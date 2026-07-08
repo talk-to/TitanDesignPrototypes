@@ -2881,10 +2881,10 @@
             </div>
 
             <!-- Email Stack -->
-            <div class="thread-stack" onclick="expandStack(this)">
+            <div class="thread-stack">
               <!-- Show 7 older messages button -->
               <div class="stack-pill-container">
-                <button class="stack-pill">Show 7 older messages</button>
+                <button class="stack-pill" onclick="expandStack(this)">Show 7 older messages</button>
               </div>
 
               <div class="stack-card card-5">
@@ -4520,8 +4520,9 @@
 
     // ── Thread Stack Expansion Logic ──
     function expandStack(element) {
-      if (!element.classList.contains('expanded')) {
-        element.classList.add('expanded');
+      const stack = element.closest('.thread-stack');
+      if (stack && !stack.classList.contains('expanded')) {
+        stack.classList.add('expanded');
       }
     }
 
