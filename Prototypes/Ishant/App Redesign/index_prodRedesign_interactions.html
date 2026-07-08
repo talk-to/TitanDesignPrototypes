@@ -685,24 +685,7 @@
       z-index: 20;
     }
 
-    .panel-resize-handle::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 2px;
-      background: #2170f4;
-      border-radius: 2px;
-      opacity: 0;
-      transition: opacity 0.15s ease;
-    }
 
-    .panel-resize-handle:hover::after,
-    .panel-resize-handle.dragging::after {
-      opacity: 1;
-    }
 
     /* ── Wide-view email list (table layout) ── */
     .middle-panel.wide-view {
