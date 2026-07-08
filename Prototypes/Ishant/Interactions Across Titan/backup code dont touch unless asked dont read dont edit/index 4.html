@@ -8,16 +8,7 @@
   <style>
     :root {
       --click-scale: 0.97;
-      --reading-pane-bg: #f9f9fa;
-      --border-color: #e8eaed;
-      --card-border-color: #e8eaed;
-      --card-border-radius: 8px;
-      --card-spacing: 12px;
-      --compose-border-radius: 6px;
-      --search-bg: #f4f5f8;
-      --search-border-radius: 6px;
     }
-
     * {
       margin: 0;
       padding: 0;
@@ -129,7 +120,7 @@
     /* ── Reusable Titan Split Button Component ── */
     .titan-split-btn {
       background: #2170f4;
-      border-radius: var(--compose-border-radius);
+      border-radius: 4px;
       display: flex;
       align-items: center;
       flex-shrink: 0;
@@ -140,8 +131,8 @@
       display: flex;
       align-items: center;
       cursor: pointer;
-      border-top-left-radius: var(--compose-border-radius);
-      border-bottom-left-radius: var(--compose-border-radius);
+      border-top-left-radius: 4px;
+      border-bottom-left-radius: 4px;
       transition: background 0.15s ease, box-shadow 0.15s ease;
     }
 
@@ -160,8 +151,8 @@
       justify-content: center;
       border-left: 1.5px solid rgba(255, 255, 255, 0.35);
       cursor: pointer;
-      border-top-right-radius: var(--compose-border-radius);
-      border-bottom-right-radius: var(--compose-border-radius);
+      border-top-right-radius: 4px;
+      border-bottom-right-radius: 4px;
       transition: background 0.15s ease, box-shadow 0.15s ease;
     }
 
@@ -188,13 +179,10 @@
       transform: scale(var(--click-scale));
     }
 
+    /* ── Compose Button Sizing & Layout ── */
     .compose-btn {
       margin: 0 12px 4px;
       height: 38px;
-    }
-
-    .top-toolbar .compose-btn {
-      height: 34px !important;
     }
 
     .compose-main-btn {
@@ -237,7 +225,6 @@
       0% {
         box-shadow: 0 0 0 0px rgba(33, 112, 244, 0.6);
       }
-
       100% {
         box-shadow: 0 0 0 6px rgba(33, 112, 244, 0);
       }
@@ -258,11 +245,10 @@
     }
 
     .sidebar-line {
-      display: none;
-    }
-
-    .sidebar-line + .account-header {
-      margin-top: 8px;
+      height: 1px;
+      background: #2d2d2d;
+      margin: 8px 0 0;
+      flex-shrink: 0;
     }
 
     .account-header {
@@ -403,27 +389,6 @@
       cursor: pointer;
       position: relative;
       flex-shrink: 0;
-      margin: 1px 8px;
-      border-radius: 6px;
-      z-index: 0;
-    }
-
-    .nav-item::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: rgba(255, 255, 255, 0.06);
-      border-radius: inherit;
-      z-index: -1;
-      opacity: 0;
-      transform: scale(0.88);
-      transition: transform 0.2s ease-in, opacity 0.2s ease-in;
-    }
-
-    .nav-item:not(.active):hover::before {
-      opacity: 1;
-      transform: scale(1.0);
-      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.2s ease-out;
     }
 
     .nav-item.active {
@@ -561,20 +526,17 @@
 
     /* ── Middle Panel ── */
     .middle-panel {
-      width: 440px;
-      background: #fff;
+      width: 443px;
+      border-right: 1px solid #dedede;
       display: flex;
       flex-direction: column;
       flex-shrink: 0;
-      border-right: 1px solid var(--border-color);
-      padding: 8px;
-      padding-top: 0;
     }
 
     /* ── Top Toolbar (full width above middle + reading pane) ── */
     .top-toolbar {
       height: 64px;
-      border-bottom: 1px solid var(--border-color);
+      border-bottom: 1px solid #dedede;
       display: flex;
       align-items: center;
       padding: 0 16px;
@@ -590,43 +552,64 @@
     }
 
     .search-bar {
+      width: 575px;
+      height: 38px;
+      border: 1px solid #dedede;
+      border-radius: 4px;
       display: flex;
       align-items: center;
-      width: 320px;
-      height: 34px;
-      background: var(--search-bg);
-      border-radius: var(--search-border-radius);
-      padding: 0 10px;
-      gap: 8px;
-      transition: background 0.15s, box-shadow 0.15s;
-      box-sizing: border-box;
-    }
-
-    .search-bar:focus-within {
       background: #fff;
-      box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.15), 0 1px 3px rgba(0, 0, 0, 0.05);
+      position: relative;
+      overflow: hidden;
     }
 
-    .search-lens-icon {
-      width: 14px;
-      height: 14px;
-      opacity: 0.5;
+    .search-icon {
+      width: 16px;
+      height: 16px;
+      margin-left: 12px;
+      margin-right: 8px;
+      position: relative;
       flex-shrink: 0;
     }
 
+    .search-icon img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
     .search-bar input {
-      border: none;
-      background: transparent;
-      outline: none;
-      font-size: 13px;
-      color: #202124;
       flex: 1;
-      min-width: 0;
+      border: none;
+      outline: none;
+      font-size: 14px;
+      color: #888;
+      background: none;
       height: 100%;
     }
 
-    .search-bar input::placeholder {
-      color: #80868b;
+    .search-divider {
+      width: 1px;
+      height: 100%;
+      background: #dedede;
+      flex-shrink: 0;
+    }
+
+    .search-dropdown {
+      width: 38px;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .search-dropdown img {
+      width: 12px;
+      height: 12px;
+      object-fit: contain;
+      opacity: 0.6;
     }
 
     .toolbar-right {
@@ -739,9 +722,9 @@
 
     .tab-checkbox-wrap {
       position: absolute;
-      left: 21px;
-      top: 16px;
-      width: 14px;
+      left: 12px;
+      top: 18px;
+      width: 20px;
       height: 20px;
       display: flex;
       align-items: center;
@@ -765,68 +748,40 @@
 
     .tab-group {
       display: flex;
-      margin-left: 35px;
-      align-items: center;
-      gap: 6px;
+      margin-left: 32px;
+      align-self: stretch;
     }
 
     .tab-item {
       display: flex;
       align-items: center;
-      padding: 6px 12px;
+      padding: 0 8px;
       cursor: pointer;
       position: relative;
-      border-radius: 6px;
-      transition: color 0.15s ease;
-      z-index: 0;
-    }
-
-    .tab-item::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: #f4f5f8;
-      border-radius: inherit;
-      z-index: -1;
-      opacity: 0;
-      transform: scale(0.88);
-      transition: transform 0.2s ease-in, opacity 0.2s ease-in;
-    }
-
-    .tab-item:hover::before {
-      opacity: 1;
-      transform: scale(1.0);
-      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.2s ease-out;
-    }
-
-    .tab-item:has(.tab-item-underline) {
-      background: #eff6ff;
-      pointer-events: none;
-    }
-
-    .tab-item:has(.tab-item-underline)::before {
-      background: #e0ecfc;
+      align-self: stretch;
     }
 
     .tab-item-label {
-      font-size: 14px;
+      font-size: 15px;
       font-weight: 600;
-      color: #2170f4;
+      color: #333;
       white-space: nowrap;
-      line-height: 18px;
+      line-height: 20px;
     }
 
     .tab-item-label.inactive {
-      color: #666;
-      font-weight: 500;
-    }
-
-    .tab-item:hover .tab-item-label.inactive {
-      color: #333;
+      color: #888;
+      font-weight: 400;
     }
 
     .tab-item-underline {
-      display: none;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: #2170f4;
+      border-radius: 0;
     }
 
     .tabs-right-container {
@@ -836,7 +791,7 @@
       display: flex;
       align-items: center;
       gap: 8px;
-      z-index: 3;
+      z-index: 5;
     }
 
     .all-mails-dropdown {
@@ -906,15 +861,25 @@
     }
 
     .tabs-divider {
-      display: none;
+      height: 0;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+    }
+
+    .tabs-divider img {
+      position: absolute;
+      inset: -0.5px 0;
+      width: 100%;
+      height: 1px;
+      object-fit: fill;
     }
 
     /* ── Email List ── */
     .email-list {
       flex: 1;
       overflow-y: auto;
-      overflow-x: hidden;
-      margin-top: -4px;
     }
 
     .email-list::-webkit-scrollbar {
@@ -927,42 +892,18 @@
     }
 
     .email-tile {
-      padding: 14px 16px;
-      padding-left: 13px;
-      margin: 4px 8px;
-      border-radius: 8px;
+      padding: 16px 12px;
       position: relative;
       cursor: pointer;
       background: #fff;
-      transition: transform 0.15s ease;
-      border-bottom: none !important;
-      z-index: 0;
     }
 
-    .email-tile::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: #f4f5f8;
-      border-radius: inherit;
-      z-index: -1;
-      opacity: 0;
-      transform: scale(0.92);
-      transition: transform 0.2s ease-in, opacity 0.2s ease-in;
-    }
-
-    .email-tile:hover::before {
-      opacity: 1;
-      transform: scale(1.0);
-      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.2s ease-out;
+    .email-tile:hover {
+      background: #f0f0f0;
     }
 
     .email-tile.selected {
       background: #eff6ff;
-    }
-
-    .email-tile.selected::before {
-      background: #e0ecfc;
     }
 
     .email-tile-inner {
@@ -1071,23 +1012,21 @@
     }
 
     .tile-subject {
-      font-size: 14px;
+      font-size: 13px;
       color: #333333;
       line-height: 18px;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      margin-top: 4px;
     }
 
     .tile-preview {
-      font-size: 14px;
+      font-size: 13px;
       color: #666666;
       line-height: 18px;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      margin-top: 2px;
     }
 
     .tile-time {
@@ -1150,7 +1089,17 @@
     }
 
     .tile-divider {
-      display: none;
+      position: absolute;
+      bottom: 0;
+      left: -17px;
+      right: -17px;
+      height: 0;
+    }
+
+    .tile-divider img {
+      position: absolute;
+      inset: -1px 0 0 0;
+      width: 100%;
     }
 
     /* ── Reading Pane ── */
@@ -1159,7 +1108,7 @@
       display: flex;
       flex-direction: column;
       overflow: hidden;
-      background: #f9f9fa;
+      background: #fbfbfb;
     }
 
     /* Action bar sits at the same level as the tabs row */
@@ -1167,10 +1116,9 @@
       height: 44px;
       display: flex;
       align-items: center;
-      padding: 0 16px;
-      background: #f9f9fa;
+      padding: 0 24px;
+      background: #fbfbfb;
       flex-shrink: 0;
-      padding-top: 12px;
     }
 
     .email-action-bar {
@@ -1289,7 +1237,7 @@
       flex: 1;
       overflow-y: auto;
       padding: 16px 24px 24px;
-      background: #f9f9fa;
+      background: #fbfbfb;
     }
 
     .thread-content::-webkit-scrollbar {
@@ -1312,9 +1260,9 @@
     .thread-tile {
       position: relative;
       z-index: 5;
-      border: 1px solid var(--card-border-color);
-      border-radius: var(--card-border-radius);
-      margin-bottom: var(--card-spacing);
+      border: 1px solid #dedede;
+      border-radius: 4px;
+      margin-bottom: 8px;
       background: #fff;
     }
 
@@ -1347,11 +1295,10 @@
     .thread-meta {
       position: absolute;
       right: 12px;
-      top: 50%;
-      transform: translateY(-50%);
+      top: 22px;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
     }
 
     .thread-date {
@@ -1375,21 +1322,21 @@
       object-fit: contain;
     }
 
-    /* ── Thread Stack (Hidden overlapping card stack) ── */
+    /* ── Thread Stack (Single Overlapping Card Stack) ── */
     .thread-stack {
       position: relative;
-      margin-bottom: var(--card-spacing);
+      margin-bottom: 8px;
       cursor: pointer;
-      border-radius: var(--card-border-radius);
+      border-radius: 4px;
     }
 
     .stack-card {
       position: relative;
       background: #fff;
-      border: 1px solid var(--card-border-color);
-      border-radius: var(--card-border-radius);
+      border: 1px solid #dedede;
+      border-radius: 4px;
       box-sizing: border-box;
-      box-shadow: none;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.02);
       transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
       overflow: hidden;
     }
@@ -1397,25 +1344,14 @@
     /* Stacked (collapsed) state */
     .thread-stack:not(.expanded) .stack-card {
       height: 60px;
-      margin-bottom: -60px;
-      opacity: 0;
-      pointer-events: none;
-      border-color: transparent;
-      box-shadow: none;
-      background: transparent;
+      margin-bottom: -50px; /* Pulls next card up, leaving 10px spacing */
     }
 
-    /* Card 1 (Louis Litt) remains visible when collapsed */
     .thread-stack:not(.expanded) .stack-card.card-1 {
-      opacity: 1;
       margin-bottom: 0;
-      pointer-events: auto;
-      border: 1px solid var(--card-border-color);
-      background: #fff;
-      box-shadow: none;
     }
 
-    /* Hide contents of collapsed cards except Card 1 */
+    /* Hide contents in collapsed state */
     .stack-card-content {
       opacity: 0;
       transition: opacity 0.3s ease;
@@ -1426,9 +1362,46 @@
       pointer-events: none;
     }
 
+    /* Ordering to ensure proper stacking */
+    .stack-card.card-5 { z-index: 1; }
+    .stack-card.card-4 { z-index: 2; }
+    .stack-card.card-3 { z-index: 3; }
+    .stack-card.card-2 { z-index: 4; }
+    .stack-card.card-1 { z-index: 5; }
+
+    /* Show frontmost card content when collapsed */
     .thread-stack:not(.expanded) .stack-card.card-1 .stack-card-content {
       opacity: 1;
-      pointer-events: auto;
+    }
+
+    /* The pill hovering over the stacked section */
+    .stack-pill {
+      position: absolute;
+      top: 20px; /* Centered between top of card-5 (0) and top of card-1 (40) */
+      left: 50%;
+      transform: translate(-50%, -50%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 500;
+      color: #666;
+      background: #fdfdfd;
+      border: 1px solid #d4d4d4;
+      border-radius: 6px;
+      padding: 4px 12px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+      transition: opacity 0.3s ease, background 0.15s ease, transform 0.2s ease;
+      z-index: 10;
+      pointer-events: none;
+    }
+
+    .thread-stack:not(.expanded):hover .stack-pill {
+      background: #f0f0f0;
+      border-color: #ccc;
+      transform: translate(-50%, -50%);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+      color: #333;
     }
 
     /* Expanded state */
@@ -1437,13 +1410,8 @@
     }
 
     .thread-stack.expanded .stack-card {
-      height: 60px;
-      margin-bottom: var(--card-spacing);
-      opacity: 1;
-      pointer-events: auto;
-      border: 1px solid var(--card-border-color);
-      background: #fff;
-      box-shadow: none;
+      height: 60px; /* Natural expanded tile height */
+      margin-bottom: 8px; /* Normal tile spacing */
     }
 
     .thread-stack.expanded .stack-card-content {
@@ -1451,62 +1419,18 @@
       pointer-events: auto;
     }
 
-    /* Ordering to ensure proper stacking */
-    .stack-card.card-5 { z-index: 1; }
-    .stack-card.card-4 { z-index: 2; }
-    .stack-card.card-3 { z-index: 3; }
-    .stack-card.card-2 { z-index: 4; }
-    .stack-card.card-1 { z-index: 5; }
-
-    /* Stack Pill Container (Flat design like elevation redesign) */
-    .stack-pill-container {
-      display: flex;
-      justify-content: center;
-      margin-top: 12px;
-      margin-bottom: 16px;
-      position: relative;
-      max-height: 40px;
-      opacity: 1;
-      transition: all 0.3s ease;
-    }
-
-    .thread-stack.expanded .stack-pill-container {
+    .thread-stack.expanded .stack-pill {
       opacity: 0;
-      max-height: 0;
-      margin: 0;
       pointer-events: none;
-    }
-
-    .stack-pill {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 13px;
-      font-weight: 500;
-      color: #666;
-      background: transparent;
-      border: none;
-      border-radius: 6px;
-      padding: 4px 12px;
-      box-shadow: none;
-      transition: background 0.15s ease, transform 0.15s ease;
-      cursor: pointer;
-      outline: none;
-    }
-
-    .stack-pill:hover {
-      background: #f0f0f2;
-      transform: scale(1.02);
-      box-shadow: none;
-      color: #333;
+      transform: translate(-50%, -50%) scale(0.9);
     }
 
     /* Expanded tile */
     .expanded-tile {
-      border: 1px solid var(--card-border-color);
-      border-radius: var(--card-border-radius);
+      border: 1px solid #dedede;
+      border-radius: 4px;
       background: #fff;
-      margin-bottom: var(--card-spacing);
+      margin-bottom: 8px;
       overflow: hidden;
     }
 
@@ -1620,13 +1544,15 @@
     }
 
     .expanded-footer-hr {
-      display: none;
+      height: 1px;
+      background: #dedede;
+      width: 100%;
     }
 
     .expanded-footer {
       display: flex;
       align-items: center;
-      padding: 8px 20px 16px;
+      padding: 10px 20px;
       gap: 12px;
     }
 
@@ -1913,21 +1839,10 @@
       flex-shrink: 0;
     }
 
-    .tool-icon.bg-pink {
-      background: #ffe5ed;
-    }
-
-    .tool-icon.bg-purple {
-      background: #f1e4ff;
-    }
-
-    .tool-icon.bg-blue {
-      background: #e1f4ff;
-    }
-
-    .tool-icon.bg-green {
-      background: #e6faf2;
-    }
+    .tool-icon.bg-pink { background: #ffe5ed; }
+    .tool-icon.bg-purple { background: #f1e4ff; }
+    .tool-icon.bg-blue { background: #e1f4ff; }
+    .tool-icon.bg-green { background: #e6faf2; }
 
     .tool-icon img {
       object-fit: contain;
@@ -2078,15 +1993,17 @@
             </div>
             <span class="account-email-text">ella.henderson@avontechlabs.com</span>
           </div>
+          <div class="account-refresh" onclick="triggerRefresh(this)" title="Refresh mailbox">
+            <img src="assets/b08917ed-2fc9-4353-876e-6c4c19977593.svg" alt="">
+          </div>
         </div>
 
         <!-- Inbox (active) -->
-        <div class="nav-item active" style="padding-right: 8px;">
+        <div class="nav-item active">
           <div class="nav-item-icon">
             <img src="assets/f2abf784-8ff3-4cb6-8424-a3f9ea66f6c4.svg" alt="">
           </div>
           <span class="nav-item-label active">Inbox</span>
-
           <span class="nav-badge">18</span>
         </div>
 
@@ -2261,8 +2178,16 @@
             </div>
           </div>
           <div class="search-bar">
-            <img class="search-lens-icon" src="assets/31fb0942-5496-4310-8ed0-427ccce7cfe6.svg" alt="">
-            <input type="text" placeholder="Search mail, files & links">
+            <div class="search-icon">
+              <img src="assets/31fb0942-5496-4310-8ed0-427ccce7cfe6.svg" alt=""
+                style="inset:0; width:100%; height:100%;">
+            </div>
+            <input type="text" placeholder="Search in ella@avontech.com" readonly>
+            <div class="search-divider"></div>
+            <div class="search-dropdown">
+              <img src="assets/e458459b-dce0-4c30-be8a-322441399ee5.svg" alt="">
+            </div>
+
           </div>
         </div>
         <div class="toolbar-right">
@@ -2298,6 +2223,7 @@
 
           <!-- Tabs -->
           <div class="tabs-row">
+            <div class="sweep-bar"></div>
             <div class="tab-checkbox-wrap">
               <div class="chk"><img src="assets/392bf29c-08b1-44e8-b95b-b99905e722e6.svg" alt=""></div>
             </div>
@@ -2311,6 +2237,9 @@
               </div>
             </div>
             <div class="tabs-right-container">
+              <div class="tabs-refresh-btn" onclick="triggerRefresh(this)" title="Refresh mailbox">
+                <img src="assets/b08917ed-2fc9-4353-876e-6c4c19977593.svg" alt="">
+              </div>
               <div class="all-mails-dropdown">
                 <span>All mails</span>
                 <div class="dd-arrow"><img src="assets/7bd47053-31b1-485b-89c1-4496be66b2fd.svg" alt=""></div>
@@ -2583,8 +2512,8 @@
                 <span class="thread-preview">And as such the media have been very influential in shaping
                   societ...</span>
                 <div class="thread-meta">
-                  <div class="thread-attach"><img src="assets/137b4a38-f7e3-4939-b28d-56d8013f7e6b.svg" alt=""></div>
                   <span class="thread-date">Jun 3</span>
+                  <div class="thread-attach"><img src="assets/137b4a38-f7e3-4939-b28d-56d8013f7e6b.svg" alt=""></div>
                 </div>
 
               </div>
@@ -2592,11 +2521,6 @@
 
             <!-- Email Stack -->
             <div class="thread-stack" onclick="expandStack(this)">
-              <!-- Show 7 older messages button -->
-              <div class="stack-pill-container">
-                <button class="stack-pill">Show 7 older messages</button>
-              </div>
-
               <div class="stack-card card-5">
                 <div class="stack-card-content thread-tile-inner">
                   <span class="thread-sender">Rachel Zane</span>
@@ -2632,6 +2556,7 @@
                   <div class="thread-meta"><span class="thread-date">Jun 9</span></div>
                 </div>
               </div>
+              <div class="stack-pill">7 older messages</div>
             </div>
 
 
@@ -2712,9 +2637,204 @@
 
   </div><!-- /app-window -->
 
+  <!-- ── Iteration Panel ── -->
+  <div class="iter-panel" id="iter-panel">
+    <div class="iter-header" onclick="toggleIterPanel(event)">
+      <span class="iter-label">Prototype Controls</span>
+      <button class="iter-toggle-btn">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+      </button>
+    </div>
+    
+    <div class="iter-panel-content">
+      <div class="iter-row">
+        <span class="iter-sublabel">Iteration</span>
+        <div class="iter-tabs" id="iter-tabs">
+          <button class="iter-tab active" data-iter="1" onclick="setIteration(1, this)">1 · Near Email</button>
+          <button class="iter-tab" data-iter="2" onclick="setIteration(2, this)">2 · Logo</button>
+          <button class="iter-tab" data-iter="3" onclick="setIteration(3, this)">3 · Inbox Top Bar</button>
+        </div>
+      </div>
+      <div class="iter-row">
+        <span class="iter-sublabel">Variation</span>
+        <div class="iter-tabs" id="variant-tabs">
+          <button class="iter-tab active" data-variant="fade" onclick="setVariant('fade', this)">A · Fade</button>
+          <button class="iter-tab" data-variant="sweep" onclick="setVariant('sweep', this)">B · Sweep</button>
+          <button class="iter-tab" data-variant="toast" onclick="setVariant('toast', this)">C · Toast</button>
+          <button class="iter-tab" data-variant="skeleton" onclick="setVariant('skeleton', this)">D · Skeleton</button>
+        </div>
+      </div>
+    </div>
 
+    <!-- Collapsed Trigger -->
+    <div class="iter-panel-collapsed" onclick="toggleIterPanel(event)">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;">
+        <circle cx="12" cy="12" r="3"></circle>
+        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+      </svg>
+      <span>Controls</span>
+    </div>
+  </div>
 
   <style>
+    /* ── Iteration panel ── */
+    .iter-panel {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      z-index: 999;
+      background: #202020;
+      border: 1px solid #2d2d2d;
+      border-radius: 10px;
+      padding: 10px 14px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+      min-width: 280px;
+      transition: all 0.25s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    .iter-panel.minimized {
+      min-width: 105px;
+      width: 105px;
+      height: 34px;
+      border-radius: 17px;
+      padding: 0 12px;
+      gap: 0;
+      cursor: pointer;
+      overflow: hidden;
+      background: #202020;
+      border-color: #333;
+    }
+
+    .iter-panel.minimized:hover {
+      background: #2b2b2b;
+      border-color: #444;
+      box-shadow: 0 6px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .iter-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .iter-panel.minimized .iter-header {
+      display: none;
+    }
+
+    .iter-panel-content {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      transition: opacity 0.2s ease;
+    }
+
+    .iter-panel.minimized .iter-panel-content {
+      display: none;
+      opacity: 0;
+    }
+
+    .iter-toggle-btn {
+      background: #2b2b2b;
+      border: 1px solid #333;
+      color: #9aa5bd;
+      cursor: pointer;
+      width: 22px;
+      height: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 4px;
+      transition: all 0.15s ease;
+    }
+
+    .iter-toggle-btn:hover {
+      background: #333;
+      border-color: #444;
+      color: #fff;
+    }
+
+    .iter-panel-collapsed {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+      color: #9aa5bd;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.2px;
+      font-family: -apple-system, sans-serif;
+    }
+
+    .iter-panel.minimized .iter-panel-collapsed {
+      display: flex;
+    }
+
+    .iter-label {
+      font-size: 10px;
+      font-weight: 600;
+      color: #667085;
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+      font-family: -apple-system, sans-serif;
+    }
+
+    .iter-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .iter-sublabel {
+      font-size: 10px;
+      color: #4a5068;
+      font-family: -apple-system, sans-serif;
+      white-space: nowrap;
+      width: 52px;
+      flex-shrink: 0;
+    }
+
+    .iter-tabs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5px;
+    }
+
+    #iter-tabs {
+      grid-template-columns: 1fr;
+    }
+
+    .iter-tab {
+      padding: 4px 11px;
+      border-radius: 6px;
+      border: 1px solid #2d2d2d;
+      background: transparent;
+      color: #9aa5bd;
+      font-size: 11px;
+      font-weight: 500;
+      cursor: pointer;
+      font-family: -apple-system, sans-serif;
+      transition: all 0.15s;
+    }
+
+    .iter-tab:hover {
+      background: #333333;
+      color: #fff;
+    }
+
+    .iter-tab.active {
+      background: #2563eb;
+      border-color: #2563eb;
+      color: #fff;
+    }
+
     /* ── New email push-down (height controlled via JS) ── */
     .new-email-tile {
       overflow: hidden;
@@ -2725,18 +2845,36 @@
       opacity: 0 !important;
     }
 
-    /* ── Refresh Toast ── */
+    /* ── Sidebar folder fade overlay ── */
+    .sidebar-folder-overlay {
+      position: absolute;
+      left: 0;
+      right: 0;
+      pointer-events: none;
+      z-index: 6;
+      opacity: 0;
+      transform: translateY(-8px);
+      transition: opacity 0.35s ease, transform 0.35s ease;
+      background: rgba(28, 28, 28, 0.45);
+    }
+
+    .sidebar-folder-overlay.sweeping {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── D · Toast ── */
     #refresh-toast {
       position: fixed;
-      bottom: 48px;
+      bottom: 24px;
       left: 50%;
-      transform: translateX(-50%) translateY(100px);
+      transform: translateX(-50%) translateY(80px);
       background: #2a2a2a;
       color: #fff;
-      font-size: 14.5px;
+      font-size: 13px;
       font-weight: 500;
-      padding: 16px 28px;
-      border-radius: 6px;
+      padding: 14px 24px;
+      border-radius: 4px;
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
       white-space: nowrap;
       z-index: 9999;
@@ -2745,11 +2883,11 @@
       opacity: 0;
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
     }
-
+    
     #refresh-toast .toast-msg {
-      min-width: 150px;
+      min-width: 125px;
       text-align: left;
       position: relative;
       display: flex;
@@ -2777,15 +2915,15 @@
     }
 
     #refresh-toast .toast-icon {
-      width: 20px;
-      height: 20px;
+      width: 16px;
+      height: 16px;
       flex-shrink: 0;
       position: relative;
     }
 
     #refresh-toast .toast-spin {
-      width: 20px;
-      height: 20px;
+      width: 16px;
+      height: 16px;
       object-fit: contain;
       filter: invert(1);
       opacity: 0.75;
@@ -2801,7 +2939,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 18px;
+      font-size: 14px;
       color: #22c55e;
       font-weight: 700;
       opacity: 0;
@@ -2833,14 +2971,133 @@
       }
     }
 
-    /* ── Logo refresh click scaling ── */
-    .titan-logo {
+    /* ── A · Skeleton ── */
+    @keyframes shimmer {
+      0% {
+        background-position: -400px 0;
+      }
+
+      100% {
+        background-position: 400px 0;
+      }
+    }
+
+    .email-list.skeleton-refresh .email-tile {
+      pointer-events: none;
+    }
+
+    .email-list.skeleton-refresh .email-tile-inner {
+      opacity: 0 !important;
+    }
+
+    .email-list.skeleton-refresh .email-tile.selected {
+      background: #fff;
+    }
+
+    .email-list.skeleton-refresh .email-tile::before {
+      content: '';
+      position: absolute;
+      inset: 12px;
+      border-radius: 6px;
+      background: linear-gradient(90deg, #e8e8e8 25%, #f5f5f5 50%, #e8e8e8 75%);
+      background-size: 800px 100%;
+      animation: shimmer 1.2s infinite linear;
+    }
+
+    /* ── Middle panel overlay (sweep variant — covers tabs + email list) ── */
+    .middle-panel {
+      position: relative;
+    }
+
+    .middle-refresh-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(210, 213, 220, 0.22);
+      opacity: 0;
+      pointer-events: none;
+      z-index: 4;
+      transition: opacity 0.4s ease;
+    }
+
+    /* ── Sweep bar (travelling indeterminate bar on tabs row top edge) ── */
+    .tabs-row {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .sweep-bar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 35%;
+      height: 3px;
+      background: #2170f4;
+      z-index: 10;
+      opacity: 0;
+      transform: translateX(-100%);
+      transition: opacity 0.3s ease;
+    }
+
+    .sweep-bar.sweeping {
+      opacity: 1;
+      animation: sweepLoop 1.4s ease-in-out infinite;
+    }
+
+    @keyframes sweepLoop {
+      0% {
+        transform: translateX(-100%);
+      }
+
+      100% {
+        transform: translateX(320%);
+      }
+    }
+
+    /* ── Refresh overlay (always in DOM, fade in/out via JS) ── */
+    .refresh-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(210, 213, 220, 0.22);
+      opacity: 0;
+      pointer-events: none;
+      z-index: 4;
+      transition: opacity 0.4s ease;
+    }
+
+    /* ── C · Fade (vertical shimmer sweep) ── */
+    .email-list.fade-refresh {
+      overflow: hidden;
+    }
+
+    .email-list.fade-refresh .email-tile {
+      pointer-events: none;
+    }
+
+    .email-list.fade-stopping .email-tile {
+      pointer-events: auto;
+    }
+
+    /* ── Iteration 2 overrides ── */
+    body[data-iteration="2"] .account-refresh {
+      display: none !important;
+    }
+
+    body[data-iteration="2"] .titan-logo {
       cursor: pointer;
       transition: transform 0.1s ease;
     }
 
-    .titan-logo:active {
+    body[data-iteration="2"] .titan-logo:active {
       transform: scale(var(--click-scale));
+    }
+
+    /* ── Iteration 3 overrides ── */
+    body[data-iteration="3"] .account-refresh {
+      display: none !important;
+    }
+
+    body[data-iteration="3"] .tabs-refresh-btn {
+      display: flex;
     }
   </style>
 
@@ -2864,7 +3121,7 @@
     </div>
     <!-- App Switcher Content -->
     <div class="app-switcher-content">
-
+      
       <!-- Top Apps Section (Mail, Calendar, Contacts) -->
       <div class="app-switcher-section">
         <div class="app-switcher-row">
@@ -3044,18 +3301,12 @@
       <div class="comp-divider"></div>
       <!-- Feature chips -->
       <div class="comp-features-row">
-        <div class="comp-feat"><span class="fic"><img src="composer_assets/ic-track.svg"
-              alt=""></span><span>Track</span></div>
-        <div class="comp-feat"><span class="fic"><img src="composer_assets/ic-design.svg"
-              alt=""></span><span>Design</span></div>
-        <div class="comp-feat"><span class="fic"><img src="composer_assets/ic-ai-write.svg" alt=""></span><span>Ai
-            Write</span></div>
-        <div class="comp-feat"><span class="fic"><img src="composer_assets/ic-templates.svg"
-              alt=""></span><span>Templates</span></div>
-        <div class="comp-feat"><span class="fic"><img src="composer_assets/ic-invoices.svg"
-              alt=""></span><span>Invoices</span></div>
-        <div class="comp-feat"><span class="fic"><img src="composer_assets/ic-groups.svg"
-              alt=""></span><span>Groups</span></div>
+        <div class="comp-feat"><span class="fic"><img src="composer_assets/ic-track.svg" alt=""></span><span>Track</span></div>
+        <div class="comp-feat"><span class="fic"><img src="composer_assets/ic-design.svg" alt=""></span><span>Design</span></div>
+        <div class="comp-feat"><span class="fic"><img src="composer_assets/ic-ai-write.svg" alt=""></span><span>Ai Write</span></div>
+        <div class="comp-feat"><span class="fic"><img src="composer_assets/ic-templates.svg" alt=""></span><span>Templates</span></div>
+        <div class="comp-feat"><span class="fic"><img src="composer_assets/ic-invoices.svg" alt=""></span><span>Invoices</span></div>
+        <div class="comp-feat"><span class="fic"><img src="composer_assets/ic-groups.svg" alt=""></span><span>Groups</span></div>
       </div>
     </div>
 
@@ -3081,19 +3332,13 @@
         <div class="comp-fmt-sep-v"></div>
         <button class="comp-fmt-btn" title="Bold"><img src="composer_assets/figma-ic-bold.svg" alt=""></button>
         <button class="comp-fmt-btn" title="Italic"><img src="composer_assets/figma-ic-italic.svg" alt=""></button>
-        <button class="comp-fmt-btn" title="Underline"><img src="composer_assets/figma-ic-underline.svg"
-            alt=""></button>
+        <button class="comp-fmt-btn" title="Underline"><img src="composer_assets/figma-ic-underline.svg" alt=""></button>
         <button class="comp-fmt-btn" title="Text color"><img src="composer_assets/figma-ic-colors.svg" alt=""></button>
-        <button class="comp-fmt-btn comp-fmt-align" title="Alignment"><img src="composer_assets/figma-ic-align.svg"
-            alt=""><img src="composer_assets/figma-ic-caret-dd.svg" alt="" class="comp-mini-caret"></button>
-        <button class="comp-fmt-btn comp-fmt-align" title="Lists"><img src="composer_assets/figma-ic-list.svg"
-            alt=""><img src="composer_assets/figma-ic-caret-dd.svg" alt="" class="comp-mini-caret"></button>
-        <button class="comp-fmt-btn comp-fmt-align" title="Indent"><img src="composer_assets/figma-ic-indent.svg"
-            alt=""><img src="composer_assets/figma-ic-caret-dd.svg" alt="" class="comp-mini-caret"></button>
-        <button class="comp-fmt-btn comp-fmt-link" title="Link"><img src="composer_assets/figma-ic-more.svg"
-            alt=""></button>
-        <button class="comp-fmt-btn comp-fmt-moredots" title="More"><img src="composer_assets/figma-ic-link.svg"
-            alt=""></button>
+        <button class="comp-fmt-btn comp-fmt-align" title="Alignment"><img src="composer_assets/figma-ic-align.svg" alt=""><img src="composer_assets/figma-ic-caret-dd.svg" alt="" class="comp-mini-caret"></button>
+        <button class="comp-fmt-btn comp-fmt-align" title="Lists"><img src="composer_assets/figma-ic-list.svg" alt=""><img src="composer_assets/figma-ic-caret-dd.svg" alt="" class="comp-mini-caret"></button>
+        <button class="comp-fmt-btn comp-fmt-align" title="Indent"><img src="composer_assets/figma-ic-indent.svg" alt=""><img src="composer_assets/figma-ic-caret-dd.svg" alt="" class="comp-mini-caret"></button>
+        <button class="comp-fmt-btn comp-fmt-link" title="Link"><img src="composer_assets/figma-ic-more.svg" alt=""></button>
+        <button class="comp-fmt-btn comp-fmt-moredots" title="More"><img src="composer_assets/figma-ic-link.svg" alt=""></button>
       </div>
       <!-- Divider between format and send bars -->
       <div class="comp-bar-divider"></div>
@@ -3110,107 +3355,75 @@
           </span>
         </button>
         <button class="comp-campaign-btn titan-action-btn action-btn-campaign" title="Campaign">
-          <svg class="ci-campaign" preserveAspectRatio="none" width="100%" height="100%" overflow="visible"
-            style="display: block;" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg class="ci-campaign" preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g id="megaphone-icon-original 8">
-              <path id="Union"
-                d="M7.7712 2.4634C7.96265 2.4144 8.16444 2.42141 8.35225 2.48294C8.54 2.5445 8.70645 2.65828 8.83175 2.81106C11.4809 6.03543 14.7746 6.70206 14.8181 6.71047L17.3689 7.18801C18.1804 7.34094 18.8984 7.80935 19.3649 8.49075C19.8315 9.17228 20.0082 10.0118 19.8571 10.8238C19.7172 11.5649 19.3132 12.2305 18.7204 12.6968C18.1275 13.1631 17.3858 13.3985 16.6325 13.3599L15.3112 16.2398C15.2419 16.3908 15.1376 16.5232 15.0065 16.6255C14.8753 16.7278 14.7209 16.7972 14.5573 16.8277C14.3938 16.858 14.2253 16.8486 14.0661 16.8003C13.907 16.752 13.7614 16.6665 13.6423 16.5503L13.029 15.9517C12.9065 15.8324 12.8149 15.684 12.7634 15.521C12.712 15.3581 12.7015 15.185 12.7331 15.0171L13.153 12.7779C12.0792 12.7026 9.47517 12.7292 6.6794 14.3032C6.46759 14.4239 6.21987 14.4658 5.98018 14.4214C5.83017 14.393 5.68804 14.3319 5.56417 14.2427C5.40277 14.1285 5.27752 13.9701 5.20382 13.7866C5.13017 13.6033 5.11162 13.4026 5.14913 13.2085L7.0085 3.27786C7.04499 3.08367 7.13612 2.9035 7.2712 2.7593C7.4063 2.61521 7.57984 2.51241 7.7712 2.4634ZM3.65401 10.0796C4.0246 9.9477 4.43342 10.1308 4.58175 10.4947C4.73032 10.8586 4.5662 11.275 4.20967 11.44L2.21163 12.3628L2.14425 12.3833C1.76275 12.5178 1.34456 12.3174 1.20967 11.9361C1.07549 11.5549 1.27582 11.137 1.65694 11.0025L3.65401 10.0796ZM1.68135 6.88235L1.68526 6.88137L4.34053 7.36282C4.68293 7.40969 4.94684 7.68828 4.97432 8.03274C5.00181 8.37735 4.78625 8.69373 4.45577 8.79446C4.35609 8.82436 4.25052 8.83332 4.14717 8.81887L1.4919 8.33743C1.09011 8.2852 0.806859 7.91696 0.859089 7.51516C0.91133 7.11339 1.27983 6.83004 1.68135 6.88235ZM2.51046 3.76809C2.75623 3.44422 3.21764 3.381 3.54171 3.62649L5.04561 4.99368C5.35721 5.24989 5.40482 5.70978 5.15206 6.02395C5.06262 6.14274 4.93823 6.231 4.79659 6.27688C4.57162 6.34557 4.32655 6.30119 4.13936 6.15872L2.65108 4.79934C2.32753 4.55337 2.2646 4.09183 2.51046 3.76809Z"
-                fill="#888888" />
+              <path id="Union" d="M7.7712 2.4634C7.96265 2.4144 8.16444 2.42141 8.35225 2.48294C8.54 2.5445 8.70645 2.65828 8.83175 2.81106C11.4809 6.03543 14.7746 6.70206 14.8181 6.71047L17.3689 7.18801C18.1804 7.34094 18.8984 7.80935 19.3649 8.49075C19.8315 9.17228 20.0082 10.0118 19.8571 10.8238C19.7172 11.5649 19.3132 12.2305 18.7204 12.6968C18.1275 13.1631 17.3858 13.3985 16.6325 13.3599L15.3112 16.2398C15.2419 16.3908 15.1376 16.5232 15.0065 16.6255C14.8753 16.7278 14.7209 16.7972 14.5573 16.8277C14.3938 16.858 14.2253 16.8486 14.0661 16.8003C13.907 16.752 13.7614 16.6665 13.6423 16.5503L13.029 15.9517C12.9065 15.8324 12.8149 15.684 12.7634 15.521C12.712 15.3581 12.7015 15.185 12.7331 15.0171L13.153 12.7779C12.0792 12.7026 9.47517 12.7292 6.6794 14.3032C6.46759 14.4239 6.21987 14.4658 5.98018 14.4214C5.83017 14.393 5.68804 14.3319 5.56417 14.2427C5.40277 14.1285 5.27752 13.9701 5.20382 13.7866C5.13017 13.6033 5.11162 13.4026 5.14913 13.2085L7.0085 3.27786C7.04499 3.08367 7.13612 2.9035 7.2712 2.7593C7.4063 2.61521 7.57984 2.51241 7.7712 2.4634ZM3.65401 10.0796C4.0246 9.9477 4.43342 10.1308 4.58175 10.4947C4.73032 10.8586 4.5662 11.275 4.20967 11.44L2.21163 12.3628L2.14425 12.3833C1.76275 12.5178 1.34456 12.3174 1.20967 11.9361C1.07549 11.5549 1.27582 11.137 1.65694 11.0025L3.65401 10.0796ZM1.68135 6.88235L1.68526 6.88137L4.34053 7.36282C4.68293 7.40969 4.94684 7.68828 4.97432 8.03274C5.00181 8.37735 4.78625 8.69373 4.45577 8.79446C4.35609 8.82436 4.25052 8.83332 4.14717 8.81887L1.4919 8.33743C1.09011 8.2852 0.806859 7.91696 0.859089 7.51516C0.91133 7.11339 1.27983 6.83004 1.68135 6.88235ZM2.51046 3.76809C2.75623 3.44422 3.21764 3.381 3.54171 3.62649L5.04561 4.99368C5.35721 5.24989 5.40482 5.70978 5.15206 6.02395C5.06262 6.14274 4.93823 6.231 4.79659 6.27688C4.57162 6.34557 4.32655 6.30119 4.13936 6.15872L2.65108 4.79934C2.32753 4.55337 2.2646 4.09183 2.51046 3.76809Z" fill="#888888"/>
             </g>
           </svg>
         </button>
         <div class="comp-vert-sep"></div>
         <div class="comp-send-icons">
           <button class="comp-icon-btn titan-action-btn action-btn-reminder" title="Reminder">
-            <svg class="ci-reminder" preserveAspectRatio="none" width="100%" height="100%" overflow="visible"
-              style="display: block;" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg class="ci-reminder" preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
               <g id="Icon/Composer/Bottom action/reminder">
-                <path id="Vector" fill-rule="evenodd" clip-rule="evenodd"
-                  d="M12.58 8.24C12.9 8.56 12.9 9.078 12.58 9.397L10.397 11.58C10.077 11.9 9.559 11.9 9.24 11.58C8.92 11.26 8.92 10.742 9.24 10.422L11.422 8.24C11.742 7.92 12.26 7.92 12.58 8.24ZM12.728 11.013C13.805 10.293 15.071 9.91 16.366 9.91C18.102 9.91 19.768 10.6 20.996 11.827C22.224 13.055 22.913 14.721 22.913 16.457C22.913 17.752 22.529 19.018 21.81 20.095C21.09 21.172 20.068 22.011 18.872 22.506C17.675 23.002 16.359 23.131 15.089 22.879C13.819 22.626 12.652 22.003 11.736 21.087C10.821 20.171 10.196 19.005 9.944 17.735C9.692 16.465 9.821 15.148 10.317 13.951C10.812 12.755 11.652 11.733 12.728 11.013ZM16.763 13.911C16.763 13.509 16.43 13.183 16.019 13.183C15.608 13.183 15.275 13.509 15.275 13.911V16.821C15.275 17.223 15.608 17.548 16.019 17.548H19.987C20.397 17.548 20.731 17.223 20.731 16.821C20.731 16.419 20.398 16.093 19.987 16.093H16.763V13.911ZM20.153 9.397C19.833 9.077 19.833 8.559 20.153 8.24C20.472 7.92 20.99 7.92 21.31 8.24L23.492 10.422C23.812 10.742 23.812 11.26 23.492 11.58C23.172 11.9 22.654 11.9 22.335 11.58L20.153 9.397Z"
-                  fill="#888888" />
+                <path id="Vector" fill-rule="evenodd" clip-rule="evenodd" d="M12.58 8.24C12.9 8.56 12.9 9.078 12.58 9.397L10.397 11.58C10.077 11.9 9.559 11.9 9.24 11.58C8.92 11.26 8.92 10.742 9.24 10.422L11.422 8.24C11.742 7.92 12.26 7.92 12.58 8.24ZM12.728 11.013C13.805 10.293 15.071 9.91 16.366 9.91C18.102 9.91 19.768 10.6 20.996 11.827C22.224 13.055 22.913 14.721 22.913 16.457C22.913 17.752 22.529 19.018 21.81 20.095C21.09 21.172 20.068 22.011 18.872 22.506C17.675 23.002 16.359 23.131 15.089 22.879C13.819 22.626 12.652 22.003 11.736 21.087C10.821 20.171 10.196 19.005 9.944 17.735C9.692 16.465 9.821 15.148 10.317 13.951C10.812 12.755 11.652 11.733 12.728 11.013ZM16.763 13.911C16.763 13.509 16.43 13.183 16.019 13.183C15.608 13.183 15.275 13.509 15.275 13.911V16.821C15.275 17.223 15.608 17.548 16.019 17.548H19.987C20.397 17.548 20.731 17.223 20.731 16.821C20.731 16.419 20.398 16.093 19.987 16.093H16.763V13.911ZM20.153 9.397C19.833 9.077 19.833 8.559 20.153 8.24C20.472 7.92 20.99 7.92 21.31 8.24L23.492 10.422C23.812 10.742 23.812 11.26 23.492 11.58C23.172 11.9 22.654 11.9 22.335 11.58L20.153 9.397Z" fill="#888888"/>
               </g>
             </svg>
           </button>
           <button class="comp-icon-btn titan-action-btn action-btn-text" title="Text styling">
-            <svg class="ci-text" preserveAspectRatio="none" width="100%" height="100%" overflow="visible"
-              style="display: block;" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg class="ci-text" preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
               <g id="Group">
-                <path id="Subtract"
-                  d="M13 0C14.1046 0 15 0.89543 15 2V13C15 14.1046 14.1046 15 13 15H2C0.89543 15 0 14.1046 0 13V2C0 0.89543 0.89543 0 2 0H13ZM6.44727 3.21484L3.47168 11.7861H5.26953L5.92969 9.74316H8.94141L9.58984 11.7861H11.5322L8.55664 3.21484H6.44727ZM7.39062 4.99707H7.49805L8.56055 8.3584H6.31543L7.39062 4.99609V4.99707Z"
-                  fill="#888888" />
+                <path id="Subtract" d="M13 0C14.1046 0 15 0.89543 15 2V13C15 14.1046 14.1046 15 13 15H2C0.89543 15 0 14.1046 0 13V2C0 0.89543 0.89543 0 2 0H13ZM6.44727 3.21484L3.47168 11.7861H5.26953L5.92969 9.74316H8.94141L9.58984 11.7861H11.5322L8.55664 3.21484H6.44727ZM7.39062 4.99707H7.49805L8.56055 8.3584H6.31543L7.39062 4.99609V4.99707Z" fill="#888888"/>
               </g>
             </svg>
           </button>
           <button class="comp-icon-btn titan-action-btn action-btn-attach" title="Attachment">
-            <svg class="ci-attach" preserveAspectRatio="none" width="100%" height="100%" overflow="visible"
-              style="display: block;" viewBox="0 0 14.5457 15.5514" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg class="ci-attach" preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 14.5457 15.5514" fill="none" xmlns="http://www.w3.org/2000/svg">
               <g id="Attach">
-                <path id="Vector"
-                  d="M14.2692 7.65739C14.1022 7.51539 13.8862 7.44339 13.6672 7.45539C13.4472 7.46739 13.2412 7.56439 13.0912 7.72439C11.5622 9.52939 9.88923 11.2064 8.08823 12.7384C6.17523 14.2284 4.17423 14.2614 2.72823 12.8164C1.28323 11.3714 1.32823 9.33639 2.82823 7.45739C4.34023 5.56839 6.05423 3.85339 7.94423 2.34339C8.40423 1.91739 9.00423 1.67339 9.63023 1.65939C10.2572 1.64539 10.8672 1.86039 11.3462 2.26539C11.7782 2.72839 12.0132 3.34139 12.0012 3.97439C11.9882 4.60739 11.7292 5.21039 11.2802 5.65639C9.89123 7.43139 8.29323 9.03339 6.52023 10.4264C6.18723 10.6594 5.54323 10.9934 5.06423 10.5144C4.89823 10.3014 4.81523 10.0344 4.83223 9.76439C4.84823 9.49439 4.96223 9.23939 5.15323 9.04739C6.32423 7.62239 7.63523 6.31739 9.06723 5.15539C9.23323 5.01139 9.33723 4.80839 9.35723 4.58839C9.37723 4.36939 9.31323 4.15139 9.17823 3.97739C9.03323 3.81139 8.83023 3.70739 8.61123 3.68739C8.39223 3.66739 8.17423 3.73139 8.00023 3.86639C6.46223 5.13239 5.05523 6.54639 3.79723 8.09139C3.36823 8.59839 3.14123 9.24539 3.15723 9.90939C3.17323 10.5734 3.43323 11.2084 3.88623 11.6934C4.36623 12.1554 5.00323 12.4214 5.67023 12.4374C6.33623 12.4544 6.98523 12.2204 7.48823 11.7824C9.38423 10.2904 11.0872 8.56839 12.5582 6.65639C13.2592 5.89639 13.6432 4.89739 13.6302 3.86439C13.6182 2.83039 13.2102 1.84039 12.4912 1.09739C11.7352 0.405391 10.7512 0.0153904 9.72723 0.000390363C8.70223 -0.0136096 7.70723 0.34939 6.93223 1.02039C4.91923 2.61539 3.09223 4.43039 1.48423 6.43439C-0.505771 8.99139 -0.505771 11.9494 1.55123 13.9844C2.02123 14.4744 2.58523 14.8674 3.21023 15.1364C3.83423 15.4064 4.50723 15.5464 5.18723 15.5514C6.62523 15.5064 8.00623 14.9814 9.11223 14.0614C10.9872 12.4584 12.7342 10.7114 14.3372 8.83639C14.4822 8.66939 14.5572 8.45339 14.5442 8.23339C14.5312 8.01339 14.4342 7.80639 14.2702 7.65739H14.2692Z"
-                  fill="#888888" />
+                <path id="Vector" d="M14.2692 7.65739C14.1022 7.51539 13.8862 7.44339 13.6672 7.45539C13.4472 7.46739 13.2412 7.56439 13.0912 7.72439C11.5622 9.52939 9.88923 11.2064 8.08823 12.7384C6.17523 14.2284 4.17423 14.2614 2.72823 12.8164C1.28323 11.3714 1.32823 9.33639 2.82823 7.45739C4.34023 5.56839 6.05423 3.85339 7.94423 2.34339C8.40423 1.91739 9.00423 1.67339 9.63023 1.65939C10.2572 1.64539 10.8672 1.86039 11.3462 2.26539C11.7782 2.72839 12.0132 3.34139 12.0012 3.97439C11.9882 4.60739 11.7292 5.21039 11.2802 5.65639C9.89123 7.43139 8.29323 9.03339 6.52023 10.4264C6.18723 10.6594 5.54323 10.9934 5.06423 10.5144C4.89823 10.3014 4.81523 10.0344 4.83223 9.76439C4.84823 9.49439 4.96223 9.23939 5.15323 9.04739C6.32423 7.62239 7.63523 6.31739 9.06723 5.15539C9.23323 5.01139 9.33723 4.80839 9.35723 4.58839C9.37723 4.36939 9.31323 4.15139 9.17823 3.97739C9.03323 3.81139 8.83023 3.70739 8.61123 3.68739C8.39223 3.66739 8.17423 3.73139 8.00023 3.86639C6.46223 5.13239 5.05523 6.54639 3.79723 8.09139C3.36823 8.59839 3.14123 9.24539 3.15723 9.90939C3.17323 10.5734 3.43323 11.2084 3.88623 11.6934C4.36623 12.1554 5.00323 12.4214 5.67023 12.4374C6.33623 12.4544 6.98523 12.2204 7.48823 11.7824C9.38423 10.2904 11.0872 8.56839 12.5582 6.65639C13.2592 5.89639 13.6432 4.89739 13.6302 3.86439C13.6182 2.83039 13.2102 1.84039 12.4912 1.09739C11.7352 0.405391 10.7512 0.0153904 9.72723 0.000390363C8.70223 -0.0136096 7.70723 0.34939 6.93223 1.02039C4.91923 2.61539 3.09223 4.43039 1.48423 6.43439C-0.505771 8.99139 -0.505771 11.9494 1.55123 13.9844C2.02123 14.4744 2.58523 14.8674 3.21023 15.1364C3.83423 15.4064 4.50723 15.5464 5.18723 15.5514C6.62523 15.5064 8.00623 14.9814 9.11223 14.0614C10.9872 12.4584 12.7342 10.7114 14.3372 8.83639C14.4822 8.66939 14.5572 8.45339 14.5442 8.23339C14.5312 8.01339 14.4342 7.80639 14.2702 7.65739H14.2692Z" fill="#888888"/>
               </g>
             </svg>
           </button>
           <button class="comp-icon-btn titan-action-btn action-btn-drive" title="Drive">
-            <svg class="ci-drive" preserveAspectRatio="none" width="100%" height="100%" overflow="visible"
-              style="display: block;" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path
-                d="M19.7406 12.7857L17.0311 5.84963C16.9333 5.59873 16.7642 5.38364 16.5458 5.23218C16.3273 5.08071 16.0696 4.99984 15.8057 5H8.19403C7.65399 5 7.16865 5.336 6.9687 5.84963L4.25914 12.7857C4.01314 13.4163 3.94044 14.1039 4.04894 14.7737L4.55308 17.8704C4.60427 18.186 4.76317 18.4727 5.00148 18.6796C5.23979 18.8864 5.54205 19 5.85446 19H18.1445C18.7896 19 19.3399 18.5222 19.4458 17.8704L19.95 14.7737C20.0601 14.104 19.9876 13.4161 19.7406 12.7857ZM17.9462 16.5894C17.9164 16.7741 17.8235 16.9419 17.684 17.0629C17.5446 17.1839 17.3677 17.2502 17.1849 17.25H6.81489C6.6321 17.2502 6.45518 17.1839 6.31572 17.0629C6.17626 16.9419 6.08334 16.7741 6.05355 16.5894L5.74166 14.6705C5.72301 14.5572 5.72872 14.4412 5.75841 14.3304C5.7881 14.2196 5.84104 14.1168 5.91353 14.0292C5.98603 13.9415 6.07634 13.8711 6.17815 13.8229C6.27997 13.7747 6.39083 13.7498 6.50301 13.75H17.4976C17.9744 13.75 18.3376 14.1884 18.259 14.6705L17.9462 16.5894Z"
-                fill="var(--fill-0, #888888)" />
+            <svg class="ci-drive" preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M19.7406 12.7857L17.0311 5.84963C16.9333 5.59873 16.7642 5.38364 16.5458 5.23218C16.3273 5.08071 16.0696 4.99984 15.8057 5H8.19403C7.65399 5 7.16865 5.336 6.9687 5.84963L4.25914 12.7857C4.01314 13.4163 3.94044 14.1039 4.04894 14.7737L4.55308 17.8704C4.60427 18.186 4.76317 18.4727 5.00148 18.6796C5.23979 18.8864 5.54205 19 5.85446 19H18.1445C18.7896 19 19.3399 18.5222 19.4458 17.8704L19.95 14.7737C20.0601 14.104 19.9876 13.4161 19.7406 12.7857ZM17.9462 16.5894C17.9164 16.7741 17.8235 16.9419 17.684 17.0629C17.5446 17.1839 17.3677 17.2502 17.1849 17.25H6.81489C6.6321 17.2502 6.45518 17.1839 6.31572 17.0629C6.17626 16.9419 6.08334 16.7741 6.05355 16.5894L5.74166 14.6705C5.72301 14.5572 5.72872 14.4412 5.75841 14.3304C5.7881 14.2196 5.84104 14.1168 5.91353 14.0292C5.98603 13.9415 6.07634 13.8711 6.17815 13.8229C6.27997 13.7747 6.39083 13.7498 6.50301 13.75H17.4976C17.9744 13.75 18.3376 14.1884 18.259 14.6705L17.9462 16.5894Z" fill="var(--fill-0, #888888)"/>
             </svg>
           </button>
           <button class="comp-icon-btn titan-action-btn action-btn-image" title="Image">
-            <svg class="ci-image" preserveAspectRatio="none" width="100%" height="100%" overflow="visible"
-              style="display: block;" viewBox="0 0 16.0004 13.713" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg class="ci-image" preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 16.0004 13.713" fill="none" xmlns="http://www.w3.org/2000/svg">
               <g id="Group">
                 <g id="Vector">
-                  <path
-                    d="M15.9991 6.319C15.9991 4.834 15.9991 2.582 14.6851 1.303C13.3701 0.023 10.3761 0 8.60508 0H7.39408C5.62208 0 2.66308 0 1.31408 1.303C-0.0339215 2.605 7.84092e-05 4.833 7.84092e-05 6.319V7.382C7.84092e-05 8.879 7.85591e-05 11.13 1.31408 12.41C2.62808 13.69 4.86808 13.713 6.85708 13.713H8.67408C10.4441 13.713 13.3941 13.713 14.7421 12.422C16.0901 11.13 15.9991 8.879 15.9991 7.382V6.319ZM2.90308 6.548C2.38108 6.968 1.88908 7.422 1.42808 7.908L1.23408 8.113V6.343C1.23408 5.063 1.23408 3.108 2.18308 2.171C3.13108 1.234 5.24508 1.234 6.85708 1.234H8.53708C10.0451 1.234 12.8331 1.234 13.8501 2.171C14.8671 3.108 14.7991 5.062 14.7991 6.342V6.685C14.1491 5.989 13.4491 5.34 12.7081 4.742C12.4531 4.542 12.1401 4.433 11.8161 4.433C11.4931 4.433 11.1791 4.543 10.9251 4.743C10.2051 5.328 9.52108 5.957 8.87908 6.628C8.39908 7.108 7.90808 7.599 7.47408 7.999C7.03908 8.399 6.75408 8.468 6.33108 8.113C6.16008 7.965 5.94208 7.748 5.70208 7.519C5.37808 7.173 5.03008 6.849 4.66208 6.548C4.41608 6.338 4.10508 6.222 3.78208 6.216C3.46008 6.226 3.15208 6.342 2.90308 6.548Z"
-                    fill="#888888" />
-                  <path
-                    d="M6.41008 5.759C7.08008 5.759 7.62208 5.217 7.62208 4.548C7.62208 3.878 7.08008 3.337 6.41108 3.337C5.74108 3.337 5.19908 3.879 5.19908 4.547C5.19908 5.217 5.74208 5.759 6.41108 5.759H6.41008Z"
-                    fill="#888888" />
+                  <path d="M15.9991 6.319C15.9991 4.834 15.9991 2.582 14.6851 1.303C13.3701 0.023 10.3761 0 8.60508 0H7.39408C5.62208 0 2.66308 0 1.31408 1.303C-0.0339215 2.605 7.84092e-05 4.833 7.84092e-05 6.319V7.382C7.84092e-05 8.879 7.85591e-05 11.13 1.31408 12.41C2.62808 13.69 4.86808 13.713 6.85708 13.713H8.67408C10.4441 13.713 13.3941 13.713 14.7421 12.422C16.0901 11.13 15.9991 8.879 15.9991 7.382V6.319ZM2.90308 6.548C2.38108 6.968 1.88908 7.422 1.42808 7.908L1.23408 8.113V6.343C1.23408 5.063 1.23408 3.108 2.18308 2.171C3.13108 1.234 5.24508 1.234 6.85708 1.234H8.53708C10.0451 1.234 12.8331 1.234 13.8501 2.171C14.8671 3.108 14.7991 5.062 14.7991 6.342V6.685C14.1491 5.989 13.4491 5.34 12.7081 4.742C12.4531 4.542 12.1401 4.433 11.8161 4.433C11.4931 4.433 11.1791 4.543 10.9251 4.743C10.2051 5.328 9.52108 5.957 8.87908 6.628C8.39908 7.108 7.90808 7.599 7.47408 7.999C7.03908 8.399 6.75408 8.468 6.33108 8.113C6.16008 7.965 5.94208 7.748 5.70208 7.519C5.37808 7.173 5.03008 6.849 4.66208 6.548C4.41608 6.338 4.10508 6.222 3.78208 6.216C3.46008 6.226 3.15208 6.342 2.90308 6.548Z" fill="#888888"/>
+                  <path d="M6.41008 5.759C7.08008 5.759 7.62208 5.217 7.62208 4.548C7.62208 3.878 7.08008 3.337 6.41108 3.337C5.74108 3.337 5.19908 3.879 5.19908 4.547C5.19908 5.217 5.74208 5.759 6.41108 5.759H6.41008Z" fill="#888888"/>
                 </g>
               </g>
             </svg>
           </button>
           <button class="comp-icon-btn titan-action-btn action-btn-emoji" title="Emoji">
-            <svg class="ci-emoji" preserveAspectRatio="none" width="100%" height="100%" overflow="visible"
-              style="display: block;" viewBox="0 0 15 15.0002" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg class="ci-emoji" preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 15 15.0002" fill="none" xmlns="http://www.w3.org/2000/svg">
               <g id="Group">
-                <path id="Vector"
-                  d="M7.49996 0C6.01696 0 4.56696 0.44 3.33296 1.264C2.09996 2.088 1.13996 3.259 0.570963 4.63C0.00296331 6 -0.145037 7.508 0.143963 8.963C0.433963 10.418 1.14796 11.754 2.19696 12.803C3.24596 13.853 4.58196 14.567 6.03696 14.856C7.49196 15.146 8.99996 14.996 10.37 14.429C11.74 13.861 12.912 12.9 13.736 11.667C14.56 10.433 15 8.983 15 7.5C15 5.51 14.21 3.603 12.803 2.197C11.397 0.79 9.48996 0 7.49996 0ZM3.74996 6.536C3.75996 6.337 3.82896 6.146 3.94696 5.986C4.06496 5.826 4.22696 5.703 4.41396 5.634C4.60096 5.565 4.80396 5.553 4.99696 5.598C5.19096 5.643 5.36696 5.744 5.50396 5.888C5.64096 6.033 5.73396 6.214 5.76796 6.41C5.80296 6.605 5.77996 6.807 5.70196 6.99C5.62396 7.173 5.49296 7.329 5.32696 7.439C5.16096 7.549 4.96696 7.607 4.76696 7.607C4.62996 7.607 4.49296 7.579 4.36596 7.525C4.23796 7.47 4.12396 7.391 4.02796 7.29C3.93296 7.19 3.85896 7.071 3.81196 6.942C3.76396 6.812 3.74196 6.674 3.74996 6.536V6.536ZM9.71796 9.996C9.49796 10.396 9.17796 10.732 8.78896 10.971C8.39996 11.21 7.95596 11.343 7.49996 11.357C7.03996 11.345 6.59196 11.214 6.19996 10.975C5.80696 10.736 5.48296 10.399 5.25996 9.996C5.22496 9.931 5.20196 9.859 5.19396 9.785C5.18596 9.711 5.19196 9.635 5.21396 9.565C5.23396 9.492 5.26896 9.425 5.31596 9.367C5.36196 9.309 5.41996 9.261 5.48596 9.225C5.54996 9.187 5.62096 9.163 5.69596 9.153C5.76996 9.143 5.84496 9.149 5.91596 9.169C5.98896 9.189 6.05596 9.223 6.11396 9.269C6.17296 9.316 6.22096 9.374 6.25696 9.439C6.38296 9.663 6.56296 9.851 6.77996 9.988C6.99696 10.124 7.24396 10.205 7.49996 10.221C7.74896 10.199 7.98796 10.116 8.19696 9.979C8.40696 9.843 8.57896 9.658 8.69996 9.439C8.73596 9.374 8.78396 9.316 8.84296 9.269C8.90096 9.223 8.96796 9.189 9.03996 9.169C9.11196 9.149 9.187 9.143 9.261 9.153C9.33596 9.163 9.40696 9.187 9.47196 9.225C9.53896 9.259 9.59896 9.306 9.64796 9.363C9.69596 9.421 9.73296 9.487 9.75596 9.559C9.77896 9.631 9.78796 9.707 9.78096 9.782C9.77396 9.857 9.75296 9.93 9.71796 9.996V9.996ZM10.232 7.554C10.033 7.554 9.83896 7.494 9.67196 7.385C9.50696 7.275 9.37596 7.12 9.29796 6.937C9.21996 6.754 9.19696 6.552 9.23196 6.356C9.26696 6.16 9.35896 5.979 9.49596 5.835C9.63296 5.69 9.80896 5.589 10.003 5.545C10.197 5.499 10.399 5.512 10.586 5.581C10.773 5.65 10.935 5.771 11.053 5.932C11.171 6.092 11.239 6.283 11.25 6.482C11.257 6.62 11.236 6.758 11.188 6.888C11.141 7.018 11.067 7.136 10.972 7.237C10.876 7.337 10.762 7.417 10.634 7.471C10.507 7.526 10.37 7.554 10.232 7.554V7.554Z"
-                  fill="#888888" />
+                <path id="Vector" d="M7.49996 0C6.01696 0 4.56696 0.44 3.33296 1.264C2.09996 2.088 1.13996 3.259 0.570963 4.63C0.00296331 6 -0.145037 7.508 0.143963 8.963C0.433963 10.418 1.14796 11.754 2.19696 12.803C3.24596 13.853 4.58196 14.567 6.03696 14.856C7.49196 15.146 8.99996 14.996 10.37 14.429C11.74 13.861 12.912 12.9 13.736 11.667C14.56 10.433 15 8.983 15 7.5C15 5.51 14.21 3.603 12.803 2.197C11.397 0.79 9.48996 0 7.49996 0ZM3.74996 6.536C3.75996 6.337 3.82896 6.146 3.94696 5.986C4.06496 5.826 4.22696 5.703 4.41396 5.634C4.60096 5.565 4.80396 5.553 4.99696 5.598C5.19096 5.643 5.36696 5.744 5.50396 5.888C5.64096 6.033 5.73396 6.214 5.76796 6.41C5.80296 6.605 5.77996 6.807 5.70196 6.99C5.62396 7.173 5.49296 7.329 5.32696 7.439C5.16096 7.549 4.96696 7.607 4.76696 7.607C4.62996 7.607 4.49296 7.579 4.36596 7.525C4.23796 7.47 4.12396 7.391 4.02796 7.29C3.93296 7.19 3.85896 7.071 3.81196 6.942C3.76396 6.812 3.74196 6.674 3.74996 6.536V6.536ZM9.71796 9.996C9.49796 10.396 9.17796 10.732 8.78896 10.971C8.39996 11.21 7.95596 11.343 7.49996 11.357C7.03996 11.345 6.59196 11.214 6.19996 10.975C5.80696 10.736 5.48296 10.399 5.25996 9.996C5.22496 9.931 5.20196 9.859 5.19396 9.785C5.18596 9.711 5.19196 9.635 5.21396 9.565C5.23396 9.492 5.26896 9.425 5.31596 9.367C5.36196 9.309 5.41996 9.261 5.48596 9.225C5.54996 9.187 5.62096 9.163 5.69596 9.153C5.76996 9.143 5.84496 9.149 5.91596 9.169C5.98896 9.189 6.05596 9.223 6.11396 9.269C6.17296 9.316 6.22096 9.374 6.25696 9.439C6.38296 9.663 6.56296 9.851 6.77996 9.988C6.99696 10.124 7.24396 10.205 7.49996 10.221C7.74896 10.199 7.98796 10.116 8.19696 9.979C8.40696 9.843 8.57896 9.658 8.69996 9.439C8.73596 9.374 8.78396 9.316 8.84296 9.269C8.90096 9.223 8.96796 9.189 9.03996 9.169C9.11196 9.149 9.187 9.143 9.261 9.153C9.33596 9.163 9.40696 9.187 9.47196 9.225C9.53896 9.259 9.59896 9.306 9.64796 9.363C9.69596 9.421 9.73296 9.487 9.75596 9.559C9.77896 9.631 9.78796 9.707 9.78096 9.782C9.77396 9.857 9.75296 9.93 9.71796 9.996V9.996ZM10.232 7.554C10.033 7.554 9.83896 7.494 9.67196 7.385C9.50696 7.275 9.37596 7.12 9.29796 6.937C9.21996 6.754 9.19696 6.552 9.23196 6.356C9.26696 6.16 9.35896 5.979 9.49596 5.835C9.63296 5.69 9.80896 5.589 10.003 5.545C10.197 5.499 10.399 5.512 10.586 5.581C10.773 5.65 10.935 5.771 11.053 5.932C11.171 6.092 11.239 6.283 11.25 6.482C11.257 6.62 11.236 6.758 11.188 6.888C11.141 7.018 11.067 7.136 10.972 7.237C10.876 7.337 10.762 7.417 10.634 7.471C10.507 7.526 10.37 7.554 10.232 7.554V7.554Z" fill="#888888"/>
               </g>
             </svg>
           </button>
           <button class="comp-icon-btn titan-action-btn action-btn-signature" title="Signature">
-            <svg class="ci-signature" preserveAspectRatio="none" width="100%" height="100%" overflow="visible"
-              style="display: block;" viewBox="0 0 19.4306 13.006" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg class="ci-signature" preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 19.4306 13.006" fill="none" xmlns="http://www.w3.org/2000/svg">
               <g id="Group">
-                <path id="Vector"
-                  d="M19.3692 9.71963C19.4272 9.54103 19.4444 9.35173 19.4196 9.16563C19.3948 8.97953 19.3286 8.80133 19.2259 8.64413C19.1232 8.48693 18.9866 8.35483 18.8261 8.25733C18.6656 8.15983 18.4853 8.09963 18.2985 8.08093C17.3116 8.08093 16.8088 9.10513 16.4364 9.76613L16.0733 10.2969C16.0081 10.3713 15.8835 10.5959 15.8423 10.6387C15.7539 10.5006 15.6967 10.3449 15.6747 10.1825C15.5812 9.84243 15.5066 9.49733 15.4513 9.14903C15.4028 8.83543 15.3375 8.52463 15.2557 8.21793C15.1878 8.01343 15.0782 7.82513 14.934 7.66493C14.7898 7.50463 14.6141 7.37593 14.4178 7.28693C14.2241 7.19023 14.0105 7.13983 13.794 7.13983C13.5775 7.13983 13.3639 7.19023 13.1702 7.28693C12.5499 7.69123 11.9616 8.14253 11.4105 8.63693L11.3174 8.72073C9.96083 9.88453 9.43583 10.3757 9.06363 10.4932C8.69133 10.6108 8.46103 10.5373 8.24933 10.4426C7.97383 10.2696 7.73693 10.0416 7.55351 9.77283L7.80493 9.64253C7.99183 9.54583 8.17223 9.43693 8.34493 9.31663C10.207 7.96653 12.0691 5.48063 11.9295 3.23677C11.9057 2.69638 11.7662 2.16738 11.5205 1.68552C11.2747 1.20365 10.9284 0.780138 10.5049 0.443588C10.3426 0.304898 10.1519 0.203238 9.94633 0.145648C9.67333 0.0817783 9.39653 0.0351384 9.11773 0.00598839C8.59283 -0.0238116 8.06763 0.0578481 7.57654 0.245608C7.08548 0.433358 6.63975 0.722948 6.26865 1.09533C4.76032 2.49192 4.08065 5.18273 4.09927 7.22173C4.1369 7.68763 4.20219 8.15083 4.29479 8.60903L3.23338 9.03733C1.29677 9.79143 1.70925 9.69783 1.20647 9.86533C0.86776 9.94183 0.31523 10.3637 0.12921 10.6569C0.04444 10.8109 0 10.9839 0 11.1597C0 11.3355 0.04444 11.5084 0.12921 11.6625C0.26589 11.8852 0.45561 12.0707 0.68144 12.2023C0.90727 12.3339 1.16217 12.4075 1.42338 12.4166C1.59632 12.4411 2.02977 12.2268 2.20271 12.2023C2.20271 12.2023 4.02478 11.4394 5.3562 10.8994C6.09969 11.8882 7.07534 12.5611 7.66235 12.8209C8.24933 13.0806 9.09633 13.0265 9.60013 12.9038C10.1038 12.7812 10.9168 12.4079 12.2205 11.4301C12.3322 11.3463 12.6022 11.0856 12.9002 10.8156L13.1795 10.5642C13.384 11.2282 13.7522 11.8301 14.2502 12.3146C14.755 12.7173 15.3836 12.8449 16.0267 12.9038H16.1291C16.5139 12.9038 16.9017 12.7635 17.2511 12.6124C17.6005 12.4613 17.9978 12.0928 18.2337 11.7941C18.2776 11.7474 18.318 11.6976 18.3548 11.6451C18.8622 10.9999 19.1386 10.5074 19.3692 9.71963ZM9.41563 3.05987C9.41563 4.25163 8.35423 5.85303 7.26488 6.78413L6.8459 7.12863V6.68173C6.86355 5.27203 7.35184 3.90877 8.23323 2.80848C8.29013 2.75001 8.35253 2.69702 8.41943 2.6502C8.58123 2.52037 8.78013 2.44537 8.98733 2.43606C9.03273 2.42114 9.08163 2.42114 9.12703 2.43606C9.22483 2.50632 9.30283 2.60069 9.35343 2.70999C9.40393 2.8193 9.42543 2.93983 9.41563 3.05987Z"
-                  fill="#888888" />
+                <path id="Vector" d="M19.3692 9.71963C19.4272 9.54103 19.4444 9.35173 19.4196 9.16563C19.3948 8.97953 19.3286 8.80133 19.2259 8.64413C19.1232 8.48693 18.9866 8.35483 18.8261 8.25733C18.6656 8.15983 18.4853 8.09963 18.2985 8.08093C17.3116 8.08093 16.8088 9.10513 16.4364 9.76613L16.0733 10.2969C16.0081 10.3713 15.8835 10.5959 15.8423 10.6387C15.7539 10.5006 15.6967 10.3449 15.6747 10.1825C15.5812 9.84243 15.5066 9.49733 15.4513 9.14903C15.4028 8.83543 15.3375 8.52463 15.2557 8.21793C15.1878 8.01343 15.0782 7.82513 14.934 7.66493C14.7898 7.50463 14.6141 7.37593 14.4178 7.28693C14.2241 7.19023 14.0105 7.13983 13.794 7.13983C13.5775 7.13983 13.3639 7.19023 13.1702 7.28693C12.5499 7.69123 11.9616 8.14253 11.4105 8.63693L11.3174 8.72073C9.96083 9.88453 9.43583 10.3757 9.06363 10.4932C8.69133 10.6108 8.46103 10.5373 8.24933 10.4426C7.97383 10.2696 7.73693 10.0416 7.55351 9.77283L7.80493 9.64253C7.99183 9.54583 8.17223 9.43693 8.34493 9.31663C10.207 7.96653 12.0691 5.48063 11.9295 3.23677C11.9057 2.69638 11.7662 2.16738 11.5205 1.68552C11.2747 1.20365 10.9284 0.780138 10.5049 0.443588C10.3426 0.304898 10.1519 0.203238 9.94633 0.145648C9.67333 0.0817783 9.39653 0.0351384 9.11773 0.00598839C8.59283 -0.0238116 8.06763 0.0578481 7.57654 0.245608C7.08548 0.433358 6.63975 0.722948 6.26865 1.09533C4.76032 2.49192 4.08065 5.18273 4.09927 7.22173C4.1369 7.68763 4.20219 8.15083 4.29479 8.60903L3.23338 9.03733C1.29677 9.79143 1.70925 9.69783 1.20647 9.86533C0.86776 9.94183 0.31523 10.3637 0.12921 10.6569C0.04444 10.8109 0 10.9839 0 11.1597C0 11.3355 0.04444 11.5084 0.12921 11.6625C0.26589 11.8852 0.45561 12.0707 0.68144 12.2023C0.90727 12.3339 1.16217 12.4075 1.42338 12.4166C1.59632 12.4411 2.02977 12.2268 2.20271 12.2023C2.20271 12.2023 4.02478 11.4394 5.3562 10.8994C6.09969 11.8882 7.07534 12.5611 7.66235 12.8209C8.24933 13.0806 9.09633 13.0265 9.60013 12.9038C10.1038 12.7812 10.9168 12.4079 12.2205 11.4301C12.3322 11.3463 12.6022 11.0856 12.9002 10.8156L13.1795 10.5642C13.384 11.2282 13.7522 11.8301 14.2502 12.3146C14.755 12.7173 15.3836 12.8449 16.0267 12.9038H16.1291C16.5139 12.9038 16.9017 12.7635 17.2511 12.6124C17.6005 12.4613 17.9978 12.0928 18.2337 11.7941C18.2776 11.7474 18.318 11.6976 18.3548 11.6451C18.8622 10.9999 19.1386 10.5074 19.3692 9.71963ZM9.41563 3.05987C9.41563 4.25163 8.35423 5.85303 7.26488 6.78413L6.8459 7.12863V6.68173C6.86355 5.27203 7.35184 3.90877 8.23323 2.80848C8.29013 2.75001 8.35253 2.69702 8.41943 2.6502C8.58123 2.52037 8.78013 2.44537 8.98733 2.43606C9.03273 2.42114 9.08163 2.42114 9.12703 2.43606C9.22483 2.50632 9.30283 2.60069 9.35343 2.70999C9.40393 2.8193 9.42543 2.93983 9.41563 3.05987Z" fill="#888888"/>
               </g>
             </svg>
           </button>
           <button class="comp-icon-btn titan-action-btn action-btn-bookings" title="Bookings">
-            <svg class="ci-bookings" preserveAspectRatio="none" width="100%" height="100%" overflow="visible"
-              style="display: block;" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg class="ci-bookings" preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <g id="Bookings icon">
-                <path id="Exclude"
-                  d="M15.333 4.5C15.7932 4.5 16.1669 4.81828 16.167 5.21094V6.375H18.0547C18.8528 6.37525 19.4997 7.0222 19.5 7.82031V18.0547C19.4997 18.8528 18.8528 19.4997 18.0547 19.5H5.94531C5.1472 19.4997 4.50025 18.8528 4.5 18.0547V7.82031C4.50025 7.0222 5.1472 6.37525 5.94531 6.375H7.83301V5.21094C7.83312 4.81828 8.20682 4.5 8.66699 4.5C9.12701 4.50015 9.49989 4.81837 9.5 5.21094V6.375H14.5V5.21094C14.5001 4.81837 14.873 4.50015 15.333 4.5ZM15.1025 10.3125C14.7158 10.019 14.1583 10.0867 13.8574 10.4639L11.3525 13.6064L10.0664 12.4219C9.71041 12.0939 9.149 12.109 8.8125 12.4561C8.47604 12.8034 8.49237 13.3516 8.84863 13.6797L10.8438 15.5186C11.2243 15.8691 11.8319 15.824 12.1533 15.4209L15.2578 11.5264C15.5586 11.1491 15.4892 10.6059 15.1025 10.3125Z"
-                  fill="#888888" />
+                <path id="Exclude" d="M15.333 4.5C15.7932 4.5 16.1669 4.81828 16.167 5.21094V6.375H18.0547C18.8528 6.37525 19.4997 7.0222 19.5 7.82031V18.0547C19.4997 18.8528 18.8528 19.4997 18.0547 19.5H5.94531C5.1472 19.4997 4.50025 18.8528 4.5 18.0547V7.82031C4.50025 7.0222 5.1472 6.37525 5.94531 6.375H7.83301V5.21094C7.83312 4.81828 8.20682 4.5 8.66699 4.5C9.12701 4.50015 9.49989 4.81837 9.5 5.21094V6.375H14.5V5.21094C14.5001 4.81837 14.873 4.50015 15.333 4.5ZM15.1025 10.3125C14.7158 10.019 14.1583 10.0867 13.8574 10.4639L11.3525 13.6064L10.0664 12.4219C9.71041 12.0939 9.149 12.109 8.8125 12.4561C8.47604 12.8034 8.49237 13.3516 8.84863 13.6797L10.8438 15.5186C11.2243 15.8691 11.8319 15.824 12.1533 15.4209L15.2578 11.5264C15.5586 11.1491 15.4892 10.6059 15.1025 10.3125Z" fill="#888888"/>
               </g>
             </svg>
           </button>
           <button class="comp-icon-btn titan-action-btn action-btn-html" title="HTML">
-            <svg class="ci-html" preserveAspectRatio="none" width="100%" height="100%" overflow="visible"
-              style="display: block;" viewBox="0 0 16.5 12.5011" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg class="ci-html" preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 16.5 12.5011" fill="none" xmlns="http://www.w3.org/2000/svg">
               <g id="HTML">
-                <path id="Vector"
-                  d="M0.468512 5.65263L3.41995 2.28116C3.71858 1.94919 4.18972 1.94919 4.48107 2.28116C4.77241 2.61314 4.77241 3.1494 4.48107 3.48138L2.05291 6.24822L4.48107 9.02402C4.77241 9.35599 4.77241 9.89226 4.48107 10.2242C4.33149 10.3947 4.14491 10.4713 3.9505 10.4713C3.76392 10.4713 3.56951 10.3947 3.41993 10.2242L0.4685 6.85277C0.177159 6.52139 0.177171 5.9846 0.468512 5.65263ZM6.73002 12.2511C6.65549 12.2511 6.57314 12.2428 6.49861 12.2084C6.1025 12.0635 5.89351 11.5783 6.02799 11.1358L9.05401 0.833825C9.18847 0.382472 9.60698 0.144327 10.0031 0.29756C10.3914 0.442465 10.6009 0.927658 10.4737 1.3701L7.44047 11.6721C7.3352 12.0296 7.04376 12.2511 6.73002 12.2511ZM12.5427 10.4713C12.3561 10.4713 12.1617 10.3947 12.0194 10.2242C11.7208 9.89226 11.7208 9.35599 12.0194 9.02402L14.4476 6.24822L12.0194 3.48138C11.7208 3.1494 11.7208 2.61314 12.0194 2.28116C12.3108 1.94919 12.7814 1.94919 13.0727 2.28116L16.0315 5.65263C16.3228 5.9846 16.3228 6.52087 16.0315 6.85285L13.0727 10.2243C12.9237 10.3948 12.7371 10.4713 12.5427 10.4713Z"
-                  fill="#888888" stroke="#888888" stroke-width="0.5" />
+                <path id="Vector" d="M0.468512 5.65263L3.41995 2.28116C3.71858 1.94919 4.18972 1.94919 4.48107 2.28116C4.77241 2.61314 4.77241 3.1494 4.48107 3.48138L2.05291 6.24822L4.48107 9.02402C4.77241 9.35599 4.77241 9.89226 4.48107 10.2242C4.33149 10.3947 4.14491 10.4713 3.9505 10.4713C3.76392 10.4713 3.56951 10.3947 3.41993 10.2242L0.4685 6.85277C0.177159 6.52139 0.177171 5.9846 0.468512 5.65263ZM6.73002 12.2511C6.65549 12.2511 6.57314 12.2428 6.49861 12.2084C6.1025 12.0635 5.89351 11.5783 6.02799 11.1358L9.05401 0.833825C9.18847 0.382472 9.60698 0.144327 10.0031 0.29756C10.3914 0.442465 10.6009 0.927658 10.4737 1.3701L7.44047 11.6721C7.3352 12.0296 7.04376 12.2511 6.73002 12.2511ZM12.5427 10.4713C12.3561 10.4713 12.1617 10.3947 12.0194 10.2242C11.7208 9.89226 11.7208 9.35599 12.0194 9.02402L14.4476 6.24822L12.0194 3.48138C11.7208 3.1494 11.7208 2.61314 12.0194 2.28116C12.3108 1.94919 12.7814 1.94919 13.0727 2.28116L16.0315 5.65263C16.3228 5.9846 16.3228 6.52087 16.0315 6.85285L13.0727 10.2243C12.9237 10.3948 12.7371 10.4713 12.5427 10.4713Z" fill="#888888" stroke="#888888" stroke-width="0.5"/>
               </g>
             </svg>
           </button>
@@ -3233,23 +3446,17 @@
       height: 640px;
       background: #fff;
       border-radius: 4px 4px 0 0;
-      box-shadow: 0 -4px 32px rgba(0, 0, 0, 0.18), 0 0 0 1px rgba(0, 0, 0, 0.09);
+      box-shadow: 0 -4px 32px rgba(0,0,0,0.18), 0 0 0 1px rgba(0,0,0,0.09);
       display: flex;
       flex-direction: column;
       z-index: 600;
       transform: translateY(100%);
-      transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+      transition: transform 0.32s cubic-bezier(0.22,1,0.36,1);
       overflow: hidden;
       font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', sans-serif;
     }
-
-    .composer-window.comp-open {
-      transform: translateY(0);
-    }
-
-    .composer-window.comp-minimized {
-      transform: translateY(calc(100% - 44px));
-    }
+    .composer-window.comp-open    { transform: translateY(0); }
+    .composer-window.comp-minimized { transform: translateY(calc(100% - 44px)); }
 
     .comp-header {
       height: 44px;
@@ -3262,7 +3469,6 @@
       user-select: none;
       border-radius: 4px 4px 0 0;
     }
-
     .comp-title-text {
       font-size: 14px;
       font-weight: 500;
@@ -3270,41 +3476,19 @@
       flex: 1;
       letter-spacing: 0.01em;
     }
-
-    .comp-header-btns {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
+    .comp-header-btns { display: flex; align-items: center; gap: 8px; }
     .comp-hbtn {
-      width: 24px;
-      height: 24px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 4px;
-      cursor: pointer;
-      border: none;
-      background: none;
-      padding: 0;
-      opacity: 0.65;
+      width: 24px; height: 24px;
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 4px; cursor: pointer; border: none; background: none;
+      padding: 0; opacity: 0.65;
       transition: opacity 0.15s, background 0.15s;
     }
-
-    .comp-hbtn:hover {
-      opacity: 1;
-      background: rgba(255, 255, 255, 0.14);
-    }
-
+    .comp-hbtn:hover { opacity: 1; background: rgba(255,255,255,0.14); }
     .comp-hbtn img {
-      display: block;
-      max-width: 14px;
-      max-height: 14px;
-      width: auto;
-      height: auto;
+      display: block; max-width: 14px; max-height: 14px;
+      width: auto; height: auto;
     }
-
     .comp-hbtn.close-btn img {
       max-width: 10px;
       max-height: 10px;
@@ -3317,534 +3501,242 @@
       display: flex;
       flex-direction: column;
     }
-
     .comp-row {
       height: 24px;
       display: flex;
       align-items: center;
       flex-shrink: 0;
     }
-
     .comp-divider {
       height: 2px;
       background: #ededed;
       margin: 8px 0;
       flex-shrink: 0;
     }
-
     .comp-lbl {
-      font-size: 14px;
-      color: #888;
-      flex-shrink: 0;
-      line-height: 20px;
+      font-size: 14px; color: #888;
+      flex-shrink: 0; line-height: 20px;
       margin-right: 6px;
     }
-
-    .comp-lbl-from {
-      width: 38px;
-    }
-
-    .comp-lbl-to {
-      width: 20px;
-    }
-
-    .comp-lbl-subject {
-      width: 55px;
-    }
-
+    .comp-lbl-from    { width: 38px; }
+    .comp-lbl-to      { width: 20px; }
+    .comp-lbl-subject { width: 55px; }
     .comp-from-value {
-      font-size: 14px;
-      color: #333;
-      line-height: 24px;
+      font-size: 14px; color: #333; line-height: 24px;
     }
-
     .comp-field-input {
-      flex: 1;
-      border: none;
-      outline: none;
-      font-size: 14px;
-      color: #333;
-      background: none;
-      font-family: inherit;
-      line-height: 24px;
-      height: 24px;
-      padding: 0;
+      flex: 1; border: none; outline: none;
+      font-size: 14px; color: #333; background: none;
+      font-family: inherit; line-height: 24px; height: 24px; padding: 0;
     }
-
     .comp-ccbcc {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      flex-shrink: 0;
-      margin-left: auto;
+      display: flex; align-items: center; gap: 12px;
+      flex-shrink: 0; margin-left: auto;
     }
-
     .comp-ccbcc span {
-      font-size: 14px;
-      color: #888;
-      cursor: pointer;
+      font-size: 14px; color: #888; cursor: pointer;
       transition: color 0.1s;
     }
-
-    .comp-ccbcc span:hover {
-      color: #2170f4;
-    }
+    .comp-ccbcc span:hover { color: #2170f4; }
 
     /* Feature chips */
     .comp-features-row {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      height: 28px;
-      margin-bottom: 8px;
-      overflow-x: auto;
-      flex-shrink: 0;
+      display: flex; align-items: center; gap: 8px;
+      height: 28px; margin-bottom: 8px;
+      overflow-x: auto; flex-shrink: 0;
     }
-
-    .comp-features-row::-webkit-scrollbar {
-      display: none;
-    }
-
+    .comp-features-row::-webkit-scrollbar { display: none; }
     .comp-feat {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      height: 28px;
-      padding: 2px 6px 2px 4px;
-      border-radius: 4px;
-      background: transparent;
-      white-space: nowrap;
-      cursor: pointer;
-      flex-shrink: 0;
+      display: flex; align-items: center; gap: 4px;
+      height: 28px; padding: 2px 6px 2px 4px;
+      border-radius: 4px; background: transparent;
+      white-space: nowrap; cursor: pointer; flex-shrink: 0;
       transition: background 0.1s;
     }
-
-    .comp-feat:hover {
-      background: #f4f6fa;
-    }
-
+    .comp-feat:hover { background: #f4f6fa; }
     .comp-feat .fic {
-      width: 24px;
-      height: 24px;
-      flex-shrink: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      width: 24px; height: 24px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
     }
-
     .comp-feat .fic img {
-      display: block;
-      max-width: 18px;
-      max-height: 18px;
-      width: auto;
-      height: auto;
+      display: block; max-width: 18px; max-height: 18px;
+      width: auto; height: auto;
     }
-
-    .comp-feat>span {
-      font-size: 14px;
-      color: #333;
-      line-height: 24px;
-    }
+    .comp-feat > span { font-size: 14px; color: #333; line-height: 24px; }
 
     /* Content divider */
     .comp-content-divider {
-      height: 1px;
-      background: #ededed;
-      margin: 0 16px;
-      flex-shrink: 0;
+      height: 1px; background: #ededed;
+      margin: 0 16px; flex-shrink: 0;
     }
 
     /* Body */
     .comp-body {
-      flex: 1;
-      padding: 12px 16px;
-      outline: none;
-      font-size: 14px;
-      color: #333;
-      line-height: 20px;
-      overflow-y: auto;
-      min-height: 0;
-      cursor: text;
+      flex: 1; padding: 12px 16px;
+      outline: none; font-size: 14px; color: #333;
+      line-height: 20px; overflow-y: auto; min-height: 0; cursor: text;
     }
-
-    .comp-body::-webkit-scrollbar {
-      width: 4px;
-    }
-
-    .comp-body::-webkit-scrollbar-thumb {
-      background: #ddd;
-      border-radius: 2px;
-    }
+    .comp-body::-webkit-scrollbar       { width: 4px; }
+    .comp-body::-webkit-scrollbar-thumb { background: #ddd; border-radius: 2px; }
 
     /* Bottom */
-    .comp-bottom {
-      flex-shrink: 0;
-      border-top: 1px solid #ebebeb;
-    }
+    .comp-bottom { flex-shrink: 0; border-top: 1px solid #ebebeb; }
 
     /* Format bar */
     .comp-format-bar {
-      height: 48px;
-      display: flex;
-      align-items: center;
-      padding: 0 14px;
-      gap: 6px;
-      overflow-x: auto;
-      flex-shrink: 0;
+      height: 48px; display: flex; align-items: center;
+      padding: 0 14px; gap: 6px; overflow-x: auto; flex-shrink: 0;
     }
-
-    .comp-format-bar::-webkit-scrollbar {
-      display: none;
+    .comp-format-bar::-webkit-scrollbar { display: none; }
+    .comp-font-dd, .comp-size-dd {
+      display: flex; align-items: center; gap: 6px;
+      height: 28px; cursor: pointer;
+      font-size: 14px; color: #888;
+      white-space: nowrap; flex-shrink: 0; user-select: none;
     }
-
-    .comp-font-dd,
-    .comp-size-dd {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      height: 28px;
-      cursor: pointer;
-      font-size: 14px;
-      color: #888;
-      white-space: nowrap;
-      flex-shrink: 0;
-      user-select: none;
-    }
-
     .comp-dd-arrow {
-      display: block;
-      width: 8px;
-      height: 5px;
-      flex-shrink: 0;
-      opacity: 0.6;
+      display: block; width: 8px; height: 5px; flex-shrink: 0; opacity: 0.6;
       transform: rotate(180deg);
     }
-
     .comp-fmt-sep-v {
-      width: 1px;
-      height: 24px;
-      background: #dedede;
-      margin: 0 6px;
-      flex-shrink: 0;
+      width: 1px; height: 24px; background: #dedede;
+      margin: 0 6px; flex-shrink: 0;
     }
-
     .comp-fmt-btn {
-      width: 28px;
-      height: 28px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 4px;
-      cursor: pointer;
-      border: none;
-      background: none;
-      flex-shrink: 0;
-      padding: 0;
-      gap: 0;
+      width: 28px; height: 28px;
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 4px; cursor: pointer; border: none; background: none;
+      flex-shrink: 0; padding: 0; gap: 0;
       position: relative;
     }
-
-    .comp-fmt-btn:hover {
-      background: #f0f2f5;
-    }
-
+    .comp-fmt-btn:hover { background: #f0f2f5; }
     .comp-fmt-btn img {
-      display: block;
-      width: 19px;
-      height: 19px;
-      object-fit: contain;
+      display: block; width: 19px; height: 19px; object-fit: contain;
     }
-
     .comp-fmt-btn img[src*="underline"] {
-      width: 12px;
-      height: 15px;
+      width: 12px; height: 15px;
     }
-
     /* Alignment/list/indent: icon fills, caret overlaid bottom-right */
-    .comp-fmt-align {
-      width: 32px;
-      height: 28px;
-    }
-
-    .comp-fmt-align img:first-child {
-      width: 23px;
-      height: 23px;
-    }
-
+    .comp-fmt-align { width: 32px; height: 28px; }
+    .comp-fmt-align img:first-child { width: 23px; height: 23px; }
     .comp-mini-caret {
-      position: absolute;
-      bottom: 3px;
-      right: 1px;
-      width: 7px !important;
-      height: 7px !important;
-      object-fit: contain;
-      opacity: 0.65;
+      position: absolute; bottom: 3px; right: 1px;
+      width: 7px !important; height: 7px !important;
+      object-fit: contain; opacity: 0.65;
     }
-
     /* Link icon — chain (24×24 viewBox, render at 21×21) */
-    .comp-fmt-link img {
-      width: 21px;
-      height: 21px;
-    }
-
+    .comp-fmt-link img { width: 21px; height: 21px; }
     /* More dots — 3 vertical circles (3×12 viewBox, keep tall & narrow) */
-    .comp-fmt-moredots {
-      width: 20px;
-    }
-
-    .comp-fmt-moredots img {
-      width: 4px;
-      height: 15px;
-    }
+    .comp-fmt-moredots { width: 20px; }
+    .comp-fmt-moredots img { width: 4px; height: 15px; }
 
     /* Send bar */
-    .comp-bar-divider {
-      height: 1px;
-      background: #ededed;
-      flex-shrink: 0;
-    }
-
+    .comp-bar-divider { height: 1px; background: #ededed; flex-shrink: 0; }
     .comp-send-bar {
-      padding: 12px 16px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      flex-shrink: 0;
+      padding: 12px 16px; display: flex; align-items: center;
+      gap: 8px; flex-shrink: 0;
     }
-
     .comp-send-btn {
-      display: flex;
-      align-items: center;
-      height: 32px;
-      background: #2170f4;
-      border-radius: 4px;
-      flex-shrink: 0;
-      cursor: pointer;
-      border: none;
-      padding: 0;
+      display: flex; align-items: center; height: 32px;
+      background: #2170f4; border-radius: 4px;
+      flex-shrink: 0; cursor: pointer; border: none; padding: 0;
     }
-
     .comp-send-main {
-      padding: 0 16px;
-      font-size: 14px;
-      font-weight: 600;
-      color: #fff;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      font-family: inherit;
-      white-space: nowrap;
+      padding: 0 16px; font-size: 14px; font-weight: 600; color: #fff;
+      height: 100%; display: flex; align-items: center;
+      font-family: inherit; white-space: nowrap;
       border-top-left-radius: 4px;
       border-bottom-left-radius: 4px;
       transition: background 0.15s ease, box-shadow 0.15s ease;
     }
-
     .comp-send-main:hover {
       background: rgba(255, 255, 255, 0.12);
     }
-
     .comp-send-main:active {
       background: rgba(0, 0, 0, 0.15);
     }
 
     .comp-send-dd-btn {
-      width: 26px;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-left: 1.5px solid rgba(255, 255, 255, 0.35);
-      flex-shrink: 0;
+      width: 26px; height: 100%;
+      display: flex; align-items: center; justify-content: center;
+      border-left: 1.5px solid rgba(255,255,255,0.35); flex-shrink: 0;
       border-top-right-radius: 4px;
       border-bottom-right-radius: 4px;
       transition: background 0.15s ease, box-shadow 0.15s ease;
     }
-
     .comp-send-dd-btn:hover {
       background: rgba(255, 255, 255, 0.12);
     }
-
     .comp-send-dd-btn:active {
       background: rgba(0, 0, 0, 0.15);
     }
-
-    .comp-send-dd-btn img {
-      display: block;
-      width: 9px;
-      height: auto;
-    }
-
+    .comp-send-dd-btn img { display: block; width: 9px; height: auto; }
     /* Reusable Action Icon Button Component */
     .titan-action-btn {
-      width: 32px;
-      height: 32px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 4px;
-      cursor: pointer;
-      border: none;
-      background: none;
-      flex-shrink: 0;
-      padding: 0;
+      width: 32px; height: 32px;
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 4px; cursor: pointer; border: none; background: none;
+      flex-shrink: 0; padding: 0;
       transition: transform 0.15s ease, background 0.15s ease;
     }
-
     .titan-action-btn:hover {
       background: var(--btn-hover-bg, #f0f2f5);
       transform: scale(1.1);
     }
-
     .titan-action-btn:active {
       transform: scale(var(--click-scale));
       transition: transform 0.1s ease;
     }
-
     .titan-action-btn svg {
       display: block;
     }
-
-    .titan-action-btn:not(#lottie-read-receipt) svg path {
+    .titan-action-btn svg path {
       transition: fill 0.2s ease, stroke 0.2s ease;
     }
-
-    .titan-action-btn:not(#lottie-read-receipt):hover svg path {
+    .titan-action-btn:hover svg path {
       fill: var(--btn-hover-fill);
       stroke: var(--btn-hover-stroke);
     }
 
     /* Hover Color Modifier Classes via CSS Variables */
-    .action-btn-reminder {
-      --btn-hover-fill: #c084fc;
-    }
-
-    .action-btn-text {
-      --btn-hover-fill: #60a5fa;
-    }
-
-    .action-btn-attach {
-      --btn-hover-fill: #fb923c;
-    }
-
-    .action-btn-drive {
-      --btn-hover-fill: #34a853;
-    }
-
-    .action-btn-image {
-      --btn-hover-fill: #e05353;
-    }
-
-    .action-btn-emoji {
-      --btn-hover-fill: #ffa000;
-    }
-
-    .action-btn-signature {
-      --btn-hover-fill: #f472b6;
-    }
-
-    .action-btn-bookings {
-      --btn-hover-fill: #3ec1d3;
-    }
-
-    .action-btn-html {
-      --btn-hover-fill: #2dd4bf;
-      --btn-hover-stroke: #2dd4bf;
-    }
-
-    .action-btn-campaign {
-      --btn-hover-fill: #5c53db;
-      --btn-hover-bg: #edeefd;
-    }
+    .action-btn-reminder  { --btn-hover-fill: #c084fc; }
+    .action-btn-text      { --btn-hover-fill: #60a5fa; }
+    .action-btn-attach    { --btn-hover-fill: #fb923c; }
+    .action-btn-drive     { --btn-hover-fill: #34a853; }
+    .action-btn-image     { --btn-hover-fill: #e05353; }
+    .action-btn-emoji     { --btn-hover-fill: #ffa000; }
+    .action-btn-signature { --btn-hover-fill: #f472b6; }
+    .action-btn-bookings  { --btn-hover-fill: #3ec1d3; }
+    .action-btn-html      { --btn-hover-fill: #2dd4bf; --btn-hover-stroke: #2dd4bf; }
+    .action-btn-campaign  { --btn-hover-fill: #5c53db; --btn-hover-bg: #edeefd; }
 
     .ci-campaign {
-      display: block;
-      width: 20px;
-      height: 20px;
+      display: block; width: 20px; height: 20px;
       transform: scale(-1, 1);
     }
-
     .comp-vert-sep {
-      width: 1px;
-      height: 28px;
-      background: #dedede;
-      flex-shrink: 0;
+      width: 1px; height: 28px; background: #dedede; flex-shrink: 0;
     }
+    .comp-send-icons { display: flex; align-items: center; gap: 4px; flex: 1; }
 
-    .comp-send-icons {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      flex: 1;
-    }
-
-    .ci-reminder {
-      width: 32px;
-      height: 32px;
-    }
-
-    .ci-text {
-      width: 15px;
-      height: 15px;
-    }
-
-    .ci-attach {
-      width: 14.5px;
-      height: 15.5px;
-    }
-
-    .ci-drive {
-      width: 23px;
-      height: 23px;
-    }
-
-    .ci-image {
-      width: 16px;
-      height: 14px;
-    }
-
-    .ci-emoji {
-      width: 15px;
-      height: 15px;
-    }
-
-    .ci-signature {
-      width: 19.5px;
-      height: 13px;
-    }
-
-    .ci-bookings {
-      width: 24px;
-      height: 24px;
-    }
-
-    .ci-html {
-      width: 16.5px;
-      height: 12.5px;
-    }
-
+    .ci-reminder  { width: 32px;   height: 32px; }
+    .ci-text      { width: 15px;   height: 15px; }
+    .ci-attach    { width: 14.5px; height: 15.5px; }
+    .ci-drive     { width: 23px;   height: 23px; }
+    .ci-image     { width: 16px;   height: 14px; }
+    .ci-emoji     { width: 15px;   height: 15px; }
+    .ci-signature { width: 19.5px; height: 13px; }
+    .ci-bookings  { width: 24px;   height: 24px; }
+    .ci-html      { width: 16.5px; height: 12.5px; }
     .comp-delete-btn {
-      width: 32px;
-      height: 32px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 4px;
-      cursor: pointer;
-      border: none;
-      background: none;
-      flex-shrink: 0;
-      margin-left: auto;
-      padding: 0;
+      width: 32px; height: 32px;
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 4px; cursor: pointer; border: none; background: none;
+      flex-shrink: 0; margin-left: auto; padding: 0;
     }
-
-    .comp-delete-btn:hover {
-      background: #fff0f0;
-    }
-
+    .comp-delete-btn:hover { background: #fff0f0; }
     .comp-delete-btn img {
-      display: block;
-      width: 13.4px;
-      height: 16px;
+      display: block; width: 13.4px; height: 16px;
     }
 
     /* ── Shared Composer Tooltip ── */
@@ -3862,14 +3754,14 @@
       transition: opacity 0.2s ease, transform 0.2s ease, left 0.2s cubic-bezier(0.22, 1, 0.36, 1), top 0.2s cubic-bezier(0.22, 1, 0.36, 1);
       z-index: 10000;
       white-space: nowrap;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
     }
-
+    
     .shared-comp-tooltip.visible {
       opacity: 1;
       transform: translate(-50%, 0) scale(1);
     }
-
+    
     .shared-comp-tooltip.no-slide {
       transition: none !important;
     }
@@ -3909,21 +3801,43 @@
       });
     });
 
+    // ── Config ───────────────────────────────────────────────────────────
+    const CONFIG = {
+      iteration: 1,            // 1 | 2 | ...
+      refreshPlacement: 'sidebar',   // 'sidebar' | 'toolbar'
+      refreshVariant: 'fade',      // 'skeleton' | 'sweep' | 'fade' | 'toast'
+    };
+    // ─────────────────────────────────────────────────────────────────────
+
+    function setIteration(iter, tabEl) {
+      CONFIG.iteration = iter;
+      document.querySelectorAll('#iter-tabs .iter-tab').forEach(t => t.classList.remove('active'));
+      tabEl.classList.add('active');
+      document.body.dataset.iteration = iter;
+    }
+
+    function setVariant(variant, tabEl) {
+      CONFIG.refreshVariant = variant;
+      document.querySelectorAll('#variant-tabs .iter-tab').forEach(t => t.classList.remove('active'));
+      tabEl.classList.add('active');
+    }
+
     function triggerRefresh(btn) {
       const isLogoClick = btn && (btn.classList.contains('titan-logo') || btn.closest('.titan-logo'));
       const img = (btn && !isLogoClick) ? btn.querySelector('img') : null;
       const list = document.querySelector('.email-list');
+      const cls = CONFIG.refreshVariant + '-refresh';
 
       // Prevent double-trigger
-      if (list.classList.contains('toast-refreshing')) return;
+      if (list.classList.contains(cls)) return;
 
       // If new emails exist from a previous refresh, remove them first then proceed
       const existing = list.querySelectorAll('.new-email-tile');
       if (existing.length) {
         existing.forEach(tile => tile.remove());
+        triggerRefresh(btn);
+        return;
       }
-
-      list.classList.add('toast-refreshing');
 
       // 1. Spin icon continuously for the whole duration (guarded)
       if (img) {
@@ -3932,8 +3846,50 @@
         img.style.animation = 'spin 0.7s linear infinite';
       }
 
-      const toast = document.getElementById('refresh-toast');
-      if (toast) {
+      const listOverlay = list.querySelector('.refresh-overlay');
+      const middleOverlay = document.querySelector('.middle-refresh-overlay');
+      const sweepBar = document.querySelector('.sweep-bar');
+
+      // Sweep sidebar nav during refresh (all variants)
+      sweepSidebarNav(btn);
+
+      if (CONFIG.refreshVariant === 'fade') {
+        list.classList.add(cls);
+        if (middleOverlay) { middleOverlay.style.background = 'rgba(255,255,255,0.45)'; middleOverlay.style.opacity = '1'; }
+
+        const duration = 1800 + Math.random() * 1400;
+        setTimeout(() => {
+          if (middleOverlay) middleOverlay.style.opacity = '0';
+          list.classList.remove(cls);
+          list.classList.add('fade-stopping');
+          setTimeout(() => {
+            list.classList.remove('fade-stopping');
+            if (img) img.style.animation = '';
+            addNewEmail();
+            sweepSidebarNav(null, true);
+          }, 520);
+        }, duration);
+
+      } else if (CONFIG.refreshVariant === 'sweep') {
+        if (middleOverlay) { middleOverlay.style.background = 'rgba(255,255,255,0.45)'; middleOverlay.style.opacity = '1'; }
+        if (sweepBar) {
+          sweepBar.classList.remove('sweeping');
+          sweepBar.offsetHeight;
+          sweepBar.classList.add('sweeping');
+        }
+        const duration = 1800 + Math.random() * 1200;
+        setTimeout(() => {
+          if (middleOverlay) middleOverlay.style.opacity = '0';
+          if (sweepBar) { sweepBar.classList.remove('sweeping'); }
+          if (img) img.style.animation = '';
+          addNewEmail();
+          sweepSidebarNav(null, true);
+        }, duration);
+
+      } else if (CONFIG.refreshVariant === 'toast') {
+        const toast = document.getElementById('refresh-toast');
+        const msg = toast.querySelector('.toast-msg');
+
         // Slide in
         toast.classList.remove('toast-done');
         toast.classList.add('toast-in');
@@ -3944,16 +3900,23 @@
           toast.classList.add('toast-done');
           if (img) img.style.animation = '';
           addNewEmail();
-          list.classList.remove('toast-refreshing');
+          sweepSidebarNav(null, true);
 
           // Slide out after a beat
           setTimeout(() => {
             toast.classList.remove('toast-in', 'toast-done');
           }, 1600);
         }, duration);
+
       } else {
-        addNewEmail();
-        list.classList.remove('toast-refreshing');
+        // Skeleton
+        list.classList.add(cls);
+        setTimeout(() => {
+          list.classList.remove(cls);
+          if (img) img.style.animation = '';
+          addNewEmail(false);
+          sweepSidebarNav(null, true);
+        }, 1400);
       }
     }
 
@@ -4006,19 +3969,15 @@
         tile.style.maxHeight = '0';
         tile.style.paddingTop = '0';
         tile.style.paddingBottom = '0';
-        tile.style.marginTop = '0';
-        tile.style.marginBottom = '0';
         overlay.after(tile);
 
         // Phase 1: expand height — existing emails push down visibly
         requestAnimationFrame(() => {
           requestAnimationFrame(() => {
-            tile.style.transition = 'max-height 0.4s cubic-bezier(0.22, 1, 0.36, 1), padding 0.4s cubic-bezier(0.22, 1, 0.36, 1), margin 0.4s cubic-bezier(0.22, 1, 0.36, 1)';
+            tile.style.transition = 'max-height 0.4s cubic-bezier(0.22, 1, 0.36, 1), padding 0.4s cubic-bezier(0.22, 1, 0.36, 1)';
             tile.style.maxHeight = '110px';
-            tile.style.paddingTop = '14px';
-            tile.style.paddingBottom = '14px';
-            tile.style.marginTop = '4px';
-            tile.style.marginBottom = '4px';
+            tile.style.paddingTop = '16px';
+            tile.style.paddingBottom = '16px';
           });
         });
 
@@ -4036,7 +3995,70 @@
       }
     }
 
+    function sweepSidebarNav(btn, isDone) {
+      if (isDone) {
+        const overlay = document.querySelector('.sidebar-folder-overlay');
+        if (overlay) {
+          overlay.classList.remove('sweeping');
+        }
+        return;
+      }
 
+      let accountHeader = null;
+      if (btn) {
+        accountHeader = btn.closest('.account-header');
+      }
+      if (!accountHeader) {
+        const activeNavItem = document.querySelector('.nav-item.active');
+        if (activeNavItem) {
+          let prev = activeNavItem.previousElementSibling;
+          while (prev) {
+            if (prev.classList.contains('account-header')) {
+              accountHeader = prev;
+              break;
+            }
+            prev = prev.previousElementSibling;
+          }
+        }
+      }
+      if (!accountHeader) {
+        accountHeader = document.querySelector('.account-header');
+      }
+      if (!accountHeader) return;
+
+      // Collect the folder nav items for this account
+      const items = [];
+      let el = accountHeader.nextElementSibling;
+      while (el && !el.classList.contains('sidebar-line') && !el.classList.contains('account-header')) {
+        if (el.classList.contains('nav-item')) items.push(el);
+        el = el.nextElementSibling;
+      }
+      if (!items.length) return;
+
+      // Measure from the account-header bottom to the last nav-item bottom
+      const navScroll = document.querySelector('.nav-scroll');
+      const scrollRect = navScroll.getBoundingClientRect();
+      const headerRect = accountHeader.getBoundingClientRect();
+      const lastRect = items[items.length - 1].getBoundingClientRect();
+
+      const topOffset = headerRect.bottom - scrollRect.top + navScroll.scrollTop;
+      const height = lastRect.bottom - headerRect.bottom;
+
+      // Create or reuse an overlay div
+      let overlay = navScroll.querySelector('.sidebar-folder-overlay');
+      if (!overlay) {
+        overlay = document.createElement('div');
+        overlay.className = 'sidebar-folder-overlay';
+        navScroll.appendChild(overlay);
+      }
+
+      overlay.style.top = topOffset + 'px';
+      overlay.style.height = height + 'px';
+
+      // Trigger animation
+      overlay.offsetHeight;
+      overlay.classList.add('sweeping');
+    }
 
     // ── App Switcher ─────────────────────────────────────────────────────
     (function initAppSwitcher() {
@@ -4106,14 +4128,37 @@
     }
     // ─────────────────────────────────────────────────────────────────────
 
+    function toggleIterPanel(event) {
+      if (event.target.closest('.iter-tabs') || event.target.closest('.iter-tab')) {
+        return;
+      }
+      const panel = document.getElementById('iter-panel');
+      if (panel) {
+        panel.classList.toggle('minimized');
+        localStorage.setItem('iter-panel-minimized', panel.classList.contains('minimized'));
+      }
+    }
+
     // Apply initial config
     (function applyConfig() {
-      // Add click listener to logo for refresh behavior
+      document.body.dataset.refreshPlacement = CONFIG.refreshPlacement;
+      document.body.dataset.iteration = CONFIG.iteration;
+
+      // Add click listener to logo for Iteration 2 refresh behavior
       const logo = document.querySelector('.titan-logo');
       if (logo) {
         logo.addEventListener('click', function () {
-          triggerRefresh(this);
+          if (CONFIG.iteration === 2) {
+            triggerRefresh(this);
+          }
         });
+      }
+
+      // Load minimized preference
+      const isMinimized = localStorage.getItem('iter-panel-minimized') === 'true';
+      const panel = document.getElementById('iter-panel');
+      if (panel && isMinimized) {
+        panel.classList.add('minimized');
       }
     })();
 
@@ -4140,11 +4185,11 @@
         item.addEventListener('mouseenter', () => {
           clearTimeout(hideTimeout);
           tooltip.textContent = item.getAttribute('data-tooltip');
-
+          
           const rect = item.getBoundingClientRect();
           const top = rect.top - 32; // position above the icon
           const left = rect.left + (rect.width / 2);
-
+          
           // Determine the row container (formatting bar vs send bar)
           const itemRow = item.closest('.comp-fmt-bar, .comp-send-bar, .comp-header');
           const needsTeleport = !tooltip.classList.contains('visible') || (currentRow && currentRow !== itemRow);
@@ -4154,10 +4199,10 @@
             tooltip.classList.add('no-slide');
             tooltip.offsetHeight; // force reflow with transition disabled
           }
-
+          
           tooltip.style.top = top + 'px';
           tooltip.style.left = left + 'px';
-
+          
           if (needsTeleport) {
             tooltip.offsetHeight; // force reflow to apply position instantly
             requestAnimationFrame(() => {
@@ -4165,7 +4210,7 @@
               tooltip.classList.add('visible');
             });
           }
-
+          
           currentRow = itemRow;
         });
 
@@ -4182,18 +4227,9 @@
     function expandStack(element) {
       if (!element.classList.contains('expanded')) {
         element.classList.add('expanded');
+        element.onclick = null;
       }
     }
-
-    // Collapse thread stack when clicking outside of it
-    document.addEventListener('click', (e) => {
-      const stack = document.querySelector('.thread-stack');
-      if (stack && stack.classList.contains('expanded')) {
-        if (!stack.contains(e.target)) {
-          stack.classList.remove('expanded');
-        }
-      }
-    });
   </script>
 </body>
 

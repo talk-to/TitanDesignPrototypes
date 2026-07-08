@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<!-- saved from url=(0060)https://delicate-buttercream-823bb8.netlify.app/changes.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interaction Changes Proposal</title>
+<style>
+    :root {
+      --click-scale: 0.97;
+    }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', sans-serif;
+    background: #f4f5f7;
+    color: #333;
+    margin: 0;
+    padding: 40px;
+  }
+  .header { margin-bottom: 40px; }
+  .header h1 { font-size: 32px; font-weight: 600; margin-bottom: 8px; }
+  .header p { font-size: 16px; color: #666; }
+  .showcase-card {
+    background: #fff; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    padding: 32px; margin-bottom: 32px;
+  }
+  .showcase-card h2 { font-size: 20px; margin-bottom: 8px; border-bottom: 1px solid #eaeaea; padding-bottom: 12px; }
+  .showcase-card p { font-size: 14px; color: #666; margin-bottom: 24px; }
+  .showcase-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+  .comparison-grid { display: flex; gap: 32px; }
+  .inbox-insertion-card {
+    grid-column: 1 / -1;
+  }
+  .inbox-insertion-card .comparison-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .inbox-insertion-card .panel {
+    align-items: stretch;
+  }
+  .inbox-insertion-card .new-action-btn {
+    align-self: center;
+  }
+  .new-action-btn.receive-email-btn {
+    width: auto; height: 40px; padding: 0 14px; gap: 8px;
+    border: 1px solid #d6d6d6; background: #fff; color: #333;
+    font-size: 14px; font-weight: 600; white-space: nowrap;
+    border-radius: 6px;
+  }
+  .new-action-btn.receive-email-btn img { width: 18px; height: 18px; display: block; }
+  .new-action-btn.receive-email-btn .new-btn-wrapper { gap: 8px; }
+  .new-action-btn.receive-email-btn:hover {
+    background: #f2f2f2; transform: none;
+  }
+  .new-action-btn.receive-email-btn:active {
+    background: #e0e0e0; transform: none;
+  }
+  .new-action-btn.receive-email-btn:active .new-btn-wrapper {
+    transform: scale(var(--click-scale));
+  }
+  .panel {
+    flex: 1; background: #fff; border: 1px solid #eaeaea; border-radius: 6px;
+    padding: 48px 24px; display: flex; flex-direction: column; align-items: center; justify-content: center;
+    position: relative; min-height: 200px; overflow: hidden;
+  }
+  .panel-label {
+    position: absolute; top: 12px; left: 12px; font-size: 12px; font-weight: 600;
+    text-transform: uppercase; color: #888; background: #e0e0e0; padding: 4px 8px; border-radius: 4px; z-index: 50;
+  }
+  .panel.after { background: #fff; }
+  .panel.after .panel-label { background: #0052cc; color: #fff; }
+
+  .old-action-btn {
+    width: 56px; height: 56px; display: flex; align-items: center; justify-content: center;
+    border-radius: 6px; border: none; background: transparent; cursor: pointer; transition: background 0.15s ease;
+  }
+  .old-action-btn:hover { background: #e0e0e0; }
+  .old-action-btn svg { width: 28px; height: 28px; fill: #666; }
+
+  .new-action-btn {
+    width: 56px; height: 56px; display: flex; align-items: center; justify-content: center;
+    border-radius: 6px; border: none; background: transparent; cursor: pointer;
+    transition: transform 0.15s ease, background 0.15s ease;
+  }
+  .new-action-btn svg { width: 28px; height: 28px; fill: #666; transition: fill 0.2s ease; }
+  .new-action-btn:hover { background: #edeefd; transform: scale(1.1); }
+  .new-action-btn:active { transform: scale(var(--click-scale)); transition: transform 0.1s ease; }
+  .new-action-btn:hover svg { fill: #5c53db; }
+  
+  .new-action-btn.grey-hover:hover { background: #e0e0e0; }
+  .new-action-btn.grey-hover:hover svg { fill: #333; }
+
+  /* 2. Split Button */
+  .old-split-btn {
+    display: inline-flex; align-items: center; border-radius: 4px; border: none; background: #2170f4;
+    cursor: pointer; padding: 0; position: relative; overflow: visible; height: 38px; color: white; font-weight: 600; font-size: 14px;
+  }
+  .old-split-main {
+    height: 100%; display: flex; align-items: center; padding: 0 16px;
+    border-top-left-radius: 4px; border-bottom-left-radius: 4px; transition: background 0.15s ease;
+  }
+  .old-split-main:hover { background: rgba(255, 255, 255, 0.12); }
+  .old-split-main:active { background: rgba(0, 0, 0, 0.15); }
+  .old-split-dd {
+    height: 100%; display: flex; align-items: center; justify-content: center; padding: 0 12px;
+    border-left: 1.5px solid rgba(255, 255, 255, 0.35); border-top-right-radius: 4px; border-bottom-right-radius: 4px;
+    transition: background 0.15s ease;
+  }
+  .old-split-dd:hover { background: rgba(255, 255, 255, 0.12); }
+  .old-split-dd:active { background: rgba(0, 0, 0, 0.15); }
+
+  .new-split-btn {
+    display: inline-flex; align-items: center; border-radius: 4px; border: none; background: #2170f4;
+    cursor: pointer; padding: 0; position: relative; overflow: visible; height: 38px; color: white; font-weight: 600; font-size: 14px;
+  }
+  .new-split-main {
+    height: 100%; display: flex; align-items: center; padding: 0 16px;
+    border-top-left-radius: 4px; border-bottom-left-radius: 4px; transition: background 0.15s ease;
+  }
+  .new-split-main:hover { background: rgba(255, 255, 255, 0.12); }
+  .new-split-main:active { background: rgba(0, 0, 0, 0.15); }
+  .new-split-dd {
+    height: 100%; display: flex; align-items: center; justify-content: center; padding: 0 12px;
+    border-left: 1.5px solid rgba(255, 255, 255, 0.35); border-top-right-radius: 4px; border-bottom-right-radius: 4px;
+    transition: background 0.15s ease;
+  }
+  .new-split-dd:hover { background: rgba(255, 255, 255, 0.12); }
+  .new-split-dd:active { background: rgba(0, 0, 0, 0.15); }
+  .new-btn-wrapper { transition: transform 0.1s ease; display: inline-flex; align-items: center; }
+  .new-split-main:active .new-btn-wrapper, .new-split-dd:active .new-btn-wrapper { transform: scale(var(--click-scale)); }
+  @keyframes border-ripple { 0% { box-shadow: 0 0 0 0px rgba(33, 112, 244, 0.4); } 100% { box-shadow: 0 0 0 6px rgba(33, 112, 244, 0); } }
+  .ripple-active { animation: border-ripple 0.4s cubic-bezier(0.1, 0.1, 0.4, 1); }
+  @keyframes border-ripple-gray { 0% { box-shadow: 0 0 0 0px rgba(140, 140, 140, 0.4); } 100% { box-shadow: 0 0 0 6px rgba(140, 140, 140, 0); } }
+  .ripple-active-gray { animation: border-ripple-gray 0.4s cubic-bezier(0.1, 0.1, 0.4, 1); }
+
+  /* 3. Thread Stack */
+  .stack-container { width: 100%; max-width: 300px; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 220px; padding-top: 30px; }
+  
+  .old-stack { width: 100%; position: relative; cursor: pointer; margin-bottom: 8px; }
+  .old-stack-card {
+    background: #fff; border: 1px solid #dedede; border-radius: 4px; height: 46px;
+    display: flex; align-items: center; padding: 0 16px; font-size: 12px; box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+    overflow: hidden;
+  }
+  .old-stack:not(.expanded) .old-stack-card { height: 46px; margin-bottom: -36px; }
+  .old-stack:not(.expanded) .old-stack-card.card-1 { margin-bottom: 0; }
+  .old-stack-card.card-5 { z-index: 1; } .old-stack-card.card-4 { z-index: 2; }
+  .old-stack-card.card-3 { z-index: 3; } .old-stack-card.card-2 { z-index: 4; } .old-stack-card.card-1 { z-index: 5; }
+  .old-card-content { opacity: 0; }
+  .old-stack:not(.expanded) .card-1 .old-card-content { opacity: 1; }
+  .old-stack-pill {
+    position: absolute; top: 20px; left: 50%; transform: translate(-50%, -50%);
+    background: #fdfdfd; border: 1px solid #d4d4d4; border-radius: 6px; padding: 4px 12px;
+    font-size: 11px; color: #666; z-index: 10; transition: background 0.15s ease, border-color 0.15s ease;
+  }
+  .old-stack:not(.expanded):hover .old-stack-pill { background: #f0f0f0; border-color: #ccc; }
+  .old-stack.expanded .old-stack-card { height: 46px; margin-bottom: 8px; }
+  .old-stack.expanded .old-card-content { opacity: 1; }
+  .old-stack.expanded .old-stack-pill { opacity: 0; pointer-events: none; }
+
+  .new-stack { width: 100%; position: relative; cursor: pointer; margin-bottom: 8px; }
+  .new-stack-card {
+    background: #fff; border: 1px solid #dedede; border-radius: 4px; height: 46px;
+    display: flex; align-items: center; padding: 0 16px; font-size: 12px; box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+    transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1); overflow: hidden;
+  }
+  .new-stack:not(.expanded) .new-stack-card { height: 46px; margin-bottom: -36px; }
+  .new-stack:not(.expanded) .new-stack-card.card-1 { margin-bottom: 0; }
+  .new-stack-card.card-5 { z-index: 1; } .new-stack-card.card-4 { z-index: 2; }
+  .new-stack-card.card-3 { z-index: 3; } .new-stack-card.card-2 { z-index: 4; } .new-stack-card.card-1 { z-index: 5; }
+  .new-card-content { opacity: 0; transition: opacity 0.3s; }
+  .new-stack:not(.expanded) .card-1 .new-card-content { opacity: 1; }
+  
+  .new-stack-pill {
+    position: absolute; top: 20px; left: 50%; transform: translate(-50%, -50%);
+    background: #fdfdfd; border: 1px solid #d4d4d4; border-radius: 6px; padding: 4px 12px;
+    font-size: 11px; color: #666; z-index: 10; transition: opacity 0.3s, transform 0.3s, background 0.15s ease, border-color 0.15s ease;
+  }
+  .new-stack:not(.expanded):hover .new-stack-pill { background: #f0f0f0; border-color: #ccc; }
+  .new-stack.expanded .new-stack-card { height: 46px; margin-bottom: 8px; }
+  .new-stack.expanded .new-card-content { opacity: 1; }
+  .new-stack.expanded .new-stack-pill { opacity: 0; transform: translate(-50%, -50%) scale(0.9); pointer-events: none; }
+
+  /* 4. Tooltips */
+  .toolbar-row { display: flex; gap: 12px; background: #fff; padding: 8px 16px; border-radius: 6px; border: 1px solid #ddd; position: relative; }
+  .toolbar-icon { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; background: #f0f0f0; border-radius: 4px; cursor: pointer; }
+  
+  /* Smart Tooltip */
+  .smart-tooltip {
+    position: fixed; background: #333; color: #fff; font-size: 11px; padding: 4px 8px;
+    border-radius: 4px; pointer-events: none; opacity: 0; transform: translate(-50%, 4px);
+    transition: opacity 0.15s ease, left 0.2s cubic-bezier(0.2, 0, 0, 1), top 0.2s cubic-bezier(0.2, 0, 0, 1), transform 0.15s ease;
+    z-index: 1000;
+  }
+  .smart-tooltip.visible { opacity: 1; transform: translate(-50%, 0); }
+  .smart-tooltip.no-slide { transition: opacity 0.15s ease, transform 0.15s ease; }
+
+  /* Sluggish Old Tooltip Simulator */
+  .old-tooltip-icon { position: relative; }
+  .old-tooltip-icon::after {
+    content: attr(data-old-tip); position: absolute; bottom: calc(100% + 6px); left: 50%; transform: translateX(-50%);
+    background: #222; color: #fff; border-radius: 4px; font-size: 11px; padding: 4px 8px;
+    white-space: nowrap; opacity: 0; pointer-events: none;
+    transition: opacity 0.4s ease; transition-delay: 0s; z-index: 100;
+  }
+  .old-tooltip-icon:hover::after { opacity: 1; transition-delay: 0s; }
+
+
+  /* 5. Dropdown Item Hover */
+  .old-app-item {
+    display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 12px 16px; border-radius: 6px; cursor: pointer; min-width: 60px;
+    transition: background 0.15s ease;
+  }
+  .old-app-item:hover { background: #f2f2f2; }
+  .app-icon-placeholder { width: 40px; height: 40px; background: #2170f4; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #fff; font-weight: bold; font-size: 16px; }
+
+  .new-app-item {
+    position: relative; display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 12px 16px; border-radius: 6px; cursor: pointer; z-index: 10; min-width: 60px;
+  }
+  .new-app-item::before {
+    content: ""; position: absolute; inset: 0; background: #f2f2f2; border-radius: inherit; z-index: -1; opacity: 0; transform: scale(0.8);
+    transition: transform 0.2s ease-in, opacity 0.2s ease-in; pointer-events: none;
+  }
+  .new-app-item:hover::before { opacity: 1; transform: scale(1); transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.25s ease-out; }
+  .new-app-item .app-icon-placeholder { transition: transform 0.2s ease-in; }
+  .new-app-item:hover .app-icon-placeholder { transform: scale(1.06); transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1); }
+  .new-app-item:active::before { transform: scale(var(--click-scale)); transition: transform 0.1s ease; }
+  .new-app-item:active .app-icon-placeholder { transform: scale(var(--click-scale)); transition: transform 0.1s ease; }
+
+  /* 6. Composer Shutter */
+  .composer-demo-container { position: relative; width: 100%; height: 200px; background: #e0e0e0; overflow: hidden; border-radius: 6px; border: 1px solid #ccc; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+  .demo-trigger-btn { padding: 8px 16px; background: #2170f4; color: white; border: none; border-radius: 4px; cursor: pointer; z-index: 10; font-weight: 600; }
+  
+  .old-composer-shutter {
+    position: absolute; bottom: 0; right: 20px; width: 200px; height: 160px; background: #fff;
+    border-top-left-radius: 8px; border-top-right-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    display: none; flex-direction: column; z-index: 50;
+  }
+  .old-composer-shutter.open { display: flex; }
+  
+  .new-composer-shutter {
+    position: absolute; bottom: 0; right: 20px; width: 200px; height: 160px; background: #fff;
+    border-top-left-radius: 8px; border-top-right-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    display: flex; flex-direction: column; transform: translateY(100%);
+    transition: transform 0.35s cubic-bezier(0.2, 0, 0, 1); z-index: 50;
+  }
+  .new-composer-shutter.open { transform: translateY(0); }
+
+  .shutter-header { background: #f5f5f5; padding: 8px 12px; font-size: 12px; font-weight: 600; border-top-left-radius: 8px; border-top-right-radius: 8px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; }
+  .close-icon { font-size: 10px; color: #888; }
+
+  /* 7. Icon with Label Hover */
+  .old-reply-action {
+    display: flex; align-items: center; gap: 8px; padding: 10px 20px; cursor: pointer;
+    border-radius: 6px; font-size: 16px; font-weight: 500; color: #444; transition: background 0.15s ease;
+  }
+  .old-reply-action:hover { background: #f5f5f5; }
+
+  .new-reply-action {
+    display: flex; align-items: center; gap: 8px; padding: 10px 20px; cursor: pointer;
+    border-radius: 6px; font-size: 16px; font-weight: 500; color: #444; position: relative; z-index: 1;
+    transition: transform 0.1s ease;
+  }
+  .new-reply-action::before {
+    content: ''; position: absolute; inset: 0; background: #f5f5f5; border-radius: inherit; z-index: -1;
+    opacity: 0; transform: scale(0.85); transition: transform 0.2s ease-in, opacity 0.2s ease-in;
+  }
+  .new-reply-action:hover::before {
+    opacity: 1; transform: scale(1.05); transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.25s ease-out;
+  }
+  .new-reply-action:active { transform: scale(var(--click-scale)); }
+
+  /* 8. Toast Animation */
+  .old-toast-container {
+    position: absolute; bottom: 24px; left: 50%; transform: translateX(-50%);
+    background: #2a2a2a; color: #fff; font-size: 13px; font-weight: 500;
+    padding: 14px 24px; border-radius: 4px; display: none;
+  }
+  .old-toast-container.visible { display: flex; }
+  .old-toast-msg { min-width: 125px; text-align: left; }
+
+  .new-toast-container {
+    position: absolute; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px);
+    background: #2a2a2a; color: #fff; font-size: 13px; font-weight: 500;
+    padding: 14px 24px; border-radius: 4px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+    white-space: nowrap; z-index: 9999; pointer-events: none;
+    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.35s ease;
+    opacity: 0; display: flex; align-items: center; gap: 10px;
+  }
+  .new-toast-container.toast-in { transform: translateX(-50%) translateY(0); opacity: 1; }
+  .new-toast-container .toast-icon { width: 16px; height: 16px; flex-shrink: 0; position: relative; }
+  .new-toast-container .toast-spin {
+    width: 16px; height: 16px; object-fit: contain; filter: invert(1); opacity: 0.75;
+    animation: spin 0.8s linear infinite; position: absolute; inset: 0; transition: opacity 0.2s ease;
+  }
+  .new-toast-container .toast-tick {
+    position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+    font-size: 14px; color: #22c55e; font-weight: 700; opacity: 0; transition: opacity 0.25s ease;
+  }
+  .new-toast-container.toast-done .toast-spin { opacity: 0; animation: none; }
+  .new-toast-container.toast-done .toast-tick { opacity: 1; }
+  
+  .new-toast-container .toast-msg { min-width: 125px; text-align: left; position: relative; display: flex; align-items: center; }
+  .new-toast-container .msg-refreshing { opacity: 1; transition: opacity 0.25s ease; }
+  .new-toast-container .msg-refreshed { position: absolute; left: 0; opacity: 0; transition: opacity 0.25s ease; }
+  .new-toast-container.toast-done .msg-refreshing { opacity: 0; }
+  .new-toast-container.toast-done .msg-refreshed { opacity: 1; }
+  
+  @keyframes spin { 100% { transform: rotate(360deg); } }
+
+  /* 9. Inbox Insertion */
+  .mock-inbox {
+    width: 100%; background: #fff; border: 1px solid #eaeaea;
+    height: 330px; border-radius: 8px; overflow: hidden; display: flex; flex-direction: column;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+  }
+  .mock-tile {
+    padding: 12px; border-bottom: 1px solid #f0f0f0; background: #fff;
+    display: flex; flex: 0 0 auto; gap: 10px; font-size: 13px; cursor: pointer;
+  }
+  .mock-tile:hover { background: #f7f7f7; }
+  .mock-tile.selected { background: #eff6ff; }
+  .mock-tile-icons {
+    width: 14px; display: flex; flex-direction: column; align-items: center;
+    gap: 5px; flex-shrink: 0; padding-top: 2px;
+  }
+  .mock-chk {
+    width: 13px; height: 13px; border: 1px solid #cfcfcf; border-radius: 3px;
+    background: #fff;
+  }
+  .mock-dot {
+    width: 7px; height: 7px; border-radius: 50%; background: #2170f4;
+  }
+  .mock-star {
+    width: 13px; height: 13px; color: #c0c0c0; line-height: 13px; font-size: 13px;
+  }
+  .mock-tile-content {
+    min-width: 0; flex: 1; display: flex; flex-direction: column; gap: 2px; position: relative;
+  }
+  .mock-tile-top {
+    display: flex; justify-content: space-between; gap: 10px; align-items: baseline;
+  }
+  .mock-tile .tile-sender {
+    font-size: 14px; line-height: 18px; color: #1a1a1a;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .mock-tile .tile-sender.bold,
+  .mock-tile.unread .tile-sender,
+  .mock-tile.unread .tile-subject {
+    font-weight: 600;
+  }
+  .mock-tile .tile-time {
+    flex-shrink: 0; font-size: 11px; color: #888;
+  }
+  .mock-tile .tile-subject {
+    font-size: 13px; line-height: 18px; color: #333;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .mock-tile .tile-preview {
+    font-size: 12px; line-height: 17px; color: #666;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  
+  .mock-tile.anim-expanding {
+    max-height: 0; padding-top: 0; padding-bottom: 0; opacity: 0; overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(0.22, 1, 0.36, 1), padding 0.4s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.3s ease;
+  }
+  .mock-tile.anim-expanded {
+    max-height: 95px; padding-top: 12px; padding-bottom: 12px; opacity: 1;
+  }
+
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Interaction Changes Proposal</h1>
+  <p>A side-by-side comparison of the proposed UI interaction refinements for Titan.</p>
+</div>
+
+<div class="showcase-grid">
+<!-- 1. Composer Shutter -->
+<div class="showcase-card">
+  <h2>1. Composer Shutter Animation</h2>
+  <p>Abrupt element spawning could be replaced with a smooth, physical slide-up animation from the bottom of the screen.</p>
+  <div class="comparison-grid">
+    <div class="panel" style="padding: 0;">
+      <div class="panel-label" style="top: 8px; left: 8px;">Before</div>
+      <div class="composer-demo-container">
+        <button class="demo-trigger-btn" onclick="document.getElementById('old-comp').classList.toggle('open')">Toggle Composer</button>
+        <div class="old-composer-shutter" id="old-comp">
+          <div class="shutter-header" onclick="document.getElementById('old-comp').classList.remove('open')"><span>New Message</span><span class="close-icon">✕</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="panel after" style="padding: 0;">
+      <div class="panel-label" style="top: 8px; left: 8px;">After</div>
+      <div class="composer-demo-container">
+        <button class="demo-trigger-btn" onclick="document.getElementById('new-comp').classList.toggle('open')">Toggle Composer</button>
+        <div class="new-composer-shutter" id="new-comp">
+          <div class="shutter-header" onclick="document.getElementById('new-comp').classList.remove('open')"><span>New Message</span><span class="close-icon">✕</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 2. Thread Stack -->
+<div class="showcase-card">
+  <h2>2. Thread Stack Expansion</h2>
+  <p>The abrupt element-swapping stack could be replaced with a purely CSS-driven, physically layered margin expansion.</p>
+  <div class="comparison-grid">
+    <div class="panel">
+      <div class="panel-label">Current</div>
+      <div class="stack-container">
+        <div class="old-stack" onclick="this.classList.toggle('expanded')">
+          <div class="old-stack-card card-4"><div class="old-card-content">Harvey Specter</div></div>
+          <div class="old-stack-card card-3"><div class="old-card-content">Rachel Zane</div></div>
+          <div class="old-stack-card card-2"><div class="old-card-content">Mike Ross</div></div>
+          <div class="old-stack-card card-1"><div class="old-card-content">Louis Litt</div></div>
+          <div class="old-stack-pill">4 older messages</div>
+        </div>
+      </div>
+    </div>
+    <div class="panel after">
+      <div class="panel-label">Proposed</div>
+      <div class="stack-container">
+        <div class="new-stack" onclick="this.classList.toggle('expanded')">
+          <div class="new-stack-card card-4"><div class="new-card-content">Harvey Specter</div></div>
+          <div class="new-stack-card card-3"><div class="new-card-content">Rachel Zane</div></div>
+          <div class="new-stack-card card-2"><div class="new-card-content">Mike Ross</div></div>
+          <div class="new-stack-card card-1"><div class="new-card-content">Louis Litt</div></div>
+          <div class="new-stack-pill">4 older messages</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 3. Tooltips -->
+<div class="showcase-card">
+  <h2>3. Smart Persistence Tooltips</h2>
+  <p>Glitchy native title tooltips could be replaced with custom ones that slide along the X-axis and teleport between rows.</p>
+  <div class="comparison-grid">
+    <div class="panel">
+      <div class="panel-label">Current</div>
+      <div class="toolbar-row" style="margin-bottom: 20px;">
+        <div class="toolbar-icon old-tooltip-icon" data-old-tip="Bold">B</div>
+        <div class="toolbar-icon old-tooltip-icon" data-old-tip="Italic">I</div>
+        <div class="toolbar-icon old-tooltip-icon" data-old-tip="Underline">U</div>
+      </div>
+      <div class="toolbar-row">
+        <div class="toolbar-icon old-tooltip-icon" data-old-tip="Align Left">L</div>
+        <div class="toolbar-icon old-tooltip-icon" data-old-tip="Align Center">C</div>
+      </div>
+    </div>
+    <div class="panel after">
+      <div class="panel-label">Proposed</div>
+      <div class="toolbar-row smart-row" style="margin-bottom: 20px;" data-row="1">
+        <div class="toolbar-icon smart-trigger" data-tip="Bold">B</div>
+        <div class="toolbar-icon smart-trigger" data-tip="Italic">I</div>
+        <div class="toolbar-icon smart-trigger" data-tip="Underline">U</div>
+      </div>
+      <div class="toolbar-row smart-row" data-row="2">
+        <div class="toolbar-icon smart-trigger" data-tip="Align Left">L</div>
+        <div class="toolbar-icon smart-trigger" data-tip="Align Center">C</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 4. App Switcher Item -->
+<div class="showcase-card">
+  <h2>4. Dropdown Item Hover (App Switcher)</h2>
+  <p>A premium spring bounce could be added to the background highlight, along with a slight scale up for the icon inside the dropdown menu.</p>
+  <div class="comparison-grid">
+    <div class="panel">
+      <div class="panel-label">Current</div>
+      <div class="old-app-item">
+        <div class="app-icon-placeholder">C</div>
+        <span style="font-size: 12px; font-weight: 500;">Contacts</span>
+      </div>
+    </div>
+    <div class="panel after">
+      <div class="panel-label">Proposed</div>
+      <div class="new-app-item">
+        <div class="app-icon-placeholder">C</div>
+        <span style="font-size: 12px; font-weight: 500;">Contacts</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 5. Icon with Label Hover -->
+<div class="showcase-card">
+  <h2>5. Icon with Label Hover (Reply Button)</h2>
+  <p>A subtle spring-bounce scaling could be added to the hover background bounds, replacing the flat, rigid color change.</p>
+  <div class="comparison-grid">
+    <div class="panel">
+      <div class="panel-label">Current</div>
+      <div class="old-reply-action">
+        <img src="assets/dc9c9a28-fbff-4efd-8cc6-22604c7cbc3d.svg" alt="" style="width: 16px; height: 16px;">
+        Reply
+      </div>
+    </div>
+    <div class="panel after">
+      <div class="panel-label">Proposed</div>
+      <div class="new-reply-action">
+        <img src="assets/dc9c9a28-fbff-4efd-8cc6-22604c7cbc3d.svg" alt="" style="width: 16px; height: 16px;">
+        Reply
+      </div>
+    </div>
+  </div>
+</div>
+<!-- 6. Hover States -->
+<div class="showcase-card">
+  <h2>6. Icon Button Hover (Smooth Scale)</h2>
+  <p>Standard flat color changes could be replaced with a smooth scale transformation for a satisfying, tactile pop.</p>
+  <div class="comparison-grid">
+    <div class="panel">
+      <div class="panel-label">Current</div>
+      <button class="old-action-btn" title="Reminder">
+        <svg viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"></path></svg>
+      </button>
+    </div>
+    <div class="panel after">
+      <div class="panel-label">Proposed</div>
+      <button class="new-action-btn">
+        <svg viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"></path></svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- 7. Split Button -->
+<div class="showcase-card">
+  <h2>7. Split Action Button (Tactile Click &amp; Ripple)</h2>
+  <p>Instant scale-down click feedback and a satisfying ripple effect upon release could be added.</p>
+  <div class="comparison-grid">
+    <div class="panel">
+      <div class="panel-label">Current</div>
+      <div class="old-split-btn">
+        <div class="old-split-main">Send</div>
+        <div class="old-split-dd"><img src="composer_assets/ic-caret-white.svg" alt="" style="width: 10px;"></div>
+      </div>
+    </div>
+    <div class="panel after">
+      <div class="panel-label">Proposed</div>
+      <div class="new-split-btn">
+        <div class="new-split-main"><span class="new-btn-wrapper">Send</span></div>
+        <div class="new-split-dd"><span class="new-btn-wrapper"><img src="composer_assets/ic-caret-white.svg" alt="" style="width: 10px;"></span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 8. Toast Animation -->
+<div class="showcase-card">
+  <h2>8. Refresh Toast Animation</h2>
+  <p>The instant-appear static toast could be replaced with a smooth slide-up animation, featuring a dynamic spinning refresh icon that resolves into a success checkmark.</p>
+  <div class="comparison-grid">
+    <div class="panel">
+      <div class="panel-label">Current</div>
+      <button class="new-action-btn grey-hover" onclick="triggerOldToast()" title="Trigger Refresh">
+        <svg viewBox="0 0 24 24"><path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"></path></svg>
+      </button>
+      <div class="old-toast-container" id="old-toast">
+        <span class="old-toast-msg">Mailbox up to date</span>
+      </div>
+    </div>
+    <div class="panel after">
+      <div class="panel-label">Proposed</div>
+      <button class="new-action-btn grey-hover" onclick="triggerNewToast()" title="Trigger Refresh">
+        <svg viewBox="0 0 24 24"><path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"></path></svg>
+      </button>
+      <div class="new-toast-container" id="new-toast">
+        <div class="toast-icon">
+          <img class="toast-spin" src="assets/b08917ed-2fc9-4353-876e-6c4c19977593.svg" alt="">
+          <span class="toast-tick">✓</span>
+        </div>
+        <div class="toast-msg">
+          <span class="msg-refreshing">Mailbox refreshing</span>
+          <span class="msg-refreshed">Mailbox up to date</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 9. Inbox New Email Insertion -->
+<div class="showcase-card inbox-insertion-card">
+  <h2>9. Inbox New Email Insertion</h2>
+  <p>The standard instant-append behavior for new emails could be replaced with a physical push-down animation, where the new tile seamlessly expands to make room for itself.</p>
+  <div class="comparison-grid">
+    <div class="panel" style="justify-content: flex-start; padding-top: 30px;">
+      <div class="panel-label">Current</div>
+      <button class="new-action-btn receive-email-btn" onclick="triggerOldEmail()" title="Receive Email" style="margin-bottom: 20px;">
+        <span class="new-btn-wrapper">
+          <img src="app_switcher_assets/grid_icons/mail.svg" alt="">
+          <span>Receive email</span>
+        </span>
+      </button>
+      <div class="mock-inbox" id="old-inbox">
+        <div class="mock-tile unread selected">
+          <div class="mock-tile-icons"><div class="mock-chk"></div><div class="mock-dot"></div></div>
+          <div class="mock-tile-content">
+            <div class="mock-tile-top"><div class="tile-sender">Ninad Raval</div><div class="tile-time">11:20 am</div></div>
+            <div class="tile-subject">Project roadmap for Dashboard version</div>
+            <div class="tile-preview">Looking for a change? How does working on Meatvedcdv...</div>
+          </div>
+        </div>
+        <div class="mock-tile">
+          <div class="mock-tile-icons"><div class="mock-chk"></div><div class="mock-star">&#9734;</div></div>
+          <div class="mock-tile-content">
+            <div class="mock-tile-top"><div class="tile-sender">Sajal Kumar</div><div class="tile-time">10:45 am</div></div>
+            <div class="tile-subject">Feedback on grammar and spell check</div>
+            <div class="tile-preview">Looking for a change? How does working on Meatvedcdv...</div>
+          </div>
+        </div>
+        <div class="mock-tile">
+          <div class="mock-tile-icons"><div class="mock-chk"></div><div class="mock-star">&#9734;</div></div>
+          <div class="mock-tile-content">
+            <div class="mock-tile-top"><div class="tile-sender">Shreya</div><div class="tile-time">1:30 pm</div></div>
+            <div class="tile-subject">Feedback on snooze feature</div>
+            <div class="tile-preview">I like the design that you have made. Probably we ca...</div>
+          </div>
+        </div>
+        <div class="mock-tile">
+          <div class="mock-tile-icons"><div class="mock-chk"></div><div class="mock-star">&#9734;</div></div>
+          <div class="mock-tile-content">
+            <div class="mock-tile-top"><div class="tile-sender">David Jones, Ella (2)</div><div class="tile-time">12:15 pm</div></div>
+            <div class="tile-subject">Flock Terms and Condition</div>
+            <div class="tile-preview">We need to get on a meeting for the discuss our T&amp;C...</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="panel after" style="justify-content: flex-start; padding-top: 30px;">
+      <div class="panel-label">Proposed</div>
+      <button class="new-action-btn receive-email-btn" onclick="triggerNewEmail()" title="Receive Email" style="margin-bottom: 20px;">
+        <span class="new-btn-wrapper">
+          <img src="app_switcher_assets/grid_icons/mail.svg" alt="">
+          <span>Receive email</span>
+        </span>
+      </button>
+      <div class="mock-inbox" id="new-inbox">
+        <div class="mock-tile unread selected">
+          <div class="mock-tile-icons"><div class="mock-chk"></div><div class="mock-dot"></div></div>
+          <div class="mock-tile-content">
+            <div class="mock-tile-top"><div class="tile-sender">Ninad Raval</div><div class="tile-time">11:20 am</div></div>
+            <div class="tile-subject">Project roadmap for Dashboard version</div>
+            <div class="tile-preview">Looking for a change? How does working on Meatvedcdv...</div>
+          </div>
+        </div>
+        <div class="mock-tile">
+          <div class="mock-tile-icons"><div class="mock-chk"></div><div class="mock-star">&#9734;</div></div>
+          <div class="mock-tile-content">
+            <div class="mock-tile-top"><div class="tile-sender">David Jones, Ella (2)</div><div class="tile-time">12:15 pm</div></div>
+            <div class="tile-subject">Flock Terms and Condition</div>
+            <div class="tile-preview">We need to get on a meeting for the discuss our T&amp;C...</div>
+          </div>
+        </div>
+        <div class="mock-tile">
+          <div class="mock-tile-icons"><div class="mock-chk"></div><div class="mock-star">&#9734;</div></div>
+          <div class="mock-tile-content">
+            <div class="mock-tile-top"><div class="tile-sender">Sajal Kumar</div><div class="tile-time">2:45 pm</div></div>
+            <div class="tile-subject">Feedback on link and file tracking feature</div>
+            <div class="tile-preview">Hi, Ella can you please review these mocks.</div>
+          </div>
+        </div>
+        <div class="mock-tile">
+          <div class="mock-tile-icons"><div class="mock-chk"></div><div class="mock-star">&#9734;</div></div>
+          <div class="mock-tile-content">
+            <div class="mock-tile-top"><div class="tile-sender">Shreya</div><div class="tile-time">1:30 pm</div></div>
+            <div class="tile-subject">Feedback on snooze feature</div>
+            <div class="tile-preview">I like the design that you have made. Probably we ca...</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+
+<div class="smart-tooltip" id="global-tooltip">Tooltip</div>
+
+<script>
+  // Ripple JS
+  document.querySelectorAll('.new-split-main, .new-split-dd, .receive-email-btn').forEach(el => {
+    const rippleClass = el.classList.contains('receive-email-btn') ? 'ripple-active-gray' : 'ripple-active';
+    const rippleAnimation = el.classList.contains('receive-email-btn') ? 'border-ripple-gray' : 'border-ripple';
+    el.addEventListener('click', () => {
+      el.classList.remove(rippleClass);
+      void el.offsetWidth; 
+      el.classList.add(rippleClass);
+    });
+    el.addEventListener('animationend', (e) => {
+      if (e.animationName === rippleAnimation) el.classList.remove(rippleClass);
+    });
+  });
+
+  // Smart Tooltip JS
+  (function() {
+    const tooltip = document.getElementById('global-tooltip');
+    const triggers = document.querySelectorAll('.smart-trigger');
+    let hideTimeout;
+    let currentRow = null;
+
+    triggers.forEach(item => {
+      item.addEventListener('mouseenter', (e) => {
+        clearTimeout(hideTimeout);
+        const rect = item.getBoundingClientRect();
+        const row = item.closest('.smart-row').dataset.row;
+        
+        tooltip.textContent = item.dataset.tip;
+        tooltip.style.left = rect.left + (rect.width / 2) + 'px';
+        tooltip.style.top = (rect.top - tooltip.offsetHeight - 6) + 'px';
+
+        if (currentRow !== row && tooltip.classList.contains('visible')) {
+          tooltip.classList.add('no-slide');
+          tooltip.offsetHeight; 
+          requestAnimationFrame(() => {
+            tooltip.classList.remove('no-slide');
+          });
+        } else if (!tooltip.classList.contains('visible')) {
+          tooltip.classList.add('no-slide');
+          tooltip.offsetHeight;
+          requestAnimationFrame(() => {
+            tooltip.classList.remove('no-slide');
+            tooltip.classList.add('visible');
+          });
+        }
+        currentRow = row;
+      });
+
+      item.addEventListener('mouseleave', () => {
+        hideTimeout = setTimeout(() => {
+          tooltip.classList.remove('visible');
+          currentRow = null;
+        }, 150);
+      });
+    });
+  })();
+
+  // Collapse Thread Stacks on outside click
+  document.addEventListener('click', (e) => {
+    const panel = e.target.closest('.panel');
+    if (panel) {
+      if (!e.target.closest('.old-stack')) {
+        panel.querySelectorAll('.old-stack.expanded').forEach(el => el.classList.remove('expanded'));
+      }
+      if (!e.target.closest('.new-stack')) {
+        panel.querySelectorAll('.new-stack.expanded').forEach(el => el.classList.remove('expanded'));
+      }
+    }
+  });
+
+  // Toast Logic
+  function triggerOldToast() {
+    const toast = document.getElementById('old-toast');
+    toast.classList.add('visible');
+    setTimeout(() => {
+      toast.classList.remove('visible');
+    }, 2000);
+  }
+
+  function triggerNewToast() {
+    const toast = document.getElementById('new-toast');
+    toast.classList.remove('toast-done');
+    
+    // Force reflow
+    void toast.offsetWidth;
+    toast.classList.add('toast-in');
+
+    setTimeout(() => {
+      toast.classList.add('toast-done');
+      setTimeout(() => {
+        toast.classList.remove('toast-in', 'toast-done');
+      }, 1500);
+    }, 1500);
+  }
+
+  // Inbox Logic
+  const NEW_MOCK_EMAILS = [
+    { sender: 'Rohan Mehta', subject: 'Design review for onboarding flow', preview: 'Hey, can we sync on the onboarding screens before EOD?' },
+    { sender: 'Priya Nair', subject: 'Q3 metrics are in - looks great!', preview: 'Just pulled the numbers, we hit 94% retention this quarter.' },
+    { sender: 'Arjun Sharma', subject: 'Quick question on the API spec', preview: 'Does the /refresh endpoint need auth headers or is it open?' },
+    { sender: 'Meera Iyer', subject: 'Updated wireframes attached', preview: 'I have revised the flows based on last session feedback.' },
+    { sender: 'Karan Bhatia', subject: 'Team lunch - Thursday works?', preview: 'Thinking the new place near the office, lmk if Thursday is ok.' },
+  ];
+  let emailCounter = 0;
+
+  function getMockEmailMarkup(data) {
+    return `
+      <div class="mock-tile-icons"><div class="mock-chk"></div><div class="mock-dot"></div></div>
+      <div class="mock-tile-content">
+        <div class="mock-tile-top"><div class="tile-sender">${data.sender}</div><div class="tile-time">just now</div></div>
+        <div class="tile-subject">${data.subject}</div>
+        <div class="tile-preview">${data.preview}</div>
+      </div>`;
+  }
+
+  function triggerOldEmail() {
+    const inbox = document.getElementById('old-inbox');
+    const data = NEW_MOCK_EMAILS[emailCounter % NEW_MOCK_EMAILS.length];
+    const tile = document.createElement('div');
+    tile.className = 'mock-tile unread';
+    tile.innerHTML = getMockEmailMarkup(data);
+    inbox.prepend(tile);
+    emailCounter++;
+  }
+
+  function triggerNewEmail() {
+    const inbox = document.getElementById('new-inbox');
+    const data = NEW_MOCK_EMAILS[emailCounter % NEW_MOCK_EMAILS.length];
+    const tile = document.createElement('div');
+    tile.className = 'mock-tile unread anim-expanding';
+    tile.innerHTML = getMockEmailMarkup(data);
+    inbox.prepend(tile);
+    
+    // Force reflow
+    void tile.offsetWidth;
+    
+    requestAnimationFrame(() => {
+      tile.classList.add('anim-expanded');
+    });
+    emailCounter++;
+  }
+</script>
+
+
+
+</body></html>

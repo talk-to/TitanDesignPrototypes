@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inbox (367) - Mail</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', sans-serif;
+    background: #e0e0e0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+
+  /* ── App Window ── */
+  .app-window { display: flex; flex: 1; overflow: hidden; background: #fff; }
+
+  /* ── Sidebar ── */
+  .sidebar {
+    width: 250px;
+    background: #24273d;
+    display: flex; flex-direction: column;
+    flex-shrink: 0;
+    overflow: hidden;
+  }
+
+  .sidebar-header {
+    height: 64px;
+    display: flex; align-items: center;
+    padding: 0 12px; gap: 11px;
+    flex-shrink: 0;
+  }
+  .tab-switch {
+    background: #2d314b; border-radius: 4px;
+    padding: 2px;
+    display: flex; align-items: center;
+    flex-shrink: 0;
+  }
+  .tab-switch img { width: 28px; height: 28px; }
+  .tab-switch-arrow { width: 16px; height: 16px; display: flex; align-items: center; justify-content: center; }
+  .tab-switch-arrow img { width: 9px; height: 5px; object-fit: contain; }
+  .titan-logo { flex: 1; display: flex; align-items: center; justify-content: center; padding-right: 24px; padding-top: 3px; }
+  .titan-logo img { width: 70px; height: 18px; object-fit: contain; }
+
+  .compose-btn {
+    margin: 0 12px 4px;
+    background: #2170f4;
+    border: none; border-radius: 4px;
+    padding: 8px 16px;
+    display: flex; align-items: center; gap: 8px;
+    cursor: pointer; flex-shrink: 0;
+  }
+  .compose-btn .compose-icon { width: 24px; height: 24px; position: relative; }
+  .compose-btn .compose-icon img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
+  .compose-btn span { font-size: 14px; font-weight: 600; color: #fff; white-space: nowrap; }
+
+  .nav-scroll { overflow-y: auto; flex: 1; }
+  .nav-scroll::-webkit-scrollbar { width: 0; }
+
+  .sidebar-line { height: 1px; background: #3a3e58; margin: 8px 0 0; flex-shrink: 0; }
+
+  .account-header {
+    display: flex; align-items: center;
+    padding: 10px 17px 10px 0;
+    cursor: pointer; flex-shrink: 0;
+  }
+  .account-chevron { width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .account-chevron img { width: 10px; height: 6px; object-fit: contain; }
+  .account-email-id { display: flex; align-items: center; gap: 8px; }
+  .account-avatar {
+    width: 24px; height: 24px; border-radius: 50%;
+    position: relative; flex-shrink: 0; overflow: hidden;
+  }
+  .account-avatar img.bg { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .account-avatar span {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 500; color: #fff;
+    line-height: 1;
+  }
+  .account-email-text { font-size: 14px; font-weight: 600; color: #fff; white-space: nowrap; }
+
+  .nav-item {
+    display: flex; align-items: center; gap: 8px;
+    padding: 6px 12px 6px 24px; height: 32px;
+    cursor: pointer; position: relative; flex-shrink: 0;
+  }
+  .nav-item.active { background: #484872; }
+  .nav-item-icon { width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .nav-item-icon img { max-width: 16px; max-height: 16px; width: auto; height: auto; }
+  .nav-item-label { font-size: 14px; color: #fff; white-space: nowrap; flex: 1; }
+  .nav-item-label.active { font-weight: 600; }
+  .nav-item-label.secondary { color: #888; }
+  .nav-badge {
+    background: transparent;
+    font-size: 13px; font-weight: 600; color: #5692f6;
+    padding: 0 4px;
+  }
+  .nav-item-arrow { width: 24px; height: 24px; position: relative; flex-shrink: 0; }
+  .nav-item-arrow img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
+
+  .sidebar-footer {
+    flex-shrink: 0;
+    display: flex;
+    position: relative;
+  }
+  .sidebar-footer-line { height: 1px; background: transparent; position: relative; }
+  .sidebar-footer-line img { position: absolute; inset: 0; width: 100%; }
+  .footer-btn {
+    flex: 1; display: flex; align-items: center; justify-content: center; gap: 2px;
+    padding: 8px 6px; background: #31324b; cursor: pointer;
+    position: relative;
+  }
+  .footer-btn-icon { width: 24px; height: 24px; position: relative; flex-shrink: 0; }
+  .footer-btn-icon img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
+  .footer-btn span { font-size: 14px; color: #fff; }
+  .footer-divider { width: 1px; background: #3a3e58; flex-shrink: 0; }
+
+  /* ── Main area (right of sidebar) ── */
+  .main-area { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+  .content-area { flex: 1; display: flex; overflow: hidden; }
+
+  /* ── Middle Panel ── */
+  .middle-panel {
+    width: 443px;
+    border-right: 1px solid #dedede;
+    display: flex; flex-direction: column;
+    flex-shrink: 0;
+  }
+
+  /* ── Top Toolbar (full width above middle + reading pane) ── */
+  .top-toolbar {
+    height: 64px;
+    border-bottom: 1px solid #dedede;
+    display: flex; align-items: center;
+    padding: 0 16px; gap: 16px;
+    background: #fff; flex-shrink: 0;
+  }
+  .compose-search { display: flex; align-items: center; gap: 16px; }
+  .search-bar {
+    width: 575px;
+    border: 1px solid #dedede; border-radius: 4px;
+    padding: 8px;
+    display: flex; align-items: center; gap: 4px;
+    position: relative;
+  }
+  .search-icon { width: 24px; height: 24px; position: relative; flex-shrink: 0; }
+  .search-icon img { position: absolute; object-fit: contain; }
+  .search-bar input {
+    flex: 1; border: none; outline: none;
+    font-size: 14px; color: #888; background: none;
+  }
+  .search-divider { width: 1px; height: calc(100% + 16px); background: #dedede; position: absolute; right: 39px; top: -8px; }
+  .search-dropdown { width: 24px; height: 24px; position: absolute; right: 7px; top: 7px; }
+  .search-dropdown img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
+  .toolbar-right { display: flex; align-items: center; gap: 16px; margin-left: auto; }
+  .toolbar-icons { display: flex; gap: 4px; align-items: center; }
+  .toolbar-icon { width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+  .toolbar-icon img { max-width: 20px; max-height: 20px; width: auto; height: auto; }
+  .help-btn {
+    border: 1px solid #dedede; border-radius: 4px;
+    padding: 11px 8px; font-size: 14px; color: #333;
+    background: #fff; cursor: pointer; white-space: nowrap;
+  }
+  .powered-by { display: flex; flex-direction: column; gap: 3px; align-items: flex-start; }
+  .powered-by-text { width: 49.95px; height: 5px; position: relative; }
+  .powered-by-text img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
+  .powered-by-brand { display: flex; align-items: center; gap: 0; }
+  .titan-icon-small { width: 13.76px; height: 12.84px; position: relative; }
+  .titan-icon-small img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
+  .titan-text-small { width: 38.35px; height: 9.72px; position: relative; margin-left: 2.9px; }
+  .titan-text-small img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
+
+  /* ── Tabs ── */
+  .tabs-row {
+    height: 58px;
+    display: flex; align-items: center;
+    padding: 0 12px;
+    background: #fff;
+    position: relative;
+    flex-shrink: 0;
+  }
+  .tab-checkbox-wrap { position: absolute; left: 12px; top: 18px; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; }
+  .tab-checkbox-wrap .chk { width: 16px; height: 16px; position: relative; }
+  .tab-checkbox-wrap .chk img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
+  .tab-group { display: flex; margin-left: 32px; align-self: stretch; }
+  .tab-item { display: flex; align-items: center; padding: 0 8px; cursor: pointer; position: relative; align-self: stretch; }
+  .tab-item-label { font-size: 15px; font-weight: 600; color: #333; white-space: nowrap; line-height: 20px; }
+  .tab-item-label.inactive { color: #888; font-weight: 400; }
+  .tab-item-underline { position: absolute; bottom: 0; left: 0; right: 0; height: 4px; background: #2170f4; border-radius: 0; }
+  .all-mails-dropdown {
+    position: absolute; right: 12px; top: 13px;
+    border: 1px solid #dedede; border-radius: 4px;
+    padding: 5px 8px; white-space: nowrap;
+    display: flex; align-items: center; gap: 6px;
+    font-size: 14px; color: #333; cursor: pointer;
+    background: #fff;
+  }
+  .all-mails-dropdown span { flex: 1; }
+  .all-mails-dropdown .dd-arrow { width: 10px; height: 10px; position: relative; flex-shrink: 0; }
+  .all-mails-dropdown .dd-arrow img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
+  .tabs-divider { height: 0; position: absolute; bottom: 0; left: 0; right: 0; }
+  .tabs-divider img { position: absolute; inset: -0.5px 0; width: 100%; }
+
+  /* ── Email List ── */
+  .email-list { flex: 1; overflow-y: auto; }
+  .email-list::-webkit-scrollbar { width: 4px; }
+  .email-list::-webkit-scrollbar-thumb { background: #ddd; border-radius: 2px; }
+
+  .email-tile {
+    padding: 16px 12px;
+    position: relative; cursor: pointer;
+    background: #fff;
+  }
+  .email-tile:hover { background: #f0f0f0; }
+  .email-tile.selected { background: #eff6ff; }
+  .email-tile-inner { display: flex; gap: 6px; overflow: hidden; }
+  .tile-icons { display: flex; flex-direction: column; gap: 5px; align-items: center; flex-shrink: 0; justify-content: flex-start; }
+  .tile-chk { width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; }
+  .tile-chk .chk { width: 16px; height: 16px; position: relative; }
+  .tile-chk .chk img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
+  .tile-dot { width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; }
+  .tile-dot::after { content: ''; width: 7px; height: 7px; background: #2170f4; border-radius: 50%; display: block; }
+  .tile-star { width: 20px; height: 20px; display: none; align-items: center; justify-content: center; }
+  .tile-star img { max-width: 14px; max-height: 14px; width: auto; height: auto; }
+  .email-tile:hover .tile-dot { display: none; }
+  .email-tile:hover .tile-star { display: flex; }
+  .tile-content { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 5px; position: relative; overflow: hidden; }
+  .tile-sender { font-size: 15px; color: #333; line-height: 20px; white-space: nowrap; }
+  .tile-sender.bold { font-weight: 600; }
+  .tile-subject { font-size: 14px; color: #333; line-height: 20px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .tile-preview { font-size: 14px; color: #888; line-height: 20px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .tile-time { position: absolute; right: 0; top: 0; font-size: 12px; color: #888; }
+
+  .tile-hover-actions {
+    position: absolute; right: 0; top: 0;
+    display: none; gap: 4px; align-items: center;
+  }
+  .email-tile:hover .tile-hover-actions { display: flex; }
+  .tile-action-pill {
+    background: #fff;
+    border: 0.5px solid #c1c1c1;
+    box-shadow: 0 1px 0.5px rgba(0,0,0,0.05);
+    border-radius: 4px;
+    padding: 3px 8px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+  }
+  .tile-action-pill .icon18 { width: 18px; height: 18px; position: relative; overflow: hidden; }
+  .tile-action-pill .icon18 img { position: absolute; object-fit: contain; }
+  .tile-divider { position: absolute; bottom: 0; left: -17px; right: -17px; height: 0; }
+  .tile-divider img { position: absolute; inset: -1px 0 0 0; width: 100%; }
+
+  /* ── Reading Pane ── */
+  .reading-pane {
+    flex: 1; display: flex; flex-direction: column; overflow: hidden;
+    background: #fbfbfb;
+  }
+
+  /* Action bar sits at the same level as the tabs row */
+  .reading-action-bar {
+    height: 44px;
+    display: flex; align-items: center;
+    padding: 0 24px;
+    background: #fbfbfb; flex-shrink: 0;
+  }
+  .email-action-bar {
+    display: flex; align-items: center;
+    gap: 4px;
+  }
+  .action-opt {
+    display: flex; align-items: center; gap: 4px;
+    padding: 5px 8px 5px 5px;
+    cursor: pointer; border-radius: 5px; font-size: 13px; color: #333;
+    white-space: nowrap;
+  }
+  .action-opt:hover { background: #eaeaea; }
+  .action-icon { width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .action-icon img { max-width: 16px; max-height: 16px; width: auto; height: auto; }
+  .action-sep { display: none; }
+  .action-more { padding: 5px 8px; cursor: pointer; font-size: 18px; color: #666; }
+  .action-more-icon { width: 24px; height: 24px; position: relative; flex-shrink: 0; }
+  .action-more-icon img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
+
+  /* ── Thread Content ── */
+  .thread-content { flex: 1; overflow-y: auto; padding: 16px 24px 24px; background: #fbfbfb; }
+  .thread-content::-webkit-scrollbar { width: 4px; }
+  .thread-content::-webkit-scrollbar-thumb { background: #ddd; border-radius: 2px; }
+  .thread-title { font-size: 24px; font-weight: 600; color: #333; margin-bottom: 20px; line-height: 1.3; }
+
+  .thread-tile {
+    border: 1px solid #dedede; border-radius: 4px;
+    margin-bottom: 8px;
+    background: #fff;
+  }
+  .thread-tile-inner {
+    display: flex; align-items: center; gap: 16px;
+    padding: 20px 24px; position: relative;
+  }
+  .thread-sender { font-size: 15px; font-weight: 600; color: #333; white-space: nowrap; flex-shrink: 0; min-width: 120px; }
+  .thread-preview { font-size: 14px; color: #888; flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .thread-meta { position: absolute; right: 12px; top: 22px; display: flex; align-items: center; gap: 10px; }
+  .thread-date { font-size: 12px; color: #888; white-space: nowrap; }
+  .thread-attach { width: 20px; height: 20px; position: relative; overflow: hidden; }
+  .thread-attach img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
+
+  /* Expanded tile */
+  .expanded-tile { border: 1px solid #dedede; border-radius: 4px; background: #fff; margin-bottom: 8px; overflow: hidden; }
+  .expanded-header { display: flex; justify-content: space-between; align-items: flex-start; padding: 20px 24px 12px; }
+  .exp-sender { font-size: 15px; font-weight: 600; color: #333; margin-bottom: 3px; }
+  .exp-to { font-size: 14px; color: #888; }
+  .exp-right { display: flex; flex-direction: row; align-items: center; gap: 12px; }
+  .exp-timestamp { font-size: 12px; color: #888; }
+  .exp-actions { display: flex; align-items: center; gap: 12px; }
+  .exp-rr { display: flex; align-items: center; gap: 2px; padding: 0; }
+  .exp-rr-icon { width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .exp-rr-icon img { max-width: 18px; max-height: 18px; width: auto; height: auto; }
+  .exp-rr-count { font-size: 12px; color: #888; }
+  .exp-icon { width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+  .exp-icon img { max-width: 16px; max-height: 16px; width: auto; height: auto; }
+  .exp-icon-sm { width: 24px; height: 24px; position: relative; overflow: hidden; cursor: pointer; border-radius: 5px; }
+  .exp-icon-sm img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
+
+  .expanded-body { padding: 0 24px 24px; font-size: 14px; color: #333; line-height: 20px; }
+  .expanded-body p { margin-bottom: 0; }
+
+  .expanded-footer-hr { height: 1px; background: #dedede; width: 100%; }
+
+  .expanded-footer { display: flex; align-items: center; padding: 10px 20px; gap: 12px; }
+  .reply-action {
+    display: flex; align-items: center; gap: 2px;
+    padding: 4px 8px 4px 4px;
+    cursor: pointer; border-radius: 4px;
+    font-size: 14px; color: #333; white-space: nowrap;
+  }
+  .reply-action:hover { background: #f5f5f5; }
+  .reply-action-icon { width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .reply-action-icon img { max-width: 16px; max-height: 16px; width: auto; height: auto; }
+  .smart-write {
+    display: flex; align-items: center; gap: 6px;
+    margin-left: auto; cursor: pointer;
+    font-size: 14px; color: #333;
+  }
+  .smart-write-icon { width: 24px; height: 24px; position: relative; flex-shrink: 0; }
+  .smart-write-icon img { position: absolute; inset: 0; width: 100%; height: 100%; }
+</style>
+</head>
+<body>
+
+<!-- App Window -->
+<div class="app-window">
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+
+    <!-- Header with logo -->
+    <div class="sidebar-header">
+      <div class="tab-switch">
+        <img src="assets/2f8b4195-6886-4685-9c9c-cf0d3552b789.svg" alt="mail">
+        <div class="tab-switch-arrow">
+          <img src="assets/1c88a1be-2a78-4065-86f7-8eb060dbb526.svg" alt="">
+        </div>
+      </div>
+      <div class="titan-logo">
+        <img src="assets/fa36f613-977c-444a-bef5-e1b5f5f1b340.svg" alt="Titan">
+      </div>
+    </div>
+
+    <div class="nav-scroll">
+
+      <!-- Account 1 -->
+      <div class="sidebar-line"></div>
+      <div class="account-header">
+        <div class="account-chevron">
+          <img src="assets/f63230e3-4d61-49cb-95fa-34291315c8a6.svg" alt="">
+        </div>
+        <div class="account-email-id">
+          <div class="account-avatar">
+            <img class="bg" src="assets/d2c6a617-0407-4985-8c8b-740201e73dfe.svg" alt="">
+            <span>E</span>
+          </div>
+          <span class="account-email-text">ella@avontech.com</span>
+        </div>
+      </div>
+
+      <!-- Inbox (active) -->
+      <div class="nav-item active">
+        <div class="nav-item-icon">
+          <img src="assets/f2abf784-8ff3-4cb6-8424-a3f9ea66f6c4.svg" alt="">
+        </div>
+        <span class="nav-item-label active">Inbox</span>
+        <span class="nav-badge">18</span>
+      </div>
+
+      <!-- Sent -->
+      <div class="nav-item">
+        <div class="nav-item-icon">
+          <img src="assets/0d418f33-c92b-4c90-a4b4-1ac227360aee.svg" alt="">
+        </div>
+        <span class="nav-item-label">Sent</span>
+      </div>
+
+      <!-- Less -->
+      <div class="nav-item">
+        <div class="nav-item-icon">
+          <img src="assets/4b052ff7-cbf2-4484-b998-cd121a2ef23d.svg" alt="" style="width:10px; height:6px;">
+        </div>
+        <span class="nav-item-label secondary">Less</span>
+      </div>
+
+      <!-- Archive -->
+      <div class="nav-item">
+        <div class="nav-item-icon">
+          <img src="assets/84f2c4f8-5ef3-4208-b5c7-3bf9845524f6.svg" alt="">
+        </div>
+        <span class="nav-item-label">Archive</span>
+      </div>
+
+      <!-- Drafts -->
+      <div class="nav-item">
+        <div class="nav-item-icon">
+          <img src="assets/4cec5be7-969f-498e-ae20-01a59018a891.svg" alt="">
+        </div>
+        <span class="nav-item-label">Drafts</span>
+      </div>
+
+      <!-- Trash -->
+      <div class="nav-item">
+        <div class="nav-item-icon">
+          <img src="assets/f277921c-e283-4da0-a13a-05595d91fb34.svg" alt="">
+        </div>
+        <span class="nav-item-label">Trash</span>
+      </div>
+
+      <!-- Spam -->
+      <div class="nav-item">
+        <div class="nav-item-icon">
+          <img src="assets/0908bd91-743b-48cc-90f4-0f6eb8205114.svg" alt="">
+        </div>
+        <span class="nav-item-label">Spam</span>
+      </div>
+
+      <!-- Scheduled -->
+      <div class="nav-item">
+        <div class="nav-item-icon">
+          <img src="assets/506c7c7c-d0e8-4f48-9b04-9e8f4878f1dd.svg" alt="">
+        </div>
+        <span class="nav-item-label">Scheduled</span>
+      </div>
+
+      <!-- Promotions -->
+      <div class="nav-item">
+        <div class="nav-item-icon">
+          <img src="assets/05911f43-7ba2-4419-a3b7-1f9c5a6f5235.svg" alt="">
+        </div>
+        <span class="nav-item-label">Promotions</span>
+      </div>
+
+      <!-- Add folder -->
+      <div class="nav-item">
+        <div class="nav-item-icon">
+          <img src="assets/ba161cbb-b127-4cdb-9d7e-68bf42124783.svg" alt="">
+        </div>
+        <span class="nav-item-label secondary">Add folder</span>
+      </div>
+
+      <div class="sidebar-line"></div>
+
+      <!-- Account 2 -->
+      <div class="account-header">
+        <div class="account-chevron">
+          <img src="assets/f63230e3-4d61-49cb-95fa-34291315c8a6.svg" alt="">
+        </div>
+        <div class="account-email-id">
+          <div class="account-avatar">
+            <img class="bg" src="assets/1ec36ae6-2aa7-47fb-8241-ad45b652e49a.svg" alt="">
+            <span>S</span>
+          </div>
+          <span class="account-email-text" style="font-size:12px">support@avontech.com</span>
+        </div>
+      </div>
+
+      <div class="nav-item">
+        <div class="nav-item-icon">
+          <img src="assets/f2abf784-8ff3-4cb6-8424-a3f9ea66f6c4.svg" alt="">
+        </div>
+        <span class="nav-item-label">Inbox</span>
+      </div>
+      <div class="nav-item">
+        <div class="nav-item-icon">
+          <img src="assets/0d418f33-c92b-4c90-a4b4-1ac227360aee.svg" alt="">
+        </div>
+        <span class="nav-item-label">Sent</span>
+      </div>
+      <!-- More -->
+      <div class="nav-item">
+        <div class="nav-item-icon">
+          <img src="assets/593acf07-7400-4313-9d10-fee2fb2b61d5.svg" alt="" style="width:10px; height:6px;">
+        </div>
+        <span class="nav-item-label secondary">More</span>
+      </div>
+
+      <div class="sidebar-line"></div>
+
+      <!-- Add account -->
+      <div class="nav-item" style="margin-top:8px;">
+        <div class="nav-item-icon">
+          <img src="assets/2f39d1e9-d033-4964-aa94-76a9a023325c.svg" alt="">
+        </div>
+        <span class="nav-item-label">Add account</span>
+      </div>
+
+    </div><!-- /nav-scroll -->
+
+    <!-- Footer -->
+    <div style="position:relative; flex-shrink:0;">
+      <div style="height:1px; position:relative; overflow:visible;">
+        <img src="assets/0d00b891-46d6-4063-acc9-0db4c8c41036.svg" alt="" style="position:absolute; inset:-1px 0; width:100%; height:2px; object-fit:fill;">
+      </div>
+      <div class="sidebar-footer">
+        <div class="footer-btn">
+          <div class="footer-btn-icon">
+            <img src="assets/34686e57-21d5-4bf6-82c4-1c6e474d25d3.svg" alt="">
+          </div>
+          <span>Bug</span>
+        </div>
+        <div class="footer-divider"></div>
+        <div class="footer-btn">
+          <div class="footer-btn-icon">
+            <img src="assets/03a449fb-b16b-4b26-8eec-0fa033eff13e.svg" alt="">
+          </div>
+          <span>Feature</span>
+        </div>
+        <div class="footer-divider"></div>
+        <div class="footer-btn">
+          <div class="footer-btn-icon">
+            <img src="assets/6ea52e57-1d75-47b1-97cd-e416a5d2372d.svg" alt="">
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /sidebar -->
+
+  <div class="main-area">
+
+  <!-- Top toolbar (full width) -->
+  <div class="top-toolbar">
+      <div class="compose-search">
+        <button class="compose-btn" style="margin:0; flex-shrink:0;">
+          <div class="compose-icon"><img src="assets/4ef65841-a61f-4b4d-9a15-f39d8a3a4fdb.svg" alt=""></div>
+          <span>New email</span>
+        </button>
+        <div class="search-bar">
+          <div class="search-icon">
+            <img src="assets/31fb0942-5496-4310-8ed0-427ccce7cfe6.svg" alt="" style="inset:0; width:100%; height:100%;">
+          </div>
+          <input type="text" placeholder="Search in ella@avontech.com" readonly>
+          <div class="search-divider"></div>
+          <div class="search-dropdown">
+            <img src="assets/e458459b-dce0-4c30-be8a-322441399ee5.svg" alt="">
+          </div>
+        </div>
+      </div>
+      <div class="toolbar-right">
+        <div class="toolbar-icons">
+          <div class="toolbar-icon">
+            <img src="assets/ec5d8d32-261b-410c-b07c-310cd6bb915e.svg" alt="">
+          </div>
+          <div class="toolbar-icon">
+            <img src="assets/b08917ed-2fc9-4353-876e-6c4c19977593.svg" alt="">
+          </div>
+          <div class="toolbar-icon">
+            <img src="assets/63a156f6-89b7-4224-b2e1-f2fa32e8f03f.svg" alt="">
+          </div>
+        </div>
+        <div class="help-btn">Help</div>
+        <div class="powered-by">
+          <div class="powered-by-text">
+            <img src="assets/63d9b21c-fe52-4792-bc8d-ad49805438b4.svg" alt="">
+          </div>
+          <div class="powered-by-brand">
+            <div class="titan-icon-small">
+              <img src="assets/4cbc6cb9-9816-4837-aed4-a5388b93f50d.svg" alt="">
+            </div>
+            <div class="titan-text-small">
+              <img src="assets/7c7726a7-3446-4875-a5e4-bf55b4dbe2b7.svg" alt="">
+            </div>
+          </div>
+        </div>
+      </div>
+  </div><!-- /top-toolbar -->
+
+  <div class="content-area">
+  <!-- Middle panel -->
+  <div class="middle-panel">
+
+    <!-- Tabs -->
+    <div class="tabs-row">
+      <div class="tab-checkbox-wrap">
+        <div class="chk"><img src="assets/32a4d00d-a2ab-4358-b0b7-d935dd3243d4.svg" alt=""></div>
+      </div>
+      <div class="tab-group">
+        <div class="tab-item">
+          <div class="tab-item-label">Priority (25)</div>
+          <div class="tab-item-underline"></div>
+        </div>
+        <div class="tab-item">
+          <div class="tab-item-label inactive">Other (50)</div>
+        </div>
+      </div>
+      <div class="all-mails-dropdown">
+        <span>All mails</span>
+        <div class="dd-arrow"><img src="assets/7bd47053-31b1-485b-89c1-4496be66b2fd.svg" alt=""></div>
+      </div>
+      <div class="tabs-divider">
+        <img src="assets/2a9d0ebf-7f52-4d67-97ca-9f3754ce48b2.svg" alt="">
+      </div>
+    </div>
+
+    <!-- Email list -->
+    <div class="email-list">
+
+      <div class="email-tile">
+        <div class="email-tile-inner">
+          <div class="tile-icons">
+            <div class="tile-chk"><div class="chk"><img src="assets/392bf29c-08b1-44e8-b95b-b99905e722e6.svg" alt=""></div></div>
+            <div class="tile-star"><img src="assets/1e1696aa-5b8d-4409-97fd-4ce5c85c5ae5.svg" alt=""></div>
+          </div>
+          <div class="tile-content">
+            <div class="tile-sender">Sajal Kumar</div>
+            <div class="tile-subject">Feedback on grammar and spell check</div>
+            <div class="tile-preview">Looking for a change? How does working on Meatvedcdv...</div>
+            <!-- Hover actions -->
+            <div class="tile-hover-actions">
+              <div class="tile-action-pill">
+                <div class="icon18"><img src="assets/7c1d5199-2bce-428f-9bff-eb73b6954e12.svg" alt=""></div>
+              </div>
+              <div class="tile-action-pill">
+                <div class="icon18"><img src="assets/65a9156f-d37a-414e-bef2-e5b477cb6436.svg" alt=""></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="tile-divider"><img src="assets/5a7cff96-86fc-4121-9127-08bc8d0621c7.svg" alt=""></div>
+      </div>
+
+      <!-- Tile 2: selected, unread -->
+      <div class="email-tile selected">
+        <div class="email-tile-inner">
+          <div class="tile-icons">
+            <div class="tile-chk"><div class="chk"><img src="assets/392bf29c-08b1-44e8-b95b-b99905e722e6.svg" alt=""></div></div>
+            <div class="tile-dot"></div>
+            <div class="tile-star"><img src="assets/1e1696aa-5b8d-4409-97fd-4ce5c85c5ae5.svg" alt=""></div>
+          </div>
+          <div class="tile-content">
+            <div class="tile-top" style="display:flex; justify-content:space-between;">
+              <div class="tile-sender bold">Ninad Raval</div>
+              <div class="tile-time">11:20 pm</div>
+            </div>
+            <div class="tile-subject">Project roadmap for Dashboard version</div>
+            <div class="tile-preview">Looking for a change? How does working on Meatvedcdv...</div>
+          </div>
+        </div>
+        <div class="tile-divider"><img src="assets/5a7cff96-86fc-4121-9127-08bc8d0621c7.svg" alt=""></div>
+      </div>
+
+      <!-- Tiles 3–7 -->
+      <div class="email-tile" style="border-bottom:1px solid #f0f0f0;">
+        <div class="email-tile-inner">
+          <div class="tile-icons">
+            <div class="tile-chk"><div class="chk"><img src="assets/392bf29c-08b1-44e8-b95b-b99905e722e6.svg" alt=""></div></div>
+            <div class="tile-star"><img src="assets/1e1696aa-5b8d-4409-97fd-4ce5c85c5ae5.svg" alt=""></div>
+          </div>
+          <div class="tile-content">
+            <div style="display:flex; justify-content:space-between;"><div class="tile-sender">David Jones, Ella (2)</div><div class="tile-time">11:20 pm</div></div>
+            <div class="tile-subject">Flock Terms and Condition</div>
+            <div class="tile-preview">We need to get on a meeting for the discuss our T&amp;C...</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="email-tile" style="border-bottom:1px solid #f0f0f0;">
+        <div class="email-tile-inner">
+          <div class="tile-icons">
+            <div class="tile-chk"><div class="chk"><img src="assets/392bf29c-08b1-44e8-b95b-b99905e722e6.svg" alt=""></div></div>
+            <div class="tile-star"><img src="assets/1e1696aa-5b8d-4409-97fd-4ce5c85c5ae5.svg" alt=""></div>
+          </div>
+          <div class="tile-content">
+            <div style="display:flex; justify-content:space-between;"><div class="tile-sender">Shreya</div><div class="tile-time">11:20 pm</div></div>
+            <div class="tile-subject">Feedback on snooze feature</div>
+            <div class="tile-preview">I like the design that you have made. Probably we ca...</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="email-tile" style="border-bottom:1px solid #f0f0f0;">
+        <div class="email-tile-inner">
+          <div class="tile-icons">
+            <div class="tile-chk"><div class="chk"><img src="assets/392bf29c-08b1-44e8-b95b-b99905e722e6.svg" alt=""></div></div>
+            <div class="tile-star"><img src="assets/1e1696aa-5b8d-4409-97fd-4ce5c85c5ae5.svg" alt=""></div>
+          </div>
+          <div class="tile-content">
+            <div style="display:flex; justify-content:space-between;"><div class="tile-sender">Sajal Kumar</div><div class="tile-time">11:20 pm</div></div>
+            <div class="tile-subject">Feedback on link and file tracking feature</div>
+            <div class="tile-preview">Hi, Ella can you please review these mocks.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="email-tile" style="border-bottom:1px solid #f0f0f0;">
+        <div class="email-tile-inner">
+          <div class="tile-icons">
+            <div class="tile-chk"><div class="chk"><img src="assets/392bf29c-08b1-44e8-b95b-b99905e722e6.svg" alt=""></div></div>
+            <div class="tile-star"><img src="assets/1e1696aa-5b8d-4409-97fd-4ce5c85c5ae5.svg" alt=""></div>
+          </div>
+          <div class="tile-content">
+            <div style="display:flex; justify-content:space-between;"><div class="tile-sender">Ninad Raval</div><div class="tile-time">11:20 pm</div></div>
+            <div class="tile-subject">Lets schedule our 1:1 sometime</div>
+            <div class="tile-preview">Hi Ella, we should schedule a 1:1 session next week...</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="email-tile">
+        <div class="email-tile-inner">
+          <div class="tile-icons">
+            <div class="tile-chk"><div class="chk"><img src="assets/392bf29c-08b1-44e8-b95b-b99905e722e6.svg" alt=""></div></div>
+            <div class="tile-star"><img src="assets/1e1696aa-5b8d-4409-97fd-4ce5c85c5ae5.svg" alt=""></div>
+          </div>
+          <div class="tile-content">
+            <div style="display:flex; justify-content:space-between;"><div class="tile-sender">Ninad Raval</div><div class="tile-time">11:20 pm</div></div>
+            <div class="tile-subject">Lets schedule our 1:1 sometime</div>
+            <div class="tile-preview">Hi Ella, we should schedule a 1:1 session next week...</div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /email-list -->
+  </div><!-- /middle-panel -->
+
+  <!-- Reading Pane -->
+  <div class="reading-pane">
+
+    <!-- Action bar (same level as tabs) -->
+    <div class="reading-action-bar">
+      <div class="email-action-bar">
+        <div class="action-opt">
+          <div class="action-icon"><img src="assets/eb8edec6-b9b3-4707-bc5a-78a09ff60960.svg" alt=""></div>
+          Archive
+        </div>
+        <div class="action-sep"></div>
+        <div class="action-opt">
+          <div class="action-icon"><img src="assets/39065929-c90c-4ada-8017-5b7def421216.svg" alt=""></div>
+          Delete
+        </div>
+        <div class="action-sep"></div>
+        <div class="action-opt">
+          <div class="action-icon"><img src="assets/7d1fbdab-213a-460f-816a-26f90c114a53.svg" alt=""></div>
+          Star
+        </div>
+        <div class="action-sep"></div>
+        <div class="action-opt">
+          <div class="action-icon"><img src="assets/fdfefe86-ce27-43c6-a47f-d5b8019e11c3.svg" alt=""></div>
+          Mark unread
+        </div>
+        <div class="action-sep"></div>
+        <div class="action-opt">
+          <div class="action-icon"><img src="assets/bc92cea7-677d-460d-a302-220e92593976.svg" alt=""></div>
+          Block
+        </div>
+        <div class="action-sep"></div>
+        <div class="action-opt">
+          <div class="action-icon"><img src="assets/cbf05706-4cff-4bfc-bc12-604133772db9.svg" alt=""></div>
+          Spam
+        </div>
+        <div class="action-sep"></div>
+        <div class="action-more">
+          <div class="action-more-icon"><img src="assets/495649bc-11a9-41e0-84b4-81a6600de9f6.svg" alt=""></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Thread -->
+    <div class="thread-content">
+      <div class="thread-title">Project roadmap for Dashboard version 2</div>
+
+      <!-- Collapsed tile 1 -->
+      <div class="thread-tile">
+        <div class="thread-tile-inner">
+          <span class="thread-sender">David Eglasias</span>
+          <span class="thread-preview">And as such the media have been very influential in shaping societ...</span>
+          <div class="thread-meta">
+            <span class="thread-date">30 Jun</span>
+            <div class="thread-attach"><img src="assets/137b4a38-f7e3-4939-b28d-56d8013f7e6b.svg" alt=""></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Collapsed tile 2 -->
+      <div class="thread-tile">
+        <div class="thread-tile-inner">
+          <span class="thread-sender">Sajal K</span>
+          <span class="thread-preview">And as such the media have been very influential in shaping society's n,jn,kj...</span>
+          <div class="thread-meta">
+            <span class="thread-date">30 Jun</span>
+            <div class="thread-attach"><img src="assets/137b4a38-f7e3-4939-b28d-56d8013f7e6b.svg" alt=""></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Expanded tile -->
+      <div class="expanded-tile">
+        <div class="expanded-header">
+          <div>
+            <div class="exp-sender">Ninad Raval</div>
+            <div class="exp-to">To: me, Sajal, Viral</div>
+          </div>
+          <div class="exp-right">
+            <div class="exp-timestamp">Monday, 08 Feb, 11:00 am</div>
+            <div class="exp-actions">
+              <div class="exp-rr">
+                <div class="exp-rr-icon"><img src="assets/9c958176-ff20-49e6-9206-7659c8943371.svg" alt=""></div>
+                <span class="exp-rr-count">(4)</span>
+              </div>
+              <div class="exp-rr">
+                <div class="exp-rr-icon"><img src="assets/59af9c40-b8b7-40f0-ab10-349dd5700ac4.svg" alt=""></div>
+                <span class="exp-rr-count">(4)</span>
+              </div>
+              <div class="exp-icon">
+                <img src="assets/f58c5077-66f8-4b70-8f2d-a29cb41ef735.svg" alt="">
+              </div>
+              <div class="exp-icon">
+                <img src="assets/dc9c9a28-fbff-4efd-8cc6-22604c7cbc3d.svg" alt="">
+              </div>
+              <div class="exp-icon-sm">
+                <img src="assets/1bc6572b-be7e-4809-b54f-48b57701aa6b.svg" alt="">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="expanded-body">
+          <p>Hey,</p>
+          <p>Since the last time we met, I have been working on the V2 roadmap and wold like to catch up to discuss it. Following are the highlights of the version. Letsa catch up on Monday, 5 PM?</p>
+          <p>&zwj;</p>
+          <p>1. Introducing multiple themes</p>
+          <p>2. Improvements in accessibility</p>
+          <p>&zwj;</p>
+          <p>Thanks!</p>
+        </div>
+
+        <div class="expanded-footer-hr"></div>
+        <div class="expanded-footer">
+          <div class="reply-action">
+            <div class="reply-action-icon"><img src="assets/dc9c9a28-fbff-4efd-8cc6-22604c7cbc3d.svg" alt=""></div>
+            Reply
+          </div>
+          <div class="reply-action">
+            <div class="reply-action-icon"><img src="assets/440756b2-5698-4836-ab78-62a450804283.svg" alt=""></div>
+            Reply all
+          </div>
+          <div class="reply-action">
+            <div class="reply-action-icon"><img src="assets/d6d0ae75-01ff-4a38-aeb6-8cee39af4b34.svg" alt=""></div>
+            Forward
+          </div>
+          <div class="smart-write">
+            <div class="smart-write-icon"><img src="assets/f2c4a95b-e378-4f23-b049-98f40e998543.svg" alt=""></div>
+            Reply with AI
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /thread-content -->
+  </div><!-- /reading-pane -->
+
+  </div><!-- /content-area -->
+  </div><!-- /main-area -->
+
+</div><!-- /app-window -->
+</body>
+</html>

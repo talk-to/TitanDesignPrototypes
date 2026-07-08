@@ -8,14 +8,6 @@
   <style>
     :root {
       --click-scale: 0.97;
-      --reading-pane-bg: #f9f9fa;
-      --border-color: #e8eaed;
-      --card-border-color: #e8eaed;
-      --card-border-radius: 8px;
-      --card-spacing: 12px;
-      --compose-border-radius: 6px;
-      --search-bg: #f4f5f8;
-      --search-border-radius: 6px;
     }
 
     * {
@@ -50,6 +42,110 @@
       flex-direction: column;
       flex-shrink: 0;
       overflow: visible;
+      transition: width 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+      box-shadow: 4px 0 20px rgba(0, 0, 0, 0.15);
+      position: relative;
+      z-index: 10;
+    }
+
+    .sidebar.collapsed {
+      width: 64px;
+    }
+
+    .sidebar.collapsed .titan-logo,
+    .sidebar.collapsed .tab-switch-arrow,
+    .sidebar.collapsed .account-chevron,
+    .sidebar.collapsed .account-email-text,
+    .sidebar.collapsed .nav-item-label,
+    .sidebar.collapsed .nav-badge,
+    .sidebar.collapsed .footer-btn span,
+    .sidebar.collapsed .footer-divider {
+      display: none !important;
+    }
+
+    .sidebar.collapsed .sidebar-header {
+      justify-content: center;
+      padding: 0;
+    }
+
+    .sidebar.collapsed .account-header {
+      justify-content: center;
+      padding: 10px 0;
+    }
+
+    .sidebar.collapsed .account-email-id {
+      justify-content: center;
+      flex: none;
+    }
+
+    .sidebar.collapsed .nav-item {
+      justify-content: center;
+      padding: 6px 0 !important;
+      gap: 0 !important;
+    }
+
+    .sidebar.collapsed .sidebar-footer {
+      flex-direction: column;
+    }
+
+    .sidebar.collapsed .footer-btn {
+      padding: 12px 0;
+    }
+
+    .sidebar-edge-toggle {
+      position: absolute;
+      right: -6px;
+      top: 32px;
+      transform: translateY(-50%);
+      z-index: 20;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: #1c1c1c;
+      border: none;
+      box-shadow: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: #888;
+      padding: 0;
+      opacity: 0;
+      pointer-events: none;
+      transition: background 0.15s ease, color 0.15s ease, opacity 0.15s ease;
+    }
+
+    /* Extend hover detection zone beyond the sidebar's right edge */
+    .sidebar::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: -20px;
+      width: 20px;
+      height: 100%;
+      pointer-events: auto;
+    }
+
+    .sidebar:hover .sidebar-edge-toggle {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .sidebar-edge-toggle:hover {
+      background: #2a2a2a;
+      color: #fff;
+    }
+
+    .sidebar-edge-toggle svg {
+      transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .sidebar.collapsed .sidebar-edge-toggle {
+      right: -14px;
+    }
+
+    .sidebar.collapsed .sidebar-edge-toggle svg {
+      transform: scaleX(-1);
     }
 
     .sidebar-header {
@@ -70,27 +166,11 @@
       flex-shrink: 0;
       cursor: pointer;
       z-index: 1;
-      transition: transform 0.1s ease;
+
     }
 
-    .tab-switch::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: #2b2b2b;
-      border-radius: inherit;
-      z-index: -1;
-      transition: background 0.2s ease, transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
-    }
 
-    .tab-switch:not(.active):hover::before {
-      background: #3d3d3d;
-      transform: scale(1.05);
-    }
 
-    .tab-switch:not(.active):active {
-      transform: scale(var(--click-scale));
-    }
 
     .tab-switch img {
       width: 28px;
@@ -129,10 +209,11 @@
     /* ── Reusable Titan Split Button Component ── */
     .titan-split-btn {
       background: #2170f4;
-      border-radius: var(--compose-border-radius);
+      border-radius: 6px;
       display: flex;
       align-items: center;
       flex-shrink: 0;
+      box-shadow: 0 2px 8px rgba(33, 112, 244, 0.2);
     }
 
     .split-btn-main {
@@ -140,8 +221,8 @@
       display: flex;
       align-items: center;
       cursor: pointer;
-      border-top-left-radius: var(--compose-border-radius);
-      border-bottom-left-radius: var(--compose-border-radius);
+      border-top-left-radius: 6px;
+      border-bottom-left-radius: 6px;
       transition: background 0.15s ease, box-shadow 0.15s ease;
     }
 
@@ -160,8 +241,8 @@
       justify-content: center;
       border-left: 1.5px solid rgba(255, 255, 255, 0.35);
       cursor: pointer;
-      border-top-right-radius: var(--compose-border-radius);
-      border-bottom-right-radius: var(--compose-border-radius);
+      border-top-right-radius: 6px;
+      border-bottom-right-radius: 6px;
       transition: background 0.15s ease, box-shadow 0.15s ease;
     }
 
@@ -180,21 +261,16 @@
       gap: inherit;
       width: 100%;
       height: 100%;
-      transition: transform 0.1s ease;
+
     }
 
     .split-btn-main:active .btn-content-wrapper,
-    .split-btn-dd:active .btn-content-wrapper {
-      transform: scale(var(--click-scale));
-    }
+    .split-btn-dd:active .btn-content-wrapper {}
 
+    /* ── Compose Button Sizing & Layout ── */
     .compose-btn {
       margin: 0 12px 4px;
       height: 38px;
-    }
-
-    .top-toolbar .compose-btn {
-      height: 34px !important;
     }
 
     .compose-main-btn {
@@ -262,7 +338,7 @@
     }
 
     .sidebar-line + .account-header {
-      margin-top: 8px;
+      margin-top: 12px;
     }
 
     .account-header {
@@ -405,25 +481,6 @@
       flex-shrink: 0;
       margin: 1px 8px;
       border-radius: 6px;
-      z-index: 0;
-    }
-
-    .nav-item::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: rgba(255, 255, 255, 0.06);
-      border-radius: inherit;
-      z-index: -1;
-      opacity: 0;
-      transform: scale(0.88);
-      transition: transform 0.2s ease-in, opacity 0.2s ease-in;
-    }
-
-    .nav-item:not(.active):hover::before {
-      opacity: 1;
-      transform: scale(1.0);
-      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.2s ease-out;
     }
 
     .nav-item.active {
@@ -540,9 +597,7 @@
     }
 
     .footer-divider {
-      width: 1px;
-      background: #2d2d2d;
-      flex-shrink: 0;
+      display: none;
     }
 
     /* ── Main area (right of sidebar) ── */
@@ -551,82 +606,125 @@
       display: flex;
       flex-direction: column;
       overflow: hidden;
+      background: #f4f5f8;
     }
 
     .content-area {
       flex: 1;
       display: flex;
       overflow: hidden;
+      padding: 16px;
+      gap: 16px;
+      background: #f4f5f8;
+      justify-content: center;
+      transition: padding 0.25s cubic-bezier(0.22, 1, 0.36, 1), gap 0.25s cubic-bezier(0.22, 1, 0.36, 1);
     }
 
     /* ── Middle Panel ── */
     .middle-panel {
       width: 440px;
       background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.01);
       display: flex;
       flex-direction: column;
       flex-shrink: 0;
-      border-right: 1px solid var(--border-color);
-      padding: 8px;
-      padding-top: 0;
+      overflow: hidden;
+      transition: width 0.25s cubic-bezier(0.22, 1, 0.36, 1), margin 0.25s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.2s ease;
     }
 
     /* ── Top Toolbar (full width above middle + reading pane) ── */
     .top-toolbar {
       height: 64px;
-      border-bottom: 1px solid var(--border-color);
-      display: flex;
-      align-items: center;
-      padding: 0 16px;
-      gap: 16px;
-      background: #fff;
+      border-bottom: none;
+      background: #f4f5f8;
       flex-shrink: 0;
+      transition: height 0.25s cubic-bezier(0.22, 1, 0.36, 1), padding 0.25s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.2s ease;
+      position: relative;
     }
 
     .compose-search {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      z-index: 5;
+      transition: left 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .toolbar-right {
+      position: absolute;
+      right: 24px;
+      top: 50%;
+      transform: translateY(-50%);
       display: flex;
       align-items: center;
       gap: 16px;
     }
 
     .search-bar {
+      width: 575px;
+      height: 38px;
+      border: none;
+      border-radius: 6px;
       display: flex;
       align-items: center;
-      width: 320px;
-      height: 34px;
-      background: var(--search-bg);
-      border-radius: var(--search-border-radius);
-      padding: 0 10px;
-      gap: 8px;
-      transition: background 0.15s, box-shadow 0.15s;
-      box-sizing: border-box;
-    }
-
-    .search-bar:focus-within {
       background: #fff;
-      box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.15), 0 1px 3px rgba(0, 0, 0, 0.05);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
     }
 
-    .search-lens-icon {
-      width: 14px;
-      height: 14px;
-      opacity: 0.5;
+    .search-icon {
+      width: 16px;
+      height: 16px;
+      margin-left: 12px;
+      margin-right: 8px;
+      position: relative;
       flex-shrink: 0;
     }
 
+    .search-icon img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
     .search-bar input {
-      border: none;
-      background: transparent;
-      outline: none;
-      font-size: 13px;
-      color: #202124;
       flex: 1;
-      min-width: 0;
+      border: none;
+      outline: none;
+      font-size: 14px;
+      color: #888;
+      background: none;
       height: 100%;
     }
 
-    .search-bar input::placeholder {
-      color: #80868b;
+    .search-divider {
+      width: 1px;
+      height: 100%;
+      background: #dedede;
+      flex-shrink: 0;
+    }
+
+    .search-dropdown {
+      width: 38px;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .search-dropdown img {
+      width: 12px;
+      height: 12px;
+      object-fit: contain;
+      opacity: 0.6;
     }
 
     .toolbar-right {
@@ -737,35 +835,38 @@
       flex-shrink: 0;
     }
 
-    .tab-checkbox-wrap {
-      position: absolute;
-      left: 21px;
-      top: 16px;
-      width: 14px;
-      height: 20px;
+    .mp-toggle-btn {
+      width: 28px;
+      height: 28px;
+      flex-shrink: 0;
       display: flex;
       align-items: center;
       justify-content: center;
+      border: none;
+      background: none;
+      cursor: pointer;
+      border-radius: 6px;
+      color: #aaa;
+      padding: 0;
+      transition: background 0.15s ease, color 0.15s ease;
     }
 
-    .tab-checkbox-wrap .chk {
-      width: 14px;
-      height: 14px;
-      position: relative;
+    .mp-toggle-btn:hover {
+      background: #f4f5f8;
+      color: #202124;
     }
 
-    .tab-checkbox-wrap .chk img {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      opacity: 0.5;
+    .mp-toggle-btn svg {
+      transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .middle-panel.mp-collapsed .mp-toggle-btn svg {
+      transform: scaleX(-1);
     }
 
     .tab-group {
       display: flex;
-      margin-left: 35px;
+      margin-left: 4px;
       align-items: center;
       gap: 6px;
     }
@@ -777,35 +878,15 @@
       cursor: pointer;
       position: relative;
       border-radius: 6px;
-      transition: color 0.15s ease;
-      z-index: 0;
+      transition: background 0.15s ease, color 0.15s ease;
     }
 
-    .tab-item::before {
-      content: '';
-      position: absolute;
-      inset: 0;
+    .tab-item:hover {
       background: #f4f5f8;
-      border-radius: inherit;
-      z-index: -1;
-      opacity: 0;
-      transform: scale(0.88);
-      transition: transform 0.2s ease-in, opacity 0.2s ease-in;
-    }
-
-    .tab-item:hover::before {
-      opacity: 1;
-      transform: scale(1.0);
-      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.2s ease-out;
     }
 
     .tab-item:has(.tab-item-underline) {
       background: #eff6ff;
-      pointer-events: none;
-    }
-
-    .tab-item:has(.tab-item-underline)::before {
-      background: #e0ecfc;
     }
 
     .tab-item-label {
@@ -836,12 +917,12 @@
       display: flex;
       align-items: center;
       gap: 8px;
-      z-index: 3;
+      z-index: 5;
     }
 
     .all-mails-dropdown {
       border: 1px solid #dedede;
-      border-radius: 4px;
+      border-radius: 6px;
       padding: 6px 10px;
       white-space: nowrap;
       display: flex;
@@ -853,38 +934,15 @@
       background: #fff;
     }
 
-    .tabs-refresh-btn {
-      display: none;
-      width: 28px;
-      height: 28px;
-      align-items: center;
-      justify-content: center;
-      border: none;
-      border-radius: 4px;
-      background: transparent;
-      cursor: pointer;
-      transition: all 0.15s ease;
-    }
 
-    .tabs-refresh-btn img {
-      width: 13px;
-      height: 13px;
-      opacity: 0.65;
-      transition: transform 0.15s ease;
-    }
 
-    .tabs-refresh-btn:hover {
-      background: #f0f0f0;
-    }
 
-    .tabs-refresh-btn:hover img {
-      opacity: 0.9;
-    }
 
-    .tabs-refresh-btn:active {
-      background: #e4e4e4;
-      transform: scale(var(--click-scale));
-    }
+
+
+
+
+
 
     .all-mails-dropdown span {
       flex: 1;
@@ -909,12 +967,27 @@
       display: none;
     }
 
+    /* ── Middle panel individually collapsed ── */
+    .middle-panel.mp-collapsed {
+      width: 56px !important;
+      align-self: flex-start; /* shrink to content height */
+    }
+
+    /* Collapsed: hide tabs row + email list, show a single inbox indicator */
+    .middle-panel.mp-collapsed .tabs-row,
+    .middle-panel.mp-collapsed .email-list {
+      display: none !important;
+    }
+
+    .middle-panel.mp-collapsed .compact-list-header {
+      display: flex !important;
+    }
+
     /* ── Email List ── */
     .email-list {
       flex: 1;
       overflow-y: auto;
       overflow-x: hidden;
-      margin-top: -4px;
     }
 
     .email-list::-webkit-scrollbar {
@@ -928,41 +1001,21 @@
 
     .email-tile {
       padding: 14px 16px;
-      padding-left: 13px;
       margin: 4px 8px;
       border-radius: 8px;
       position: relative;
       cursor: pointer;
       background: #fff;
-      transition: transform 0.15s ease;
+      transition: background 0.15s ease, transform 0.15s ease;
       border-bottom: none !important;
-      z-index: 0;
     }
 
-    .email-tile::before {
-      content: '';
-      position: absolute;
-      inset: 0;
+    .email-tile:hover {
       background: #f4f5f8;
-      border-radius: inherit;
-      z-index: -1;
-      opacity: 0;
-      transform: scale(0.92);
-      transition: transform 0.2s ease-in, opacity 0.2s ease-in;
-    }
-
-    .email-tile:hover::before {
-      opacity: 1;
-      transform: scale(1.0);
-      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.2s ease-out;
     }
 
     .email-tile.selected {
       background: #eff6ff;
-    }
-
-    .email-tile.selected::before {
-      background: #e0ecfc;
     }
 
     .email-tile-inner {
@@ -1071,23 +1124,21 @@
     }
 
     .tile-subject {
-      font-size: 14px;
+      font-size: 13px;
       color: #333333;
       line-height: 18px;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      margin-top: 4px;
     }
 
     .tile-preview {
-      font-size: 14px;
+      font-size: 13px;
       color: #666666;
       line-height: 18px;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      margin-top: 2px;
     }
 
     .tile-time {
@@ -1159,18 +1210,165 @@
       display: flex;
       flex-direction: column;
       overflow: hidden;
-      background: #f9f9fa;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.01);
+      transition: max-width 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+      max-width: 1100px;
     }
 
     /* Action bar sits at the same level as the tabs row */
     .reading-action-bar {
-      height: 44px;
+      height: 56px;
       display: flex;
       align-items: center;
-      padding: 0 16px;
-      background: #f9f9fa;
+      justify-content: space-between;
+      padding: 0 12px 0 24px;
+      background: #fff;
       flex-shrink: 0;
-      padding-top: 12px;
+    }
+
+    /* ── Compose-search centering: when left or middle panel is collapsed ── */
+
+    /* ── Sender Avatars ── */
+    .tile-avatar {
+      display: none;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 600;
+      flex-shrink: 0;
+      user-select: none;
+      position: relative;
+    }
+
+    .avatar-dot {
+      display: none;
+      position: absolute;
+      top: -2px;
+      right: -2px;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #2170f4;
+      border: 1.5px solid #fff;
+    }
+
+    .email-tile:has(.tile-dot) .avatar-dot {
+      display: block;
+    }
+
+    .avatar-blue,
+    .avatar-orange,
+    .avatar-green,
+    .avatar-pink,
+    .avatar-purple {
+      background: #f4f5f8 !important;
+      color: #777 !important;
+      border: 1px solid #eef0f2;
+    }
+
+    .email-tile.selected .tile-avatar {
+      background: #eff6ff !important;
+      color: #2170f4 !important;
+      border-color: #d0e5ff !important;
+    }
+
+    /* Compact list header icon styling */
+    .compact-list-header {
+      display: none;
+      padding: 12px 0;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      flex-shrink: 0;
+      cursor: pointer;
+    }
+
+    .compact-total-count {
+      font-size: 12px;
+      font-weight: 500;
+      color: #aaa;
+      line-height: 1;
+    }
+
+    .compact-inbox-icon-container {
+      position: relative;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 6px;
+      transition: background 0.15s ease;
+    }
+
+    .compact-list-header:hover .compact-inbox-icon-container {
+      background: #f4f5f8;
+    }
+
+    .compact-inbox-icon-container img {
+      width: 18px;
+      height: 18px;
+      filter: invert(0.45);
+    }
+
+    .compact-unread-badge {
+      position: absolute;
+      top: 1px;
+      right: 1px;
+      width: 15px;
+      height: 15px;
+      padding: 0;
+      box-sizing: border-box;
+      background: #2170f4;
+      color: #fff;
+      font-size: 9px;
+      font-weight: 600;
+      line-height: 1;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1.5px solid #fff;
+    }
+
+    .compact-unread-badge:empty {
+      display: none;
+    }
+
+    .focus-toggle-btn {
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      border-radius: 6px;
+      color: #666;
+      background: #fff;
+      border: 1px solid #e9e9ec;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+      transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+      flex-shrink: 0;
+    }
+
+    .focus-toggle-btn:hover {
+      background: #f4f5f8;
+      border-color: #dedede;
+      color: #2170f4;
+    }
+
+    .focus-toggle-btn svg {
+      transition: transform 0.2s ease-in-out;
+    }
+
+    .focus-toggle-btn.active svg {
+      transform: rotate(180deg);
     }
 
     .email-action-bar {
@@ -1191,30 +1389,11 @@
       white-space: nowrap;
       position: relative;
       z-index: 1;
-      transition: transform 0.1s ease;
+
     }
 
-    .action-opt::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: #eaeaea;
-      border-radius: inherit;
-      z-index: -1;
-      opacity: 0;
-      transform: scale(0.85);
-      transition: transform 0.2s ease-in, opacity 0.2s ease-in;
-    }
 
-    .action-opt:not(.active):hover::before {
-      opacity: 1;
-      transform: scale(1.05);
-      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.25s ease-out;
-    }
 
-    .action-opt:not(.active):active {
-      transform: scale(var(--click-scale));
-    }
 
     .action-icon {
       width: 24px;
@@ -1244,29 +1423,13 @@
       border-radius: 5px;
       position: relative;
       z-index: 1;
-      transition: transform 0.1s ease;
+
     }
 
-    .action-more::before {
-      content: '';
-      position: absolute;
-      inset: 0;
+
+
+    .action-more:hover {
       background: #eaeaea;
-      border-radius: inherit;
-      z-index: -1;
-      opacity: 0;
-      transform: scale(0.85);
-      transition: transform 0.2s ease-in, opacity 0.2s ease-in;
-    }
-
-    .action-more:not(.active):hover::before {
-      opacity: 1;
-      transform: scale(1.05);
-      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.25s ease-out;
-    }
-
-    .action-more:not(.active):active {
-      transform: scale(var(--click-scale));
     }
 
     .action-more-icon {
@@ -1289,7 +1452,7 @@
       flex: 1;
       overflow-y: auto;
       padding: 16px 24px 24px;
-      background: #f9f9fa;
+      background: #fff;
     }
 
     .thread-content::-webkit-scrollbar {
@@ -1312,10 +1475,11 @@
     .thread-tile {
       position: relative;
       z-index: 5;
-      border: 1px solid var(--card-border-color);
-      border-radius: var(--card-border-radius);
-      margin-bottom: var(--card-spacing);
+      border: 1px solid #e9e9ec;
+      border-radius: 8px;
+      margin-bottom: 16px;
       background: #fff;
+      box-shadow: none;
     }
 
     .thread-tile-inner {
@@ -1345,13 +1509,11 @@
     }
 
     .thread-meta {
-      position: absolute;
-      right: 12px;
-      top: 50%;
-      transform: translateY(-50%);
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
+      flex-shrink: 0;
+      margin-left: auto;
     }
 
     .thread-date {
@@ -1375,19 +1537,19 @@
       object-fit: contain;
     }
 
-    /* ── Thread Stack (Hidden overlapping card stack) ── */
+    /* ── Thread Stack (Single Overlapping Card Stack) ── */
     .thread-stack {
       position: relative;
-      margin-bottom: var(--card-spacing);
+      margin-bottom: 16px;
       cursor: pointer;
-      border-radius: var(--card-border-radius);
+      border-radius: 8px;
     }
 
     .stack-card {
       position: relative;
       background: #fff;
-      border: 1px solid var(--card-border-color);
-      border-radius: var(--card-border-radius);
+      border: 1px solid #e9e9ec;
+      border-radius: 8px;
       box-sizing: border-box;
       box-shadow: none;
       transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
@@ -1397,25 +1559,17 @@
     /* Stacked (collapsed) state */
     .thread-stack:not(.expanded) .stack-card {
       height: 60px;
-      margin-bottom: -60px;
-      opacity: 0;
-      pointer-events: none;
-      border-color: transparent;
+      margin-bottom: -50px;
+      /* Pulls next card up, leaving 10px spacing */
       box-shadow: none;
-      background: transparent;
     }
 
-    /* Card 1 (Louis Litt) remains visible when collapsed */
     .thread-stack:not(.expanded) .stack-card.card-1 {
-      opacity: 1;
       margin-bottom: 0;
-      pointer-events: auto;
-      border: 1px solid var(--card-border-color);
-      background: #fff;
       box-shadow: none;
     }
 
-    /* Hide contents of collapsed cards except Card 1 */
+    /* Hide contents in collapsed state */
     .stack-card-content {
       opacity: 0;
       transition: opacity 0.3s ease;
@@ -1426,9 +1580,61 @@
       pointer-events: none;
     }
 
+    /* Ordering to ensure proper stacking */
+    .stack-card.card-5 {
+      z-index: 1;
+    }
+
+    .stack-card.card-4 {
+      z-index: 2;
+    }
+
+    .stack-card.card-3 {
+      z-index: 3;
+    }
+
+    .stack-card.card-2 {
+      z-index: 4;
+    }
+
+    .stack-card.card-1 {
+      z-index: 5;
+    }
+
+    /* Show frontmost card content when collapsed */
     .thread-stack:not(.expanded) .stack-card.card-1 .stack-card-content {
       opacity: 1;
-      pointer-events: auto;
+    }
+
+    /* The pill hovering over the stacked section */
+    .stack-pill {
+      position: absolute;
+      top: 20px;
+      /* Centered between top of card-5 (0) and top of card-1 (40) */
+      left: 50%;
+      transform: translate(-50%, -50%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 500;
+      color: #666;
+      background: #fdfdfd;
+      border: 1px solid #d4d4d4;
+      border-radius: 6px;
+      padding: 4px 12px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+      transition: opacity 0.3s ease, background 0.15s ease, transform 0.2s ease;
+      z-index: 10;
+      pointer-events: none;
+    }
+
+    .thread-stack:not(.expanded):hover .stack-pill {
+      background: #f0f0f0;
+      border-color: #ccc;
+      transform: translate(-50%, -50%);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+      color: #333;
     }
 
     /* Expanded state */
@@ -1438,12 +1644,9 @@
 
     .thread-stack.expanded .stack-card {
       height: 60px;
-      margin-bottom: var(--card-spacing);
-      opacity: 1;
-      pointer-events: auto;
-      border: 1px solid var(--card-border-color);
-      background: #fff;
-      box-shadow: none;
+      /* Natural expanded tile height */
+      margin-bottom: 8px;
+      /* Normal tile spacing */
     }
 
     .thread-stack.expanded .stack-card-content {
@@ -1451,63 +1654,20 @@
       pointer-events: auto;
     }
 
-    /* Ordering to ensure proper stacking */
-    .stack-card.card-5 { z-index: 1; }
-    .stack-card.card-4 { z-index: 2; }
-    .stack-card.card-3 { z-index: 3; }
-    .stack-card.card-2 { z-index: 4; }
-    .stack-card.card-1 { z-index: 5; }
-
-    /* Stack Pill Container (Flat design like elevation redesign) */
-    .stack-pill-container {
-      display: flex;
-      justify-content: center;
-      margin-top: 12px;
-      margin-bottom: 16px;
-      position: relative;
-      max-height: 40px;
-      opacity: 1;
-      transition: all 0.3s ease;
-    }
-
-    .thread-stack.expanded .stack-pill-container {
+    .thread-stack.expanded .stack-pill {
       opacity: 0;
-      max-height: 0;
-      margin: 0;
       pointer-events: none;
-    }
-
-    .stack-pill {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 13px;
-      font-weight: 500;
-      color: #666;
-      background: transparent;
-      border: none;
-      border-radius: 6px;
-      padding: 4px 12px;
-      box-shadow: none;
-      transition: background 0.15s ease, transform 0.15s ease;
-      cursor: pointer;
-      outline: none;
-    }
-
-    .stack-pill:hover {
-      background: #f0f0f2;
-      transform: scale(1.02);
-      box-shadow: none;
-      color: #333;
+      transform: translate(-50%, -50%) scale(0.9);
     }
 
     /* Expanded tile */
     .expanded-tile {
-      border: 1px solid var(--card-border-color);
-      border-radius: var(--card-border-radius);
+      border: 1px solid #e9e9ec;
+      border-radius: 8px;
       background: #fff;
-      margin-bottom: var(--card-spacing);
+      margin-bottom: 16px;
       overflow: hidden;
+      box-shadow: none;
     }
 
     .expanded-header {
@@ -1642,30 +1802,11 @@
       white-space: nowrap;
       position: relative;
       z-index: 1;
-      transition: transform 0.1s ease;
+
     }
 
-    .reply-action::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: #f5f5f5;
-      border-radius: inherit;
-      z-index: -1;
-      opacity: 0;
-      transform: scale(0.85);
-      transition: transform 0.2s ease-in, opacity 0.2s ease-in;
-    }
 
-    .reply-action:not(.active):hover::before {
-      opacity: 1;
-      transform: scale(1.05);
-      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.25s ease-out;
-    }
 
-    .reply-action:not(.active):active {
-      transform: scale(var(--click-scale));
-    }
 
     .reply-action-icon {
       width: 24px;
@@ -1783,39 +1924,8 @@
       cursor: pointer;
     }
 
-    .app-switcher-item::before {
-      content: "";
-      position: absolute;
-      inset: 0;
+    .app-switcher-item:hover {
       background: #f2f2f2;
-      border-radius: 4px;
-      z-index: -1;
-      opacity: 0;
-      transform: scale(0.8);
-      /* Exit transition: shrinks and fades off cleanly when mouse leaves */
-      transition: transform 0.2s ease-in, opacity 0.2s ease-in;
-      pointer-events: none;
-    }
-
-    .app-switcher-item:hover::before {
-      opacity: 1;
-      transform: scale(1);
-      /* Enter transition: zooms in and fades in with spring bounce on hover */
-      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.25s ease-out;
-    }
-
-    .app-switcher-item:hover .app-icon {
-      transform: scale(1.06);
-      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
-    }
-
-    .app-switcher-item:active::before {
-      transform: scale(var(--click-scale));
-      transition: transform 0.1s ease;
-    }
-
-    .app-switcher-item:active .app-icon {
-      transform: scale(var(--click-scale));
     }
 
     .app-icon {
@@ -1826,7 +1936,6 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: transform 0.2s ease-in;
     }
 
     .app-icon-img {
@@ -2050,6 +2159,13 @@
     <!-- Sidebar -->
     <div class="sidebar">
 
+      <!-- Edge toggle button -->
+      <button class="sidebar-edge-toggle" onclick="toggleSidebar()" title="Toggle Sidebar">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+      </button>
+
       <!-- Header with logo -->
       <div class="sidebar-header">
         <div class="tab-switch">
@@ -2078,6 +2194,7 @@
             </div>
             <span class="account-email-text">ella.henderson@avontechlabs.com</span>
           </div>
+
         </div>
 
         <!-- Inbox (active) -->
@@ -2086,6 +2203,8 @@
             <img src="assets/f2abf784-8ff3-4cb6-8424-a3f9ea66f6c4.svg" alt="">
           </div>
           <span class="nav-item-label active">Inbox</span>
+
+
 
           <span class="nav-badge">18</span>
         </div>
@@ -2212,10 +2331,6 @@
 
       <!-- Footer -->
       <div style="position:relative; flex-shrink:0;">
-        <div style="height:1px; position:relative; overflow:visible;">
-          <img src="assets/0d00b891-46d6-4063-acc9-0db4c8c41036.svg" alt=""
-            style="position:absolute; inset:-1px 0; width:100%; height:2px; object-fit:fill;">
-        </div>
         <div class="sidebar-footer">
           <div class="footer-btn">
             <div class="footer-btn-icon">
@@ -2261,8 +2376,16 @@
             </div>
           </div>
           <div class="search-bar">
-            <img class="search-lens-icon" src="assets/31fb0942-5496-4310-8ed0-427ccce7cfe6.svg" alt="">
-            <input type="text" placeholder="Search mail, files & links">
+            <div class="search-icon">
+              <img src="assets/31fb0942-5496-4310-8ed0-427ccce7cfe6.svg" alt=""
+                style="inset:0; width:100%; height:100%;">
+            </div>
+            <input type="text" placeholder="Search in ella@avontech.com" readonly>
+            <div class="search-divider"></div>
+            <div class="search-dropdown">
+              <img src="assets/e458459b-dce0-4c30-be8a-322441399ee5.svg" alt="">
+            </div>
+
           </div>
         </div>
         <div class="toolbar-right">
@@ -2296,11 +2419,16 @@
         <div class="middle-panel">
           <div class="middle-refresh-overlay"></div>
 
+          <!-- Compact inbox indicator (shown when middle panel is collapsed) -->
+          <div class="compact-list-header" onclick="toggleMiddlePanel()" title="Expand email list">
+            <div class="compact-inbox-icon-container">
+              <img src="assets/f2abf784-8ff3-4cb6-8424-a3f9ea66f6c4.svg" alt="Inbox">
+              <span class="compact-unread-badge"></span>
+            </div>
+          </div>
+
           <!-- Tabs -->
           <div class="tabs-row">
-            <div class="tab-checkbox-wrap">
-              <div class="chk"><img src="assets/392bf29c-08b1-44e8-b95b-b99905e722e6.svg" alt=""></div>
-            </div>
             <div class="tab-group">
               <div class="tab-item">
                 <div class="tab-item-label">Priority (25)</div>
@@ -2311,10 +2439,17 @@
               </div>
             </div>
             <div class="tabs-right-container">
+
               <div class="all-mails-dropdown">
                 <span>All mails</span>
                 <div class="dd-arrow"><img src="assets/7bd47053-31b1-485b-89c1-4496be66b2fd.svg" alt=""></div>
               </div>
+              <button class="mp-toggle-btn" onclick="toggleMiddlePanel()" title="Toggle email list">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="4" y1="4" x2="4" y2="20"></line>
+                  <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
+              </button>
             </div>
             <div class="tabs-divider">
               <img src="assets/2a9d0ebf-7f52-4d67-97ca-9f3754ce48b2.svg" alt="">
@@ -2327,6 +2462,8 @@
 
             <div class="email-tile">
               <div class="email-tile-inner">
+                <div class="tile-avatar avatar-blue">SK<div class="avatar-dot"></div>
+                </div>
                 <div class="tile-icons">
                   <div class="tile-chk">
                     <div class="chk"><img src="assets/392bf29c-08b1-44e8-b95b-b99905e722e6.svg" alt=""></div>
@@ -2358,6 +2495,8 @@
             <!-- Tile 2: selected, unread -->
             <div class="email-tile selected">
               <div class="email-tile-inner">
+                <div class="tile-avatar avatar-orange">NR<div class="avatar-dot"></div>
+                </div>
                 <div class="tile-icons">
                   <div class="tile-chk">
                     <div class="chk"><img src="assets/392bf29c-08b1-44e8-b95b-b99905e722e6.svg" alt=""></div>
@@ -2387,12 +2526,15 @@
             </div>
 
             <!-- Tiles 3–7 -->
-            <div class="email-tile" style="border-bottom:1px solid #f0f0f0;">
+            <div class="email-tile">
               <div class="email-tile-inner">
+                <div class="tile-avatar avatar-green">DJ<div class="avatar-dot"></div>
+                </div>
                 <div class="tile-icons">
                   <div class="tile-chk">
                     <div class="chk"><img src="assets/392bf29c-08b1-44e8-b95b-b99905e722e6.svg" alt=""></div>
                   </div>
+                  <div class="tile-dot"></div>
                   <div class="tile-star"><img src="assets/1e1696aa-5b8d-4409-97fd-4ce5c85c5ae5.svg" alt=""></div>
                 </div>
                 <div class="tile-content">
@@ -2415,8 +2557,10 @@
               </div>
             </div>
 
-            <div class="email-tile" style="border-bottom:1px solid #f0f0f0;">
+            <div class="email-tile">
               <div class="email-tile-inner">
+                <div class="tile-avatar avatar-pink">S<div class="avatar-dot"></div>
+                </div>
                 <div class="tile-icons">
                   <div class="tile-chk">
                     <div class="chk"><img src="assets/392bf29c-08b1-44e8-b95b-b99905e722e6.svg" alt=""></div>
@@ -2443,8 +2587,10 @@
               </div>
             </div>
 
-            <div class="email-tile" style="border-bottom:1px solid #f0f0f0;">
+            <div class="email-tile">
               <div class="email-tile-inner">
+                <div class="tile-avatar avatar-blue">SK<div class="avatar-dot"></div>
+                </div>
                 <div class="tile-icons">
                   <div class="tile-chk">
                     <div class="chk"><img src="assets/392bf29c-08b1-44e8-b95b-b99905e722e6.svg" alt=""></div>
@@ -2471,8 +2617,10 @@
               </div>
             </div>
 
-            <div class="email-tile" style="border-bottom:1px solid #f0f0f0;">
+            <div class="email-tile">
               <div class="email-tile-inner">
+                <div class="tile-avatar avatar-orange">NR<div class="avatar-dot"></div>
+                </div>
                 <div class="tile-icons">
                   <div class="tile-chk">
                     <div class="chk"><img src="assets/392bf29c-08b1-44e8-b95b-b99905e722e6.svg" alt=""></div>
@@ -2501,6 +2649,8 @@
 
             <div class="email-tile">
               <div class="email-tile-inner">
+                <div class="tile-avatar avatar-orange">NR<div class="avatar-dot"></div>
+                </div>
                 <div class="tile-icons">
                   <div class="tile-chk">
                     <div class="chk"><img src="assets/392bf29c-08b1-44e8-b95b-b99905e722e6.svg" alt=""></div>
@@ -2570,6 +2720,14 @@
                 <div class="action-more-icon"><img src="assets/495649bc-11a9-41e0-84b4-81a6600de9f6.svg" alt=""></div>
               </div>
             </div>
+            <div class="focus-toggle-btn" onclick="toggleFocusMode()" title="Toggle Focus Mode">
+              <svg class="focus-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path class="expand-arrows" d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"></path>
+                <path class="contract-arrows" d="M4 14h6v6M20 10h-6V4M14 10l7-7M10 14l-7 7" style="display: none;">
+                </path>
+              </svg>
+            </div>
           </div>
 
           <!-- Thread -->
@@ -2583,20 +2741,15 @@
                 <span class="thread-preview">And as such the media have been very influential in shaping
                   societ...</span>
                 <div class="thread-meta">
-                  <div class="thread-attach"><img src="assets/137b4a38-f7e3-4939-b28d-56d8013f7e6b.svg" alt=""></div>
                   <span class="thread-date">Jun 3</span>
+                  <div class="thread-attach"><img src="assets/137b4a38-f7e3-4939-b28d-56d8013f7e6b.svg" alt=""></div>
                 </div>
 
               </div>
             </div>
 
             <!-- Email Stack -->
-            <div class="thread-stack" onclick="expandStack(this)">
-              <!-- Show 7 older messages button -->
-              <div class="stack-pill-container">
-                <button class="stack-pill">Show 7 older messages</button>
-              </div>
-
+            <div class="thread-stack">
               <div class="stack-card card-5">
                 <div class="stack-card-content thread-tile-inner">
                   <span class="thread-sender">Rachel Zane</span>
@@ -2632,6 +2785,7 @@
                   <div class="thread-meta"><span class="thread-date">Jun 9</span></div>
                 </div>
               </div>
+              <div class="stack-pill">7 older messages</div>
             </div>
 
 
@@ -2707,6 +2861,147 @@
           </div><!-- /thread-content -->
         </div><!-- /reading-pane -->
 
+        <!-- Tasks Sidebar -->
+        <div class="tasks-panel" id="tasks-panel">
+          <!-- Expanded View (slides open/closed) -->
+          <div class="tasks-expanded-view">
+            <div class="tasks-header">
+              <div class="tasks-heading">
+                <img src="app_switcher_assets/grid_icons/tasks.svg" class="tasks-heading-icon" alt="">
+                <span class="tasks-heading-text">Tasks</span>
+              </div>
+            </div>
+
+            <div class="tasks-list-body">
+              <div class="tasks-top-row">
+                <div class="tasks-add-card">
+                  <img src="tasks_assets/ic-plus-blue.svg" alt="Add" class="add-card-icon">
+                  <span class="add-card-text">Add a task</span>
+                </div>
+                <div class="tasks-action-icons">
+                  <div class="tasks-action-icon" title="Maximize">
+                    <img src="tasks_assets/ic-maximize.svg" alt="Maximize">
+                  </div>
+                  <div class="tasks-action-icon" title="More options">
+                    <img src="tasks_assets/ic-more-vert.svg" alt="Options">
+                  </div>
+                </div>
+              </div>
+
+              <div class="tasks-category-header" style="padding-top: 16px;">
+                <span class="task-tag tag-work">Work</span>
+              </div>
+
+              <!-- Task Item 1 -->
+              <div class="task-item">
+                <div class="task-item-checkbox">
+                  <img src="tasks_assets/ic-checkbox.svg" alt="Checkbox">
+                </div>
+                <div class="task-item-content">
+                  <div class="task-item-title">Check Design System File</div>
+                  <div class="task-item-meta">
+                    <div class="task-badge">
+                      <img src="tasks_assets/ic-calendar-gray.svg" alt="" class="meta-icon">
+                      <span>Today</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Task Item 2 -->
+              <div class="task-item">
+                <div class="task-item-checkbox">
+                  <img src="tasks_assets/ic-checkbox.svg" alt="Checkbox">
+                </div>
+                <div class="task-item-content">
+                  <div class="task-item-title">Return Request (Summer Sandals)</div>
+                  <div class="task-item-meta">
+                    <div class="task-badge">
+                      <img src="tasks_assets/ic-calendar-gray.svg" alt="" class="meta-icon">
+                      <span>Today</span>
+                    </div>
+                    <div class="task-badge">
+                      <img src="tasks_assets/ic-mail-gray.svg" alt="" class="meta-icon">
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Task Item 3 -->
+              <div class="task-item">
+                <div class="task-item-checkbox">
+                  <img src="tasks_assets/ic-checkbox.svg" alt="Checkbox">
+                </div>
+                <div class="task-item-content">
+                  <div class="task-item-title">Check Design System File</div>
+                  <div class="task-item-meta">
+                    <div class="task-badge">
+                      <img src="tasks_assets/ic-calendar-gray.svg" alt="" class="meta-icon">
+                      <span>Today</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="tasks-category-header" style="margin-top: 16px; padding-top: 8px;">
+                <span class="task-tag tag-office">Office</span>
+              </div>
+
+              <!-- Task Item 4 -->
+              <div class="task-item">
+                <div class="task-item-checkbox">
+                  <img src="tasks_assets/ic-checkbox.svg" alt="Checkbox">
+                </div>
+                <div class="task-item-content">
+                  <div class="task-item-title">Order whiteboard markers</div>
+                  <div class="task-item-meta">
+                    <div class="task-badge">
+                      <img src="tasks_assets/ic-calendar-gray.svg" alt="" class="meta-icon">
+                      <span>Tomorrow</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Task Item 5 -->
+              <div class="task-item">
+                <div class="task-item-checkbox">
+                  <img src="tasks_assets/ic-checkbox.svg" alt="Checkbox">
+                </div>
+                <div class="task-item-content">
+                  <div class="task-item-title">Submit Q2 travel expense reports</div>
+                  <div class="task-item-meta">
+                    <div class="task-badge">
+                      <img src="tasks_assets/ic-calendar-gray.svg" alt="" class="meta-icon">
+                      <span>Jul 2</span>
+                    </div>
+                    <div class="task-badge">
+                      <img src="tasks_assets/ic-mail-gray.svg" alt="" class="meta-icon">
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Compact Dock (always visible on the right) -->
+          <div class="tasks-compact-dock">
+            <div class="compact-dock-collapse-btn" title="Collapse panel">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="20" y1="4" x2="20" y2="20"></line>
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </div>
+            <div class="compact-dock-calendar-btn" title="Calendar" data-tab="calendar">
+              <img src="app_switcher_assets/grid_icons/calendar.svg" alt="Calendar">
+            </div>
+            <div class="compact-dock-tasks-btn" title="Tasks" data-tab="tasks">
+              <img src="app_switcher_assets/grid_icons/tasks.svg" alt="Tasks">
+            </div>
+          </div>
+        </div>
+
       </div><!-- /content-area -->
     </div><!-- /main-area -->
 
@@ -2725,101 +3020,22 @@
       opacity: 0 !important;
     }
 
-    /* ── Refresh Toast ── */
-    #refresh-toast {
-      position: fixed;
-      bottom: 48px;
-      left: 50%;
-      transform: translateX(-50%) translateY(100px);
-      background: #2a2a2a;
-      color: #fff;
-      font-size: 14.5px;
-      font-weight: 500;
-      padding: 16px 28px;
-      border-radius: 6px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
-      white-space: nowrap;
-      z-index: 9999;
-      pointer-events: none;
-      transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.35s ease;
-      opacity: 0;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    #refresh-toast .toast-msg {
-      min-width: 150px;
-      text-align: left;
-      position: relative;
-      display: flex;
-      align-items: center;
-    }
-
-    #refresh-toast .msg-refreshing {
-      opacity: 1;
-      transition: opacity 0.25s ease;
-    }
-
-    #refresh-toast .msg-refreshed {
+    /* ── Sidebar folder fade overlay ── */
+    .sidebar-folder-overlay {
       position: absolute;
       left: 0;
+      right: 0;
+      pointer-events: none;
+      z-index: 6;
       opacity: 0;
-      transition: opacity 0.25s ease;
+      transform: translateY(-8px);
+      transition: opacity 0.35s ease, transform 0.35s ease;
+      background: rgba(28, 28, 28, 0.45);
     }
 
-    #refresh-toast.toast-done .msg-refreshing {
-      opacity: 0;
-    }
-
-    #refresh-toast.toast-done .msg-refreshed {
+    .sidebar-folder-overlay.sweeping {
       opacity: 1;
-    }
-
-    #refresh-toast .toast-icon {
-      width: 20px;
-      height: 20px;
-      flex-shrink: 0;
-      position: relative;
-    }
-
-    #refresh-toast .toast-spin {
-      width: 20px;
-      height: 20px;
-      object-fit: contain;
-      filter: invert(1);
-      opacity: 0.75;
-      animation: spin 0.8s linear infinite;
-      position: absolute;
-      inset: 0;
-      transition: opacity 0.2s ease;
-    }
-
-    #refresh-toast .toast-tick {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 18px;
-      color: #22c55e;
-      font-weight: 700;
-      opacity: 0;
-      transition: opacity 0.25s ease;
-    }
-
-    #refresh-toast.toast-in {
-      transform: translateX(-50%) translateY(0);
-      opacity: 1;
-    }
-
-    #refresh-toast.toast-done .toast-spin {
-      opacity: 0;
-      animation: none;
-    }
-
-    #refresh-toast.toast-done .toast-tick {
-      opacity: 1;
+      transform: translateY(0);
     }
 
     /* ── Shared: spinning refresh icon ── */
@@ -2833,28 +3049,94 @@
       }
     }
 
-    /* ── Logo refresh click scaling ── */
-    .titan-logo {
-      cursor: pointer;
-      transition: transform 0.1s ease;
+    /* ── Middle panel overlay (sweep variant — covers tabs + email list) ── */
+    .middle-panel {
+      position: relative;
     }
 
-    .titan-logo:active {
-      transform: scale(var(--click-scale));
+    .middle-refresh-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(210, 213, 220, 0.22);
+      opacity: 0;
+      pointer-events: none;
+      z-index: 4;
+      transition: opacity 0.4s ease;
+    }
+
+    /* ── Refresh overlay (always in DOM, fade in/out via JS) ── */
+    .refresh-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(210, 213, 220, 0.22);
+      opacity: 0;
+      pointer-events: none;
+      z-index: 4;
+      transition: opacity 0.4s ease;
+    }
+
+    /* ── C · Fade (vertical shimmer sweep) ── */
+    .email-list.fade-refresh {
+      overflow: hidden;
+    }
+
+    .email-list.fade-refresh .email-tile {
+      pointer-events: none;
+    }
+
+    .email-list.fade-stopping .email-tile {
+      pointer-events: auto;
+    }
+
+    /* ── Iteration 2 overrides ── */
+    body[data-iteration="2"] .account-refresh {
+      display: none !important;
+    }
+
+    body[data-iteration="2"] .titan-logo {
+      cursor: pointer;
+
+    }
+
+    body[data-iteration="2"] .titan-logo:active {}
+
+    /* ── Iteration 3 overrides ── */
+    body[data-iteration="3"] .account-refresh {
+      display: none !important;
+    }
+
+    body[data-iteration="3"]
+
+    /* ── Iteration 4 overrides ── */
+    body[data-iteration="4"] .account-refresh {
+      display: none !important;
+    }
+
+    body[data-iteration="4"] .sidebar-refresh-btn {
+      display: flex !important;
+    }
+
+    .sidebar-refresh-btn {
+      display: none !important;
+      /* hidden by default */
+      width: 20px !important;
+      height: 20px !important;
+      margin-left: auto;
+    }
+
+    .sidebar-refresh-btn:hover {
+      background: rgba(255, 255, 255, 0.15) !important;
+    }
+
+    .sidebar-refresh-btn img {
+      width: 12px;
+      height: 12px;
+      filter: invert(1) brightness(2);
     }
   </style>
 
   <div id="email-tooltip"></div>
-  <div id="refresh-toast">
-    <div class="toast-icon">
-      <img class="toast-spin" src="assets/b08917ed-2fc9-4353-876e-6c4c19977593.svg" alt="">
-      <span class="toast-tick">✓</span>
-    </div>
-    <div class="toast-msg">
-      <span class="msg-refreshing">Mailbox refreshing</span>
-      <span class="msg-refreshed">Mailbox up to date</span>
-    </div>
-  </div>
+
 
   <!-- App Switcher Dropdown (App Switcher - Light) -->
   <div class="app-switcher-dropdown" id="app-switcher">
@@ -3238,7 +3520,7 @@
       flex-direction: column;
       z-index: 600;
       transform: translateY(100%);
-      transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+
       overflow: hidden;
       font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', sans-serif;
     }
@@ -3692,69 +3974,15 @@
 
     .titan-action-btn:hover {
       background: var(--btn-hover-bg, #f0f2f5);
-      transform: scale(1.1);
+
     }
 
-    .titan-action-btn:active {
-      transform: scale(var(--click-scale));
-      transition: transform 0.1s ease;
-    }
+    .titan-action-btn:active {}
 
     .titan-action-btn svg {
       display: block;
     }
 
-    .titan-action-btn:not(#lottie-read-receipt) svg path {
-      transition: fill 0.2s ease, stroke 0.2s ease;
-    }
-
-    .titan-action-btn:not(#lottie-read-receipt):hover svg path {
-      fill: var(--btn-hover-fill);
-      stroke: var(--btn-hover-stroke);
-    }
-
-    /* Hover Color Modifier Classes via CSS Variables */
-    .action-btn-reminder {
-      --btn-hover-fill: #c084fc;
-    }
-
-    .action-btn-text {
-      --btn-hover-fill: #60a5fa;
-    }
-
-    .action-btn-attach {
-      --btn-hover-fill: #fb923c;
-    }
-
-    .action-btn-drive {
-      --btn-hover-fill: #34a853;
-    }
-
-    .action-btn-image {
-      --btn-hover-fill: #e05353;
-    }
-
-    .action-btn-emoji {
-      --btn-hover-fill: #ffa000;
-    }
-
-    .action-btn-signature {
-      --btn-hover-fill: #f472b6;
-    }
-
-    .action-btn-bookings {
-      --btn-hover-fill: #3ec1d3;
-    }
-
-    .action-btn-html {
-      --btn-hover-fill: #2dd4bf;
-      --btn-hover-stroke: #2dd4bf;
-    }
-
-    .action-btn-campaign {
-      --btn-hover-fill: #5c53db;
-      --btn-hover-bg: #edeefd;
-    }
 
     .ci-campaign {
       display: block;
@@ -3847,48 +4075,493 @@
       height: 16px;
     }
 
-    /* ── Shared Composer Tooltip ── */
-    .shared-comp-tooltip {
-      position: fixed;
-      background: #1c1c1c;
-      color: #fff;
-      padding: 5px 8px;
-      border-radius: 4px;
-      font-size: 11px;
-      font-weight: 500;
-      pointer-events: none;
+    /* ── Tasks Side Panel ── */
+    .tasks-panel {
+      width: 56px;
+      transition: width 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+      overflow: hidden;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.01);
+      display: flex;
+      flex-direction: row;
+      flex-shrink: 0;
+      align-self: flex-start;
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', sans-serif;
+    }
+
+    .tasks-panel.tasks-open {
+      width: 334px;
+      align-self: stretch;
+    }
+
+    .tasks-expanded-view {
+      width: 0;
       opacity: 0;
-      transform: translate(-50%, -4px) scale(0.95);
-      transition: opacity 0.2s ease, transform 0.2s ease, left 0.2s cubic-bezier(0.22, 1, 0.36, 1), top 0.2s cubic-bezier(0.22, 1, 0.36, 1);
-      z-index: 10000;
-      white-space: nowrap;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      transition: width 0.25s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      height: 0;
+      overflow: hidden;
+      flex-shrink: 0;
     }
 
-    .shared-comp-tooltip.visible {
+    .tasks-panel.tasks-open .tasks-expanded-view {
+      width: 278px;
       opacity: 1;
-      transform: translate(-50%, 0) scale(1);
+      height: 100%;
     }
 
-    .shared-comp-tooltip.no-slide {
-      transition: none !important;
+    .tasks-compact-dock {
+      width: 56px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: #fff;
+      height: auto;
+      flex-shrink: 0;
+      border-left: 1px solid #f4f5f8;
+      padding: 12px 0;
     }
+
+    .compact-dock-collapse-btn {
+      width: 36px;
+      height: 0;
+      opacity: 0;
+      transform: scale(0);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      border-radius: 6px;
+      transition: height 0.2s ease, opacity 0.2s ease, transform 0.2s ease, margin-bottom 0.2s ease, background 0.15s ease;
+      pointer-events: none;
+      color: #5f6368;
+    }
+
+    .compact-dock-collapse-btn:hover {
+      background: #f4f5f8;
+      color: #202124;
+    }
+
+    .tasks-panel.tasks-open .compact-dock-collapse-btn {
+      height: 36px;
+      opacity: 0.7;
+      transform: scale(1);
+      margin-bottom: 12px;
+      pointer-events: auto;
+    }
+
+    .compact-dock-calendar-btn,
+    .compact-dock-tasks-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background 0.15s ease;
+    }
+
+    .compact-dock-calendar-btn:hover,
+    .compact-dock-tasks-btn:hover {
+      background: #f4f5f8;
+    }
+
+    /* Active background only when panel is open */
+    .tasks-panel.tasks-open .compact-dock-calendar-btn.active,
+    .tasks-panel.tasks-open .compact-dock-tasks-btn.active {
+      background: #eff6ff;
+    }
+
+    .compact-dock-calendar-btn img {
+      width: 24px;
+      height: 24px;
+      transition: width 0.2s ease, height 0.2s ease;
+    }
+
+    .compact-dock-tasks-btn {
+      margin-top: 12px;
+    }
+
+    .compact-dock-tasks-btn img {
+      width: 18px;
+      height: 18px;
+      transition: width 0.2s ease, height 0.2s ease;
+    }
+
+    /* Non-active icons shrink when panel is expanded */
+    .tasks-panel.tasks-open .compact-dock-calendar-btn:not(.active) img {
+      width: 18px;
+      height: 18px;
+    }
+
+    .tasks-panel.tasks-open .compact-dock-tasks-btn:not(.active) img {
+      width: 14px;
+      height: 14px;
+    }
+
+    .tasks-header {
+      border-bottom: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 24px 16px;
+      flex-shrink: 0;
+      background: #fff;
+    }
+
+    .tasks-heading {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .tasks-heading-icon {
+      flex-shrink: 0;
+    }
+
+    .tasks-heading-icon[src*="calendar.svg"] {
+      width: 22px;
+      height: 22px;
+    }
+
+    .tasks-heading-icon[src*="tasks.svg"] {
+      width: 18px;
+      height: 18px;
+    }
+
+    .tasks-heading-text {
+      font-size: 15px;
+      font-weight: 600;
+      color: #202124;
+      line-height: 1;
+    }
+
+    .tasks-tabs {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .tasks-tab {
+      height: 32px;
+      padding: 0 14px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+      color: #5f6368;
+      transition: all 0.15s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .tasks-tab span {
+      line-height: 1;
+    }
+
+    .tasks-tab-icon {
+      flex-shrink: 0;
+      opacity: 0.5;
+      transition: opacity 0.15s ease;
+    }
+
+    .tasks-tab-icon[src*="calendar.svg"] {
+      width: 26px;
+      height: 26px;
+      transform: translateY(-1px);
+    }
+
+    .tasks-tab-icon[src*="tasks.svg"] {
+      width: 18px;
+      height: 18px;
+    }
+
+    .tasks-tab.active .tasks-tab-icon {
+      opacity: 1;
+    }
+
+    .tasks-tab.active {
+      background: #eff6ff;
+      color: #2170f4;
+    }
+
+    .tasks-tab:hover:not(.active) {
+      background: #f4f5f8;
+      color: #1a73e8;
+    }
+
+    .tasks-tab-underline {
+      display: none;
+    }
+
+    .tasks-close-btn {
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      border-radius: 4px;
+      transition: background 0.15s;
+    }
+
+    .tasks-close-btn:hover {
+      background: #f1f3f4;
+    }
+
+    .tasks-close-btn img {
+      width: 16px;
+      height: 16px;
+    }
+
+
+
+    .tasks-top-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 12px 16px 8px 16px;
+    }
+
+    .tasks-add-card {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0;
+      flex: 1;
+      padding: 7px 14px;
+      border-radius: 8px;
+      background: #eff6ff;
+      border: 1px dashed #bfdbfe;
+      cursor: pointer;
+      transition: background 0.15s ease, border-color 0.15s ease;
+    }
+
+    .tasks-add-card:hover {
+      background: #dbeafe;
+      border-color: #3b82f6;
+    }
+
+    .add-card-text {
+      font-size: 13px;
+      font-weight: 600;
+      color: #1a73e8;
+    }
+
+    .add-card-icon {
+      width: 16px;
+      height: 16px;
+      filter: brightness(0) saturate(100%) invert(32%) sepia(98%) saturate(1511%) hue-rotate(208deg) brightness(101%) contrast(93%);
+    }
+
+    .tasks-action-icons {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .tasks-action-icon {
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      border-radius: 6px;
+      transition: background 0.15s;
+    }
+
+    .tasks-action-icon:hover {
+      background: #f4f5f8;
+    }
+
+    .tasks-action-icon img {
+      width: 22px;
+      height: 22px;
+    }
+
+    .tasks-avatar-badge {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: #2170f4;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 500;
+      position: relative;
+    }
+
+    /* ── Tasks List Body ── */
+    .tasks-list-body {
+      flex: 1;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      background: #fff;
+    }
+
+    .tasks-list-body::-webkit-scrollbar {
+      width: 0px;
+    }
+
+    .tasks-category-header {
+      background: transparent;
+      border-top: none;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px 10px 16px;
+      flex-shrink: 0;
+    }
+
+    .tasks-category-dot {
+      width: 10px;
+      height: 10px;
+    }
+
+    .tasks-category-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: #5692f6;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .task-item {
+      display: flex;
+      gap: 12px;
+      padding: 12px 16px;
+      border-bottom: none;
+      align-items: flex-start;
+      border-radius: 8px;
+      margin: 2px 8px;
+      background: transparent;
+      transition: background 0.15s ease;
+    }
+
+    .task-item:hover {
+      background: #f4f5f8;
+    }
+
+    .task-item-checkbox {
+      width: 16px;
+      height: 16px;
+      cursor: pointer;
+      margin-top: 2px;
+      flex-shrink: 0;
+    }
+
+    .task-item-checkbox img {
+      width: 100%;
+      height: 100%;
+      opacity: 0.5;
+      transition: opacity 0.15s ease;
+    }
+
+    .task-item-checkbox:hover img {
+      opacity: 1;
+    }
+
+    .task-item-content {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      flex: 1;
+      min-width: 0;
+    }
+
+    .task-item-title {
+      font-size: 14px;
+      font-weight: 500;
+      color: #202124;
+      line-height: 1.3;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .task-item-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      width: 100%;
+    }
+
+    .task-tag {
+      font-size: 10px;
+      font-weight: 600;
+      padding: 2px 6px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+      flex-shrink: 0;
+      line-height: 1.2;
+    }
+
+    .tag-work {
+      background: #e6f4ea;
+      color: #137333;
+    }
+
+    .tag-office {
+      background: #e8f0fe;
+      color: #1a73e8;
+    }
+
+    .task-item-meta {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 6px;
+    }
+
+    .task-badge {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 12px;
+      border-radius: 100px;
+      border: none;
+      background: #f4f5f8;
+      font-size: 11px;
+      color: #5f6368;
+      line-height: 1;
+      cursor: pointer;
+      transition: background 0.15s ease, color 0.15s ease;
+    }
+
+    .task-badge:hover {
+      background: #e2e6eb;
+      color: #202124;
+    }
+
+    .meta-icon {
+      width: 14px;
+      height: 14px;
+      opacity: 0.7;
+      display: block;
+    }
+
+    .toolbar-icon.titan-action-btn.active {
+      background: #eff6ff !important;
+      border-radius: 6px !important;
+    }
+
+
   </style>
 
   <script>
-    // ── Blue Buttons Ripple Effect ──────────────────────────────────────────
-    document.querySelectorAll('.split-btn-main, .split-btn-dd').forEach(part => {
-      part.addEventListener('click', (e) => {
-        part.classList.remove('ripple-active');
-        void part.offsetWidth; // Reflow to restart animation
-        part.classList.add('ripple-active');
-      });
-      part.addEventListener('animationend', (e) => {
-        if (e.animationName === 'border-ripple') {
-          part.classList.remove('ripple-active');
-        }
-      });
-    });
+
 
     // ── Email name tooltip ───────────────────────────────────────────────
     document.querySelectorAll('.account-email-text').forEach(emailText => {
@@ -3909,53 +4582,15 @@
       });
     });
 
+
+
+
+
     function triggerRefresh(btn) {
-      const isLogoClick = btn && (btn.classList.contains('titan-logo') || btn.closest('.titan-logo'));
-      const img = (btn && !isLogoClick) ? btn.querySelector('img') : null;
-      const list = document.querySelector('.email-list');
-
-      // Prevent double-trigger
-      if (list.classList.contains('toast-refreshing')) return;
-
-      // If new emails exist from a previous refresh, remove them first then proceed
-      const existing = list.querySelectorAll('.new-email-tile');
-      if (existing.length) {
-        existing.forEach(tile => tile.remove());
-      }
-
-      list.classList.add('toast-refreshing');
-
-      // 1. Spin icon continuously for the whole duration (guarded)
-      if (img) {
-        img.style.animation = 'none';
-        img.offsetHeight;
-        img.style.animation = 'spin 0.7s linear infinite';
-      }
-
-      const toast = document.getElementById('refresh-toast');
-      if (toast) {
-        // Slide in
-        toast.classList.remove('toast-done');
-        toast.classList.add('toast-in');
-
-        const duration = 1800 + Math.random() * 1200;
-        setTimeout(() => {
-          // Update to refreshed (CSS handles crossfade)
-          toast.classList.add('toast-done');
-          if (img) img.style.animation = '';
-          addNewEmail();
-          list.classList.remove('toast-refreshing');
-
-          // Slide out after a beat
-          setTimeout(() => {
-            toast.classList.remove('toast-in', 'toast-done');
-          }, 1600);
-        }, duration);
-      } else {
-        addNewEmail();
-        list.classList.remove('toast-refreshing');
-      }
+      addNewEmail();
     }
+
+
 
     const NEW_EMAILS = [
       { sender: 'Rohan Mehta', subject: 'Design review for onboarding flow', preview: 'Hey, can we sync on the onboarding screens before EOD?' },
@@ -3966,15 +4601,24 @@
     ];
     let newEmailIndex = 0;
 
-    function addNewEmail(animate = true) {
+    function addNewEmail() {
       const list = document.querySelector('.email-list');
       const data = NEW_EMAILS[newEmailIndex % NEW_EMAILS.length];
       newEmailIndex++;
 
+      // Compute initials
+      const parts = data.sender.split(' ');
+      const initials = parts.map(p => p[0]).join('').substring(0, 2).toUpperCase();
+
+      // Determine avatar color class based on sender name length hash
+      const colors = ['blue', 'orange', 'green', 'pink', 'purple'];
+      const colorClass = 'avatar-' + colors[data.sender.length % colors.length];
+
       const tile = document.createElement('div');
       tile.className = 'email-tile new-email-tile';
       tile.innerHTML = `
-    <div class="email-tile-inner" style="opacity:0;">
+    <div class="email-tile-inner" style="opacity:1;">
+      <div class="tile-avatar ${colorClass}">${initials}<div class="avatar-dot"></div></div>
       <div class="tile-icons">
         <div class="tile-chk"><div class="chk"><img src="assets/392bf29c-08b1-44e8-b95b-b99905e722e6.svg" alt=""></div></div>
         <div class="tile-dot"></div>
@@ -3995,48 +4639,77 @@
     </div>
     <div class="tile-divider"><img src="assets/5a7cff96-86fc-4121-9127-08bc8d0621c7.svg" alt=""></div>`;
 
+      // Instant append
       const overlay = list.querySelector('.refresh-overlay');
-
-      if (!animate) {
-        // Skeleton: just insert instantly, no animation
-        tile.querySelector('.email-tile-inner').style.opacity = '1';
-        overlay.after(tile);
-      } else {
-        // Start collapsed
-        tile.style.maxHeight = '0';
-        tile.style.paddingTop = '0';
-        tile.style.paddingBottom = '0';
-        tile.style.marginTop = '0';
-        tile.style.marginBottom = '0';
-        overlay.after(tile);
-
-        // Phase 1: expand height — existing emails push down visibly
-        requestAnimationFrame(() => {
-          requestAnimationFrame(() => {
-            tile.style.transition = 'max-height 0.4s cubic-bezier(0.22, 1, 0.36, 1), padding 0.4s cubic-bezier(0.22, 1, 0.36, 1), margin 0.4s cubic-bezier(0.22, 1, 0.36, 1)';
-            tile.style.maxHeight = '110px';
-            tile.style.paddingTop = '14px';
-            tile.style.paddingBottom = '14px';
-            tile.style.marginTop = '4px';
-            tile.style.marginBottom = '4px';
-          });
-        });
-
-        // Phase 2: fade in content after space opens
-        setTimeout(() => {
-          const inner = tile.querySelector('.email-tile-inner');
-          inner.style.transition = 'opacity 0.3s ease';
-          inner.style.opacity = '1';
-        }, 280);
-      }
-
-      // Keep max 3 new tiles
-      if (list.querySelectorAll('.new-email-tile').length > 3) {
-        list.querySelectorAll('.new-email-tile')[0].remove();
-      }
+      if (overlay) overlay.after(tile);
     }
 
 
+
+    function sweepSidebarNav(btn, isDone) {
+      if (isDone) {
+        const overlay = document.querySelector('.sidebar-folder-overlay');
+        if (overlay) {
+          overlay.classList.remove('sweeping');
+        }
+        return;
+      }
+
+      let accountHeader = null;
+      if (btn) {
+        accountHeader = btn.closest('.account-header');
+      }
+      if (!accountHeader) {
+        const activeNavItem = document.querySelector('.nav-item.active');
+        if (activeNavItem) {
+          let prev = activeNavItem.previousElementSibling;
+          while (prev) {
+            if (prev.classList.contains('account-header')) {
+              accountHeader = prev;
+              break;
+            }
+            prev = prev.previousElementSibling;
+          }
+        }
+      }
+      if (!accountHeader) {
+        accountHeader = document.querySelector('.account-header');
+      }
+      if (!accountHeader) return;
+
+      // Collect the folder nav items for this account
+      const items = [];
+      let el = accountHeader.nextElementSibling;
+      while (el && !el.classList.contains('sidebar-line') && !el.classList.contains('account-header')) {
+        if (el.classList.contains('nav-item')) items.push(el);
+        el = el.nextElementSibling;
+      }
+      if (!items.length) return;
+
+      // Measure from the account-header bottom to the last nav-item bottom
+      const navScroll = document.querySelector('.nav-scroll');
+      const scrollRect = navScroll.getBoundingClientRect();
+      const headerRect = accountHeader.getBoundingClientRect();
+      const lastRect = items[items.length - 1].getBoundingClientRect();
+
+      const topOffset = headerRect.bottom - scrollRect.top + navScroll.scrollTop;
+      const height = lastRect.bottom - headerRect.bottom;
+
+      // Create or reuse an overlay div
+      let overlay = navScroll.querySelector('.sidebar-folder-overlay');
+      if (!overlay) {
+        overlay = document.createElement('div');
+        overlay.className = 'sidebar-folder-overlay';
+        navScroll.appendChild(overlay);
+      }
+
+      overlay.style.top = topOffset + 'px';
+      overlay.style.height = height + 'px';
+
+      // Trigger animation
+      overlay.offsetHeight;
+      overlay.classList.add('sweeping');
+    }
 
     // ── App Switcher ─────────────────────────────────────────────────────
     (function initAppSwitcher() {
@@ -4104,96 +4777,238 @@
       if (!w.classList.contains('comp-open')) return;
       w.classList.toggle('comp-minimized');
     }
-    // ─────────────────────────────────────────────────────────────────────
 
-    // Apply initial config
-    (function applyConfig() {
-      // Add click listener to logo for refresh behavior
-      const logo = document.querySelector('.titan-logo');
-      if (logo) {
-        logo.addEventListener('click', function () {
-          triggerRefresh(this);
+    // Align the compose-search bar:
+    // - Left-aligned with the inbox container when the middle panel is expanded
+    // - Centered in the toolbar when the middle panel is collapsed
+    function alignToolbar() {
+      const tb = document.querySelector('.top-toolbar');
+      if (!tb) return;
+      const tbRect = tb.getBoundingClientRect();
+
+      const cs = document.querySelector('.compose-search');
+      const mp = document.querySelector('.middle-panel');
+      if (cs && mp) {
+        if (mp.classList.contains('mp-collapsed')) {
+          const csWidth = cs.getBoundingClientRect().width;
+          cs.style.left = ((tbRect.width - csWidth) / 2) + 'px';
+        } else {
+          const left = mp.getBoundingClientRect().left - tbRect.left;
+          cs.style.left = Math.max(0, left) + 'px';
+        }
+      }
+    }
+
+    // Track positions across panel-toggle transitions so the bars move in
+    // lockstep with the panels rather than jumping at the end.
+    function trackComposeSearch(duration = 320) {
+      const start = performance.now();
+      (function frame(now) {
+        alignToolbar();
+        if (now - start < duration) requestAnimationFrame(frame);
+      })(start);
+    }
+
+    window.addEventListener('load', alignToolbar);
+    window.addEventListener('resize', alignToolbar);
+    requestAnimationFrame(alignToolbar);
+
+    // Populate the collapsed-inbox unread badge and total count.
+    function updateUnreadBadge() {
+      const badge = document.querySelector('.compact-unread-badge');
+      const total = document.querySelector('.compact-total-count');
+      const unread = document.querySelectorAll('.email-list .email-tile .tile-dot').length;
+      const totalCount = document.querySelectorAll('.email-list .email-tile').length;
+      if (badge) badge.textContent = unread > 99 ? '99+' : (unread || '');
+      if (total) total.textContent = totalCount || '';
+    }
+    window.addEventListener('load', updateUnreadBadge);
+    updateUnreadBadge();
+
+    // Sync the focus mode button icon to reflect whether all panels
+    // (sidebar + middle panel) are currently collapsed, regardless of
+    // whether they were collapsed individually or via the focus button.
+    function syncFocusBtn() {
+      const sidebar = document.querySelector('.sidebar');
+      const mp = document.querySelector('.middle-panel');
+      const btn = document.querySelector('.focus-toggle-btn');
+      if (!btn) return;
+      const allCollapsed = sidebar && sidebar.classList.contains('collapsed') &&
+                           mp && mp.classList.contains('mp-collapsed');
+      btn.classList.toggle('active', allCollapsed);
+      const expandArrows = btn.querySelector('.expand-arrows');
+      const contractArrows = btn.querySelector('.contract-arrows');
+      if (expandArrows && contractArrows) {
+        expandArrows.style.display = allCollapsed ? 'none' : 'inline';
+        contractArrows.style.display = allCollapsed ? 'inline' : 'none';
+      }
+      // Keep app-window focus-mode class in sync so CSS rules stay consistent.
+      const appWindow = document.querySelector('.app-window');
+      if (appWindow) appWindow.classList.toggle('focus-mode', allCollapsed);
+    }
+
+    function toggleSidebar() {
+      const sidebar = document.querySelector('.sidebar');
+      if (sidebar) sidebar.classList.toggle('collapsed');
+      if (typeof sweepSidebarNav === 'function') sweepSidebarNav(null, true);
+      syncFocusBtn();
+      trackComposeSearch();
+    }
+
+    function toggleMiddlePanel() {
+      const mp = document.querySelector('.middle-panel');
+      if (mp) mp.classList.toggle('mp-collapsed');
+      syncFocusBtn();
+      trackComposeSearch();
+    }
+
+    let wasSidebarExpanded = false;
+    let wasMiddlePanelExpanded = false;
+
+    function toggleFocusMode() {
+      const appWindow = document.querySelector('.app-window');
+      if (!appWindow) return;
+
+      appWindow.classList.toggle('focus-mode');
+      const isFocus = appWindow.classList.contains('focus-mode');
+
+      const btn = document.querySelector('.focus-toggle-btn');
+      if (btn) {
+        btn.classList.toggle('active', isFocus);
+        const expandArrows = btn.querySelector('.expand-arrows');
+        const contractArrows = btn.querySelector('.contract-arrows');
+        if (expandArrows && contractArrows) {
+          if (isFocus) {
+            expandArrows.style.display = 'none';
+            contractArrows.style.display = 'inline';
+          } else {
+            expandArrows.style.display = 'inline';
+            contractArrows.style.display = 'none';
+          }
+        }
+      }
+
+      const sidebar = document.querySelector('.sidebar');
+      const middlePanel = document.querySelector('.middle-panel');
+
+      if (isFocus) {
+        wasSidebarExpanded = sidebar && !sidebar.classList.contains('collapsed');
+        wasMiddlePanelExpanded = middlePanel && !middlePanel.classList.contains('mp-collapsed');
+
+        if (wasSidebarExpanded) sidebar.classList.add('collapsed');
+        if (wasMiddlePanelExpanded) middlePanel.classList.add('mp-collapsed');
+        if (typeof sweepSidebarNav === 'function') sweepSidebarNav(null, true);
+      } else {
+        if (wasSidebarExpanded) sidebar.classList.remove('collapsed');
+        if (wasMiddlePanelExpanded) middlePanel.classList.remove('mp-collapsed');
+        if (typeof sweepSidebarNav === 'function') sweepSidebarNav(null, true);
+      }
+      trackComposeSearch();
+      syncFocusBtn();
+    }
+
+    // ── Tasks Side Panel Toggle ──────────────────────────────────────────
+    (function initTasksPanel() {
+      const tasksToggleBtn = document.querySelector('.toolbar-icon.titan-action-btn[title="Tasks"]');
+      const tasksPanel = document.getElementById('tasks-panel');
+      const collapseBtn = document.querySelector('.compact-dock-collapse-btn');
+      const calendarBtn = document.querySelector('.compact-dock-calendar-btn');
+      const tasksBtn = document.querySelector('.compact-dock-tasks-btn');
+      const tabs = document.querySelectorAll('.tasks-tab');
+
+      function setPanelState(open) {
+        tasksPanel.classList.toggle('tasks-open', open);
+        if (tasksToggleBtn) {
+          tasksToggleBtn.classList.toggle('active', open);
+        }
+        if (!open) {
+          if (calendarBtn) calendarBtn.classList.remove('active');
+          if (tasksBtn) tasksBtn.classList.remove('active');
+        }
+        if (typeof trackComposeSearch === 'function') trackComposeSearch();
+      }
+
+      function switchTab(tabName) {
+        if (calendarBtn) calendarBtn.classList.toggle('active', tabName === 'calendar');
+        if (tasksBtn) tasksBtn.classList.toggle('active', tabName === 'tasks');
+
+        const headingText = document.querySelector('.tasks-heading-text');
+        const headingIcon = document.querySelector('.tasks-heading-icon');
+        if (headingText) headingText.textContent = tabName === 'calendar' ? 'Calendar' : 'Tasks';
+        if (headingIcon) headingIcon.src = tabName === 'calendar'
+          ? 'app_switcher_assets/grid_icons/calendar.svg'
+          : 'app_switcher_assets/grid_icons/tasks.svg';
+      }
+
+      if (tasksToggleBtn && tasksPanel) {
+        tasksToggleBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const currentlyOpen = tasksPanel.classList.contains('tasks-open');
+          if (!currentlyOpen) switchTab('tasks');
+          setPanelState(!currentlyOpen);
         });
       }
-    })();
 
-    // ── Shared Composer Tooltip Logic ──
-    (function initComposerTooltips() {
-      const composer = document.getElementById('composer-window');
-      if (!composer) return;
-
-      const tooltip = document.createElement('div');
-      tooltip.className = 'shared-comp-tooltip';
-      document.body.appendChild(tooltip);
-
-      // Select all elements with a title inside the composer
-      const items = composer.querySelectorAll('[title]');
-      let hideTimeout;
-      let currentRow = null;
-
-      items.forEach(item => {
-        // Move title to data-tooltip to disable native browser tooltips
-        const titleText = item.getAttribute('title');
-        item.setAttribute('data-tooltip', titleText);
-        item.removeAttribute('title');
-
-        item.addEventListener('mouseenter', () => {
-          clearTimeout(hideTimeout);
-          tooltip.textContent = item.getAttribute('data-tooltip');
-
-          const rect = item.getBoundingClientRect();
-          const top = rect.top - 32; // position above the icon
-          const left = rect.left + (rect.width / 2);
-
-          // Determine the row container (formatting bar vs send bar)
-          const itemRow = item.closest('.comp-fmt-bar, .comp-send-bar, .comp-header');
-          const needsTeleport = !tooltip.classList.contains('visible') || (currentRow && currentRow !== itemRow);
-
-          if (needsTeleport) {
-            tooltip.classList.remove('visible');
-            tooltip.classList.add('no-slide');
-            tooltip.offsetHeight; // force reflow with transition disabled
-          }
-
-          tooltip.style.top = top + 'px';
-          tooltip.style.left = left + 'px';
-
-          if (needsTeleport) {
-            tooltip.offsetHeight; // force reflow to apply position instantly
-            requestAnimationFrame(() => {
-              tooltip.classList.remove('no-slide');
-              tooltip.classList.add('visible');
-            });
-          }
-
-          currentRow = itemRow;
+      if (collapseBtn) {
+        collapseBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          setPanelState(false);
         });
+      }
 
-        item.addEventListener('mouseleave', () => {
-          hideTimeout = setTimeout(() => {
-            tooltip.classList.remove('visible');
-            currentRow = null;
-          }, 150); // persistence timer
+      if (calendarBtn) {
+        calendarBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const isOpen = tasksPanel.classList.contains('tasks-open');
+          const isAlreadyActive = calendarBtn.classList.contains('active');
+
+          if (!isOpen) {
+            switchTab('calendar');
+            setPanelState(true);
+          } else {
+            if (isAlreadyActive) {
+              setPanelState(false);
+            } else {
+              switchTab('calendar');
+            }
+          }
+        });
+      }
+
+      if (tasksBtn) {
+        tasksBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const isOpen = tasksPanel.classList.contains('tasks-open');
+          const isAlreadyActive = tasksBtn.classList.contains('active');
+
+          if (!isOpen) {
+            switchTab('tasks');
+            setPanelState(true);
+          } else {
+            if (isAlreadyActive) {
+              setPanelState(false);
+            } else {
+              switchTab('tasks');
+            }
+          }
+        });
+      }
+
+      tabs.forEach(tab => {
+        tab.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const tabName = tab.textContent.trim().toLowerCase().includes('calendar') ? 'calendar' : 'tasks';
+          switchTab(tabName);
         });
       });
     })();
 
-    // ── Thread Stack Expansion Logic ──
-    function expandStack(element) {
-      if (!element.classList.contains('expanded')) {
-        element.classList.add('expanded');
-      }
-    }
+    // ─────────────────────────────────────────────────────────────────────
 
-    // Collapse thread stack when clicking outside of it
-    document.addEventListener('click', (e) => {
-      const stack = document.querySelector('.thread-stack');
-      if (stack && stack.classList.contains('expanded')) {
-        if (!stack.contains(e.target)) {
-          stack.classList.remove('expanded');
-        }
-      }
-    });
+
+
+
+
   </script>
 </body>
 
