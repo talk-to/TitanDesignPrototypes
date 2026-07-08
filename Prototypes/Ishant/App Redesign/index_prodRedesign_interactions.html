@@ -3995,6 +3995,8 @@
       flex-shrink: 0;
       padding: 0;
       transition: transform 0.15s ease, background 0.15s ease;
+      --btn-hover-fill: #333333;
+      --btn-hover-stroke: #333333;
     }
 
     .titan-action-btn:hover {
@@ -4020,45 +4022,45 @@
       stroke: var(--btn-hover-stroke);
     }
 
-    /* Hover Color Modifier Classes via CSS Variables */
-    .action-btn-reminder {
+    /* Hover Color Modifier Classes via CSS Variables (Gated under feature flag class) */
+    .enable-composer-hover-colors .action-btn-reminder {
       --btn-hover-fill: #c084fc;
     }
 
-    .action-btn-text {
+    .enable-composer-hover-colors .action-btn-text {
       --btn-hover-fill: #60a5fa;
     }
 
-    .action-btn-attach {
+    .enable-composer-hover-colors .action-btn-attach {
       --btn-hover-fill: #fb923c;
     }
 
-    .action-btn-drive {
+    .enable-composer-hover-colors .action-btn-drive {
       --btn-hover-fill: #34a853;
     }
 
-    .action-btn-image {
+    .enable-composer-hover-colors .action-btn-image {
       --btn-hover-fill: #e05353;
     }
 
-    .action-btn-emoji {
+    .enable-composer-hover-colors .action-btn-emoji {
       --btn-hover-fill: #ffa000;
     }
 
-    .action-btn-signature {
+    .enable-composer-hover-colors .action-btn-signature {
       --btn-hover-fill: #f472b6;
     }
 
-    .action-btn-bookings {
+    .enable-composer-hover-colors .action-btn-bookings {
       --btn-hover-fill: #3ec1d3;
     }
 
-    .action-btn-html {
+    .enable-composer-hover-colors .action-btn-html {
       --btn-hover-fill: #2dd4bf;
       --btn-hover-stroke: #2dd4bf;
     }
 
-    .action-btn-campaign {
+    .enable-composer-hover-colors .action-btn-campaign {
       --btn-hover-fill: #5c53db;
       --btn-hover-bg: #edeefd;
     }
@@ -4183,6 +4185,15 @@
   </style>
 
   <script>
+    // Feature Flag: Enable colorful hover states for composer action buttons.
+    // Set this to true to enable the colors (reminder: purple, text: blue, etc.).
+    // By default, this is false and keeps them grayscale.
+    const ENABLE_COMPOSER_HOVER_COLORS = false;
+
+    if (ENABLE_COMPOSER_HOVER_COLORS) {
+      document.body.classList.add('enable-composer-hover-colors');
+    }
+
     // ── Middle Panel Resize + Wide View ─────────────────────────────────────
     (function () {
       const handle = document.getElementById('panelResizeHandle');
