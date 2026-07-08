@@ -4019,7 +4019,10 @@
 
     .titan-action-btn:not(#lottie-read-receipt):hover svg path {
       fill: var(--btn-hover-fill);
-      stroke: var(--btn-hover-stroke);
+    }
+
+    .action-btn-html:hover svg path {
+      stroke: var(--btn-hover-stroke, #555555);
     }
 
     /* Hover Color Modifier Classes via CSS Variables (Gated under feature flag class) */
