@@ -768,7 +768,7 @@
       gap: 0;
       width: 100%;
       min-width: 0;
-      padding-right: 96px; /* reserve space for absolutely-positioned time */
+      padding-right: 160px; /* reserve space for absolutely-positioned time and hover actions */
       box-sizing: border-box;
       position: relative;
     }
@@ -829,7 +829,7 @@
 
     .middle-panel.wide-view .tile-hover-actions {
       position: absolute !important;
-      right: -4px;
+      right: 8px;
       top: 50%;
       transform: translateY(-50%);
       margin: 0;
@@ -1358,10 +1358,18 @@
       font-size: 14px;
       color: #666666;
       line-height: 18px;
+      margin-top: 2px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+    }
+    .preview-text {
+      flex: 1;
+      min-width: 0;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      margin-top: 2px;
     }
 
     .tile-time {
@@ -1884,9 +1892,11 @@
 
     .exp-icon-sm img {
       position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 16px;
+      height: 16px;
       object-fit: contain;
     }
 
@@ -2519,7 +2529,7 @@
             <span>Feature</span>
           </div>
           <div class="footer-divider"></div>
-          <div class="footer-btn icon-only">
+          <div class="footer-btn icon-only" onclick="openSettingsModal()">
             <div class="footer-btn-icon settings-icon">
               <img src="assets/6ea52e57-1d75-47b1-97cd-e416a5d2372d.svg" alt="">
             </div>
@@ -2558,7 +2568,7 @@
             <div class="toolbar-icon titan-action-btn" title="View details">
               <img src="assets/ec5d8d32-261b-410c-b07c-310cd6bb915e.svg" alt="">
             </div>
-            <div class="toolbar-icon titan-action-btn" title="Settings">
+            <div class="toolbar-icon titan-action-btn" title="Settings" onclick="openSettingsModal()">
               <img src="assets/63a156f6-89b7-4224-b2e1-f2fa32e8f03f.svg" alt="">
             </div>
           </div>
@@ -2614,7 +2624,7 @@
           <div class="email-list">
             <div class="refresh-overlay"></div>
 
-            <div class="email-tile">
+            <div class="email-tile" data-labels='["Calendar", "Meeting", "Important", "Checking"]'>
               <div class="email-tile-inner">
                 <div class="tile-icons">
                   <div class="tile-chk">
@@ -2627,8 +2637,12 @@
                     <div class="tile-sender">Sajal Kumar</div>
                     <div class="tile-time">10:45 am</div>
                   </div>
+                  <div class="tile-labels-wide"></div>
                   <div class="tile-subject">Feedback on grammar and spell check</div>
-                  <div class="tile-preview">Looking for a change? How does working on Meatvedcdv...</div>
+                  <div class="tile-preview">
+                    <span class="preview-text">Looking for a change? How does working on Meatvedcdv and helping us build the next generation of our design prototypes sound to you? We have several openings available across product management, engineering, and product design. Please let me know if you would like to have a quick call this week to talk details and explore open team options.</span>
+                    <div class="tile-labels-narrow"></div>
+                  </div>
 
                   <div class="tile-hover-actions">
                     <div class="tile-action-pill">
@@ -2645,7 +2659,7 @@
             </div>
 
             <!-- Tile 2: selected, unread -->
-            <div class="email-tile selected">
+            <div class="email-tile selected" data-labels='["Work", "Design"]'>
               <div class="email-tile-inner">
                 <div class="tile-icons">
                   <div class="tile-chk">
@@ -2659,8 +2673,12 @@
                     <div class="tile-sender bold">Ninad Raval</div>
                     <div class="tile-time">11:20 am</div>
                   </div>
+                  <div class="tile-labels-wide"></div>
                   <div class="tile-subject">Project roadmap for Dashboard version</div>
-                  <div class="tile-preview">Looking for a change? How does working on Meatvedcdv...</div>
+                  <div class="tile-preview">
+                    <span class="preview-text">Looking for a change? How does working on Meatvedcdv and helping us build the next generation of our design prototypes sound to you? We have several openings available across product management, engineering, and product design. Please let me know if you would like to have a quick call this week to talk details and explore open team options.</span>
+                    <div class="tile-labels-narrow"></div>
+                  </div>
                   <div class="tile-hover-actions">
                     <div class="tile-action-pill">
                       <div class="icon18"><img src="assets/7c1d5199-2bce-428f-9bff-eb73b6954e12.svg" alt=""></div>
@@ -2685,12 +2703,16 @@
                   <div class="tile-star"><img src="assets/1e1696aa-5b8d-4409-97fd-4ce5c85c5ae5.svg" alt=""></div>
                 </div>
                 <div class="tile-content">
-                  <div style="display:flex; justify-content:space-between;">
+                  <div class="tile-top" style="display:flex; justify-content:space-between;">
                     <div class="tile-sender">David Jones, Ella (2)</div>
                     <div class="tile-time">12:15 pm</div>
                   </div>
+                  <div class="tile-labels-wide"></div>
                   <div class="tile-subject">Flock Terms and Condition</div>
-                  <div class="tile-preview">We need to get on a meeting for the discuss our T&amp;C...</div>
+                  <div class="tile-preview">
+                    <span class="preview-text">We need to get on a meeting for the discuss our T&amp;Cs, finalize the contract details, and establish the milestones for the next quarter. I want to make sure all stakeholders are aligned on the roadmap, sprint plans, deliverables, and timeline before we kick off the development phase next Monday morning.</span>
+                    <div class="tile-labels-narrow"></div>
+                  </div>
                   <div class="tile-hover-actions">
                     <div class="tile-action-pill">
                       <div class="icon18"><img src="assets/7c1d5199-2bce-428f-9bff-eb73b6954e12.svg" alt=""></div>
@@ -2713,12 +2735,16 @@
                   <div class="tile-star"><img src="assets/1e1696aa-5b8d-4409-97fd-4ce5c85c5ae5.svg" alt=""></div>
                 </div>
                 <div class="tile-content">
-                  <div style="display:flex; justify-content:space-between;">
+                  <div class="tile-top" style="display:flex; justify-content:space-between;">
                     <div class="tile-sender">Shreya</div>
                     <div class="tile-time">1:30 pm</div>
                   </div>
+                  <div class="tile-labels-wide"></div>
                   <div class="tile-subject">Feedback on snooze feature</div>
-                  <div class="tile-preview">I like the design that you have made. Probably we ca...</div>
+                  <div class="tile-preview">
+                    <span class="preview-text">I like the design that you have made. Probably we can review the layout together next Tuesday and make some minor refinements to the sidebar navigation. Also, let's explore if we can incorporate user feedback regarding the default folder states, dynamic responsive breakpoints, and sidebar collapsing animations.</span>
+                    <div class="tile-labels-narrow"></div>
+                  </div>
                   <div class="tile-hover-actions">
                     <div class="tile-action-pill">
                       <div class="icon18"><img src="assets/7c1d5199-2bce-428f-9bff-eb73b6954e12.svg" alt=""></div>
@@ -2741,12 +2767,16 @@
                   <div class="tile-star"><img src="assets/1e1696aa-5b8d-4409-97fd-4ce5c85c5ae5.svg" alt=""></div>
                 </div>
                 <div class="tile-content">
-                  <div style="display:flex; justify-content:space-between;">
+                  <div class="tile-top" style="display:flex; justify-content:space-between;">
                     <div class="tile-sender">Sajal Kumar</div>
                     <div class="tile-time">2:45 pm</div>
                   </div>
+                  <div class="tile-labels-wide"></div>
                   <div class="tile-subject">Feedback on link and file tracking feature</div>
-                  <div class="tile-preview">Hi, Ella can you please review these mocks.</div>
+                  <div class="tile-preview">
+                    <span class="preview-text">Hi, Ella can you please review these mocks, verify the spacing and color alignments, and let me know if they align with the latest brand guidelines? I'd appreciate your detailed feedback on the mobile-first layouts, header navigation bar, active dropdown states, and the footer CTA button sizing before we present them.</span>
+                    <div class="tile-labels-narrow"></div>
+                  </div>
                   <div class="tile-hover-actions">
                     <div class="tile-action-pill">
                       <div class="icon18"><img src="assets/7c1d5199-2bce-428f-9bff-eb73b6954e12.svg" alt=""></div>
@@ -2769,12 +2799,16 @@
                   <div class="tile-star"><img src="assets/1e1696aa-5b8d-4409-97fd-4ce5c85c5ae5.svg" alt=""></div>
                 </div>
                 <div class="tile-content">
-                  <div style="display:flex; justify-content:space-between;">
+                  <div class="tile-top" style="display:flex; justify-content:space-between;">
                     <div class="tile-sender">Ninad Raval</div>
                     <div class="tile-time">3:10 pm</div>
                   </div>
+                  <div class="tile-labels-wide"></div>
                   <div class="tile-subject">Lets schedule our 1:1 sometime</div>
-                  <div class="tile-preview">Hi Ella, we should schedule a 1:1 session next week...</div>
+                  <div class="tile-preview">
+                    <span class="preview-text">Hi Ella, we should schedule a 1:1 session next week to sync on your recent project contributions, discuss career growth, and plan upcoming team priorities. Please check your calendar and propose a couple of slots that work best for your schedule so we can lock it in.</span>
+                    <div class="tile-labels-narrow"></div>
+                  </div>
                   <div class="tile-hover-actions">
                     <div class="tile-action-pill">
                       <div class="icon18"><img src="assets/7c1d5199-2bce-428f-9bff-eb73b6954e12.svg" alt=""></div>
@@ -2797,12 +2831,16 @@
                   <div class="tile-star"><img src="assets/1e1696aa-5b8d-4409-97fd-4ce5c85c5ae5.svg" alt=""></div>
                 </div>
                 <div class="tile-content">
-                  <div style="display:flex; justify-content:space-between;">
+                  <div class="tile-top" style="display:flex; justify-content:space-between;">
                     <div class="tile-sender">Ninad Raval</div>
                     <div class="tile-time">Yesterday</div>
                   </div>
+                  <div class="tile-labels-wide"></div>
                   <div class="tile-subject">Lets schedule our 1:1 sometime</div>
-                  <div class="tile-preview">Hi Ella, we should schedule a 1:1 session next week...</div>
+                  <div class="tile-preview">
+                    <span class="preview-text">Hi Ella, we should schedule a 1:1 session next week to sync on your recent project contributions, discuss career growth, and plan upcoming team priorities. Please check your calendar and propose a couple of slots that work best for your schedule so we can lock it in.</span>
+                    <div class="tile-labels-narrow"></div>
+                  </div>
                   <div class="tile-hover-actions">
                     <div class="tile-action-pill">
                       <div class="icon18"><img src="assets/7c1d5199-2bce-428f-9bff-eb73b6954e12.svg" alt=""></div>
@@ -2825,6 +2863,16 @@
           <!-- Action bar (same level as tabs) -->
           <div class="reading-action-bar">
             <div class="email-action-bar">
+              <div class="action-opt back-btn" id="readingPaneBackBtn" onclick="goBackToList()" style="display: none; margin-right: 4px;">
+                <div class="action-icon">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="19" y1="12" x2="5" y2="12"></line>
+                    <polyline points="12 19 5 12 12 5"></polyline>
+                  </svg>
+                </div>
+                Back
+              </div>
+              <div class="action-sep back-sep" id="readingPaneBackSep" style="display: none;"></div>
               <div class="action-opt">
                 <div class="action-icon"><img src="assets/eb8edec6-b9b3-4707-bc5a-78a09ff60960.svg" alt=""></div>
                 Archive
@@ -2864,6 +2912,7 @@
           <!-- Thread -->
           <div class="thread-content">
             <div class="thread-title">Project roadmap for Dashboard version 2</div>
+            <div class="thread-labels" style="display: flex; gap: 6px; margin-top: 8px; margin-bottom: 16px;"></div>
 
             <!-- Collapsed tile 1 -->
             <div class="thread-tile">
@@ -2970,28 +3019,212 @@
 
               <div class="expanded-footer-hr"></div>
               <div class="expanded-footer">
-                <div class="reply-action">
+                <div class="reply-action" onclick="openReplyBox('reply')">
                   <div class="reply-action-icon"><img src="assets/dc9c9a28-fbff-4efd-8cc6-22604c7cbc3d.svg" alt="">
                   </div>
                   Reply
                 </div>
-                <div class="reply-action">
+                <div class="reply-action" onclick="openReplyBox('reply-all')">
                   <div class="reply-action-icon"><img src="assets/440756b2-5698-4836-ab78-62a450804283.svg" alt="">
                   </div>
                   Reply all
                 </div>
-                <div class="reply-action">
+                <div class="reply-action" onclick="openReplyBox('forward')">
                   <div class="reply-action-icon"><img src="assets/d6d0ae75-01ff-4a38-aeb6-8cee39af4b34.svg" alt="">
                   </div>
                   Forward
                 </div>
-                <div class="smart-write">
+                <div class="smart-write" onclick="openReplyBox('reply-ai')">
                   <div class="smart-write-icon"><img src="assets/f2c4a95b-e378-4f23-b049-98f40e998543.svg" alt=""></div>
                   Reply with AI
                 </div>
 
               </div>
             </div>
+
+            <!-- Reply Box Card (Embedded Inline) -->
+            <div class="reply-box-card" id="reply-box-card" style="display: none; margin-top: 16px; border: 1px solid #dcdcdc; border-radius: 8px; background: #ffffff; flex-direction: column; overflow: hidden; margin-bottom: 20px;">
+                <!-- Header -->
+                <div class="reply-box-header" style="display: flex; align-items: center; justify-content: space-between; padding: 20px 24px 12px; border-bottom: none;">
+                  <div class="reply-box-recipient" id="reply-box-recipient" style="font-size: 14px; font-weight: 500; color: #333333; padding-bottom: 2px;">Sajal Kumar</div>
+                  <div style="display: flex; align-items: center; gap: 10px; font-size: 13px; color: #888888;">
+                    <span id="reply-subject-toggle" onclick="toggleReplySubject()" style="cursor: pointer; color: #888888; font-weight: 500; transition: color 0.15s; padding-bottom: 2px;">Subject</span>
+                    <button class="reply-box-popout-btn" style="border: none; background: none; cursor: pointer; padding: 3px; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; border-radius: 5px; transition: background 0.15s;" onmouseenter="this.style.background='#f1f3f4'" onmouseleave="this.style.background='none'" onclick="popoutToComposer()" title="Pop out">
+                      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="1" y="4.5" width="9.5" height="9.5" rx="1.8" stroke="#888888" stroke-width="1.3" fill="none"/>
+                        <path d="M5.5 1H15V10.5" stroke="#888888" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                        <path d="M5.5 1H15V4.5" stroke="#888888" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Subject Row (hidden by default) -->
+                <div id="reply-subject-row" style="overflow: hidden; max-height: 0; opacity: 0; transition: max-height 0.25s cubic-bezier(0.22,1,0.36,1), opacity 0.2s ease; padding: 0 24px;">
+                  <div style="font-size: 14px; color: #444; padding-top: 6px; padding-bottom: 14px;">
+                    <span contenteditable="true" spellcheck="false" id="reply-subject-field" style="outline: none; display: block; color: #444; font-size: 14px; font-family: inherit; min-width: 20px;">Re: &nbsp;Notification: Design Sync is starting in 10 minutes</span>
+                  </div>
+                </div>
+
+                <!-- Features Toolbar -->
+                <div class="comp-features-row" style="padding: 4px 24px 0 24px; margin-bottom: 0; background: transparent; display: flex; align-items: center; gap: 8px; height: 36px; box-sizing: border-box; justify-content: space-between;">
+                  <div style="display: flex; align-items: center; gap: 8px;">
+                    <div class="comp-feat comp-feat-active"><span class="fic"><img src="composer_assets/ic-track.svg" style="filter: invert(51%) sepia(82%) saturate(461%) hue-rotate(71deg) brightness(96%) contrast(85%); width: 15px; height: 15px;" alt=""></span><span>Track</span></div>
+                    <div class="comp-feat"><span class="fic"><img src="composer_assets/ic-design.svg" alt=""></span><span>Design</span></div>
+                    <div class="comp-feat"><span class="fic"><img src="composer_assets/ic-ai-write.svg" alt=""></span><span>Ai Write</span></div>
+                    <div class="comp-feat"><span class="fic"><img src="composer_assets/ic-templates.svg" alt=""></span><span>Templates</span></div>
+                    <div class="comp-feat"><span class="fic"><img src="composer_assets/ic-invoices.svg" alt=""></span><span>Invoices</span></div>
+                    <div class="comp-feat"><span class="fic"><img src="composer_assets/ic-groups.svg" alt=""></span><span>Groups</span></div>
+                  </div>
+                  <button style="border:none; background:none; cursor:pointer; padding: 2px; width:24px; height:24px; display:flex; align-items:center; justify-content:center;">
+                    <svg width="14" height="14" viewBox="0 0 4 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <circle cx="2" cy="2" r="1.5" fill="#888888"/>
+                      <circle cx="2" cy="8" r="1.5" fill="#888888"/>
+                      <circle cx="2" cy="14" r="1.5" fill="#888888"/>
+                    </svg>
+                  </button>
+                </div>
+
+                <!-- Text Area / Editor -->
+                <div style="padding: 16px 24px; position: relative;">
+                  <div class="reply-box-body" id="reply-box-body" contenteditable="true" spellcheck="true" placeholder="Reply to email..." style="min-height: 100px; max-height: 250px; overflow-y: auto; outline: none; font-size: 14px; color: #333333; line-height: 1.5; font-family: inherit;"></div>
+                  
+                  <!-- History ellipsis button (...) -->
+                  <div style="margin-top: 12px; display: flex; align-items: center;">
+                    <button class="reply-history-btn" style="background: #f1f3f4; border: 1px solid #dcdcdc; border-radius: 4px; padding: 2px 8px; font-size: 12px; font-weight: 600; color: #666666; cursor: pointer;">...</button>
+                  </div>
+                </div>
+
+                <!-- Bottom Toolbar (Format & Send) -->
+                <div class="comp-bottom" style="border-top: none;">
+                  <!-- Formatting bar -->
+                  <div class="comp-format-bar" style="border-top: none; padding-left: 24px; padding-right: 24px;">
+                    <div class="reply-font-dd-pill">
+                      <span>Sans Serif</span>
+                      <img src="composer_assets/figma-ic-triangle.svg" alt="" class="comp-dd-arrow">
+                    </div>
+                    <div class="reply-font-dd-pill">
+                      <span>11</span>
+                      <img src="composer_assets/figma-ic-triangle.svg" alt="" class="comp-dd-arrow">
+                    </div>
+                    <button class="comp-fmt-btn" title="Bold"><img src="composer_assets/figma-ic-bold.svg" alt=""></button>
+                    <button class="comp-fmt-btn" title="Italic"><img src="composer_assets/figma-ic-italic.svg" alt=""></button>
+                    <button class="comp-fmt-btn" title="Underline"><img src="composer_assets/figma-ic-underline.svg" alt=""></button>
+                    <button class="comp-fmt-btn" title="Text color"><img src="composer_assets/figma-ic-colors.svg" alt=""></button>
+                    <button class="comp-fmt-btn comp-fmt-align" title="Alignment"><img src="composer_assets/figma-ic-align.svg" alt=""><img src="composer_assets/figma-ic-caret-dd.svg" alt="" class="comp-mini-caret"></button>
+                    <button class="comp-fmt-btn comp-fmt-align" title="Lists"><img src="composer_assets/figma-ic-list.svg" alt=""><img src="composer_assets/figma-ic-caret-dd.svg" alt="" class="comp-mini-caret"></button>
+                    <button class="comp-fmt-btn comp-fmt-align" title="Indent"><img src="composer_assets/figma-ic-indent.svg" alt=""><img src="composer_assets/figma-ic-caret-dd.svg" alt="" class="comp-mini-caret"></button>
+                    <button class="comp-fmt-btn comp-fmt-link" title="Link"><img src="composer_assets/figma-ic-more.svg" alt=""></button>
+                    <button class="comp-fmt-btn comp-fmt-moredots" title="More"><img src="composer_assets/figma-ic-link.svg" alt=""></button>
+                  </div>
+                  <!-- Send bar -->
+                  <div class="comp-send-bar" style="display: flex; align-items: center; justify-content: space-between; padding: 12px 24px; border-top: 1px solid #ebebeb;">
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                      <button class="comp-send-btn titan-split-btn" onclick="sendReply()">
+                        <span class="comp-send-main split-btn-main">
+                          <span class="btn-content-wrapper">Send</span>
+                        </span>
+                        <span class="comp-send-dd-btn split-btn-dd">
+                          <span class="btn-content-wrapper">
+                            <img src="composer_assets/ic-caret-white.svg" alt="">
+                          </span>
+                        </span>
+                      </button>
+                      <button class="comp-campaign-btn titan-action-btn action-btn-campaign" title="Campaign">
+                        <svg class="ci-campaign" preserveAspectRatio="xMidYMid meet" overflow="visible"
+                          style="display: block;" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <g id="megaphone-icon-original 8">
+                            <path id="Union"
+                              d="M7.7712 2.4634C7.96265 2.4144 8.16444 2.42141 8.35225 2.48294C8.54 2.5445 8.70645 2.65828 8.83175 2.81106C11.4809 6.03543 14.7746 6.70206 14.8181 6.71047L17.3689 7.18801C18.1804 7.34094 18.8984 7.80935 19.3649 8.49075C19.8315 9.17228 20.0082 10.0118 19.8571 10.8238C19.7172 11.5649 19.3132 12.2305 18.7204 12.6968C18.1275 13.1631 17.3858 13.3985 16.6325 13.3599L15.3112 16.2398C15.2419 16.3908 15.1376 16.5232 15.0065 16.6255C14.8753 16.7278 14.7209 16.7972 14.5573 16.8277C14.3938 16.858 14.2253 16.8486 14.0661 16.8003C13.907 16.752 13.7614 16.6665 13.6423 16.5503L13.029 15.9517C12.9065 15.8324 12.8149 15.684 12.7634 15.521C12.712 15.3581 12.7015 15.185 12.7331 15.0171L13.153 12.7779C12.0792 12.7026 9.47517 12.7292 6.6794 14.3032C6.46759 14.4239 6.21987 14.4658 5.98018 14.4214C5.83017 14.393 5.68804 14.3319 5.56417 14.2427C5.40277 14.1285 5.27752 13.9701 5.20382 13.7866C5.13017 13.6033 5.11162 13.4026 5.14913 13.2085L7.0085 3.27786C7.04499 3.08367 7.13612 2.9035 7.2712 2.7593C7.4063 2.61521 7.57984 2.51241 7.7712 2.4634Z"
+                              fill="#888888" />
+                          </g>
+                        </svg>
+                      </button>
+                      <div class="comp-vert-sep"></div>
+                      <div class="comp-send-icons">
+                        <button class="comp-icon-btn titan-action-btn action-btn-reminder" title="Reminder">
+                          <svg class="ci-reminder" preserveAspectRatio="xMidYMid meet" overflow="visible"
+                            style="display: block;" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <g id="Icon/Composer/Bottom action/reminder">
+                              <path id="Vector" fill-rule="evenodd" clip-rule="evenodd"
+                                d="M12.58 8.24C12.9 8.56 12.9 9.078 12.58 9.397L10.397 11.58C10.077 11.9 9.559 11.9 9.24 11.58C8.92 11.26 8.92 10.742 9.24 10.422L11.422 8.24C11.742 7.92 12.26 7.92 12.58 8.24ZM12.728 11.013C13.805 10.293 15.071 9.91 16.366 9.91C18.102 9.91 19.768 10.6 20.996 11.827C22.224 13.055 22.913 14.721 22.913 16.457C22.913 17.752 22.529 19.018 21.81 20.095C21.09 21.172 20.068 22.011 18.872 22.506C17.675 23.002 16.359 23.131 15.089 22.879C13.819 22.626 12.652 22.003 11.736 21.087C10.821 20.171 10.196 19.005 9.944 17.735C9.692 16.465 9.821 15.148 10.317 13.951C10.812 12.755 11.652 11.733 12.728 11.013ZM16.763 13.911C16.763 13.509 16.43 13.183 16.019 13.183C15.608 13.183 15.275 13.509 15.275 13.911V16.821C15.275 17.223 15.608 17.548 16.019 17.548H19.987C20.397 17.548 20.731 17.223 20.731 16.821C20.731 16.419 20.398 16.093 19.987 16.093H16.763V13.911ZM20.153 9.397C19.833 9.077 19.833 8.559 20.153 8.24C20.472 7.92 20.99 7.92 21.31 8.24L23.492 10.422C23.812 10.742 23.812 11.26 23.492 11.58C23.172 11.9 22.654 11.9 22.335 11.58L20.153 9.397Z"
+                                fill="#888888" />
+                            </g>
+                          </svg>
+                        </button>
+                        <button class="comp-icon-btn titan-action-btn action-btn-text" title="Text styling">
+                          <svg class="ci-text" preserveAspectRatio="xMidYMid meet" overflow="visible"
+                            style="display: block;" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <g id="Group">
+                              <path id="Subtract"
+                                d="M13 0C14.1046 0 15 0.89543 15 2V13C15 14.1046 14.1046 15 13 15H2C0.89543 15 0 14.1046 0 13V2C0 0.89543 0.89543 0 2 0H13ZM6.44727 3.21484L3.47168 11.7861H5.26953L5.92969 9.74316H8.94141L9.58984 11.7861H11.5322L8.55664 3.21484H6.44727ZM7.39062 4.99707H7.49805L8.56055 8.3584H6.31543L7.39062 4.99609V4.99707Z"
+                                fill="#888888" />
+                            </g>
+                          </svg>
+                        </button>
+                        <button class="comp-icon-btn titan-action-btn action-btn-attach" title="Attachment">
+                          <svg class="ci-attach" preserveAspectRatio="xMidYMid meet" overflow="visible"
+                            style="display: block;" viewBox="0 0 14.5457 15.5514" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <g id="Attach">
+                              <path id="Vector"
+                                d="M14.2692 7.65739C14.1022 7.51539 13.8862 7.44339 13.6672 7.45539C13.4472 7.46739 13.2412 7.56439 13.0912 7.72439C11.5622 9.52939 9.88923 11.2064 8.08823 12.7384C6.17523 14.2284 4.17423 14.2614 2.72823 12.8164C1.28323 11.3714 1.32823 9.33639 2.82823 7.45739C4.34023 5.56839 6.05423 3.85339 7.94423 2.34339C8.40423 1.91739 9.00423 1.67339 9.63023 1.65939C10.2572 1.64539 10.8672 1.86039 11.3462 2.26539C11.7782 2.72839 12.0132 3.34139 12.0012 3.97439C11.9882 4.60739 11.7292 5.21039 11.2802 5.65639C9.89123 7.43139 8.29323 9.03339 6.52023 10.4264C6.18723 10.6594 5.54323 10.9934 5.06423 10.5144C4.89823 10.3014 4.81523 10.0344 4.83223 9.76439C4.84823 9.49439 4.96223 9.23939 5.15323 9.04739C6.32423 7.62239 7.63523 6.31739 9.06723 5.15539C9.23323 5.01139 9.33723 4.80839 9.35723 4.58839C9.37723 4.36939 9.31323 4.15139 9.17823 3.97739C9.03323 3.81139 8.83023 3.70739 8.61123 3.68739C8.39223 3.66739 8.17423 3.73139 8.00023 3.86639C6.46223 5.13239 5.05523 6.54639 3.79723 8.09139C3.36823 8.59839 3.14123 9.24539 3.15723 9.90939C3.17323 10.5734 3.43323 11.2084 3.88623 11.6934C4.36623 12.1554 5.00323 12.4214 5.67023 12.4374C6.33623 12.4544 6.98523 12.2204 7.48823 11.7824C9.38423 10.2904 11.0872 8.56839 12.5582 6.65639C13.2592 5.89639 13.6432 4.89739 13.6302 3.86439C13.6182 2.83039 13.2102 1.84039 12.4912 1.09739C11.7352 0.405391 10.7512 0.0153904 9.72723 0.000390363C8.70223 -0.0136096 7.70723 0.34939 6.93223 1.02039C4.91923 2.61539 3.09223 4.43039 1.48423 6.43439C-0.505771 8.99139 -0.505771 11.9494 1.55123 13.9844C2.02123 14.4744 2.58523 14.8674 3.21023 15.1364C3.83423 15.4064 4.50723 15.5464 5.18723 15.5514C6.62523 15.5064 8.00623 14.9814 9.11223 14.0614C10.9872 12.4584 12.7342 10.7114 14.3372 8.83639C14.4822 8.66939 14.5572 8.45339 14.5442 8.23339C14.5312 8.01339 14.4342 7.80639 14.2702 7.65739H14.2692Z"
+                                fill="#888888" />
+                            </g>
+                          </svg>
+                        </button>
+                        <button class="comp-icon-btn titan-action-btn action-btn-image" title="Image">
+                          <svg class="ci-image" preserveAspectRatio="xMidYMid meet" overflow="visible"
+                            style="display: block;" viewBox="0 0 16.0004 13.713" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <g id="Group">
+                              <g id="Vector">
+                                <path
+                                  d="M15.9991 6.319C15.9991 4.834 15.9991 2.582 14.6851 1.303C13.3701 0.023 10.3761 0 8.60508 0H7.39408C5.62208 0 2.66308 0 1.31408 1.303C-0.0339215 2.605 7.84092e-05 4.833 7.84092e-05 6.319V7.382C7.84092e-05 8.879 7.85591e-05 11.13 1.31408 12.41C2.62808 13.69 4.86808 13.713 6.85708 13.713H8.67408C10.4441 13.713 13.3941 13.713 14.7421 12.422C16.0901 11.13 15.9991 8.879 15.9991 7.382V6.319ZM2.90308 6.548C2.38108 6.968 1.88908 7.422 1.42808 7.908L1.23408 8.113V6.343C1.23408 5.063 1.23408 3.108 2.18308 2.171C3.13108 1.234 5.24508 1.234 6.85708 1.234H8.53708C10.0451 1.234 12.8331 1.234 13.8501 2.171C14.8671 3.108 14.7991 5.062 14.7991 6.342V6.685C14.1491 5.989 13.4491 5.34 12.7081 4.742C12.4531 4.542 12.1401 4.433 11.8161 4.433C11.4931 4.433 11.1791 4.543 10.9251 4.743C10.2051 5.328 9.52108 5.957 8.87908 6.628C8.39908 7.108 7.90808 7.599 7.47408 7.999C7.03908 8.399 6.75408 8.468 6.33108 8.113C6.16008 7.965 5.94208 7.748 5.70208 7.519C5.37808 7.173 5.03008 6.849 4.66208 6.548C4.41608 6.338 4.10508 6.222 3.78208 6.216C3.46008 6.226 3.15208 6.342 2.90308 6.548Z"
+                                  fill="#888888" />
+                                <path
+                                  d="M6.41008 5.759C7.08008 5.759 7.62208 5.217 7.62208 4.548C7.62208 3.878 7.08008 3.337 6.41108 3.337C5.74108 3.337 5.19908 3.879 5.19908 4.547C5.19908 5.217 5.74208 5.759 6.41108 5.759H6.41008Z"
+                                  fill="#888888" />
+                              </g>
+                            </g>
+                          </svg>
+                        </button>
+                        <button class="comp-icon-btn titan-action-btn action-btn-emoji" title="Emoji">
+                          <svg class="ci-emoji" preserveAspectRatio="xMidYMid meet" overflow="visible"
+                            style="display: block;" viewBox="0 0 15 15.0002" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <g id="Group">
+                              <path id="Vector"
+                                d="M7.49996 0C6.01696 0 4.56696 0.44 3.33296 1.264C2.09996 2.088 1.13996 3.259 0.570963 4.63C0.00296331 6 -0.145037 7.508 0.143963 8.963C0.433963 10.418 1.14796 11.754 2.19696 12.803C3.24596 13.853 4.58196 14.567 6.03696 14.856C7.49196 15.146 8.99996 14.996 10.37 14.429C11.74 13.861 12.912 12.9 13.736 11.667C14.56 10.433 15 8.983 15 7.5C15 5.51 14.21 3.603 12.803 2.197C11.397 0.79 9.48996 0 7.49996 0ZM3.74996 6.536C3.75996 6.337 3.82896 6.146 3.94696 5.986C4.06496 5.826 4.22696 5.703 4.41396 5.634C4.60096 5.565 4.80396 5.553 4.99696 5.598C5.19096 5.643 5.36696 5.744 5.50396 5.888C5.64096 6.033 5.73396 6.214 5.76796 6.41C5.80296 6.605 5.77996 6.807 5.70196 6.99C5.62396 7.173 5.49296 7.329 5.32696 7.439C5.16096 7.549 4.96696 7.607 4.76696 7.607C4.62996 7.607 4.49296 7.579 4.36596 7.525C4.23796 7.47 4.12396 7.391 4.02796 7.29C3.93296 7.19 3.85896 7.071 3.81196 6.942C3.76396 6.812 3.74196 6.674 3.74996 6.536V6.536ZM9.71796 9.996C9.49796 10.396 9.17796 10.732 8.78896 10.971C8.39996 11.21 7.95596 11.343 7.49996 11.357C7.03996 11.345 6.59196 11.214 6.19996 10.975C5.80696 10.736 5.48296 10.399 5.25996 9.996C5.22496 9.931 5.20196 9.859 5.19396 9.785C5.18596 9.711 5.19196 9.635 5.21396 9.565C5.23396 9.492 5.26896 9.425 5.31596 9.367C5.36196 9.309 5.41996 9.261 5.48596 9.225C5.54996 9.187 5.62096 9.163 5.69596 9.153C5.76996 9.143 5.84496 9.149 5.91596 9.169C5.98896 9.189 6.05596 9.223 6.11396 9.269C6.17296 9.316 6.22096 9.374 6.25696 9.439C6.38296 9.663 6.56296 9.851 6.77996 9.988C6.99696 10.124 7.24396 10.205 7.49996 10.221C7.74896 10.199 7.98796 10.116 8.19696 9.979C8.40696 9.843 8.57896 9.658 8.69996 9.439C8.73596 9.374 8.78396 9.316 8.84296 9.269C8.90096 9.223 8.96796 9.189 9.03996 9.169C9.11196 9.149 9.187 9.143 9.261 9.153C9.33596 9.163 9.40696 9.187 9.47196 9.225C9.53896 9.259 9.59896 9.306 9.64796 9.363C9.69596 9.421 9.73296 9.487 9.75596 9.559C9.77896 9.631 9.78796 9.707 9.78096 9.782C9.77396 9.857 9.75296 9.93 9.71796 9.996V9.996ZM10.232 7.554C10.033 7.554 9.83896 7.494 9.67196 7.385C9.50696 7.275 9.37596 7.12 9.29796 6.937C9.21996 6.754 9.19696 6.552 9.23196 6.356C9.26696 6.16 9.35896 5.979 9.49596 5.835C9.63296 5.69 9.80896 5.589 10.003 5.545C10.197 5.499 10.399 5.512 10.586 5.581C10.773 5.65 10.935 5.771 11.053 5.932C11.171 6.092 11.239 6.283 11.25 6.482C11.257 6.62 11.236 6.758 11.188 6.888C11.141 7.018 11.067 7.136 10.972 7.237C10.876 7.337 10.762 7.417 10.634 7.471C10.507 7.526 10.37 7.554 10.232 7.554V7.554Z"
+                                fill="#888888" />
+                            </g>
+                          </svg>
+                        </button>
+                        <button class="comp-icon-btn titan-action-btn action-btn-signature" title="Signature">
+                          <svg class="ci-signature" preserveAspectRatio="xMidYMid meet" overflow="visible"
+                            style="display: block;" viewBox="0 0 19.4306 13.006" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <g id="Group">
+                              <path id="Vector"
+                                d="M19.3692 9.71963C19.4272 9.54103 19.4444 9.35173 19.4196 9.16563C19.3948 8.97953 19.3286 8.80133 19.2259 8.64413C19.1232 8.48693 18.9866 8.35483 18.8261 8.25733C18.6656 8.15983 18.4853 8.09963 18.2985 8.08093C17.3116 8.08093 16.8088 9.10513 16.4364 9.76613L16.0733 10.2969C16.0081 10.3713 15.8835 10.5959 15.8423 10.6387C15.7539 10.5006 15.6967 10.3449 15.6747 10.1825C15.5812 9.84243 15.5066 9.49733 15.4513 9.14903C15.4028 8.83543 15.3375 8.52463 15.2557 8.21793C15.1878 8.01343 15.0782 7.82513 14.934 7.66493C14.7898 7.50463 14.6141 7.37593 14.4178 7.28693C14.2241 7.19023 14.0105 7.13983 13.794 7.13983C13.5775 7.13983 13.3639 7.19023 13.1702 7.28693C12.5499 7.69123 11.9616 8.14253 11.4105 8.63693L11.3174 8.72073C9.96083 9.88453 9.43583 10.3757 9.06363 10.4932C8.69133 10.6108 8.46103 10.5373 8.24933 10.4426C7.97383 10.2696 7.73693 10.0416 7.55351 9.77283L7.80493 9.64253C7.99183 9.54583 8.17223 9.43693 8.34493 9.31663C10.207 7.96653 12.0691 5.48063 11.9295 3.23677C11.9057 2.69638 11.7662 2.16738 11.5205 1.68552C11.2747 1.20365 10.9284 0.780138 10.5049 0.443588C10.3426 0.304898 10.1519 0.203238 9.94633 0.145648C9.67333 0.0817783 9.39653 0.0351384 9.11773 0.00598839C8.59283 -0.0238116 8.06763 0.0578481 7.57654 0.245608C7.08548 0.433358 6.63975 0.722948 6.26865 1.09533C4.76032 2.49192 4.08065 5.18273 4.09927 7.22173C4.1369 7.68763 4.20219 8.15083 4.29479 8.60903L3.23338 9.03733C1.29677 9.79143 1.70925 9.69783 1.20647 9.86533C0.86776 9.94183 0.31523 10.3637 0.12921 10.6569C0.04444 10.8109 0 10.9839 0 11.1597C0 11.3355 0.04444 11.5084 0.12921 11.6625C0.26589 11.8852 0.45561 12.0707 0.68144 12.2023C0.90727 12.3339 1.16217 12.4075 1.42338 12.4166C1.59632 12.4411 2.02977 12.2268 2.20271 12.2023C2.20271 12.2023 4.02478 11.4394 5.3562 10.8994C6.09969 11.8882 7.07534 12.5611 7.66235 12.8209C8.24933 13.0806 9.09633 13.0265 9.60013 12.9038C10.1038 12.7812 10.9168 12.4079 12.2205 11.4301C12.3322 11.3463 12.6022 11.0856 12.9002 10.8156L13.1795 10.5642C13.384 11.2282 13.7522 11.8301 14.2502 12.3146C14.755 12.7173 15.3836 12.8449 16.0267 12.9038H16.1291C16.5139 12.9038 16.9017 12.7635 17.2511 12.6124C17.6005 12.4613 17.9978 12.0928 18.2337 11.7941C18.2776 11.7474 18.318 11.6976 18.3548 11.6451C18.8622 10.9999 19.1386 10.5074 19.3692 9.71963ZM9.41563 3.05987C9.41563 4.25163 8.35423 5.85303 7.26488 6.78413L6.8459 7.12863V6.68173C6.86355 5.27203 7.35184 3.90877 8.23323 2.80848C8.29013 2.75001 8.35253 2.69702 8.41943 2.6502C8.58123 2.52037 8.78013 2.44537 8.98733 2.43606C9.03273 2.42114 9.08163 2.42114 9.12703 2.43606C9.22483 2.50632 9.30283 2.60069 9.35343 2.70999C9.40393 2.8193 9.42543 2.93983 9.41563 3.05987Z"
+                                fill="#888888" />
+                            </g>
+                          </svg>
+                        </button>
+                        <button class="comp-icon-btn titan-action-btn action-btn-bookings" title="Calendar">
+                          <svg class="ci-bookings" preserveAspectRatio="xMidYMid meet" overflow="visible"
+                            style="display: block;" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <g id="Bookings icon">
+                              <path id="Exclude"
+                                d="M15.333 4.5C15.7932 4.5 16.1669 4.81828 16.167 5.21094V6.375H18.0547C18.8528 6.37525 19.4997 7.0222 19.5 7.82031V18.0547C19.4997 18.8528 18.8528 19.4997 18.0547 19.5H5.94531C5.1472 19.4997 4.50025 18.8528 4.5 18.0547V7.82031C4.50025 7.0222 5.1472 6.37525 5.94531 6.375H7.83301V5.21094C7.83312 4.81828 8.20682 4.5 8.66699 4.5C9.12701 4.50015 9.49989 4.81837 9.5 5.21094V6.375H14.5V5.21094C14.5001 4.81837 14.873 4.50015 15.333 4.5ZM15.1025 10.3125C14.7158 10.019 14.1583 10.0867 13.8574 10.4639L11.3525 13.6064L10.0664 12.4219C9.71041 12.0939 9.149 12.109 8.8125 12.4561C8.47604 12.8034 8.49237 13.3516 8.84863 13.6797L10.8438 15.5186C11.2243 15.8691 11.8319 15.824 12.1533 15.4209L15.2578 11.5264C15.5586 11.1491 15.4892 10.6059 15.1025 10.3125Z"
+                                fill="#888888" />
+                            </g>
+                          </svg>
+                        </button>
+                      </div>
+                    </div>
+                    <button class="comp-delete-btn" title="Discard" onclick="discardReply()">
+                      <img src="composer_assets/figma-ic-delete.svg" alt="">
+                    </button>
+                  </div>
+                </div>
+              </div>
 
           </div><!-- /thread-content -->
         </div><!-- /reading-pane -->
@@ -3288,6 +3521,174 @@
         </div>
       </div>
 
+    </div>
+  </div>
+
+
+  <!-- Settings Side Modal -->
+  <div class="side-modal" id="settingsModal">
+    <!-- Profile section -->
+    <div class="side-modal-profile">
+      <div class="side-modal-avatar-container">
+        <div class="side-modal-avatar-wrapper">
+          <img src="settings_sidebar_assets/profile_avatar.png" alt="Profile" class="side-modal-avatar-img">
+        </div>
+        <button class="side-modal-edit-btn" title="Edit Profile">
+          <img src="settings_sidebar_assets/edit.svg" alt="Edit">
+        </button>
+      </div>
+      <div class="side-modal-user-info">
+        <div class="side-modal-username">Ella Mathews</div>
+        <div class="side-modal-email">elizabethmathews1980@avontech.com</div>
+      </div>
+      <button class="side-modal-close-btn" onclick="closeSettingsModal()" title="Close Settings">
+        <img src="settings_sidebar_assets/close.svg" alt="Close">
+      </button>
+    </div>
+
+    <div class="side-modal-scrollable">
+      <div class="side-modal-divider"><img src="settings_sidebar_assets/line.svg" alt="" style="width:100%; display:block;"></div>
+      <div class="side-modal-option">
+        <span>Preferences</span>
+      </div>
+      <div class="side-modal-divider"><img src="settings_sidebar_assets/line.svg" alt="" style="width:100%; display:block;"></div>
+      <div class="side-modal-option">
+        <span>Admin control panel</span>
+      </div>
+      <div class="side-modal-divider"><img src="settings_sidebar_assets/line.svg" alt="" style="width:100%; display:block;"></div>
+
+      <!-- Theme section -->
+      <div class="side-modal-section">
+        <div class="side-modal-section-title">Theme</div>
+        <div class="side-modal-row">
+          <div class="side-modal-radio-label active" onclick="setTheme('light')">
+            <span class="radio-btn checked">
+              <img src="settings_sidebar_assets/radio_selected.svg" alt="Selected">
+            </span>
+            <span class="radio-btn unchecked" style="display:none;">
+              <img src="settings_sidebar_assets/radio_unselected.svg" alt="Unselected">
+            </span>
+            <span>Light mode</span>
+          </div>
+          <!-- Light mode preview -->
+          <div class="theme-layout-preview active" onclick="setTheme('light')">
+            <img src="settings_sidebar_assets/preview_theme_light.svg" alt="Light theme preview">
+          </div>
+        </div>
+        <div class="side-modal-row">
+          <div class="side-modal-radio-label" onclick="setTheme('dark')">
+            <span class="radio-btn checked" style="display:none;">
+              <img src="settings_sidebar_assets/radio_selected.svg" alt="Selected">
+            </span>
+            <span class="radio-btn unchecked">
+              <img src="settings_sidebar_assets/radio_unselected.svg" alt="Unselected">
+            </span>
+            <span>Dark mode</span>
+          </div>
+          <!-- Dark mode preview -->
+          <div class="theme-layout-preview" onclick="setTheme('dark')">
+            <img src="settings_sidebar_assets/preview_theme_dark.svg" alt="Dark theme preview">
+          </div>
+        </div>
+      </div>
+
+      <div class="side-modal-divider"><img src="settings_sidebar_assets/line.svg" alt="" style="width:100%; display:block;"></div>
+
+      <!-- Reading Pane section -->
+      <div class="side-modal-section">
+        <div class="side-modal-section-title">Reading pane</div>
+        <div class="side-modal-row">
+          <div class="side-modal-radio-label active" onclick="setReadingPane('show')">
+            <span class="radio-btn checked">
+              <img src="settings_sidebar_assets/radio_selected.svg" alt="Selected">
+            </span>
+            <span class="radio-btn unchecked" style="display:none;">
+              <img src="settings_sidebar_assets/radio_unselected.svg" alt="Unselected">
+            </span>
+            <span>Show reading pane</span>
+          </div>
+          <div class="theme-layout-preview active" onclick="setReadingPane('show')">
+            <img src="settings_sidebar_assets/preview_reading_show.svg" alt="Show reading pane preview">
+          </div>
+        </div>
+        <div class="side-modal-row">
+          <div class="side-modal-radio-label" onclick="setReadingPane('hide')">
+            <span class="radio-btn checked" style="display:none;">
+              <img src="settings_sidebar_assets/radio_selected.svg" alt="Selected">
+            </span>
+            <span class="radio-btn unchecked">
+              <img src="settings_sidebar_assets/radio_unselected.svg" alt="Unselected">
+            </span>
+            <span>Hide reading pane</span>
+          </div>
+          <div class="theme-layout-preview" onclick="setReadingPane('hide')">
+            <img src="settings_sidebar_assets/preview_reading_hide.svg" alt="Hide reading pane preview">
+          </div>
+        </div>
+      </div>
+
+      <div class="side-modal-divider"><img src="settings_sidebar_assets/line.svg" alt="" style="width:100%; display:block;"></div>
+
+      <!-- Email Organisation section -->
+      <div class="side-modal-section">
+        <div class="side-modal-section-title" style="display:flex; align-items:center; gap:4px;">
+          <span>Email organisation</span>
+          <span class="info-icon" title="Choose whether to group related replies into threads or show them as separate emails.">
+            <img src="settings_sidebar_assets/help.svg" alt="Help">
+          </span>
+        </div>
+        <div class="side-modal-row">
+          <div class="side-modal-radio-label active" onclick="setEmailOrg('group')">
+            <span class="radio-btn checked">
+              <img src="settings_sidebar_assets/radio_selected.svg" alt="Selected">
+            </span>
+            <span class="radio-btn unchecked" style="display:none;">
+              <img src="settings_sidebar_assets/radio_unselected.svg" alt="Unselected">
+            </span>
+            <span>Group emails with replies</span>
+          </div>
+          <div class="theme-layout-preview active" onclick="setEmailOrg('group')">
+            <img src="settings_sidebar_assets/preview_org_group.svg" alt="Group emails preview">
+          </div>
+        </div>
+        <div class="side-modal-row">
+          <div class="side-modal-radio-label" onclick="setEmailOrg('separate')">
+            <span class="radio-btn checked" style="display:none;">
+              <img src="settings_sidebar_assets/radio_selected.svg" alt="Selected">
+            </span>
+            <span class="radio-btn unchecked">
+              <img src="settings_sidebar_assets/radio_unselected.svg" alt="Unselected">
+            </span>
+            <span>Show emails separately</span>
+          </div>
+          <div class="theme-layout-preview" onclick="setEmailOrg('separate')">
+            <img src="settings_sidebar_assets/preview_org_separate.svg" alt="Separate emails preview">
+          </div>
+        </div>
+      </div>
+
+      <div class="side-modal-divider"><img src="settings_sidebar_assets/line.svg" alt="" style="width:100%; display:block;"></div>
+
+      <div class="side-modal-option">
+        <span>Download Titan App</span>
+      </div>
+      <div class="side-modal-divider"><img src="settings_sidebar_assets/line.svg" alt="" style="width:100%; display:block;"></div>
+      <div class="side-modal-option">
+        <span>Enable Titan on other apps</span>
+      </div>
+      <div class="side-modal-divider"><img src="settings_sidebar_assets/line.svg" alt="" style="width:100%; display:block;"></div>
+      <div class="side-modal-option logout">
+        <span>Log out</span>
+      </div>
+    </div>
+
+    <!-- Upgrade CTA footer -->
+    <div class="side-modal-upgrade-cta">
+      <button class="upgrade-btn">
+        <img src="settings_sidebar_assets/upgrade_crown.svg" alt="Upgrade" style="width:16px; height:16px; margin-right:4px;">
+        <span>Upgrade</span>
+      </button>
+      <div class="upgrade-subtext">Current plan: Free</div>
     </div>
   </div>
 
@@ -3705,11 +4106,50 @@
       white-space: nowrap;
       cursor: pointer;
       flex-shrink: 0;
-      transition: background 0.1s;
+      position: relative;
+      transition: background 0.1s ease;
     }
 
-    .comp-feat:hover {
-      background: #f4f6fa;
+    .comp-feat::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 4px;
+      background: #eaeaea;
+      opacity: 0;
+      transform: scale(0.85);
+      transition: transform 0.2s ease-in, opacity 0.2s ease-in;
+      z-index: 0;
+    }
+
+    .comp-feat > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .comp-feat:hover::before {
+      opacity: 1;
+      transform: scale(1.05);
+      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.25s ease-out;
+    }
+
+    .comp-feat:active::before {
+      opacity: 1;
+      transform: scale(var(--click-scale));
+      transition: transform 0.1s ease;
+    }
+
+    .comp-feat-active::before {
+      background: #eaeaea;
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .comp-feat-active:hover::before {
+      background: #eaeaea;
+      opacity: 1;
+      transform: scale(1.05);
+      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.25s ease-out;
     }
 
     .comp-feat .fic {
@@ -3833,8 +4273,38 @@
       position: relative;
     }
 
-    .comp-fmt-btn:hover {
-      background: #f0f2f5;
+    .comp-fmt-btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 4px;
+      background: #eaeaea;
+      opacity: 0;
+      transform: scale(0.85);
+      transition: transform 0.2s ease-in, opacity 0.2s ease-in;
+      z-index: 0;
+    }
+
+    .comp-fmt-btn > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .comp-fmt-btn img {
+      position: relative;
+      z-index: 1;
+    }
+
+    .comp-fmt-btn:hover::before {
+      opacity: 1;
+      transform: scale(1.1);
+      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.25s ease-out;
+    }
+
+    .comp-fmt-btn:active::before {
+      opacity: 1;
+      transform: scale(var(--click-scale));
+      transition: transform 0.1s ease;
     }
 
     .comp-fmt-btn img {
@@ -4059,7 +4529,7 @@
 
     .comp-vert-sep {
       width: 1px;
-      height: 28px;
+      height: 20px;
       background: #dedede;
       flex-shrink: 0;
     }
@@ -4166,6 +4636,417 @@
 
     .shared-comp-tooltip.no-slide {
       transition: none !important;
+    }
+
+    /* ── Side Modal Panel ── */
+    .side-modal {
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: 316px;
+      background: #ffffff;
+      box-shadow: -4px 0 24px rgba(0, 0, 0, 0.15);
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(100%);
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', sans-serif;
+    }
+    .side-modal.open {
+      transform: translateX(0);
+    }
+
+    /* Profile Header */
+    .side-modal-profile {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 16px 24px;
+      border-bottom: 1px solid #f0f0f0;
+      position: relative;
+      flex-shrink: 0;
+    }
+    .side-modal-avatar-container {
+      position: relative;
+      width: 48px;
+      height: 48px;
+    }
+    .side-modal-avatar-wrapper {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      overflow: hidden;
+    }
+    .side-modal-avatar-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .side-modal-edit-btn {
+      position: absolute;
+      bottom: -2px;
+      right: -2px;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #ffffff;
+      border: none;
+      box-shadow: 0px 1px 4px rgba(0,0,0,0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      padding: 0;
+    }
+    .side-modal-edit-btn img {
+      width: 12px;
+      height: 12px;
+      display: block;
+    }
+    .side-modal-user-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      flex: 1;
+      min-width: 0;
+    }
+    .side-modal-username {
+      font-size: 15px;
+      font-weight: 600;
+      color: #333;
+    }
+    .side-modal-email {
+      font-size: 12px;
+      color: #888;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .side-modal-close-btn {
+      width: 24px;
+      height: 24px;
+      border-radius: 4px;
+      border: none;
+      background: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      padding: 0;
+    }
+    .side-modal-close-btn img {
+      width: 14px;
+      height: 14px;
+      display: block;
+    }
+    .side-modal-close-btn:hover {
+      background: #f0f0f0;
+    }
+
+    /* Scrollable settings */
+    .side-modal-scrollable {
+      flex: 1;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+    }
+    .side-modal-divider {
+      width: 100%;
+      height: auto;
+    }
+    .side-modal-option {
+      padding: 16px;
+      font-size: 14px;
+      font-weight: 500;
+      color: #333;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .side-modal-option:hover {
+      background: #f0f0f0;
+    }
+    .side-modal-option.logout {
+      color: #d93025;
+    }
+
+    /* Preference Sections */
+    .side-modal-section {
+      padding: 12px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .side-modal-section-title {
+      font-size: 12px;
+      color: #888;
+      text-transform: uppercase;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+    }
+    .side-modal-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .side-modal-radio-label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      color: #333;
+      cursor: pointer;
+      user-select: none;
+      flex: 1;
+    }
+    .radio-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .info-icon {
+      display: inline-flex;
+      align-items: center;
+      cursor: help;
+      color: #999;
+    }
+
+    /* Preview Boxes */
+    .theme-layout-preview {
+      width: 80px;
+      height: 42px;
+      border-radius: 4px;
+      border: 1px solid #dedede;
+      position: relative;
+      overflow: hidden;
+      flex-shrink: 0;
+      cursor: pointer;
+    }
+    .theme-layout-preview.active {
+      border: 2px solid #2170f4;
+    }
+    .theme-layout-preview img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Upgrade Footer */
+    .side-modal-upgrade-cta {
+      background: #f1bd6c;
+      padding: 12px 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      flex-shrink: 0;
+      color: #333;
+    }
+    .upgrade-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: none;
+      border: none;
+      font-size: 14px;
+      font-weight: 700;
+      color: #333;
+      cursor: pointer;
+    }
+    .upgrade-btn img {
+      width: 16px;
+      height: 16px;
+      display: block;
+    }
+    .upgrade-subtext {
+      font-size: 12px;
+      color: #333;
+      opacity: 0.8;
+    }
+
+    /* ── Reading Pane Hidden State Layout ── */
+    .content-area.reading-pane-hidden .middle-panel {
+      width: 100% !important;
+      flex: 1 !important;
+    }
+    .content-area.reading-pane-hidden .reading-pane {
+      display: none !important;
+    }
+    .content-area.reading-pane-hidden .panel-resize-handle {
+      display: none !important;
+    }
+
+    /* Detail view active under hidden state */
+    .content-area.reading-pane-hidden.show-detail .middle-panel {
+      display: none !important;
+    }
+    .content-area.reading-pane-hidden.show-detail .reading-pane {
+      display: flex !important;
+      flex: 1 !important;
+    }
+    .content-area.reading-pane-hidden.show-detail #readingPaneBackBtn {
+      display: flex !important;
+    }
+    .content-area.reading-pane-hidden.show-detail #readingPaneBackSep {
+      display: block !important;
+    }
+
+    /* ── Email Labels ── */
+    .tile-labels-wide {
+      display: none;
+      align-items: center;
+      gap: 4px;
+      flex-shrink: 0;
+    }
+    .tile-labels-narrow {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      flex-shrink: 0;
+      margin-left: 8px;
+    }
+    .middle-panel.wide-view .tile-labels-wide {
+      display: flex;
+      margin-left: 12px;
+      margin-right: 12px;
+    }
+    .middle-panel.wide-view .tile-labels-narrow {
+      display: none;
+    }
+    .tile-label-pill {
+      font-size: 13px;
+      font-weight: 500;
+      padding: 3px 8px;
+      border-radius: 4px;
+      white-space: nowrap;
+      text-transform: capitalize;
+    }
+    .tile-label-pill.calendar {
+      background: #cbeff4;
+      color: #1d4d54;
+    }
+    .tile-label-pill.meeting {
+      background: #ffccd2;
+      color: #7c3e44;
+    }
+    .tile-label-pill.important {
+      background: #dcedc8;
+      color: #435534;
+    }
+    .tile-label-pill.work {
+      background: #ffe0b2;
+      color: #7d4e24;
+    }
+    .tile-label-pill.design {
+      background: #e1bee7;
+      color: #5e3e66;
+    }
+    .tile-label-pill.checking {
+      background: #fedfa9;
+      color: #755026;
+    }
+    .tile-label-more {
+      background: #ffffff;
+      border: 1px solid #dcdcdc;
+      color: #666;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 1px 5px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    /* ── Reply Box CSS Placeholder ── */
+    .reply-box-body:empty::before {
+      content: attr(placeholder);
+      color: #999999;
+      pointer-events: none;
+      display: block;
+    }
+
+    /* ── Reply Box Slide + Fade Animation ── */
+    #reply-box-card {
+      opacity: 0;
+      transform: translateY(-10px);
+      transition: none;
+    }
+    #reply-box-card.reply-box-animating {
+      transition: opacity 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+                  transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    #reply-box-card.reply-box-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    #reply-box-card.reply-box-hiding {
+      transition: opacity 0.22s ease, transform 0.22s ease;
+      opacity: 0;
+      transform: translateY(-8px);
+    }
+
+    /* ── Font / Size dropdown pills ── */
+    .reply-font-dd-pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      height: 26px;
+      padding: 0 9px;
+      border-radius: 6px;
+      background: transparent;
+      cursor: pointer;
+      font-size: 13px;
+      color: #555;
+      font-weight: 500;
+      user-select: none;
+      white-space: nowrap;
+      flex-shrink: 0;
+      line-height: 1;
+      box-sizing: border-box;
+      padding-bottom: 1px;
+      position: relative;
+    }
+    .reply-font-dd-pill::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 6px;
+      background: #f1f3f4;
+      transform: scale(1);
+      transition: transform 0.2s ease-in, background 0.2s ease-in;
+      z-index: 0;
+    }
+    .reply-font-dd-pill span {
+      display: block;
+      line-height: 1;
+      transform: translateY(0);
+      position: relative;
+      z-index: 1;
+    }
+    .reply-font-dd-pill .comp-dd-arrow {
+      flex-shrink: 0;
+      transform: rotate(180deg) translateY(-1px);
+      transform-origin: center center;
+      position: relative;
+      z-index: 1;
+    }
+    .reply-font-dd-pill:hover::before {
+      background: #eaeaea;
+      transform: scale(1.05);
+      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.25s ease-out;
+    }
+    .reply-font-dd-pill:active::before {
+      transform: scale(var(--click-scale));
+      transition: transform 0.1s ease;
     }
   </style>
 
@@ -4297,11 +5178,11 @@
     }
 
     const NEW_EMAILS = [
-      { sender: 'Rohan Mehta', subject: 'Design review for onboarding flow', preview: 'Hey, can we sync on the onboarding screens before EOD?' },
-      { sender: 'Priya Nair', subject: 'Q3 metrics are in — looks great!', preview: 'Just pulled the numbers, we hit 94% retention this quarter.' },
-      { sender: 'Arjun Sharma', subject: 'Quick question on the API spec', preview: 'Does the /refresh endpoint need auth headers or is it open?' },
-      { sender: 'Meera Iyer', subject: 'Updated wireframes attached', preview: 'I have revised the flows based on last session feedback.' },
-      { sender: 'Karan Bhatia', subject: 'Team lunch — Thursday works?', preview: 'Thinking the new place near the office, lmk if Thursday is ok.' },
+      { sender: 'Rohan Mehta', subject: 'Design review for onboarding flow', preview: 'Hey, can we sync on the onboarding screens before EOD to review the latest visual iterations and make sure the transition animations feel completely smooth and align with our updated core user flows and usability expectations?' },
+      { sender: 'Priya Nair', subject: 'Q3 metrics are in — looks great!', preview: 'Just pulled the numbers, we hit 94% retention this quarter and exceeded all key user engagement goals across our core dashboard panels, especially within the workspace, collaboration settings, and custom onboarding modules.', labels: ["Work", "Important"] },
+      { sender: 'Arjun Sharma', subject: 'Quick question on the API spec', preview: 'Does the /refresh endpoint need auth headers or is it open to any client requests without requiring token validation? Let me know if we need to coordinate with the security and platform infrastructure teams on this.' },
+      { sender: 'Meera Iyer', subject: 'Updated wireframes attached', preview: 'I have revised the flows based on last session feedback and added the detailed interaction states for the settings side modal, workspace configuration dropdowns, hover states, and responsive layout breakpoints.', labels: ["Design", "Calendar", "Meeting", "Important"] },
+      { sender: 'Karan Bhatia', subject: 'Team lunch — Thursday works?', preview: 'Thinking the new Italian place near the office, let me know if Thursday afternoon works for everyone on the team, and please send over any dietary restrictions or preferences you might have so I can make reservations.' },
     ];
     let newEmailIndex = 0;
 
@@ -4312,6 +5193,9 @@
 
       const tile = document.createElement('div');
       tile.className = 'email-tile new-email-tile';
+      if (data.labels) {
+        tile.setAttribute('data-labels', JSON.stringify(data.labels));
+      }
       tile.innerHTML = `
     <div class="email-tile-inner" style="opacity:0;">
       <div class="tile-icons">
@@ -4320,12 +5204,16 @@
         <div class="tile-star"><img src="assets/1e1696aa-5b8d-4409-97fd-4ce5c85c5ae5.svg" alt=""></div>
       </div>
       <div class="tile-content">
-        <div style="display:flex;justify-content:space-between;">
+        <div class="tile-top" style="display:flex;justify-content:space-between;">
           <div class="tile-sender bold">${data.sender}</div>
           <div class="tile-time">just now</div>
         </div>
+        <div class="tile-labels-wide"></div>
         <div class="tile-subject">${data.subject}</div>
-        <div class="tile-preview">${data.preview}</div>
+        <div class="tile-preview">
+          <span class="preview-text">${data.preview}</span>
+          <div class="tile-labels-narrow"></div>
+        </div>
         <div class="tile-hover-actions">
           <div class="tile-action-pill"><div class="icon18"><img src="assets/7c1d5199-2bce-428f-9bff-eb73b6954e12.svg" alt=""></div></div>
           <div class="tile-action-pill"><div class="icon18"><img src="assets/65a9156f-d37a-414e-bef2-e5b477cb6436.svg" alt=""></div></div>
@@ -4340,6 +5228,7 @@
         // Skeleton: just insert instantly, no animation
         tile.querySelector('.email-tile-inner').style.opacity = '1';
         overlay.after(tile);
+        renderLabels();
       } else {
         // Start collapsed
         tile.style.maxHeight = '0';
@@ -4348,6 +5237,7 @@
         tile.style.marginTop = '0';
         tile.style.marginBottom = '0';
         overlay.after(tile);
+        renderLabels();
 
         // Phase 1: expand height — existing emails push down visibly
         requestAnimationFrame(() => {
@@ -4541,6 +5431,416 @@
         }
       }
     });
+
+    // ── Settings Side Modal Logic ──
+    function openSettingsModal() {
+      const modal = document.getElementById('settingsModal');
+      if (modal) {
+        modal.classList.add('open');
+      }
+    }
+
+    function closeSettingsModal() {
+      const modal = document.getElementById('settingsModal');
+      if (modal) {
+        modal.classList.remove('open');
+      }
+    }
+
+    // Close settings modal when clicking outside of it
+    document.addEventListener('click', (e) => {
+      const modal = document.getElementById('settingsModal');
+      if (modal && modal.classList.contains('open')) {
+        const isClickInside = modal.contains(e.target);
+        const clickedTrigger = e.target.closest('.settings-icon') || 
+                               e.target.closest('[onclick="openSettingsModal()"]') ||
+                               e.target.closest('.titan-action-btn[title="Settings"]');
+                               
+        if (!isClickInside && !clickedTrigger) {
+          closeSettingsModal();
+        }
+      }
+    });
+
+    function setTheme(theme) {
+      const sections = document.querySelectorAll('.side-modal-section');
+      if (sections.length < 1) return;
+      const rows = sections[0].querySelectorAll('.side-modal-row');
+      rows.forEach((row, idx) => {
+        const label = row.querySelector('.side-modal-radio-label');
+        const preview = row.querySelector('.theme-layout-preview');
+        const checked = label.querySelector('.radio-btn.checked');
+        const unchecked = label.querySelector('.radio-btn.unchecked');
+        
+        const targetTheme = idx === 0 ? 'light' : 'dark';
+        if (targetTheme === theme) {
+          label.classList.add('active');
+          preview.classList.add('active');
+          checked.style.display = '';
+          unchecked.style.display = 'none';
+        } else {
+          label.classList.remove('active');
+          preview.classList.remove('active');
+          checked.style.display = 'none';
+          unchecked.style.display = '';
+        }
+      });
+      localStorage.setItem('titan_settings_theme', theme);
+    }
+
+    function setReadingPane(option) {
+      const sections = document.querySelectorAll('.side-modal-section');
+      if (sections.length < 2) return;
+      const rows = sections[1].querySelectorAll('.side-modal-row');
+      rows.forEach((row, idx) => {
+        const label = row.querySelector('.side-modal-radio-label');
+        const preview = row.querySelector('.theme-layout-preview');
+        const checked = label.querySelector('.radio-btn.checked');
+        const unchecked = label.querySelector('.radio-btn.unchecked');
+        
+        const targetOpt = idx === 0 ? 'show' : 'hide';
+        if (targetOpt === option) {
+          label.classList.add('active');
+          preview.classList.add('active');
+          checked.style.display = '';
+          unchecked.style.display = 'none';
+        } else {
+          label.classList.remove('active');
+          preview.classList.remove('active');
+          checked.style.display = 'none';
+          unchecked.style.display = '';
+        }
+      });
+
+      const contentArea = document.querySelector('.content-area');
+      const middlePanel = document.getElementById('middlePanel');
+      if (contentArea && middlePanel) {
+        if (option === 'hide') {
+          contentArea.classList.add('reading-pane-hidden');
+          contentArea.classList.remove('show-detail');
+          middlePanel.classList.add('wide-view');
+        } else {
+          contentArea.classList.remove('reading-pane-hidden', 'show-detail');
+          // Re-evaluate wide-view based on current pixel width of the panel
+          const currentW = middlePanel.offsetWidth;
+          middlePanel.classList.toggle('wide-view', currentW >= 620);
+        }
+      }
+      localStorage.setItem('titan_settings_reading_pane', option);
+    }
+
+    function setEmailOrg(option) {
+      const sections = document.querySelectorAll('.side-modal-section');
+      if (sections.length < 3) return;
+      const rows = sections[2].querySelectorAll('.side-modal-row');
+      rows.forEach((row, idx) => {
+        const label = row.querySelector('.side-modal-radio-label');
+        const preview = row.querySelector('.theme-layout-preview');
+        const checked = label.querySelector('.radio-btn.checked');
+        const unchecked = label.querySelector('.radio-btn.unchecked');
+        
+        const targetOpt = idx === 0 ? 'group' : 'separate';
+        if (targetOpt === option) {
+          label.classList.add('active');
+          preview.classList.add('active');
+          checked.style.display = '';
+          unchecked.style.display = 'none';
+        } else {
+          label.classList.remove('active');
+          preview.classList.remove('active');
+          checked.style.display = 'none';
+          unchecked.style.display = '';
+        }
+      });
+      localStorage.setItem('titan_settings_email_org', option);
+    }
+
+    function goBackToList() {
+      const contentArea = document.querySelector('.content-area');
+      if (contentArea) {
+        contentArea.classList.remove('show-detail');
+      }
+    }
+
+    // ── Email Tile Selection and Detail View Toggling ──
+    document.addEventListener('DOMContentLoaded', () => {
+      const emailList = document.querySelector('.email-list');
+      const contentArea = document.querySelector('.content-area');
+      
+      // Load and apply persisted settings
+      const savedTheme = localStorage.getItem('titan_settings_theme') || 'light';
+      const savedReadingPane = localStorage.getItem('titan_settings_reading_pane') || 'show';
+      const savedEmailOrg = localStorage.getItem('titan_settings_email_org') || 'group';
+
+      setTheme(savedTheme);
+      setReadingPane(savedReadingPane);
+      setEmailOrg(savedEmailOrg);
+      renderLabels();
+
+      // Initialize reading pane with selected tile on load
+      const selectedTile = document.querySelector('.email-tile.selected');
+      if (selectedTile) {
+        updateReadingPane(selectedTile);
+      }
+
+      if (emailList && contentArea) {
+        emailList.addEventListener('click', (e) => {
+          const tile = e.target.closest('.email-tile');
+          if (!tile) return;
+          
+          if (e.target.closest('.tile-chk') || e.target.closest('.tile-star') || e.target.closest('.tile-hover-actions')) {
+            return;
+          }
+          
+          document.querySelectorAll('.email-tile').forEach(t => t.classList.remove('selected'));
+          tile.classList.add('selected');
+          
+          updateReadingPane(tile);
+          
+          if (contentArea.classList.contains('reading-pane-hidden')) {
+            contentArea.classList.add('show-detail');
+          }
+        });
+      }
+    });
+
+    function updateReadingPane(tile) {
+      discardReply();
+
+      const subject = tile.querySelector('.tile-subject').textContent.trim();
+      const threadTitle = document.querySelector('.thread-title');
+      if (threadTitle) {
+        threadTitle.textContent = subject;
+      }
+      const labelsData = JSON.parse(tile.getAttribute('data-labels') || '[]');
+      const threadLabels = document.querySelector('.thread-labels');
+      if (threadLabels) {
+        if (labelsData.length) {
+          let html = '';
+          labelsData.forEach(label => {
+            const cleanLabel = label.toLowerCase();
+            html += `<span class="tile-label-pill ${cleanLabel}">${label}</span>`;
+          });
+          threadLabels.innerHTML = html;
+          threadLabels.style.display = 'flex';
+        } else {
+          threadLabels.innerHTML = '';
+          threadLabels.style.display = 'none';
+        }
+      }
+    }
+
+    function openReplyBox(type) {
+      const selectedTile = document.querySelector('.email-tile.selected');
+      const senderName = selectedTile ? selectedTile.querySelector('.tile-sender').textContent.trim() : 'Sajal Kumar';
+      
+      const recipientEl = document.getElementById('reply-box-recipient');
+      if (recipientEl) {
+        recipientEl.textContent = senderName;
+      }
+      
+      const replyBox = document.getElementById('reply-box-card');
+      const replyBody = document.getElementById('reply-box-body');
+      
+      if (replyBox && replyBody) {
+        if (type === 'reply-ai') {
+          replyBody.innerHTML = `Hi ${senderName},<br><br>Thanks for reaching out! I've reviewed the V2 roadmap highlights you sent over, and Monday at 5 PM works perfectly for me to catch up. Looking forward to speaking then!<br><br>Best regards,<br>Ella`;
+        } else if (type === 'forward') {
+          replyBody.innerHTML = `<br><br>---------- Forwarded message ---------<br>From: ${senderName}<br>Subject: ...`;
+        } else {
+          replyBody.innerHTML = '';
+        }
+
+        // Slide + fade in
+        replyBox.style.display = 'flex';
+        replyBox.classList.remove('reply-box-hiding');
+        replyBox.classList.add('reply-box-animating');
+        // Force reflow then start animation
+        replyBox.getBoundingClientRect();
+        replyBox.classList.add('reply-box-visible');
+
+        setTimeout(() => {
+          replyBox.classList.remove('reply-box-animating');
+          replyBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          replyBody.focus();
+        }, 320);
+      }
+    }
+
+    function discardReply() {
+      const replyBox = document.getElementById('reply-box-card');
+      const replyBody = document.getElementById('reply-box-body');
+      if (replyBox && replyBox.classList.contains('reply-box-visible')) {
+        replyBox.classList.remove('reply-box-visible');
+        replyBox.classList.add('reply-box-hiding');
+        setTimeout(() => {
+          replyBox.style.display = 'none';
+          replyBox.classList.remove('reply-box-hiding');
+          if (replyBody) replyBody.innerHTML = '';
+        }, 280);
+      } else if (replyBox) {
+        replyBox.style.display = 'none';
+        if (replyBody) replyBody.innerHTML = '';
+      }
+    }
+
+    function sendReply() {
+      const recipient = document.getElementById('reply-box-recipient').textContent;
+      showToastNotification(`Reply sent to ${recipient}!`);
+      discardReply();
+    }
+
+    function toggleReplySubject() {
+      const row = document.getElementById('reply-subject-row');
+      const toggle = document.getElementById('reply-subject-toggle');
+      const field = document.getElementById('reply-subject-field');
+      const isOpen = row.style.maxHeight && row.style.maxHeight !== '0px' && row.style.maxHeight !== '0';
+
+      if (isOpen) {
+        row.style.maxHeight = '0';
+        row.style.opacity = '0';
+        toggle.style.color = '#888888';
+      } else {
+        row.style.maxHeight = '80px';
+        row.style.opacity = '1';
+        toggle.style.color = '#2170f4';
+        setTimeout(() => { if (field) field.focus(); }, 260);
+      }
+    }
+
+    function popoutToComposer() {
+
+      const replyBody = document.getElementById('reply-box-body').innerHTML;
+      const recipient = document.getElementById('reply-box-recipient').textContent;
+      
+      discardReply();
+      openComposer();
+      
+      const toInput = document.getElementById('comp-to-input');
+      if (toInput) {
+        toInput.value = recipient;
+      }
+      const compBody = document.getElementById('comp-body');
+      if (compBody) {
+        compBody.innerHTML = replyBody;
+      }
+    }
+
+    function showToastNotification(message) {
+      const existing = document.getElementById('reply-sent-toast');
+      if (existing) existing.remove();
+
+      const toast = document.createElement('div');
+      toast.id = 'reply-sent-toast';
+      toast.style.position = 'fixed';
+      toast.style.bottom = '24px';
+      toast.style.left = '50%';
+      toast.style.transform = 'translateX(-50%) translateY(100px)';
+      toast.style.background = '#323232';
+      toast.style.color = '#ffffff';
+      toast.style.padding = '10px 20px';
+      toast.style.borderRadius = '4px';
+      toast.style.fontSize = '14px';
+      toast.style.fontWeight = '500';
+      toast.style.boxShadow = '0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)';
+      toast.style.zIndex = '99999';
+      toast.style.transition = 'transform 0.3s cubic-bezier(0.22, 1, 0.36, 1)';
+      toast.style.display = 'flex';
+      toast.style.alignItems = 'center';
+      toast.style.gap = '8px';
+      toast.innerHTML = `<span style="color:#4caf50; font-weight:bold;">✓</span> ${message}`;
+
+      document.body.appendChild(toast);
+
+      // Force reflow
+      void toast.offsetHeight;
+
+      toast.style.transform = 'translateX(-50%) translateY(0)';
+
+      setTimeout(() => {
+        toast.style.transform = 'translateX(-50%) translateY(100px)';
+        setTimeout(() => {
+          toast.remove();
+        }, 300);
+      }, 3000);
+    }
+
+    function renderLabels() {
+      document.querySelectorAll('.email-tile[data-labels]').forEach(tile => {
+        const labelsData = JSON.parse(tile.getAttribute('data-labels') || '[]');
+        if (!labelsData.length) return;
+
+        const wideContainer = tile.querySelector('.tile-labels-wide');
+        const narrowContainer = tile.querySelector('.tile-labels-narrow');
+
+        if (wideContainer) {
+          let html = '';
+          const maxVisible = 3;
+          labelsData.slice(0, maxVisible).forEach(label => {
+            const cleanLabel = label.toLowerCase();
+            html += `<span class="tile-label-pill ${cleanLabel}">${label}</span>`;
+          });
+          if (labelsData.length > maxVisible) {
+            const moreCount = labelsData.length - maxVisible;
+            const moreLabels = labelsData.slice(maxVisible).join(', ');
+            html += `<span class="tile-label-more label-tooltip-trigger" data-tooltip="${moreLabels}">+${moreCount}</span>`;
+          }
+          wideContainer.innerHTML = html;
+        }
+
+        if (narrowContainer) {
+          let html = '';
+          const maxVisible = 2;
+          labelsData.slice(0, maxVisible).forEach(label => {
+            const cleanLabel = label.toLowerCase();
+            html += `<span class="tile-label-pill ${cleanLabel}">${label}</span>`;
+          });
+          if (labelsData.length > maxVisible) {
+            const moreCount = labelsData.length - maxVisible;
+            const moreLabels = labelsData.slice(maxVisible).join(', ');
+            html += `<span class="tile-label-more label-tooltip-trigger" data-tooltip="${moreLabels}">+${moreCount}</span>`;
+          }
+          narrowContainer.innerHTML = html;
+        }
+      });
+    }
+
+    // Tooltip for label +N badges
+    (function initLabelTooltips() {
+      const tooltip = document.createElement('div');
+      tooltip.className = 'shared-comp-tooltip';
+      document.body.appendChild(tooltip);
+
+      let hideTimeout;
+
+      document.addEventListener('mouseenter', (e) => {
+        if (!e.target || typeof e.target.closest !== 'function') return;
+        const trigger = e.target.closest('.label-tooltip-trigger');
+        if (!trigger) return;
+
+        clearTimeout(hideTimeout);
+        tooltip.textContent = trigger.getAttribute('data-tooltip');
+
+        const rect = trigger.getBoundingClientRect();
+        const top = rect.top - 32; // position above the badge
+        const left = rect.left + (rect.width / 2);
+
+        tooltip.style.top = top + 'px';
+        tooltip.style.left = left + 'px';
+        tooltip.classList.remove('no-slide');
+        tooltip.classList.add('visible');
+      }, true);
+
+      document.addEventListener('mouseleave', (e) => {
+        if (!e.target || typeof e.target.closest !== 'function') return;
+        const trigger = e.target.closest('.label-tooltip-trigger');
+        if (!trigger) return;
+
+        hideTimeout = setTimeout(() => {
+          tooltip.classList.remove('visible');
+        }, 150);
+      }, true);
+    })();
   </script>
 </body>
 

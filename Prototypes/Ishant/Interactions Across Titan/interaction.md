@@ -245,3 +245,18 @@ When building or updating interactive components across the application, follow 
 *   **Row-Aware Teleportation**: The script detects which row/container the hovered icon belongs to. If the user moves the cursor between disparate container rows (e.g. from a top format bar to a bottom send bar), the tooltip instantly teleports (`no-slide` class temporarily applied) bypassing the slide animation, preventing visual glitching across disjointed vertical distances.
 *   **Hover Persistence**: A `150ms` delay timeout is applied on `mouseleave`. If the user accidentally drifts their mouse off the icon by a few pixels, the tooltip persists and won't flash or disappear instantly.
 *   **Code Reference**: Look for the self-executing tooltip function `(function() { const tooltip = document.querySelector('.custom-tooltip'); ...` in `index.html` JS.
+
+### 7. Selection Toggles and Dropdown Containers
+
+**Best for:** Option toggles (like Track, Design, etc.) and formatting dropdown menus (font family, font size).
+
+*   **Selection Toggle (Active State):**
+    *   **Set/Active Representation:** Once toggled on or selected, the button maintains a persistent background container fill of `#eaeaea` (the standard hover grey) to reflect that it is set.
+    *   **Hover on Active:** Hovering on an active button does **not** darken the background container further; it remains `#eaeaea` and simply scales up by 5% (`scale(1.05)`) with spring easing.
+    *   **Toggle Off:** Toggling the state off completely removes the background container fill and returns the inner icon/label to its default resting state (grayed out).
+*   **Dropdown Container (Pills):**
+    *   **Hover Scaling:** The dropdown container pill itself transitions to `#eaeaea` background and scales up (`scale(1.05)`) on hover.
+    *   **Content Isolation:** The text label and dropdown caret arrow inside the pill must **not** scale or stretch during hover, preserving visual proportions and readability.
+    *   **Tactile Snap Click Feedback:** Clicking either selection toggles or dropdowns triggers the standard spring scale-down click bounce (`scale(0.97)`) to provide immediate physical feedback before opening a menu or toggling a state.
+
+
