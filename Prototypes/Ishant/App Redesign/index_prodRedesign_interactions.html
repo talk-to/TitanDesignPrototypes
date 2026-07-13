@@ -1442,10 +1442,16 @@
       flex-direction: column;
       overflow: hidden;
       background: #f9f9fa;
+      position: relative;
     }
 
     /* Action bar sits at the same level as the tabs row */
     .reading-action-bar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 10;
       height: 44px;
       display: flex;
       align-items: center;
@@ -1453,6 +1459,18 @@
       background: #f9f9fa;
       flex-shrink: 0;
       padding-top: 12px;
+    }
+
+    .reading-action-bar::after {
+      content: '';
+      position: absolute;
+      bottom: -24px;
+      left: 0;
+      right: 0;
+      height: 24px;
+      background: linear-gradient(to bottom, #f9f9fa, rgba(249, 249, 250, 0));
+      pointer-events: none;
+      z-index: 10;
     }
 
     .email-action-bar {
@@ -1570,7 +1588,7 @@
     .thread-content {
       flex: 1;
       overflow-y: auto;
-      padding: 16px 24px 24px;
+      padding: 0 24px 24px; /* top padding now handled by sticky header so it stays under the action bar */
       background: #f9f9fa;
     }
 
@@ -1583,11 +1601,37 @@
       border-radius: 2px;
     }
 
+    .thread-sticky-header {
+      position: sticky;
+      top: 0;
+      z-index: 8;
+      background: #f9f9fa;
+      padding-top: 62px; /* 56px action bar height + 6px padding top */
+      padding-bottom: 24px;
+    }
+
+    .thread-sticky-header::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      height: 24px;
+      background: linear-gradient(to bottom, #f9f9fa, rgba(249, 249, 250, 0));
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.15s ease;
+    }
+
+    .thread-sticky-header.show-fade::after {
+      opacity: 1;
+    }
+
     .thread-title {
       font-size: 24px;
       font-weight: 600;
       color: #333;
-      margin-bottom: 20px;
+      margin-bottom: 0;
       line-height: 1.3;
     }
 
@@ -2911,8 +2955,10 @@
 
           <!-- Thread -->
           <div class="thread-content">
-            <div class="thread-title">Project roadmap for Dashboard version 2</div>
-            <div class="thread-labels" style="display: flex; gap: 6px; margin-top: 8px; margin-bottom: 16px;"></div>
+            <div class="thread-sticky-header">
+              <div class="thread-title">Project roadmap for Dashboard version 2</div>
+              <div class="thread-labels" style="display: flex; gap: 6px; margin-top: 14px;"></div>
+            </div>
 
             <!-- Collapsed tile 1 -->
             <div class="thread-tile">
@@ -3043,7 +3089,7 @@
             </div>
 
             <!-- Reply Box Card (Embedded Inline) -->
-            <div class="reply-box-card" id="reply-box-card" style="display: none; margin-top: 16px; border: 1px solid #dcdcdc; border-radius: 8px; background: #ffffff; flex-direction: column; overflow: hidden; margin-bottom: 20px;">
+            <div class="reply-box-card" id="reply-box-card" style="display: none; margin-top: 16px; border: 1px solid var(--card-border-color); border-radius: var(--card-border-radius); background: #ffffff; flex-direction: column; overflow: hidden; margin-bottom: 20px;">
                 <!-- Header -->
                 <div class="reply-box-header" style="display: flex; align-items: center; justify-content: space-between; padding: 20px 24px 12px; border-bottom: none;">
                   <div class="reply-box-recipient" id="reply-box-recipient" style="font-size: 14px; font-weight: 500; color: #333333; padding-bottom: 2px;">Sajal Kumar</div>
@@ -5587,19 +5633,27 @@
         emailList.addEventListener('click', (e) => {
           const tile = e.target.closest('.email-tile');
           if (!tile) return;
-          
+
           if (e.target.closest('.tile-chk') || e.target.closest('.tile-star') || e.target.closest('.tile-hover-actions')) {
             return;
           }
-          
+
           document.querySelectorAll('.email-tile').forEach(t => t.classList.remove('selected'));
           tile.classList.add('selected');
-          
+
           updateReadingPane(tile);
-          
+
           if (contentArea.classList.contains('reading-pane-hidden')) {
             contentArea.classList.add('show-detail');
           }
+        });
+      }
+
+      const threadContent = document.querySelector('.thread-content');
+      const threadStickyHeader = document.querySelector('.thread-sticky-header');
+      if (threadContent && threadStickyHeader) {
+        threadContent.addEventListener('scroll', () => {
+          threadStickyHeader.classList.toggle('show-fade', threadContent.scrollTop > 0);
         });
       }
     });
@@ -5670,13 +5724,16 @@
             const isPartiallyHidden = rect.bottom > containerRect.bottom || rect.top < containerRect.top;
             
             if (isPartiallyHidden) {
-              replyBox.scrollIntoView({ behavior: 'smooth', block: 'end' });
+              container.scrollTo({
+                top: container.scrollHeight,
+                behavior: 'smooth'
+              });
             }
           } else {
             replyBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
           }
           
-          replyBody.focus();
+          replyBody.focus({ preventScroll: true });
         }, 320);
       }
     }
