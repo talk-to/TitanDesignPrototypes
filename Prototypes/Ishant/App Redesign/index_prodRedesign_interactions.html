@@ -5661,7 +5661,21 @@
 
         setTimeout(() => {
           replyBox.classList.remove('reply-box-animating');
-          replyBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          
+          const container = document.querySelector('.thread-content');
+          if (container) {
+            const rect = replyBox.getBoundingClientRect();
+            const containerRect = container.getBoundingClientRect();
+            // Check if the reply box is partially or fully outside the container's visible bounds
+            const isPartiallyHidden = rect.bottom > containerRect.bottom || rect.top < containerRect.top;
+            
+            if (isPartiallyHidden) {
+              replyBox.scrollIntoView({ behavior: 'smooth', block: 'end' });
+            }
+          } else {
+            replyBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          }
+          
           replyBody.focus();
         }, 320);
       }
