@@ -1857,7 +1857,7 @@
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
-      padding: 20px 24px 12px;
+      padding: 20px 24px 20px;
       gap: 12px;
       min-width: 0;
     }
@@ -1866,6 +1866,29 @@
       min-width: 0;
       overflow: hidden;
       flex: 1;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .exp-avatar {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 14px;
+      font-weight: 600;
+      color: #fff;
+      background: #ab47bc;
+      margin: auto 0;
+    }
+
+    .exp-header-text {
+      min-width: 0;
+      overflow: hidden;
     }
 
     .exp-sender {
@@ -3042,8 +3065,11 @@
             <div class="expanded-tile">
               <div class="expanded-header">
                 <div>
-                  <div class="exp-sender">Ninad Raval</div>
-                  <div class="exp-to">To: me, Sajal, Viral</div>
+                  <div class="exp-avatar">N</div>
+                  <div class="exp-header-text">
+                    <div class="exp-sender">Ninad Raval</div>
+                    <div class="exp-to">To: me, Sajal, Viral</div>
+                  </div>
                 </div>
                 <div class="exp-right">
                   <div class="exp-timestamp">Jun 12</div>
