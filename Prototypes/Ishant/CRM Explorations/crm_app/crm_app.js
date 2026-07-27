@@ -47,11 +47,17 @@ const CrmApp = (function () {
 
   function renderView(viewId) {
     // Hide all view pages
-    document.querySelectorAll('.crm-view-page').forEach(page => page.classList.remove('active'));
+    document.querySelectorAll('.crm-view-page').forEach(page => {
+      page.classList.remove('active');
+      page.style.display = 'none';
+    });
 
     // Show target view page
     const targetPage = document.getElementById(`crmView-${viewId}`);
-    if (targetPage) targetPage.classList.add('active');
+    if (targetPage) {
+      targetPage.classList.add('active');
+      targetPage.style.display = 'flex';
+    }
 
     const backBtn = document.getElementById('crmBackBtn');
     const tabsBar = document.getElementById('crmTabsBar');
@@ -64,7 +70,7 @@ const CrmApp = (function () {
       backBtn.style.display = isDrilledIn ? 'flex' : 'none';
     }
 
-    // Toggle 3-Tab Bar (Hide tabs when inside a drilled sub-page)
+    // Toggle 2-Tab Bar (Hide tabs when inside a drilled sub-page)
     if (tabsBar) {
       tabsBar.style.display = isDrilledIn ? 'none' : 'flex';
     }
@@ -79,10 +85,10 @@ const CrmApp = (function () {
     }
 
     // Highlight main top tab if at root tabs
-    if (!isDrilledIn && ['overview', 'activity', 'activities'].includes(viewId)) {
+    if (!isDrilledIn && ['overview', 'activity'].includes(viewId)) {
       document.querySelectorAll('.crm-tab-item').forEach(tab => {
         const onclickAttr = tab.getAttribute('onclick') || '';
-        const isActive = onclickAttr.includes(`'${viewId}'`) && !(viewId === 'activity' && onclickAttr.includes('activities'));
+        const isActive = onclickAttr.includes(`'${viewId}'`);
         tab.classList.toggle('active', isActive);
       });
     }
@@ -106,7 +112,7 @@ const CrmApp = (function () {
     if (!input || !input.value.trim()) return;
     const taskText = input.value.trim();
 
-    const taskCard = document.querySelector('#crmView-activities .crm-card');
+    const taskCard = document.querySelector('#crmView-activity .crm-card');
     if (taskCard) {
       const newId = 'task_' + Date.now();
       const div = document.createElement('div');

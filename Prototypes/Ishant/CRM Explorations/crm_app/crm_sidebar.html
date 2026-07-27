@@ -39,18 +39,17 @@
     </div>
   </div>
 
-  <!-- 3 Main Navigation Tabs: Overview, Activity, Activities -->
+  <!-- 2 Main Navigation Tabs: Overview, Activity -->
   <div class="crm-tabs-bar" id="crmTabsBar">
     <button class="crm-tab-item active" onclick="CrmApp.switchTab('overview')">Overview</button>
     <button class="crm-tab-item" onclick="CrmApp.switchTab('activity')">Activity</button>
-    <button class="crm-tab-item" onclick="CrmApp.switchTab('activities')">Activities</button>
   </div>
 
   <!-- Viewport Body -->
   <div class="crm-body-viewport">
     
     <!-- 📄 PAGE 1: OVERVIEW TAB (Default) -->
-    <div class="crm-view-page active" id="crmView-overview">
+    <div class="crm-view-page active" id="crmView-overview" style="display: flex;">
       
       <!-- Sticky Notes Section Header with SVG Chevron "See all" Link -->
       <div class="crm-section-title">
@@ -137,10 +136,6 @@
 
     <!-- 📄 PAGE 3: MORE DETAILS (Drilled View) -->
     <div class="crm-view-page" id="crmView-more-details">
-      <div class="crm-section-title">
-        <span>All Contact Fields</span>
-      </div>
-
       <div class="crm-card">
         <div class="crm-info-row">
           <span class="crm-info-label">Full Name</span>
@@ -247,32 +242,6 @@
           </div>
           <span style="font-size:14px; color:var(--titan-blue); cursor:pointer;">⬇</span>
         </div>
-      </div>
-
-    </div>
-
-    <!-- 📄 PAGE 5: ACTIVITIES TAB (Tasks & To-Dos) -->
-    <div class="crm-view-page" id="crmView-activities">
-      
-      <div class="crm-section-title">
-        <span>Scheduled Tasks & To-Dos</span>
-      </div>
-
-      <div class="crm-card">
-        <div class="crm-task-row">
-          <input type="checkbox" id="task1">
-          <label for="task1">Follow up on revised proposal terms (Due Thursday)</label>
-        </div>
-        <div class="crm-task-row">
-          <input type="checkbox" id="task2">
-          <label for="task2">Schedule security review call with VP Tech (Dave)</label>
-        </div>
-      </div>
-
-      <!-- Quick Task Add Input -->
-      <div class="crm-input-card">
-        <textarea id="crmTaskInput" rows="2" placeholder="Add a new task or follow-up..."></textarea>
-        <button class="crm-btn-blue" onclick="CrmApp.addTask()">+ Add Task</button>
       </div>
 
     </div>
