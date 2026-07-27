@@ -133,7 +133,7 @@
   color: var(--titan-text-main);
 }
 
-/* ── Hero Profile Header with Horizontally Scrollable Chips Strip ── */
+/* ── Hero Profile Header ── */
 .crm-profile-hero {
   padding: 16px 16px 12px 16px;
   background: #ffffff;
@@ -185,14 +185,16 @@
   letter-spacing: -0.01em;
 }
 
-/* Horizontally Scrollable Contact Chips Strip */
+/* Edge-to-Edge Horizontally Scrollable Contact Chips Strip */
 .crm-chips-strip {
   display: flex;
   align-items: center;
   gap: 6px;
   overflow-x: auto;
   white-space: nowrap;
-  padding-bottom: 2px;
+  margin: 0 -16px;
+  padding: 0 16px 4px 16px;
+  width: calc(100% + 32px);
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
 }
@@ -205,7 +207,7 @@
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  padding: 4px 10px;
+  padding: 5px 11px;
   border-radius: 100px;
   background: var(--titan-grey-hover);
   border: 1px solid var(--titan-grey-border);
