@@ -7,28 +7,33 @@
   --titan-red-hover: #c53030;
   --titan-red-bg: #fff5f5;
   --titan-grey-hover: #f4f5f8;
-  --titan-grey-border: rgba(0, 0, 0, 0.07);
+  --titan-grey-border: rgba(0, 0, 0, 0.08);
   --titan-text-main: #1c1c1e;
   --titan-text-sub: #636366;
   --titan-card-shadow: none;
-  --titan-drawer-shadow: -4px 0 24px rgba(0, 0, 0, 0.12);
   --titan-squircle-radius: 6px;
 }
 
-/* ── Main Drawer Shell ── */
+/* ── In-Flow Flex Panel Host Container ── */
+#crmSidebarContainer {
+  display: flex;
+  height: 100%;
+}
+
+/* ── Persistent In-Flow Panel Shell (Not fixed overlay) ── */
 .crm-drawer-container {
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  width: 360px;
+  width: 0;
+  min-width: 0;
+  height: 100%;
   background: #ffffff;
-  box-shadow: var(--titan-drawer-shadow);
-  z-index: 9999;
+  border-left: none;
   display: flex;
   flex-direction: column;
-  transform: translateX(100%);
-  transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+  flex-shrink: 0;
+  overflow: hidden;
+  opacity: 0;
+  box-shadow: none;
+  transition: width 0.28s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.2s ease;
   font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, sans-serif;
   color: var(--titan-text-main);
   letter-spacing: -0.01em;
@@ -36,7 +41,9 @@
 }
 
 .crm-drawer-container.open {
-  transform: translateX(0);
+  width: 360px;
+  opacity: 1;
+  border-left: 1px solid var(--titan-grey-border);
 }
 
 /* ── Navigation Header ── */
@@ -108,7 +115,7 @@
   color: var(--titan-text-main);
 }
 
-/* ── Hero Profile Header (No redundant bottom border) ── */
+/* ── Hero Profile Header ── */
 .crm-profile-hero {
   padding: 14px 16px 10px 16px;
   background: #ffffff;
@@ -154,7 +161,7 @@
   letter-spacing: -0.01em;
 }
 
-/* ── 3 Main Navigation Tabs (Consistent Letter-Spacing) ── */
+/* ── 3 Main Navigation Tabs ── */
 .crm-tabs-bar {
   display: flex;
   background: #ffffff;
@@ -264,7 +271,7 @@
 .crm-note-text {
   font-size: 13px;
   line-height: 1.48;
-  color: #1c1c1e;
+  color: #18181b;
   font-weight: 500;
   letter-spacing: -0.01em;
 }
