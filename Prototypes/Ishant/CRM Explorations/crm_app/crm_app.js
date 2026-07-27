@@ -45,35 +45,33 @@ const CrmApp = (function () {
     const targetPage = document.getElementById(`crmView-${viewId}`);
     if (targetPage) targetPage.classList.add('active');
 
-    // Update Back Button visibility
     const backBtn = document.getElementById('crmBackBtn');
+    const tabsBar = document.getElementById('crmTabsBar');
+    const titleEl = document.getElementById('crmNavTitle');
+
+    const isDrilledIn = navHistory.length > 1;
+
+    // Toggle Back Chevron Button
     if (backBtn) {
-      backBtn.style.display = navHistory.length > 1 ? 'flex' : 'none';
+      backBtn.style.display = isDrilledIn ? 'flex' : 'none';
     }
 
-    // Update Nav Breadcrumbs
-    const titleEl = document.getElementById('crmNavTitle');
-    const subtitleEl = document.getElementById('crmNavSubtitle');
+    // Toggle 3-Tab Bar (Hide tabs when inside a drilled sub-page)
+    if (tabsBar) {
+      tabsBar.style.display = isDrilledIn ? 'none' : 'flex';
+    }
 
+    // Update Header Title
     if (viewId === 'all-notes') {
       if (titleEl) titleEl.textContent = 'All Notes';
-      if (subtitleEl) subtitleEl.textContent = 'Notes History • Ella Mathews';
     } else if (viewId === 'more-details') {
-      if (titleEl) titleEl.textContent = 'Contact Fields';
-      if (subtitleEl) subtitleEl.textContent = 'All Profile & Company Info';
-    } else if (viewId === 'activity') {
-      if (titleEl) titleEl.textContent = 'Activity';
-      if (subtitleEl) subtitleEl.textContent = 'Interactions & Shared Files';
-    } else if (viewId === 'activities') {
-      if (titleEl) titleEl.textContent = 'Activities';
-      if (subtitleEl) subtitleEl.textContent = 'Tasks & Scheduled Follow-ups';
+      if (titleEl) titleEl.textContent = 'Contact Details';
     } else {
-      if (titleEl) titleEl.textContent = 'CRM Context';
-      if (subtitleEl) subtitleEl.textContent = 'Ella Mathews';
+      if (titleEl) titleEl.textContent = 'CRM Board';
     }
 
-    // Highlight main top tab if applicable
-    if (['overview', 'activity', 'activities'].includes(viewId)) {
+    // Highlight main top tab if at root tabs
+    if (!isDrilledIn && ['overview', 'activity', 'activities'].includes(viewId)) {
       document.querySelectorAll('.crm-tab-item').forEach(tab => {
         const isActive = tab.getAttribute('onclick')?.includes(`'${viewId}'`);
         tab.classList.toggle('active', !!isActive);
