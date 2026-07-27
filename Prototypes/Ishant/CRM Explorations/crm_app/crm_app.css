@@ -179,7 +179,7 @@
   letter-spacing: -0.01em;
 }
 
-/* ── 3 Main Navigation Tabs (Added Top Spacing) ── */
+/* ── 2 Main Navigation Tabs ── */
 .crm-tabs-bar {
   display: flex;
   background: #ffffff;
@@ -407,69 +407,71 @@
   background: var(--titan-blue-hover);
 }
 
-/* Activity Items */
-.crm-activity-row {
+/* ── 📍 Connected Vertical Timeline Feed (No box wrapper) ── */
+.crm-timeline-wrapper {
+  position: relative;
+  padding-left: 6px;
+  margin-top: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Continuous Vertical Timeline Line */
+.crm-timeline-wrapper::before {
+  content: '';
+  position: absolute;
+  top: 14px;
+  bottom: 14px;
+  left: 20px; /* Centered precisely behind the 30px circular badges */
+  width: 2px;
+  background: #e2e8f0;
+  z-index: 1;
+}
+
+.crm-timeline-item {
+  position: relative;
   display: flex;
   gap: 12px;
-  padding: 8px 0;
-  border-bottom: 1px solid var(--titan-grey-border);
+  z-index: 2;
 }
 
-.crm-activity-row:last-child {
-  border-bottom: none;
-}
-
-.crm-activity-icon-badge {
+.crm-timeline-badge {
   width: 30px;
   height: 30px;
   border-radius: 50%;
-  background: var(--titan-grey-hover);
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 14px;
+  font-size: 13px;
   flex-shrink: 0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
 }
 
-.crm-activity-content {
+.crm-timeline-content {
   display: flex;
   flex-direction: column;
   gap: 2px;
   font-size: 13px;
   letter-spacing: -0.01em;
+  padding-top: 2px;
 }
 
-.crm-activity-title {
+.crm-timeline-title {
   font-weight: 600;
   color: var(--titan-text-main);
 }
 
-.crm-activity-desc {
+.crm-timeline-desc {
   color: var(--titan-text-sub);
+  line-height: 1.35;
 }
 
-.crm-activity-time {
+.crm-timeline-time {
   font-size: 11px;
   color: #94a3b8;
-}
-
-/* Tasks Checklist */
-.crm-task-row {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 13px;
-  padding: 6px 0;
-  border-bottom: 1px solid var(--titan-grey-border);
-  letter-spacing: -0.01em;
-}
-
-.crm-task-row:last-child {
-  border-bottom: none;
-}
-
-.crm-task-row input[type="checkbox"] {
-  width: 16px;
-  height: 16px;
-  cursor: pointer;
+  font-weight: 500;
+  margin-top: 1px;
 }
