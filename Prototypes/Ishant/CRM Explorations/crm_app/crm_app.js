@@ -6,17 +6,25 @@ const CrmApp = (function () {
 
   function toggleDrawer() {
     const drawer = document.getElementById('crmSidebar');
-    if (drawer) drawer.classList.toggle('open');
+    const btn = document.querySelector('.action-btn-crm');
+    if (drawer) {
+      const isOpen = drawer.classList.toggle('open');
+      if (btn) btn.classList.toggle('active', isOpen);
+    }
   }
 
   function openDrawer() {
     const drawer = document.getElementById('crmSidebar');
+    const btn = document.querySelector('.action-btn-crm');
     if (drawer) drawer.classList.add('open');
+    if (btn) btn.classList.add('active');
   }
 
   function closeDrawer() {
     const drawer = document.getElementById('crmSidebar');
+    const btn = document.querySelector('.action-btn-crm');
     if (drawer) drawer.classList.remove('open');
+    if (btn) btn.classList.remove('active');
   }
 
   function drillInto(viewId) {

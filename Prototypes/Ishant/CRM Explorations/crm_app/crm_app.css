@@ -14,6 +14,24 @@
   --titan-squircle-radius: 6px;
 }
 
+/* ── Top-Bar Trigger Button Toggled-On Active State ── */
+.action-btn-crm {
+  transition: background 0.15s ease, transform 0.1s ease;
+}
+
+.action-btn-crm.active,
+.action-btn-crm:hover {
+  background: #fff5f5 !important;
+  border-radius: 6px;
+}
+
+.action-btn-crm.active svg path,
+.action-btn-crm.active svg circle,
+.action-btn-crm:hover svg path,
+.action-btn-crm:hover svg circle {
+  fill: #c53030 !important;
+}
+
 /* ── In-Flow Flex Panel Host Container ── */
 #crmSidebarContainer {
   display: flex;
@@ -41,7 +59,7 @@
 }
 
 .crm-drawer-container.open {
-  width: 360px;
+  width: 340px;
   opacity: 1;
   border-left: 1px solid var(--titan-grey-border);
 }
