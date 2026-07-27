@@ -70,9 +70,9 @@
         <span class="crm-note-date">Today at 2:15 PM</span>
       </div>
 
-      <!-- Quick Note Add Input -->
+      <!-- Quick Note Add Input (1-line tall, auto-expands on type) -->
       <div class="crm-input-card">
-        <textarea id="crmNoteInput" rows="2" placeholder="Add a quick note for Ella..."></textarea>
+        <textarea id="crmNoteInput" rows="1" placeholder="Add a quick note for Ella..." oninput="this.style.height='32px';if(this.scrollHeight>32)this.style.height=(this.scrollHeight)+'px'"></textarea>
         <button class="crm-btn-blue" onclick="CrmApp.saveNote()">+ Add Note</button>
       </div>
 

@@ -1,4 +1,4 @@
-/* ── Titan Design System Tokens & Minimal Flat CRM Component Styles ── */
+/* ── Titan Design System Tokens & Refined Typography ── */
 :root {
   --titan-blue: #2170f4;
   --titan-blue-hover: #1a5ecf;
@@ -7,9 +7,9 @@
   --titan-red-hover: #c53030;
   --titan-red-bg: #fff5f5;
   --titan-grey-hover: #f4f5f8;
-  --titan-grey-border: #eef0f2;
-  --titan-text-main: #18181b;
-  --titan-text-sub: #52525b;
+  --titan-grey-border: rgba(0, 0, 0, 0.07);
+  --titan-text-main: #1c1c1e;
+  --titan-text-sub: #636366;
   --titan-card-shadow: none;
   --titan-drawer-shadow: -4px 0 24px rgba(0, 0, 0, 0.12);
   --titan-squircle-radius: 6px;
@@ -29,8 +29,9 @@
   flex-direction: column;
   transform: translateX(100%);
   transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
-  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, sans-serif;
   color: var(--titan-text-main);
+  letter-spacing: -0.01em;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -79,6 +80,7 @@
   font-size: 15px;
   font-weight: 600;
   color: var(--titan-text-main);
+  letter-spacing: -0.01em;
 }
 
 .crm-nav-actions {
@@ -133,7 +135,7 @@
 .crm-profile-meta {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 3px;
   flex: 1;
   min-width: 0;
 }
@@ -142,12 +144,14 @@
   font-size: 15px;
   font-weight: 600;
   color: var(--titan-text-main);
+  letter-spacing: -0.01em;
 }
 
 .crm-profile-role {
   font-size: 12.5px;
   color: var(--titan-text-sub);
   line-height: 1.3;
+  letter-spacing: -0.005em;
 }
 
 /* ── 3 Main Navigation Tabs ── */
@@ -171,6 +175,7 @@
   transition: all 0.15s ease;
   flex: 1;
   text-align: center;
+  letter-spacing: -0.01em;
 }
 
 .crm-tab-item:hover {
@@ -183,7 +188,7 @@
   border-bottom-color: var(--titan-blue);
 }
 
-/* ── Scrollable Viewport with Decent Section Spacing ── */
+/* ── Scrollable Viewport ── */
 .crm-body-viewport {
   flex: 1;
   overflow-y: auto;
@@ -209,7 +214,7 @@
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* ── Section Title Header with Inline SVG Chevron Links ── */
+/* ── Section Title Header ── */
 .crm-section-title {
   font-size: 13px;
   font-weight: 600;
@@ -218,19 +223,22 @@
   align-items: center;
   justify-content: space-between;
   margin-bottom: 4px;
+  letter-spacing: -0.01em;
 }
 
+/* Bolder See All & More Details Links */
 .crm-header-link {
   background: none;
   border: none;
   color: var(--titan-blue);
-  font-size: 12px;
-  font-weight: 500;
+  font-size: 12.5px;
+  font-weight: 600;
   cursor: pointer;
   padding: 0;
   display: inline-flex;
   align-items: center;
   gap: 3px;
+  letter-spacing: -0.01em;
   transition: opacity 0.15s ease;
 }
 
@@ -239,10 +247,10 @@
   opacity: 0.85;
 }
 
-/* 📌 Crisp Flat Sticky Notes Component ── */
+/* 📌 Crisp Thin-Border Sticky Notes Component ── */
 .crm-sticky-note {
   background: #fffdf0;
-  border: 1px solid #f59e0b;
+  border: 1px solid #fcd34d;
   border-radius: var(--titan-squircle-radius);
   padding: 12px 14px;
   display: flex;
@@ -253,9 +261,10 @@
 
 .crm-note-text {
   font-size: 13px;
-  line-height: 1.45;
-  color: #18181b;
+  line-height: 1.48;
+  color: #1c1c1e;
   font-weight: 500;
+  letter-spacing: -0.008em;
 }
 
 .crm-note-date {
@@ -269,12 +278,12 @@
   font-size: 11px;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.05em;
   color: var(--titan-text-sub);
   margin-top: 6px;
 }
 
-/* ── Clean Flat Card Containers ── */
+/* ── Thin-Border Card Containers ── */
 .crm-card {
   background: #ffffff;
   border: 1px solid var(--titan-grey-border);
@@ -292,8 +301,9 @@
   align-items: center;
   justify-content: space-between;
   font-size: 13px;
-  padding: 4px 0;
+  padding: 5px 0;
   border-bottom: 1px solid #f8fafc;
+  letter-spacing: -0.008em;
 }
 
 .crm-info-row:last-child {
@@ -319,27 +329,32 @@
   text-decoration: underline;
 }
 
-/* ── Input Box for Adding Notes & Tasks ── */
+/* ── Compact 1-Line Add Note Input Box ── */
 .crm-input-card {
   background: #ffffff;
   border: 1px solid var(--titan-grey-border);
   border-radius: var(--titan-squircle-radius);
-  padding: 10px 12px;
+  padding: 4px 6px 4px 12px;
   box-shadow: none;
   display: flex;
-  flex-direction: column;
+  align-items: center;
   gap: 8px;
 }
 
 .crm-input-card textarea {
-  width: 100%;
+  height: 32px;
+  min-height: 32px;
+  padding: 6px 0;
   border: none;
   outline: none;
   resize: none;
   font-size: 13px;
   font-family: inherit;
   color: var(--titan-text-main);
-  line-height: 1.4;
+  line-height: 20px;
+  flex: 1;
+  letter-spacing: -0.008em;
+  overflow: hidden;
 }
 
 .crm-input-card textarea::placeholder {
@@ -347,7 +362,6 @@
 }
 
 .crm-btn-blue {
-  align-self: flex-end;
   background: var(--titan-blue);
   color: #ffffff;
   border: none;
@@ -356,6 +370,8 @@
   font-size: 12px;
   font-weight: 600;
   cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
   transition: background 0.15s ease;
 }
 
