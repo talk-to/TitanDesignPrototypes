@@ -149,23 +149,7 @@ const CrmApp = (function () {
     alert('Opening Full CRM Workspace (Landing Page View)...');
   }
 
-  function init() {
-    const container = document.getElementById('crmSidebarContainer');
-    if (container) {
-      fetch('crm_app/crm_sidebar.html')
-        .then(res => res.text())
-        .then(html => {
-          container.innerHTML = html;
-        })
-        .catch(err => console.error('Failed to load CRM Sidebar HTML component:', err));
-    }
-  }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
-  } else {
-    init();
-  }
+  // No init needed — CRM sidebar HTML is inlined directly in index.html
 
   return {
     toggleDrawer,
