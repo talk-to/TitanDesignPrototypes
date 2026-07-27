@@ -46,17 +46,18 @@ const CrmApp = (function () {
   }
 
   function renderView(viewId) {
-    // Hide all view pages
-    document.querySelectorAll('.crm-view-page').forEach(page => {
+    // Hide all view pages cleanly
+    const allPages = document.querySelectorAll('.crm-view-page');
+    allPages.forEach(page => {
       page.classList.remove('active');
-      page.style.display = 'none';
+      page.style.cssText = 'display: none !important;';
     });
 
-    // Show target view page
+    // Display target view page cleanly
     const targetPage = document.getElementById(`crmView-${viewId}`);
     if (targetPage) {
       targetPage.classList.add('active');
-      targetPage.style.display = 'flex';
+      targetPage.style.cssText = 'display: flex !important; flex-direction: column; gap: 16px;';
     }
 
     const backBtn = document.getElementById('crmBackBtn');
@@ -70,7 +71,7 @@ const CrmApp = (function () {
       backBtn.style.display = isDrilledIn ? 'flex' : 'none';
     }
 
-    // Toggle 2-Tab Bar (Hide tabs when inside a drilled sub-page)
+    // Toggle 2-Tab Bar
     if (tabsBar) {
       tabsBar.style.display = isDrilledIn ? 'none' : 'flex';
     }
@@ -84,11 +85,12 @@ const CrmApp = (function () {
       if (titleEl) titleEl.textContent = 'CRM Board';
     }
 
-    // Highlight main top tab if at root tabs
-    if (!isDrilledIn && ['overview', 'activity'].includes(viewId)) {
+    // Highlight main top tab based on exact text match
+    if (!isDrilledIn) {
       document.querySelectorAll('.crm-tab-item').forEach(tab => {
-        const onclickAttr = tab.getAttribute('onclick') || '';
-        const isActive = onclickAttr.includes(`'${viewId}'`);
+        const text = tab.textContent.trim().toLowerCase();
+        const isActive = (viewId === 'overview' && text === 'overview') ||
+                         (viewId === 'activity' && text === 'activity');
         tab.classList.toggle('active', isActive);
       });
     }
@@ -178,6 +180,8 @@ const CrmApp = (function () {
     openFullView
   };
 })();
+
+window.CrmApp = CrmApp;
 
 function toggleCrmSidebar() {
   CrmApp.toggleDrawer();
