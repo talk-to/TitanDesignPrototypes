@@ -135,11 +135,11 @@
 
 /* ── Hero Profile Header ── */
 .crm-profile-hero {
-  padding: 16px 16px 12px 16px;
+  padding: 16px;
   background: #ffffff;
   border-bottom: none;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 12px;
 }
 
@@ -179,12 +179,55 @@
   letter-spacing: -0.01em;
 }
 
+/* Quick Contact Pills Row */
+.crm-pills-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.crm-contact-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px;
+  border-radius: 100px;
+  background: var(--titan-grey-hover);
+  border: 1px solid var(--titan-grey-border);
+  color: var(--titan-text-main);
+  font-size: 11.5px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.15s ease;
+  cursor: pointer;
+}
+
+.crm-contact-pill:hover {
+  background: #ffffff;
+  border-color: #cbd5e1;
+  color: var(--titan-blue);
+}
+
+.crm-pill-link {
+  color: var(--titan-blue);
+  font-weight: 600;
+  background: var(--titan-blue-bg);
+  border-color: rgba(33, 112, 244, 0.2);
+}
+
+.crm-pill-link:hover {
+  background: #dbeafe;
+  border-color: var(--titan-blue);
+}
+
 /* ── 2 Main Navigation Tabs ── */
 .crm-tabs-bar {
   display: flex;
   background: #ffffff;
   border-bottom: 1px solid var(--titan-grey-border);
-  padding: 6px 16px 0 16px;
+  padding: 2px 16px 0 16px;
   gap: 8px;
 }
 
@@ -274,7 +317,7 @@
   opacity: 0.85;
 }
 
-/* 📌 Crisp Thin-Border Sticky Notes Component ── */
+/* 📌 Crisp Personal Notes Component ── */
 .crm-sticky-note {
   background: #fffdf0;
   border: 1px solid #fcd34d;
@@ -407,10 +450,10 @@
   background: var(--titan-blue-hover);
 }
 
-/* ── 📍 Connected Vertical Timeline Feed (No box wrapper) ── */
+/* ── 📍 Connected Vertical Timeline Feed (Consistent Vector SVG Badges) ── */
 .crm-timeline-wrapper {
   position: relative;
-  padding-left: 6px;
+  padding-left: 4px;
   margin-top: 4px;
   display: flex;
   flex-direction: column;
@@ -423,7 +466,7 @@
   position: absolute;
   top: 14px;
   bottom: 14px;
-  left: 20px; /* Centered precisely behind the 30px circular badges */
+  left: 18px; /* Centered precisely behind the 28px circular SVG badges */
   width: 2px;
   background: #e2e8f0;
   z-index: 1;
@@ -437,15 +480,15 @@
 }
 
 .crm-timeline-badge {
-  width: 30px;
-  height: 30px;
+  width: 28px;
+  height: 28px;
   border-radius: 50%;
   background: #ffffff;
-  border: 1px solid #cbd5e1;
+  border: 1.5px solid #cbd5e1;
+  color: #475569;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 13px;
   flex-shrink: 0;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
 }

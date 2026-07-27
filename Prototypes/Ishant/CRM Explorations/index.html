@@ -3495,12 +3495,38 @@
           </div>
         </div>
 
-        <!-- Profile Hero Header -->
+        <!-- Profile Hero Header with Contact Pills -->
         <div class="crm-profile-hero">
           <div class="crm-avatar-large">EM</div>
           <div class="crm-profile-meta">
             <span class="crm-profile-name">Ella Mathews</span>
             <span class="crm-profile-role">Head of Product • Avon Technologies</span>
+            
+            <!-- Interactive Contact Pills -->
+            <div class="crm-pills-row">
+              <a href="https://avontech.com" target="_blank" class="crm-contact-pill">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <line x1="2" y1="12" x2="22" y2="12"></line>
+                  <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                </svg>
+                Website
+              </a>
+              <a href="https://linkedin.com" target="_blank" class="crm-contact-pill">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                  <rect x="2" y="9" width="4" height="12"></rect>
+                  <circle cx="4" cy="4" r="2"></circle>
+                </svg>
+                LinkedIn
+              </a>
+              <button class="crm-contact-pill crm-pill-link" onclick="CrmApp.drillInto('more-details')">
+                See all details
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+              </button>
+            </div>
           </div>
         </div>
 
@@ -3516,9 +3542,9 @@
           <!-- 📄 PAGE 1: OVERVIEW TAB (Default) -->
           <div class="crm-view-page active" id="crmView-overview" style="display: flex;">
             
-            <!-- Sticky Notes Section Header with SVG Chevron "See all" Link -->
+            <!-- Personal Notes Section Header -->
             <div class="crm-section-title">
-              <span>Sticky Notes</span>
+              <span>Personal Notes</span>
               <button class="crm-header-link" onclick="CrmApp.drillInto('all-notes')">
                 See all
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
@@ -3536,38 +3562,8 @@
 
             <!-- Quick Note Add Input (1-line tall, auto-expands on type) -->
             <div class="crm-input-card">
-              <textarea id="crmNoteInput" rows="1" placeholder="Add a quick note for Ella..." oninput="this.style.height='32px';if(this.scrollHeight>32)this.style.height=(this.scrollHeight)+'px'"></textarea>
+              <textarea id="crmNoteInput" rows="1" placeholder="Add a personal note for Ella..." oninput="this.style.height='32px';if(this.scrollHeight>32)this.style.height=(this.scrollHeight)+'px'"></textarea>
               <button class="crm-btn-blue" onclick="CrmApp.saveNote()">+ Add Note</button>
-            </div>
-
-            <!-- Contact Info Section Header with SVG Chevron "More details" Link -->
-            <div class="crm-section-title" style="margin-top: 10px;">
-              <span>Contact Details</span>
-              <button class="crm-header-link" onclick="CrmApp.drillInto('more-details')">
-                More details
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                  <polyline points="9 18 15 12 9 6"></polyline>
-                </svg>
-              </button>
-            </div>
-
-            <div class="crm-card">
-              <div class="crm-info-row">
-                <span class="crm-info-label">Website</span>
-                <a href="https://avontech.com" target="_blank" class="crm-info-link">avontech.com 🌐</a>
-              </div>
-              <div class="crm-info-row">
-                <span class="crm-info-label">LinkedIn</span>
-                <a href="https://linkedin.com" target="_blank" class="crm-info-link">in/ellamathews 💼</a>
-              </div>
-              <div class="crm-info-row">
-                <span class="crm-info-label">Company</span>
-                <span class="crm-info-value">Avon Technologies</span>
-              </div>
-              <div class="crm-info-row">
-                <span class="crm-info-label">Location</span>
-                <span class="crm-info-value">San Francisco, CA</span>
-              </div>
             </div>
 
           </div>
@@ -3637,7 +3633,7 @@
             </div>
           </div>
 
-          <!-- 📄 PAGE 4: ACTIVITY TAB -->
+          <!-- 📄 PAGE 4: ACTIVITY TAB (Connected Timeline Feed with SVG Icons) -->
           <div class="crm-view-page" id="crmView-activity" style="display: none;">
             
             <div class="crm-section-title">
@@ -3645,11 +3641,16 @@
               <button class="crm-btn-blue" style="padding:4px 10px; font-size:11px;" onclick="CrmApp.logActivityPrompt()">+ Log Activity</button>
             </div>
 
-            <!-- Connected Vertical Timeline Feed (No box) -->
+            <!-- Connected Vertical Timeline Feed -->
             <div class="crm-timeline-wrapper">
               
               <div class="crm-timeline-item">
-                <div class="crm-timeline-badge">✉️</div>
+                <div class="crm-timeline-badge">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                    <polyline points="22,6 12,13 2,6"></polyline>
+                  </svg>
+                </div>
                 <div class="crm-timeline-content">
                   <span class="crm-timeline-title">Email Received</span>
                   <span class="crm-timeline-desc">"RE: Q3 Proposal & Licensing Terms"</span>
@@ -3658,7 +3659,12 @@
               </div>
 
               <div class="crm-timeline-item">
-                <div class="crm-timeline-badge">👁️</div>
+                <div class="crm-timeline-badge">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                    <circle cx="12" cy="12" r="3"></circle>
+                  </svg>
+                </div>
                 <div class="crm-timeline-content">
                   <span class="crm-timeline-title">Email Read Receipt</span>
                   <span class="crm-timeline-desc">Opened 'AvonTech Proposal v2' (3 times)</span>
@@ -3667,7 +3673,11 @@
               </div>
 
               <div class="crm-timeline-item">
-                <div class="crm-timeline-badge">📞</div>
+                <div class="crm-timeline-badge">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                  </svg>
+                </div>
                 <div class="crm-timeline-content">
                   <span class="crm-timeline-title">Discovery Call Logged</span>
                   <span class="crm-timeline-desc">15 min sync on security, SSO & seat tiers</span>
@@ -3676,7 +3686,12 @@
               </div>
 
               <div class="crm-timeline-item">
-                <div class="crm-timeline-badge">📤</div>
+                <div class="crm-timeline-badge">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="22" y1="2" x2="11" y2="13"></line>
+                    <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                  </svg>
+                </div>
                 <div class="crm-timeline-content">
                   <span class="crm-timeline-title">Email Sent</span>
                   <span class="crm-timeline-desc">"AvonTech Proposal & Security Documentation"</span>
@@ -3685,7 +3700,14 @@
               </div>
 
               <div class="crm-timeline-item">
-                <div class="crm-timeline-badge">📄</div>
+                <div class="crm-timeline-badge">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                    <polyline points="14 2 14 8 20 8"></polyline>
+                    <line x1="16" y1="13" x2="8" y2="13"></line>
+                    <line x1="16" y1="17" x2="8" y2="17"></line>
+                  </svg>
+                </div>
                 <div class="crm-timeline-content">
                   <span class="crm-timeline-title">Quote Created</span>
                   <span class="crm-timeline-desc">Generated Enterprise Quote ($32,000 / yr)</span>
@@ -3696,7 +3718,7 @@
             </div>
 
             <!-- Shared Files Vault -->
-            <div class="crm-section-title" style="margin-top: 8px;">
+            <div class="crm-section-title" style="margin-top: 10px;">
               <span>Shared Files & Collateral</span>
             </div>
 
