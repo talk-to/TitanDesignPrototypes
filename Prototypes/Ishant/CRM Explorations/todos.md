@@ -1,23 +1,21 @@
 # CRM Explorations - Prototype Roadmap & To-Dos
 
-> **Approach**: Prioritizing the **Happy Path Scenario** first for fast presentation and visual validation. Interactive edge cases and deeper flows will be connected incrementally.
+> **Core Philosophy ("Zero Memory Failure")**: A CRM integrated into an email client must **never fail the user's memory**. Whenever a user views an email thread, every key detail, custom note, interaction history, budget, and pipeline status about that lead or customer must be effortlessly and intuitively accessible right in their line of sight—requiring zero reliance on human recall or tedious searching.
+
+> **Approach**: Prioritizing the **Happy Path Scenario** first for fast presentation and visual validation. Interactive edge cases and complex flows will be connected incrementally. (Note: Standalone creation form dropped for now).
 
 ---
 
 ## 📋 Roadmap & Task Checklist
 
-- [ ] **1. "Add to CRM" Contextual Quick Form (Happy Path)**
-  - *Context*: When viewing an email from an un-tracked sender, show an inline/sidebar pre-populated form (Name, Email, Company).
-  - *Goal*: 1-click creation of a CRM record (Deal Value, Pipeline Stage) to quickly showcase lead capture.
-
-- [ ] **2. Right Dock CRM Panel - Active Contact & Deal View (Happy Path)**
+- [ ] **1. Right Dock CRM Panel - Contextual Memory Surface (Happy Path)**
   - *Context*: Active CRM tab in Titan's right utility dock (`#tasks-panel`).
-  - *Goal*: Displays the contact profile, visual pipeline progress bar, deal amount, and quick note/task logging.
+  - *Goal*: Displays the complete memory profile of the active email sender—deal stage, value, key attributes, recent interaction timeline, and a zero-friction "Add Quick Memory Note" input.
 
-- [ ] **3. Inline Thread Header CRM Badge (Happy Path)**
-  - *Context*: Contextual status pill inserted directly into the reading pane thread header next to sender metadata.
-  - *Goal*: Shows deal status (`[ Lead | $12k | Proposal Sent ]`) with a 1-click stage changer.
+- [ ] **2. Inline Thread Header Memory Badges (Happy Path)**
+  - *Context*: Contextual memory cues inserted directly into the email thread header next to sender metadata.
+  - *Goal*: Immediate visual recall pills (`[ Lead | $12k | Proposal Sent ]` + key memory snippet) right when opening an email.
 
-- [ ] **4. Global CRM Pipeline Board (Happy Path)**
-  - *Context*: High-level deal management view accessible from Titan's top-left App Switcher.
-  - *Goal*: Visual Kanban board showing all active leads moving across pipeline columns.
+- [ ] **3. Global CRM Pipeline & Memory Board (Happy Path)**
+  - *Context*: High-level deal and contact memory bank accessible via Titan's top-left App Switcher.
+  - *Goal*: Visual Kanban board for managing all lead memory records across pipeline stages.

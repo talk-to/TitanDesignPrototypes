@@ -59,7 +59,16 @@ For detailed aesthetic specifications, design tokens, and standardized UI intera
 
 ---
 
-## 3. Extending the Shell for New Products & Features
+## 3. Core Product Philosophy: "Zero Memory Failure"
+
+The fundamental principle driving CRM & contextual extensions within Titan:
+> **A CRM integrated into an email client must never fail the user's memory.**
+
+Whenever a user opens an email thread, every piece of critical context—past interaction history, custom notes, deal stage, budget, key takeaways, and scheduled tasks—should be immediately and effortlessly accessible in their natural line of sight (Right Dock & Header Badges). The user should never have to rely on human recall, search manually, or switch away to a separate app.
+
+---
+
+## 4. Extending the Shell for New Products & Features
 
 When building a new feature or product prototype (e.g., CRM Explorations):
 
