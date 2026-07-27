@@ -1,5 +1,5 @@
 /**
- * Dedicated CRM Mini-App Controller & State Manager
+ * Minimal CRM Controller Module
  */
 const CrmApp = (function () {
   let navHistory = ['overview'];
@@ -51,44 +51,34 @@ const CrmApp = (function () {
       backBtn.style.display = navHistory.length > 1 ? 'flex' : 'none';
     }
 
-    // Update Nav Title & Subtitle
+    // Update Nav Breadcrumbs
     const titleEl = document.getElementById('crmNavTitle');
     const subtitleEl = document.getElementById('crmNavSubtitle');
 
-    if (viewId === 'pipeline') {
-      if (titleEl) titleEl.textContent = 'Pipeline Progress';
-      if (subtitleEl) subtitleEl.textContent = 'Stage 3 of 4: Proposal Sent';
-    } else if (viewId === 'attachments') {
-      if (titleEl) titleEl.textContent = 'Shared Documents';
-      if (subtitleEl) subtitleEl.textContent = 'Vault • 3 files';
-    } else if (viewId === 'timeline') {
-      if (titleEl) titleEl.textContent = 'Activity Feed';
-      if (subtitleEl) subtitleEl.textContent = 'Chronological Logs';
-    } else if (viewId === 'adaptor') {
-      if (titleEl) titleEl.textContent = 'Entity Adaptor Lens';
-      if (subtitleEl) subtitleEl.textContent = 'Sales / Project / Inventory';
+    if (viewId === 'all-notes') {
+      if (titleEl) titleEl.textContent = 'All Notes';
+      if (subtitleEl) subtitleEl.textContent = 'Notes History • Ella Mathews';
+    } else if (viewId === 'more-details') {
+      if (titleEl) titleEl.textContent = 'Contact Fields';
+      if (subtitleEl) subtitleEl.textContent = 'All Profile & Company Info';
+    } else if (viewId === 'activity') {
+      if (titleEl) titleEl.textContent = 'Activity';
+      if (subtitleEl) subtitleEl.textContent = 'Interactions & Shared Files';
+    } else if (viewId === 'activities') {
+      if (titleEl) titleEl.textContent = 'Activities';
+      if (subtitleEl) subtitleEl.textContent = 'Tasks & Scheduled Follow-ups';
     } else {
       if (titleEl) titleEl.textContent = 'CRM Context';
-      if (subtitleEl) subtitleEl.textContent = 'Ella Mathews • Avon Tech';
+      if (subtitleEl) subtitleEl.textContent = 'Ella Mathews';
     }
 
-    // Highlight active tab if top tab
-    if (['overview', 'timeline', 'adaptor'].includes(viewId)) {
+    // Highlight main top tab if applicable
+    if (['overview', 'activity', 'activities'].includes(viewId)) {
       document.querySelectorAll('.crm-tab-item').forEach(tab => {
-        const isActive = tab.getAttribute('onclick')?.includes(viewId);
+        const isActive = tab.getAttribute('onclick')?.includes(`'${viewId}'`);
         tab.classList.toggle('active', !!isActive);
       });
     }
-  }
-
-  function setLens(lens) {
-    const salesView = document.getElementById('lens-sales-view');
-    const projectView = document.getElementById('lens-project-view');
-    const inventoryView = document.getElementById('lens-inventory-view');
-
-    if (salesView) salesView.style.display = lens === 'sales' ? 'flex' : 'none';
-    if (projectView) projectView.style.display = lens === 'project' ? 'flex' : 'none';
-    if (inventoryView) inventoryView.style.display = lens === 'inventory' ? 'flex' : 'none';
   }
 
   function saveNote() {
@@ -96,18 +86,54 @@ const CrmApp = (function () {
     if (!input || !input.value.trim()) return;
     const noteText = input.value.trim();
 
-    const memoryBox = document.getElementById('crmMemoryContent');
-    if (memoryBox) {
-      memoryBox.innerHTML = `📌 <b>New Note:</b> ${noteText}<br><span style="font-size:11px; opacity:0.7;">Just now by You</span><hr style="border:none; border-top:1px solid #fef3c7; margin:6px 0;">` + memoryBox.innerHTML;
+    const noteDisplay = document.getElementById('crmLatestNoteText');
+    if (noteDisplay) {
+      noteDisplay.textContent = noteText;
+    }
+    input.value = '';
+    alert('Sticky note added!');
+  }
+
+  function addTask() {
+    const input = document.getElementById('crmTaskInput');
+    if (!input || !input.value.trim()) return;
+    const taskText = input.value.trim();
+
+    const taskCard = document.querySelector('#crmView-activities .crm-card');
+    if (taskCard) {
+      const newId = 'task_' + Date.now();
+      const div = document.createElement('div');
+      div.className = 'crm-task-row';
+      div.innerHTML = `<input type="checkbox" id="${newId}"><label for="${newId}">${taskText}</label>`;
+      taskCard.appendChild(div);
     }
     input.value = '';
   }
 
-  function openFullView() {
-    alert('Launching Full CRM Workspace (Landing Page View)...');
+  function logActivityPrompt() {
+    const activity = prompt('Enter activity log (e.g., "10 min phone call on pricing"):');
+    if (activity) {
+      const card = document.querySelector('#crmView-activity .crm-card');
+      if (card) {
+        const div = document.createElement('div');
+        div.className = 'crm-activity-row';
+        div.innerHTML = `
+          <div class="crm-activity-icon-badge">📝</div>
+          <div class="crm-activity-content">
+            <span class="crm-activity-title">Activity Logged</span>
+            <span class="crm-activity-desc">${activity}</span>
+            <span class="crm-activity-time">Just now</span>
+          </div>
+        `;
+        card.prepend(div);
+      }
+    }
   }
 
-  // Auto-injector for mounting CRM Component into main page
+  function openFullView() {
+    alert('Opening Full CRM Workspace (Landing Page View)...');
+  }
+
   function init() {
     const container = document.getElementById('crmSidebarContainer');
     if (container) {
@@ -120,7 +146,6 @@ const CrmApp = (function () {
     }
   }
 
-  // Load component on DOMReady
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
   } else {
@@ -134,13 +159,13 @@ const CrmApp = (function () {
     drillInto,
     goBack,
     switchTab,
-    setLens,
     saveNote,
+    addTask,
+    logActivityPrompt,
     openFullView
   };
 })();
 
-// Global handler alias for toolbar button trigger
 function toggleCrmSidebar() {
   CrmApp.toggleDrawer();
 }

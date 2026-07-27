@@ -1,18 +1,19 @@
-<!-- Dedicated CRM Sidebar Component Drawer -->
+<!-- Dedicated Minimal CRM Sidebar Drawer -->
 <div class="crm-drawer-container" id="crmSidebar">
-  <!-- Mini-App Header with Progressive Disclosure Navigation -->
+  
+  <!-- Navigation Header with Progressive Disclosure Back Button -->
   <div class="crm-nav-header">
     <div class="crm-nav-left">
-      <button class="crm-back-btn" id="crmBackBtn" onclick="CrmApp.goBack()" style="display:none;" title="Go back">
+      <button class="crm-back-btn" id="crmBackBtn" onclick="CrmApp.goBack()" style="display:none;" title="Go Back">
         ←
       </button>
       <div class="crm-nav-breadcrumbs">
         <span class="crm-nav-title" id="crmNavTitle">CRM Context</span>
-        <span class="crm-nav-subtitle" id="crmNavSubtitle">Ella Mathews • Avon Technologies</span>
+        <span class="crm-nav-subtitle" id="crmNavSubtitle">Ella Mathews</span>
       </div>
     </div>
     <div class="crm-nav-actions">
-      <button class="crm-icon-btn" onclick="CrmApp.openFullView()" title="Open Full CRM View (Landing Page)">
+      <button class="crm-icon-btn" onclick="CrmApp.openFullView()" title="Full Version (Landing Page)">
         ↗
       </button>
       <button class="crm-icon-btn" onclick="CrmApp.closeDrawer()" title="Close Sidebar">
@@ -25,202 +26,227 @@
   <div class="crm-profile-hero">
     <div class="crm-avatar-large">EM</div>
     <div class="crm-profile-meta">
-      <div class="crm-profile-name-row">
-        <span class="crm-profile-name">Ella Mathews</span>
-        <span class="crm-badge-pill">Proposal Sent</span>
-      </div>
+      <span class="crm-profile-name">Ella Mathews</span>
       <span class="crm-profile-role">Head of Product • Avon Technologies</span>
     </div>
   </div>
 
-  <!-- Web-Scraped Intelligence Enrichment Bar -->
-  <div class="crm-enrichment-bar">
-    <a href="https://avontech.com" target="_blank" class="crm-enrich-chip" title="Website">
-      🌐 avontech.com
-    </a>
-    <a href="https://linkedin.com" target="_blank" class="crm-enrich-chip" title="LinkedIn Profile">
-      💼 in/ellamathews
-    </a>
-    <span class="crm-enrich-chip" title="Company Size">
-      🏢 250-500
-    </span>
-  </div>
-
-  <!-- Main View Tabs -->
+  <!-- 3 Main Navigation Tabs: Overview, Activity, Activities -->
   <div class="crm-tabs-bar" id="crmTabsBar">
-    <button class="crm-tab-item active" onclick="CrmApp.switchTab('overview')">Overview & Memory</button>
-    <button class="crm-tab-item" onclick="CrmApp.switchTab('timeline')">Timeline</button>
-    <button class="crm-tab-item" onclick="CrmApp.switchTab('adaptor')">Use-Case Lens</button>
+    <button class="crm-tab-item active" onclick="CrmApp.switchTab('overview')">Overview</button>
+    <button class="crm-tab-item" onclick="CrmApp.switchTab('activity')">Activity</button>
+    <button class="crm-tab-item" onclick="CrmApp.switchTab('activities')">Activities</button>
   </div>
 
-  <!-- Viewport Area (Supports Drilled-in Pages via Progressive Disclosure) -->
+  <!-- Viewport Body -->
   <div class="crm-body-viewport">
     
-    <!-- 📄 PAGE 1: OVERVIEW & ZERO MEMORY FAILURE (Default) -->
+    <!-- 📄 PAGE 1: OVERVIEW TAB (Default) -->
     <div class="crm-view-page active" id="crmView-overview">
-      <!-- 📌 Pinned Zero Memory Failure Card -->
-      <div class="crm-memory-box">
-        <div class="crm-memory-title">
-          <span>🧠 Must-Remember Context</span>
+      
+      <!-- Sticky Notes Section -->
+      <div class="crm-section-title">
+        <span>Sticky Notes</span>
+      </div>
+
+      <div class="crm-sticky-note">
+        <div class="crm-note-text" id="crmLatestNoteText">
+          "Prefers async updates over email. Q3 security budget approved up to $45,000. Decision maker alongside VP Tech (Dave)."
         </div>
-        <div class="crm-memory-content" id="crmMemoryContent">
-          "Prefers async updates over email. Q3 security budget approved up to $45,000. Key decision maker alongside VP Tech (Dave)."
+        <span class="crm-note-date">Today at 2:15 PM</span>
+      </div>
+
+      <!-- Action Link: Show All Notes -->
+      <div class="crm-action-card" onclick="CrmApp.drillInto('all-notes')">
+        <span>Show All Notes (4)</span>
+        <span>→</span>
+      </div>
+
+      <!-- Quick Note Add Input -->
+      <div class="crm-input-card">
+        <textarea id="crmNoteInput" rows="2" placeholder="Add a quick note for Ella..."></textarea>
+        <button class="crm-btn-blue" onclick="CrmApp.saveNote()">+ Add Note</button>
+      </div>
+
+      <!-- Contact Info Section -->
+      <div class="crm-section-title" style="margin-top: 6px;">
+        <span>Contact Details</span>
+      </div>
+
+      <div class="crm-card">
+        <div class="crm-info-row">
+          <span class="crm-info-label">Website</span>
+          <a href="https://avontech.com" target="_blank" class="crm-info-link">avontech.com 🌐</a>
+        </div>
+        <div class="crm-info-row">
+          <span class="crm-info-label">LinkedIn</span>
+          <a href="https://linkedin.com" target="_blank" class="crm-info-link">in/ellamathews 💼</a>
+        </div>
+        <div class="crm-info-row">
+          <span class="crm-info-label">Company</span>
+          <span class="crm-info-value">Avon Technologies</span>
+        </div>
+        <div class="crm-info-row">
+          <span class="crm-info-label">Location</span>
+          <span class="crm-info-value">San Francisco, CA</span>
         </div>
       </div>
 
-      <!-- Key Metrics Elevation Grid -->
-      <div class="crm-metrics-grid">
-        <div class="crm-metric-card">
-          <span class="crm-metric-label">Deal Value</span>
-          <span class="crm-metric-value" style="color:#2170f4;">$32,000</span>
-        </div>
-        <div class="crm-metric-card">
-          <span class="crm-metric-label">Stage</span>
-          <span class="crm-metric-value" style="color:#e65100;">Proposal Sent</span>
-        </div>
-        <div class="crm-metric-card">
-          <span class="crm-metric-label">Win Probability</span>
-          <span class="crm-metric-value" style="color:#16a34a;">80% (High)</span>
-        </div>
-        <div class="crm-metric-card">
-          <span class="crm-metric-label">Last Interaction</span>
-          <span class="crm-metric-value">Today, 2:15 PM</span>
-        </div>
+      <!-- Action Link: More Details -->
+      <div class="crm-action-card" onclick="CrmApp.drillInto('more-details')">
+        <span>More Details</span>
+        <span>→</span>
       </div>
 
-      <!-- Progressive Disclosure Drill Cards -->
-      <div class="crm-drill-card" onclick="CrmApp.drillInto('pipeline')">
-        <div class="crm-drill-info">
-          <span class="crm-drill-title">📊 View Full Pipeline Progress</span>
-          <span class="crm-drill-sub">Stage 3 of 4: Proposal Sent • Next: Contract Sign</span>
-        </div>
-        <span class="crm-drill-arrow">→</span>
+    </div>
+
+    <!-- 📄 PAGE 2: ALL NOTES (Progressive Disclosure) -->
+    <div class="crm-view-page" id="crmView-all-notes">
+      <div class="crm-section-title">
+        <span>All Notes History</span>
       </div>
 
-      <div class="crm-drill-card" onclick="CrmApp.drillInto('attachments')">
-        <div class="crm-drill-info">
-          <span class="crm-drill-title">📂 Shared Files & Proposals (3)</span>
-          <span class="crm-drill-sub">AvonTech_Proposal_v2.pdf, SOW_Draft.docx</span>
+      <div class="crm-date-divider">TODAY</div>
+      <div class="crm-sticky-note">
+        <div class="crm-note-text">
+          "Prefers async updates over email. Q3 security budget approved up to $45,000. Decision maker alongside VP Tech (Dave)."
         </div>
-        <span class="crm-drill-arrow">→</span>
+        <span class="crm-note-date">Today at 2:15 PM</span>
       </div>
 
-      <!-- Instant Note Input -->
-      <div class="crm-note-box">
-        <textarea id="crmNoteInput" rows="2" placeholder="Type a quick memory note to save..."></textarea>
-        <button class="crm-btn-primary" onclick="CrmApp.saveNote()">+ Save Memory Note</button>
+      <div class="crm-date-divider">YESTERDAY</div>
+      <div class="crm-sticky-note">
+        <div class="crm-note-text">
+          "Had a 15-minute discovery call. SSO integration is a must-have requirement before contract signing."
+        </div>
+        <span class="crm-note-date">Yesterday at 4:45 PM</span>
       </div>
 
-      <!-- Full CRM Landing Page Banner Link -->
-      <div class="crm-landing-banner" onclick="CrmApp.openFullView()">
-        <div class="crm-landing-text">
-          <span class="crm-landing-title">Open Full CRM Workspace</span>
-          <span class="crm-landing-sub">Access lead board, analytics & global deal views</span>
+      <div class="crm-date-divider">LAST WEEK</div>
+      <div class="crm-sticky-note">
+        <div class="crm-note-text">
+          "Initial inbound inquiry from Avon Tech web form. Interested in 50 enterprise seat tier."
         </div>
-        <span style="font-size:16px;">↗</span>
+        <span class="crm-note-date">Jul 20, 2026</span>
       </div>
     </div>
 
-    <!-- 📄 PAGE 2: DRILLED PIPELINE PROGRESS (Progressive Disclosure) -->
-    <div class="crm-view-page" id="crmView-pipeline">
-      <div style="font-size:12px; font-weight:700; text-transform:uppercase; color:var(--titan-text-sub);">
-        Detailed Pipeline Stepper
+    <!-- 📄 PAGE 3: MORE DETAILS (Progressive Disclosure) -->
+    <div class="crm-view-page" id="crmView-more-details">
+      <div class="crm-section-title">
+        <span>All Contact Fields</span>
       </div>
 
-      <div style="background:#ffffff; border:1px solid var(--titan-grey-border); border-radius:6px; padding:14px; display:flex; flex-direction:column; gap:12px;">
-        <div style="display:flex; align-items:center; gap:10px; font-size:13px; color:#16a34a; font-weight:600;">
-          <span>✓</span> 1. Inbound Lead Captured
+      <div class="crm-card">
+        <div class="crm-info-row">
+          <span class="crm-info-label">Full Name</span>
+          <span class="crm-info-value">Elizabeth (Ella) Mathews</span>
         </div>
-        <div style="display:flex; align-items:center; gap:10px; font-size:13px; color:#16a34a; font-weight:600;">
-          <span>✓</span> 2. Discovery Call Completed
+        <div class="crm-info-row">
+          <span class="crm-info-label">Job Title</span>
+          <span class="crm-info-value">Head of Product</span>
         </div>
-        <div style="display:flex; align-items:center; gap:10px; font-size:13px; color:#e05353; font-weight:700;">
-          <span>●</span> 3. Proposal Sent (Current Stage)
+        <div class="crm-info-row">
+          <span class="crm-info-label">Email</span>
+          <span class="crm-info-value">elizabethmathews1980@avontech.com</span>
         </div>
-        <div style="display:flex; align-items:center; gap:10px; font-size:13px; color:#94a3b8;">
-          <span>○</span> 4. Closed Won
+        <div class="crm-info-row">
+          <span class="crm-info-label">Phone</span>
+          <span class="crm-info-value">+1 (415) 892-3019</span>
         </div>
-      </div>
-
-      <div class="crm-note-box">
-        <span style="font-size:11px; font-weight:600; color:var(--titan-text-sub);">UPDATE PIPELINE STAGE</span>
-        <button class="crm-btn-primary" style="align-self:stretch; text-align:center;" onclick="alert('Stage updated to Closed Won!')">
-          Advance Stage to Closed Won 🎉
-        </button>
-      </div>
-    </div>
-
-    <!-- 📄 PAGE 3: SHARED FILES & ATTACHMENTS (Progressive Disclosure) -->
-    <div class="crm-view-page" id="crmView-attachments">
-      <div style="font-size:12px; font-weight:700; text-transform:uppercase; color:var(--titan-text-sub);">
-        Shared Collateral Vault
-      </div>
-      <div class="crm-drill-card">
-        <div class="crm-drill-info">
-          <span class="crm-drill-title">📄 AvonTech_Proposal_v2.pdf</span>
-          <span class="crm-drill-sub">2.4 MB • Sent 3 days ago</span>
+        <div class="crm-info-row">
+          <span class="crm-info-label">Company Size</span>
+          <span class="crm-info-value">250-500 Employees</span>
         </div>
-        <span class="crm-drill-arrow">⬇</span>
-      </div>
-      <div class="crm-drill-card">
-        <div class="crm-drill-info">
-          <span class="crm-drill-title">📝 SOW_Draft_v1.docx</span>
-          <span class="crm-drill-sub">1.1 MB • Sent 5 days ago</span>
+        <div class="crm-info-row">
+          <span class="crm-info-label">Industry</span>
+          <span class="crm-info-value">SaaS / Cloud Software</span>
         </div>
-        <span class="crm-drill-arrow">⬇</span>
-      </div>
-    </div>
-
-    <!-- 📄 PAGE 4: TIMELINE TAB -->
-    <div class="crm-view-page" id="crmView-timeline">
-      <div style="font-size:12px; font-weight:700; text-transform:uppercase; color:var(--titan-text-sub);">
-        Chronological Activity Feed
-      </div>
-      <div class="crm-drill-card" style="cursor:default;">
-        <div class="crm-drill-info">
-          <span class="crm-drill-title">✉️ Email Received</span>
-          <span class="crm-drill-sub">"RE: Q3 Proposal & Licensing Terms" • Today 2:15 PM</span>
+        <div class="crm-info-row">
+          <span class="crm-info-label">Lead Stage</span>
+          <span class="crm-info-value" style="color:var(--titan-blue); font-weight:600;">Proposal Sent</span>
         </div>
-      </div>
-      <div class="crm-drill-card" style="cursor:default;">
-        <div class="crm-drill-info">
-          <span class="crm-drill-title">📞 Call Logged</span>
-          <span class="crm-drill-sub">15 min sync on SSO & security • Yesterday 4:30 PM</span>
+        <div class="crm-info-row">
+          <span class="crm-info-label">Deal Value</span>
+          <span class="crm-info-value" style="font-weight:600;">$32,000</span>
         </div>
       </div>
     </div>
 
-    <!-- 📄 PAGE 5: ADAPTOR LENS TAB (Sales / Project / Inventory) -->
-    <div class="crm-view-page" id="crmView-adaptor">
-      <div style="font-size:12px; font-weight:700; text-transform:uppercase; color:var(--titan-text-sub);">
-        Entity Adaptor Lens
-      </div>
-      <div style="display:flex; background:#f1f5f9; padding:4px; border-radius:6px; gap:4px;">
-        <button class="crm-tab-item active" style="flex:1; padding:6px; border:none;" onclick="CrmApp.setLens('sales')">Sales</button>
-        <button class="crm-tab-item" style="flex:1; padding:6px; border:none;" onclick="CrmApp.setLens('project')">Project</button>
-        <button class="crm-tab-item" style="flex:1; padding:6px; border:none;" onclick="CrmApp.setLens('inventory')">Inventory</button>
+    <!-- 📄 PAGE 4: ACTIVITY TAB -->
+    <div class="crm-view-page" id="crmView-activity">
+      
+      <div class="crm-section-title">
+        <span>Interactions & History</span>
+        <button class="crm-btn-blue" style="padding:4px 10px; font-size:11px;" onclick="CrmApp.logActivityPrompt()">+ Log Activity</button>
       </div>
 
-      <div id="lens-sales-view" style="display:flex; flex-direction:column; gap:10px;">
-        <div class="crm-metric-card">
-          <span class="crm-metric-label">Sales Opportunity</span>
-          <span class="crm-metric-value">$32,000 • Enterprise Tier</span>
+      <div class="crm-card" style="padding: 10px 14px;">
+        <div class="crm-activity-row">
+          <div class="crm-activity-icon-badge">✉️</div>
+          <div class="crm-activity-content">
+            <span class="crm-activity-title">Email Received</span>
+            <span class="crm-activity-desc">"RE: Q3 Proposal & Licensing Terms"</span>
+            <span class="crm-activity-time">Today at 2:15 PM</span>
+          </div>
+        </div>
+        <div class="crm-activity-row">
+          <div class="crm-activity-icon-badge">📞</div>
+          <div class="crm-activity-content">
+            <span class="crm-activity-title">Discovery Call Logged</span>
+            <span class="crm-activity-desc">15 min sync on security & SSO</span>
+            <span class="crm-activity-time">Yesterday at 4:30 PM</span>
+          </div>
         </div>
       </div>
 
-      <div id="lens-project-view" style="display:none; flex-direction:column; gap:10px;">
-        <div class="crm-metric-card">
-          <span class="crm-metric-label">Project Name</span>
-          <span class="crm-metric-value">AvonTech Integration (65% Complete)</span>
+      <!-- Shared Files Vault -->
+      <div class="crm-section-title" style="margin-top: 6px;">
+        <span>Shared Files & Collateral</span>
+      </div>
+
+      <div class="crm-action-card" style="cursor:default;">
+        <div>
+          <div>📄 AvonTech_Proposal_v2.pdf</div>
+          <div style="font-size:11px; color:var(--titan-text-sub);">2.4 MB • Sent 3 days ago</div>
+        </div>
+        <span style="font-size:14px; color:var(--titan-blue); cursor:pointer;">⬇</span>
+      </div>
+
+      <div class="crm-action-card" style="cursor:default;">
+        <div>
+          <div>📝 SOW_Draft_v1.docx</div>
+          <div style="font-size:11px; color:var(--titan-text-sub);">1.1 MB • Sent 5 days ago</div>
+        </div>
+        <span style="font-size:14px; color:var(--titan-blue); cursor:pointer;">⬇</span>
+      </div>
+
+    </div>
+
+    <!-- 📄 PAGE 5: ACTIVITIES TAB (Tasks & To-Dos) -->
+    <div class="crm-view-page" id="crmView-activities">
+      
+      <div class="crm-section-title">
+        <span>Scheduled Tasks & To-Dos</span>
+      </div>
+
+      <div class="crm-card" style="padding: 10px 14px;">
+        <div class="crm-task-row">
+          <input type="checkbox" id="task1">
+          <label for="task1">Follow up on revised proposal terms (Due Thursday)</label>
+        </div>
+        <div class="crm-task-row">
+          <input type="checkbox" id="task2">
+          <label for="task2">Schedule security review call with VP Tech (Dave)</label>
         </div>
       </div>
 
-      <div id="lens-inventory-view" style="display:none; flex-direction:column; gap:10px;">
-        <div class="crm-metric-card">
-          <span class="crm-metric-label">Order Reference</span>
-          <span class="crm-metric-value">#ORD-9082 • 50 Licenses (Fulfilled)</span>
-        </div>
+      <!-- Quick Task Add Input -->
+      <div class="crm-input-card">
+        <textarea id="crmTaskInput" rows="2" placeholder="Add a new task or follow-up..."></textarea>
+        <button class="crm-btn-blue" onclick="CrmApp.addTask()">+ Add Task</button>
       </div>
+
     </div>
 
   </div>

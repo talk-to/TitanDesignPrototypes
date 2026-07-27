@@ -1,4 +1,4 @@
-/* ── Titan Design System Tokens & CRM Component Styles ── */
+/* ── Titan Design System Tokens & Minimal CRM Component Styles ── */
 :root {
   --titan-blue: #2170f4;
   --titan-blue-hover: #1a5ecf;
@@ -10,12 +10,12 @@
   --titan-grey-border: #eef0f2;
   --titan-text-main: #202124;
   --titan-text-sub: #5f6368;
-  --titan-card-shadow: 0 4px 20px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.01);
-  --titan-drawer-shadow: -4px 0 24px rgba(0, 0, 0, 0.15);
+  --titan-card-shadow: 0 2px 8px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.02);
+  --titan-drawer-shadow: -4px 0 24px rgba(0, 0, 0, 0.12);
   --titan-squircle-radius: 6px;
 }
 
-/* ── CRM Sidebar Main Drawer Container ── */
+/* ── Main Drawer Shell ── */
 .crm-drawer-container {
   position: fixed;
   top: 0;
@@ -31,16 +31,17 @@
   transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
   font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', sans-serif;
   color: var(--titan-text-main);
+  -webkit-font-smoothing: antialiased;
 }
 
 .crm-drawer-container.open {
   transform: translateX(0);
 }
 
-/* ── Mini-App Navigation & Header ── */
+/* ── Navigation Header (Spacious & Readable) ── */
 .crm-nav-header {
-  height: 56px;
-  padding: 0 16px;
+  height: 58px;
+  padding: 0 18px;
   background: #ffffff;
   border-bottom: 1px solid var(--titan-grey-border);
   display: flex;
@@ -52,26 +53,27 @@
 .crm-nav-left {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
 }
 
 .crm-back-btn {
   width: 32px;
   height: 32px;
   border-radius: var(--titan-squircle-radius);
-  border: none;
-  background: transparent;
-  color: var(--titan-text-sub);
+  border: 1px solid var(--titan-grey-border);
+  background: #ffffff;
+  color: var(--titan-text-main);
+  font-size: 14px;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background 0.15s ease, color 0.15s ease;
+  transition: all 0.15s ease;
 }
 
 .crm-back-btn:hover {
   background: var(--titan-grey-hover);
-  color: var(--titan-text-main);
+  border-color: #cbd5e1;
 }
 
 .crm-nav-breadcrumbs {
@@ -81,20 +83,20 @@
 }
 
 .crm-nav-title {
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 600;
   color: var(--titan-text-main);
 }
 
 .crm-nav-subtitle {
-  font-size: 11px;
+  font-size: 12px;
   color: var(--titan-text-sub);
 }
 
 .crm-nav-actions {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 6px;
 }
 
 .crm-icon-btn {
@@ -104,6 +106,7 @@
   border: none;
   background: transparent;
   color: var(--titan-text-sub);
+  font-size: 15px;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -116,109 +119,63 @@
   color: var(--titan-text-main);
 }
 
-/* ── Profile Summary Card ── */
+/* ── Hero Profile Header ── */
 .crm-profile-hero {
-  padding: 16px;
+  padding: 18px;
   background: #ffffff;
   border-bottom: 1px solid var(--titan-grey-border);
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
 }
 
 .crm-avatar-large {
-  width: 48px;
-  height: 48px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #e05353, #e65100);
+  background: linear-gradient(135deg, #e05353, #d97706);
   color: #ffffff;
   font-weight: 600;
-  font-size: 17px;
+  font-size: 18px;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  box-shadow: 0 2px 8px rgba(224, 83, 83, 0.25);
+  box-shadow: 0 2px 8px rgba(224, 83, 83, 0.2);
 }
 
 .crm-profile-meta {
   display: flex;
   flex-direction: column;
-  gap: 3px;
+  gap: 4px;
   flex: 1;
   min-width: 0;
 }
 
-.crm-profile-name-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-}
-
 .crm-profile-name {
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 600;
   color: var(--titan-text-main);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.crm-badge-pill {
-  padding: 3px 8px;
-  border-radius: 100px;
-  font-size: 11px;
-  font-weight: 600;
-  background: var(--titan-blue-bg);
-  color: var(--titan-blue);
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
 }
 
 .crm-profile-role {
-  font-size: 12px;
+  font-size: 13px;
   color: var(--titan-text-sub);
+  line-height: 1.3;
 }
 
-/* 🌐 Scraped Enrichment Bar ── */
-.crm-enrichment-bar {
-  background: var(--titan-grey-hover);
-  padding: 10px 16px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  font-size: 11px;
-  color: var(--titan-text-sub);
-  border-bottom: 1px solid var(--titan-grey-border);
-}
-
-.crm-enrich-chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  color: var(--titan-text-main);
-  text-decoration: none;
-  transition: color 0.15s ease;
-}
-
-.crm-enrich-chip:hover {
-  color: var(--titan-blue);
-}
-
-/* ── Tab Switcher Bar ── */
+/* ── 3 Main Navigation Tabs ── */
 .crm-tabs-bar {
   display: flex;
   background: #ffffff;
   border-bottom: 1px solid var(--titan-grey-border);
-  padding: 0 16px;
-  gap: 4px;
+  padding: 0 18px;
+  gap: 8px;
 }
 
 .crm-tab-item {
-  padding: 12px 10px;
-  font-size: 12px;
+  padding: 12px 6px;
+  font-size: 13px;
   font-weight: 500;
   color: var(--titan-text-sub);
   background: none;
@@ -226,6 +183,8 @@
   border-bottom: 2px solid transparent;
   cursor: pointer;
   transition: all 0.15s ease;
+  flex: 1;
+  text-align: center;
 }
 
 .crm-tab-item:hover {
@@ -238,21 +197,21 @@
   border-bottom-color: var(--titan-blue);
 }
 
-/* ── Progressive Views Body ── */
+/* ── Scrollable Viewport ── */
 .crm-body-viewport {
   flex: 1;
   overflow-y: auto;
-  padding: 16px;
+  padding: 18px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 18px;
 }
 
 .crm-view-page {
   display: none;
   flex-direction: column;
   gap: 16px;
-  animation: fadeIn 0.2s ease forwards;
+  animation: fadeIn 0.18s ease forwards;
 }
 
 .crm-view-page.active {
@@ -260,72 +219,103 @@
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(4px); }
+  from { opacity: 0; transform: translateY(3px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* 🧠 Zero Memory Failure Card */
-.crm-memory-box {
-  background: #fffdf5;
-  border: 1px solid #fef3c7;
+/* ── Section Title ── */
+.crm-section-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--titan-text-main);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* 📌 Sticky Notes Component ── */
+.crm-sticky-note {
+  background: #fffdf0;
+  border: 1px solid #fef08a;
+  border-left: 4px solid #f59e0b;
   border-radius: var(--titan-squircle-radius);
-  padding: 12px 14px;
+  padding: 14px;
   display: flex;
   flex-direction: column;
   gap: 6px;
   box-shadow: var(--titan-card-shadow);
 }
 
-.crm-memory-title {
+.crm-note-text {
+  font-size: 13px;
+  line-height: 1.5;
+  color: #78350f;
+  font-weight: 400;
+}
+
+.crm-note-date {
+  font-size: 11px;
+  color: #b45309;
+  font-weight: 500;
+}
+
+/* ── Date Heading Separators for All Notes View ── */
+.crm-date-divider {
   font-size: 11px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  color: #b45309;
-  display: flex;
-  align-items: center;
-  gap: 6px;
+  color: var(--titan-text-sub);
+  margin-top: 4px;
 }
 
-.crm-memory-content {
-  font-size: 12.5px;
-  line-height: 1.45;
-  color: #78350f;
-}
-
-/* Key Metrics Elevation Grid */
-.crm-metrics-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-}
-
-.crm-metric-card {
+/* ── Clean Card Containers ── */
+.crm-card {
   background: #ffffff;
   border: 1px solid var(--titan-grey-border);
   border-radius: var(--titan-squircle-radius);
-  padding: 10px 12px;
+  padding: 14px;
   box-shadow: var(--titan-card-shadow);
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 10px;
 }
 
-.crm-metric-label {
-  font-size: 10px;
-  font-weight: 600;
-  text-transform: uppercase;
+/* Key Info Rows */
+.crm-info-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 13px;
+  padding: 4px 0;
+  border-bottom: 1px solid #f8fafc;
+}
+
+.crm-info-row:last-child {
+  border-bottom: none;
+}
+
+.crm-info-label {
   color: var(--titan-text-sub);
 }
 
-.crm-metric-value {
-  font-size: 14px;
-  font-weight: 600;
+.crm-info-value {
   color: var(--titan-text-main);
+  font-weight: 500;
 }
 
-/* Progressive Disclosure Nav Cards */
-.crm-drill-card {
+.crm-info-link {
+  color: var(--titan-blue);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.crm-info-link:hover {
+  text-decoration: underline;
+}
+
+/* ── Action Link Cards (Progressive Disclosure Triggers) ── */
+.crm-action-card {
   background: #ffffff;
   border: 1px solid var(--titan-grey-border);
   border-radius: var(--titan-squircle-radius);
@@ -336,109 +326,122 @@
   justify-content: space-between;
   cursor: pointer;
   transition: all 0.15s ease;
-}
-
-.crm-drill-card:hover {
-  border-color: #cbd5e1;
-  background: var(--titan-grey-hover);
-  transform: translateY(-1px);
-}
-
-.crm-drill-info {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.crm-drill-title {
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 500;
   color: var(--titan-text-main);
 }
 
-.crm-drill-sub {
-  font-size: 11px;
-  color: var(--titan-text-sub);
+.crm-action-card:hover {
+  border-color: #cbd5e1;
+  background: var(--titan-grey-hover);
+  color: var(--titan-blue);
 }
 
-.crm-drill-arrow {
-  font-size: 14px;
-  color: var(--titan-text-sub);
-}
-
-/* Instant Note Input */
-.crm-note-box {
+/* ── Input Box for Adding Notes & Logging Activities ── */
+.crm-input-card {
   background: #ffffff;
   border: 1px solid var(--titan-grey-border);
   border-radius: var(--titan-squircle-radius);
-  padding: 10px;
+  padding: 12px;
   box-shadow: var(--titan-card-shadow);
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
 }
 
-.crm-note-box textarea {
+.crm-input-card textarea {
   width: 100%;
   border: none;
   outline: none;
   resize: none;
-  font-size: 12px;
+  font-size: 13px;
   font-family: inherit;
   color: var(--titan-text-main);
+  line-height: 1.4;
 }
 
-.crm-note-box textarea::placeholder {
+.crm-input-card textarea::placeholder {
   color: #94a3b8;
 }
 
-.crm-btn-primary {
+.crm-btn-blue {
   align-self: flex-end;
   background: var(--titan-blue);
   color: #ffffff;
   border: none;
-  padding: 6px 14px;
+  padding: 7px 14px;
   border-radius: 4px;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 600;
   cursor: pointer;
   transition: background 0.15s ease;
 }
 
-.crm-btn-primary:hover {
+.crm-btn-blue:hover {
   background: var(--titan-blue-hover);
 }
 
-/* Full Landing Page Banner Link */
-.crm-landing-banner {
-  margin-top: auto;
-  background: linear-gradient(135deg, #1e293b, #0f172a);
-  color: #ffffff;
-  border-radius: var(--titan-squircle-radius);
-  padding: 12px 14px;
+/* Activity Items */
+.crm-activity-row {
+  display: flex;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--titan-grey-border);
+}
+
+.crm-activity-row:last-child {
+  border-bottom: none;
+}
+
+.crm-activity-icon-badge {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--titan-grey-hover);
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  cursor: pointer;
-  transition: opacity 0.15s ease;
+  justify-content: center;
+  font-size: 14px;
+  flex-shrink: 0;
 }
 
-.crm-landing-banner:hover {
-  opacity: 0.92;
-}
-
-.crm-landing-text {
+.crm-activity-content {
   display: flex;
   flex-direction: column;
   gap: 2px;
+  font-size: 13px;
 }
 
-.crm-landing-title {
-  font-size: 12px;
+.crm-activity-title {
   font-weight: 600;
+  color: var(--titan-text-main);
 }
 
-.crm-landing-sub {
-  font-size: 10px;
+.crm-activity-desc {
+  color: var(--titan-text-sub);
+}
+
+.crm-activity-time {
+  font-size: 11px;
   color: #94a3b8;
+}
+
+/* Tasks / To-Dos Checklist */
+.crm-task-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--titan-grey-border);
+}
+
+.crm-task-row:last-child {
+  border-bottom: none;
+}
+
+.crm-task-row input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
 }
