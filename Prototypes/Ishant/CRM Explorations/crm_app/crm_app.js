@@ -81,8 +81,9 @@ const CrmApp = (function () {
     // Highlight main top tab if at root tabs
     if (!isDrilledIn && ['overview', 'activity', 'activities'].includes(viewId)) {
       document.querySelectorAll('.crm-tab-item').forEach(tab => {
-        const isActive = tab.getAttribute('onclick')?.includes(`'${viewId}'`);
-        tab.classList.toggle('active', !!isActive);
+        const onclickAttr = tab.getAttribute('onclick') || '';
+        const isActive = onclickAttr.includes(`'${viewId}'`) && !(viewId === 'activity' && onclickAttr.includes('activities'));
+        tab.classList.toggle('active', isActive);
       });
     }
   }
