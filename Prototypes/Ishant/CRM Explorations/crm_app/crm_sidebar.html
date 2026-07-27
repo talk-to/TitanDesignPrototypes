@@ -108,7 +108,7 @@
     </div>
 
     <!-- 📄 PAGE 2: ALL NOTES (Drilled View) -->
-    <div class="crm-view-page" id="crmView-all-notes">
+    <div class="crm-view-page" id="crmView-all-notes" style="display: none;">
       <div class="crm-date-divider" style="margin-top:0;">TODAY</div>
       <div class="crm-sticky-note">
         <div class="crm-note-text">
@@ -135,7 +135,7 @@
     </div>
 
     <!-- 📄 PAGE 3: MORE DETAILS (Drilled View) -->
-    <div class="crm-view-page" id="crmView-more-details">
+    <div class="crm-view-page" id="crmView-more-details" style="display: none;">
       <div class="crm-card">
         <div class="crm-info-row">
           <span class="crm-info-label">Full Name</span>
@@ -173,10 +173,10 @@
     </div>
 
     <!-- 📄 PAGE 4: ACTIVITY TAB -->
-    <div class="crm-view-page" id="crmView-activity">
+    <div class="crm-view-page" id="crmView-activity" style="display: none;">
       
       <div class="crm-section-title">
-        <span>Interactions & History</span>
+        <span>Email & Interactions Feed</span>
         <button class="crm-btn-blue" style="padding:4px 10px; font-size:11px;" onclick="CrmApp.logActivityPrompt()">+ Log Activity</button>
       </div>
 
@@ -206,11 +206,19 @@
           </div>
         </div>
         <div class="crm-activity-row">
+          <div class="crm-activity-icon-badge">📤</div>
+          <div class="crm-activity-content">
+            <span class="crm-activity-title">Email Sent</span>
+            <span class="crm-activity-desc">"AvonTech Proposal & Security Documentation"</span>
+            <span class="crm-activity-time">Jul 22, 2026</span>
+          </div>
+        </div>
+        <div class="crm-activity-row">
           <div class="crm-activity-icon-badge">📄</div>
           <div class="crm-activity-content">
-            <span class="crm-activity-title">Quote Sent</span>
-            <span class="crm-activity-desc">Sent formal quote ($32,000 / yr)</span>
-            <span class="crm-activity-time">Jul 22, 2026</span>
+            <span class="crm-activity-title">Quote Created</span>
+            <span class="crm-activity-desc">Generated Enterprise Quote ($32,000 / yr)</span>
+            <span class="crm-activity-time">Jul 20, 2026</span>
           </div>
         </div>
       </div>
