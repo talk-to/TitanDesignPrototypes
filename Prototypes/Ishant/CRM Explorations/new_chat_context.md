@@ -68,7 +68,26 @@ Whenever a user opens an email thread, every piece of critical context—past in
 
 ---
 
-## 4. Extending the Shell for New Products & Features
+## 4. Modular CRM Component Architecture (`crm_app/`)
+
+To maintain clean separation of concerns and avoid bloated single-file code, the CRM mini-app is decoupled into its own dedicated directory:
+
+- 📂 `crm_app/crm_sidebar.html`: Standalone HTML component template for the CRM mini-app drawer. Supports progressive disclosure navigation (bread-crumb back button, summary cards, pipeline detail views, attachment vault).
+- 📂 `crm_app/crm_app.css`: Dedicated stylesheet enforcing Titan design system tokens (squircle radii, elevation card shadows, Titan blue/red accents, typography).
+- 📂 `crm_app/crm_app.js`: State manager handling drawer visibility, progressive disclosure stack navigation (`drillInto` / `goBack`), tab switching, note persistence, and lens views (Sales / Project / Inventory).
+
+### Main Shell Integration (`index.html`)
+The main shell includes:
+```html
+<link rel="stylesheet" href="crm_app/crm_app.css">
+<div id="crmSidebarContainer"></div>
+<script src="crm_app/crm_app.js"></script>
+```
+The `CrmApp` module automatically fetches and mounts `crm_sidebar.html` into `#crmSidebarContainer` at runtime.
+
+---
+
+## 5. Extending the Shell for New Products & Features
 
 When building a new feature or product prototype (e.g., CRM Explorations):
 
