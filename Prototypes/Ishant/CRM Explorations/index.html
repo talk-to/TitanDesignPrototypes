@@ -513,12 +513,14 @@
       display: flex;
       flex-direction: column;
       overflow: hidden;
+      min-width: 0;
     }
 
     .content-area {
       flex: 1;
       display: flex;
       overflow: hidden;
+      min-width: 0;
     }
 
     /* ── Middle Panel ── */
@@ -3455,11 +3457,11 @@
 
         </div><!-- /reading-pane -->
 
-        <!-- Dedicated In-Flow CRM Panel Container -->
-        <div id="crmSidebarContainer"></div>
-
       </div><!-- /content-area -->
     </div><!-- /main-area -->
+
+    <!-- Full Vertical Viewport Height CRM Panel (Right side of app-window) -->
+    <div id="crmSidebarContainer"></div>
 
   </div><!-- /app-window -->
 
