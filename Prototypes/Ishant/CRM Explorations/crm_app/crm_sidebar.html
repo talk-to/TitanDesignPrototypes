@@ -52,9 +52,10 @@
     <!-- 📄 PAGE 1: OVERVIEW TAB (Default) -->
     <div class="crm-view-page active" id="crmView-overview">
       
-      <!-- Sticky Notes Section -->
+      <!-- Sticky Notes Section Header with Inline "See all →" Link -->
       <div class="crm-section-title">
         <span>Sticky Notes</span>
+        <button class="crm-header-link" onclick="CrmApp.drillInto('all-notes')">See all →</button>
       </div>
 
       <div class="crm-sticky-note">
@@ -64,23 +65,16 @@
         <span class="crm-note-date">Today at 2:15 PM</span>
       </div>
 
-      <!-- Action Link: Show All Notes -->
-      <div class="crm-action-card" onclick="CrmApp.drillInto('all-notes')">
-        <span>Show All Notes (4)</span>
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <polyline points="9 18 15 12 9 6"></polyline>
-        </svg>
-      </div>
-
       <!-- Quick Note Add Input -->
       <div class="crm-input-card">
         <textarea id="crmNoteInput" rows="2" placeholder="Add a quick note for Ella..."></textarea>
         <button class="crm-btn-blue" onclick="CrmApp.saveNote()">+ Add Note</button>
       </div>
 
-      <!-- Contact Info Section -->
-      <div class="crm-section-title" style="margin-top: 6px;">
+      <!-- Contact Info Section Header with Inline "More details →" Link -->
+      <div class="crm-section-title" style="margin-top: 4px;">
         <span>Contact Details</span>
+        <button class="crm-header-link" onclick="CrmApp.drillInto('more-details')">More details →</button>
       </div>
 
       <div class="crm-card">
@@ -100,14 +94,6 @@
           <span class="crm-info-label">Location</span>
           <span class="crm-info-value">San Francisco, CA</span>
         </div>
-      </div>
-
-      <!-- Action Link: More Details -->
-      <div class="crm-action-card" onclick="CrmApp.drillInto('more-details')">
-        <span>More Details</span>
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <polyline points="9 18 15 12 9 6"></polyline>
-        </svg>
       </div>
 
     </div>
@@ -193,7 +179,7 @@
         <button class="crm-btn-blue" style="padding:4px 10px; font-size:11px;" onclick="CrmApp.logActivityPrompt()">+ Log Activity</button>
       </div>
 
-      <div class="crm-card" style="padding: 10px 14px;">
+      <div class="crm-card">
         <div class="crm-activity-row">
           <div class="crm-activity-icon-badge">✉️</div>
           <div class="crm-activity-content">
@@ -213,24 +199,25 @@
       </div>
 
       <!-- Shared Files Vault -->
-      <div class="crm-section-title" style="margin-top: 6px;">
+      <div class="crm-section-title" style="margin-top: 4px;">
         <span>Shared Files & Collateral</span>
       </div>
 
-      <div class="crm-action-card" style="cursor:default;">
-        <div>
-          <div>📄 AvonTech_Proposal_v2.pdf</div>
-          <div style="font-size:11px; color:var(--titan-text-sub);">2.4 MB • Sent 3 days ago</div>
+      <div class="crm-card">
+        <div class="crm-info-row">
+          <div>
+            <div style="font-weight:500;">📄 AvonTech_Proposal_v2.pdf</div>
+            <div style="font-size:11px; color:var(--titan-text-sub);">2.4 MB • Sent 3 days ago</div>
+          </div>
+          <span style="font-size:14px; color:var(--titan-blue); cursor:pointer;">⬇</span>
         </div>
-        <span style="font-size:14px; color:var(--titan-blue); cursor:pointer;">⬇</span>
-      </div>
-
-      <div class="crm-action-card" style="cursor:default;">
-        <div>
-          <div>📝 SOW_Draft_v1.docx</div>
-          <div style="font-size:11px; color:var(--titan-text-sub);">1.1 MB • Sent 5 days ago</div>
+        <div class="crm-info-row">
+          <div>
+            <div style="font-weight:500;">📝 SOW_Draft_v1.docx</div>
+            <div style="font-size:11px; color:var(--titan-text-sub);">1.1 MB • Sent 5 days ago</div>
+          </div>
+          <span style="font-size:14px; color:var(--titan-blue); cursor:pointer;">⬇</span>
         </div>
-        <span style="font-size:14px; color:var(--titan-blue); cursor:pointer;">⬇</span>
       </div>
 
     </div>
@@ -242,7 +229,7 @@
         <span>Scheduled Tasks & To-Dos</span>
       </div>
 
-      <div class="crm-card" style="padding: 10px 14px;">
+      <div class="crm-card">
         <div class="crm-task-row">
           <input type="checkbox" id="task1">
           <label for="task1">Follow up on revised proposal terms (Due Thursday)</label>
