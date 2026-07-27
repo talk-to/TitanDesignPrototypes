@@ -5211,6 +5211,12 @@
       const threadContent = document.querySelector('.thread-content');
       const stickyHeader = document.querySelector('.thread-sticky-header');
       if (threadContent && stickyHeader) {
+        threadContent.addEventListener('scroll', function () {
+          stickyHeader.classList.toggle('show-fade', threadContent.scrollTop > 0);
+        });
+      }
+    })();
+
     // ── CRM Sidebar Drawer Logic ──────────────────────────────────────────
     function toggleCrmSidebar() {
       const modal = document.getElementById('crmSidebar');
