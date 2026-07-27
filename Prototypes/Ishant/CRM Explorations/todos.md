@@ -8,9 +8,11 @@
 
 ## 📋 Roadmap & Task Checklist
 
-- [ ] **1. Right Dock CRM Panel - Contextual Memory Surface (Happy Path)**
-  - *Context*: Active CRM tab in Titan's right utility dock (`#tasks-panel`).
-  - *Goal*: Displays the complete memory profile of the active email sender—deal stage, value, key attributes, recent interaction timeline, and a zero-friction "Add Quick Memory Note" input.
+- [x] **1. Right Dock CRM Sidebar Drawer (Enriched Memory Surface - Happy Path)**
+  - *Added*: Red CRM trigger button in the top-right toolbar next to Read Receipts & Settings.
+  - *Added*: Matching `.side-modal` sliding drawer (`#crmSidebar`) displaying web-scraped intelligence (website, LinkedIn, company size, location).
+  - *Added*: "Zero Memory Failure" pinned context card, key lead metrics grid, and interactive 1-click note-saver.
+  - *Added*: Tabbed navigation (`Overview & Memory`, `Activity Feed`, `Deals & Adaptor`) with secondary use-case lenses (`Sales Deal`, `Project`, `Inventory`).
 
 - [ ] **2. Inline Thread Header Memory Badges (Happy Path)**
   - *Context*: Contextual memory cues inserted directly into the email thread header next to sender metadata.
