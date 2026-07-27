@@ -108,11 +108,11 @@
   color: var(--titan-text-main);
 }
 
-/* ── Hero Profile Header ── */
+/* ── Hero Profile Header (No redundant bottom border) ── */
 .crm-profile-hero {
-  padding: 16px;
+  padding: 14px 16px 10px 16px;
   background: #ffffff;
-  border-bottom: 1px solid var(--titan-grey-border);
+  border-bottom: none;
   display: flex;
   align-items: center;
   gap: 12px;
@@ -151,10 +151,10 @@
   font-size: 12.5px;
   color: var(--titan-text-sub);
   line-height: 1.3;
-  letter-spacing: -0.005em;
+  letter-spacing: -0.01em;
 }
 
-/* ── 3 Main Navigation Tabs ── */
+/* ── 3 Main Navigation Tabs (Consistent Letter-Spacing) ── */
 .crm-tabs-bar {
   display: flex;
   background: #ffffff;
@@ -172,10 +172,11 @@
   border: none;
   border-bottom: 2px solid transparent;
   cursor: pointer;
-  transition: all 0.15s ease;
+  transition: color 0.15s ease, border-color 0.15s ease;
   flex: 1;
   text-align: center;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.01em !important;
+  font-family: inherit;
 }
 
 .crm-tab-item:hover {
@@ -186,6 +187,7 @@
   color: var(--titan-blue);
   font-weight: 600;
   border-bottom-color: var(--titan-blue);
+  letter-spacing: -0.01em !important;
 }
 
 /* ── Scrollable Viewport ── */
@@ -264,13 +266,14 @@
   line-height: 1.48;
   color: #1c1c1e;
   font-weight: 500;
-  letter-spacing: -0.008em;
+  letter-spacing: -0.01em;
 }
 
 .crm-note-date {
   font-size: 11px;
   color: #b45309;
   font-weight: 600;
+  letter-spacing: -0.01em;
 }
 
 /* ── Date Heading Separators for All Notes View ── */
@@ -303,7 +306,7 @@
   font-size: 13px;
   padding: 5px 0;
   border-bottom: 1px solid #f8fafc;
-  letter-spacing: -0.008em;
+  letter-spacing: -0.01em;
 }
 
 .crm-info-row:last-child {
@@ -353,7 +356,7 @@
   color: var(--titan-text-main);
   line-height: 20px;
   flex: 1;
-  letter-spacing: -0.008em;
+  letter-spacing: -0.01em;
   overflow: hidden;
 }
 
@@ -408,6 +411,7 @@
   flex-direction: column;
   gap: 2px;
   font-size: 13px;
+  letter-spacing: -0.01em;
 }
 
 .crm-activity-title {
@@ -432,6 +436,7 @@
   font-size: 13px;
   padding: 6px 0;
   border-bottom: 1px solid var(--titan-grey-border);
+  letter-spacing: -0.01em;
 }
 
 .crm-task-row:last-child {
