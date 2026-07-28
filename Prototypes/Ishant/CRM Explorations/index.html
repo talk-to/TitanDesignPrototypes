@@ -3583,7 +3583,7 @@
 
             <!-- Company Association Section Header -->
             <div class="crm-section-title" style="margin-top: 10px;">
-              <span>Associated Company</span>
+              <span>Company</span>
               <button class="crm-header-link" onclick="CrmApp.drillInto('company-details')">
                 View company
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
@@ -3592,55 +3592,149 @@
               </button>
             </div>
 
-            <!-- Data-Rich Company Card -->
-            <div class="crm-card">
-              <div class="crm-company-header" style="display:flex; align-items:center; gap:10px; padding-bottom:8px; border-bottom:1px solid #f8fafc;">
-                <div style="width:34px; height:34px; border-radius:6px; background:#eff6ff; border:1px solid rgba(33,112,244,0.2); color:var(--titan-blue); font-weight:700; font-size:13px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">AT</div>
-                <div style="display:flex; flex-direction:column; gap:2px; flex:1; min-width:0;">
+            <!-- Compact Flat Company Row (No Box) -->
+            <div onclick="CrmApp.drillInto('company-details')" style="display:flex; align-items:center; justify-space-between; padding:10px 12px; border-radius:6px; background:var(--titan-grey-hover); cursor:pointer; transition:background 0.15s ease;">
+              <div style="display:flex; align-items:center; gap:10px; flex:1; min-width:0;">
+                <div style="width:34px; height:34px; border-radius:8px; background:#eff6ff; border:1px solid rgba(33,112,244,0.25); color:var(--titan-blue); font-weight:700; font-size:13px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">AT</div>
+                <div style="display:flex; flex-direction:column; gap:2px; min-width:0;">
                   <span style="font-weight:600; font-size:13.5px; color:var(--titan-text-main);">Avon Technologies</span>
-                  <span style="font-size:11.5px; color:var(--titan-text-sub);">SaaS / Cloud • 250-500 Employees</span>
+                  <span style="font-size:11.5px; color:var(--titan-text-sub);">SaaS • 250-500 Employees • 3 contacts</span>
                 </div>
               </div>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </div>
 
-              <div class="crm-info-row">
-                <span class="crm-info-label">Account Deal</span>
-                <span class="crm-info-value" style="color:var(--titan-blue); font-weight:600;">$32,000 / yr • Proposal Sent</span>
+          </div>
+
+          <!-- 📄 PAGE 2: ALL NOTES (Drilled View) -->
+          <div class="crm-view-page" id="crmView-all-notes" style="display: none;">
+            <div class="crm-date-divider" style="margin-top:0;">TODAY</div>
+            <div class="crm-sticky-note">
+              <div class="crm-note-text">
+                "Prefers async updates over email. Q3 security budget approved up to $45,000. Decision maker alongside VP Tech (Dave)."
               </div>
-              
+              <span class="crm-note-date">Today at 2:15 PM</span>
+            </div>
+
+            <div class="crm-date-divider">YESTERDAY</div>
+            <div class="crm-sticky-note">
+              <div class="crm-note-text">
+                "Had a 15-minute discovery call. SSO integration is a must-have requirement before contract signing."
+              </div>
+              <span class="crm-note-date">Yesterday at 4:45 PM</span>
+            </div>
+
+            <div class="crm-date-divider">LAST WEEK</div>
+            <div class="crm-sticky-note">
+              <div class="crm-note-text">
+                "Initial inbound inquiry from Avon Tech web form. Interested in 50 enterprise seat tier."
+              </div>
+              <span class="crm-note-date">Jul 20, 2026</span>
+            </div>
+          </div>
+
+          <!-- 📄 PAGE 3: MORE DETAILS (Drilled View) -->
+          <div class="crm-view-page" id="crmView-more-details" style="display: none;">
+            <div class="crm-card">
+              <div class="crm-info-row">
+                <span class="crm-info-label">Full Name</span>
+                <span class="crm-info-value">Elizabeth (Ella) Mathews</span>
+              </div>
+              <div class="crm-info-row">
+                <span class="crm-info-label">Job Title</span>
+                <span class="crm-info-value">Head of Product</span>
+              </div>
+              <div class="crm-info-row">
+                <span class="crm-info-label">Email</span>
+                <span class="crm-info-value">elizabethmathews1980@avontech.com</span>
+              </div>
+              <div class="crm-info-row">
+                <span class="crm-info-label">Phone</span>
+                <span class="crm-info-value">+1 (415) 892-3019</span>
+              </div>
+              <div class="crm-info-row">
+                <span class="crm-info-label">Company Size</span>
+                <span class="crm-info-value">250-500 Employees</span>
+              </div>
+              <div class="crm-info-row">
+                <span class="crm-info-label">Industry</span>
+                <span class="crm-info-value">SaaS / Cloud Software</span>
+              </div>
+              <div class="crm-info-row">
+                <span class="crm-info-label">Lead Stage</span>
+                <span class="crm-info-value" style="color:var(--titan-blue); font-weight:600;">Proposal Sent</span>
+              </div>
+              <div class="crm-info-row">
+                <span class="crm-info-label">Deal Value</span>
+                <span class="crm-info-value" style="font-weight:600;">$32,000</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 📄 PAGE 4: COMPANY DETAILS (Drilled View) -->
+          <div class="crm-view-page" id="crmView-company-details" style="display: none;">
+            <div class="crm-card">
+              <div class="crm-info-row">
+                <span class="crm-info-label">Company Name</span>
+                <span class="crm-info-value">Avon Technologies Inc.</span>
+              </div>
               <div class="crm-info-row">
                 <span class="crm-info-label">Domain</span>
                 <a href="https://avontech.com" target="_blank" class="crm-info-link">avontech.com 🌐</a>
               </div>
-
-              <!-- Other Associated Teammates (Persons at Avon Tech) -->
-              <div style="margin-top:6px; padding-top:6px; border-top:1px solid #f8fafc;">
-                <div style="font-size:11.5px; font-weight:600; color:var(--titan-text-sub); margin-bottom:6px;">OTHER TEAMMATES AT AVON TECH (3)</div>
-                <div style="display:flex; flex-direction:column; gap:6px;">
-                  <div style="display:flex; align-items:center; justify-content:space-between; font-size:12.5px;">
-                    <div style="display:flex; align-items:center; gap:6px;">
-                      <div style="width:20px; height:20px; border-radius:50%; background:#e2e8f0; font-size:9.5px; font-weight:600; color:#475569; display:flex; align-items:center; justify-content:center;">DM</div>
-                      <span style="font-weight:500; color:var(--titan-text-main);">Dave Miller</span>
-                    </div>
-                    <span style="font-size:11px; color:var(--titan-text-sub);">VP Technology</span>
-                  </div>
-                  <div style="display:flex; align-items:center; justify-content:space-between; font-size:12.5px;">
-                    <div style="display:flex; align-items:center; gap:6px;">
-                      <div style="width:20px; height:20px; border-radius:50%; background:#e2e8f0; font-size:9.5px; font-weight:600; color:#475569; display:flex; align-items:center; justify-content:center;">MV</div>
-                      <span style="font-weight:500; color:var(--titan-text-main);">Marcus Vance</span>
-                    </div>
-                    <span style="font-size:11px; color:var(--titan-text-sub);">CEO</span>
-                  </div>
-                  <div style="display:flex; align-items:center; justify-content:space-between; font-size:12.5px;">
-                    <div style="display:flex; align-items:center; gap:6px;">
-                      <div style="width:20px; height:20px; border-radius:50%; background:#e2e8f0; font-size:9.5px; font-weight:600; color:#475569; display:flex; align-items:center; justify-content:center;">SJ</div>
-                      <span style="font-size:11px; color:var(--titan-text-sub);">Sarah Jenkins</span>
-                    </div>
-                    <span style="font-size:11px; color:var(--titan-text-sub);">Lead Security</span>
-                  </div>
-                </div>
+              <div class="crm-info-row">
+                <span class="crm-info-label">Account Deal</span>
+                <span class="crm-info-value" style="color:var(--titan-blue); font-weight:600;">$32,000 / yr • Proposal Sent</span>
               </div>
-
+              <div class="crm-info-row">
+                <span class="crm-info-label">Industry</span>
+                <span class="crm-info-value">Enterprise SaaS / Cloud</span>
+              </div>
+              <div class="crm-info-row">
+                <span class="crm-info-label">Headquarters</span>
+                <span class="crm-info-value">San Francisco, CA</span>
+              </div>
+              <div class="crm-info-row">
+                <span class="crm-info-label">Employee Count</span>
+                <span class="crm-info-value">320 Employees</span>
+              </div>
+              <div class="crm-info-row">
+                <span class="crm-info-label">Annual Revenue</span>
+                <span class="crm-info-value">$45M ARR</span>
+              </div>
             </div>
+
+            <!-- Teammates at Avon Tech in Drilled Page -->
+            <div class="crm-section-title" style="margin-top: 10px;">
+              <span>Associated Contacts at Avon Tech (3)</span>
+            </div>
+
+            <div class="crm-card">
+              <div class="crm-info-row">
+                <div style="display:flex; align-items:center; gap:8px;">
+                  <div style="width:24px; height:24px; border-radius:50%; background:#e2e8f0; font-size:10px; font-weight:600; color:#475569; display:flex; align-items:center; justify-content:center;">DM</div>
+                  <span style="font-weight:500; color:var(--titan-text-main);">Dave Miller</span>
+                </div>
+                <span style="font-size:12px; color:var(--titan-text-sub);">VP Technology</span>
+              </div>
+              <div class="crm-info-row">
+                <div style="display:flex; align-items:center; gap:8px;">
+                  <div style="width:24px; height:24px; border-radius:50%; background:#e2e8f0; font-size:10px; font-weight:600; color:#475569; display:flex; align-items:center; justify-content:center;">MV</div>
+                  <span style="font-weight:500; color:var(--titan-text-main);">Marcus Vance</span>
+                </div>
+                <span style="font-size:12px; color:var(--titan-text-sub);">CEO</span>
+              </div>
+              <div class="crm-info-row">
+                <div style="display:flex; align-items:center; gap:8px;">
+                  <div style="width:24px; height:24px; border-radius:50%; background:#e2e8f0; font-size:10px; font-weight:600; color:#475569; display:flex; align-items:center; justify-content:center;">SJ</div>
+                  <span style="font-size:12px; color:var(--titan-text-sub);">Sarah Jenkins</span>
+                </div>
+                <span style="font-size:12px; color:var(--titan-text-sub);">Lead Security</span>
+              </div>
+            </div>
+          </div>
 
           </div>
 
