@@ -47,6 +47,248 @@
       background: #fff;
     }
 
+    /* ── Dedicated Vertical Apps Sidebar ── */
+    .apps-sidebar {
+      width: 60px;
+      background: #141415;
+      border-right: 1px solid #262626;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex-shrink: 0;
+      z-index: 10;
+      user-select: none;
+      padding: 12px 0;
+    }
+
+    .apps-sidebar-top {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+      height: 36px;
+    }
+
+    .apps-sidebar-brand {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #2170f4 0%, #1545aa 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 8px rgba(33, 112, 244, 0.35);
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    .apps-sidebar-brand:hover {
+      transform: scale(1.05);
+    }
+
+    .apps-sidebar-brand img {
+      width: 18px;
+      height: 18px;
+      filter: brightness(0) invert(1);
+    }
+
+    .apps-nav-list {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      flex: 1;
+      overflow-y: auto;
+    }
+
+    .apps-nav-list::-webkit-scrollbar {
+      width: 0;
+    }
+
+    .apps-nav-item {
+      position: relative;
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      background: transparent;
+      transition: background 0.18s ease, transform 0.18s ease;
+    }
+
+    .apps-nav-item:hover {
+      background: rgba(255, 255, 255, 0.08);
+      transform: scale(1.04);
+    }
+
+    .apps-nav-item:active {
+      transform: scale(0.96);
+    }
+
+    .apps-nav-item img {
+      width: 22px;
+      height: 22px;
+      object-fit: contain;
+      transition: filter 0.18s ease, transform 0.18s ease;
+    }
+
+    .apps-nav-item.active {
+      background: rgba(33, 112, 244, 0.16);
+      box-shadow: inset 0 0 0 1px rgba(33, 112, 244, 0.3);
+    }
+
+    .apps-nav-item.active::before {
+      content: '';
+      position: absolute;
+      left: -9px;
+      top: 10px;
+      bottom: 10px;
+      width: 4px;
+      background: #2170f4;
+      border-radius: 0 4px 4px 0;
+      box-shadow: 0 0 8px rgba(33, 112, 244, 0.6);
+    }
+
+    .apps-nav-item.active img {
+      filter: brightness(1.15) drop-shadow(0 2px 4px rgba(33, 112, 244, 0.4));
+    }
+
+    /* Floating Tooltips for Apps Sidebar */
+    .apps-nav-item[data-tooltip]::after {
+      content: attr(data-tooltip);
+      position: absolute;
+      left: 54px;
+      top: 50%;
+      transform: translateY(-50%) translateX(-4px);
+      background: #111113;
+      color: #ffffff;
+      font-size: 12px;
+      font-weight: 500;
+      padding: 5px 10px;
+      border-radius: 6px;
+      white-space: nowrap;
+      pointer-events: none;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.15s ease, transform 0.15s ease, visibility 0.15s ease;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      z-index: 100;
+    }
+
+    .apps-nav-item[data-tooltip]:hover::after {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(-50%) translateX(0);
+    }
+
+    .apps-sidebar-divider {
+      width: 28px;
+      height: 1px;
+      background: #28282d;
+      margin: 6px 0;
+    }
+
+    /* App Views Container & Smooth Transitions */
+    .app-views-wrapper {
+      display: flex;
+      flex: 1;
+      height: 100%;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .app-view {
+      display: none;
+      opacity: 0;
+      transform: translateY(4px) scale(0.998);
+      transition: opacity 0.22s cubic-bezier(0.16, 1, 0.3, 1), transform 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+      width: 100%;
+      height: 100%;
+    }
+
+    .app-view.active-view {
+      display: flex;
+      flex: 1;
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    /* Placeholder App Screen Container */
+    .app-placeholder-screen {
+      flex: 1;
+      background: #0f1015;
+      color: #e2e8f0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px;
+      text-align: center;
+      background-image: 
+        radial-gradient(circle at 50% 30%, rgba(33, 112, 244, 0.08) 0%, transparent 60%),
+        radial-gradient(circle at 80% 80%, rgba(147, 51, 234, 0.05) 0%, transparent 50%);
+    }
+
+    .app-placeholder-card {
+      background: #181920;
+      border: 1px dashed #2f3442;
+      border-radius: 16px;
+      padding: 40px 48px;
+      max-width: 520px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .app-placeholder-icon {
+      width: 64px;
+      height: 64px;
+      border-radius: 16px;
+      background: rgba(33, 112, 244, 0.12);
+      border: 1px solid rgba(33, 112, 244, 0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .app-placeholder-icon img {
+      width: 32px;
+      height: 32px;
+    }
+
+    .app-placeholder-title {
+      font-size: 20px;
+      font-weight: 600;
+      color: #ffffff;
+      letter-spacing: -0.3px;
+    }
+
+    .app-placeholder-desc {
+      font-size: 14px;
+      color: #94a3b8;
+      line-height: 1.5;
+    }
+
+    .app-placeholder-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      font-size: 12px;
+      font-weight: 500;
+      color: #cbd5e1;
+      margin-top: 4px;
+    }
+
     /* ── Sidebar ── */
     .sidebar {
       width: 250px;
@@ -2586,21 +2828,76 @@
   <!-- App Window -->
   <div class="app-window">
 
-    <!-- Sidebar -->
-    <div class="sidebar">
-
-      <!-- Header with logo -->
-      <div class="sidebar-header">
-        <div class="tab-switch">
-          <img src="assets/2f8b4195-6886-4685-9c9c-cf0d3552b789.svg" alt="mail">
-          <div class="tab-switch-arrow">
-            <img src="assets/1c88a1be-2a78-4065-86f7-8eb060dbb526.svg" alt="">
-          </div>
-        </div>
-        <div class="titan-logo">
-          <img src="assets/fa36f613-977c-444a-bef5-e1b5f5f1b340.svg" alt="Titan">
+    <!-- Dedicated Vertical Apps Sidebar -->
+    <div class="apps-sidebar">
+      <div class="apps-sidebar-top">
+        <div class="apps-sidebar-brand" title="Titan Suite">
+          <img src="assets/fa36f613-977c-444a-bef5-e1b5f5f1b340.svg" alt="T">
         </div>
       </div>
+      
+      <div class="apps-nav-list">
+        <!-- Mail (Active by Default) -->
+        <div class="apps-nav-item active" data-app="mail" data-tooltip="Mail" onclick="switchApp('mail')">
+          <img src="app_switcher_assets/grid_icons/mail.svg" alt="Mail">
+        </div>
+        <!-- Calendar -->
+        <div class="apps-nav-item" data-app="calendar" data-tooltip="Calendar" onclick="switchApp('calendar')">
+          <img src="app_switcher_assets/grid_icons/calendar.svg" alt="Calendar">
+        </div>
+        <!-- Contacts -->
+        <div class="apps-nav-item" data-app="contacts" data-tooltip="Contacts" onclick="switchApp('contacts')">
+          <img src="app_switcher_assets/grid_icons/contacts.svg" alt="Contacts">
+        </div>
+        <!-- Bookings -->
+        <div class="apps-nav-item" data-app="bookings" data-tooltip="Bookings" onclick="switchApp('bookings')">
+          <img src="app_switcher_assets/grid_icons/bookings.svg" alt="Bookings">
+        </div>
+        <!-- Drive -->
+        <div class="apps-nav-item" data-app="drive" data-tooltip="Drive" onclick="switchApp('drive')">
+          <img src="app_switcher_assets/grid_icons/drive.svg" alt="Drive">
+        </div>
+        <!-- Backup -->
+        <div class="apps-nav-item" data-app="backup" data-tooltip="Backup" onclick="switchApp('backup')">
+          <img src="app_switcher_assets/grid_icons/backup.svg" alt="Backup">
+        </div>
+        <!-- Tasks -->
+        <div class="apps-nav-item" data-app="tasks" data-tooltip="Tasks" onclick="switchApp('tasks')">
+          <img src="app_switcher_assets/grid_icons/tasks.svg" alt="Tasks">
+        </div>
+        <!-- Site -->
+        <div class="apps-nav-item" data-app="site" data-tooltip="Site" onclick="switchApp('site')">
+          <img src="app_switcher_assets/grid_icons/site.svg" alt="Site">
+        </div>
+        <!-- Admin -->
+        <div class="apps-nav-item" data-app="admin" data-tooltip="Admin" onclick="switchApp('admin')">
+          <img src="app_switcher_assets/grid_icons/admin.svg" alt="Admin">
+        </div>
+      </div>
+
+      <div class="apps-sidebar-divider"></div>
+
+      <!-- Settings Icon -->
+      <div class="apps-nav-item" data-app="settings" data-tooltip="Settings" onclick="toggleSettingsModal()">
+        <img src="assets/63a156f6-89b7-4224-b2e1-f2fa32e8f03f.svg" alt="Settings" style="filter: brightness(0.8);">
+      </div>
+    </div>
+
+    <!-- App Views Wrapper -->
+    <div class="app-views-wrapper">
+
+      <!-- Email App View (Active by Default) -->
+      <div class="app-view active-view" id="app-view-mail">
+
+        <!-- Sidebar -->
+        <div class="sidebar">
+
+          <!-- Header with logo -->
+          <div class="sidebar-header" style="justify-content: flex-start; padding-left: 16px;">
+            <div class="titan-logo" style="justify-content: flex-start; padding: 0;">
+              <img src="assets/fa36f613-977c-444a-bef5-e1b5f5f1b340.svg" alt="Titan">
+            </div>
+          </div>
 
       <div class="nav-scroll">
 
@@ -3444,6 +3741,121 @@
       </div><!-- /content-area -->
     </div><!-- /main-area -->
 
+      </div><!-- /#app-view-mail -->
+
+      <!-- Calendar View -->
+      <div class="app-view" id="app-view-calendar">
+        <div class="app-placeholder-screen">
+          <div class="app-placeholder-card">
+            <div class="app-placeholder-icon">
+              <img src="app_switcher_assets/grid_icons/calendar.svg" alt="Calendar">
+            </div>
+            <div class="app-placeholder-title">Calendar View</div>
+            <div class="app-placeholder-desc">Screenshot view for Calendar will be added here once provided.</div>
+            <div class="app-placeholder-badge">Ready for Screenshot</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contacts View -->
+      <div class="app-view" id="app-view-contacts">
+        <div class="app-placeholder-screen">
+          <div class="app-placeholder-card">
+            <div class="app-placeholder-icon">
+              <img src="app_switcher_assets/grid_icons/contacts.svg" alt="Contacts">
+            </div>
+            <div class="app-placeholder-title">Contacts View</div>
+            <div class="app-placeholder-desc">Screenshot view for Contacts will be added here once provided.</div>
+            <div class="app-placeholder-badge">Ready for Screenshot</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bookings View -->
+      <div class="app-view" id="app-view-bookings">
+        <div class="app-placeholder-screen">
+          <div class="app-placeholder-card">
+            <div class="app-placeholder-icon">
+              <img src="app_switcher_assets/grid_icons/bookings.svg" alt="Bookings">
+            </div>
+            <div class="app-placeholder-title">Bookings View</div>
+            <div class="app-placeholder-desc">Screenshot view for Bookings will be added here once provided.</div>
+            <div class="app-placeholder-badge">Ready for Screenshot</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Drive View -->
+      <div class="app-view" id="app-view-drive">
+        <div class="app-placeholder-screen">
+          <div class="app-placeholder-card">
+            <div class="app-placeholder-icon">
+              <img src="app_switcher_assets/grid_icons/drive.svg" alt="Drive">
+            </div>
+            <div class="app-placeholder-title">Drive View</div>
+            <div class="app-placeholder-desc">Screenshot view for Drive will be added here once provided.</div>
+            <div class="app-placeholder-badge">Ready for Screenshot</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Backup View -->
+      <div class="app-view" id="app-view-backup">
+        <div class="app-placeholder-screen">
+          <div class="app-placeholder-card">
+            <div class="app-placeholder-icon">
+              <img src="app_switcher_assets/grid_icons/backup.svg" alt="Backup">
+            </div>
+            <div class="app-placeholder-title">Backup View</div>
+            <div class="app-placeholder-desc">Screenshot view for Backup will be added here once provided.</div>
+            <div class="app-placeholder-badge">Ready for Screenshot</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tasks View -->
+      <div class="app-view" id="app-view-tasks">
+        <div class="app-placeholder-screen">
+          <div class="app-placeholder-card">
+            <div class="app-placeholder-icon">
+              <img src="app_switcher_assets/grid_icons/tasks.svg" alt="Tasks">
+            </div>
+            <div class="app-placeholder-title">Tasks View</div>
+            <div class="app-placeholder-desc">Screenshot view for Tasks will be added here once provided.</div>
+            <div class="app-placeholder-badge">Ready for Screenshot</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Site View -->
+      <div class="app-view" id="app-view-site">
+        <div class="app-placeholder-screen">
+          <div class="app-placeholder-card">
+            <div class="app-placeholder-icon">
+              <img src="app_switcher_assets/grid_icons/site.svg" alt="Site">
+            </div>
+            <div class="app-placeholder-title">Site Builder View</div>
+            <div class="app-placeholder-desc">Screenshot view for Site Builder will be added here once provided.</div>
+            <div class="app-placeholder-badge">Ready for Screenshot</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Admin View -->
+      <div class="app-view" id="app-view-admin">
+        <div class="app-placeholder-screen">
+          <div class="app-placeholder-card">
+            <div class="app-placeholder-icon">
+              <img src="app_switcher_assets/grid_icons/admin.svg" alt="Admin">
+            </div>
+            <div class="app-placeholder-title">Control Panel / Admin</div>
+            <div class="app-placeholder-desc">Screenshot view for Admin will be added here once provided.</div>
+            <div class="app-placeholder-badge">Ready for Screenshot</div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /app-views-wrapper -->
   </div><!-- /app-window -->
 
 
@@ -4516,7 +4928,28 @@
   </style>
 
   <script>
+    // ── Apps Sidebar Switcher ───────────────────────────────────────────
+    function switchApp(appName) {
+      // Update active state in Apps Sidebar rail
+      const navItems = document.querySelectorAll('.apps-nav-item[data-app]');
+      navItems.forEach(item => {
+        if (item.getAttribute('data-app') === appName) {
+          item.classList.add('active');
+        } else {
+          item.classList.remove('active');
+        }
+      });
 
+      // Update active view pane with smooth fade-in
+      const appViews = document.querySelectorAll('.app-view');
+      appViews.forEach(view => {
+        if (view.id === 'app-view-' + appName) {
+          view.classList.add('active-view');
+        } else {
+          view.classList.remove('active-view');
+        }
+      });
+    }
 
     // ── Email name tooltip ───────────────────────────────────────────────
     document.querySelectorAll('.account-email-text').forEach(emailText => {
