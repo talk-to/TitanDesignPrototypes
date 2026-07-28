@@ -87,7 +87,7 @@ const CrmApp = (function () {
     const titleEl = document.getElementById('crmNavTitle');
 
     const isDrilledIn = navHistory.length > 1;
-    const isProfileTab = viewId === 'overview' || viewId === 'activity';
+    const isProfileTab = viewId === 'overview' || viewId === 'activity' || viewId === 'upcoming';
 
     // Toggle Back Chevron Button
     if (backBtn) {
@@ -96,10 +96,10 @@ const CrmApp = (function () {
 
     // Toggle Profile Hero Header (Only visible on contact profile views)
     if (heroHeader) {
-      heroHeader.style.display = (isProfileTab || viewId === 'all-notes' || viewId === 'more-details') ? 'block' : 'none';
+      heroHeader.style.display = (isProfileTab || viewId === 'all-notes' || viewId === 'more-details' || viewId === 'company-details') ? 'block' : 'none';
     }
 
-    // Toggle 2-Tab Bar (Only visible when on contact profile overview/activity)
+    // Toggle 3-Tab Bar (Only visible when on contact profile overview/activity/upcoming)
     if (tabsBar) {
       tabsBar.style.display = isProfileTab ? 'flex' : 'none';
     }
@@ -115,6 +115,8 @@ const CrmApp = (function () {
       if (titleEl) titleEl.textContent = 'Company Profile';
     } else if (viewId === 'all-activity') {
       if (titleEl) titleEl.textContent = 'All Activity';
+    } else if (viewId === 'all-tasks') {
+      if (titleEl) titleEl.textContent = 'Upcoming Tasks';
     } else {
       if (titleEl) titleEl.textContent = 'Ella Mathews';
     }
@@ -124,7 +126,8 @@ const CrmApp = (function () {
       document.querySelectorAll('.crm-tab-item').forEach(tab => {
         const text = tab.textContent.trim().toLowerCase();
         const isActive = (viewId === 'overview' && text === 'overview') ||
-                         (viewId === 'activity' && text === 'activity');
+                         (viewId === 'activity' && text === 'activity') ||
+                         (viewId === 'upcoming' && text === 'upcoming');
         tab.classList.toggle('active', isActive);
       });
     }
