@@ -187,13 +187,8 @@
     <div class="crm-view-page" id="crmView-activity" style="display: none;">
       
       <div class="crm-section-title">
-        <span>Recent Activity</span>
-        <button class="crm-header-link" onclick="CrmApp.drillInto('all-activity')">
-          See all activity
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="9 18 15 12 9 6"></polyline>
-          </svg>
-        </button>
+        <span>Email & Interactions Feed</span>
+        <button class="crm-btn-blue" style="padding:4px 10px; font-size:11px;" onclick="CrmApp.logActivityPrompt()">+ Log Activity</button>
       </div>
 
       <!-- Top 5 Connected Vertical Timeline Feed -->
@@ -270,6 +265,16 @@
           </div>
         </div>
 
+      </div>
+
+      <!-- Bottom Center See All Activity Button -->
+      <div style="display:flex; justify-content:center; margin-top: 4px;">
+        <button class="crm-header-link" onclick="CrmApp.drillInto('all-activity')" style="font-weight:600; font-size:12.5px;">
+          See all activity
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </button>
       </div>
 
       <!-- Shared Files Vault -->
