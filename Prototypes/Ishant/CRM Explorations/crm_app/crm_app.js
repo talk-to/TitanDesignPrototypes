@@ -96,7 +96,7 @@ const CrmApp = (function () {
 
     // Toggle Profile Hero Header (Only visible on contact profile views)
     if (heroHeader) {
-      heroHeader.style.display = (isProfileTab || viewId === 'all-notes' || viewId === 'more-details' || viewId === 'company-details') ? 'block' : 'none';
+      heroHeader.style.display = (isProfileTab || viewId === 'all-notes' || viewId === 'more-details' || viewId === 'company-details') ? 'flex' : 'none';
     }
 
     // Toggle 3-Tab Bar (Only visible when on contact profile overview/activity/upcoming)
