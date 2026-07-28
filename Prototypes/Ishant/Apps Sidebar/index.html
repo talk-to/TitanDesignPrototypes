@@ -259,6 +259,27 @@
       transform: translateY(0) scale(1);
     }
 
+    /* App Screenshot View Containers */
+    .app-screenshot-container {
+      flex: 1;
+      width: 100%;
+      height: 100%;
+      background: #0f1015;
+      display: flex;
+      align-items: flex-start;
+      justify-content: flex-start;
+      overflow: auto;
+    }
+
+    .app-screenshot-img {
+      height: 100%;
+      width: auto;
+      max-width: 100%;
+      object-fit: contain;
+      object-position: top left;
+      display: block;
+    }
+
     /* Placeholder App Screen Container */
     .app-placeholder-screen {
       flex: 1;
@@ -3796,15 +3817,8 @@
 
       <!-- Calendar View -->
       <div class="app-view" id="app-view-calendar">
-        <div class="app-placeholder-screen">
-          <div class="app-placeholder-card">
-            <div class="app-placeholder-icon">
-              <img src="app_switcher_assets/grid_icons/calendar.svg" alt="Calendar">
-            </div>
-            <div class="app-placeholder-title">Calendar View</div>
-            <div class="app-placeholder-desc">Screenshot view for Calendar will be added here once provided.</div>
-            <div class="app-placeholder-badge">Ready for Screenshot</div>
-          </div>
+        <div class="app-screenshot-container">
+          <img src="screenshots/calendar.png" alt="Calendar View" class="app-screenshot-img">
         </div>
       </div>
 
@@ -3824,29 +3838,15 @@
 
       <!-- Bookings View -->
       <div class="app-view" id="app-view-bookings">
-        <div class="app-placeholder-screen">
-          <div class="app-placeholder-card">
-            <div class="app-placeholder-icon">
-              <img src="app_switcher_assets/grid_icons/bookings.svg" alt="Bookings">
-            </div>
-            <div class="app-placeholder-title">Bookings View</div>
-            <div class="app-placeholder-desc">Screenshot view for Bookings will be added here once provided.</div>
-            <div class="app-placeholder-badge">Ready for Screenshot</div>
-          </div>
+        <div class="app-screenshot-container">
+          <img src="screenshots/bookings.png" alt="Bookings View" class="app-screenshot-img">
         </div>
       </div>
 
       <!-- Drive View -->
       <div class="app-view" id="app-view-drive">
-        <div class="app-placeholder-screen">
-          <div class="app-placeholder-card">
-            <div class="app-placeholder-icon">
-              <img src="app_switcher_assets/grid_icons/drive.svg" alt="Drive">
-            </div>
-            <div class="app-placeholder-title">Drive View</div>
-            <div class="app-placeholder-desc">Screenshot view for Drive will be added here once provided.</div>
-            <div class="app-placeholder-badge">Ready for Screenshot</div>
-          </div>
+        <div class="app-screenshot-container">
+          <img src="screenshots/drive.png" alt="Drive View" class="app-screenshot-img">
         </div>
       </div>
 
