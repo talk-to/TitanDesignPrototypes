@@ -81,6 +81,8 @@ const CrmApp = (function () {
       if (titleEl) titleEl.textContent = 'All Notes';
     } else if (viewId === 'more-details') {
       if (titleEl) titleEl.textContent = 'Contact Details';
+    } else if (viewId === 'company-details') {
+      if (titleEl) titleEl.textContent = 'Company Profile';
     } else if (viewId === 'all-activity') {
       if (titleEl) titleEl.textContent = 'All Activity';
     } else {
