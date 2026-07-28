@@ -129,10 +129,50 @@
     }
 
     .apps-nav-item img {
-      width: 22px;
-      height: 22px;
+      width: 28px;
+      height: 28px;
       object-fit: contain;
       transition: filter 0.18s ease, transform 0.18s ease;
+    }
+
+    /* SVG ViewBox Normalization: Tasks & Drive SVGs are unpadded 30x30 */
+    .apps-nav-item[data-app="tasks"] img,
+    .apps-nav-item[data-app="drive"] img {
+      width: 21px;
+      height: 21px;
+    }
+
+    /* Bottom Tools squircle containers */
+    .tool-icon-squircle {
+      width: 26px;
+      height: 26px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.18s ease;
+    }
+
+    .tool-icon-squircle.bg-pink {
+      background: #fce7f3;
+    }
+
+    .tool-icon-squircle.bg-purple {
+      background: #f3e8ff;
+    }
+
+    .tool-icon-squircle.bg-blue {
+      background: #e0f2fe;
+    }
+
+    .tool-icon-squircle.bg-green {
+      background: #dcfce7;
+    }
+
+    .tool-icon-squircle img {
+      width: 15px !important;
+      height: 15px !important;
+      object-fit: contain;
     }
 
     .apps-nav-item.active {
@@ -2867,19 +2907,27 @@
       <div class="apps-nav-bottom">
         <!-- Signature Designer -->
         <div class="apps-nav-item" data-app="signature" data-tooltip="Signature Designer" onclick="switchApp('signature')">
-          <img src="app_switcher_assets/imgGroup.svg" alt="Signature Designer">
+          <div class="tool-icon-squircle bg-pink">
+            <img src="app_switcher_assets/imgGroup.svg" alt="Signature Designer">
+          </div>
         </div>
         <!-- Smart Write AI -->
         <div class="apps-nav-item" data-app="smartwrite" data-tooltip="Smart Write AI" onclick="switchApp('smartwrite')">
-          <img src="app_switcher_assets/imgGroup22777.svg" alt="Smart Write AI">
+          <div class="tool-icon-squircle bg-purple">
+            <img src="app_switcher_assets/imgGroup22777.svg" alt="Smart Write AI">
+          </div>
         </div>
         <!-- Email Designer -->
         <div class="apps-nav-item" data-app="emaildesigner" data-tooltip="Email Designer" onclick="switchApp('emaildesigner')">
-          <img src="app_switcher_assets/imgGroup23292.svg" alt="Email Designer">
+          <div class="tool-icon-squircle bg-blue">
+            <img src="app_switcher_assets/imgGroup23292.svg" alt="Email Designer">
+          </div>
         </div>
         <!-- Invoice Builder -->
         <div class="apps-nav-item" data-app="invoicebuilder" data-tooltip="Invoice Builder" onclick="switchApp('invoicebuilder')">
-          <img src="app_switcher_assets/imgFrame1707478357.svg" alt="Invoice Builder">
+          <div class="tool-icon-squircle bg-green">
+            <img src="app_switcher_assets/imgFrame1707478357.svg" alt="Invoice Builder">
+          </div>
         </div>
       </div>
     </div>
