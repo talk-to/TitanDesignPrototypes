@@ -186,6 +186,24 @@ const CrmApp = (function () {
     alert('Opening Full CRM Workspace (Landing Page View)...');
   }
 
+  function toggleTask(el) {
+    if (!el) return;
+    el.classList.toggle('checked');
+    const container = el.closest('.crm-item-card') || el.parentElement;
+    if (container) {
+      const title = container.querySelector('.crm-item-title');
+      if (title) {
+        if (el.classList.contains('checked')) {
+          title.style.textDecoration = 'line-through';
+          title.style.opacity = '0.55';
+        } else {
+          title.style.textDecoration = 'none';
+          title.style.opacity = '1';
+        }
+      }
+    }
+  }
+
   // No init needed — CRM sidebar HTML is inlined directly in index.html
 
   return {
@@ -200,7 +218,8 @@ const CrmApp = (function () {
     saveNote,
     addTask,
     logActivityPrompt,
-    openFullView
+    openFullView,
+    toggleTask
   };
 })();
 
