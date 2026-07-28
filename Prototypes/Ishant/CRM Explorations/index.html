@@ -3648,15 +3648,20 @@
             </div>
           </div>
 
-          <!-- 📄 PAGE 4: ACTIVITY TAB (Connected Timeline Feed with SVG Icons) -->
+          <!-- 📄 PAGE 4: ACTIVITY TAB (Top 5 Recent Activities) -->
           <div class="crm-view-page" id="crmView-activity" style="display: none;">
             
             <div class="crm-section-title">
-              <span>Email & Interactions Feed</span>
-              <button class="crm-btn-blue" style="padding:4px 10px; font-size:11px;" onclick="CrmApp.logActivityPrompt()">+ Log Activity</button>
+              <span>Recent Activity</span>
+              <button class="crm-header-link" onclick="CrmApp.drillInto('all-activity')">
+                See all activity
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+              </button>
             </div>
 
-            <!-- Connected Vertical Timeline Feed -->
+            <!-- Top 5 Connected Vertical Timeline Feed -->
             <div class="crm-timeline-wrapper">
               
               <div class="crm-timeline-item">
@@ -3758,6 +3763,140 @@
                   <div style="font-size:11px; color:var(--titan-text-sub);">4.8 MB • Sent Jul 18</div>
                 </div>
                 <span style="font-size:14px; color:var(--titan-blue); cursor:pointer;">⬇</span>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- 📄 PAGE 5: ALL ACTIVITY (Dedicated Drilled Page for Indefinite Scrolling) -->
+          <div class="crm-view-page" id="crmView-all-activity" style="display: none;">
+            
+            <div class="crm-section-title" style="margin-bottom:0;">
+              <span>Full Activity History</span>
+              <button class="crm-btn-blue" style="padding:4px 10px; font-size:11px;" onclick="CrmApp.logActivityPrompt()">+ Log Activity</button>
+            </div>
+
+            <div class="crm-date-divider" style="margin-top:4px;">TODAY</div>
+            <div class="crm-timeline-wrapper">
+              <div class="crm-timeline-item">
+                <div class="crm-timeline-badge">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                    <polyline points="22,6 12,13 2,6"></polyline>
+                  </svg>
+                </div>
+                <div class="crm-timeline-content">
+                  <span class="crm-timeline-title">Email Received</span>
+                  <span class="crm-timeline-desc">"RE: Q3 Proposal & Licensing Terms"</span>
+                  <span class="crm-timeline-time">Today at 2:15 PM</span>
+                </div>
+              </div>
+
+              <div class="crm-timeline-item">
+                <div class="crm-timeline-badge">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                    <circle cx="12" cy="12" r="3"></circle>
+                  </svg>
+                </div>
+                <div class="crm-timeline-content">
+                  <span class="crm-timeline-title">Email Read Receipt</span>
+                  <span class="crm-timeline-desc">Opened 'AvonTech Proposal v2' (3 times)</span>
+                  <span class="crm-timeline-time">Today at 11:40 AM</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="crm-date-divider">YESTERDAY</div>
+            <div class="crm-timeline-wrapper">
+              <div class="crm-timeline-item">
+                <div class="crm-timeline-badge">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                  </svg>
+                </div>
+                <div class="crm-timeline-content">
+                  <span class="crm-timeline-title">Discovery Call Logged</span>
+                  <span class="crm-timeline-desc">15 min sync on security, SSO & seat tiers</span>
+                  <span class="crm-timeline-time">Yesterday at 4:30 PM</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="crm-date-divider">LAST WEEK</div>
+            <div class="crm-timeline-wrapper">
+              <div class="crm-timeline-item">
+                <div class="crm-timeline-badge">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="22" y1="2" x2="11" y2="13"></line>
+                    <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                  </svg>
+                </div>
+                <div class="crm-timeline-content">
+                  <span class="crm-timeline-title">Email Sent</span>
+                  <span class="crm-timeline-desc">"AvonTech Proposal & Security Documentation"</span>
+                  <span class="crm-timeline-time">Jul 22, 2026</span>
+                </div>
+              </div>
+
+              <div class="crm-timeline-item">
+                <div class="crm-timeline-badge">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                    <polyline points="14 2 14 8 20 8"></polyline>
+                    <line x1="16" y1="13" x2="8" y2="13"></line>
+                    <line x1="16" y1="17" x2="8" y2="17"></line>
+                  </svg>
+                </div>
+                <div class="crm-timeline-content">
+                  <span class="crm-timeline-title">Quote Created</span>
+                  <span class="crm-timeline-desc">Generated Enterprise Quote ($32,000 / yr)</span>
+                  <span class="crm-timeline-time">Jul 20, 2026</span>
+                </div>
+              </div>
+
+              <div class="crm-timeline-item">
+                <div class="crm-timeline-badge">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                    <circle cx="12" cy="12" r="3"></circle>
+                  </svg>
+                </div>
+                <div class="crm-timeline-content">
+                  <span class="crm-timeline-title">SOC2 Report Shared</span>
+                  <span class="crm-timeline-desc">Sent Security_Compliance_SOC2.pdf to Dave</span>
+                  <span class="crm-timeline-time">Jul 18, 2026</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="crm-date-divider">EARLIER THIS MONTH</div>
+            <div class="crm-timeline-wrapper">
+              <div class="crm-timeline-item">
+                <div class="crm-timeline-badge">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                  </svg>
+                </div>
+                <div class="crm-timeline-content">
+                  <span class="crm-timeline-title">Initial Intro Call</span>
+                  <span class="crm-timeline-desc">30 min call with Ella Mathews & Dave (VP Tech)</span>
+                  <span class="crm-timeline-time">Jul 12, 2026</span>
+                </div>
+              </div>
+
+              <div class="crm-timeline-item">
+                <div class="crm-timeline-badge">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                    <polyline points="22,6 12,13 2,6"></polyline>
+                  </svg>
+                </div>
+                <div class="crm-timeline-content">
+                  <span class="crm-timeline-title">Inbound Form Inquiry</span>
+                  <span class="crm-timeline-desc">Lead captured via website pricing calculator</span>
+                  <span class="crm-timeline-time">Jul 10, 2026</span>
+                </div>
               </div>
             </div>
 
