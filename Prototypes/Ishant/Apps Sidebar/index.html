@@ -196,33 +196,35 @@
       filter: brightness(1.15) drop-shadow(0 2px 4px rgba(33, 112, 244, 0.4));
     }
 
-    /* Floating Tooltips for Apps Sidebar */
-    .apps-nav-item[data-tooltip]::after {
-      content: attr(data-tooltip);
-      position: absolute;
-      left: 54px;
-      top: 50%;
-      transform: translateY(-50%) translateX(-4px);
+    /* ── Persistent Floating & Sliding Tooltip for Apps Sidebar ── */
+    .apps-persistent-tooltip {
+      position: fixed;
+      left: 68px;
+      top: 0px;
+      transform: translateY(-50%) scale(0.95);
       background: #111113;
       color: #ffffff;
       font-size: 12px;
       font-weight: 500;
-      padding: 5px 10px;
+      padding: 5px 11px;
       border-radius: 6px;
       white-space: nowrap;
       pointer-events: none;
       opacity: 0;
       visibility: hidden;
-      transition: opacity 0.15s ease, transform 0.15s ease, visibility 0.15s ease;
-      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      z-index: 100;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.08);
+      z-index: 10000;
+      transition: opacity 0.15s ease, transform 0.15s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.15s ease;
     }
 
-    .apps-nav-item[data-tooltip]:hover::after {
+    .apps-persistent-tooltip.visible {
       opacity: 1;
       visibility: visible;
-      transform: translateY(-50%) translateX(0);
+      transform: translateY(-50%) scale(1);
+    }
+
+    .apps-persistent-tooltip.sliding {
+      transition: top 0.18s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.15s ease, transform 0.15s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.15s ease;
     }
 
     .apps-sidebar-divider {
@@ -4092,6 +4094,9 @@
   </style>
 
   <div id="email-tooltip"></div>
+  <div id="apps-sidebar-tooltip" class="apps-persistent-tooltip">
+    <span id="apps-sidebar-tooltip-text"></span>
+  </div>
 
 
   <!-- App Switcher Dropdown (App Switcher - Light) -->
@@ -5055,6 +5060,45 @@
         }
       });
     }
+
+    // ── Persistent Sliding Tooltip for Apps Sidebar ────────────────────
+    (function initAppsSidebarTooltip() {
+      const tooltip = document.getElementById('apps-sidebar-tooltip');
+      const tooltipText = document.getElementById('apps-sidebar-tooltip-text');
+      const navItems = document.querySelectorAll('.apps-nav-item[data-tooltip]');
+      let hideTimer = null;
+      let isTooltipActive = false;
+
+      navItems.forEach(item => {
+        item.addEventListener('mouseenter', () => {
+          clearTimeout(hideTimer);
+          const label = item.getAttribute('data-tooltip');
+          if (!label) return;
+
+          const rect = item.getBoundingClientRect();
+          const targetTop = rect.top + rect.height / 2;
+
+          tooltipText.textContent = label;
+          tooltip.style.top = targetTop + 'px';
+
+          if (isTooltipActive) {
+            tooltip.classList.add('sliding');
+          } else {
+            tooltip.classList.remove('sliding');
+            isTooltipActive = true;
+          }
+
+          tooltip.classList.add('visible');
+        });
+
+        item.addEventListener('mouseleave', () => {
+          hideTimer = setTimeout(() => {
+            tooltip.classList.remove('visible', 'sliding');
+            isTooltipActive = false;
+          }, 200);
+        });
+      });
+    })();
 
     // ── Email name tooltip ───────────────────────────────────────────────
     document.querySelectorAll('.account-email-text').forEach(emailText => {
