@@ -2,7 +2,7 @@
  * Minimal CRM Controller Module
  */
 const CrmApp = (function () {
-  let navHistory = ['overview'];
+  let navHistory = ['home', 'overview']; // Root is home, default selected contact on email thread is Ella Mathews
 
   function toggleDrawer() {
     const drawer = document.getElementById('crmSidebar');
@@ -40,9 +40,30 @@ const CrmApp = (function () {
     }
   }
 
+  function goHome() {
+    navHistory = ['home'];
+    renderView('home');
+  }
+
   function switchTab(tabId) {
-    navHistory = [tabId];
+    // If on contact profile, switch between overview and activity tabs
+    if (navHistory.length > 0 && navHistory[0] === 'home') {
+      navHistory = ['home', tabId];
+    } else {
+      navHistory = [tabId];
+    }
     renderView(tabId);
+  }
+
+  function selectContact(contactId) {
+    if (contactId === 'ella') {
+      navHistory = ['home', 'overview'];
+      renderView('overview');
+    } else {
+      // For demo, load contact profile view
+      navHistory = ['home', 'overview'];
+      renderView('overview');
+    }
   }
 
   function renderView(viewId) {
@@ -62,22 +83,31 @@ const CrmApp = (function () {
 
     const backBtn = document.getElementById('crmBackBtn');
     const tabsBar = document.getElementById('crmTabsBar');
+    const heroHeader = document.querySelector('.crm-profile-hero');
     const titleEl = document.getElementById('crmNavTitle');
 
     const isDrilledIn = navHistory.length > 1;
+    const isProfileTab = viewId === 'overview' || viewId === 'activity';
 
     // Toggle Back Chevron Button
     if (backBtn) {
       backBtn.style.display = isDrilledIn ? 'flex' : 'none';
     }
 
-    // Toggle 2-Tab Bar
+    // Toggle Profile Hero Header (Only visible on contact profile views)
+    if (heroHeader) {
+      heroHeader.style.display = (isProfileTab || viewId === 'all-notes' || viewId === 'more-details') ? 'block' : 'none';
+    }
+
+    // Toggle 2-Tab Bar (Only visible when on contact profile overview/activity)
     if (tabsBar) {
-      tabsBar.style.display = isDrilledIn ? 'none' : 'flex';
+      tabsBar.style.display = isProfileTab ? 'flex' : 'none';
     }
 
     // Update Header Title
-    if (viewId === 'all-notes') {
+    if (viewId === 'home') {
+      if (titleEl) titleEl.textContent = 'CRM Board';
+    } else if (viewId === 'all-notes') {
       if (titleEl) titleEl.textContent = 'All Notes';
     } else if (viewId === 'more-details') {
       if (titleEl) titleEl.textContent = 'Contact Details';
@@ -86,11 +116,11 @@ const CrmApp = (function () {
     } else if (viewId === 'all-activity') {
       if (titleEl) titleEl.textContent = 'All Activity';
     } else {
-      if (titleEl) titleEl.textContent = 'CRM Board';
+      if (titleEl) titleEl.textContent = 'Ella Mathews';
     }
 
     // Highlight main top tab based on exact text match
-    if (!isDrilledIn) {
+    if (isProfileTab) {
       document.querySelectorAll('.crm-tab-item').forEach(tab => {
         const text = tab.textContent.trim().toLowerCase();
         const isActive = (viewId === 'overview' && text === 'overview') ||
@@ -161,7 +191,9 @@ const CrmApp = (function () {
     closeDrawer,
     drillInto,
     goBack,
+    goHome,
     switchTab,
+    selectContact,
     saveNote,
     addTask,
     logActivityPrompt,
