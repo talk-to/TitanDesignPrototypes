@@ -204,6 +204,14 @@ const CrmApp = (function () {
     }
   }
 
+  function setPipelineStage(stageEl) {
+    if (!stageEl) return;
+    const container = stageEl.closest('.crm-pipeline-stages');
+    if (!container) return;
+    container.querySelectorAll('.crm-pipe-stage').forEach(s => s.classList.remove('active'));
+    stageEl.classList.add('active');
+  }
+
   // No init needed — CRM sidebar HTML is inlined directly in index.html
 
   return {
@@ -219,7 +227,8 @@ const CrmApp = (function () {
     addTask,
     logActivityPrompt,
     openFullView,
-    toggleTask
+    toggleTask,
+    setPipelineStage
   };
 })();
 

@@ -3723,7 +3723,32 @@
           
           <!-- 📄 PAGE 1: OVERVIEW TAB (Default) -->
           <div class="crm-view-page active" id="crmView-overview" style="display: flex;">
-            
+
+            <!-- Pipeline Stage Overview (chevron stepper, visual only for now) -->
+            <div class="crm-section-title" style="margin-top: 0;">
+              <span>Pipeline Stage</span>
+            </div>
+            <div class="crm-pipeline-stages" id="crmPipelineStages">
+              <div class="crm-pipe-stage" style="background:#1e3a8a;" onclick="CrmApp.setPipelineStage(this)">
+                <span class="crm-pipe-label">Lead</span>
+              </div>
+              <div class="crm-pipe-stage active" style="background:#1d4ed8;" onclick="CrmApp.setPipelineStage(this)">
+                <span class="crm-pipe-label">Contacted</span>
+              </div>
+              <div class="crm-pipe-stage" style="background:#2563eb;" onclick="CrmApp.setPipelineStage(this)">
+                <span class="crm-pipe-label">Sent Sample</span>
+              </div>
+              <div class="crm-pipe-stage" style="background:#3b82f6;" onclick="CrmApp.setPipelineStage(this)">
+                <span class="crm-pipe-label">Demo</span>
+              </div>
+              <div class="crm-pipe-stage" style="background:#60a5fa;" onclick="CrmApp.setPipelineStage(this)">
+                <span class="crm-pipe-label">Negotiation</span>
+              </div>
+              <div class="crm-pipe-stage" style="background:#93c5fd;" onclick="CrmApp.setPipelineStage(this)">
+                <span class="crm-pipe-label">Won</span>
+              </div>
+            </div>
+
             <!-- Personal Notes Section Header -->
             <div class="crm-section-title">
               <span>Personal Notes</span>
