@@ -615,7 +615,7 @@
   display: flex;
   align-items: stretch;
   height: 28px;
-  margin: 6px 0 0 0;
+  margin: 0;
   border-radius: 6px;
   overflow: hidden;
   background: #ffffff;
