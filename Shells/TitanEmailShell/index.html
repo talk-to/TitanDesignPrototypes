@@ -1366,6 +1366,28 @@
       position: relative;
     }
 
+    .msg-avatar {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 600;
+      color: #fff;
+      line-height: 1;
+    }
+
+    .msg-avatar.exp-avatar {
+      width: 36px;
+      height: 36px;
+      font-size: 14px;
+    }
+
+    .av-7 { background: #9B51E0; }
+
     .thread-sender {
       font-size: 15px;
       font-weight: 600;
@@ -1549,6 +1571,16 @@
       justify-content: space-between;
       align-items: flex-start;
       padding: 20px 24px 12px;
+    }
+
+    .exp-left {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .exp-avatar {
+      margin-top: 1px;
     }
 
     .exp-sender {
@@ -2817,7 +2849,7 @@
         </div>
         <div class="toolbar-right">
           <div class="toolbar-icons">
-            <div class="toolbar-icon titan-action-btn" title="View details">
+            <div class="toolbar-icon titan-action-btn" title="Read receipts">
               <img src="assets/ec5d8d32-261b-410c-b07c-310cd6bb915e.svg" alt="">
             </div>
             <div class="toolbar-icon titan-action-btn" title="Settings" onclick="toggleSettingsModal()">
@@ -3187,9 +3219,12 @@
             <!-- Expanded tile -->
             <div class="expanded-tile">
               <div class="expanded-header">
-                <div>
-                  <div class="exp-sender">Ninad Raval</div>
-                  <div class="exp-to">To: me, Sajal, Viral</div>
+                <div class="exp-left">
+                  <div class="msg-avatar exp-avatar av-7">N</div>
+                  <div>
+                    <div class="exp-sender">Ninad Raval</div>
+                    <div class="exp-to">To: me, Sajal, Viral</div>
+                  </div>
                 </div>
                 <div class="exp-right">
                   <div class="exp-timestamp">Jun 12</div>
