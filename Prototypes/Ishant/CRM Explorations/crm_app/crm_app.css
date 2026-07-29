@@ -614,8 +614,14 @@
 .crm-pipeline-stages {
   display: flex;
   align-items: stretch;
-  height: 34px;
-  margin: 2px 0 4px;
+  height: 28px;
+  margin: 6px 0 0 0;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #ffffff;
+  padding: 1px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
 }
 
 .crm-pipe-stage {
@@ -625,19 +631,25 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  margin-left: -11px;
-  padding: 0 6px;
-  clip-path: polygon(0 0, calc(100% - 11px) 0, 100% 50%, calc(100% - 11px) 100%, 0 100%, 11px 50%);
-  transition: filter 0.15s ease, flex 0.2s ease;
+  margin-left: -9px;
+  padding: 0 4px;
+  clip-path: polygon(0 0, calc(100% - 9px) 0, 100% 50%, calc(100% - 9px) 100%, 0 100%, 9px 50%);
+  transition: flex 0.2s ease, filter 0.15s ease;
+  filter: drop-shadow(1.5px 0 0 #ffffff);
+  border-radius: 2px;
 }
 
 .crm-pipe-stage:first-child {
   margin-left: 0;
-  clip-path: polygon(0 0, calc(100% - 11px) 0, 100% 50%, calc(100% - 11px) 100%, 0 100%);
+  clip-path: polygon(0 0, calc(100% - 9px) 0, 100% 50%, calc(100% - 9px) 100%, 0 100%);
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
 }
 
 .crm-pipe-stage:last-child {
-  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 11px 50%);
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 9px 50%);
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
 }
 
 .crm-pipe-stage:nth-child(1) { z-index: 6; }
@@ -648,7 +660,9 @@
 .crm-pipe-stage:nth-child(6) { z-index: 1; }
 
 .crm-pipe-stage:hover {
-  filter: brightness(1.12);
+  flex: 1.6;
+  filter: drop-shadow(1.5px 0 0 #ffffff) brightness(1.15);
+  z-index: 10 !important;
 }
 
 .crm-pipe-stage.active {
@@ -657,15 +671,17 @@
 
 .crm-pipe-label {
   display: none;
-  font-size: 11.5px;
+  font-size: 11px;
   font-weight: 700;
   color: #ffffff;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
   white-space: nowrap;
   letter-spacing: 0.1px;
+  padding: 0 2px;
 }
 
-.crm-pipe-stage.active .crm-pipe-label {
+.crm-pipe-stage.active .crm-pipe-label,
+.crm-pipe-stage:hover .crm-pipe-label {
   display: inline-block;
 }
 
