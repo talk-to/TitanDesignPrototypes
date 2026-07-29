@@ -2920,8 +2920,67 @@
               </div>
             </div>
 
+            <!-- Personal inbound email from someone not yet in the CRM — clicking shows their details in the CRM sidebar instead of Ella's data -->
+            <div class="email-tile" onclick="CrmApp.selectPromoLead(this)">
+              <div class="email-tile-inner">
+                <div class="tile-icons">
+                  <div class="tile-chk">
+                    <div class="chk"><img src="assets/392bf29c-08b1-44e8-b95b-b99905e722e6.svg" alt=""></div>
+                  </div>
+                  <div class="tile-dot"></div>
+                  <div class="tile-star"><img src="assets/1e1696aa-5b8d-4409-97fd-4ce5c85c5ae5.svg" alt=""></div>
+                </div>
+                <div class="tile-content">
+                  <div class="tile-top" style="display:flex; justify-content:space-between;">
+                    <div class="tile-sender bold">Priya Anand</div>
+                    <div class="tile-time">11:05 am</div>
+                  </div>
+                  <div class="tile-subject">Exploring Titan for our team at Northbridge Analytics</div>
+                  <div class="tile-preview">Hi, a colleague recommended Titan for our ops team — wondering if...</div>
+                  <div class="tile-hover-actions">
+                    <div class="tile-action-pill">
+                      <div class="icon18"><img src="assets/7c1d5199-2bce-428f-9bff-eb73b6954e12.svg" alt=""></div>
+                    </div>
+                    <div class="tile-action-pill">
+                      <div class="icon18"><img src="assets/65a9156f-d37a-414e-bef2-e5b477cb6436.svg" alt=""></div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- Already-read mass marketing email — clicking shows a sparse "Potential Promotion" card, since there isn't much real contact info to go on -->
+            <div class="email-tile" onclick="CrmApp.selectPotentialPromo(this)">
+              <div class="email-tile-inner">
+                <div class="tile-icons">
+                  <div class="tile-chk">
+                    <div class="chk"><img src="assets/392bf29c-08b1-44e8-b95b-b99905e722e6.svg" alt=""></div>
+                  </div>
+                  <div class="tile-star"><img src="assets/1e1696aa-5b8d-4409-97fd-4ce5c85c5ae5.svg" alt=""></div>
+                </div>
+                <div class="tile-content">
+                  <div class="tile-top" style="display:flex; justify-content:space-between;">
+                    <div class="tile-sender">Jordan Lee</div>
+                    <div class="tile-time">8:15 am</div>
+                  </div>
+                  <div class="tile-subject">🚀 3 Ways to 10x Your Email Outreach in 2026</div>
+                  <div class="tile-preview">Struggling to get replies from cold outreach? GrowthBoost's AI...</div>
+                  <div class="tile-hover-actions">
+                    <div class="tile-action-pill">
+                      <div class="icon18"><img src="assets/7c1d5199-2bce-428f-9bff-eb73b6954e12.svg" alt=""></div>
+                    </div>
+                    <div class="tile-action-pill">
+                      <div class="icon18"><img src="assets/65a9156f-d37a-414e-bef2-e5b477cb6436.svg" alt=""></div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
             <!-- Tile 2: selected, unread -->
-            <div class="email-tile selected">
+            <div class="email-tile selected" onclick="CrmApp.selectEllaEmail(this)">
               <div class="email-tile-inner">
                 <div class="tile-icons">
                   <div class="tile-chk">
@@ -3142,8 +3201,11 @@
           <!-- Thread -->
           <div class="thread-content">
             <div class="thread-sticky-header">
-              <div class="thread-title">RE: Q3 Proposal & Licensing Terms</div>
+              <div class="thread-title" id="threadTitleText">RE: Q3 Proposal & Licensing Terms</div>
             </div>
+
+            <!-- Collapsed history (hidden for single, non-threaded emails like the promo/lead notification) -->
+            <div id="threadHistoryBlock">
 
             <!-- Collapsed tile 1 -->
             <div class="thread-tile">
@@ -3199,17 +3261,17 @@
               <div class="stack-pill">7 older messages</div>
             </div>
 
-
+            </div><!-- /threadHistoryBlock -->
 
             <!-- Expanded tile -->
             <div class="expanded-tile">
               <div class="expanded-header">
                 <div>
-                  <div class="exp-sender">Ella Mathews</div>
-                  <div class="exp-to">To: me, Dave Miller</div>
+                  <div class="exp-sender" id="expSenderText">Ella Mathews</div>
+                  <div class="exp-to" id="expToText">To: me, Dave Miller</div>
                 </div>
                 <div class="exp-right">
-                  <div class="exp-timestamp">2:15 PM</div>
+                  <div class="exp-timestamp" id="expTimestampText">2:15 PM</div>
                   <div class="exp-actions">
                     <div class="exp-rr">
                       <div class="exp-rr-icon"><img src="assets/9c958176-ff20-49e6-9206-7659c8943371.svg" alt=""></div>
@@ -3233,7 +3295,7 @@
 
               </div>
 
-              <div class="expanded-body">
+              <div class="expanded-body" id="expandedBodyContent">
                 <p>Hi,</p>
                 <p>Thanks for sending over the updated Q3 proposal and licensing terms — I've had a chance to review
                   with Dave and the team on our end.</p>
@@ -3548,10 +3610,10 @@
           </div>
 
           <!-- Pipeline Section Wrapper Container -->
-          <div class="crm-pipeline-container" style="display:flex; flex-direction:column; gap:2px; margin-top:4px;">
+          <div class="crm-pipeline-container" style="display:flex; flex-direction:column; gap:12px; margin-top:4px;">
             <div style="display:flex; align-items:center; justify-content:space-between; padding:0 2px;">
               <span style="font-size:11px; font-weight:600; color:var(--titan-text-sub); text-transform:uppercase; letter-spacing:0.3px;">Total Value</span>
-              <div style="display:flex; align-items:center; gap:2px; cursor:pointer;">
+              <div onclick="CrmApp.drillInto('all-pipelines')" style="display:flex; align-items:center; gap:2px; cursor:pointer;" title="View all pipelines">
                 <span style="font-size:12.5px; font-weight:700; color:var(--titan-blue);">$32,000</span>
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--titan-blue)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                   <polyline points="9 18 15 12 9 6"></polyline>
@@ -3604,7 +3666,7 @@
             </div>
 
             <!-- Full-Width Clickable Open Pipeline Card -->
-            <div onclick="CrmApp.openFullView()" style="padding:12px 14px; background:#f8fafc; border-radius:8px; border:1px solid #e2e8f0; display:flex; align-items:center; justify-content:space-between; cursor:pointer; transition:all 0.15s ease;">
+            <div onclick="CrmApp.drillInto('all-pipelines')" style="padding:12px 14px; background:#f8fafc; border-radius:8px; border:1px solid #e2e8f0; display:flex; align-items:center; justify-content:space-between; cursor:pointer; transition:all 0.15s ease;">
               <div style="display:flex; flex-direction:column; gap:2px;">
                 <span style="font-size:10.5px; font-weight:600; color:var(--titan-text-sub); text-transform:uppercase; letter-spacing:0.3px;">Open Pipeline</span>
                 <span style="font-size:17px; font-weight:700; color:var(--titan-blue);">$105,000</span>
@@ -3803,6 +3865,275 @@
               </svg>
             </div>
 
+          </div>
+
+          <!-- 📄 PAGE: CONTACT NOT YET IN CRM (from a personal inbound email, visual only — not wired to real data) -->
+          <div class="crm-view-page" id="crmView-new-lead" style="display: none;">
+
+            <div class="crm-card">
+              <div style="display:flex; align-items:center; gap:10px;">
+                <div style="width:40px; height:40px; border-radius:50%; background:#f59e0b; color:#fff; font-weight:700; font-size:14px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">PA</div>
+                <div style="display:flex; flex-direction:column; gap:1px; min-width:0;">
+                  <span style="font-weight:600; font-size:14px; color:var(--titan-text-main);">Priya Anand</span>
+                  <span style="font-size:12px; color:var(--titan-text-sub);">Head of Operations · Northbridge Analytics</span>
+                </div>
+              </div>
+
+              <div class="crm-info-row">
+                <span class="crm-info-label">Email</span>
+                <span class="crm-info-value">priya.anand@northbridgeanalytics.io</span>
+              </div>
+              <div class="crm-info-row">
+                <span class="crm-info-label">Company</span>
+                <span class="crm-info-value">Northbridge Analytics</span>
+              </div>
+              <div class="crm-info-row">
+                <span class="crm-info-label">Team Size</span>
+                <span class="crm-info-value">~60 employees</span>
+              </div>
+            </div>
+
+            <div class="crm-section-title" style="margin-top: 2px;">
+              <span>Other Interactions</span>
+              <button class="crm-header-link" onclick="CrmApp.drillInto('lead-interactions')">
+                See all
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+              </button>
+            </div>
+            <div style="display:flex; flex-direction:column; gap:6px;">
+              <div style="display:flex; align-items:center; gap:8px; padding:8px 10px; border-radius:6px; background:var(--titan-grey-hover);">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--titan-text-sub)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                  <polyline points="22,6 12,13 2,6"></polyline>
+                </svg>
+                <div style="display:flex; flex-direction:column; gap:1px; min-width:0; flex:1;">
+                  <span style="font-size:12.5px; font-weight:500; color:var(--titan-text-main); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Signed up for Titan Product Newsletter</span>
+                  <span style="font-size:11px; color:var(--titan-text-sub);">3 weeks ago</span>
+                </div>
+              </div>
+              <div style="display:flex; align-items:center; gap:8px; padding:8px 10px; border-radius:6px; background:var(--titan-grey-hover);">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--titan-text-sub)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                  <polyline points="22,6 12,13 2,6"></polyline>
+                </svg>
+                <div style="display:flex; flex-direction:column; gap:1px; min-width:0; flex:1;">
+                  <span style="font-size:12.5px; font-weight:500; color:var(--titan-text-main); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Downloaded "Enterprise Onboarding Guide"</span>
+                  <span style="font-size:11px; color:var(--titan-text-sub);">10 days ago</span>
+                </div>
+              </div>
+              <div style="display:flex; align-items:center; gap:8px; padding:8px 10px; border-radius:6px; background:var(--titan-grey-hover);">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--titan-text-sub)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                  <polyline points="22,6 12,13 2,6"></polyline>
+                </svg>
+                <div style="display:flex; flex-direction:column; gap:1px; min-width:0; flex:1;">
+                  <span style="font-size:12.5px; font-weight:500; color:var(--titan-text-main); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Attended "Titan for Ops Teams" Webinar</span>
+                  <span style="font-size:11px; color:var(--titan-text-sub);">5 days ago</span>
+                </div>
+              </div>
+            </div>
+
+            <button class="crm-btn-blue" id="crmAddLeadBtn" onclick="CrmApp.addLeadToCrm(this)" style="width:100%; padding:10px; font-size:13px; font-weight:600; display:flex; align-items:center; justify-content:center; gap:6px; margin-top:2px;">
+              + Add to CRM
+            </button>
+
+          </div>
+
+          <!-- 📄 PAGE: ALL OTHER INTERACTIONS with the not-yet-in-CRM lead (visual only, static list) -->
+          <div class="crm-view-page" id="crmView-lead-interactions" style="display: none;">
+            <div style="display:flex; flex-direction:column; gap:6px;">
+              <div style="display:flex; align-items:center; gap:8px; padding:8px 10px; border-radius:6px; background:var(--titan-grey-hover);">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--titan-text-sub)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                  <polyline points="22,6 12,13 2,6"></polyline>
+                </svg>
+                <div style="display:flex; flex-direction:column; gap:1px; min-width:0; flex:1;">
+                  <span style="font-size:12.5px; font-weight:500; color:var(--titan-text-main); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Signed up for Titan Product Newsletter</span>
+                  <span style="font-size:11px; color:var(--titan-text-sub);">3 weeks ago</span>
+                </div>
+              </div>
+              <div style="display:flex; align-items:center; gap:8px; padding:8px 10px; border-radius:6px; background:var(--titan-grey-hover);">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--titan-text-sub)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                  <polyline points="22,6 12,13 2,6"></polyline>
+                </svg>
+                <div style="display:flex; flex-direction:column; gap:1px; min-width:0; flex:1;">
+                  <span style="font-size:12.5px; font-weight:500; color:var(--titan-text-main); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Downloaded "Enterprise Onboarding Guide"</span>
+                  <span style="font-size:11px; color:var(--titan-text-sub);">10 days ago</span>
+                </div>
+              </div>
+              <div style="display:flex; align-items:center; gap:8px; padding:8px 10px; border-radius:6px; background:var(--titan-grey-hover);">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--titan-text-sub)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                  <polyline points="22,6 12,13 2,6"></polyline>
+                </svg>
+                <div style="display:flex; flex-direction:column; gap:1px; min-width:0; flex:1;">
+                  <span style="font-size:12.5px; font-weight:500; color:var(--titan-text-main); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Attended "Titan for Ops Teams" Webinar</span>
+                  <span style="font-size:11px; color:var(--titan-text-sub);">5 days ago</span>
+                </div>
+              </div>
+              <div style="display:flex; align-items:center; gap:8px; padding:8px 10px; border-radius:6px; background:var(--titan-grey-hover);">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--titan-text-sub)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                  <polyline points="22,6 12,13 2,6"></polyline>
+                </svg>
+                <div style="display:flex; flex-direction:column; gap:1px; min-width:0; flex:1;">
+                  <span style="font-size:12.5px; font-weight:500; color:var(--titan-text-main); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Visited Pricing Page (titan.email/pricing)</span>
+                  <span style="font-size:11px; color:var(--titan-text-sub);">3 weeks ago</span>
+                </div>
+              </div>
+              <div style="display:flex; align-items:center; gap:8px; padding:8px 10px; border-radius:6px; background:var(--titan-grey-hover);">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--titan-text-sub)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                  <polyline points="22,6 12,13 2,6"></polyline>
+                </svg>
+                <div style="display:flex; flex-direction:column; gap:1px; min-width:0; flex:1;">
+                  <span style="font-size:12.5px; font-weight:500; color:var(--titan-text-main); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Registered with work email on titan.email</span>
+                  <span style="font-size:11px; color:var(--titan-text-sub);">1 month ago</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 📄 PAGE: POTENTIAL PROMOTION (sparse details, low-confidence match — visual only, not wired to real data) -->
+          <div class="crm-view-page" id="crmView-potential-promo" style="display: none;">
+
+            <div style="display:flex; align-items:center; gap:6px; padding:6px 10px; background:#fef9c3; border:1px solid #fde68a; border-radius:6px; width:fit-content;">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#92710a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 9v4"></path>
+                <path d="M12 17h.01"></path>
+                <path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+              </svg>
+              <span style="font-size:11.5px; font-weight:600; color:#92710a;">Potential Promotion</span>
+            </div>
+
+            <div class="crm-card">
+              <div style="display:flex; align-items:center; gap:10px;">
+                <div style="width:40px; height:40px; border-radius:50%; background:#cbd5e1; color:#475569; font-weight:700; font-size:14px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">JL</div>
+                <div style="display:flex; flex-direction:column; gap:1px; min-width:0;">
+                  <span style="font-weight:600; font-size:14px; color:var(--titan-text-main);">Jordan Lee</span>
+                  <span style="font-size:12px; color:var(--titan-text-sub);">GrowthBoost</span>
+                </div>
+              </div>
+
+              <div class="crm-info-row">
+                <span class="crm-info-label">Email</span>
+                <span class="crm-info-value">hello@growthboost.io</span>
+              </div>
+              <div class="crm-info-row">
+                <span class="crm-info-label">Role</span>
+                <span class="crm-info-value" style="color:var(--titan-text-sub); font-weight:400;">Not detected</span>
+              </div>
+              <div class="crm-info-row">
+                <span class="crm-info-label">Team Size</span>
+                <span class="crm-info-value" style="color:var(--titan-text-sub); font-weight:400;">Not detected</span>
+              </div>
+            </div>
+
+            <div class="crm-section-title" style="margin-top: 2px;">
+              <span>Other Interactions</span>
+              <button class="crm-header-link" onclick="CrmApp.drillInto('promo-interactions')">
+                See all
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+              </button>
+            </div>
+            <div style="display:flex; flex-direction:column; gap:6px;">
+              <div style="display:flex; align-items:center; gap:8px; padding:8px 10px; border-radius:6px; background:var(--titan-grey-hover);">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--titan-text-sub)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                  <polyline points="22,6 12,13 2,6"></polyline>
+                </svg>
+                <div style="display:flex; flex-direction:column; gap:1px; min-width:0; flex:1;">
+                  <span style="font-size:12.5px; font-weight:500; color:var(--titan-text-main); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">5 Cold Email Templates That Actually Work</span>
+                  <span style="font-size:11px; color:var(--titan-text-sub);">2 weeks ago</span>
+                </div>
+              </div>
+              <div style="display:flex; align-items:center; gap:8px; padding:8px 10px; border-radius:6px; background:var(--titan-grey-hover);">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--titan-text-sub)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                  <polyline points="22,6 12,13 2,6"></polyline>
+                </svg>
+                <div style="display:flex; flex-direction:column; gap:1px; min-width:0; flex:1;">
+                  <span style="font-size:12.5px; font-weight:500; color:var(--titan-text-main); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Webinar: Scaling Outbound in 2026</span>
+                  <span style="font-size:11px; color:var(--titan-text-sub);">1 month ago</span>
+                </div>
+              </div>
+              <div style="display:flex; align-items:center; gap:8px; padding:8px 10px; border-radius:6px; background:var(--titan-grey-hover);">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--titan-text-sub)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                  <polyline points="22,6 12,13 2,6"></polyline>
+                </svg>
+                <div style="display:flex; flex-direction:column; gap:1px; min-width:0; flex:1;">
+                  <span style="font-size:12.5px; font-weight:500; color:var(--titan-text-main); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">GrowthBoost Product Update — New AI Features</span>
+                  <span style="font-size:11px; color:var(--titan-text-sub);">2 months ago</span>
+                </div>
+              </div>
+            </div>
+
+            <button class="crm-btn-blue" id="crmAddPromoBtn" onclick="CrmApp.addLeadToCrm(this)" style="width:100%; padding:10px; font-size:13px; font-weight:600; display:flex; align-items:center; justify-content:center; gap:6px; margin-top:2px;">
+              + Add to CRM
+            </button>
+
+          </div>
+
+          <!-- 📄 PAGE: ALL EARLIER INTERACTIONS with the potential-promotion contact (visual only, static list) -->
+          <div class="crm-view-page" id="crmView-promo-interactions" style="display: none;">
+            <div style="display:flex; flex-direction:column; gap:6px;">
+              <div style="display:flex; align-items:center; gap:8px; padding:8px 10px; border-radius:6px; background:var(--titan-grey-hover);">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--titan-text-sub)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                  <polyline points="22,6 12,13 2,6"></polyline>
+                </svg>
+                <div style="display:flex; flex-direction:column; gap:1px; min-width:0; flex:1;">
+                  <span style="font-size:12.5px; font-weight:500; color:var(--titan-text-main); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">5 Cold Email Templates That Actually Work</span>
+                  <span style="font-size:11px; color:var(--titan-text-sub);">2 weeks ago</span>
+                </div>
+              </div>
+              <div style="display:flex; align-items:center; gap:8px; padding:8px 10px; border-radius:6px; background:var(--titan-grey-hover);">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--titan-text-sub)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                  <polyline points="22,6 12,13 2,6"></polyline>
+                </svg>
+                <div style="display:flex; flex-direction:column; gap:1px; min-width:0; flex:1;">
+                  <span style="font-size:12.5px; font-weight:500; color:var(--titan-text-main); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Webinar: Scaling Outbound in 2026</span>
+                  <span style="font-size:11px; color:var(--titan-text-sub);">1 month ago</span>
+                </div>
+              </div>
+              <div style="display:flex; align-items:center; gap:8px; padding:8px 10px; border-radius:6px; background:var(--titan-grey-hover);">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--titan-text-sub)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                  <polyline points="22,6 12,13 2,6"></polyline>
+                </svg>
+                <div style="display:flex; flex-direction:column; gap:1px; min-width:0; flex:1;">
+                  <span style="font-size:12.5px; font-weight:500; color:var(--titan-text-main); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">GrowthBoost Product Update — New AI Features</span>
+                  <span style="font-size:11px; color:var(--titan-text-sub);">2 months ago</span>
+                </div>
+              </div>
+              <div style="display:flex; align-items:center; gap:8px; padding:8px 10px; border-radius:6px; background:var(--titan-grey-hover);">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--titan-text-sub)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                  <polyline points="22,6 12,13 2,6"></polyline>
+                </svg>
+                <div style="display:flex; flex-direction:column; gap:1px; min-width:0; flex:1;">
+                  <span style="font-size:12.5px; font-weight:500; color:var(--titan-text-main); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Case Study: How TeamCo 3x'd Their Pipeline</span>
+                  <span style="font-size:11px; color:var(--titan-text-sub);">3 months ago</span>
+                </div>
+              </div>
+              <div style="display:flex; align-items:center; gap:8px; padding:8px 10px; border-radius:6px; background:var(--titan-grey-hover);">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--titan-text-sub)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                  <polyline points="22,6 12,13 2,6"></polyline>
+                </svg>
+                <div style="display:flex; flex-direction:column; gap:1px; min-width:0; flex:1;">
+                  <span style="font-size:12.5px; font-weight:500; color:var(--titan-text-main); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Welcome to GrowthBoost — Here's What's Next</span>
+                  <span style="font-size:11px; color:var(--titan-text-sub);">4 months ago</span>
+                </div>
+              </div>
+            </div>
           </div>
 
           <!-- 📄 PAGE 2: ALL NOTES (Drilled View) -->
@@ -4075,7 +4406,7 @@
           <div class="crm-view-page" id="crmView-upcoming" style="display: none;">
             
             <div class="crm-section-title">
-              <span>Upcoming Tasks & Meetings for Ella</span>
+              <span>Tasks and Meetings</span>
               <button class="crm-btn-blue" style="padding:4px 10px; font-size:11px;">+ Schedule</button>
             </div>
 
@@ -4253,6 +4584,142 @@
                 </div>
                 <span class="crm-item-time">01 AUG</span>
               </div>
+            </div>
+
+          </div>
+
+          <!-- 📄 PAGE 8: ALL ACTIVE PIPELINES (Dedicated Drilled View) -->
+          <div class="crm-view-page" id="crmView-all-pipelines" style="display: none;">
+            
+            <div style="padding:12px 14px; background:#f8fafc; border-radius:8px; border:1px solid #e2e8f0; display:flex; align-items:center; justify-content:space-between;">
+              <div style="display:flex; flex-direction:column; gap:2px;">
+                <span style="font-size:10.5px; font-weight:600; color:var(--titan-text-sub); text-transform:uppercase; letter-spacing:0.3px;">Total Open Pipeline</span>
+                <span style="font-size:18px; font-weight:700; color:var(--titan-blue);">$105,000</span>
+              </div>
+              <span style="font-size:11.5px; font-weight:600; background:#eff6ff; color:var(--titan-blue); padding:3px 10px; border-radius:12px;">5 Active Deals</span>
+            </div>
+
+            <div class="crm-section-title" style="margin-top: 4px;">
+              <span>Active Deal Pipelines</span>
+            </div>
+
+            <div style="display:flex; flex-direction:column; gap:8px;">
+              
+              <!-- Pipeline Item 1: Ella Mathews (Avon Technologies) -->
+              <div onclick="CrmApp.selectContact('ella')" style="padding:12px; border-radius:8px; background:#ffffff; border:1px solid #e2e8f0; cursor:pointer; display:flex; flex-direction:column; gap:10px; transition:all 0.15s ease;">
+                <div style="display:flex; align-items:center; justify-content:space-between;">
+                  <div style="display:flex; align-items:center; gap:10px; min-width:0;">
+                    <div style="width:34px; height:34px; border-radius:50%; background:var(--titan-blue); color:#ffffff; font-weight:700; font-size:12px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">EM</div>
+                    <div style="display:flex; flex-direction:column; gap:2px; min-width:0;">
+                      <span style="font-weight:600; font-size:13.5px; color:var(--titan-text-main);">Ella Mathews</span>
+                      <span style="font-size:11.5px; color:var(--titan-text-sub);">Avon Technologies • Enterprise License</span>
+                    </div>
+                  </div>
+                  <span style="font-size:13.5px; font-weight:700; color:var(--titan-blue);">$32,000</span>
+                </div>
+                <!-- Pipeline Chevron Stepper -->
+                <div class="crm-pipeline-stages" style="height:24px; margin:0;">
+                  <div class="crm-pipe-stage" style="background:#1e3a8a;" title="Lead"><span class="crm-pipe-label">Lead</span></div>
+                  <div class="crm-pipe-stage active" style="background:#1d4ed8;" title="Contacted"><span class="crm-pipe-label">Contacted</span></div>
+                  <div class="crm-pipe-stage" style="background:#2563eb;" title="Sent Sample"><span class="crm-pipe-label">Sent Sample</span></div>
+                  <div class="crm-pipe-stage" style="background:#3b82f6;" title="Demo"><span class="crm-pipe-label">Demo</span></div>
+                  <div class="crm-pipe-stage" style="background:#60a5fa;" title="Negotiation"><span class="crm-pipe-label">Negotiation</span></div>
+                  <div class="crm-pipe-stage" style="background:#93c5fd;" title="Won"><span class="crm-pipe-label">Won</span></div>
+                </div>
+              </div>
+
+              <!-- Pipeline Item 2: Dave Miller (Sentry Cloud) -->
+              <div onclick="CrmApp.selectContact('dave')" style="padding:12px; border-radius:8px; background:#ffffff; border:1px solid #e2e8f0; cursor:pointer; display:flex; flex-direction:column; gap:10px; transition:all 0.15s ease;">
+                <div style="display:flex; align-items:center; justify-content:space-between;">
+                  <div style="display:flex; align-items:center; gap:10px; min-width:0;">
+                    <div style="width:34px; height:34px; border-radius:50%; background:#64748b; color:#ffffff; font-weight:700; font-size:12px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">DM</div>
+                    <div style="display:flex; flex-direction:column; gap:2px; min-width:0;">
+                      <span style="font-weight:600; font-size:13.5px; color:var(--titan-text-main);">Dave Miller</span>
+                      <span style="font-size:11.5px; color:var(--titan-text-sub);">Sentry Cloud • SOC2 Add-on</span>
+                    </div>
+                  </div>
+                  <span style="font-size:13.5px; font-weight:700; color:var(--titan-blue);">$24,000</span>
+                </div>
+                <!-- Pipeline Chevron Stepper -->
+                <div class="crm-pipeline-stages" style="height:24px; margin:0;">
+                  <div class="crm-pipe-stage" style="background:#1e3a8a;" title="Lead"><span class="crm-pipe-label">Lead</span></div>
+                  <div class="crm-pipe-stage" style="background:#1d4ed8;" title="Contacted"><span class="crm-pipe-label">Contacted</span></div>
+                  <div class="crm-pipe-stage" style="background:#2563eb;" title="Sent Sample"><span class="crm-pipe-label">Sent Sample</span></div>
+                  <div class="crm-pipe-stage" style="background:#3b82f6;" title="Demo"><span class="crm-pipe-label">Demo</span></div>
+                  <div class="crm-pipe-stage active" style="background:#60a5fa;" title="Negotiation"><span class="crm-pipe-label">Negotiation</span></div>
+                  <div class="crm-pipe-stage" style="background:#93c5fd;" title="Won"><span class="crm-pipe-label">Won</span></div>
+                </div>
+              </div>
+
+              <!-- Pipeline Item 3: Priya Sharma (Aura Systems) -->
+              <div onclick="CrmApp.selectContact('priya')" style="padding:12px; border-radius:8px; background:#ffffff; border:1px solid #e2e8f0; cursor:pointer; display:flex; flex-direction:column; gap:10px; transition:all 0.15s ease;">
+                <div style="display:flex; align-items:center; justify-content:space-between;">
+                  <div style="display:flex; align-items:center; gap:10px; min-width:0;">
+                    <div style="width:34px; height:34px; border-radius:50%; background:#8b5cf6; color:#ffffff; font-weight:700; font-size:12px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">PS</div>
+                    <div style="display:flex; flex-direction:column; gap:2px; min-width:0;">
+                      <span style="font-weight:600; font-size:13.5px; color:var(--titan-text-main);">Priya Sharma</span>
+                      <span style="font-size:11.5px; color:var(--titan-text-sub);">Aura Systems • Pro Upgrade (120 seats)</span>
+                    </div>
+                  </div>
+                  <span style="font-size:13.5px; font-weight:700; color:var(--titan-blue);">$18,500</span>
+                </div>
+                <!-- Pipeline Chevron Stepper -->
+                <div class="crm-pipeline-stages" style="height:24px; margin:0;">
+                  <div class="crm-pipe-stage" style="background:#1e3a8a;" title="Lead"><span class="crm-pipe-label">Lead</span></div>
+                  <div class="crm-pipe-stage" style="background:#1d4ed8;" title="Contacted"><span class="crm-pipe-label">Contacted</span></div>
+                  <div class="crm-pipe-stage" style="background:#2563eb;" title="Sent Sample"><span class="crm-pipe-label">Sent Sample</span></div>
+                  <div class="crm-pipe-stage active" style="background:#3b82f6;" title="Demo"><span class="crm-pipe-label">Demo</span></div>
+                  <div class="crm-pipe-stage" style="background:#60a5fa;" title="Negotiation"><span class="crm-pipe-label">Negotiation</span></div>
+                  <div class="crm-pipe-stage" style="background:#93c5fd;" title="Won"><span class="crm-pipe-label">Won</span></div>
+                </div>
+              </div>
+
+              <!-- Pipeline Item 4: Alex Rivera (Vanguard Interactive) -->
+              <div onclick="CrmApp.selectContact('alex')" style="padding:12px; border-radius:8px; background:#ffffff; border:1px solid #e2e8f0; cursor:pointer; display:flex; flex-direction:column; gap:10px; transition:all 0.15s ease;">
+                <div style="display:flex; align-items:center; justify-content:space-between;">
+                  <div style="display:flex; align-items:center; gap:10px; min-width:0;">
+                    <div style="width:34px; height:34px; border-radius:50%; background:#10b981; color:#ffffff; font-weight:700; font-size:12px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">AR</div>
+                    <div style="display:flex; flex-direction:column; gap:2px; min-width:0;">
+                      <span style="font-weight:600; font-size:13.5px; color:var(--titan-text-main);">Alex Rivera</span>
+                      <span style="font-size:11.5px; color:var(--titan-text-sub);">Vanguard Interactive • Custom SLA</span>
+                    </div>
+                  </div>
+                  <span style="font-size:13.5px; font-weight:700; color:var(--titan-blue);">$15,000</span>
+                </div>
+                <!-- Pipeline Chevron Stepper -->
+                <div class="crm-pipeline-stages" style="height:24px; margin:0;">
+                  <div class="crm-pipe-stage active" style="background:#1e3a8a;" title="Lead"><span class="crm-pipe-label">Lead</span></div>
+                  <div class="crm-pipe-stage" style="background:#1d4ed8;" title="Contacted"><span class="crm-pipe-label">Contacted</span></div>
+                  <div class="crm-pipe-stage" style="background:#2563eb;" title="Sent Sample"><span class="crm-pipe-label">Sent Sample</span></div>
+                  <div class="crm-pipe-stage" style="background:#3b82f6;" title="Demo"><span class="crm-pipe-label">Demo</span></div>
+                  <div class="crm-pipe-stage" style="background:#60a5fa;" title="Negotiation"><span class="crm-pipe-label">Negotiation</span></div>
+                  <div class="crm-pipe-stage" style="background:#93c5fd;" title="Won"><span class="crm-pipe-label">Won</span></div>
+                </div>
+              </div>
+
+              <!-- Pipeline Item 5: Marcus Vance (Apex Capital) -->
+              <div onclick="CrmApp.selectContact('marcus')" style="padding:12px; border-radius:8px; background:#ffffff; border:1px solid #e2e8f0; cursor:pointer; display:flex; flex-direction:column; gap:10px; transition:all 0.15s ease;">
+                <div style="display:flex; align-items:center; justify-content:space-between;">
+                  <div style="display:flex; align-items:center; gap:10px; min-width:0;">
+                    <div style="width:34px; height:34px; border-radius:50%; background:#f59e0b; color:#ffffff; font-weight:700; font-size:12px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">MV</div>
+                    <div style="display:flex; flex-direction:column; gap:2px; min-width:0;">
+                      <span style="font-weight:600; font-size:13.5px; color:var(--titan-text-main);">Marcus Vance</span>
+                      <span style="font-size:11.5px; color:var(--titan-text-sub);">Apex Capital • Executive Suite</span>
+                    </div>
+                  </div>
+                  <span style="font-size:13.5px; font-weight:700; color:var(--titan-blue);">$15,500</span>
+                </div>
+                <!-- Pipeline Chevron Stepper -->
+                <div class="crm-pipeline-stages" style="height:24px; margin:0;">
+                  <div class="crm-pipe-stage" style="background:#1e3a8a;" title="Lead"><span class="crm-pipe-label">Lead</span></div>
+                  <div class="crm-pipe-stage" style="background:#1d4ed8;" title="Contacted"><span class="crm-pipe-label">Contacted</span></div>
+                  <div class="crm-pipe-stage active" style="background:#2563eb;" title="Sent Sample"><span class="crm-pipe-label">Sent Sample</span></div>
+                  <div class="crm-pipe-stage" style="background:#3b82f6;" title="Demo"><span class="crm-pipe-label">Demo</span></div>
+                  <div class="crm-pipe-stage" style="background:#60a5fa;" title="Negotiation"><span class="crm-pipe-label">Negotiation</span></div>
+                  <div class="crm-pipe-stage" style="background:#93c5fd;" title="Won"><span class="crm-pipe-label">Won</span></div>
+                </div>
+              </div>
+
             </div>
 
           </div>
