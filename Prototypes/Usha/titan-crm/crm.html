@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Inbox (367) - Mail</title>
+  <title>Neo partnerships - CRM</title>
   <style>
     :root {
       --click-scale: 0.97;
@@ -248,28 +248,129 @@
       flex-shrink: 0;
     }
 
+    /* Account switcher — rounded pill trigger + dropdown menu */
     .account-header {
       display: flex;
       align-items: center;
-      padding: 10px 8px 10px 0;
+      gap: 8px;
+      margin: 4px 12px 2px;
+      padding: 7px 8px 7px 10px;
+      background: #2a2a2a;
+      border-radius: 8px;
       cursor: pointer;
       flex-shrink: 0;
       position: relative;
+      transition: background 0.15s;
     }
 
+    .account-header:hover { background: #333333; }
+    .account-header.open { background: #333333; }
+
     .account-chevron {
-      width: 24px;
-      height: 24px;
+      width: 18px;
+      height: 18px;
       display: flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
+      transition: transform 0.18s ease;
     }
 
-    .account-chevron img {
-      width: 10px;
-      height: 6px;
-      object-fit: contain;
+    .account-header.open .account-chevron { transform: rotate(180deg); }
+
+    .account-chevron img { width: 10px; height: 6px; object-fit: contain; }
+
+    .account-menu {
+      position: absolute;
+      top: calc(100% + 6px);
+      left: 0;
+      right: 0;
+      background: #2a2a2a;
+      border: 1px solid #3d3d3d;
+      border-radius: 10px;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.55);
+      padding: 6px;
+      display: none;
+      z-index: 200;
+    }
+    .account-menu.open { display: block; }
+
+    .account-menu-label {
+      font-size: 10.5px;
+      font-weight: 600;
+      color: #7d7d7d;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 6px 8px 4px;
+    }
+
+    .account-menu-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 7px 8px;
+      border-radius: 7px;
+      cursor: pointer;
+    }
+    .account-menu-item:hover { background: #3a3a3a; }
+
+    .account-menu-avatar {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .account-menu-text { flex: 1; min-width: 0; }
+    .account-menu-email {
+      font-size: 13px;
+      font-weight: 500;
+      color: #fff;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .account-menu-sub { font-size: 11px; color: #8a8a8a; margin-top: 1px; }
+
+    .account-menu-check {
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+      color: #2170f4;
+      display: none;
+    }
+    .account-menu-item.active .account-menu-check { display: block; }
+
+    .account-menu-sep { height: 1px; background: #3d3d3d; margin: 5px 4px; }
+
+    .account-menu-add {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px;
+      border-radius: 7px;
+      cursor: pointer;
+      color: #d0d0d0;
+      font-size: 13px;
+      font-weight: 500;
+    }
+    .account-menu-add:hover { background: #3a3a3a; }
+    .account-menu-add-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 1px dashed #555;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: #9a9a9a;
     }
 
     .account-email-id {
@@ -2603,7 +2704,7 @@
       cursor: pointer;
       width: fit-content;
     }
-    .pipeline-chip .pchip-icon { width: 13px; height: 13px; flex-shrink: 0; }
+    .pipeline-chip .pchip-icon { width: 11px; height: 11px; flex-shrink: 0; }
     .pipeline-chip.pc-added .pchip-label { color: #888; font-weight: 500; margin-right: 1px; }
     .pipeline-chip.pc-manual {
       color: #9aa1a9; border: 1px dashed #d6d9dd; border-radius: 4px; padding: 2px 8px;
@@ -2614,53 +2715,6 @@
     }
     .pipeline-chip.pc-suggested:hover { background: #eaf1ff; }
     .pc-ai-spark { width: 10px; height: 10px; flex-shrink: 0; }
-
-    /* ── CRM: Pipeline label pill (regular-label style: color card + icon + name) ── */
-    .pipeline-label {
-      display: inline-flex; align-items: center; gap: 5px;
-      margin-top: 6px; padding: 2px 8px; border-radius: 4px;
-      background: #e7f0fe; color: #1f6fe5;
-      font-size: 11.5px; font-weight: 600; line-height: 1.55;
-      cursor: pointer; width: fit-content; white-space: nowrap;
-    }
-    .pipeline-label:hover { background: #dbe8fd; }
-    .pipeline-label .pl-icon { width: 12px; height: 12px; flex-shrink: 0; }
-
-    /* Preview + inline label share one line; preview truncates, label never wraps */
-    .tile-preview-row { display: flex; align-items: center; gap: 8px; min-width: 0; }
-    .tile-preview-row .tile-preview { flex: 1 1 auto; min-width: 0; }
-    .tile-preview-row .pipeline-label { margin-top: 0; flex-shrink: 0; }
-    /* In wide (list) view the wrapper takes the flex role the preview used to have */
-    .middle-panel.wide-view .tile-preview-row { flex: 1; min-width: 0; }
-
-    /* ── CRM: Pipeline dropdown (anchored, label-menu style) ── */
-    .pipeline-dropdown {
-      position: fixed; z-index: 600; display: none;
-      width: 240px; background: #fff; border: 1px solid #e6e6e6;
-      border-radius: 10px; box-shadow: 0 8px 28px rgba(0,0,0,0.16);
-      padding: 8px 0; font-size: 13px;
-    }
-    .pipeline-dropdown.open { display: block; }
-    .pl-dd-title { padding: 6px 14px 4px; font-size: 11px; font-weight: 600; letter-spacing: .02em; color: #8a9099; }
-    .pl-dd-option { display: flex; align-items: center; gap: 10px; padding: 7px 14px; cursor: pointer; }
-    .pl-dd-option:hover { background: #f4f7fb; }
-    .pl-dd-ic { width: 15px; height: 15px; flex-shrink: 0; display: flex; align-items: center; }
-    .pl-dd-name { flex: 1; color: #2b2f36; }
-    /* Radio (single-select): an email belongs to at most one pipeline */
-    .pl-dd-radio {
-      width: 16px; height: 16px; border: 1.5px solid #cdd2d8; border-radius: 50%; flex-shrink: 0;
-      display: flex; align-items: center; justify-content: center;
-    }
-    .pl-dd-option.checked .pl-dd-radio { border-color: #2170f4; }
-    .pl-dd-option.checked .pl-dd-radio::after {
-      content: ''; width: 8px; height: 8px; border-radius: 50%; background: #2170f4;
-    }
-    .pl-dd-sep { height: 1px; background: #eee; margin: 6px 0; }
-    .pl-dd-action { display: flex; align-items: center; gap: 10px; padding: 8px 14px; cursor: pointer; color: #2b2f36; }
-    .pl-dd-action:hover { background: #f4f7fb; }
-    .pl-dd-action .pl-dd-ic { color: #667085; }
-    .pl-dd-ext { color: #9aa1a9; display: flex; align-items: center; flex-shrink: 0; }
-    .pl-dd-ext svg { width: 13px; height: 13px; }
 
     .tile-pipeline-badge-mini { margin-top: 3px; }
 
@@ -2704,6 +2758,130 @@
       color: #15803d; background: #f0fdf4; border-radius: 6px; display: none;
     }
     .pipeline-picker-confirm.show { display: block; }
+
+    /* ── CRM: New Pipeline flow (§4.1–4.3) ── */
+    .np-overlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.28);
+      display: none; align-items: center; justify-content: center; z-index: 600;
+    }
+    .np-overlay.open { display: flex; }
+    .np-modal {
+      background: #fff; border-radius: 12px; width: 640px; max-width: calc(100vw - 40px);
+      max-height: 88vh; display: flex; flex-direction: column; overflow: hidden;
+      box-shadow: 0 16px 50px rgba(0,0,0,0.24); transition: width 0.18s ease;
+    }
+    .np-modal.np-step2-open { width: 900px; }
+    .np-header {
+      padding: 18px 24px; border-bottom: 1px solid #eee;
+      display: flex; align-items: center; gap: 8px; flex-shrink: 0;
+    }
+    .np-header .np-title { font-size: 15px; font-weight: 700; color: #222; flex: 1; }
+    .np-close { cursor: pointer; color: #999; font-size: 20px; line-height: 1; padding: 0 2px; }
+    .np-back {
+      width: 26px; height: 26px; border-radius: 6px; display: flex; align-items: center;
+      justify-content: center; cursor: pointer; color: #555; flex-shrink: 0;
+    }
+    .np-back:hover { background: #f0f0f0; }
+    .np-body { padding: 22px 24px 24px; overflow-y: auto; }
+    .np-subhead { font-size: 12.5px; color: #888; margin: 0 2px 12px; }
+    .np-step { display: none; flex-direction: column; min-height: 0; }
+    .np-step.active { display: flex; }
+
+    /* Step 1 — radio type list (clean: no boxes, lines, or arrows) */
+    .np-radio {
+      display: flex; align-items: center; gap: 14px; padding: 13px 8px;
+      cursor: pointer; border-radius: 8px;
+    }
+    .np-radio:hover { background: #f7f9fc; }
+    .np-radio-dot {
+      width: 20px; height: 20px; border-radius: 50%; border: 2px solid #c5c9d0;
+      flex-shrink: 0; position: relative; transition: border-color 0.12s;
+    }
+    .np-radio:hover .np-radio-dot { border-color: #2170f4; }
+    .np-radio.selected .np-radio-dot { border-color: #2170f4; }
+    .np-radio.selected .np-radio-dot::after {
+      content: ''; position: absolute; inset: 3px; border-radius: 50%; background: #2170f4;
+    }
+    .np-radio-text .t { display: block; font-size: 15px; font-weight: 600; color: #222; }
+    .np-radio-text .s { display: block; font-size: 12.5px; color: #8a8f98; margin-top: 1px; }
+
+    /* Step 2 — name + stage editor */
+    .np-label {
+      font-size: 11px; font-weight: 700; color: #6b7280; text-transform: uppercase;
+      letter-spacing: 0.04em; margin: 0 2px 6px;
+    }
+    .np-name-input {
+      width: 100%; padding: 10px 12px; border: 1px solid #d9dce1; border-radius: 7px;
+      font-size: 14px; color: #222; outline: none; font-family: inherit;
+    }
+    .np-name-input:focus { border-color: #2170f4; box-shadow: 0 0 0 3px rgba(33,112,244,0.12); }
+    .np-help { font-size: 11.5px; color: #9a9fa7; margin: 0 2px 10px; }
+
+    /* Stages as interlocking chevrons — same visual language as the board (§3.2) */
+    .np-chev-chain {
+      display: flex; align-items: stretch; gap: 6px; margin-top: 6px;
+      overflow-x: auto; padding: 6px 0 30px;
+    }
+    .np-chev {
+      position: relative; flex: 1 1 0; min-width: 84px; height: 60px;
+      display: flex; align-items: center; justify-content: center;
+      clip-path: polygon(0 0, 92% 0, 100% 50%, 92% 100%, 0 100%, 8% 50%);
+      cursor: default; user-select: none;
+    }
+    .np-chev:first-child { clip-path: polygon(0 0, 92% 0, 100% 50%, 92% 100%, 0 100%); }
+    .np-chev.dragging { opacity: 0.4; }
+    .np-chev.drop-target { filter: brightness(0.93); }
+    .np-chev-name {
+      font-size: 12.5px; font-weight: 700; color: #0d2b52; text-align: center;
+      padding: 0 15px 0 19px; max-width: 100%; white-space: nowrap; overflow: hidden;
+      text-overflow: ellipsis; cursor: text;
+    }
+    .np-chev-input {
+      width: 74%; border: none; outline: none; background: rgba(255,255,255,0.9);
+      border-radius: 4px; text-align: center; font-size: 12.5px; font-weight: 700;
+      color: #0d2b52; font-family: inherit; padding: 4px 2px;
+    }
+    .np-chev-remove {
+      position: absolute; top: 4px; right: 15px; width: 16px; height: 16px; border-radius: 50%;
+      display: none; align-items: center; justify-content: center; color: #0d2b52;
+      background: rgba(255,255,255,0.55); cursor: pointer; line-height: 1;
+    }
+    .np-chev:hover .np-chev-remove { display: flex; }
+    .np-chev-remove:hover { background: #fff; color: #dc2626; }
+    .np-chev-add {
+      flex-shrink: 0; min-width: 92px; height: 60px; display: flex; align-items: center;
+      justify-content: center; gap: 5px; border: 1.5px dashed #c5cbd4; border-radius: 7px;
+      color: #2170f4; font-size: 12.5px; font-weight: 600; cursor: pointer; white-space: nowrap;
+    }
+    .np-chev-add:hover { border-color: #2170f4; background: #f5f9ff; }
+    .np-footer {
+      padding: 13px 18px; border-top: 1px solid #eee; display: flex;
+      align-items: center; justify-content: flex-end; gap: 8px; flex-shrink: 0;
+    }
+    .np-btn-secondary {
+      font-size: 13px; font-weight: 600; color: #555; padding: 9px 14px;
+      border-radius: 7px; cursor: pointer;
+    }
+    .np-btn-secondary:hover { background: #f2f2f4; }
+    .np-btn-primary {
+      font-size: 13px; font-weight: 600; color: #fff; background: #2170f4;
+      padding: 9px 18px; border-radius: 7px; cursor: pointer;
+    }
+    .np-btn-primary:hover { background: #1b62db; }
+
+    /* Empty column state (new pipelines have no linked emails yet) */
+    .kanban-empty-hint {
+      font-size: 12px; color: #b6bbc2; text-align: center; padding: 22px 8px; line-height: 1.5;
+    }
+
+    /* Toast confirmation */
+    .np-toast {
+      position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(12px);
+      background: #1c1c1c; color: #fff; font-size: 13px; font-weight: 500;
+      padding: 11px 18px; border-radius: 8px; box-shadow: 0 6px 24px rgba(0,0,0,0.28);
+      opacity: 0; pointer-events: none; transition: opacity 0.2s, transform 0.2s; z-index: 700;
+    }
+    .np-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
     /* ── CRM: Right panel (inline column, like Streak in Gmail — not an overlay) ── */
     .crm-panel {
@@ -2771,84 +2949,102 @@
     .crm-field-label { color: #888; }
     .crm-field-value { color: #222; font-weight: 500; }
 
-    /* ── CRM panel: record title in header (name, not "CRM") + open-in-app icon ── */
-    .crm-panel-header { align-items: center; }
-    .crm-record-title {
-      font-size: 15.5px; font-weight: 700; color: #1a1a1a; line-height: 1.3;
-      display: inline-flex; align-items: center; gap: 7px; padding-right: 8px; min-width: 0;
+    /* ── CRM: Kanban board ── */
+    .kanban-board { display: flex; gap: 8px; align-items: stretch; }
+    .kanban-col {
+      width: 240px; flex-shrink: 0; background: transparent;
+      display: flex; flex-direction: column; max-height: 100%;
     }
-    .crm-record-title #crm-record-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-    .crm-record-ext { color: #9aa1a9; cursor: pointer; display: inline-flex; flex-shrink: 0; }
-    .crm-record-ext:hover { color: #2170f4; }
-    .crm-record-ext svg { width: 14px; height: 14px; }
-
-    /* ── CRM panel: pipeline · stage label with change-stage dropdown ── */
-    .crm-ps-wrap { position: relative; }
-    .crm-pipeline-stage {
-      display: inline-flex; align-items: center; gap: 6px; cursor: pointer;
-      padding: 4px 10px; border-radius: 5px; font-size: 12.5px; font-weight: 600;
-      background: #e7f0fe; color: #1f6fe5; width: fit-content; max-width: 100%;
+    .kanban-col:last-child { margin-right: 24px; }
+    .kanban-col-header {
+      border-radius: 0;
+      /* left edge notched inward (point cuts INTO the box, same rightward angle as
+         the right edge's outward point) + right edge points OUT to the right.
+         Shallow angle: only 3% of width tapers. */
+      clip-path: polygon(0 0, 97% 0, 100% 50%, 97% 100%, 0 100%, 3% 50%);
+      padding: 14px 20px 12px 16px;
+      width: calc(100% + 7px);
+      flex-shrink: 0; margin-bottom: 4px; position: relative; z-index: 1;
     }
-    .crm-pipeline-stage:hover { filter: brightness(0.97); }
-    .crm-pipeline-stage .pl-icon { width: 12px; height: 12px; flex-shrink: 0; }
-    .crm-pipeline-stage #crm-ps-text { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-    .crm-pipeline-stage .caret { font-size: 9px; opacity: .75; margin-left: 1px; flex-shrink: 0; }
-    .crm-stage-menu {
-      position: absolute; top: calc(100% + 4px); left: 0; z-index: 40; display: none;
-      background: #fff; border: 1px solid #e6e6e6; border-radius: 8px;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.14); padding: 6px 0; min-width: 190px;
+    .kanban-col:first-child .kanban-col-header {
+      /* flat left edge, only the first stage has no incoming point to notch against.
+         Top-left stays rounded; bottom-left is square so it flows into the lane below. */
+      clip-path: polygon(0 0, 97% 0, 100% 50%, 97% 100%, 0 100%);
+      border-radius: 8px 0 0 0;
+      padding-left: 14px;
     }
-    .crm-stage-menu.open { display: block; }
-    .crm-stage-item { display: flex; align-items: center; gap: 9px; padding: 7px 14px; font-size: 13px; color: #2b2f36; cursor: pointer; }
-    .crm-stage-item:hover { background: #f4f7fb; }
-    .crm-stage-item .dot { width: 8px; height: 8px; border-radius: 50%; background: #cbd5e1; flex-shrink: 0; }
-    .crm-stage-item.active { font-weight: 600; }
-    .crm-stage-item.active .dot { background: #2170f4; }
+    .kanban-col:last-child .kanban-col-header {
+      /* flat right edge, only the last stage has no outgoing point; keeps left notch.
+         Top-right stays rounded; bottom-right is square so it flows into the lane below. */
+      width: 100%;
+      clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 3% 50%);
+      border-radius: 0 8px 0 0;
+      padding-right: 14px;
+    }
+    .kanban-col-title { font-size: 14px; font-weight: 700; color: #0d2b52; margin-bottom: 6px; }
+    .kanban-col-meta { display: flex; align-items: center; gap: 6px; font-size: 12.5px; color: #3f6ea5; }
+    .kanban-col-body {
+      flex: 1; overflow-y: auto; padding: 6px 6px 10px; min-height: 520px;
+      background: #f4f6f8; border-radius: 0 0 8px 8px;
+      width: 100%;
+      box-sizing: border-box;
+    }
 
-    /* ── CRM panel: company (bigger) + contact email ── */
-    .crm-contact-email { font-size: 12.5px; color: #888; margin-top: 2px; }
-    .crm-company { font-size: 15px; font-weight: 600; color: #1a1a1a; margin-top: 14px; }
-
-    /* ── CRM panel: recent-activity type icons ── */
-    .crm-act-ic {
-      width: 26px; height: 26px; border-radius: 50%; flex-shrink: 0;
+    .kanban-card {
+      background: #fff; border: 1px solid #ececec; border-radius: 4px; padding: 10px;
+      margin-bottom: 6px; cursor: grab; box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+      position: relative;
+    }
+    .kanban-card:active { cursor: grabbing; }
+    .kanban-card-top-row { display: flex; align-items: flex-start; justify-content: space-between; }
+    .kanban-status-icon { width: 18px; height: 18px; flex-shrink: 0; display: block; }
+    .kanban-action-icon {
+      margin-left: 6px; flex-shrink: 0; cursor: pointer; border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
     }
-    .crm-act-ic svg { width: 14px; height: 14px; }
-    /* Neutral (non-colored) activity icons across Upcoming + Recent */
-    .crm-act-ic,
-    .crm-act-ic.email, .crm-act-ic.meeting, .crm-act-ic.phone,
-    .crm-act-ic.task, .crm-act-ic.followup { background: #f2f4f6; color: #667085; }
-    .crm-activity-date.overdue { color: #dc2626; font-weight: 600; }
+    .kanban-action-icon:hover { box-shadow: 0 0 0 3px rgba(0,0,0,0.12); }
 
-    /* Task activities: a real checkbox you can mark done */
-    .crm-act-check {
-      width: 26px; height: 26px; flex-shrink: 0; cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
-    }
-    .crm-act-check .box {
-      width: 17px; height: 17px; box-sizing: border-box;
-      border: 1.6px solid #c4c9d0; border-radius: 5px;
-      display: flex; align-items: center; justify-content: center;
-    }
-    .crm-act-check .box svg { width: 11px; height: 11px; display: none; }
-    .crm-act-check.done .box { background: #2170f4; border-color: #2170f4; }
-    .crm-act-check.done .box svg { display: block; }
-    .crm-act-check.done ~ .crm-activity-text { text-decoration: line-through; color: #9aa1a9; }
-
-    /* ── CRM panel: "+ Add activity" menu (mirrors the CRM card action menu) ── */
-    .crm-add-activity { font-size: 12.5px; color: #2170f4; font-weight: 600; cursor: pointer; margin-top: 12px; display: inline-block; }
-    .crm-activity-menu {
+    /* ── CRM: Card action menu ── */
+    .card-action-menu {
       position: fixed; display: none; background: #fff; border-radius: 8px;
-      box-shadow: 0 6px 24px rgba(0,0,0,0.16); width: 214px; overflow: hidden; z-index: 600;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.14); width: 210px; overflow: hidden; z-index: 600;
     }
-    .crm-activity-menu.open { display: block; }
-    .cam2-bar { font-size: 12.5px; font-weight: 700; padding: 11px 12px; background: #eef0f2; color: #333; }
-    .cam2-items { padding: 6px; }
-    .cam2-item { display: flex; align-items: center; gap: 9px; font-size: 13px; color: #333; padding: 8px 10px; border-radius: 6px; cursor: pointer; }
-    .cam2-item:hover { background: #f4f6f8; }
-    .cam2-item .ic { width: 15px; height: 15px; flex-shrink: 0; display: flex; color: #667085; }
-    .cam2-item .ic svg { width: 15px; height: 15px; }
+    .card-action-menu.open { display: block; }
+    .cam-last-activity {
+      font-size: 12.5px; font-weight: 700; padding: 11px 12px;
+    }
+    .cam-last-activity.next { background: #3a3f47; color: #fff; }
+    .cam-last-activity.last { background: #eef0f2; color: #333; }
+    .cam-last-activity.overdue { background: #fdecd2; color: #d97706; }
+    .cam-items { padding: 6px; }
+    .cam-item {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 13px; color: #333; padding: 8px 10px; border-radius: 6px; cursor: pointer;
+    }
+    .cam-item:hover { background: #f4f6f8; }
+    /* Monochrome activity-type icons (same glyphs as the CRM panel's Recent Activity, no color) */
+    .cam-ic { width: 14px; height: 14px; flex-shrink: 0; color: #6b7280; display: flex; }
+    .cam-ic svg { width: 14px; height: 14px; }
+    .cam-sep { height: 1px; background: #eee; margin: 5px 4px; }
+    .cam-see-all {
+      font-size: 11px; color: #999; padding: 6px 10px 8px; cursor: pointer; font-weight: 500;
+    }
+    .cam-see-all:hover { color: #666; }
+    .kanban-card-deal { font-size: 13px; font-weight: 700; color: #222; margin-bottom: 4px; }
+    .kanban-card-company { font-size: 12px; color: #888; margin-bottom: 14px; }
+    .kanban-card-footer { display: flex; align-items: center; gap: 6px; }
+    .kanban-card-value { font-size: 12.5px; font-weight: 500; color: #888; }
+    .kanban-card-task { font-size: 11px; color: #999; margin-left: auto; }
+    .kanban-card-avatar {
+      width: 24px; height: 24px; border-radius: 50%; color: #fff;
+      font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; overflow: hidden;
+    }
+    .kanban-card-avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .kanban-won-pill {
+      font-size: 10.5px; font-weight: 700; color: #15803d; background: #ecfdf5; border-radius: 10px;
+      padding: 2px 8px; margin-left: auto;
+    }
   </style>
 </head>
 
@@ -2875,150 +3071,83 @@
 
       <div class="nav-scroll">
 
-        <!-- Account 1 -->
+        <!-- Account switcher -->
         <div class="sidebar-line" style="margin-top:2px;"></div>
-        <div class="account-header">
+        <div class="account-header" id="account-header" onclick="toggleAccountMenu(event)">
+          <div class="account-avatar">
+            <img class="bg" src="assets/d2c6a617-0407-4985-8c8b-740201e73dfe.svg" alt="">
+            <span id="account-active-initial">E</span>
+          </div>
+          <span class="account-email-text" id="account-active-email">ella.henderson@avontechlabs.com</span>
           <div class="account-chevron">
-            <img src="assets/f63230e3-4d61-49cb-95fa-34291315c8a6.svg" alt="">
+            <svg width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="#bdbdbd" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </div>
-          <div class="account-email-id">
-            <div class="account-avatar">
-              <img class="bg" src="assets/d2c6a617-0407-4985-8c8b-740201e73dfe.svg" alt="">
-              <span>E</span>
+
+          <!-- Dropdown: account switcher -->
+          <div class="account-menu" id="account-menu">
+            <div class="account-menu-label">Titan accounts</div>
+            <div class="account-menu-item active" onclick="selectAccount(event, this, 'ella.henderson@avontechlabs.com', 'E', '#3f6ea5')">
+              <span class="account-menu-avatar" style="background:#3f6ea5;">E</span>
+              <div class="account-menu-text">
+                <div class="account-menu-email">ella.henderson@avontechlabs.com</div>
+                <div class="account-menu-sub">Avontech Labs</div>
+              </div>
+              <svg class="account-menu-check" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3.2 3.2L13 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </div>
-            <span class="account-email-text">ella.henderson@avontechlabs.com</span>
+            <div class="account-menu-item" onclick="selectAccount(event, this, 'ella@brightpath.co', 'B', '#9a6b3f')">
+              <span class="account-menu-avatar" style="background:#9a6b3f;">B</span>
+              <div class="account-menu-text">
+                <div class="account-menu-email">ella@brightpath.co</div>
+                <div class="account-menu-sub">BrightPath Co</div>
+              </div>
+              <svg class="account-menu-check" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3.2 3.2L13 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div class="account-menu-sep"></div>
+            <div class="account-menu-add" onclick="event.stopPropagation(); closeAccountMenu(); alert('Prototype only: adding an account is not wired up yet.');">
+              <span class="account-menu-add-icon">
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 1v10M1 6h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+              </span>
+              Add another account
+            </div>
           </div>
-
         </div>
 
-        <!-- Inbox (active) -->
-        <div class="nav-item active" style="padding-right: 8px;">
-          <div class="nav-item-icon">
-            <img src="assets/f2abf784-8ff3-4cb6-8424-a3f9ea66f6c4.svg" alt="">
-          </div>
-          <span class="nav-item-label active">Inbox</span>
-
-
-
-          <span class="nav-badge">18</span>
+        <!-- + New Pipeline -->
+        <div class="nav-item" onclick="openNewPipeline()">
+          <div class="nav-item-icon" style="color:#2170f4; font-weight:700; font-size:16px;">+</div>
+          <span class="nav-item-label" style="color:#2170f4; font-weight:600;">New Pipeline</span>
         </div>
 
-        <!-- Sent -->
-        <div class="nav-item">
-          <div class="nav-item-icon">
-            <img src="assets/0d418f33-c92b-4c90-a4b4-1ac227360aee.svg" alt="">
-          </div>
-          <span class="nav-item-label">Sent</span>
-        </div>
+        <div class="sidebar-line" id="pipeline-nav-line"></div>
 
-        <!-- Less -->
-        <div class="nav-item">
+        <!-- Neo partnerships (active) -->
+        <div class="nav-item active" data-pipeline-id="neo" onclick="switchPipeline('neo')">
           <div class="nav-item-icon">
-            <img src="assets/4b052ff7-cbf2-4484-b998-cd121a2ef23d.svg" alt="" style="width:10px; height:6px;">
+            <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M2 3.2H9.6L12.4 7L9.6 10.8H2L4.4 7L2 3.2Z" fill="#fff"/></svg>
           </div>
-          <span class="nav-item-label secondary">Less</span>
+          <span class="nav-item-label active">Neo partnerships</span>
         </div>
-
-        <!-- Archive -->
-        <div class="nav-item">
-          <div class="nav-item-icon">
-            <img src="assets/84f2c4f8-5ef3-4208-b5c7-3bf9845524f6.svg" alt="">
-          </div>
-          <span class="nav-item-label">Archive</span>
+        <!-- Saved filtered views of the Neo partnerships pipeline -->
+        <div class="nav-item" style="padding-left:52px;">
+          <span class="nav-item-label secondary">Deal over $10k</span>
         </div>
-
-        <!-- Drafts -->
-        <div class="nav-item">
-          <div class="nav-item-icon">
-            <img src="assets/4cec5be7-969f-498e-ae20-01a59018a891.svg" alt="">
-          </div>
-          <span class="nav-item-label">Drafts</span>
-        </div>
-
-        <!-- Trash -->
-        <div class="nav-item">
-          <div class="nav-item-icon">
-            <img src="assets/f277921c-e283-4da0-a13a-05595d91fb34.svg" alt="">
-          </div>
-          <span class="nav-item-label">Trash</span>
-        </div>
-
-        <!-- Spam -->
-        <div class="nav-item">
-          <div class="nav-item-icon">
-            <img src="assets/0908bd91-743b-48cc-90f4-0f6eb8205114.svg" alt="">
-          </div>
-          <span class="nav-item-label">Spam</span>
-        </div>
-
-        <!-- Scheduled -->
-        <div class="nav-item">
-          <div class="nav-item-icon">
-            <img src="assets/506c7c7c-d0e8-4f48-9b04-9e8f4878f1dd.svg" alt="">
-          </div>
-          <span class="nav-item-label">Scheduled</span>
-        </div>
-
-        <!-- Promotions -->
-        <div class="nav-item">
-          <div class="nav-item-icon">
-            <img src="assets/05911f43-7ba2-4419-a3b7-1f9c5a6f5235.svg" alt="">
-          </div>
-          <span class="nav-item-label">Promotions</span>
-        </div>
-
-        <!-- Add folder -->
-        <div class="nav-item">
-          <div class="nav-item-icon">
-            <img src="assets/ba161cbb-b127-4cdb-9d7e-68bf42124783.svg" alt="">
-          </div>
-          <span class="nav-item-label secondary">Add folder</span>
+        <div class="nav-item" style="padding-left:52px;">
+          <span class="nav-item-label secondary">North America</span>
         </div>
 
         <div class="sidebar-line"></div>
 
-        <!-- Account 2 -->
-        <div class="account-header">
-          <div class="account-chevron">
-            <img src="assets/f63230e3-4d61-49cb-95fa-34291315c8a6.svg" alt="">
-          </div>
-          <div class="account-email-id">
-            <div class="account-avatar">
-              <img class="bg" src="assets/1ec36ae6-2aa7-47fb-8241-ad45b652e49a.svg" alt="">
-              <span>S</span>
-            </div>
-            <span class="account-email-text">support.team@avontechlabs.com</span>
-          </div>
-        </div>
-
         <div class="nav-item">
           <div class="nav-item-icon">
-            <img src="assets/f2abf784-8ff3-4cb6-8424-a3f9ea66f6c4.svg" alt="">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="4.5" r="2.5" stroke="#fff" stroke-width="1.3"/><path d="M2.5 12.5c0-2.5 2-4 4.5-4s4.5 1.5 4.5 4" stroke="#fff" stroke-width="1.3"/></svg>
           </div>
-          <span class="nav-item-label">Inbox</span>
+          <span class="nav-item-label">Contacts</span>
         </div>
         <div class="nav-item">
           <div class="nav-item-icon">
-            <img src="assets/0d418f33-c92b-4c90-a4b4-1ac227360aee.svg" alt="">
+            <svg width="14" height="14" viewBox="0 0 20 20" fill="none"><rect x="3" y="7" width="14" height="11" stroke="#fff" stroke-width="1.3"/><path d="M6 7V3h8v4" stroke="#fff" stroke-width="1.3"/></svg>
           </div>
-          <span class="nav-item-label">Sent</span>
-        </div>
-        <!-- More -->
-        <div class="nav-item">
-          <div class="nav-item-icon">
-            <img src="assets/593acf07-7400-4313-9d10-fee2fb2b61d5.svg" alt="" style="width:10px; height:6px;">
-          </div>
-          <span class="nav-item-label secondary">More</span>
-        </div>
-
-        <div class="sidebar-line"></div>
-
-        <!-- Add account -->
-        <div class="nav-item" style="margin-top:8px;">
-          <div class="nav-item-icon">
-            <img src="assets/2f39d1e9-d033-4964-aa94-76a9a023325c.svg" alt="">
-          </div>
-          <span class="nav-item-label">Add account</span>
+          <span class="nav-item-label">Organizations</span>
         </div>
 
       </div><!-- /nav-scroll -->
@@ -3061,15 +3190,10 @@
       <div class="top-toolbar">
         <div class="compose-search">
           <div class="compose-btn titan-split-btn" style="margin:0; flex-shrink:0;">
-            <div class="compose-main-btn split-btn-main" onclick="openComposer()">
+            <div class="compose-main-btn split-btn-main" onclick="openNewPipeline()">
               <div class="btn-content-wrapper">
-                <div class="compose-icon"><img src="assets/4ef65841-a61f-4b4d-9a15-f39d8a3a4fdb.svg" alt=""></div>
-                <span>New email</span>
-              </div>
-            </div>
-            <div class="compose-dd-btn split-btn-dd" onclick="event.stopPropagation();">
-              <div class="btn-content-wrapper">
-                <img src="composer_assets/ic-caret-white.svg" alt="">
+                <span style="font-weight:700; margin-right:4px;">+</span>
+                <span>New Pipeline</span>
               </div>
             </div>
           </div>
@@ -3078,7 +3202,7 @@
               <img src="assets/31fb0942-5496-4310-8ed0-427ccce7cfe6.svg" alt=""
                 style="inset:0; width:100%; height:100%;">
             </div>
-            <input type="text" placeholder="Search in ella@avontech.com" readonly>
+            <input type="text" placeholder="Search contacts, companies, deals..." readonly>
             <div class="search-divider"></div>
             <div class="search-dropdown">
               <img src="assets/e458459b-dce0-4c30-be8a-322441399ee5.svg" alt="">
@@ -3087,14 +3211,7 @@
           </div>
         </div>
         <div class="toolbar-right">
-          <div class="toolbar-icons">
-            <div class="toolbar-icon titan-action-btn" title="View details">
-              <img src="assets/ec5d8d32-261b-410c-b07c-310cd6bb915e.svg" alt="">
-            </div>
-            <div class="toolbar-icon titan-action-btn" title="Settings" onclick="toggleSettingsModal()">
-              <img src="assets/63a156f6-89b7-4224-b2e1-f2fa32e8f03f.svg" alt="">
-            </div>
-          </div>
+          <div class="toolbar-icons"></div>
           <div class="powered-by">
             <div class="powered-by-text">
               <img src="assets/63d9b21c-fe52-4792-bc8d-ad49805438b4.svg" alt="">
@@ -3112,907 +3229,27 @@
         </div>
       </div><!-- /top-toolbar -->
 
-      <div class="content-area">
-        <!-- Middle panel -->
-        <div class="middle-panel" id="middlePanel">
-          <div class="middle-refresh-overlay"></div>
-
-          <!-- Tabs -->
-          <div class="tabs-row">
-
-            <div class="tab-checkbox-wrap">
-              <div class="chk"><img src="assets/392bf29c-08b1-44e8-b95b-b99905e722e6.svg" alt=""></div>
+      <div class="content-area" style="display:block; overflow:auto; padding:20px 24px;">
+        <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:18px;">
+          <div style="font-size:19px; font-weight:700; color:#1a1a1a;">
+            <span id="pipeline-name-heading">Neo partnerships</span> <span id="pipeline-total" style="font-size:13.5px; font-weight:500; color:#888; margin-left:8px;"></span>
+          </div>
+          <div style="display:flex; align-items:center; gap:10px;">
+            <div style="display:flex; align-items:center; gap:6px; background:#2170f4; color:#fff; font-size:13px; font-weight:600; padding:8px 14px; border-radius:6px; cursor:pointer;" onclick="alert('Prototype only: manual record creation is not wired up here — cards are added by linking an email thread (§1.3).')">
+              <span style="font-weight:700;">+</span> Add <span id="add-entity-label">opportunity</span>
             </div>
-            <div class="tab-group">
-              <div class="tab-item">
-                <div class="tab-item-label">Priority (25)</div>
-                <div class="tab-item-underline"></div>
+            <div style="display:flex; gap:4px; background:#f4f4f7; border-radius:7px; padding:3px;">
+              <div title="Kanban" style="display:flex; padding:6px 10px; border-radius:6px; background:#fff; box-shadow:0 1px 2px rgba(0,0,0,0.08); cursor:pointer;">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="4" height="14" rx="1" fill="#2170f4"/><rect x="6" y="1" width="4" height="9" rx="1" fill="#2170f4"/><rect x="11" y="1" width="4" height="11" rx="1" fill="#2170f4"/></svg>
               </div>
-              <div class="tab-item">
-                <div class="tab-item-label inactive">Other (50)</div>
-              </div>
-            </div>
-            <div class="tabs-right-container">
-
-              <div class="all-mails-dropdown">
-                <span>All mails</span>
-                <div class="dd-arrow"><img src="assets/7bd47053-31b1-485b-89c1-4496be66b2fd.svg" alt=""></div>
+              <div title="List" style="display:flex; padding:6px 10px; border-radius:6px; cursor:pointer;" onclick="alert('Prototype only: List view (§3.3) is not built yet.')">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1" y="2" width="14" height="2.4" rx="1" fill="#888"/><rect x="1" y="6.8" width="14" height="2.4" rx="1" fill="#888"/><rect x="1" y="11.6" width="14" height="2.4" rx="1" fill="#888"/></svg>
               </div>
             </div>
           </div>
+        </div>
 
-          <!-- Email list -->
-          <div class="email-list">
-            <div class="refresh-overlay"></div>
-
-            <!-- New: unlinked sales-inquiry demo -->
-            <div class="email-tile" onclick="selectEmailTile(this, 'unlinked')">
-              <div class="email-tile-inner">
-                <div class="tile-icons">
-                  <div class="tile-chk">
-                    <div class="chk"><img src="assets/392bf29c-08b1-44e8-b95b-b99905e722e6.svg" alt=""></div>
-                  </div>
-                  <div class="tile-dot"></div>
-                  <div class="tile-star"><img src="assets/1e1696aa-5b8d-4409-97fd-4ce5c85c5ae5.svg" alt=""></div>
-                </div>
-                <div class="tile-content">
-                  <div class="tile-top" style="display:flex; justify-content:space-between;">
-                    <div class="tile-sender bold">Emma Clarke</div>
-                    <div class="tile-time">10:12 am</div>
-                  </div>
-                  <div class="tile-subject">Question about Enterprise plan pricing</div>
-                  <div class="tile-preview">We're evaluating Titan Mail for our team of 40 and I had a question...</div>
-                  <div class="tile-hover-actions">
-                    <div class="tile-action-pill" title="Add to pipeline" onclick="openPipelinePicker(event)">
-                      <div class="icon18 icon18-plus">
-                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M2 3.2H9.6L12.4 7L9.6 10.8H2L4.4 7L2 3.2Z" fill="#9aa1a9"/>
-                        </svg>
-                      </div>
-                    </div>
-                    <div class="tile-action-pill">
-                      <div class="icon18"><img src="assets/7c1d5199-2bce-428f-9bff-eb73b6954e12.svg" alt=""></div>
-                    </div>
-                    <div class="tile-action-pill">
-                      <div class="icon18"><img src="assets/65a9156f-d37a-414e-bef2-e5b477cb6436.svg" alt=""></div>
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-
-            <div class="email-tile" onclick="selectEmailTile(this, 'other')">
-              <div class="email-tile-inner">
-                <div class="tile-icons">
-                  <div class="tile-chk">
-                    <div class="chk"><img src="assets/392bf29c-08b1-44e8-b95b-b99905e722e6.svg" alt=""></div>
-                  </div>
-                  <div class="tile-star"><img src="assets/1e1696aa-5b8d-4409-97fd-4ce5c85c5ae5.svg" alt=""></div>
-                </div>
-                <div class="tile-content">
-                  <div class="tile-top" style="display:flex; justify-content:space-between;">
-                    <div class="tile-sender">Jason Miller</div>
-                    <div class="tile-time">10:45 am</div>
-                  </div>
-                  <div class="tile-subject">Feedback on grammar and spell check</div>
-                  <div class="tile-preview">Looking for a change? How does working on Meatvedcdv...</div>
-
-                  <div class="tile-hover-actions">
-                    <div class="tile-action-pill" title="Add to pipeline" onclick="openPipelinePicker(event)">
-                      <div class="icon18 icon18-plus">
-                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M2 3.2H9.6L12.4 7L9.6 10.8H2L4.4 7L2 3.2Z" fill="#9aa1a9"/>
-                        </svg>
-                      </div>
-                    </div>
-                    <div class="tile-action-pill">
-                      <div class="icon18"><img src="assets/7c1d5199-2bce-428f-9bff-eb73b6954e12.svg" alt=""></div>
-                    </div>
-                    <div class="tile-action-pill">
-                      <div class="icon18"><img src="assets/65a9156f-d37a-414e-bef2-e5b477cb6436.svg" alt=""></div>
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-
-            <!-- Tile 2: selected, unread, linked to Neo partnerships -->
-            <div class="email-tile selected" data-record="linked" onclick="selectEmailTile(this, 'linked')">
-              <div class="email-tile-inner">
-                <div class="tile-icons">
-                  <div class="tile-chk">
-                    <div class="chk"><img src="assets/392bf29c-08b1-44e8-b95b-b99905e722e6.svg" alt=""></div>
-                  </div>
-                  <div class="tile-dot"></div>
-                  <div class="tile-star"><img src="assets/1e1696aa-5b8d-4409-97fd-4ce5c85c5ae5.svg" alt=""></div>
-                </div>
-                <div class="tile-content">
-                  <div class="tile-top" style="display:flex; justify-content:space-between;">
-                    <div class="tile-sender bold">Ryan Walker</div>
-                    <div class="tile-time">11:20 am</div>
-                  </div>
-                  <div class="tile-subject">Project roadmap for Dashboard version</div>
-                  <div class="tile-preview-row" data-pipeline="sales" data-stage="Proposal Sent">
-                    <span class="tile-preview">Looking for a change? How does working on Meatvedcdv...</span>
-                    <span class="pipeline-label" onclick="event.stopPropagation(); openCrmForLinked();" title="Neo partnerships — open record">
-                      <svg class="pl-icon" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 3.2H9.6L12.4 7L9.6 10.8H2L4.4 7L2 3.2Z" fill="currentColor"/></svg>
-                      <span>Neo partnerships</span>
-                    </span>
-                  </div>
-                  <div class="tile-hover-actions">
-                    <div class="tile-action-pill" title="Add to pipeline" onclick="openPipelinePicker(event)">
-                      <div class="icon18 icon18-plus">
-                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M2 3.2H9.6L12.4 7L9.6 10.8H2L4.4 7L2 3.2Z" fill="#9aa1a9"/>
-                        </svg>
-                      </div>
-                    </div>
-                    <div class="tile-action-pill">
-                      <div class="icon18"><img src="assets/7c1d5199-2bce-428f-9bff-eb73b6954e12.svg" alt=""></div>
-                    </div>
-                    <div class="tile-action-pill">
-                      <div class="icon18"><img src="assets/65a9156f-d37a-414e-bef2-e5b477cb6436.svg" alt=""></div>
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-
-            <!-- Tiles 3–7 -->
-            <div class="email-tile" onclick="selectEmailTile(this, 'other')">
-              <div class="email-tile-inner">
-                <div class="tile-icons">
-                  <div class="tile-chk">
-                    <div class="chk"><img src="assets/392bf29c-08b1-44e8-b95b-b99905e722e6.svg" alt=""></div>
-                  </div>
-                  <div class="tile-star"><img src="assets/1e1696aa-5b8d-4409-97fd-4ce5c85c5ae5.svg" alt=""></div>
-                </div>
-                <div class="tile-content">
-                  <div style="display:flex; justify-content:space-between;">
-                    <div class="tile-sender">David Jones, Ella (2)</div>
-                    <div class="tile-time">12:15 pm</div>
-                  </div>
-                  <div class="tile-subject">Flock Terms and Condition</div>
-                  <div class="tile-preview">We need to get on a meeting for the discuss our T&amp;C...</div>
-                  <div class="tile-hover-actions">
-                    <div class="tile-action-pill" title="Add to pipeline" onclick="openPipelinePicker(event)">
-                      <div class="icon18 icon18-plus">
-                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M2 3.2H9.6L12.4 7L9.6 10.8H2L4.4 7L2 3.2Z" fill="#9aa1a9"/>
-                        </svg>
-                      </div>
-                    </div>
-                    <div class="tile-action-pill">
-                      <div class="icon18"><img src="assets/7c1d5199-2bce-428f-9bff-eb73b6954e12.svg" alt=""></div>
-                    </div>
-                    <div class="tile-action-pill">
-                      <div class="icon18"><img src="assets/65a9156f-d37a-414e-bef2-e5b477cb6436.svg" alt=""></div>
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-
-            <div class="email-tile" onclick="selectEmailTile(this, 'other')">
-              <div class="email-tile-inner">
-                <div class="tile-icons">
-                  <div class="tile-chk">
-                    <div class="chk"><img src="assets/392bf29c-08b1-44e8-b95b-b99905e722e6.svg" alt=""></div>
-                  </div>
-                  <div class="tile-star"><img src="assets/1e1696aa-5b8d-4409-97fd-4ce5c85c5ae5.svg" alt=""></div>
-                </div>
-                <div class="tile-content">
-                  <div style="display:flex; justify-content:space-between;">
-                    <div class="tile-sender">Chloe</div>
-                    <div class="tile-time">1:30 pm</div>
-                  </div>
-                  <div class="tile-subject">Feedback on snooze feature</div>
-                  <div class="tile-preview">I like the design that you have made. Probably we ca...</div>
-                  <div class="tile-hover-actions">
-                    <div class="tile-action-pill" title="Add to pipeline" onclick="openPipelinePicker(event)">
-                      <div class="icon18 icon18-plus">
-                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M2 3.2H9.6L12.4 7L9.6 10.8H2L4.4 7L2 3.2Z" fill="#9aa1a9"/>
-                        </svg>
-                      </div>
-                    </div>
-                    <div class="tile-action-pill">
-                      <div class="icon18"><img src="assets/7c1d5199-2bce-428f-9bff-eb73b6954e12.svg" alt=""></div>
-                    </div>
-                    <div class="tile-action-pill">
-                      <div class="icon18"><img src="assets/65a9156f-d37a-414e-bef2-e5b477cb6436.svg" alt=""></div>
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-
-            <div class="email-tile" onclick="selectEmailTile(this, 'other')">
-              <div class="email-tile-inner">
-                <div class="tile-icons">
-                  <div class="tile-chk">
-                    <div class="chk"><img src="assets/392bf29c-08b1-44e8-b95b-b99905e722e6.svg" alt=""></div>
-                  </div>
-                  <div class="tile-star"><img src="assets/1e1696aa-5b8d-4409-97fd-4ce5c85c5ae5.svg" alt=""></div>
-                </div>
-                <div class="tile-content">
-                  <div style="display:flex; justify-content:space-between;">
-                    <div class="tile-sender">Jason Miller</div>
-                    <div class="tile-time">2:45 pm</div>
-                  </div>
-                  <div class="tile-subject">Feedback on link and file tracking feature</div>
-                  <div class="tile-preview">Hi, Ella can you please review these mocks.</div>
-                  <div class="tile-hover-actions">
-                    <div class="tile-action-pill" title="Add to pipeline" onclick="openPipelinePicker(event)">
-                      <div class="icon18 icon18-plus">
-                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M2 3.2H9.6L12.4 7L9.6 10.8H2L4.4 7L2 3.2Z" fill="#9aa1a9"/>
-                        </svg>
-                      </div>
-                    </div>
-                    <div class="tile-action-pill">
-                      <div class="icon18"><img src="assets/7c1d5199-2bce-428f-9bff-eb73b6954e12.svg" alt=""></div>
-                    </div>
-                    <div class="tile-action-pill">
-                      <div class="icon18"><img src="assets/65a9156f-d37a-414e-bef2-e5b477cb6436.svg" alt=""></div>
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-
-            <div class="email-tile" onclick="selectEmailTile(this, 'other')">
-              <div class="email-tile-inner">
-                <div class="tile-icons">
-                  <div class="tile-chk">
-                    <div class="chk"><img src="assets/392bf29c-08b1-44e8-b95b-b99905e722e6.svg" alt=""></div>
-                  </div>
-                  <div class="tile-star"><img src="assets/1e1696aa-5b8d-4409-97fd-4ce5c85c5ae5.svg" alt=""></div>
-                </div>
-                <div class="tile-content">
-                  <div style="display:flex; justify-content:space-between;">
-                    <div class="tile-sender">Ryan Walker</div>
-                    <div class="tile-time">3:10 pm</div>
-                  </div>
-                  <div class="tile-subject">Lets schedule our 1:1 sometime</div>
-                  <div class="tile-preview">Hi Ella, we should schedule a 1:1 session next week...</div>
-                  <div class="tile-hover-actions">
-                    <div class="tile-action-pill" title="Add to pipeline" onclick="openPipelinePicker(event)">
-                      <div class="icon18 icon18-plus">
-                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M2 3.2H9.6L12.4 7L9.6 10.8H2L4.4 7L2 3.2Z" fill="#9aa1a9"/>
-                        </svg>
-                      </div>
-                    </div>
-                    <div class="tile-action-pill">
-                      <div class="icon18"><img src="assets/7c1d5199-2bce-428f-9bff-eb73b6954e12.svg" alt=""></div>
-                    </div>
-                    <div class="tile-action-pill">
-                      <div class="icon18"><img src="assets/65a9156f-d37a-414e-bef2-e5b477cb6436.svg" alt=""></div>
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-
-            <div class="email-tile" onclick="selectEmailTile(this, 'other')">
-              <div class="email-tile-inner">
-                <div class="tile-icons">
-                  <div class="tile-chk">
-                    <div class="chk"><img src="assets/392bf29c-08b1-44e8-b95b-b99905e722e6.svg" alt=""></div>
-                  </div>
-                  <div class="tile-star"><img src="assets/1e1696aa-5b8d-4409-97fd-4ce5c85c5ae5.svg" alt=""></div>
-                </div>
-                <div class="tile-content">
-                  <div style="display:flex; justify-content:space-between;">
-                    <div class="tile-sender">Ryan Walker</div>
-                    <div class="tile-time">Yesterday</div>
-                  </div>
-                  <div class="tile-subject">Lets schedule our 1:1 sometime</div>
-                  <div class="tile-preview">Hi Ella, we should schedule a 1:1 session next week...</div>
-                  <div class="tile-hover-actions">
-                    <div class="tile-action-pill" title="Add to pipeline" onclick="openPipelinePicker(event)">
-                      <div class="icon18 icon18-plus">
-                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M2 3.2H9.6L12.4 7L9.6 10.8H2L4.4 7L2 3.2Z" fill="#9aa1a9"/>
-                        </svg>
-                      </div>
-                    </div>
-                    <div class="tile-action-pill">
-                      <div class="icon18"><img src="assets/7c1d5199-2bce-428f-9bff-eb73b6954e12.svg" alt=""></div>
-                    </div>
-                    <div class="tile-action-pill">
-                      <div class="icon18"><img src="assets/65a9156f-d37a-414e-bef2-e5b477cb6436.svg" alt=""></div>
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-
-          </div><!-- /email-list -->
-
-          <!-- Panel resize handle -->
-          <div class="panel-resize-handle" id="panelResizer"></div>
-        </div><!-- /middle-panel -->
-
-        <!-- Reading Pane -->
-        <div class="reading-pane">
-
-          <!-- Action bar (same level as tabs) -->
-          <div class="reading-action-bar">
-            <div class="email-action-bar">
-              <div class="action-opt">
-                <div class="action-icon"><img src="assets/eb8edec6-b9b3-4707-bc5a-78a09ff60960.svg" alt=""></div>
-                Archive
-              </div>
-              <div class="action-sep"></div>
-              <div class="action-opt">
-                <div class="action-icon"><img src="assets/39065929-c90c-4ada-8017-5b7def421216.svg" alt=""></div>
-                Delete
-              </div>
-              <div class="action-sep"></div>
-              <div class="action-opt">
-                <div class="action-icon"><img src="assets/7d1fbdab-213a-460f-816a-26f90c114a53.svg" alt=""></div>
-                Star
-              </div>
-              <div class="action-sep"></div>
-              <div class="action-opt">
-                <div class="action-icon"><img src="assets/fdfefe86-ce27-43c6-a47f-d5b8019e11c3.svg" alt=""></div>
-                Mark unread
-              </div>
-              <div class="action-sep"></div>
-              <div class="action-opt">
-                <div class="action-icon"><img src="assets/bc92cea7-677d-460d-a302-220e92593976.svg" alt=""></div>
-                Block
-              </div>
-              <div class="action-sep"></div>
-              <div class="action-opt">
-                <div class="action-icon"><img src="assets/cbf05706-4cff-4bfc-bc12-604133772db9.svg" alt=""></div>
-                Spam
-              </div>
-              <div class="action-sep"></div>
-              <div class="action-opt" onclick="openPipelinePicker(event)" title="Add to pipeline">
-                <div class="action-icon"><svg width="16" height="16" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 3.2H9.6L12.4 7L9.6 10.8H2L4.4 7L2 3.2Z" fill="#444"/></svg></div>
-                Pipeline
-              </div>
-              <div class="action-sep"></div>
-              <div class="action-more">
-                <div class="action-more-icon"><img src="assets/495649bc-11a9-41e0-84b4-81a6600de9f6.svg" alt=""></div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Thread -->
-          <div class="thread-content">
-
-            <!-- ============ LINKED THREAD (Sales Pipeline demo) ============ -->
-            <div id="thread-view-linked" class="thread-view">
-
-            <div class="thread-sticky-header" data-pipeline="sales" data-stage="Proposal Sent">
-              <div class="thread-title">Project roadmap for Dashboard version 2</div>
-              <div class="pipeline-label" onclick="openCrmForLinked()" title="Neo partnerships — open record">
-                <svg class="pl-icon" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 3.2H9.6L12.4 7L9.6 10.8H2L4.4 7L2 3.2Z" fill="currentColor"/></svg>
-                <span>Neo partnerships: Proposal Sent</span>
-              </div>
-            </div>
-
-            <!-- Collapsed tile 1 -->
-            <div class="thread-tile">
-              <div class="thread-tile-inner">
-                <span class="thread-sender">David Eglasias</span>
-                <span class="thread-preview">And as such the media have been very influential in shaping
-                  societ...</span>
-                <div class="thread-meta">
-                  <span class="thread-date">Jun 3</span>
-                  <div class="thread-attach"><img src="assets/137b4a38-f7e3-4939-b28d-56d8013f7e6b.svg" alt=""></div>
-                </div>
-
-              </div>
-            </div>
-
-            <!-- Email Stack -->
-            <div class="thread-stack">
-              <div class="stack-card card-5">
-                <div class="stack-card-content thread-tile-inner">
-                  <span class="thread-sender">Rachel Zane</span>
-                  <span class="thread-preview">Could you forward me the details of the Q3 deliverables?</span>
-                  <div class="thread-meta"><span class="thread-date">Jun 2</span></div>
-                </div>
-              </div>
-              <div class="stack-card card-4">
-                <div class="stack-card-content thread-tile-inner">
-                  <span class="thread-sender">Sarah Jenkins</span>
-                  <span class="thread-preview">Following up on the project roadmap and the recent updates...</span>
-                  <div class="thread-meta"><span class="thread-date">Jun 4</span></div>
-                </div>
-              </div>
-              <div class="stack-card card-3">
-                <div class="stack-card-content thread-tile-inner">
-                  <span class="thread-sender">Mike Ross</span>
-                  <span class="thread-preview">I reviewed the document. Looks solid but we need to discuss...</span>
-                  <div class="thread-meta"><span class="thread-date">Jun 6</span></div>
-                </div>
-              </div>
-              <div class="stack-card card-2">
-                <div class="stack-card-content thread-tile-inner">
-                  <span class="thread-sender">Harvey Specter</span>
-                  <span class="thread-preview">Please ensure the deliverables are ready by next Tuesday...</span>
-                  <div class="thread-meta"><span class="thread-date">Jun 8</span></div>
-                </div>
-              </div>
-              <div class="stack-card card-1">
-                <div class="stack-card-content thread-tile-inner">
-                  <span class="thread-sender">Louis Litt</span>
-                  <span class="thread-preview">Checking in on the status of the new dashboard designs.</span>
-                  <div class="thread-meta"><span class="thread-date">Jun 9</span></div>
-                </div>
-              </div>
-              <div class="stack-pill">7 older messages</div>
-            </div>
-
-
-
-            <!-- Expanded tile -->
-            <div class="expanded-tile">
-              <div class="expanded-header">
-                <div>
-                  <div class="exp-sender">Ryan Walker</div>
-                  <div class="exp-to">To: me, Jason, Owen</div>
-                </div>
-                <div class="exp-right">
-                  <div class="exp-timestamp">Jun 12</div>
-                  <div class="exp-actions">
-                    <div class="exp-rr">
-                      <div class="exp-rr-icon"><img src="assets/9c958176-ff20-49e6-9206-7659c8943371.svg" alt=""></div>
-                      <span class="exp-rr-count">4</span>
-                    </div>
-                    <div class="exp-rr">
-                      <div class="exp-rr-icon"><img src="assets/59af9c40-b8b7-40f0-ab10-349dd5700ac4.svg" alt=""></div>
-                      <span class="exp-rr-count">4</span>
-                    </div>
-                    <div class="exp-icon">
-                      <img src="assets/f58c5077-66f8-4b70-8f2d-a29cb41ef735.svg" alt="">
-                    </div>
-                    <div class="exp-icon">
-                      <img src="assets/dc9c9a28-fbff-4efd-8cc6-22604c7cbc3d.svg" alt="">
-                    </div>
-                    <div class="exp-icon-sm">
-                      <img src="assets/1bc6572b-be7e-4809-b54f-48b57701aa6b.svg" alt="">
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-
-              <div class="expanded-body">
-                <p>Hey,</p>
-                <p>Since the last time we met, I have been working on the V2 roadmap and wold like to catch up to
-                  discuss it. Following are the highlights of the version. Letsa catch up on Monday, 5 PM?</p>
-                <p>&zwj;</p>
-                <p>1. Introducing multiple themes</p>
-                <p>2. Improvements in accessibility</p>
-                <p>&zwj;</p>
-                <p>Thanks!</p>
-              </div>
-
-              <div class="expanded-footer-hr"></div>
-              <div class="expanded-footer">
-                <div class="reply-action" onclick="openReplyBox('reply')">
-                  <div class="reply-action-icon"><img src="assets/dc9c9a28-fbff-4efd-8cc6-22604c7cbc3d.svg" alt="">
-                  </div>
-                  Reply
-                </div>
-                <div class="reply-action" onclick="openReplyBox('reply-all')">
-                  <div class="reply-action-icon"><img src="assets/440756b2-5698-4836-ab78-62a450804283.svg" alt="">
-                  </div>
-                  Reply all
-                </div>
-                <div class="reply-action" onclick="openReplyBox('forward')">
-                  <div class="reply-action-icon"><img src="assets/d6d0ae75-01ff-4a38-aeb6-8cee39af4b34.svg" alt="">
-                  </div>
-                  Forward
-                </div>
-                <div class="smart-write" onclick="openReplyBox('reply')">
-                  <div class="smart-write-icon"><img src="assets/f2c4a95b-e378-4f23-b049-98f40e998543.svg" alt=""></div>
-                  Reply with AI
-                </div>
-
-              </div>
-            </div>
-            </div><!-- /thread-view-linked -->
-
-            <!-- ============ UNLINKED THREAD (AI suggestion demo) ============ -->
-            <div id="thread-view-unlinked" class="thread-view" style="display:none;">
-
-              <div class="thread-sticky-header">
-                <div class="thread-title">Question about Enterprise plan pricing</div>
-                <div class="pipeline-chip pc-suggested" onclick="addSuggestedToPipeline(event)" title="AI suggestion">
-                  <svg class="pchip-icon" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 3.2H9.6L12.4 7L9.6 10.8H2L4.4 7L2 3.2Z" fill="currentColor"/></svg>
-                  Neo partnerships
-                  <svg class="pc-ai-spark" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 0L6 4L10 5L6 6L5 10L4 6L0 5L4 4Z" fill="currentColor"/></svg>
-                </div>
-              </div>
-
-              <div class="expanded-tile" style="margin-top:16px;">
-                <div class="expanded-header">
-                  <div>
-                    <div class="exp-sender">Emma Clarke</div>
-                    <div class="exp-to">To: me &middot; Northwind Traders</div>
-                  </div>
-                  <div class="exp-right">
-                    <div class="exp-timestamp">10:12 am</div>
-                  </div>
-                </div>
-
-                <div class="expanded-body">
-                  <p>Hi,</p>
-                  <p>We're evaluating Titan Mail for our team of 40 and I had a question about what's included in
-                    the Enterprise plan, specifically around admin controls and SLA support.</p>
-                  <p>&zwj;</p>
-                  <p>Could someone walk us through pricing and options for a call this week?</p>
-                  <p>&zwj;</p>
-                  <p>Thanks,<br>Emma</p>
-                </div>
-
-                <div class="expanded-footer-hr"></div>
-                <div class="expanded-footer">
-                  <div class="reply-action" onclick="openReplyBox('reply')">
-                    <div class="reply-action-icon"><img src="assets/dc9c9a28-fbff-4efd-8cc6-22604c7cbc3d.svg" alt="">
-                    </div>
-                    Reply
-                  </div>
-                  <div class="reply-action" onclick="openReplyBox('forward')">
-                    <div class="reply-action-icon"><img src="assets/d6d0ae75-01ff-4a38-aeb6-8cee39af4b34.svg" alt="">
-                    </div>
-                    Forward
-                  </div>
-                  <div class="smart-write" onclick="openReplyBox('reply')">
-                    <div class="smart-write-icon"><img src="assets/f2c4a95b-e378-4f23-b049-98f40e998543.svg" alt=""></div>
-                    Reply with AI
-                  </div>
-                </div>
-              </div>
-
-            </div><!-- /thread-view-unlinked -->
-
-            <!-- ============ OTHER (no pipeline association) ============ -->
-            <div id="thread-view-other" class="thread-view" style="display:none;">
-              <div class="thread-empty-state">
-                This is a prototype build. Only the two CRM demo threads (Ryan Walker and Emma Clarke) have full pipeline behavior wired up here.
-              </div>
-            </div><!-- /thread-view-other -->
-
-            <!-- Reply Box Card (Embedded Inline) -->
-            <div class="reply-box-card" id="reply-box-card" style="display: none; margin-top: 16px; border: 1px solid #dedede; border-radius: 4px; box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06); background: #ffffff; flex-direction: column; overflow: hidden; margin-bottom: 20px;">
-                <!-- From row -->
-                <div class="reply-box-from-row" style="display: flex; align-items: center; justify-content: space-between; padding: 10px 24px; border-bottom: 1px solid #ebebeb;">
-                  <div style="font-size: 14px; color: #888888;">From: <span id="reply-box-from" style="color: #333333;">ishantp@titan.email</span></div>
-                  <div style="display: flex; align-items: center; gap: 6px; font-size: 13px; color: #888888;">
-                    <span>Saved</span>
-                    <button class="reply-box-popout-btn" style="border: none; background: none; cursor: pointer; padding: 3px; width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; border-radius: 5px; transition: background 0.15s;" onmouseenter="this.style.background='var(--hover-bg)'" onmouseleave="this.style.background='none'" onclick="popoutToComposer()" title="Pop out">
-                      <svg width="14" height="14" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <rect x="1" y="4.5" width="9.5" height="9.5" rx="1.8" stroke="#888888" stroke-width="1.3" fill="none"/>
-                        <path d="M5.5 1H15V10.5" stroke="#888888" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-                        <path d="M5.5 1H15V4.5" stroke="#888888" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-                      </svg>
-                    </button>
-                  </div>
-                </div>
-
-                <!-- Header -->
-                <div class="reply-box-header" style="display: flex; align-items: center; justify-content: space-between; padding: 10px 24px; border-bottom: 1px solid #ebebeb;">
-                  <div class="reply-box-recipient" id="reply-box-recipient" style="display: flex; align-items: center; gap: 8px; font-size: 14px;">
-                    <span id="reply-recipient-name" style="color: #333333; font-weight: 500;">Usha Loutongbam</span>
-                  </div>
-                  <div style="display: flex; align-items: center; gap: 14px; font-size: 13px; color: #888888; font-weight: 500;">
-                    <span id="reply-subject-toggle" onclick="toggleReplySubject()" style="cursor: pointer; transition: color 0.15s; padding-bottom: 2px;" onmouseenter="this.style.color='#333333'" onmouseleave="this.style.color='#888888'">Subject</span>
-                  </div>
-                </div>
-
-                <!-- Subject Row (hidden by default) -->
-                <div id="reply-subject-row" style="overflow: hidden; max-height: 0; opacity: 0; transition: max-height 0.25s cubic-bezier(0.22,1,0.36,1), opacity 0.2s ease; padding: 0 24px; border-bottom: 1px solid #ebebeb;">
-                  <div style="font-size: 14px; color: #444; padding-top: 10px; padding-bottom: 10px;">
-                    <span contenteditable="true" spellcheck="false" id="reply-subject-field" style="outline: none; display: block; color: #444; font-size: 14px; font-family: inherit; min-width: 20px;">Re: Project roadmap for Dashboard version</span>
-                  </div>
-                </div>
-
-                <!-- Features Toolbar -->
-                <div class="comp-features-row" style="padding: 10px 24px; margin-bottom: 0; background: transparent; display: flex; align-items: center; gap: 8px; height: auto; box-sizing: border-box; justify-content: space-between; border-bottom: 1px solid #ebebeb;">
-                  <div style="display: flex; align-items: center; gap: 8px;">
-                    <div class="comp-feat comp-feat-active"><span class="fic"><img src="composer_assets/ic-track.svg" style="filter: invert(51%) sepia(82%) saturate(461%) hue-rotate(71deg) brightness(96%) contrast(85%); width: 15px; height: 15px;" alt=""></span><span>Track</span></div>
-                    <div class="comp-feat"><span class="fic"><img src="composer_assets/ic-design.svg" alt=""></span><span>Design</span></div>
-                    <div class="comp-feat"><span class="fic"><img src="composer_assets/ic-ai-write.svg" alt=""></span><span>AI Write</span></div>
-                    <div class="comp-feat"><span class="fic"><img src="composer_assets/ic-templates.svg" alt=""></span><span>Templates</span></div>
-                    <div class="comp-feat"><span class="fic"><img src="composer_assets/ic-invoices.svg" alt=""></span><span>Invoices</span></div>
-                    <div class="comp-feat"><span class="fic"><img src="composer_assets/ic-groups.svg" alt=""></span><span>Groups</span></div>
-                  </div>
-                  <button style="border:none; background:none; cursor:pointer; padding: 2px; width:24px; height:24px; display:flex; align-items:center; justify-content:center;">
-                    <svg width="14" height="14" viewBox="0 0 4 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <circle cx="2" cy="2" r="1.5" fill="#888888"/>
-                      <circle cx="2" cy="8" r="1.5" fill="#888888"/>
-                      <circle cx="2" cy="14" r="1.5" fill="#888888"/>
-                    </svg>
-                  </button>
-                </div>
-
-                <!-- Text Area / Editor -->
-                <div style="padding: 16px 24px; position: relative;">
-                  <div class="reply-box-body" id="reply-box-body" contenteditable="true" spellcheck="true" placeholder="Reply to email..." style="min-height: 100px; max-height: 250px; overflow-y: auto; outline: none; font-size: 14px; color: #333333; line-height: 1.5; font-family: inherit;"></div>
-                  
-                  <!-- History ellipsis button (...) -->
-                  <div style="margin-top: 12px; display: flex; align-items: center;">
-                    <button class="reply-history-btn" style="background: #f1f3f4; border: 1px solid #dcdcdc; border-radius: 4px; padding: 2px 8px; font-size: 12px; font-weight: 600; color: #666666; cursor: pointer;">...</button>
-                  </div>
-                </div>
-
-                <!-- Bottom Toolbar (Format & Send) -->
-                <div class="comp-bottom" style="border-top: none;">
-                  <!-- Formatting bar -->
-                  <div class="comp-format-bar" style="border-top: 1px solid #ebebeb; padding-left: 24px; padding-right: 24px; display: flex; align-items: center; gap: 8px;">
-                    <div class="reply-font-dd-pill">
-                      <span>Sans Serif</span>
-                      <img src="composer_assets/figma-ic-triangle.svg" alt="" class="comp-dd-arrow">
-                    </div>
-                    <div class="comp-vert-sep"></div>
-                    <div class="reply-font-dd-pill">
-                      <span>11</span>
-                      <img src="composer_assets/figma-ic-triangle.svg" alt="" class="comp-dd-arrow">
-                    </div>
-                    <div class="comp-vert-sep"></div>
-                    <button class="comp-fmt-btn" title="Bold"><img src="composer_assets/figma-ic-bold.svg" alt=""></button>
-                    <button class="comp-fmt-btn" title="Italic"><img src="composer_assets/figma-ic-italic.svg" alt=""></button>
-                    <button class="comp-fmt-btn" title="Underline"><img src="composer_assets/figma-ic-underline.svg" alt=""></button>
-                    <button class="comp-fmt-btn" title="Text color"><img src="composer_assets/figma-ic-colors.svg" alt=""></button>
-                    <button class="comp-fmt-btn comp-fmt-align" title="Alignment"><img src="composer_assets/figma-ic-align.svg" alt=""><img src="composer_assets/figma-ic-caret-dd.svg" alt="" class="comp-mini-caret"></button>
-                    <button class="comp-fmt-btn comp-fmt-align" title="Lists"><img src="composer_assets/figma-ic-list.svg" alt=""><img src="composer_assets/figma-ic-caret-dd.svg" alt="" class="comp-mini-caret"></button>
-                    <button class="comp-fmt-btn comp-fmt-align" title="Indent"><img src="composer_assets/figma-ic-indent.svg" alt=""><img src="composer_assets/figma-ic-caret-dd.svg" alt="" class="comp-mini-caret"></button>
-                    <button class="comp-fmt-btn comp-fmt-link" title="Link"><img src="composer_assets/figma-ic-more.svg" alt=""></button>
-                    <button class="comp-fmt-btn comp-fmt-moredots" title="More"><img src="composer_assets/figma-ic-link.svg" alt=""></button>
-                  </div>
-                  <!-- Send bar -->
-                  <div class="comp-send-bar" style="display: flex; align-items: center; justify-content: space-between; padding: 12px 24px; border-top: 1px solid #ebebeb;">
-                    <div style="display: flex; align-items: center; gap: 8px;">
-                      <button class="comp-send-btn titan-split-btn" onclick="discardReply()">
-                        <span class="comp-send-main split-btn-main">
-                          <span class="btn-content-wrapper">Send</span>
-                        </span>
-                        <span class="comp-send-dd-btn split-btn-dd">
-                          <span class="btn-content-wrapper">
-                            <img src="composer_assets/ic-caret-white.svg" alt="">
-                          </span>
-                        </span>
-                      </button>
-                      <button class="comp-campaign-btn titan-action-btn action-btn-campaign" title="Campaign">
-                        <svg class="ci-campaign" preserveAspectRatio="xMidYMid meet" overflow="visible"
-                          style="display: block;" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <g id="megaphone-icon-original 8">
-                            <path id="Union"
-                              d="M7.7712 2.4634C7.96265 2.4144 8.16444 2.42141 8.35225 2.48294C8.54 2.5445 8.70645 2.65828 8.83175 2.81106C11.4809 6.03543 14.7746 6.70206 14.8181 6.71047L17.3689 7.18801C18.1804 7.34094 18.8984 7.80935 19.3649 8.49075C19.8315 9.17228 20.0082 10.0118 19.8571 10.8238C19.7172 11.5649 19.3132 12.2305 18.7204 12.6968C18.1275 13.1631 17.3858 13.3985 16.6325 13.3599L15.3112 16.2398C15.2419 16.3908 15.1376 16.5232 15.0065 16.6255C14.8753 16.7278 14.7209 16.7972 14.5573 16.8277C14.3938 16.858 14.2253 16.8486 14.0661 16.8003C13.907 16.752 13.7614 16.6665 13.6423 16.5503L13.029 15.9517C12.9065 15.8324 12.8149 15.684 12.7634 15.521C12.712 15.3581 12.7015 15.185 12.7331 15.0171L13.153 12.7779C12.0792 12.7026 9.47517 12.7292 6.6794 14.3032C6.46759 14.4239 6.21987 14.4658 5.98018 14.4214C5.83017 14.393 5.68804 14.3319 5.56417 14.2427C5.40277 14.1285 5.27752 13.9701 5.20382 13.7866C5.13017 13.6033 5.11162 13.4026 5.14913 13.2085L7.0085 3.27786C7.04499 3.08367 7.13612 2.9035 7.2712 2.7593C7.4063 2.61521 7.57984 2.51241 7.7712 2.4634Z"
-                              fill="#888888" />
-                          </g>
-                        </svg>
-                      </button>
-                      <div class="comp-vert-sep"></div>
-                      <div class="comp-send-icons">
-                        <button class="comp-icon-btn titan-action-btn action-btn-reminder" title="Reminder">
-                          <svg class="ci-reminder" preserveAspectRatio="xMidYMid meet" overflow="visible"
-                            style="display: block;" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <g id="Icon/Composer/Bottom action/reminder">
-                              <path id="Vector" fill-rule="evenodd" clip-rule="evenodd"
-                                d="M12.58 8.24C12.9 8.56 12.9 9.078 12.58 9.397L10.397 11.58C10.077 11.9 9.559 11.9 9.24 11.58C8.92 11.26 8.92 10.742 9.24 10.422L11.422 8.24C11.742 7.92 12.26 7.92 12.58 8.24ZM12.728 11.013C13.805 10.293 15.071 9.91 16.366 9.91C18.102 9.91 19.768 10.6 20.996 11.827C22.224 13.055 22.913 14.721 22.913 16.457C22.913 17.752 22.529 19.018 21.81 20.095C21.09 21.172 20.068 22.011 18.872 22.506C17.675 23.002 16.359 23.131 15.089 22.879C13.819 22.626 12.652 22.003 11.736 21.087C10.821 20.171 10.196 19.005 9.944 17.735C9.692 16.465 9.821 15.148 10.317 13.951C10.812 12.755 11.652 11.733 12.728 11.013ZM16.763 13.911C16.763 13.509 16.43 13.183 16.019 13.183C15.608 13.183 15.275 13.509 15.275 13.911V16.821C15.275 17.223 15.608 17.548 16.019 17.548H19.987C20.397 17.548 20.731 17.223 20.731 16.821C20.731 16.419 20.398 16.093 19.987 16.093H16.763V13.911ZM20.153 9.397C19.833 9.077 19.833 8.559 20.153 8.24C20.472 7.92 20.99 7.92 21.31 8.24L23.492 10.422C23.812 10.742 23.812 11.26 23.492 11.58C23.172 11.9 22.654 11.9 22.335 11.58L20.153 9.397Z"
-                                fill="#888888" />
-                            </g>
-                          </svg>
-                        </button>
-                        <button class="comp-icon-btn titan-action-btn action-btn-text" title="Text styling">
-                          <svg class="ci-text" preserveAspectRatio="xMidYMid meet" overflow="visible"
-                            style="display: block;" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <g id="Group">
-                              <path id="Subtract"
-                                d="M13 0C14.1046 0 15 0.89543 15 2V13C15 14.1046 14.1046 15 13 15H2C0.89543 15 0 14.1046 0 13V2C0 0.89543 0.89543 0 2 0H13ZM6.44727 3.21484L3.47168 11.7861H5.26953L5.92969 9.74316H8.94141L9.58984 11.7861H11.5322L8.55664 3.21484H6.44727ZM7.39062 4.99707H7.49805L8.56055 8.3584H6.31543L7.39062 4.99609V4.99707Z"
-                                fill="#888888" />
-                            </g>
-                          </svg>
-                        </button>
-                        <button class="comp-icon-btn titan-action-btn action-btn-attach" title="Attachment">
-                          <svg class="ci-attach" preserveAspectRatio="xMidYMid meet" overflow="visible"
-                            style="display: block;" viewBox="0 0 14.5457 15.5514" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <g id="Attach">
-                              <path id="Vector"
-                                d="M14.2692 7.65739C14.1022 7.51539 13.8862 7.44339 13.6672 7.45539C13.4472 7.46739 13.2412 7.56439 13.0912 7.72439C11.5622 9.52939 9.88923 11.2064 8.08823 12.7384C6.17523 14.2284 4.17423 14.2614 2.72823 12.8164C1.28323 11.3714 1.32823 9.33639 2.82823 7.45739C4.34023 5.56839 6.05423 3.85339 7.94423 2.34339C8.40423 1.91739 9.00423 1.67339 9.63023 1.65939C10.2572 1.64539 10.8672 1.86039 11.3462 2.26539C11.7782 2.72839 12.0132 3.34139 12.0012 3.97439C11.9882 4.60739 11.7292 5.21039 11.2802 5.65639C9.89123 7.43139 8.29323 9.03339 6.52023 10.4264C6.18723 10.6594 5.54323 10.9934 5.06423 10.5144C4.89823 10.3014 4.81523 10.0344 4.83223 9.76439C4.84823 9.49439 4.96223 9.23939 5.15323 9.04739C6.32423 7.62239 7.63523 6.31739 9.06723 5.15539C9.23323 5.01139 9.33723 4.80839 9.35723 4.58839C9.37723 4.36939 9.31323 4.15139 9.17823 3.97739C9.03323 3.81139 8.83023 3.70739 8.61123 3.68739C8.39223 3.66739 8.17423 3.73139 8.00023 3.86639C6.46223 5.13239 5.05523 6.54639 3.79723 8.09139C3.36823 8.59839 3.14123 9.24539 3.15723 9.90939C3.17323 10.5734 3.43323 11.2084 3.88623 11.6934C4.36623 12.1554 5.00323 12.4214 5.67023 12.4374C6.33623 12.4544 6.98523 12.2204 7.48823 11.7824C9.38423 10.2904 11.0872 8.56839 12.5582 6.65639C13.2592 5.89639 13.6432 4.89739 13.6302 3.86439C13.6182 2.83039 13.2102 1.84039 12.4912 1.09739C11.7352 0.405391 10.7512 0.0153904 9.72723 0.000390363C8.70223 -0.0136096 7.70723 0.34939 6.93223 1.02039C4.91923 2.61539 3.09223 4.43039 1.48423 6.43439C-0.505771 8.99139 -0.505771 11.9494 1.55123 13.9844C2.02123 14.4744 2.58523 14.8674 3.21023 15.1364C3.83423 15.4064 4.50723 15.5464 5.18723 15.5514C6.62523 15.5064 8.00623 14.9814 9.11223 14.0614C10.9872 12.4584 12.7342 10.7114 14.3372 8.83639C14.4822 8.66939 14.5572 8.45339 14.5442 8.23339C14.5312 8.01339 14.4342 7.80639 14.2702 7.65739H14.2692Z"
-                                fill="#888888" />
-                            </g>
-                          </svg>
-                        </button>
-                        <button class="comp-icon-btn titan-action-btn action-btn-image" title="Image">
-                          <svg class="ci-image" preserveAspectRatio="xMidYMid meet" overflow="visible"
-                            style="display: block;" viewBox="0 0 16.0004 13.713" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <g id="Group">
-                              <g id="Vector">
-                                <path
-                                  d="M15.9991 6.319C15.9991 4.834 15.9991 2.582 14.6851 1.303C13.3701 0.023 10.3761 0 8.60508 0H7.39408C5.62208 0 2.66308 0 1.31408 1.303C-0.0339215 2.605 7.84092e-05 4.833 7.84092e-05 6.319V7.382C7.84092e-05 8.879 7.85591e-05 11.13 1.31408 12.41C2.62808 13.69 4.86808 13.713 6.85708 13.713H8.67408C10.4441 13.713 13.3941 13.713 14.7421 12.422C16.0901 11.13 15.9991 8.879 15.9991 7.382V6.319ZM2.90308 6.548C2.38108 6.968 1.88908 7.422 1.42808 7.908L1.23408 8.113V6.343C1.23408 5.063 1.23408 3.108 2.18308 2.171C3.13108 1.234 5.24508 1.234 6.85708 1.234H8.53708C10.0451 1.234 12.8331 1.234 13.8501 2.171C14.8671 3.108 14.7991 5.062 14.7991 6.342V6.685C14.1491 5.989 13.4491 5.34 12.7081 4.742C12.4531 4.542 12.1401 4.433 11.8161 4.433C11.4931 4.433 11.1791 4.543 10.9251 4.743C10.2051 5.328 9.52108 5.957 8.87908 6.628C8.39908 7.108 7.90808 7.599 7.47408 7.999C7.03908 8.399 6.75408 8.468 6.33108 8.113C6.16008 7.965 5.94208 7.748 5.70208 7.519C5.37808 7.173 5.03008 6.849 4.66208 6.548C4.41608 6.338 4.10508 6.222 3.78208 6.216C3.46008 6.226 3.15208 6.342 2.90308 6.548Z"
-                                  fill="#888888" />
-                                <path
-                                  d="M6.41008 5.759C7.08008 5.759 7.62208 5.217 7.62208 4.548C7.62208 3.878 7.08008 3.337 6.41108 3.337C5.74108 3.337 5.19908 3.879 5.19908 4.547C5.19908 5.217 5.74208 5.759 6.41108 5.759H6.41008Z"
-                                  fill="#888888" />
-                              </g>
-                            </g>
-                          </svg>
-                        </button>
-                        <button class="comp-icon-btn titan-action-btn action-btn-signature" title="Signature">
-                          <svg class="ci-signature" preserveAspectRatio="xMidYMid meet" overflow="visible"
-                            style="display: block;" viewBox="0 0 19.4306 13.006" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <g id="Group">
-                              <path id="Vector"
-                                d="M19.3692 9.71963C19.4272 9.54103 19.4444 9.35173 19.4196 9.16563C19.3948 8.97953 19.3286 8.80133 19.2259 8.64413C19.1232 8.48693 18.9866 8.35483 18.8261 8.25733C18.6656 8.15983 18.4853 8.09963 18.2985 8.08093C17.3116 8.08093 16.8088 9.10513 16.4364 9.76613L16.0733 10.2969C16.0081 10.3713 15.8835 10.5959 15.8423 10.6387C15.7539 10.5006 15.6967 10.3449 15.6747 10.1825C15.5812 9.84243 15.5066 9.49733 15.4513 9.14903C15.4028 8.83543 15.3375 8.52463 15.2557 8.21793C15.1878 8.01343 15.0782 7.82513 14.934 7.66493C14.7898 7.50463 14.6141 7.37593 14.4178 7.28693C14.2241 7.19023 14.0105 7.13983 13.794 7.13983C13.5775 7.13983 13.3639 7.19023 13.1702 7.28693C12.5499 7.69123 11.9616 8.14253 11.4105 8.63693L11.3174 8.72073C9.96083 9.88453 9.43583 10.3757 9.06363 10.4932C8.69133 10.6108 8.46103 10.5373 8.24933 10.4426C7.97383 10.2696 7.73693 10.0416 7.55351 9.77283L7.80493 9.64253C7.99183 9.54583 8.17223 9.43693 8.34493 9.31663C10.207 7.96653 12.0691 5.48063 11.9295 3.23677C11.9057 2.69638 11.7662 2.16738 11.5205 1.68552C11.2747 1.20365 10.9284 0.780138 10.5049 0.443588C10.3426 0.304898 10.1519 0.203238 9.94633 0.145648C9.67333 0.0817783 9.39653 0.0351384 9.11773 0.00598839C8.59283 -0.0238116 8.06763 0.0578481 7.57654 0.245608C7.08548 0.433358 6.63975 0.722948 6.26865 1.09533C4.76032 2.49192 4.08065 5.18273 4.09927 7.22173C4.1369 7.68763 4.20219 8.15083 4.29479 8.60903L3.23338 9.03733C1.29677 9.79143 1.70925 9.69783 1.20647 9.86533C0.86776 9.94183 0.31523 10.3637 0.12921 10.6569C0.04444 10.8109 0 10.9839 0 11.1597C0 11.3355 0.04444 11.5084 0.12921 11.6625C0.26589 11.8852 0.45561 12.0707 0.68144 12.2023C0.90727 12.3339 1.16217 12.4075 1.42338 12.4166C1.59632 12.4411 2.02977 12.2268 2.20271 12.2023C2.20271 12.2023 4.02478 11.4394 5.3562 10.8994C6.09969 11.8882 7.07534 12.5611 7.66235 12.8209C8.24933 13.0806 9.09633 13.0265 9.60013 12.9038C10.1038 12.7812 10.9168 12.4079 12.2205 11.4301C12.3322 11.3463 12.6022 11.0856 12.9002 10.8156L13.1795 10.5642C13.384 11.2282 13.7522 11.8301 14.2502 12.3146C14.755 12.7173 15.3836 12.8449 16.0267 12.9038H16.1291C16.5139 12.9038 16.9017 12.7635 17.2511 12.6124C17.6005 12.4613 17.9978 12.0928 18.2337 11.7941C18.2776 11.7474 18.318 11.6976 18.3548 11.6451C18.8622 10.9999 19.1386 10.5074 19.3692 9.71963ZM9.41563 3.05987C9.41563 4.25163 8.35423 5.85303 7.26488 6.78413L6.8459 7.12863V6.68173C6.86355 5.27203 7.35184 3.90877 8.23323 2.80848C8.29013 2.75001 8.35253 2.69702 8.41943 2.6502C8.58123 2.52037 8.78013 2.44537 8.98733 2.43606C9.03273 2.42114 9.08163 2.42114 9.12703 2.43606C9.22483 2.50632 9.30283 2.60069 9.35343 2.70999C9.40393 2.8193 9.42543 2.93983 9.41563 3.05987Z"
-                                fill="#888888" />
-                            </g>
-                          </svg>
-                        </button>
-                        <button class="comp-icon-btn titan-action-btn action-btn-bookings" title="Calendar">
-                          <svg class="ci-bookings" preserveAspectRatio="xMidYMid meet" overflow="visible"
-                            style="display: block;" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <g id="Bookings icon">
-                              <path id="Exclude"
-                                d="M15.333 4.5C15.7932 4.5 16.1669 4.81828 16.167 5.21094V6.375H18.0547C18.8528 6.37525 19.4997 7.0222 19.5 7.82031V18.0547C19.4997 18.8528 18.8528 19.4997 18.0547 19.5H5.94531C5.1472 19.4997 4.50025 18.8528 4.5 18.0547V7.82031C4.50025 7.0222 5.1472 6.37525 5.94531 6.375H7.83301V5.21094C7.83312 4.81828 8.20682 4.5 8.66699 4.5C9.12701 4.50015 9.49989 4.81837 9.5 5.21094V6.375H14.5V5.21094C14.5001 4.81837 14.873 4.50015 15.333 4.5ZM15.1025 10.3125C14.7158 10.019 14.1583 10.0867 13.8574 10.4639L11.3525 13.6064L10.0664 12.4219C9.71041 12.0939 9.149 12.109 8.8125 12.4561C8.47604 12.8034 8.49237 13.3516 8.84863 13.6797L10.8438 15.5186C11.2243 15.8691 11.8319 15.824 12.1533 15.4209L15.2578 11.5264C15.5586 11.1491 15.4892 10.6059 15.1025 10.3125Z"
-                                fill="#888888" />
-                            </g>
-                          </svg>
-                        </button>
-                      </div>
-                    </div>
-                    <button class="comp-delete-btn" title="Discard" onclick="discardReply()">
-                      <img src="composer_assets/figma-ic-delete.svg" alt="">
-                    </button>
-                  </div>
-                </div>
-            </div>
-
-          </div><!-- /thread-content -->
-        </div><!-- /reading-pane -->
-
-        <!-- ============ CRM: Right Panel (inline column, like Streak in Gmail) ============ -->
-        <div class="crm-panel" id="crm-panel">
-          <div class="crm-panel-header">
-            <span class="crm-record-title" id="crm-record-title">
-              <span id="crm-record-name">Dashboard v2 Upgrade</span>
-              <a class="crm-record-ext" title="Open in Titan CRM" onclick="location.href='crm.html'">
-                <svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.5 3H3.2C2.54 3 2 3.54 2 4.2v6.6C2 11.46 2.54 12 3.2 12h6.6c.66 0 1.2-.54 1.2-1.2V8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><path d="M8.5 2H12v3.5M12 2L6.8 7.2" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </a>
-            </span>
-            <span class="close-x" onclick="closeCrmPanel()">&times;</span>
-          </div>
-          <div class="crm-panel-body">
-
-            <div class="crm-section">
-              <div class="crm-ps-wrap">
-                <div class="crm-pipeline-stage" id="crm-pipeline-stage" onclick="toggleStageMenu(event)">
-                  <svg class="pl-icon" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 3.2H9.6L12.4 7L9.6 10.8H2L4.4 7L2 3.2Z" fill="currentColor"/></svg>
-                  <span id="crm-ps-text">Neo partnerships: Proposal Sent</span>
-                  <span class="caret">&#9662;</span>
-                </div>
-                <div class="crm-stage-menu" id="crm-stage-menu"></div>
-              </div>
-            </div>
-
-            <div class="crm-section">
-              <div class="crm-contact-row">
-                <div class="crm-contact-avatar" id="crm-contact-avatar">RW</div>
-                <div>
-                  <div class="crm-contact-name" id="crm-contact-name">Ryan Walker</div>
-                  <div class="crm-contact-email" id="crm-contact-email">ryan.walker@meridianlabs.com</div>
-                </div>
-              </div>
-              <div class="crm-company" id="crm-company">Meridian Labs</div>
-            </div>
-
-            <div class="crm-section">
-              <div class="crm-section-title">Upcoming Activity</div>
-              <div class="crm-activity-row">
-                <span class="crm-act-ic followup"><svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="8" cy="8.6" r="5.1" stroke="currentColor" stroke-width="1.3"/><path d="M8 6V8.6l1.8 1.1" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><path d="M8 1.8v1.3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></span>
-                <div class="crm-activity-text">Follow-up on proposal</div>
-                <div class="crm-activity-date">Thu</div>
-              </div>
-              <div class="crm-activity-row">
-                <span class="crm-act-ic meeting"><svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2.5" y="3.5" width="11" height="10" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M2.5 6.5h11M5.5 2.3v2.2M10.5 2.3v2.2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></span>
-                <div class="crm-activity-text">Proposal follow-up questions</div>
-                <div class="crm-activity-date">Jul 30, 3:00 PM</div>
-              </div>
-              <div class="crm-activity-row">
-                <span class="crm-act-check" onclick="toggleActTask(this)"><span class="box"><svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3.5 8.2l2.6 2.6L11.8 5" stroke="#fff" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span>
-                <div class="crm-activity-text">Send updated proposal deck</div>
-                <div class="crm-activity-date overdue">Overdue</div>
-              </div>
-              <div class="crm-activity-row">
-                <span class="crm-act-check" onclick="toggleActTask(this)"><span class="box"><svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3.5 8.2l2.6 2.6L11.8 5" stroke="#fff" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span>
-                <div class="crm-activity-text">Schedule follow-up call</div>
-                <div class="crm-activity-date">Mon, 5pm</div>
-              </div>
-              <div class="crm-add-activity" onclick="openActivityMenu(event)">+ Add activity</div>
-              <div class="crm-activity-menu" id="crm-activity-menu">
-                <div class="cam2-bar">Last activity: Email sent 2d ago</div>
-                <div class="cam2-items">
-                  <div class="cam2-item" onclick="addActivity('followup')">
-                    <span class="ic"><svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 4L2.6 7.2 6 10.4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 7.2h6.4c2 0 3.6 1.6 3.6 3.6V12" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></span>
-                    Follow-up on email
-                  </div>
-                  <div class="cam2-item" onclick="addActivity('call')">
-                    <span class="ic"><svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.4 2.8H4c-1 0-1.7.8-1.5 1.8.4 2 1.5 3.9 3 5.4s3.4 2.6 5.4 3c1 .2 1.8-.5 1.8-1.5v-1.4c0-.5-.4-.9-.8-1l-1.7-.4c-.4-.1-.9 0-1.2.4l-.5.6C7 8.9 6 7.9 5.4 6.7l.6-.5c.3-.3.5-.8.4-1.2L6 3.6c-.1-.5-.5-.8-1-.8z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg></span>
-                    Schedule a call
-                  </div>
-                  <div class="cam2-item" onclick="addActivity('booking')">
-                    <span class="ic"><svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2.5" y="3.5" width="11" height="10" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M2.5 6.5h11M5.5 2.3v2.2M10.5 2.3v2.2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></span>
-                    Send a booking link
-                  </div>
-                  <div class="cam2-item" onclick="addActivity('task')">
-                    <span class="ic"><svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2.5" y="2.5" width="11" height="11" rx="2.5" stroke="currentColor" stroke-width="1.3"/><path d="M5.4 8l1.8 1.8L11 6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-                    Create a task
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="crm-section">
-              <div class="crm-section-title">Recent Activity</div>
-              <div class="crm-activity-row">
-                <span class="crm-act-ic email"><svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="3.5" width="12" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M2.6 4.6L8 8.4l5.4-3.8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></span>
-                <div class="crm-activity-text">Project roadmap for Dashboard v2</div>
-                <div class="crm-activity-date">Jun 12</div>
-              </div>
-              <div class="crm-activity-row">
-                <span class="crm-act-ic meeting"><svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2.5" y="3.5" width="11" height="10" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M2.5 6.5h11M5.5 2.3v2.2M10.5 2.3v2.2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></span>
-                <div class="crm-activity-text">Design review call</div>
-                <div class="crm-activity-date">Jun 10</div>
-              </div>
-              <div class="crm-activity-row">
-                <span class="crm-act-ic phone"><svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.4 2.8H4c-1 0-1.7.8-1.5 1.8.4 2 1.5 3.9 3 5.4s3.4 2.6 5.4 3c1 .2 1.8-.5 1.8-1.5v-1.4c0-.5-.4-.9-.8-1l-1.7-.4c-.4-.1-.9 0-1.2.4l-.5.6C7 8.9 6 7.9 5.4 6.7l.6-.5c.3-.3.5-.8.4-1.2L6 3.6c-.1-.5-.5-.8-1-.8z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg></span>
-                <div class="crm-activity-text">Intro call with Ryan</div>
-                <div class="crm-activity-date">Jun 8</div>
-              </div>
-              <div class="crm-activity-row">
-                <span class="crm-act-ic task"><svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2.5" y="2.5" width="11" height="11" rx="2.5" stroke="currentColor" stroke-width="1.3"/><path d="M5.4 8l1.8 1.8L11 6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-                <div class="crm-activity-text">Send updated proposal deck</div>
-                <div class="crm-activity-date">Jun 7</div>
-              </div>
-            </div>
-
-            <div class="crm-section">
-              <div class="crm-section-title">Notes</div>
-              <div class="crm-note">
-                <div class="meta">Usha &middot; Jun 10</div>
-                Wants multi-theme support prioritized before signing off on the proposal.
-              </div>
-            </div>
-
-            <div class="crm-section">
-              <div class="crm-section-title">AI Summary</div>
-              <button class="crm-ai-summary-btn" onclick="generateAiSummary(this)">Generate</button>
-              <div class="crm-ai-summary-text" id="crm-ai-summary-text">
-                Ryan at Meridian Labs is evaluating the Dashboard v2 upgrade. Proposal was sent Jun 9; main open item is multi-theme support before he'll sign off. Next step: confirm theming scope on Monday's call.
-              </div>
-            </div>
-
-            <div class="crm-section">
-              <div class="crm-section-title">Fields</div>
-              <div class="crm-field-row"><span class="crm-field-label">Lead Source</span><span class="crm-field-value">Referral</span></div>
-              <div class="crm-field-row"><span class="crm-field-label">Deal Value</span><span class="crm-field-value">$18,000</span></div>
-              <div class="crm-field-row"><span class="crm-field-label">Projected Close Date</span><span class="crm-field-value">Jul 30</span></div>
-              <div class="crm-field-row"><span class="crm-field-label">Decision Maker</span><span class="crm-field-value">Ryan Walker</span></div>
-              <div class="crm-field-row"><span class="crm-field-label">Key Objection</span><span class="crm-field-value">Theming support</span></div>
-              <div class="crm-field-row"><span class="crm-field-label">Next Step</span><span class="crm-field-value">Confirm scope on call</span></div>
-            </div>
-
-          </div>
-        </div><!-- /crm-panel -->
-
+        <div class="kanban-board" id="kanban-board" style="padding-right:24px;"></div>
       </div><!-- /content-area -->
     </div><!-- /main-area -->
 
@@ -4162,7 +3399,7 @@
       <div class="app-switcher-section">
         <div class="app-switcher-row">
           <!-- Mail -->
-          <div class="app-switcher-item">
+          <div class="app-switcher-item" onclick="location.href='index.html'">
             <div class="app-icon">
               <img src="app_switcher_assets/grid_icons/mail.svg" alt="Mail" class="app-icon-img">
             </div>
@@ -4225,12 +3462,12 @@
             </div>
             <span class="app-label">Site</span>
           </div>
-          <!-- CRM -->
-          <div class="app-switcher-item" onclick="location.href='crm.html'">
+          <!-- CRM (current app) -->
+          <div class="app-switcher-item" style="background:#eaf1ff; border-radius:8px;">
             <div class="app-icon">
               <img src="app_switcher_assets/grid_icons/crm.svg" alt="CRM" class="app-icon-img">
             </div>
-            <span class="app-label">CRM</span>
+            <span class="app-label" style="color:#2170f4; font-weight:700;">CRM</span>
           </div>
         </div>
       </div>
@@ -4295,34 +3532,109 @@
     </div>
   </div><!-- /app-switcher-dropdown -->
 
-  <!-- ============ CRM: Pipeline Dropdown (label-menu style) ============ -->
-  <div class="pipeline-dropdown" id="pipeline-dropdown">
-    <div class="pl-dd-title">Pipelines</div>
-    <div class="pl-dd-option checked" data-key="sales" onclick="selectPipelineOption(this); event.stopPropagation();">
-      <span class="pl-dd-ic" style="color:#2170f4;"><svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 3.2H9.6L12.4 7L9.6 10.8H2L4.4 7L2 3.2Z" fill="currentColor"/></svg></span>
-      <span class="pl-dd-name">Neo partnerships</span>
-      <span class="pl-dd-radio"></span>
+  <!-- ============ New Pipeline flow (§4.1–4.3) ============ -->
+  <div class="np-overlay" id="np-overlay" onclick="if(event.target===this) closeNewPipeline()">
+    <div class="np-modal" id="np-modal">
+
+      <!-- Step 1: choose what to track -->
+      <div class="np-step active" id="np-step-1">
+        <div class="np-header">
+          <span class="np-title">What do you want to track?</span>
+          <span class="np-close" onclick="closeNewPipeline()">&times;</span>
+        </div>
+        <div class="np-body">
+          <div class="np-radio" data-type="sales" onclick="npPickType('sales')">
+            <span class="np-radio-dot"></span>
+            <span class="np-radio-text"><span class="t">Sales</span><span class="s">Deals &amp; opportunities</span></span>
+          </div>
+          <div class="np-radio" data-type="projects" onclick="npPickType('projects')">
+            <span class="np-radio-dot"></span>
+            <span class="np-radio-text"><span class="t">Projects</span><span class="s">Client or internal work</span></span>
+          </div>
+          <div class="np-radio" data-type="orders" onclick="npPickType('orders')">
+            <span class="np-radio-dot"></span>
+            <span class="np-radio-text"><span class="t">Orders</span><span class="s">Fulfilment &amp; delivery</span></span>
+          </div>
+          <div class="np-radio" data-type="candidates" onclick="npPickType('candidates')">
+            <span class="np-radio-dot"></span>
+            <span class="np-radio-text"><span class="t">Candidates</span><span class="s">Hiring &amp; recruitment</span></span>
+          </div>
+          <div class="np-radio" data-type="other" onclick="npPickType('other')">
+            <span class="np-radio-dot"></span>
+            <span class="np-radio-text"><span class="t">Other</span><span class="s">Start from a blank template</span></span>
+          </div>
+        </div>
+        <div class="np-footer">
+          <div class="np-btn-primary" onclick="npContinue()">Continue</div>
+        </div>
+      </div>
+
+      <!-- Step 2: name + edit stage template -->
+      <div class="np-step" id="np-step-2">
+        <div class="np-header">
+          <span class="np-back" onclick="npBack()" title="Back">
+            <svg width="8" height="13" viewBox="0 0 8 13" fill="none"><path d="M6.5 1l-5 5.5 5 5.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          <span class="np-title" id="np-step2-title">Set up your pipeline</span>
+          <span class="np-close" onclick="closeNewPipeline()">&times;</span>
+        </div>
+        <div class="np-body">
+          <div class="np-label">Pipeline name</div>
+          <input class="np-name-input" id="np-name" type="text" placeholder="Pipeline name" spellcheck="false">
+
+          <div style="height:30px;"></div>
+
+          <div class="np-label">Stages</div>
+          <div class="np-help">Click a stage to rename it. These are the columns on your board.</div>
+          <div class="np-chev-chain" id="np-stages"></div>
+        </div>
+        <div class="np-footer">
+          <div class="np-btn-secondary" onclick="npBack()">Back</div>
+          <div class="np-btn-primary" onclick="npCreate()">Create pipeline</div>
+        </div>
+      </div>
+
     </div>
-    <div class="pl-dd-option" data-key="onboarding" onclick="selectPipelineOption(this); event.stopPropagation();">
-      <span class="pl-dd-ic" style="color:#0ea5e9;"><svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 3.2H9.6L12.4 7L9.6 10.8H2L4.4 7L2 3.2Z" fill="currentColor"/></svg></span>
-      <span class="pl-dd-name">Onboarding Projects</span>
-      <span class="pl-dd-radio"></span>
-    </div>
-    <div class="pl-dd-option" data-key="hiring" onclick="selectPipelineOption(this); event.stopPropagation();">
-      <span class="pl-dd-ic" style="color:#f59e0b;"><svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 3.2H9.6L12.4 7L9.6 10.8H2L4.4 7L2 3.2Z" fill="currentColor"/></svg></span>
-      <span class="pl-dd-name">Q3 Hiring</span>
-      <span class="pl-dd-radio"></span>
-    </div>
-    <div class="pl-dd-sep"></div>
-    <div class="pl-dd-action" onclick="location.href='crm.html#new-pipeline';">
-      <span class="pl-dd-ic"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 2.5V11.5M2.5 7H11.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></span>
-      <span class="pl-dd-name">New pipeline</span>
-      <span class="pl-dd-ext" title="Opens in Titan CRM"><svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.5 3H3.2C2.54 3 2 3.54 2 4.2v6.6C2 11.46 2.54 12 3.2 12h6.6c.66 0 1.2-.54 1.2-1.2V8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><path d="M8.5 2H12v3.5M12 2L6.8 7.2" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-    </div>
-    <div class="pl-dd-action" onclick="location.href='crm.html';">
-      <span class="pl-dd-ic"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 5a2 2 0 100 4 2 2 0 000-4z" stroke="currentColor" stroke-width="1.2"/><path d="M11.4 8.2l1 .6-1 1.7-1.1-.4a3.7 3.7 0 01-.8.5l-.2 1.2H6.7l-.2-1.2a3.7 3.7 0 01-.8-.5l-1.1.4-1-1.7 1-.6a3.6 3.6 0 010-1l-1-.6 1-1.7 1.1.4c.25-.2.52-.36.8-.5l.2-1.2h2.6l.2 1.2c.28.14.55.3.8.5l1.1-.4 1 1.7-1 .6a3.6 3.6 0 010 1z" stroke="currentColor" stroke-width="1.1" stroke-linejoin="round"/></svg></span>
-      <span class="pl-dd-name">Manage pipelines</span>
-      <span class="pl-dd-ext" title="Opens in Titan CRM"><svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.5 3H3.2C2.54 3 2 3.54 2 4.2v6.6C2 11.46 2.54 12 3.2 12h6.6c.66 0 1.2-.54 1.2-1.2V8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><path d="M8.5 2H12v3.5M12 2L6.8 7.2" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+  </div>
+  <div class="np-toast" id="np-toast"></div>
+
+  <!-- ============ CRM: Pipeline Picker Modal ============ -->
+  <div class="pipeline-picker-overlay" id="pipeline-picker-overlay" onclick="if(event.target===this) closePipelinePicker()">
+    <div class="pipeline-picker-modal">
+      <div class="pipeline-picker-header">
+        Add to pipeline
+        <span class="close-x" onclick="closePipelinePicker()">&times;</span>
+      </div>
+      <div class="pipeline-picker-body">
+        <div class="pipeline-picker-option" onclick="confirmPipelinePick('link')">
+          <div class="pipeline-picker-option-icon">
+            <img src="app_switcher_assets/grid_icons/crm.svg" alt="" style="width:18px;height:18px;">
+          </div>
+          <div class="pipeline-picker-option-text">
+            <div class="title">Link to existing record</div>
+            <div class="subtitle">Neo partnerships &middot; Ryan Walker (Proposal Sent)</div>
+          </div>
+        </div>
+        <div class="pipeline-picker-option" onclick="confirmPipelinePick('new')">
+          <div class="pipeline-picker-option-icon">
+            <img src="app_switcher_assets/grid_icons/crm.svg" alt="" style="width:18px;height:18px;">
+          </div>
+          <div class="pipeline-picker-option-text">
+            <div class="title">Add new record to Neo partnerships</div>
+            <div class="subtitle">Creates a new Lead card from this thread</div>
+          </div>
+        </div>
+        <div class="pipeline-picker-option" onclick="closePipelinePicker()">
+          <div class="pipeline-picker-option-icon" style="background:#f3f3f3;">
+            <span style="color:#999; font-size:16px;">&times;</span>
+          </div>
+          <div class="pipeline-picker-option-text">
+            <div class="title">Nothing, dismiss</div>
+            <div class="subtitle">Don't link this email to a pipeline</div>
+          </div>
+        </div>
+      </div>
+      <div class="pipeline-picker-confirm" id="pipeline-picker-confirm"></div>
     </div>
   </div>
 
@@ -5365,6 +4677,40 @@
       if (modal) modal.classList.remove('open');
     }
 
+    // ── Account switcher dropdown ───────────────────────────────────────
+    function toggleAccountMenu(evt) {
+      if (evt) evt.stopPropagation();
+      const header = document.getElementById('account-header');
+      const menu = document.getElementById('account-menu');
+      const willOpen = !menu.classList.contains('open');
+      menu.classList.toggle('open', willOpen);
+      header.classList.toggle('open', willOpen);
+    }
+    function closeAccountMenu() {
+      const header = document.getElementById('account-header');
+      const menu = document.getElementById('account-menu');
+      if (menu) menu.classList.remove('open');
+      if (header) header.classList.remove('open');
+    }
+    function selectAccount(evt, item, email, initial, color) {
+      if (evt) evt.stopPropagation();
+      document.querySelectorAll('#account-menu .account-menu-item').forEach(function (el) { el.classList.remove('active'); });
+      item.classList.add('active');
+      document.getElementById('account-active-email').textContent = email;
+      document.getElementById('account-active-initial').textContent = initial;
+      const av = document.querySelector('.account-header .account-avatar');
+      if (av) {
+        av.style.background = color;   // solid tint replaces the default avatar image
+        const bg = av.querySelector('img.bg');
+        if (bg) bg.style.display = 'none';
+      }
+      closeAccountMenu();
+    }
+    document.addEventListener('click', function (e) {
+      const header = document.getElementById('account-header');
+      if (header && !header.contains(e.target)) closeAccountMenu();
+    });
+
     // ── Reading Pane Toggle ─────────────────────────────────────────────
     function setReadingPane(option) {
       const sections = document.querySelectorAll('.side-modal-section');
@@ -5442,7 +4788,7 @@
       'Negotiation': '#ec4899',
       'Closed': '#15803d',
     };
-    const PIPELINE_ICON_SVG = '<svg class="pchip-icon" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 3.2H9.6L12.4 7L9.6 10.8H2L4.4 7L2 3.2Z" fill="currentColor"/></svg>';
+    const PIPELINE_ICON_SVG = '<svg class="pchip-icon" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 3h12M3 7h8M5 11h4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>';
 
     function selectEmailTile(el, type) {
       document.querySelectorAll('.email-tile').forEach(function (t) { t.classList.remove('selected'); });
@@ -5465,348 +4811,491 @@
       if (panel) panel.classList.remove('open');
     }
 
+    function updateStageBadges(stage) {
+      const color = STAGE_COLORS[stage] || '#2170f4';
+
+      document.querySelectorAll('.pipeline-chip.pc-added .pchip-stage').forEach(function (el) {
+        el.textContent = stage;
+        el.style.background = color;
+      });
+
+      const stageBox = document.getElementById('crm-current-stage-box');
+      if (stageBox) { stageBox.textContent = stage; stageBox.style.background = color; }
+
+      const stages = ['Lead', 'Qualified', 'Demo Scheduled', 'Proposal Sent', 'Negotiation', 'Closed'];
+      const idx = stages.indexOf(stage);
+      document.querySelectorAll('.crm-stage-step').forEach(function (step, i) {
+        step.classList.toggle('done', i <= idx);
+      });
+    }
+
     function generateAiSummary(btn) {
       const text = document.getElementById('crm-ai-summary-text');
       if (text) text.classList.add('show');
       btn.textContent = 'Regenerate';
     }
 
-    // ── Pipeline dropdown (§1.3 / §7.1) — anchored, label-menu style ──
-    // Available pipelines the user can move an email into (name + label colors).
-    const PIPELINES = {
-      sales:      { name: 'Neo partnerships',     color: '#2170f4', tint: '#e7f0fe' },
-      onboarding: { name: 'Onboarding Projects', color: '#0ea5e9', tint: '#e3f4fd' },
-      hiring:     { name: 'Q3 Hiring',           color: '#f59e0b', tint: '#fef3e0' },
-    };
-    const PL_LABEL_ICON = '<svg class="pl-icon" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 3.2H9.6L12.4 7L9.6 10.8H2L4.4 7L2 3.2Z" fill="currentColor"/></svg>';
-
-    // The record (tile row and/or thread header) the open dropdown will edit.
-    let pipelineCtx = null;
-
-    // Wrap a tile's bare preview in a flex row so a label can sit at its end.
-    function ensurePreviewRow(tile) {
-      const preview = tile.querySelector('.tile-preview');
-      if (!preview) return null;
-      let row = preview.closest('.tile-preview-row');
-      if (!row) {
-        row = document.createElement('div');
-        row.className = 'tile-preview-row';
-        preview.parentNode.insertBefore(row, preview);
-        row.appendChild(preview);
-      }
-      return row;
-    }
-
-    // Create / update / remove the pipeline label inside a host (preview-row or thread header).
-    function renderPipelineLabel(host, key) {
-      if (!host) return;
-      let label = host.querySelector(':scope > .pipeline-label');
-      if (!key) {                       // removed from all pipelines
-        if (label) label.remove();
-        delete host.dataset.pipeline;
-        delete host.dataset.stage;
-        return;
-      }
-      const p = PIPELINES[key];
-      if (!p) return;
-      if (!label) {
-        label = document.createElement('span');
-        label.className = 'pipeline-label';
-        label.addEventListener('click', function (e) { e.stopPropagation(); openRecordForLabel(label); });
-        host.appendChild(label);
-      }
-      // Thread header shows "Pipeline: Stage"; tiles show the pipeline name only.
-      const isHeader = host.classList && host.classList.contains('thread-sticky-header');
-      const text = p.name + (isHeader && host.dataset.stage ? ': ' + host.dataset.stage : '');
-      label.title = p.name + ' — open record';
-      label.innerHTML = PL_LABEL_ICON + '<span>' + text + '</span>';
-      label.style.background = p.tint;
-      label.style.color = p.color;
-      host.dataset.pipeline = key;
-    }
-
-    function syncDropdownRadios() {
-      const key = pipelineCtx && pipelineCtx.host ? pipelineCtx.host.dataset.pipeline : null;
-      document.querySelectorAll('#pipeline-dropdown .pl-dd-option').forEach(function (o) {
-        o.classList.toggle('checked', !!key && o.getAttribute('data-key') === key);
-      });
-    }
-
+    // ── Pipeline picker modal (§1.3 / §7.1) ──
     function openPipelinePicker(evt) {
       if (evt) evt.stopPropagation();
-      const dd = document.getElementById('pipeline-dropdown');
-      if (!dd) return;
-      const trigger = evt && (evt.currentTarget || evt.target);
-
-      // Resolve which record's label this dropdown edits, and any mirror to keep in sync.
-      pipelineCtx = null;
-      if (trigger && trigger.closest) {
-        const tile = trigger.closest('.email-tile');
-        if (tile) {
-          pipelineCtx = { host: ensurePreviewRow(tile), mirror: null, tile: tile };
-          const linked = document.getElementById('thread-view-linked');
-          if (tile.classList.contains('selected') && linked && linked.style.display !== 'none') {
-            pipelineCtx.mirror = linked.querySelector('.thread-sticky-header');
-          }
-        } else if (trigger.closest('.reading-action-bar')) {
-          const view = visibleThreadView();
-          const header = view ? view.querySelector('.thread-sticky-header') : null;
-          pipelineCtx = { host: header, mirror: null, tile: null };
-          const sel = document.querySelector('.email-tile.selected');
-          if (sel) pipelineCtx.mirror = ensurePreviewRow(sel);
-        }
-      }
-      syncDropdownRadios();
-
-      dd.classList.add('open');
-      if (trigger && trigger.getBoundingClientRect) {
-        const r = trigger.getBoundingClientRect();
-        const w = dd.offsetWidth || 240;
-        const h = dd.offsetHeight || 260;
-        let left = r.left;
-        if (left + w > window.innerWidth - 8) left = window.innerWidth - w - 8;
-        if (left < 8) left = 8;
-        let top = r.bottom + 6;
-        if (top + h > window.innerHeight - 8) top = Math.max(8, r.top - h - 6);
-        dd.style.left = left + 'px';
-        dd.style.top = top + 'px';
-      }
-      setTimeout(function () { document.addEventListener('click', outsidePipelineDropdown); }, 0);
-    }
-    function outsidePipelineDropdown(e) {
-      const dd = document.getElementById('pipeline-dropdown');
-      if (dd && !dd.contains(e.target)) closePipelinePicker();
+      document.getElementById('pipeline-picker-overlay').classList.add('open');
+      document.getElementById('pipeline-picker-confirm').classList.remove('show');
     }
     function closePipelinePicker() {
-      const dd = document.getElementById('pipeline-dropdown');
-      if (dd) dd.classList.remove('open');
-      document.removeEventListener('click', outsidePipelineDropdown);
+      document.getElementById('pipeline-picker-overlay').classList.remove('open');
     }
-    // Single-select: an email can belong to only one pipeline (radio behavior).
-    // Clicking the selected option again clears it (removed from the pipeline).
-    // The chosen pipeline is reflected live onto the email's label in the UI.
-    function selectPipelineOption(el) {
-      const already = el.classList.contains('checked');
-      const key = already ? null : el.getAttribute('data-key');
-      document.querySelectorAll('#pipeline-dropdown .pl-dd-option').forEach(function (o) {
-        o.classList.toggle('checked', !already && o === el);
-      });
-      if (!pipelineCtx) return;
-      const prevKey = pipelineCtx.host ? pipelineCtx.host.dataset.pipeline : null;
-      const firstStage = key ? (PIPELINE_STAGES[key] || ['New'])[0] : null;
-      if (key && pipelineCtx.host) pipelineCtx.host.dataset.stage = firstStage;
-      renderPipelineLabel(pipelineCtx.host, key);
-      if (pipelineCtx.mirror) {
-        if (key) pipelineCtx.mirror.dataset.stage = firstStage;
-        renderPipelineLabel(pipelineCtx.mirror, key);
-      }
-      // Adding an unlinked email to a pipeline opens the CRM sidebar for the new record.
-      if (key && !prevKey) {
-        closePipelinePicker();
-        if (pipelineCtx.tile) openCrmForEmail(pipelineCtx.tile, key);
-        else if (pipelineCtx.host) openCrmForThreadHeader(pipelineCtx.host, key);
-      }
+    function confirmPipelinePick(kind) {
+      const confirmEl = document.getElementById('pipeline-picker-confirm');
+      confirmEl.textContent = kind === 'link'
+        ? 'Linked to Ryan Walker · Neo partnerships (Proposal Sent).'
+        : 'New Lead record created in Neo partnerships.';
+      confirmEl.classList.add('show');
+      setTimeout(closePipelinePicker, 1400);
     }
 
-    // ── CRM record sidebar (§2.2 redesigned) ──────────────────────────────
-    const PIPELINE_STAGES = {
-      sales:      ['Lead', 'Qualified', 'Demo Scheduled', 'Proposal Sent', 'Negotiation', 'Closed'],
-      onboarding: ['Scoping', 'Proposal', 'Kickoff', 'In Progress', 'Review', 'Delivered'],
-      hiring:     ['Applied', 'Screen', 'Interview', 'Final Round', 'Offer', 'Hired'],
+    // ── CRM: Kanban board (§3.2) ────────────────────────────────────
+    // Stages are mutable so the New Pipeline flow (§4.1–4.3) can swap in a new template.
+    let STAGES = [
+      { key: 'lead', label: 'Lead' },
+      { key: 'qualified', label: 'Qualified' },
+      { key: 'demo', label: 'Demo Scheduled' },
+      { key: 'proposal', label: 'Proposal Sent' },
+      { key: 'negotiation', label: 'Negotiation' },
+      { key: 'closed', label: 'Closed' },
+    ];
+
+    // Plural noun for the header stat ("9 opportunities · $86,850"); updated per pipeline type.
+    let CURRENT_ENTITY_PLURAL = 'opportunities';
+
+    let CARDS = [
+      { id: 1, company: 'BrightPath Co', contact: 'Olivia Bennett', initials: 'OB', deal: 'BrightPath Pro plan', value: 3000, stage: 'lead', lastActivity: '2d ago', activityType: 'Email sent', overdue: false },
+      { id: 2, company: 'Lumen Retail', contact: 'Marcus Webb', initials: 'MW', deal: 'Lumen CD only', value: 5400, stage: 'lead', lastActivity: '1d ago', activityType: 'Email received', overdue: false, nextActivity: { type: 'followup', date: '12 Feb' } },
+      { id: 3, company: 'Northfield Group', contact: 'Grace Turner', initials: 'GT', deal: 'Northfield Site freemium', value: 7200, stage: 'qualified', lastActivity: '3d ago', activityType: 'Phone call', overdue: false },
+      { id: 4, company: 'Coastal Supply', contact: 'Ethan Price', initials: 'EP', deal: 'Coastal migration from Google', value: 2950, stage: 'qualified', lastActivity: '6d ago', activityType: 'Email received', overdue: true },
+      { id: 5, company: 'Union Analytics', contact: 'Sophie Hart', initials: 'SH', deal: 'Union Enterprise plan', value: 12000, stage: 'demo', lastActivity: '4h ago', activityType: 'Meeting', overdue: false, nextActivity: { type: 'task', name: 'Send proposal', date: '5 Mar' } },
+      { id: 6, company: 'Meridian Labs', contact: 'Ryan Walker', initials: 'RW', deal: 'Meridian AI site', value: 18000, stage: 'proposal', lastActivity: '8d ago', activityType: 'Email sent', overdue: true },
+      { id: 7, company: 'Fairview Logistics', contact: 'Noah Bennett', initials: 'NB', deal: 'Fairview seat expansion', value: 6500, stage: 'proposal', lastActivity: '2d ago', activityType: 'Phone call', overdue: false, nextActivity: { type: 'meeting', date: '2 Mar' } },
+      { id: 8, company: 'Delta Freight', contact: 'Chloe Sanders', initials: 'CS', deal: 'Delta annual renewal', value: 22000, stage: 'negotiation', lastActivity: '5d ago', activityType: 'Meeting', overdue: false },
+      { id: 9, company: 'Vantage Group', contact: 'Liam Carter', initials: 'LC', deal: 'Vantage Business plan', value: 9800, stage: 'closed', won: true, lastActivity: '1d ago', activityType: 'Email sent', overdue: false },
+    ];
+
+    // Every pipeline the user has is kept here, so creating a new one never wipes an
+    // existing board — you can switch between them from the sidebar. STAGES / CARDS /
+    // CURRENT_ENTITY_PLURAL always mirror the pipeline currently on screen.
+    const PIPELINES = {
+      neo: { id: 'neo', name: 'Neo partnerships', entity: 'Opportunity', plural: 'opportunities', stages: STAGES, cards: CARDS },
     };
-    const CONTACTS = {
-      'Ryan Walker':  { email: 'ryan.walker@meridianlabs.com', company: 'Meridian Labs' },
-      'David Jones':  { email: 'david.jones@flock.io',         company: 'Flock' },
-      'Emma Clarke':  { email: 'emma.clarke@northwind.co',     company: 'Northwind' },
-      'Chloe':        { email: 'chloe@brightpath.co',          company: 'BrightPath' },
-      'Jason Miller': { email: 'jason.miller@lumen.io',        company: 'Lumen' },
-    };
-    function initialsOf(name) {
-      return name.split(/\s+/).map(function (w) { return w[0]; }).join('').slice(0, 2).toUpperCase();
+    let currentPipelineId = 'neo';
+    let pipelineSeq = 0;
+
+    function switchPipeline(id) {
+      const p = PIPELINES[id];
+      if (!p) return;
+      currentPipelineId = id;
+      STAGES = p.stages;
+      CARDS = p.cards;
+      CURRENT_ENTITY_PLURAL = p.plural;
+
+      const heading = document.getElementById('pipeline-name-heading');
+      if (heading) heading.textContent = p.name;
+      const addLabel = document.getElementById('add-entity-label');
+      if (addLabel) addLabel.textContent = p.entity.toLowerCase();
+
+      document.querySelectorAll('.nav-scroll .nav-item[data-pipeline-id]').forEach(function (el) {
+        const on = el.dataset.pipelineId === id;
+        el.classList.toggle('active', on);
+        const lbl = el.querySelector('.nav-item-label');
+        if (lbl) lbl.classList.toggle('active', on);
+      });
+
+      closeCardActionMenu();
+      renderBoard();
     }
-    function contactInfo(name) {
-      return CONTACTS[name] || {
-        email: name.toLowerCase().replace(/[^a-z0-9]+/g, '.').replace(/^\.|\.$/g, '') + '@example.com',
-        company: 'Independent',
+
+    function fmtMoney(n) { return '$' + n.toLocaleString(); }
+
+    // Muted, varied avatar colors — no real photos in this prototype, so every
+    // contact falls back to a single-initial circle, colored deterministically
+    // by name so the same person always gets the same (muted) color.
+    const AVATAR_COLORS = ['#8a9099'];
+    function avatarColorFor(name) {
+      let hash = 0;
+      for (let i = 0; i < name.length; i++) { hash = (hash + name.charCodeAt(i)) % AVATAR_COLORS.length; }
+      return AVATAR_COLORS[hash];
+    }
+
+    // ── Card action menu (§2.2-style quick actions, triggered from the card's action icon) ──
+    function formatNextActivity(next) {
+      if (next.type === 'followup') return 'Follow-up scheduled for ' + next.date;
+      if (next.type === 'meeting') return 'Meeting scheduled for ' + next.date;
+      if (next.type === 'task') return 'Task "' + next.name + '" due on ' + next.date;
+      return '';
+    }
+
+    function toggleCardActionMenu(evt, cardId) {
+      evt.stopPropagation();
+      const menu = document.getElementById('card-action-menu');
+      const wasOpenForThisCard = menu.classList.contains('open') && menu.dataset.cardId === String(cardId);
+      closeCardActionMenu();
+      if (wasOpenForThisCard) return;
+
+      const card = CARDS.find(function (c) { return c.id === cardId; });
+      if (!card) return;
+
+      // Next activity (if scheduled) takes priority over showing the last one.
+      const lastActivityEl = document.getElementById('cam-last-activity');
+      lastActivityEl.textContent = card.nextActivity
+        ? formatNextActivity(card.nextActivity)
+        : 'Last activity: ' + card.activityType + ' ' + card.lastActivity;
+      lastActivityEl.className = 'cam-last-activity ' + cardActivityState(card);
+
+      const rect = evt.currentTarget.getBoundingClientRect();
+      menu.style.top = (rect.bottom + 6) + 'px';
+      menu.style.left = (rect.right - 210) + 'px';
+      menu.dataset.cardId = cardId;
+      menu.classList.add('open');
+    }
+    function closeCardActionMenu() {
+      const menu = document.getElementById('card-action-menu');
+      menu.classList.remove('open');
+      menu.dataset.cardId = '';
+    }
+    function cardAction(kind) {
+      closeCardActionMenu();
+      const labels = {
+        followup: 'Follow-up on email', call: 'Schedule a call', booking: 'Send a booking link',
+        task: 'Create a task', seeall: 'View the opportunity',
       };
+      alert('Prototype only: "' + labels[kind] + '" is not wired up yet.');
     }
-    // Which record (label hosts) the open panel represents, so stage edits sync back.
-    let panelRecord = null;
+    document.addEventListener('click', function (e) {
+      const menu = document.getElementById('card-action-menu');
+      if (menu.classList.contains('open') && !menu.contains(e.target)) closeCardActionMenu();
+    });
 
-    function openCrmPanel() {
-      const p = document.getElementById('crm-panel');
-      if (p) p.classList.add('open');
-    }
+    function renderBoard() {
+      const board = document.getElementById('kanban-board');
+      if (!board) return;
+      board.innerHTML = '';
 
-    function setCrmRecord(rec) {
-      document.getElementById('crm-record-name').textContent = rec.title;
-      document.getElementById('crm-contact-name').textContent = rec.contact;
-      document.getElementById('crm-contact-email').textContent = rec.email;
-      document.getElementById('crm-company').textContent = rec.company;
-      document.getElementById('crm-contact-avatar').textContent = rec.avatar;
-      renderStageLabel(rec.key, rec.stage);
-      buildStageMenu(rec.key, rec.stage);
-      panelRecord = { key: rec.key, stage: rec.stage, host: rec.host || null, mirror: rec.mirror || null };
-    }
-    function renderStageLabel(key, stage) {
-      const p = PIPELINES[key]; if (!p) return;
-      document.getElementById('crm-ps-text').textContent = p.name + ': ' + stage;
-      const el = document.getElementById('crm-pipeline-stage');
-      el.style.background = p.tint; el.style.color = p.color;
-    }
-    function buildStageMenu(key, stage) {
-      const menu = document.getElementById('crm-stage-menu');
-      menu.innerHTML = (PIPELINE_STAGES[key] || []).map(function (s) {
-        return '<div class="crm-stage-item' + (s === stage ? ' active' : '') +
-          '" onclick="selectStage(this.dataset.s); event.stopPropagation();" data-s="' + s + '">' +
-          '<span class="dot"></span>' + s + '</div>';
-      }).join('');
-    }
-    function toggleStageMenu(evt) {
-      if (evt) evt.stopPropagation();
-      const m = document.getElementById('crm-stage-menu');
-      if (m.classList.toggle('open')) {
-        setTimeout(function () { document.addEventListener('click', outsideStageMenu); }, 0);
-      } else { document.removeEventListener('click', outsideStageMenu); }
-    }
-    function outsideStageMenu(e) {
-      const w = document.querySelector('.crm-ps-wrap');
-      if (w && !w.contains(e.target)) {
-        document.getElementById('crm-stage-menu').classList.remove('open');
-        document.removeEventListener('click', outsideStageMenu);
-      }
-    }
-    function selectStage(stage) {
-      if (!panelRecord) return;
-      panelRecord.stage = stage;
-      renderStageLabel(panelRecord.key, stage);
-      buildStageMenu(panelRecord.key, stage);
-      document.getElementById('crm-stage-menu').classList.remove('open');
-      document.removeEventListener('click', outsideStageMenu);
-      // Sync the email's labels (thread header shows the stage suffix).
-      [panelRecord.host, panelRecord.mirror].forEach(function (h) {
-        if (h) { h.dataset.stage = stage; renderPipelineLabel(h, panelRecord.key); }
-      });
-    }
+      STAGES.forEach(function (stage, idx) {
+        const cardsInStage = CARDS.filter(function (c) { return c.stage === stage.key; });
+        const total = cardsInStage.reduce(function (sum, c) { return sum + c.value; }, 0);
+        const headerShade = blueShade(idx, STAGES.length);
 
-    // Open the sidebar for the pre-seeded linked record (Ryan Walker · Neo partnerships).
-    function openCrmForLinked() {
-      const header = document.querySelector('#thread-view-linked .thread-sticky-header');
-      const linkedTile = document.querySelector('.email-tile[data-record="linked"]');
-      const tileRow = linkedTile ? linkedTile.querySelector('.tile-preview-row') : null;
-      const key = (header && header.dataset.pipeline) || 'sales';
-      const stage = (header && header.dataset.stage) || 'Proposal Sent';
-      setCrmRecord({
-        title: 'Dashboard v2 Upgrade', contact: 'Ryan Walker',
-        email: 'ryan.walker@meridianlabs.com', company: 'Meridian Labs', avatar: 'RW',
-        key: key, stage: stage, host: header, mirror: tileRow,
-      });
-      openCrmPanel();
-    }
+        const col = document.createElement('div');
+        col.className = 'kanban-col';
+        col.innerHTML =
+          '<div class="kanban-col-header" style="background:' + headerShade + ';">' +
+            '<div class="kanban-col-title">' + stage.label + '</div>' +
+            '<div class="kanban-col-meta">' +
+              '<span>' + cardsInStage.length + ' &middot; ' + fmtMoney(total) + '</span>' +
+            '</div>' +
+          '</div>' +
+          '<div class="kanban-col-body" data-stage="' + stage.key + '"></div>';
+        board.appendChild(col);
 
-    // Open the sidebar for any email tile; record name defaults to the contact name.
-    function openCrmForEmail(tile, key) {
-      if (!tile) return;
-      const row = ensurePreviewRow(tile);
-      const raw = (tile.querySelector('.tile-sender') || {}).textContent || 'New contact';
-      const contact = raw.replace(/\s*\(\d+\)\s*$/, '').split(',')[0].trim();
-      const info = contactInfo(contact);
-      const stage = row.dataset.stage || (PIPELINE_STAGES[key] || ['New'])[0];
-      row.dataset.stage = stage;
-      setCrmRecord({
-        title: contact, contact: contact, email: info.email, company: info.company,
-        avatar: initialsOf(contact), key: key, stage: stage, host: row, mirror: null,
-      });
-      openCrmPanel();
-    }
+        const body = col.querySelector('.kanban-col-body');
+        cardsInStage.forEach(function (card) { body.appendChild(renderCard(card)); });
+        if (cardsInStage.length === 0) {
+          const hint = document.createElement('div');
+          hint.className = 'kanban-empty-hint';
+          hint.textContent = 'Nothing here yet';
+          body.appendChild(hint);
+        }
 
-    // The thread currently shown in the reading pane (linked or unlinked).
-    function visibleThreadView() {
-      return [].slice.call(document.querySelectorAll('.thread-view')).find(function (v) {
-        return v.style.display !== 'none' && v.offsetParent !== null;
-      }) || null;
-    }
-
-    // Open the sidebar from a reading-pane hook (action bar / suggestion pill),
-    // deriving the contact from the visible thread's sender.
-    function openCrmForThreadHeader(header, key) {
-      const view = visibleThreadView();
-      const sEl = view ? view.querySelector('.exp-sender') : null;
-      const contact = sEl ? sEl.textContent.replace(/\s*\(\d+\)\s*$/, '').split(',')[0].trim() : 'New contact';
-      const info = contactInfo(contact);
-      const stage = (header && header.dataset.stage) || (PIPELINE_STAGES[key] || ['New'])[0];
-      if (header) header.dataset.stage = stage;
-      setCrmRecord({
-        title: contact, contact: contact, email: info.email, company: info.company,
-        avatar: initialsOf(contact), key: key, stage: stage, host: header, mirror: null,
-      });
-      openCrmPanel();
-    }
-
-    // Suggestion pill (AI): pipeline is already suggested, so add + open the panel directly.
-    function addSuggestedToPipeline(evt) {
-      if (evt) evt.stopPropagation();
-      const view = document.getElementById('thread-view-unlinked');
-      const header = view ? view.querySelector('.thread-sticky-header') : null;
-      const key = 'sales';
-      const stage = (PIPELINE_STAGES[key] || ['New'])[0];
-      if (header) { header.dataset.stage = stage; renderPipelineLabel(header, key); }
-      const pill = evt && (evt.currentTarget || evt.target.closest('.pc-suggested'));
-      if (pill && pill.classList.contains('pc-suggested')) pill.style.display = 'none';
-      openCrmForThreadHeader(header, key);
-    }
-
-    function openRecordForLabel(label) {
-      const tile = label.closest && label.closest('.email-tile');
-      if (tile && tile.dataset.record === 'linked') return openCrmForLinked();
-      if (tile) {
-        const row = tile.querySelector('.tile-preview-row');
-        return openCrmForEmail(tile, (row && row.dataset.pipeline) || 'sales');
-      }
-      return openCrmForLinked();
-    }
-
-    // "+ Add activity" — same menu the card action icon shows in the CRM board (§3.2.1).
-    function openActivityMenu(evt) {
-      if (evt) evt.stopPropagation();
-      const m = document.getElementById('crm-activity-menu');
-      const trigger = evt && (evt.currentTarget || evt.target);
-      m.classList.add('open');
-      if (trigger && trigger.getBoundingClientRect) {
-        const r = trigger.getBoundingClientRect();
-        const w = m.offsetWidth || 214;
-        const h = m.offsetHeight || 190;
-        let left = r.left;
-        if (left + w > window.innerWidth - 8) left = window.innerWidth - w - 8;
-        let top = r.bottom + 6;
-        if (top + h > window.innerHeight - 8) top = Math.max(8, r.top - h - 6);
-        m.style.left = left + 'px';
-        m.style.top = top + 'px';
-      }
-      setTimeout(function () { document.addEventListener('click', outsideActivityMenu); }, 0);
-    }
-    function outsideActivityMenu(e) {
-      const m = document.getElementById('crm-activity-menu');
-      if (m && !m.contains(e.target)) closeActivityMenu();
-    }
-    function closeActivityMenu() {
-      const m = document.getElementById('crm-activity-menu');
-      if (m) m.classList.remove('open');
-      document.removeEventListener('click', outsideActivityMenu);
-    }
-    function addActivity(kind) { closeActivityMenu(); }
-    function toggleActTask(el) { el.classList.toggle('done'); }
-
-    // ── Sticky Header Scroll Listener ────────────────────────────────────
-    (function initStickyHeader() {
-      const threadContent = document.querySelector('.thread-content');
-      const stickyHeader = document.querySelector('.thread-sticky-header');
-      if (threadContent && stickyHeader) {
-        threadContent.addEventListener('scroll', function () {
-          stickyHeader.classList.toggle('show-fade', threadContent.scrollTop > 0);
+        body.addEventListener('mouseenter', function () { body.style.background = headerShade; });
+        body.addEventListener('mouseleave', function () { body.style.background = ''; });
+        body.addEventListener('dragover', function (e) { e.preventDefault(); body.style.background = headerShade; });
+        body.addEventListener('dragleave', function () { body.style.background = ''; });
+        body.addEventListener('drop', function (e) {
+          e.preventDefault();
+          body.style.background = '';
+          const id = Number(e.dataTransfer.getData('text/card-id'));
+          const card = CARDS.find(function (c) { return c.id === id; });
+          if (card) { card.stage = stage.key; renderBoard(); }
         });
+      });
+
+      const pt = document.getElementById('pipeline-total');
+      if (pt) {
+        const total = CARDS.reduce(function (sum, c) { return sum + c.value; }, 0);
+        pt.textContent = CARDS.length + ' ' + CURRENT_ENTITY_PLURAL + ' · ' + fmtMoney(total);
       }
-    })();
+    }
+
+    // Progressive shade in Titan's single blue family — palest first stage to
+    // deepest last. Shared by the board headers and the New Pipeline stage editor
+    // so a stage looks the same while you're building it and once it's live.
+    function blueShade(idx, total) {
+      const min = 0.06, max = 0.36;
+      const t = total <= 1 ? 0 : idx / (total - 1);
+      return 'rgba(33, 112, 244, ' + (min + (max - min) * t).toFixed(3) + ')';
+    }
+    function blueDot(idx, total) {
+      const min = 0.4, max = 1;
+      const t = total <= 1 ? 0 : idx / (total - 1);
+      return 'rgba(33, 112, 244, ' + (min + (max - min) * t).toFixed(3) + ')';
+    }
+
+    // Shared color states for both the card's action icon and the menu's top bar,
+    // so a glance at the icon tells you what color the menu will open in.
+    function cardActivityState(card) {
+      if (card.overdue) return 'overdue';
+      if (card.nextActivity) return 'next';
+      return 'last';
+    }
+
+    function statusIconSvg(card) {
+      const state = cardActivityState(card);
+      if (state === 'overdue') {
+        return '<svg class="kanban-status-icon" viewBox="0 0 18 18"><circle cx="9" cy="9" r="9" fill="#d97706"/><path d="M7.5 5.5l4 3.5-4 3.5" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>';
+      }
+      if (state === 'next') {
+        return '<svg class="kanban-status-icon" viewBox="0 0 18 18"><circle cx="9" cy="9" r="9" fill="#3a3f47"/><path d="M7.5 5.5l4 3.5-4 3.5" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>';
+      }
+      return '<svg class="kanban-status-icon" viewBox="0 0 18 18"><circle cx="9" cy="9" r="9" fill="#e5e7eb"/><path d="M7.5 5.5l4 3.5-4 3.5" stroke="#9ca3af" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>';
+    }
+
+    function renderCard(card) {
+      const el = document.createElement('div');
+      el.className = 'kanban-card';
+      el.draggable = true;
+      el.ondragstart = function (e) { e.dataTransfer.setData('text/card-id', card.id); el.classList.add('dragging'); };
+      el.ondragend = function () { el.classList.remove('dragging'); };
+      el.innerHTML =
+        '<div class="kanban-card-top-row">' +
+          '<div class="kanban-card-deal">' + card.deal + '</div>' +
+          '<div class="kanban-action-icon" onclick="toggleCardActionMenu(event, ' + card.id + ')" title="Actions">' + statusIconSvg(card) + '</div>' +
+        '</div>' +
+        '<div class="kanban-card-company">' + card.company + '</div>' +
+        '<div class="kanban-card-footer">' +
+          '<span class="kanban-card-avatar" style="background:' + avatarColorFor(card.contact) + ';" title="' + card.contact + '">' + card.contact.charAt(0) + '</span>' +
+          '<span class="kanban-card-value">' + fmtMoney(card.value) + '</span>' +
+          (card.won
+            ? '<span class="kanban-won-pill">Won</span>'
+            : '<span class="kanban-card-task">' + card.lastActivity + '</span>') +
+        '</div>';
+      return el;
+    }
+
+    renderBoard();
+
+    // ── New Pipeline flow (§4.1 Create · §4.2 Templates · §4.3 Stage customization) ──
+    const NP_TEMPLATES = {
+      sales:      { name: 'My Sales Pipeline', entity: 'Opportunity', plural: 'opportunities', title: 'Set up your sales pipeline',
+                    stages: [{ name: 'Lead' }, { name: 'Qualified' }, { name: 'Demo Scheduled' }, { name: 'Proposal Sent' }, { name: 'Negotiation' }, { name: 'Closed', wonLost: true }] },
+      projects:   { name: 'My Projects', entity: 'Project', plural: 'projects', title: 'Set up your projects pipeline',
+                    stages: [{ name: 'Scoping' }, { name: 'Proposal' }, { name: 'Kickoff' }, { name: 'In Progress' }, { name: 'Review' }, { name: 'Delivered' }] },
+      orders:     { name: 'Orders', entity: 'Order', plural: 'orders', title: 'Set up your orders pipeline',
+                    stages: [{ name: 'Received' }, { name: 'Processing' }, { name: 'Shipped' }, { name: 'Delivered' }, { name: 'Closed' }] },
+      candidates: { name: 'Hiring Pipeline', entity: 'Candidate', plural: 'candidates', title: 'Set up your hiring pipeline',
+                    stages: [{ name: 'Applied' }, { name: 'Screen' }, { name: 'Interview' }, { name: 'Final Round' }, { name: 'Offer' }, { name: 'Hired' }] },
+      other:      { name: 'My Pipeline', entity: 'Record', plural: 'records', title: 'Set up your pipeline',
+                    stages: [{ name: 'New' }, { name: 'Processing' }, { name: 'Stage 3' }, { name: 'Closed' }] },
+    };
+
+    const npState = { type: null, name: '', plural: 'records', stages: [] };
+    let npDragIndex = null;
+
+    function openNewPipeline() {
+      npState.type = 'sales';   // default selection so Continue is always actionable
+      npRenderRadios();
+      npShowStep(1);
+      document.getElementById('np-overlay').classList.add('open');
+    }
+    function closeNewPipeline() {
+      document.getElementById('np-overlay').classList.remove('open');
+    }
+    function npShowStep(n) {
+      document.getElementById('np-step-1').classList.toggle('active', n === 1);
+      document.getElementById('np-step-2').classList.toggle('active', n === 2);
+      document.getElementById('np-modal').classList.toggle('np-step2-open', n === 2);
+    }
+    function npBack() { npShowStep(1); }
+
+    // Step 1 — radio selection (no advance until Continue)
+    function npPickType(type) { npState.type = type; npRenderRadios(); }
+    function npRenderRadios() {
+      document.querySelectorAll('#np-step-1 .np-radio').forEach(function (r) {
+        r.classList.toggle('selected', r.dataset.type === npState.type);
+      });
+    }
+    function npContinue() {
+      if (!npState.type) return;
+      const tpl = NP_TEMPLATES[npState.type];
+      npState.name = tpl.name;
+      npState.plural = tpl.plural;
+      // Deep copy so edits don't mutate the template.
+      npState.stages = tpl.stages.map(function (s) { return { name: s.name, wonLost: !!s.wonLost }; });
+      document.getElementById('np-step2-title').textContent = tpl.title;
+      document.getElementById('np-name').value = tpl.name;
+      npRenderStages();
+      npShowStep(2);
+    }
+
+    // Step 2 — stages as interlocking chevrons (same shape as the board, §3.2).
+    // Default state is draggable text chevrons; click a chevron to rename in place.
+    function npRenderStages() {
+      const wrap = document.getElementById('np-stages');
+      wrap.innerHTML = '';
+      const n = npState.stages.length;
+      npState.stages.forEach(function (stage, i) {
+        const chev = document.createElement('div');
+        chev.className = 'np-chev';
+        chev.draggable = true;
+        chev.dataset.idx = i;
+        chev.style.background = blueShade(i, n);
+        chev.innerHTML =
+          '<span class="np-chev-name" title="Click to rename"></span>' +
+          (n > 2
+            ? '<span class="np-chev-remove" title="Remove stage">' +
+                '<svg width="9" height="9" viewBox="0 0 9 9" fill="none"><path d="M1 1l7 7M8 1L1 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>' +
+              '</span>'
+            : '');
+        chev.querySelector('.np-chev-name').textContent = stage.name || '—';
+
+        chev.querySelector('.np-chev-name').addEventListener('click', function () { npEditStage(i); });
+        const rm = chev.querySelector('.np-chev-remove');
+        if (rm) rm.addEventListener('click', function (e) { e.stopPropagation(); npRemoveStage(i); });
+
+        chev.addEventListener('dragstart', function (e) {
+          npDragIndex = i; chev.classList.add('dragging'); e.dataTransfer.effectAllowed = 'move';
+        });
+        chev.addEventListener('dragend', function () {
+          npDragIndex = null; chev.classList.remove('dragging');
+          wrap.querySelectorAll('.np-chev').forEach(function (c) { c.classList.remove('drop-target'); });
+        });
+        chev.addEventListener('dragover', function (e) {
+          e.preventDefault();
+          if (npDragIndex === null || npDragIndex === i) return;
+          chev.classList.add('drop-target');
+        });
+        chev.addEventListener('dragleave', function () { chev.classList.remove('drop-target'); });
+        chev.addEventListener('drop', function (e) {
+          e.preventDefault();
+          if (npDragIndex === null || npDragIndex === i) return;
+          const moved = npState.stages.splice(npDragIndex, 1)[0];
+          npState.stages.splice(i, 0, moved);
+          npDragIndex = null;
+          npRenderStages();
+        });
+        wrap.appendChild(chev);
+      });
+
+      const add = document.createElement('div');
+      add.className = 'np-chev-add';
+      add.title = 'Add a stage';
+      add.innerHTML =
+        '<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 1v10M1 6h10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg> Add stage';
+      add.addEventListener('click', npAddStage);
+      wrap.appendChild(add);
+    }
+
+    function npEditStage(i) {
+      const wrap = document.getElementById('np-stages');
+      const chev = wrap.querySelector('.np-chev[data-idx="' + i + '"]');
+      if (!chev) return;
+      const nameEl = chev.querySelector('.np-chev-name');
+      if (!nameEl) return;
+      chev.draggable = false;   // don't let the text drag while editing
+      const input = document.createElement('input');
+      input.className = 'np-chev-input';
+      input.value = npState.stages[i].name;
+      input.spellcheck = false;
+      nameEl.replaceWith(input);
+      input.focus();
+      input.select();
+      // Update state live so the name is captured even if a blur never fires
+      // (e.g. the user clicks "Create pipeline" straight from an open editor).
+      input.addEventListener('input', function () { npState.stages[i].name = input.value; });
+      const commit = function () { npState.stages[i].name = input.value.trim(); npRenderStages(); };
+      input.addEventListener('blur', commit);
+      input.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter') { e.preventDefault(); input.blur(); }
+        else if (e.key === 'Escape') { input.value = npState.stages[i].name; input.blur(); }
+      });
+    }
+
+    // Flush an in-progress stage rename (open <input>) back into npState.
+    function npFlushOpenEdit() {
+      const input = document.querySelector('#np-stages .np-chev-input');
+      if (!input) return;
+      const chev = input.closest('.np-chev');
+      if (chev) { const i = Number(chev.dataset.idx); if (npState.stages[i]) npState.stages[i].name = input.value.trim(); }
+    }
+
+    function npAddStage() {
+      npState.stages.push({ name: 'New stage' });
+      npRenderStages();
+      npEditStage(npState.stages.length - 1);   // open the new chevron ready to rename
+    }
+    function npRemoveStage(i) {
+      if (npState.stages.length <= 2) return;
+      npState.stages.splice(i, 1);
+      npRenderStages();
+    }
+
+    function slugify(s, i) {
+      return (s || 'stage').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') + '-' + i;
+    }
+
+    function npCreate() {
+      npFlushOpenEdit();
+      const name = (document.getElementById('np-name').value || '').trim() || npState.name;
+      const clean = npState.stages
+        .map(function (s) { return { name: (s.name || '').trim() }; })
+        .filter(function (s) { return s.name.length > 0; });
+      if (clean.length < 2) { npToast('Add at least two stages to create a pipeline.'); return; }
+
+      // Register the new pipeline (starts empty — cards arrive by linking email) and
+      // switch to it. The existing pipeline(s) stay in PIPELINES, so nothing is lost.
+      const entity = npState.type ? NP_TEMPLATES[npState.type].entity : 'Record';
+      const id = 'p' + (++pipelineSeq);
+      PIPELINES[id] = {
+        id: id, name: name, entity: entity, plural: npState.plural,
+        stages: clean.map(function (s, i) { return { key: slugify(s.name, i), label: s.name }; }),
+        cards: [],
+      };
+      npAddSidebarPipeline(name, id);
+      switchPipeline(id);
+
+      closeNewPipeline();
+      npToast('“' + name + '” created — link an email to add your first ' + entity.toLowerCase() + '.');
+    }
+
+    function npAddSidebarPipeline(name, id) {
+      // Insert the new pipeline into the sidebar just under the divider; switchPipeline
+      // handles active-state highlighting.
+      const item = document.createElement('div');
+      item.className = 'nav-item';
+      item.dataset.pipelineId = id;
+      item.setAttribute('onclick', "switchPipeline('" + id + "')");
+      item.innerHTML =
+        '<div class="nav-item-icon">' +
+          '<svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M2 3.2H9.6L12.4 7L9.6 10.8H2L4.4 7L2 3.2Z" fill="#fff"/></svg>' +
+        '</div>' +
+        '<span class="nav-item-label"></span>';
+      item.querySelector('.nav-item-label').textContent = name;
+      const line = document.getElementById('pipeline-nav-line');
+      if (line && line.parentNode) line.parentNode.insertBefore(item, line.nextSibling);
+    }
+
+    let npToastTimer = null;
+    function npToast(msg) {
+      const t = document.getElementById('np-toast');
+      if (!t) return;
+      t.textContent = msg;
+      t.classList.add('show');
+      clearTimeout(npToastTimer);
+      npToastTimer = setTimeout(function () { t.classList.remove('show'); }, 3200);
+    }
+
+    // Auto-open the New Pipeline modal when arriving from Mail's "+ New pipeline" link.
+    if (location.hash === '#new-pipeline') {
+      openNewPipeline();
+      try { history.replaceState(null, '', location.pathname); } catch (e) {}
+    }
   </script>
 
   <!-- Settings Sidebar Modal Drawer -->
@@ -5959,6 +5448,31 @@
         <span>Upgrade</span>
       </button>
       <div class="upgrade-subtext" style="font-size:12px; opacity:0.8;">Current plan: Free</div>
+    </div>
+  </div>
+
+  <!-- ============ Card action menu (shared, positioned per-click) ============ -->
+  <div class="card-action-menu" id="card-action-menu">
+    <div class="cam-last-activity" id="cam-last-activity">Last activity: Email sent 2d ago</div>
+    <div class="cam-items">
+      <div class="cam-item" onclick="cardAction('followup')">
+        <span class="cam-ic"><svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="3.5" width="12" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M2.6 4.6L8 8.4l5.4-3.8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></span>
+        Follow-up on email
+      </div>
+      <div class="cam-item" onclick="cardAction('call')">
+        <span class="cam-ic"><svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.4 2.8H4c-1 0-1.7.8-1.5 1.8.4 2 1.5 3.9 3 5.4s3.4 2.6 5.4 3c1 .2 1.8-.5 1.8-1.5v-1.4c0-.5-.4-.9-.8-1l-1.7-.4c-.4-.1-.9 0-1.2.4l-.5.6C7 8.9 6 7.9 5.4 6.7l.6-.5c.3-.3.5-.8.4-1.2L6 3.6c-.1-.5-.5-.8-1-.8z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg></span>
+        Schedule a call
+      </div>
+      <div class="cam-item" onclick="cardAction('booking')">
+        <span class="cam-ic"><svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2.5" y="3.5" width="11" height="10" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M2.5 6.5h11M5.5 2.3v2.2M10.5 2.3v2.2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></span>
+        Send a booking link
+      </div>
+      <div class="cam-item" onclick="cardAction('task')">
+        <span class="cam-ic"><svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2.5" y="2.5" width="11" height="11" rx="2.5" stroke="currentColor" stroke-width="1.3"/><path d="M5.4 8l1.8 1.8L11 6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        Create a task
+      </div>
+      <div class="cam-sep"></div>
+      <div class="cam-see-all" onclick="cardAction('seeall')">View the opportunity</div>
     </div>
   </div>
 </body>
