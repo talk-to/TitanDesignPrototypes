@@ -5,6 +5,27 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Inbox (367) - Mail</title>
+  <!-- Persona loader: ?u=<id> loads personas/<id>.js ONLY; no param = this page's built-in data. -->
+  <script>
+    (function () {
+      var raw = new URLSearchParams(location.search).get('u');
+      var u = (raw && /^[a-z0-9_-]{1,32}$/.test(raw)) ? raw.toLowerCase() : null;
+      window.PERSONA_ID = u || 'default';
+      window.withPersona = function (href) {
+        if (!u || /[?&]u=/.test(href)) return href;
+        var hash = '', hi = href.indexOf('#');
+        if (hi !== -1) { hash = href.slice(hi); href = href.slice(0, hi); }
+        return href + (href.indexOf('?') === -1 ? '?' : '&') + 'u=' + u + hash;
+      };
+      if (u) {
+        document.documentElement.classList.add('persona-cloak');
+        document.write('<' + 'script src="personas/' + u + '.js?v=' + Date.now() + '"><' + '/script>');
+      }
+    })();
+  </script>
+  <style>
+    .persona-cloak .app-window { visibility: hidden; }
+  </style>
   <style>
     :root {
       --click-scale: 0.97;
@@ -2620,7 +2641,7 @@
       display: inline-flex; align-items: center; gap: 5px;
       margin-top: 6px; padding: 2px 8px; border-radius: 4px;
       background: #e7f0fe; color: #1f6fe5;
-      font-size: 11.5px; font-weight: 600; line-height: 1.55;
+      font-size: 11.5px; font-weight: 400; line-height: 1.55;
       cursor: pointer; width: fit-content; white-space: nowrap;
     }
     .pipeline-label:hover { background: #dbe8fd; }
@@ -2728,8 +2749,8 @@
     }
     .crm-contact-row { display: flex; align-items: center; gap: 12px; }
     .crm-contact-avatar {
-      width: 42px; height: 42px; border-radius: 50%; background: #2170f4; color: #fff;
-      display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 15px; flex-shrink: 0;
+      width: 32px; height: 32px; border-radius: 50%; background: #8a9099; color: #fff;
+      display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 13px; flex-shrink: 0;
     }
     .crm-contact-name { font-size: 14.5px; font-weight: 600; color: #222; }
     .crm-contact-meta { font-size: 12.5px; color: #888; margin-top: 2px; }
@@ -2785,18 +2806,22 @@
     /* ── CRM panel: pipeline · stage label with change-stage dropdown ── */
     .crm-ps-wrap { position: relative; }
     .crm-pipeline-stage {
-      display: inline-flex; align-items: center; gap: 6px; cursor: pointer;
-      padding: 4px 10px; border-radius: 5px; font-size: 12.5px; font-weight: 600;
-      background: #e7f0fe; color: #1f6fe5; width: fit-content; max-width: 100%;
+      display: flex; align-items: center; gap: 5px; cursor: pointer;
+      padding: 8px 12px 8px 10px; border-radius: 7px; font-size: 13.5px; font-weight: 500;
+      background: #2170f4; color: #fff; width: 100%;
     }
-    .crm-pipeline-stage:hover { filter: brightness(0.97); }
-    .crm-pipeline-stage .pl-icon { width: 12px; height: 12px; flex-shrink: 0; }
-    .crm-pipeline-stage #crm-ps-text { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-    .crm-pipeline-stage .caret { font-size: 9px; opacity: .75; margin-left: 1px; flex-shrink: 0; }
+    .crm-pipeline-stage:hover { filter: brightness(1.06); }
+    .crm-pipeline-stage .pl-icon { width: 14px; height: 14px; flex-shrink: 0; }
+    .crm-pipeline-stage #crm-ps-text { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .crm-pipeline-stage .caret { font-size: 16px; opacity: .95; margin-left: 5px; flex-shrink: 0; display: inline-block; transform: scaleX(1.4); transform-origin: center; }
+    .crm-ps-wrap:has(.crm-stage-menu.open) .crm-pipeline-stage {
+      border-bottom-left-radius: 0; border-bottom-right-radius: 0;
+    }
     .crm-stage-menu {
-      position: absolute; top: calc(100% + 4px); left: 0; z-index: 40; display: none;
-      background: #fff; border: 1px solid #e6e6e6; border-radius: 8px;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.14); padding: 6px 0; min-width: 190px;
+      position: absolute; top: 100%; left: 0; z-index: 40; display: none;
+      background: #fff; border: 1px solid #e6e6e6; border-top: none;
+      border-radius: 0 0 7px 7px;
+      box-shadow: 0 10px 24px rgba(0,0,0,0.14); padding: 6px 0; width: 100%; box-sizing: border-box;
     }
     .crm-stage-menu.open { display: block; }
     .crm-stage-item { display: flex; align-items: center; gap: 9px; padding: 7px 14px; font-size: 13px; color: #2b2f36; cursor: pointer; }
@@ -3480,7 +3505,7 @@
               </div>
               <div class="action-sep"></div>
               <div class="action-opt" onclick="openPipelinePicker(event)" title="Add to pipeline">
-                <div class="action-icon"><svg width="16" height="16" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 3.2H9.6L12.4 7L9.6 10.8H2L4.4 7L2 3.2Z" fill="#444"/></svg></div>
+                <div class="action-icon" style="width:20px;"><svg width="18" height="18" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 3.2H9.6L12.4 7L9.6 10.8H2L4.4 7L2 3.2Z" fill="#888888"/></svg></div>
                 Pipeline
               </div>
               <div class="action-sep"></div>
@@ -3941,7 +3966,7 @@
                 <div class="cam2-bar">Last activity: Email sent 2d ago</div>
                 <div class="cam2-items">
                   <div class="cam2-item" onclick="addActivity('followup')">
-                    <span class="ic"><svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 4L2.6 7.2 6 10.4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 7.2h6.4c2 0 3.6 1.6 3.6 3.6V12" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></span>
+                    <span class="ic"><svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="3.5" width="12" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M2.6 4.6L8 8.4l5.4-3.8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></span>
                     Follow-up on email
                   </div>
                   <div class="cam2-item" onclick="addActivity('call')">
@@ -5643,7 +5668,7 @@
       document.getElementById('crm-contact-name').textContent = rec.contact;
       document.getElementById('crm-contact-email').textContent = rec.email;
       document.getElementById('crm-company').textContent = rec.company;
-      document.getElementById('crm-contact-avatar').textContent = rec.avatar;
+      document.getElementById('crm-contact-avatar').textContent = (rec.contact || rec.avatar || '?').charAt(0).toUpperCase();
       renderStageLabel(rec.key, rec.stage);
       buildStageMenu(rec.key, rec.stage);
       panelRecord = { key: rec.key, stage: rec.stage, host: rec.host || null, mirror: rec.mirror || null };
@@ -5652,14 +5677,24 @@
       const p = PIPELINES[key]; if (!p) return;
       document.getElementById('crm-ps-text').textContent = p.name + ': ' + stage;
       const el = document.getElementById('crm-pipeline-stage');
-      el.style.background = p.tint; el.style.color = p.color;
+      el.style.background = p.color; el.style.color = '#fff';
+    }
+    // Progressive tint of the pipeline colour, palest first stage → deepest last.
+    function pipeShade(hex, idx, total) {
+      hex = (hex || '#2170f4').replace('#', '');
+      if (hex.length === 3) hex = hex.split('').map(function (c) { return c + c; }).join('');
+      const n = parseInt(hex, 16), r = (n >> 16) & 255, g = (n >> 8) & 255, b = n & 255;
+      const min = 0.35, max = 1, t = total <= 1 ? 1 : idx / (total - 1);
+      return 'rgba(' + r + ',' + g + ',' + b + ',' + (min + (max - min) * t).toFixed(3) + ')';
     }
     function buildStageMenu(key, stage) {
       const menu = document.getElementById('crm-stage-menu');
-      menu.innerHTML = (PIPELINE_STAGES[key] || []).map(function (s) {
+      const color = (PIPELINES[key] && PIPELINES[key].color) || '#2170f4';
+      const stages = PIPELINE_STAGES[key] || [];
+      menu.innerHTML = stages.map(function (s, i) {
         return '<div class="crm-stage-item' + (s === stage ? ' active' : '') +
           '" onclick="selectStage(this.dataset.s); event.stopPropagation();" data-s="' + s + '">' +
-          '<span class="dot"></span>' + s + '</div>';
+          '<span class="dot" style="background:' + pipeShade(color, i, stages.length) + ';"></span>' + s + '</div>';
       }).join('');
     }
     function toggleStageMenu(evt) {
@@ -5807,6 +5842,268 @@
         });
       }
     })();
+
+    // ── Persona system: ?u=<id> replaces the built-in mailbox + CRM data ──────────
+    function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+    function initialsOfName(name) {
+      return name.split(/\s+/).map(function (w) { return w[0]; }).join('').slice(0, 2).toUpperCase();
+    }
+    const PL_LABEL_ICON_STR = '<svg class="pl-icon" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 3.2H9.6L12.4 7L9.6 10.8H2L4.4 7L2 3.2Z" fill="currentColor"/></svg>';
+    let PERSONA = null;
+
+    function carryPersonaLinks() {
+      if (window.PERSONA_ID === 'default' || typeof withPersona !== 'function') return;
+      document.querySelectorAll('a[href]').forEach(function (a) {
+        var h = a.getAttribute('href');
+        if (/^(crm|index)\.html/.test(h)) a.setAttribute('href', withPersona(h));
+      });
+      document.querySelectorAll('[onclick]').forEach(function (el) {
+        var oc = el.getAttribute('onclick');
+        if (oc && oc.indexOf('location.href') !== -1) {
+          el.setAttribute('onclick', oc.replace(/(location\.href\s*=\s*')([^']+)(')/g,
+            function (_, a, url, b) { return a + withPersona(url) + b; }));
+        }
+      });
+    }
+
+    function pipeName(key) { return (PIPELINES[key] && PIPELINES[key].name) || key; }
+
+    // Rebuild the CRM data maps (single-select dropdown, stage menus, contact resolution).
+    function rebuildPersonaCrmData(p) {
+      for (var k in PIPELINES) delete PIPELINES[k];
+      for (var k2 in PIPELINE_STAGES) delete PIPELINE_STAGES[k2];
+      for (var k3 in CONTACTS) delete CONTACTS[k3];
+      p.pipelines.forEach(function (pl) {
+        var color = pl.color || '#2170f4';
+        PIPELINES[pl.id] = { name: pl.name, color: color, tint: color + '21' };
+        PIPELINE_STAGES[pl.id] = pl.stages.slice();
+      });
+      (p.contacts || []).forEach(function (c) {
+        CONTACTS[c.name] = { email: c.email, company: (c.company || (c.email.split('@')[1] || '').split('.')[0]) };
+      });
+      p.mailbox.threads.forEach(function (t) {
+        if (!CONTACTS[t.from]) CONTACTS[t.from] = { email: t.email, company: (t.email.split('@')[1] || '').split('.')[0] };
+      });
+      // Rebuild the pipeline dropdown options by CLONING a real default option
+      // (keeps the exact markup: icon + name + radio), then just swapping the data.
+      var dd = document.getElementById('pipeline-dropdown');
+      if (dd) {
+        var tmpl = dd.querySelector('.pl-dd-option');
+        var anchor = dd.querySelector('.pl-dd-sep') || dd.querySelector('.pl-dd-action');
+        if (tmpl && anchor) {
+          dd.querySelectorAll('.pl-dd-option').forEach(function (o) { o.remove(); });
+          p.pipelines.forEach(function (pl, i) {
+            var row = tmpl.cloneNode(true);
+            row.setAttribute('data-key', pl.id);
+            row.classList.toggle('checked', i === 0);
+            var nameEl = row.querySelector('.pl-dd-name'); if (nameEl) nameEl.textContent = pl.name;
+            var ic = row.querySelector('.pl-dd-ic'); if (ic) ic.style.color = pl.color || '#2170f4';
+            dd.insertBefore(row, anchor);
+          });
+        }
+      }
+    }
+
+    function applyPersonaIdentity(acc) {
+      var emails = document.querySelectorAll('.account-email-text');
+      if (emails[0]) emails[0].textContent = acc.email;
+      var av = document.querySelector('.account-header .account-avatar span');
+      if (av) av.textContent = acc.avatar || (acc.name || '?').charAt(0);
+      var search = document.querySelector('.top-toolbar input[placeholder^="Search"], input[placeholder^="Search in"]');
+      if (search) search.setAttribute('placeholder', 'Search in ' + acc.email);
+      // Isolation: hide every account section after the first.
+      var headers = document.querySelectorAll('.nav-scroll .account-header');
+      for (var i = 1; i < headers.length; i++) {
+        var h = headers[i];
+        var prev = h.previousElementSibling;
+        if (prev && prev.classList.contains('sidebar-line')) prev.style.display = 'none';
+        h.style.display = 'none';
+        var n = h.nextElementSibling;
+        while (n && !n.classList.contains('sidebar-line') && !n.classList.contains('account-header')) {
+          var next = n.nextElementSibling; n.style.display = 'none'; n = next;
+        }
+      }
+    }
+
+    // Templates cloned from the REAL default markup, so persona rows inherit the exact
+    // UI (all hover pills, the reply footer, etc.). Personas only supply data.
+    var _tileTmpl = null, _msgTmpl = null;
+    function capturePersonaTemplates() {
+      var tl = document.querySelector('.email-list .email-tile');
+      if (tl) _tileTmpl = tl.cloneNode(true);
+      var m = document.querySelector('#thread-view-unlinked .expanded-tile') ||
+              document.querySelector('.thread-content .expanded-tile');
+      if (m) _msgTmpl = m.cloneNode(true);
+    }
+
+    function clonePersonaTile(t, i) {
+      var tile = _tileTmpl.cloneNode(true);
+      tile.removeAttribute('data-record');
+      tile.classList.toggle('selected', i === 0);
+      tile.dataset.threadId = t.id;
+      tile.onclick = function () { openPersonaThread(t.id); selectPersonaTile(tile); };
+      var sender = tile.querySelector('.tile-sender');
+      if (sender) { sender.textContent = t.from; sender.classList.toggle('bold', !!t.unread); }
+      var time = tile.querySelector('.tile-time'); if (time) time.textContent = t.date;
+      var subj = tile.querySelector('.tile-subject'); if (subj) subj.textContent = t.subject;
+      var prev = tile.querySelector('.tile-preview');
+      var lastMsg = t.messages && t.messages[t.messages.length - 1];
+      if (prev) prev.textContent = lastMsg ? lastMsg.body.join(' ').replace(/\n/g, ' ') : '';
+      var oldLabel = tile.querySelector('.pipeline-label'); if (oldLabel) oldLabel.remove();
+      var dot = tile.querySelector('.tile-dot');
+      if (t.unread && !dot) { var d = document.createElement('div'); d.className = 'tile-dot'; var star = tile.querySelector('.tile-star'); if (star) star.parentNode.insertBefore(d, star); }
+      if (!t.unread && dot) dot.remove();
+      if (t.pipelineRef) {
+        var host = ensurePreviewRow(tile);
+        host.dataset.stage = t.pipelineRef.stage;
+        renderPipelineLabel(host, t.pipelineRef.pipeline);       // reuse the real default label renderer
+        var lbl = tile.querySelector('.pipeline-label');
+        if (lbl) lbl.onclick = function (e) { e.stopPropagation(); openPersonaRecord(t.id); };
+      }
+      return tile;
+    }
+
+    function selectPersonaTile(tile) {
+      document.querySelectorAll('.email-list .email-tile').forEach(function (t) { t.classList.remove('selected'); });
+      tile.classList.add('selected');
+    }
+
+    function fillPersonaMessage(node, m, t) {
+      var sent = m.dir === 'sent';
+      var s = node.querySelector('.exp-sender'); if (s) s.textContent = sent ? PERSONA.account.name : t.from;
+      var to = node.querySelector('.exp-to'); if (to) to.textContent = sent ? 'To: ' + t.from : 'To: me · ' + (t.email || '');
+      var ts = node.querySelector('.exp-timestamp'); if (ts) ts.textContent = m.when || t.date;
+      var body = node.querySelector('.expanded-body');
+      if (body) body.innerHTML = (m.body || []).map(function (p) { return '<p>' + esc(p).replace(/\n/g, '<br>') + '</p>'; }).join('<p>&zwj;</p>');
+    }
+
+    function openPersonaThread(id) {
+      var t = PERSONA.mailbox.threads.find(function (x) { return x.id === id; });
+      var content = document.querySelector('.thread-content');
+      if (!t || !content) return;
+      content.innerHTML = '';
+      var view = document.createElement('div');
+      view.className = 'thread-view'; view.style.display = 'block';
+      var header = document.createElement('div');
+      header.className = 'thread-sticky-header';
+      var title = document.createElement('div');
+      title.className = 'thread-title'; title.textContent = t.subject;
+      header.appendChild(title);
+      view.appendChild(header);
+      (t.messages || []).forEach(function (m) {
+        var node = _msgTmpl ? _msgTmpl.cloneNode(true) : document.createElement('div');
+        fillPersonaMessage(node, m, t);
+        view.appendChild(node);
+      });
+      content.appendChild(view);
+      if (t.pipelineRef) {
+        header.dataset.stage = t.pipelineRef.stage;
+        renderPipelineLabel(header, t.pipelineRef.pipeline);      // identical UI to the default header label
+        var lbl = header.querySelector('.pipeline-label');
+        if (lbl) lbl.onclick = function (e) { e.stopPropagation(); openPersonaRecord(t.id); };
+      }
+    }
+
+    function personaMoney(n) {
+      var s = (PERSONA && PERSONA.account.currency && PERSONA.account.currency.symbol) || '$';
+      return s + Number(n).toLocaleString();
+    }
+
+    // Drive the panel's Notes / AI Summary / Fields from the card's data, so no default
+    // demo content leaks into a persona record. (Activity has no card data yet → cleared.)
+    function fillPersonaPanel(card) {
+      var panel = document.getElementById('crm-panel');
+      if (!panel) return;
+      panel.querySelectorAll('.crm-activity-row').forEach(function (r) { r.remove(); });
+
+      var note = panel.querySelector('.crm-note');
+      if (note) {
+        if (card && card.note) { note.style.display = ''; note.innerHTML = '<div class="meta"></div>'; note.querySelector('.meta').textContent = PERSONA.account.name; note.appendChild(document.createTextNode(card.note)); }
+        else { note.style.display = 'none'; }
+      }
+
+      var sum = document.getElementById('crm-ai-summary-text');
+      if (sum) { sum.textContent = ''; sum.classList.remove('show'); }
+      var sumBtn = panel.querySelector('.crm-ai-summary-btn');
+      if (sumBtn) sumBtn.textContent = 'Generate';
+
+      var fieldSection = null;
+      panel.querySelectorAll('.crm-section-title').forEach(function (ti) { if (ti.textContent.trim() === 'Fields') fieldSection = ti.parentNode; });
+      if (fieldSection && card) {
+        fieldSection.querySelectorAll('.crm-field-row').forEach(function (r) { r.remove(); });
+        var fmtDate = function (iso) {
+          if (!iso || !/^\d{4}-\d{2}-\d{2}$/.test(iso)) return iso;
+          var M = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+          var p = iso.split('-'); return parseInt(p[2], 10) + ' ' + M[parseInt(p[1], 10) - 1] + ' ' + p[0];
+        };
+        var rows = [];
+        if (card.leadSource) rows.push(['Lead source', card.leadSource]);
+        if (card.weddingDate) rows.push(['Wedding date', fmtDate(card.weddingDate)]);
+        if (card.value) rows.push(['Value', personaMoney(card.value)]);
+        if (card.deposit != null) rows.push(['Deposit', personaMoney(card.deposit)]);
+        if (card.balance != null) rows.push(['Balance', personaMoney(card.balance)]);
+        if (card.dropOffDate) rows.push(['Drop-off', fmtDate(card.dropOffDate)]);
+        if (card.framerDue) rows.push(['Framer due', fmtDate(card.framerDue)]);
+        if (card.nextStep) rows.push(['Next step', card.nextStep]);
+        rows.forEach(function (r) {
+          var row = document.createElement('div');
+          row.className = 'crm-field-row';
+          row.innerHTML = '<span class="crm-field-label"></span><span class="crm-field-value"></span>';
+          row.querySelector('.crm-field-label').textContent = r[0];
+          row.querySelector('.crm-field-value').textContent = r[1];
+          fieldSection.appendChild(row);
+        });
+      }
+    }
+
+    function openPersonaRecord(threadId) {
+      var t = PERSONA.mailbox.threads.find(function (x) { return x.id === threadId; });
+      if (!t || !t.pipelineRef) return;
+      var pl = PERSONA.pipelines.find(function (p) { return p.id === t.pipelineRef.pipeline; });
+      var card = pl && (pl.cards.find(function (c) { return c.id === t.pipelineRef.cardId; }) ||
+        pl.cards.find(function (c) { return c.contact === t.from; }));
+      var info = (typeof contactInfo === 'function') ? contactInfo(t.from) : { email: t.email, company: '' };
+      setCrmRecord({
+        title: card ? card.deal : t.from,
+        contact: t.from, email: t.email || info.email, company: (card && card.company) || info.company,
+        avatar: initialsOfName(t.from),
+        key: t.pipelineRef.pipeline, stage: t.pipelineRef.stage, host: null, mirror: null,
+      });
+      fillPersonaPanel(card);
+      openCrmPanel();
+    }
+
+    function renderPersonaMailbox(p) {
+      capturePersonaTemplates();
+      var list = document.querySelector('.email-list');
+      if (list && _tileTmpl) {
+        var overlay = list.querySelector('.refresh-overlay');
+        var tiles = p.mailbox.threads.map(function (t, i) { return clonePersonaTile(t, i); });
+        list.innerHTML = '';
+        if (overlay) list.appendChild(overlay);
+        tiles.forEach(function (n) { list.appendChild(n); });
+      }
+      if (p.mailbox.threads[0]) openPersonaThread(p.mailbox.threads[0].id);
+    }
+
+    function applyPersona() {
+      try {
+        carryPersonaLinks();
+        var p = (window.TITAN_PERSONAS || {})[window.PERSONA_ID];
+        if (p) {
+          PERSONA = p;
+          document.title = 'Inbox - ' + (p.account.brand || 'Mail');
+          applyPersonaIdentity(p.account);
+          rebuildPersonaCrmData(p);
+          renderPersonaMailbox(p);
+        }
+      } finally {
+        document.documentElement.classList.remove('persona-cloak');
+      }
+    }
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', applyPersona);
+    else applyPersona();
   </script>
 
   <!-- Settings Sidebar Modal Drawer -->
