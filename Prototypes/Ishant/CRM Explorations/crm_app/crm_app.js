@@ -117,6 +117,14 @@ const CrmApp = (function () {
       if (titleEl) titleEl.textContent = 'All Activity';
     } else if (viewId === 'all-tasks') {
       if (titleEl) titleEl.textContent = 'Upcoming Tasks';
+    } else if (viewId === 'all-pipelines') {
+      if (titleEl) titleEl.textContent = 'Active Pipelines';
+    } else if (viewId === 'new-lead') {
+      if (titleEl) titleEl.textContent = 'Priya Anand';
+    } else if (viewId === 'potential-promo') {
+      if (titleEl) titleEl.textContent = 'Jordan Lee';
+    } else if (viewId === 'promo-interactions' || viewId === 'lead-interactions') {
+      if (titleEl) titleEl.textContent = 'Other Interactions';
     } else {
       if (titleEl) titleEl.textContent = 'Ella Mathews';
     }
@@ -212,6 +220,157 @@ const CrmApp = (function () {
     stageEl.classList.add('active');
   }
 
+  // Ella's thread content, kept here so clicking back to her email restores it exactly.
+  const ELLA_THREAD = {
+    title: 'RE: Q3 Proposal & Licensing Terms',
+    sender: 'Ella Mathews',
+    to: 'To: me, Dave Miller',
+    timestamp: '2:15 PM',
+    bodyHtml: `
+        <p>Hi,</p>
+        <p>Thanks for sending over the updated Q3 proposal and licensing terms — I've had a chance to review
+          with Dave and the team on our end.</p>
+        <p>&zwj;</p>
+        <p>1. SSO integration is still a must-have requirement before we can move to contract sign-off.</p>
+        <p>2. We've got budget approved up to $45,000 for the security line item, so let's make sure the
+          final quote lines up.</p>
+        <p>&zwj;</p>
+        <p>Dave will be looped in as the technical decision maker alongside me. I generally prefer async
+          updates over a call if that works on your end.</p>
+        <p>Thanks!</p>
+      `
+  };
+
+  function selectEllaEmail(tileEl) {
+    if (!tileEl) return;
+
+    document.querySelectorAll('.email-tile').forEach(t => t.classList.remove('selected'));
+    tileEl.classList.add('selected');
+
+    const historyBlock = document.getElementById('threadHistoryBlock');
+    if (historyBlock) historyBlock.style.display = '';
+
+    const titleText = document.getElementById('threadTitleText');
+    if (titleText) titleText.textContent = ELLA_THREAD.title;
+
+    const expSender = document.getElementById('expSenderText');
+    if (expSender) expSender.textContent = ELLA_THREAD.sender;
+
+    const expTo = document.getElementById('expToText');
+    if (expTo) expTo.textContent = ELLA_THREAD.to;
+
+    const expTimestamp = document.getElementById('expTimestampText');
+    if (expTimestamp) expTimestamp.textContent = ELLA_THREAD.timestamp;
+
+    const expBody = document.getElementById('expandedBodyContent');
+    if (expBody) expBody.innerHTML = ELLA_THREAD.bodyHtml;
+
+    openDrawer();
+    navHistory = ['home', 'overview'];
+    renderView('overview');
+  }
+
+  // Clicking a personal email from someone not yet in the CRM — visual only, not wired to real data.
+  // Selects the tile, swaps the reading pane to that email, and points the CRM drawer at a
+  // simple contact-detail card instead of Ella's profile.
+  function selectPromoLead(tileEl) {
+    if (!tileEl) return;
+
+    document.querySelectorAll('.email-tile').forEach(t => t.classList.remove('selected'));
+    tileEl.classList.add('selected');
+
+    const dot = tileEl.querySelector('.tile-dot');
+    if (dot) dot.remove();
+    const sender = tileEl.querySelector('.tile-sender');
+    if (sender) sender.classList.remove('bold');
+
+    const historyBlock = document.getElementById('threadHistoryBlock');
+    if (historyBlock) historyBlock.style.display = 'none';
+
+    const titleText = document.getElementById('threadTitleText');
+    if (titleText) titleText.textContent = 'Exploring Titan for our team at Northbridge Analytics';
+
+    const expSender = document.getElementById('expSenderText');
+    if (expSender) expSender.textContent = 'Priya Anand';
+
+    const expTo = document.getElementById('expToText');
+    if (expTo) expTo.textContent = 'To: ishantp@titan.email';
+
+    const expTimestamp = document.getElementById('expTimestampText');
+    if (expTimestamp) expTimestamp.textContent = '11:05 AM';
+
+    const expBody = document.getElementById('expandedBodyContent');
+    if (expBody) {
+      expBody.innerHTML = `
+        <p>Hi,</p>
+        <p>A colleague recommended Titan for our ops team — we're about 60 people and looking to
+          consolidate our email and CRM tooling.</p>
+        <p>&zwj;</p>
+        <p>Could you share more about your Enterprise pricing and what onboarding typically looks like?
+          Happy to hop on a call this week if that's easier.</p>
+        <p>&zwj;</p>
+        <p>Best,<br>Priya Anand<br>Head of Operations, Northbridge Analytics</p>
+      `;
+    }
+
+    openDrawer();
+    navHistory = ['home', 'new-lead'];
+    renderView('new-lead');
+  }
+
+  // Clicking an already-read mass marketing email — visual only, not wired to real data.
+  // There's little reliable info to extract, so the CRM drawer shows a sparse card flagged
+  // as a likely promotion, leaving the call on whether to track it to the user.
+  function selectPotentialPromo(tileEl) {
+    if (!tileEl) return;
+
+    document.querySelectorAll('.email-tile').forEach(t => t.classList.remove('selected'));
+    tileEl.classList.add('selected');
+
+    const historyBlock = document.getElementById('threadHistoryBlock');
+    if (historyBlock) historyBlock.style.display = 'none';
+
+    const titleText = document.getElementById('threadTitleText');
+    if (titleText) titleText.textContent = '3 Ways to 10x Your Email Outreach in 2026';
+
+    const expSender = document.getElementById('expSenderText');
+    if (expSender) expSender.textContent = 'Jordan Lee';
+
+    const expTo = document.getElementById('expToText');
+    if (expTo) expTo.textContent = 'To: ishantp@titan.email';
+
+    const expTimestamp = document.getElementById('expTimestampText');
+    if (expTimestamp) expTimestamp.textContent = '8:15 AM';
+
+    const expBody = document.getElementById('expandedBodyContent');
+    if (expBody) {
+      expBody.innerHTML = `
+        <p>Hi there,</p>
+        <p>Struggling to get replies from cold outreach? GrowthBoost's AI platform helps sales teams
+          increase reply rates by up to 3x — trusted by 500+ companies.</p>
+        <p>&zwj;</p>
+        <p>Book a free demo this week and get 20% off your first quarter.</p>
+        <p>&zwj;</p>
+        <p>Cheers,<br>The GrowthBoost Team</p>
+        <p>&zwj;</p>
+        <p style="color:#999; font-size:12px;">You're receiving this because you subscribed to marketing updates. Unsubscribe here.</p>
+      `;
+    }
+
+    openDrawer();
+    navHistory = ['home', 'potential-promo'];
+    renderView('potential-promo');
+  }
+
+  // Visual-only acknowledgement — no data is actually persisted.
+  function addLeadToCrm(btnEl) {
+    if (!btnEl || btnEl.disabled) return;
+    btnEl.textContent = '✓ Added to CRM';
+    btnEl.disabled = true;
+    btnEl.style.background = '#16a34a';
+    btnEl.style.cursor = 'default';
+  }
+
   // No init needed — CRM sidebar HTML is inlined directly in index.html
 
   return {
@@ -228,7 +387,11 @@ const CrmApp = (function () {
     logActivityPrompt,
     openFullView,
     toggleTask,
-    setPipelineStage
+    setPipelineStage,
+    selectEllaEmail,
+    selectPromoLead,
+    selectPotentialPromo,
+    addLeadToCrm
   };
 })();
 
