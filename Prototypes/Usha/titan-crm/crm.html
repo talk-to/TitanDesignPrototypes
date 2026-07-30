@@ -5,6 +5,27 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Neo partnerships - CRM</title>
+  <!-- Persona loader: ?u=<id> loads personas/<id>.js ONLY; no param = this page's built-in data. -->
+  <script>
+    (function () {
+      var raw = new URLSearchParams(location.search).get('u');
+      var u = (raw && /^[a-z0-9_-]{1,32}$/.test(raw)) ? raw.toLowerCase() : null;
+      window.PERSONA_ID = u || 'default';
+      window.withPersona = function (href) {
+        if (!u || /[?&]u=/.test(href)) return href;
+        var hash = '', hi = href.indexOf('#');
+        if (hi !== -1) { hash = href.slice(hi); href = href.slice(0, hi); }
+        return href + (href.indexOf('?') === -1 ? '?' : '&') + 'u=' + u + hash;
+      };
+      if (u) {
+        document.documentElement.classList.add('persona-cloak');
+        document.write('<' + 'script src="personas/' + u + '.js?v=' + Date.now() + '"><' + '/script>');
+      }
+    })();
+  </script>
+  <style>
+    .persona-cloak .app-window { visibility: hidden; }
+  </style>
   <style>
     :root {
       --click-scale: 0.97;
@@ -2818,6 +2839,12 @@
     .np-help { font-size: 11.5px; color: #9a9fa7; margin: 0 2px 10px; }
 
     /* Stages as interlocking chevrons — same visual language as the board (§3.2) */
+    .np-color-row { display: flex; gap: 12px; margin-top: 6px; }
+    .np-swatch {
+      width: 26px; height: 26px; border-radius: 50%; cursor: pointer; flex-shrink: 0;
+      transition: transform 0.1s ease;
+    }
+    .np-swatch:hover { transform: scale(1.12); }
     .np-chev-chain {
       display: flex; align-items: stretch; gap: 6px; margin-top: 6px;
       overflow-x: auto; padding: 6px 0 30px;
@@ -3115,7 +3142,7 @@
         <!-- + New Pipeline -->
         <div class="nav-item" onclick="openNewPipeline()">
           <div class="nav-item-icon" style="color:#2170f4; font-weight:700; font-size:16px;">+</div>
-          <span class="nav-item-label" style="color:#2170f4; font-weight:600;">New Pipeline</span>
+          <span class="nav-item-label" style="color:#2170f4; font-weight:600;">New pipeline</span>
         </div>
 
         <div class="sidebar-line" id="pipeline-nav-line"></div>
@@ -3123,7 +3150,7 @@
         <!-- Neo partnerships (active) -->
         <div class="nav-item active" data-pipeline-id="neo" onclick="switchPipeline('neo')">
           <div class="nav-item-icon">
-            <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M2 3.2H9.6L12.4 7L9.6 10.8H2L4.4 7L2 3.2Z" fill="#fff"/></svg>
+            <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M2 3.2H9.6L12.4 7L9.6 10.8H2L4.4 7L2 3.2Z" fill="#2170f4"/></svg>
           </div>
           <span class="nav-item-label active">Neo partnerships</span>
         </div>
@@ -3193,7 +3220,7 @@
             <div class="compose-main-btn split-btn-main" onclick="openNewPipeline()">
               <div class="btn-content-wrapper">
                 <span style="font-weight:700; margin-right:4px;">+</span>
-                <span>New Pipeline</span>
+                <span>New pipeline</span>
               </div>
             </div>
           </div>
@@ -3235,7 +3262,7 @@
             <span id="pipeline-name-heading">Neo partnerships</span> <span id="pipeline-total" style="font-size:13.5px; font-weight:500; color:#888; margin-left:8px;"></span>
           </div>
           <div style="display:flex; align-items:center; gap:10px;">
-            <div style="display:flex; align-items:center; gap:6px; background:#2170f4; color:#fff; font-size:13px; font-weight:600; padding:8px 14px; border-radius:6px; cursor:pointer;" onclick="alert('Prototype only: manual record creation is not wired up here — cards are added by linking an email thread (§1.3).')">
+            <div id="add-entity-btn" style="display:flex; align-items:center; gap:6px; background:#2170f4; color:#fff; font-size:13px; font-weight:600; padding:8px 14px; border-radius:6px; cursor:pointer;" onclick="alert('Prototype only: manual record creation is not wired up here — cards are added by linking an email thread (§1.3).')">
               <span style="font-weight:700;">+</span> Add <span id="add-entity-label">opportunity</span>
             </div>
             <div style="display:flex; gap:4px; background:#f4f4f7; border-radius:7px; padding:3px;">
@@ -3582,7 +3609,12 @@
           <div class="np-label">Pipeline name</div>
           <input class="np-name-input" id="np-name" type="text" placeholder="Pipeline name" spellcheck="false">
 
-          <div style="height:30px;"></div>
+          <div style="height:24px;"></div>
+
+          <div class="np-label">Colour</div>
+          <div class="np-color-row" id="np-colors"></div>
+
+          <div style="height:24px;"></div>
 
           <div class="np-label">Stages</div>
           <div class="np-help">Click a stage to rename it. These are the columns on your board.</div>
@@ -4883,7 +4915,7 @@
     // existing board — you can switch between them from the sidebar. STAGES / CARDS /
     // CURRENT_ENTITY_PLURAL always mirror the pipeline currently on screen.
     const PIPELINES = {
-      neo: { id: 'neo', name: 'Neo partnerships', entity: 'Opportunity', plural: 'opportunities', stages: STAGES, cards: CARDS },
+      neo: { id: 'neo', name: 'Neo partnerships', entity: 'Opportunity', plural: 'opportunities', color: '#2170f4', stages: STAGES, cards: CARDS },
     };
     let currentPipelineId = 'neo';
     let pipelineSeq = 0;
@@ -4895,11 +4927,14 @@
       STAGES = p.stages;
       CARDS = p.cards;
       CURRENT_ENTITY_PLURAL = p.plural;
+      CURRENT_PIPELINE_COLOR = p.color || '#2170f4';
 
       const heading = document.getElementById('pipeline-name-heading');
       if (heading) heading.textContent = p.name;
       const addLabel = document.getElementById('add-entity-label');
       if (addLabel) addLabel.textContent = p.entity.toLowerCase();
+      const addBtn = document.getElementById('add-entity-btn');
+      if (addBtn) addBtn.style.background = CURRENT_PIPELINE_COLOR;
 
       document.querySelectorAll('.nav-scroll .nav-item[data-pipeline-id]').forEach(function (el) {
         const on = el.dataset.pipelineId === id;
@@ -4912,7 +4947,8 @@
       renderBoard();
     }
 
-    function fmtMoney(n) { return '$' + n.toLocaleString(); }
+    let CURRENCY_SYMBOL = '$';
+    function fmtMoney(n) { return CURRENCY_SYMBOL + n.toLocaleString(); }
 
     // Muted, varied avatar colors — no real photos in this prototype, so every
     // contact falls back to a single-initial circle, colored deterministically
@@ -4926,6 +4962,7 @@
 
     // ── Card action menu (§2.2-style quick actions, triggered from the card's action icon) ──
     function formatNextActivity(next) {
+      if (next.label) return next.label + (next.date ? ' · ' + next.date : '');
       if (next.type === 'followup') return 'Follow-up scheduled for ' + next.date;
       if (next.type === 'meeting') return 'Meeting scheduled for ' + next.date;
       if (next.type === 'task') return 'Task "' + next.name + '" due on ' + next.date;
@@ -4939,7 +4976,7 @@
       closeCardActionMenu();
       if (wasOpenForThisCard) return;
 
-      const card = CARDS.find(function (c) { return c.id === cardId; });
+      const card = CARDS.find(function (c) { return String(c.id) === String(cardId); });
       if (!card) return;
 
       // Next activity (if scheduled) takes priority over showing the last one.
@@ -4982,13 +5019,15 @@
         const cardsInStage = CARDS.filter(function (c) { return c.stage === stage.key; });
         const total = cardsInStage.reduce(function (sum, c) { return sum + c.value; }, 0);
         const headerShade = blueShade(idx, STAGES.length);
+        const titleColor = darken(CURRENT_PIPELINE_COLOR, 0.5);
+        const metaColor = darken(CURRENT_PIPELINE_COLOR, 0.72);
 
         const col = document.createElement('div');
         col.className = 'kanban-col';
         col.innerHTML =
           '<div class="kanban-col-header" style="background:' + headerShade + ';">' +
-            '<div class="kanban-col-title">' + stage.label + '</div>' +
-            '<div class="kanban-col-meta">' +
+            '<div class="kanban-col-title" style="color:' + titleColor + ';">' + stage.label + '</div>' +
+            '<div class="kanban-col-meta" style="color:' + metaColor + ';">' +
               '<span>' + cardsInStage.length + ' &middot; ' + fmtMoney(total) + '</span>' +
             '</div>' +
           '</div>' +
@@ -5011,8 +5050,8 @@
         body.addEventListener('drop', function (e) {
           e.preventDefault();
           body.style.background = '';
-          const id = Number(e.dataTransfer.getData('text/card-id'));
-          const card = CARDS.find(function (c) { return c.id === id; });
+          const id = e.dataTransfer.getData('text/card-id');
+          const card = CARDS.find(function (c) { return String(c.id) === String(id); });
           if (card) { card.stage = stage.key; renderBoard(); }
         });
       });
@@ -5024,18 +5063,31 @@
       }
     }
 
-    // Progressive shade in Titan's single blue family — palest first stage to
-    // deepest last. Shared by the board headers and the New Pipeline stage editor
-    // so a stage looks the same while you're building it and once it's live.
-    function blueShade(idx, total) {
+    // Pipeline colour → progressive tints for stage boxes / chevrons (palest first → deepest last).
+    const PIPELINE_COLORS = ['#4f6d9e', '#3f8a7d', '#5e8a4e', '#b5813f', '#ab5f74', '#7a6ba3'];
+    let CURRENT_PIPELINE_COLOR = '#2170f4';
+    function hexToRgb(hex) {
+      hex = (hex || '#2170f4').replace('#', '');
+      if (hex.length === 3) hex = hex.split('').map(function (c) { return c + c; }).join('');
+      const n = parseInt(hex, 16);
+      return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
+    }
+    function shadeFor(hex, idx, total) {
+      const rgb = hexToRgb(hex);
       const min = 0.06, max = 0.36;
       const t = total <= 1 ? 0 : idx / (total - 1);
-      return 'rgba(33, 112, 244, ' + (min + (max - min) * t).toFixed(3) + ')';
+      return 'rgba(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ',' + (min + (max - min) * t).toFixed(3) + ')';
     }
+    function darken(hex, f) {
+      const rgb = hexToRgb(hex).map(function (c) { return Math.round(c * f); });
+      return 'rgb(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ')';
+    }
+    function blueShade(idx, total) { return shadeFor(CURRENT_PIPELINE_COLOR, idx, total); }
     function blueDot(idx, total) {
+      const rgb = hexToRgb(CURRENT_PIPELINE_COLOR);
       const min = 0.4, max = 1;
       const t = total <= 1 ? 0 : idx / (total - 1);
-      return 'rgba(33, 112, 244, ' + (min + (max - min) * t).toFixed(3) + ')';
+      return 'rgba(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ',' + (min + (max - min) * t).toFixed(3) + ')';
     }
 
     // Shared color states for both the card's action icon and the menu's top bar,
@@ -5066,7 +5118,7 @@
       el.innerHTML =
         '<div class="kanban-card-top-row">' +
           '<div class="kanban-card-deal">' + card.deal + '</div>' +
-          '<div class="kanban-action-icon" onclick="toggleCardActionMenu(event, ' + card.id + ')" title="Actions">' + statusIconSvg(card) + '</div>' +
+          '<div class="kanban-action-icon" onclick="toggleCardActionMenu(event, \'' + card.id + '\')" title="Actions">' + statusIconSvg(card) + '</div>' +
         '</div>' +
         '<div class="kanban-card-company">' + card.company + '</div>' +
         '<div class="kanban-card-footer">' +
@@ -5080,6 +5132,103 @@
     }
 
     renderBoard();
+
+    // ── Persona system: ?u=<id> replaces the built-in pipelines with a customer's data ──
+    function carryPersonaLinks() {
+      if (window.PERSONA_ID === 'default' || typeof withPersona !== 'function') return;
+      document.querySelectorAll('a[href]').forEach(function (a) {
+        var h = a.getAttribute('href');
+        if (/^(crm|index)\.html/.test(h)) a.setAttribute('href', withPersona(h));
+      });
+      document.querySelectorAll('[onclick]').forEach(function (el) {
+        var oc = el.getAttribute('onclick');
+        if (oc && oc.indexOf('location.href') !== -1) {
+          el.setAttribute('onclick', oc.replace(/(location\.href\s*=\s*')([^']+)(')/g,
+            function (_, a, url, b) { return a + withPersona(url) + b; }));
+        }
+      });
+    }
+
+    function applyPersonaAccount(acc) {
+      var email = document.getElementById('account-active-email');
+      var initial = document.getElementById('account-active-initial');
+      if (email) email.textContent = acc.email;
+      if (initial) initial.textContent = acc.avatar || (acc.name || '?').charAt(0);
+      var avatar = document.querySelector('.account-header .account-avatar');
+      if (avatar) { avatar.style.background = '#3f6ea5'; var bg = avatar.querySelector('img.bg'); if (bg) bg.style.display = 'none'; }
+      // Show only this customer's account in the switcher menu (isolation).
+      var menu = document.getElementById('account-menu');
+      if (menu) {
+        menu.innerHTML =
+          '<div class="account-menu-label">Titan account</div>' +
+          '<div class="account-menu-item active">' +
+            '<span class="account-menu-avatar" style="background:#3f6ea5;">' + (acc.avatar || 'J') + '</span>' +
+            '<div class="account-menu-text"><div class="account-menu-email"></div><div class="account-menu-sub"></div></div>' +
+            '<svg class="account-menu-check" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3.2 3.2L13 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>' +
+          '</div>';
+        menu.querySelector('.account-menu-email').textContent = acc.email;
+        menu.querySelector('.account-menu-sub').textContent = acc.brand || '';
+      }
+    }
+
+    function rebuildPipelineNav(pipelines) {
+      var line = document.getElementById('pipeline-nav-line');
+      if (!line) return;
+      var n = line.nextElementSibling;
+      while (n && !n.classList.contains('sidebar-line')) { var next = n.nextElementSibling; n.remove(); n = next; }
+      var after = line;
+      pipelines.forEach(function (pl, i) {
+        var item = document.createElement('div');
+        item.className = 'nav-item' + (i === 0 ? ' active' : '');
+        item.dataset.pipelineId = pl.id;
+        item.setAttribute('onclick', "switchPipeline('" + pl.id + "')");
+        item.innerHTML =
+          '<div class="nav-item-icon"><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M2 3.2H9.6L12.4 7L9.6 10.8H2L4.4 7L2 3.2Z" fill="' + (pl.color || '#2170f4') + '"/></svg></div>' +
+          '<span class="nav-item-label' + (i === 0 ? ' active' : '') + '"></span>';
+        item.querySelector('.nav-item-label').textContent = pl.name;
+        after.after(item);
+        after = item;
+      });
+    }
+
+    function applyPersona() {
+      try {
+      carryPersonaLinks();
+      var p = (window.TITAN_PERSONAS || {})[window.PERSONA_ID];
+      if (p) {
+        CURRENCY_SYMBOL = (p.account.currency && p.account.currency.symbol) || '$';
+        document.title = (p.pipelines[0] ? p.pipelines[0].name : 'CRM') + ' — CRM';
+        applyPersonaAccount(p.account);
+
+        for (var k in PIPELINES) delete PIPELINES[k];
+        p.pipelines.forEach(function (pl) {
+          var stages = pl.stages.map(function (label, i) { return { key: 's' + i, label: label }; });
+          var labelToKey = {};
+          stages.forEach(function (s) { labelToKey[s.label] = s.key; });
+          var cards = pl.cards.map(function (c, i) {
+            var copy = Object.assign({}, c);
+            copy.id = pl.id + '-' + (c.id || i);
+            copy.stage = labelToKey[c.stage] || stages[0].key;
+            return copy;
+          });
+          var entity = pl.entity || 'Record';
+          var plural = pl.plural || (/y$/i.test(entity) ? entity.replace(/y$/i, 'ies') : entity + 's');
+          PIPELINES[pl.id] = {
+            id: pl.id, name: pl.name, entity: entity, plural: plural.toLowerCase(),
+            color: pl.color || '#2170f4', stages: stages, cards: cards,
+          };
+        });
+        rebuildPipelineNav(p.pipelines);
+        switchPipeline(p.pipelines[0].id);
+      } else {
+        switchPipeline(currentPipelineId);   // sync the built-in default from its pipeline data
+      }
+      } finally {
+        document.documentElement.classList.remove('persona-cloak');
+      }
+    }
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', applyPersona);
+    else applyPersona();
 
     // ── New Pipeline flow (§4.1 Create · §4.2 Templates · §4.3 Stage customization) ──
     const NP_TEMPLATES = {
@@ -5095,7 +5244,7 @@
                     stages: [{ name: 'New' }, { name: 'Processing' }, { name: 'Stage 3' }, { name: 'Closed' }] },
     };
 
-    const npState = { type: null, name: '', plural: 'records', stages: [] };
+    const npState = { type: null, name: '', plural: 'records', color: '#4f6d9e', stages: [] };
     let npDragIndex = null;
 
     function openNewPipeline() {
@@ -5126,12 +5275,36 @@
       const tpl = NP_TEMPLATES[npState.type];
       npState.name = tpl.name;
       npState.plural = tpl.plural;
+      npState.color = npRandomColor();   // random default, preferring an unused colour
       // Deep copy so edits don't mutate the template.
       npState.stages = tpl.stages.map(function (s) { return { name: s.name, wonLost: !!s.wonLost }; });
       document.getElementById('np-step2-title').textContent = tpl.title;
       document.getElementById('np-name').value = tpl.name;
+      npRenderColors();
       npRenderStages();
       npShowStep(2);
+    }
+
+    // Random colour, preferring one not already used by an existing pipeline.
+    function npRandomColor() {
+      const used = Object.keys(PIPELINES).map(function (k) { return (PIPELINES[k].color || '').toLowerCase(); });
+      const free = PIPELINE_COLORS.filter(function (c) { return used.indexOf(c.toLowerCase()) === -1; });
+      const pool = free.length ? free : PIPELINE_COLORS;
+      return pool[Math.floor(Math.random() * pool.length)];
+    }
+    function npRenderColors() {
+      const wrap = document.getElementById('np-colors');
+      if (!wrap) return;
+      wrap.innerHTML = '';
+      PIPELINE_COLORS.forEach(function (c) {
+        const sw = document.createElement('div');
+        sw.className = 'np-swatch' + (c === npState.color ? ' selected' : '');
+        sw.style.background = c;
+        if (c === npState.color) sw.style.boxShadow = '0 0 0 2px #fff, 0 0 0 4px ' + c;
+        sw.title = c;
+        sw.onclick = function () { npState.color = c; npRenderColors(); npRenderStages(); };
+        wrap.appendChild(sw);
+      });
     }
 
     // Step 2 — stages as interlocking chevrons (same shape as the board, §3.2).
@@ -5145,9 +5318,9 @@
         chev.className = 'np-chev';
         chev.draggable = true;
         chev.dataset.idx = i;
-        chev.style.background = blueShade(i, n);
+        chev.style.background = shadeFor(npState.color, i, n);
         chev.innerHTML =
-          '<span class="np-chev-name" title="Click to rename"></span>' +
+          '<span class="np-chev-name" title="Click to rename" style="color:' + darken(npState.color, 0.5) + ';"></span>' +
           (n > 2
             ? '<span class="np-chev-remove" title="Remove stage">' +
                 '<svg width="9" height="9" viewBox="0 0 9 9" fill="none"><path d="M1 1l7 7M8 1L1 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>' +
@@ -5253,7 +5426,7 @@
       const entity = npState.type ? NP_TEMPLATES[npState.type].entity : 'Record';
       const id = 'p' + (++pipelineSeq);
       PIPELINES[id] = {
-        id: id, name: name, entity: entity, plural: npState.plural,
+        id: id, name: name, entity: entity, plural: npState.plural, color: npState.color,
         stages: clean.map(function (s, i) { return { key: slugify(s.name, i), label: s.name }; }),
         cards: [],
       };
@@ -5273,7 +5446,7 @@
       item.setAttribute('onclick', "switchPipeline('" + id + "')");
       item.innerHTML =
         '<div class="nav-item-icon">' +
-          '<svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M2 3.2H9.6L12.4 7L9.6 10.8H2L4.4 7L2 3.2Z" fill="#fff"/></svg>' +
+          '<svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M2 3.2H9.6L12.4 7L9.6 10.8H2L4.4 7L2 3.2Z" fill="' + (npState.color || '#2170f4') + '"/></svg>' +
         '</div>' +
         '<span class="nav-item-label"></span>';
       item.querySelector('.nav-item-label').textContent = name;
