@@ -87,7 +87,21 @@ The `CrmApp` module automatically fetches and mounts `crm_sidebar.html` into `#c
 
 ---
 
-## 5. Extending the Shell for New Products & Features
+## 5. Merged Approach (`Merged Approach/`)
+
+To synthesize different design explorations without breaking isolated prototypes, the **Merged Approach** directory bridges Usha's pipeline-centric markers with Ishant's modular `crm_app` architecture:
+
+- 📁 **[Merged Approach Directory](file:///Users/ishant.p/Documents/Titan%20Design%20Git/Prototypes/Ishant/CRM%20Explorations/Merged%20Approach)**: Standalone prototype combining thread-level pipeline markers and stage advancement with the `crm_app` sidebar drawer.
+- 📄 **[Analysis Document](file:///Users/ishant.p/Documents/Titan%20Design%20Git/Prototypes/Ishant/CRM%20Explorations/Merged%20Approach/usha_approach_analysis.md)**: In-depth architectural analysis of Usha's pipeline labels (`.pipeline-label`, `.pipeline-chip`), single-select radio dropdown, and interactive stage bar.
+- ⚡ **Lightweight Integration Bridge**: Clicking any pipeline label or chip in the inbox list or reading pane calls `openCrmPanel()`, which delegates directly to `CrmApp.openDrawer()` and updates the hero header and stage pill (`Sales · Proposal Sent`).
+- 🗂️ **Streamlined 2-Tab Navigation**:
+  - **Activity**: Interactions feed, email logs, and shared files vault.
+  - **Upcoming**: Scheduled meetings, follow-up checklists, and priority tasks.
+  - **Overview (Hidden Non-Destructively)**: Preserved in code (`style="display: none !important;"`) so it can be unhidden cleanly at any point without loss of context.
+
+---
+
+## 6. Extending the Shell for New Products & Features
 
 When building a new feature or product prototype (e.g., CRM Explorations):
 
