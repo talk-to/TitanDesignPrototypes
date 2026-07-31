@@ -87,10 +87,61 @@ The `CrmApp` module automatically fetches and mounts `crm_sidebar.html` into `#c
 
 ---
 
-## 5. Extending the Shell for New Products & Features
+## 5. Merged Approach (`Merged Approach/`)
+
+To synthesize different design explorations without breaking isolated prototypes, the **Merged Approach** directory bridges Usha's pipeline-centric markers with Ishant's modular `crm_app` architecture:
+
+- 📁 **[Merged Approach Directory](file:///Users/ishant.p/Documents/Titan%20Design%20Git/Prototypes/Ishant/CRM%20Explorations/Merged%20Approach)**: Standalone prototype combining thread-level pipeline markers and stage advancement with the `crm_app` sidebar drawer.
+- 📄 **[Analysis Document](file:///Users/ishant.p/Documents/Titan%20Design%20Git/Prototypes/Ishant/CRM%20Explorations/Merged%20Approach/usha_approach_analysis.md)**: In-depth architectural analysis of Usha's pipeline labels (`.pipeline-label`, `.pipeline-chip`), single-select radio dropdown, and interactive stage bar.
+- ⚡ **Lightweight Integration Bridge**: Clicking any pipeline label or chip in the inbox list or reading pane calls `openCrmPanel()`, which delegates directly to `CrmApp.openDrawer()` and updates the hero header and stage pill (`Sales · Proposal Sent`).
+- 🗂️ **Streamlined 2-Tab Navigation & Outcome-First Layout**:
+  - **Top Stage Bar Widget**: Positioned at the very top of the profile hero. Displays the **Pipeline Name** (`Neo Partnerships`), **`View Pipeline >`** link, and interactive **Chevron Stage Bar** with strict left-to-right z-index stacking (`z-index: 20` to `10`) and 2px white ribbon contour separation.
+  - **Outcome-First Activity Feed**: Activity cards organized around **Business Direction / Conclusions Drawn** (Tier 1) rather than communication mechanics. Includes directional movement pills (Tier 2), channel context (Tier 3), and interactive per-activity **Personal Note Drawers** (Tier 4) with live note counters (`💬 2 Notes Saved`) and inline note creation (`+ Add Note`).
+  - **Upcoming**: Scheduled meetings, follow-up checklists, and priority tasks.
+  - **Overview (Hidden Non-Destructively)**: Preserved in DOM (`style="display: none !important;"`) so it can be unhidden cleanly at any point without loss of context.
+
+---
+
+## 6. Extending the Shell for New Products & Features
 
 When building a new feature or product prototype (e.g., CRM Explorations):
 
 1. **Adding Side-App Extensions**: Use the **Right Utility Dock (`#tasks-panel`)**. Add a new app button icon in the dock and pair it with a `334px` sliding container panel.
 2. **Adding Thread-Level Context**: Insert inline status pills, cards, or action triggers directly inside the **Reading Pane Header** next to sender metadata.
 3. **Adding Global Tools / Views**: Register navigation entries in the **Left Sidebar** or access higher-level views via the top-left App Switcher.
+
+---
+
+## 7. Recent CRM Activity Feed & Profile UI Refinements
+
+The following user-requested refinements have been applied and synced across `crm_app/` and `Merged Approach/`:
+
+1. **Connected Vertical Timeline**: Restored continuous vertical line (`.crm-timeline-wrapper::before`) with neutral slate-gray (`#64748b`) circular icon badges (`26px`).
+2. **Timeline Rhythm & Spacing Tokens**:
+   - Timeline item gap: `28px`.
+   - Section headers: Scoped `4px` margin-bottom strictly for `Recent Activity` & `Shared Files` section titles.
+   - Log Activity button: Full-width dashed low-contrast button positioned *before/above* the timeline feed with `4px` bottom margin (duplicate bottom button removed).
+   - Sub-tab active indicator line thickness: Updated to `2.5px`.
+3. **Activity Title Wrapping & Dynamic Subject Sync**:
+   - Constrained title max-width to `195px` with top-aligned line wrapping (`align-items: flex-start; line-height: 1.35`).
+   - Dynamic DOM subject resolution: `#crmAct1Title` & `#crmAllAct1Title` dynamically query the active email thread subject (`Project roadmap for Dashboard version 2`) rather than hardcoded fallbacks.
+4. **Notes Button Position Swap & Labeling**:
+   - Swapped positions: `+ Add Note` button placed on the **left** (right below activity title), `💬 N Notes` count pill on the **right**.
+   - Note count pills updated to concise format (`💬 1 Note`, `💬 2 Notes`).
+5. **Profile Hero Header Customizations**:
+   - Top navigation bar (`.crm-nav-header` with back button & full view icon): Hidden non-destructively (`style="display: none;"`) for email-context viewing.
+   - Contact chips strip (`See all details`, `Call`, `Email`, `LinkedIn`): Hidden non-destructively (`style="display: none;"`).
+   - Profile header row: Added right-aligned vertically centered chevron (`>`) next to contact avatar, name, and role.
+6. **Custom Pipeline Tooltips & Stage Naming**:
+   - Custom dark slate (`#0f172a`, white text) slide-in tooltip (`0.15s cubic-bezier`) on hover over empty pipeline ribbons using body-anchored fixed positioning (disabled native browser `title` tooltips).
+   - Stage name update: Renamed `Closed Won` stage to `Closed`.
+7. **Pipeline Container Spacing**:
+   - Increased internal gap between pipeline heading (`Neo Partnerships`) and blue chevron stage ribbons to `12px`.
+   - Updated pipeline section container outer margins to `margin-top: 16px; margin-bottom: 16px;`.
+8. **Consistent Icon Family System**:
+   - Replaced all raw emojis across tasks, meetings, note pills, and file attachments (`💬`, `📅`, `⚡`, `🤝`, `📝`, `👥`, `📄`, `📊`, `⬇`) with a unified, lightweight SVG line icon family matching Titan design system conventions.
+9. **Upcoming Task & Meeting Right Chevrons & Clean Subtext**:
+   - Replaced right-side grey timestamp text with clean right-aligned chevron icons (`>`), providing a clear affordance for opening Google Meet or task details.
+   - Cleaned up item subtext by removing redundant labels (`Google Meet`, `High Priority`, contact names), leaving crisp, readable schedule subtext (`Today at 3:00 PM`, `Tomorrow at 10:00 AM`, `Next Monday at 2:00 PM`).
+   - Increased vertical gap between task/meeting card heading and subtext from `2px` to `4px` for enhanced readability and breathing room.
+

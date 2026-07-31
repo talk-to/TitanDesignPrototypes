@@ -11,11 +11,15 @@
 - [x] **1. Right Dock CRM Sidebar Drawer (Minimal & Decoupled - Happy Path)**
   - *Added*: Red CRM trigger button in the top-right toolbar next to Read Receipts & Settings.
   - *Added*: Decoupled `crm_app/` module (`crm_sidebar.html`, `crm_app.css`, `crm_app.js`) using Titan design tokens, generous spacing, and clear 13px–16px typography.
-  - *Added*: **3 Core Tabs**:
-    1. **Overview**: Pinned Sticky Notes, `Show All Notes →` (date-grouped history), Constant Contact Info, `More Details →` (all contact fields).
-    2. **Activity**: Interaction logs (emails, calls), `+ Log Activity` button, and Shared Files Vault (`Proposal_v2.pdf`, `SOW_Draft.docx`).
-    3. **Activities**: Scheduled tasks & follow-ups checklist (`+ Add Task`).
-  - *Removed*: Use-Case Lens and unnecessary visual clutter.
+  - *Refined Navigation*:
+    1. **Activity**: Interaction logs (emails, calls), `+ Log Activity` button, and Shared Files Vault (`Proposal_v2.pdf`, `SOW_Draft.docx`).
+    2. **Upcoming**: Scheduled meetings, tasks & follow-ups checklist (`+ Schedule`).
+    3. **Overview (Hidden Non-Destructively)**: Preserved in code (`style="display: none !important;"`) for easy restoration.
+
+- [x] **1b. Merged Approach Pipeline Integration (`Merged Approach/`)**
+  - *Added*: [Merged Approach/](file:///Users/ishant.p/Documents/Titan%20Design%20Git/Prototypes/Ishant/CRM%20Explorations/Merged%20Approach) synthesizing Usha's pipeline labels and stage dropdown with Ishant's `crm_app` sidebar.
+  - *Added*: Interactive Pipeline Stage Pill (`Sales · Proposal Sent`) embedded in the header hero of `crm_sidebar.html`.
+  - *Added*: Documented context in [usha_approach_analysis.md](file:///Users/ishant.p/Documents/Titan%20Design%20Git/Prototypes/Ishant/CRM%20Explorations/Merged%20Approach/usha_approach_analysis.md) and cross-linked in [new_chat_context.md](file:///Users/ishant.p/Documents/Titan%20Design%20Git/Prototypes/Ishant/CRM%20Explorations/new_chat_context.md).
 
 - [ ] **2. Inline Thread Header Memory Badges (Happy Path)**
   - *Context*: Contextual memory cues inserted directly into the email thread header next to sender metadata.
