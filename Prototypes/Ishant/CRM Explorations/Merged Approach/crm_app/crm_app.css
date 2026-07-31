@@ -254,7 +254,7 @@
   color: var(--titan-text-sub);
   background: none;
   border: none;
-  border-bottom: 2px solid transparent;
+  border-bottom: 2.5px solid transparent;
   cursor: pointer;
   transition: color 0.15s ease, border-color 0.15s ease;
   flex: 1;
@@ -270,7 +270,7 @@
 .crm-tab-item.active {
   color: var(--titan-blue);
   font-weight: 600;
-  border-bottom-color: var(--titan-blue);
+  border-bottom: 2.5px solid var(--titan-blue);
   letter-spacing: -0.01em !important;
 }
 
@@ -287,7 +287,7 @@
 .crm-view-page {
   display: none;
   flex-direction: column;
-  gap: 16px;
+  gap: 0px;
   animation: fadeIn 0.18s ease forwards;
 }
 
@@ -308,7 +308,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 4px;
+  margin-bottom: 10px;
   letter-spacing: -0.01em;
 }
 
@@ -469,20 +469,20 @@
 /* ── 📍 Connected Vertical Timeline Feed (Consistent Vector SVG Badges) ── */
 .crm-timeline-wrapper {
   position: relative;
-  padding-left: 4px;
-  margin-top: 4px;
+  padding-left: 36px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 28px;
+  margin-top: 4px;
 }
 
 /* Continuous Vertical Timeline Line */
 .crm-timeline-wrapper::before {
   content: '';
   position: absolute;
-  top: 14px;
-  bottom: 14px;
-  left: 18px;
+  top: 12px;
+  bottom: 12px;
+  left: 13px;
   width: 2px;
   background: #e2e8f0;
   z-index: 1;
@@ -496,26 +496,30 @@
 }
 
 .crm-timeline-badge {
-  width: 28px;
-  height: 28px;
+  position: absolute;
+  left: -36px;
+  top: 1px;
+  width: 26px;
+  height: 26px;
   border-radius: 50%;
   background: #ffffff;
   border: 1.5px solid #cbd5e1;
-  color: #475569;
+  color: #64748b;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  z-index: 3;
 }
 
 .crm-timeline-content {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 6px;
   font-size: 13px;
   letter-spacing: -0.01em;
-  padding-top: 2px;
+  padding-top: 0px;
 }
 
 .crm-timeline-title {
@@ -688,9 +692,45 @@
   letter-spacing: 0.1px;
 }
 
-.crm-pipe-stage.active .crm-pipe-label,
-.crm-pipe-stage:hover .crm-pipe-label {
+.crm-pipe-stage.active .crm-pipe-label {
   display: inline-block;
+}
+
+/* ── Custom Sleek Dark Tooltip for Pipeline Ribbon Stages ── */
+.crm-pipe-tooltip-box {
+  position: fixed;
+  transform: translateX(-50%) translateY(4px);
+  background: #0f172a;
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 8px;
+  border-radius: 4px;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.3);
+  transition: opacity 0.15s ease, transform 0.15s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.15s ease;
+  z-index: 99999 !important;
+  letter-spacing: 0.1px;
+}
+
+.crm-pipe-tooltip-box::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 4px 4px 0 4px;
+  border-style: solid;
+  border-color: #0f172a transparent transparent transparent;
+}
+
+.crm-pipe-tooltip-box.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
 }
 
 .crm-task-checkbox.checked::after {

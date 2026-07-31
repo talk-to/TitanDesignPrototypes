@@ -208,7 +208,7 @@ const CrmApp = (function () {
 
   function setPipelineStage(stageEl) {
     if (!stageEl) return;
-    const stageName = stageEl.getAttribute('title') || stageEl.textContent.trim();
+    const stageName = stageEl.getAttribute('data-tooltip') || stageEl.getAttribute('title') || stageEl.textContent.trim();
     if (stageName) {
       selectStage(stageName);
     }
@@ -216,7 +216,7 @@ const CrmApp = (function () {
 
   // Ella's thread content, kept here so clicking back to her email restores it exactly.
   const ELLA_THREAD = {
-    title: 'RE: Q3 Proposal & Licensing Terms',
+    title: 'Project roadmap for Dashboard version 2',
     sender: 'Ella Mathews',
     to: 'To: me, Dave Miller',
     timestamp: '2:15 PM',
@@ -374,7 +374,7 @@ const CrmApp = (function () {
     renewals: { name: 'Renewals & Expansion', color: '#dc2626' },
   };
   const PIPELINE_STAGES = {
-    sales: ['New', 'Contacted', 'Qualified', 'Proposal Sent', 'Closed Won'],
+    sales: ['New', 'Contacted', 'Qualified', 'Proposal Sent', 'Closed'],
     onboarding: ['Kickoff', 'Integration', 'Training', 'Live'],
     partnerships: ['Lead', 'In Discussion', 'Term Sheet', 'Signed'],
     investors: ['Intro', 'Pitch', 'Due Diligence', 'Committed'],
@@ -395,7 +395,7 @@ const CrmApp = (function () {
       const isActive = (i === activeIdx) || (s.toLowerCase() === (activeStage || '').toLowerCase());
       const bg = pipeShade(color, i, stages.length);
       return '<div class="crm-pipe-stage' + (isActive ? ' active' : '') +
-        '" style="background:' + bg + ';" onclick="CrmApp.selectStage(\'' + s + '\')" title="' + s + '">' +
+        '" style="background:' + bg + ';" onclick="CrmApp.selectStage(\'' + s + '\')" data-tooltip="' + s + '">' +
         '<span class="crm-pipe-label">' + (isActive ? s : '') + '</span>' +
         '</div>';
     }).join('');
@@ -475,20 +475,69 @@ const CrmApp = (function () {
   }
 
   function updateContext(rec) {
+    if (!rec) rec = {};
     panelRecord = rec;
+
+    // Dynamically retrieve the current selected email subject
+    const activeSubjectEl = document.getElementById('threadTitleText') || document.querySelector('.thread-title') || document.querySelector('.exp-subject');
+    const activeSubject = (activeSubjectEl && activeSubjectEl.textContent.trim()) 
+      ? activeSubjectEl.textContent.trim() 
+      : (rec.subject || (rec.title && rec.title !== rec.contact ? rec.title : null) || 'Project roadmap for Dashboard version 2');
+
     const titleEl = document.getElementById('crmNavTitle');
     const heroName = document.getElementById('crmHeroName');
     const heroRole = document.getElementById('crmHeroRole');
     const heroAvatar = document.getElementById('crmHeroAvatar');
+    const act1Title = document.getElementById('crmAct1Title');
+    const allAct1Title = document.getElementById('crmAllAct1Title');
 
-    if (titleEl) titleEl.textContent = rec.contact || rec.title || 'CRM Contact';
-    if (heroName) heroName.textContent = rec.contact || rec.title || 'CRM Contact';
+    if (titleEl) titleEl.textContent = rec.contact || rec.title || 'Ella Mathews';
+    if (heroName) heroName.textContent = rec.contact || rec.title || 'Ella Mathews';
     if (heroRole) heroRole.textContent = (rec.company ? rec.company : 'Client Contact');
     if (heroAvatar) heroAvatar.textContent = (rec.avatar || (rec.contact ? rec.contact.charAt(0) : 'C')).toUpperCase();
+    if (act1Title) act1Title.textContent = activeSubject;
+    if (allAct1Title) allAct1Title.textContent = activeSubject;
 
     renderStageLabel(rec.key, rec.stage);
     buildStageMenu(rec.key, rec.stage);
     switchTab('activity');
+  }
+
+  function toggleActivityNotes(cardId) {
+    const drawer = document.getElementById(`actNotes-${cardId}`);
+    if (drawer) {
+      const isHidden = drawer.style.display === 'none' || !drawer.style.display;
+      drawer.style.display = isHidden ? 'flex' : 'none';
+    }
+  }
+
+  function showAddNoteInput(cardId) {
+    const drawer = document.getElementById(`actNotes-${cardId}`);
+    if (drawer) {
+      drawer.style.display = 'flex';
+      const input = drawer.querySelector('input[type="text"]');
+      if (input) input.focus();
+    }
+  }
+
+  function appendActivityNote(cardId, inputEl) {
+    if (!inputEl || !inputEl.value.trim()) return;
+    const text = inputEl.value.trim();
+    const list = document.getElementById(`actNoteList-${cardId}`);
+    if (list) {
+      const div = document.createElement('div');
+      div.style.cssText = 'font-size:11.5px; color:#334155; padding:4px 0; border-top:1px solid #e2e8f0;';
+      div.innerHTML = `<span style="font-weight:600; color:#0f172a;">Just now:</span> "${text}"`;
+      list.appendChild(div);
+      inputEl.value = '';
+
+      const countEl = document.getElementById(`noteCount-${cardId}`);
+      if (countEl) {
+        const currentNum = list.children.length;
+        const iconSvg = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>';
+        countEl.innerHTML = `${iconSvg} ${currentNum} Note${currentNum === 1 ? '' : 's'}`;
+      }
+    }
   }
 
   return {
@@ -511,7 +560,10 @@ const CrmApp = (function () {
     selectEllaEmail,
     selectPromoLead,
     selectPotentialPromo,
-    addLeadToCrm
+    addLeadToCrm,
+    toggleActivityNotes,
+    showAddNoteInput,
+    appendActivityNote
   };
 })();
 
@@ -542,6 +594,44 @@ if (typeof window !== 'undefined') {
           container.innerHTML = html;
         })
         .catch(err => console.error('Failed to load CRM sidebar template:', err));
+    }
+  });
+
+  // Dynamic Custom Tooltip Handler for Pipeline Ribbons
+  document.addEventListener('mouseover', function (e) {
+    const stage = e.target.closest('.crm-pipe-stage');
+    let tooltip = document.getElementById('crmPipeTooltip');
+
+    if (!stage) {
+      if (tooltip) tooltip.classList.remove('visible');
+      return;
+    }
+
+    const text = stage.getAttribute('data-tooltip') || stage.getAttribute('title') || '';
+    if (!text || stage.classList.contains('active')) {
+      if (tooltip) tooltip.classList.remove('visible');
+      return;
+    }
+
+    if (!tooltip) {
+      tooltip = document.createElement('div');
+      tooltip.id = 'crmPipeTooltip';
+      tooltip.className = 'crm-pipe-tooltip-box';
+      document.body.appendChild(tooltip);
+    }
+
+    tooltip.textContent = text;
+    const rect = stage.getBoundingClientRect();
+    tooltip.style.left = (rect.left + rect.width / 2) + 'px';
+    tooltip.style.top = (rect.top - 28) + 'px';
+    tooltip.classList.add('visible');
+  });
+
+  document.addEventListener('mouseout', function (e) {
+    const stage = e.target.closest('.crm-pipe-stage');
+    if (stage) {
+      const tooltip = document.getElementById('crmPipeTooltip');
+      if (tooltip) tooltip.classList.remove('visible');
     }
   });
 }
