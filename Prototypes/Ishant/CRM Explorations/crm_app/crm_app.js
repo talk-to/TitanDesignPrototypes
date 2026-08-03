@@ -549,7 +549,8 @@ const CrmApp = (function () {
     }
   }
 
-  function selectStage(stageName) {
+  function selectStage(stageName, e) {
+    if (e) e.stopPropagation();
     const chevronSvg = '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>';
     const label = document.getElementById('crmCurrentStageLabel');
     if (label) label.innerHTML = stageName + ' ' + chevronSvg;
@@ -661,8 +662,7 @@ const CrmApp = (function () {
   // Close menus on outside click
   document.addEventListener('click', function (e) {
     const stageMenu = document.getElementById('crmStageDropdownMenu');
-    const stageBtn = document.getElementById('crmStageBadgeBtn');
-    if (stageMenu && stageBtn && !stageBtn.contains(e.target) && !stageMenu.contains(e.target)) {
+    if (stageMenu && !e.target.closest('#crmPipelineStages') && !e.target.closest('#crmStageDropdownMenu')) {
       stageMenu.style.display = 'none';
     }
     const actMenu = document.getElementById('crmAddActivityMenu');

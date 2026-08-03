@@ -51,22 +51,22 @@
       <!-- Chevron Ribbon Stage Bar & Dropdown Container -->
       <div style="flex:1; min-width:0; position:relative;">
         <div class="crm-pipeline-stages" id="crmPipelineStages" onclick="CrmApp.toggleStageDropdown(event)" style="cursor:pointer; position:relative;" title="Click to change stage">
-          <div class="crm-pipe-stage" onclick="CrmApp.selectStage('New')" data-tooltip="New" style="background:#1e3a8a;">
+          <div class="crm-pipe-stage" onclick="CrmApp.selectStage('New', event)" data-tooltip="New" style="background:#1e3a8a;">
             <span class="crm-pipe-label">New</span>
           </div>
-          <div class="crm-pipe-stage" onclick="CrmApp.selectStage('Contacted')" data-tooltip="Contacted" style="background:#1d4ed8;">
+          <div class="crm-pipe-stage" onclick="CrmApp.selectStage('Contacted', event)" data-tooltip="Contacted" style="background:#1d4ed8;">
             <span class="crm-pipe-label">Contacted</span>
           </div>
-          <div class="crm-pipe-stage" onclick="CrmApp.selectStage('Qualified')" data-tooltip="Qualified" style="background:#2563eb;">
+          <div class="crm-pipe-stage" onclick="CrmApp.selectStage('Qualified', event)" data-tooltip="Qualified" style="background:#2563eb;">
             <span class="crm-pipe-label">Qualified</span>
           </div>
-          <div class="crm-pipe-stage active" onclick="CrmApp.selectStage('Proposal Sent')" data-tooltip="Proposal Sent" style="background:#3b82f6;">
+          <div class="crm-pipe-stage active" onclick="CrmApp.selectStage('Proposal Sent', event)" data-tooltip="Proposal Sent" style="background:#3b82f6;">
             <span class="crm-pipe-label" id="crmCurrentStageLabel" style="display:inline-flex; align-items:center; gap:4px;">
               Proposal Sent
               <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
             </span>
           </div>
-          <div class="crm-pipe-stage" onclick="CrmApp.selectStage('Closed')" data-tooltip="Closed" style="background:#93c5fd;">
+          <div class="crm-pipe-stage" onclick="CrmApp.selectStage('Closed', event)" data-tooltip="Closed" style="background:#93c5fd;">
             <span class="crm-pipe-label">Closed</span>
           </div>
 
@@ -78,12 +78,12 @@
 
         <!-- Scalable Stage Dropdown Menu (Handles 10+ stages safely) -->
         <div class="crm-stage-dropdown-menu" id="crmStageDropdownMenu" style="display:none; position:absolute; top:100%; left:0; margin-top:4px; background:#fff; border:1px solid #e2e8f0; border-radius:8px; box-shadow:0 10px 15px -3px rgba(0,0,0,0.1); z-index:100; min-width:160px; padding:4px 0;">
-          <div class="crm-stage-opt" onclick="CrmApp.selectStage('New')" style="padding:6px 12px; font-size:12px; cursor:pointer;">New</div>
-          <div class="crm-stage-opt" onclick="CrmApp.selectStage('Contacted')" style="padding:6px 12px; font-size:12px; cursor:pointer;">Contacted</div>
-          <div class="crm-stage-opt" onclick="CrmApp.selectStage('Qualified')" style="padding:6px 12px; font-size:12px; cursor:pointer;">Qualified</div>
-          <div class="crm-stage-opt active" onclick="CrmApp.selectStage('Proposal Sent')" style="padding:6px 12px; font-size:12px; font-weight:600; color:var(--titan-blue); background:#eff6ff; cursor:pointer;">Proposal Sent ✓</div>
-          <div class="crm-stage-opt" onclick="CrmApp.selectStage('Negotiation')" style="padding:6px 12px; font-size:12px; cursor:pointer;">Negotiation</div>
-          <div class="crm-stage-opt" onclick="CrmApp.selectStage('Closed')" style="padding:6px 12px; font-size:12px; cursor:pointer;">Closed</div>
+          <div class="crm-stage-opt" onclick="CrmApp.selectStage('New', event)" style="padding:6px 12px; font-size:12px; cursor:pointer;">New</div>
+          <div class="crm-stage-opt" onclick="CrmApp.selectStage('Contacted', event)" style="padding:6px 12px; font-size:12px; cursor:pointer;">Contacted</div>
+          <div class="crm-stage-opt" onclick="CrmApp.selectStage('Qualified', event)" style="padding:6px 12px; font-size:12px; cursor:pointer;">Qualified</div>
+          <div class="crm-stage-opt active" onclick="CrmApp.selectStage('Proposal Sent', event)" style="padding:6px 12px; font-size:12px; font-weight:600; color:var(--titan-blue); background:#eff6ff; cursor:pointer;">Proposal Sent ✓</div>
+          <div class="crm-stage-opt" onclick="CrmApp.selectStage('Negotiation', event)" style="padding:6px 12px; font-size:12px; cursor:pointer;">Negotiation</div>
+          <div class="crm-stage-opt" onclick="CrmApp.selectStage('Closed', event)" style="padding:6px 12px; font-size:12px; cursor:pointer;">Closed</div>
         </div>
       </div>
 
