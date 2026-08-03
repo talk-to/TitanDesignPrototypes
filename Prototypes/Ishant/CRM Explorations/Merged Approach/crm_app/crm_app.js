@@ -551,11 +551,22 @@ const CrmApp = (function () {
 
   function selectStage(stageName) {
     const label = document.getElementById('crmCurrentStageLabel');
-    if (label) label.textContent = stageName;
+    if (label) label.textContent = stageName + ' ▾';
     const menu = document.getElementById('crmStageDropdownMenu');
     if (menu) menu.style.display = 'none';
 
-    // Highlight active option
+    // Update active chevron ribbon stage segment
+    document.querySelectorAll('.crm-pipe-stage').forEach(stage => {
+      const tooltip = stage.getAttribute('data-tooltip') || '';
+      const isMatch = tooltip.toLowerCase() === stageName.toLowerCase() || stage.textContent.toLowerCase().includes(stageName.toLowerCase());
+      stage.classList.toggle('active', isMatch);
+      const labelSpan = stage.querySelector('.crm-pipe-label');
+      if (labelSpan) {
+        labelSpan.textContent = isMatch ? (stageName + ' ▾') : '';
+      }
+    });
+
+    // Highlight active option in dropdown menu
     document.querySelectorAll('.crm-stage-opt').forEach(opt => {
       const isMatch = opt.textContent.includes(stageName);
       opt.classList.toggle('active', isMatch);
