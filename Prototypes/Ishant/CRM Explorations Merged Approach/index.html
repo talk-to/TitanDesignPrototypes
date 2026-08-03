@@ -4047,66 +4047,25 @@
 <!-- Dedicated Minimal CRM Sidebar Drawer -->
 <div class="crm-drawer-container" id="crmSidebar">
   
-  <!-- Navigation Header with SVG Chevron & Icons (Hidden for now) -->
-  <div class="crm-nav-header" style="display: none;">
-    <div class="crm-nav-left">
-      <button class="crm-back-btn" id="crmBackBtn" onclick="CrmApp.goBack()" style="display:flex;" title="Back">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-          <polyline points="15 18 9 12 15 6"></polyline>
-        </svg>
-      </button>
-      <div class="crm-nav-breadcrumbs">
-        <span class="crm-nav-title" id="crmNavTitle" onclick="CrmApp.goHome()" style="cursor:pointer;">Ella Mathews</span>
-      </div>
-    </div>
-    <div class="crm-nav-actions">
-      <button class="crm-icon-btn" onclick="CrmApp.openFullView()" title="Full Version (Landing Page)">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-          <polyline points="15 3 21 3 21 9"></polyline>
-          <line x1="10" y1="14" x2="21" y2="3"></line>
-        </svg>
-      </button>
-      <button class="crm-icon-btn" onclick="CrmApp.closeDrawer()" title="Close Sidebar">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-          <line x1="18" y1="6" x2="6" y2="18"></line>
-          <line x1="6" y1="6" x2="18" y2="18"></line>
-        </svg>
-      </button>
-    </div>
-  </div>
-
   <!-- Profile Hero Header -->
   <div class="crm-profile-hero">
     
-    <!-- Pipeline Section Wrapper Container (Total Value & Chevron Stage Bar) -->
-    <div class="crm-pipeline-container" style="display:flex; flex-direction:column; gap:12px; margin-top:16px; margin-bottom:16px;">
-      <div style="display:flex; align-items:center; justify-content:space-between; padding:0 2px;">
-        <span id="crmPipelineName" style="font-size:12px; font-weight:700; color:var(--titan-text-main); letter-spacing:0.1px;">Neo Partnerships</span>
-        <div style="display:flex; align-items:center; gap:2px; cursor:pointer;" onclick="CrmApp.openFullView()" title="View in CRM">
-          <span style="font-size:12.5px; font-weight:600; color:var(--titan-blue);">View Pipeline</span>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--titan-blue)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="9 18 15 12 9 6"></polyline>
-          </svg>
+    <!-- Work Item + Stage -->
+    <div style="display:flex; flex-direction:column; gap:8px; padding:12px 14px; background:#f4f8ff; border:1px solid #dbe7fb; border-radius:8px; position:relative; margin-top:12px;">
+      <div style="display:flex; align-items:center; justify-content:space-between; gap:8px; min-width:0;">
+        <div style="display:flex; align-items:center; gap:7px; min-width:0; cursor:pointer; flex:1;" onclick="CrmApp.openFullView()" title="Open pipeline">
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--titan-blue)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0; width:14px; height:14px;"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+          <span id="crmWorkItemTitle" style="font-size:13px; font-weight:600; color:var(--titan-text-main); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; transition:color 0.15s ease;" onmouseover="this.style.color='var(--titan-blue)';" onmouseout="this.style.color='var(--titan-text-main)';">Meridian AI site</span>
         </div>
+        <span id="crmWorkItemStage" class="crm-wi-stage-pill" onclick="CrmApp.toggleWorkItemStageMenu(event)" title="Change stage">
+          <svg class="pl-icon" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 3.2H9.6L12.4 7L9.6 10.8H2L4.4 7L2 3.2Z" fill="currentColor"/></svg>
+          <span>Proposal Sent</span>
+          <svg class="pl-dd" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </span>
       </div>
-      <div class="crm-pipeline-stages" id="crmPipelineStages">
-        <div class="crm-pipe-stage" style="background:#1e3a8a;" onclick="CrmApp.setPipelineStage(this)" data-tooltip="New">
-          <span class="crm-pipe-label">New</span>
-        </div>
-        <div class="crm-pipe-stage" style="background:#1d4ed8;" onclick="CrmApp.setPipelineStage(this)" data-tooltip="Contacted">
-          <span class="crm-pipe-label">Contacted</span>
-        </div>
-        <div class="crm-pipe-stage" style="background:#2563eb;" onclick="CrmApp.setPipelineStage(this)" data-tooltip="Qualified">
-          <span class="crm-pipe-label">Qualified</span>
-        </div>
-        <div class="crm-pipe-stage active" style="background:#3b82f6;" onclick="CrmApp.setPipelineStage(this)" data-tooltip="Proposal Sent">
-          <span class="crm-pipe-label">Proposal Sent</span>
-        </div>
-        <div class="crm-pipe-stage" style="background:#93c5fd;" onclick="CrmApp.setPipelineStage(this)" data-tooltip="Closed">
-          <span class="crm-pipe-label">Closed</span>
-        </div>
-      </div>
+
+      <!-- Stage dropdown menu (positioned under the chevron) -->
+      <div class="crm-work-item-stage-menu" id="crmWorkItemStageMenu"></div>
     </div>
 
     <!-- Contact Profile Identity (Avatar, Name & Role) -->
@@ -4124,7 +4083,35 @@
         </svg>
       </button>
     </div>
-    
+
+    <!-- Pinned Contact Note — a standing fact about the contact, not tied to any one activity.
+         Lives in the hero so it stays visible on every tab. Activity-specific notes are separate
+         and live on their timeline entry. -->
+    <div class="crm-pinned-note" id="crmPinnedNote" style="margin-top:12px;">
+
+      <!-- Empty state -->
+      <button id="crmPinnedNoteEmpty" onclick="CrmApp.editPinnedNote()" title="Pin a standing note about this contact" style="width:100%; background:transparent; border:1px dashed #cbd5e1; color:var(--titan-text-sub); padding:7px 10px; border-radius:6px; font-size:11.5px; font-weight:500; cursor:pointer; display:flex; align-items:center; gap:6px; transition:all 0.15s ease;" onmouseover="this.style.background='#f8fafc'; this.style.borderColor='#94a3b8';" onmouseout="this.style.background='transparent'; this.style.borderColor='#cbd5e1';">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><path d="M12 17v5"></path><path d="M9 10.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24V16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V7a1 1 0 0 1 1-1 2 2 0 0 0 0-4H8a2 2 0 0 0 0 4 1 1 0 0 1 1 1z"></path></svg>
+        <span>Pin a note about this contact</span>
+      </button>
+
+      <!-- Filled state -->
+      <div id="crmPinnedNoteFilled" style="display:none; align-items:flex-start; gap:8px; background:#fffbeb; border:1px solid #fde68a; border-radius:6px; padding:8px 10px;">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#b45309" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0; margin-top:2px;"><path d="M12 17v5"></path><path d="M9 10.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24V16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V7a1 1 0 0 1 1-1 2 2 0 0 0 0-4H8a2 2 0 0 0 0 4 1 1 0 0 1 1 1z"></path></svg>
+        <span id="crmPinnedNoteText" onclick="CrmApp.editPinnedNote()" style="flex:1; min-width:0; font-size:11.5px; line-height:1.45; color:#0f172a; cursor:text;"></span>
+        <button onclick="CrmApp.removePinnedNote()" title="Unpin this note" style="background:transparent; border:none; color:#b45309; cursor:pointer; padding:0 2px; flex-shrink:0; display:flex; align-items:center; margin-top:1px;">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+
+      <!-- Edit state -->
+      <div id="crmPinnedNoteEdit" style="display:none; gap:6px; background:#fffbeb; border:1px solid #fde68a; border-radius:6px; padding:8px 10px;">
+        <input type="text" id="crmPinnedNoteInput" placeholder="e.g. Prefers weekday mornings — never Fridays" style="flex:1; min-width:0; font-size:11.5px; border:1px solid #fcd34d; border-radius:4px; padding:5px 8px; outline:none; background:#fff;" onkeydown="if(event.key==='Enter'){CrmApp.savePinnedNote();}else if(event.key==='Escape'){CrmApp.cancelPinnedNote();}">
+        <button onclick="CrmApp.savePinnedNote()" style="background:var(--titan-blue); color:#fff; border:none; border-radius:4px; padding:5px 10px; font-size:11.5px; font-weight:600; cursor:pointer; flex-shrink:0;">Pin</button>
+      </div>
+
+    </div>
+
     <!-- Horizontally Scrollable Contact Chips Strip (Hidden for now) -->
     <div class="crm-chips-strip" style="display: none;">
       <button class="crm-chip-item crm-chip-primary" onclick="CrmApp.drillInto('more-details')">
@@ -4163,13 +4150,6 @@
         Website
       </a>
     </div>
-  </div>
-
-  <!-- 2 Main Navigation Tabs: Activity, Upcoming (Overview tab non-destructively hidden) -->
-  <div class="crm-tabs-bar" id="crmTabsBar">
-    <button class="crm-tab-item" id="crmTab-overview" onclick="CrmApp.switchTab('overview')" style="display: none !important;">Overview</button>
-    <button class="crm-tab-item active" id="crmTab-activity" onclick="CrmApp.switchTab('activity')">Activity</button>
-    <button class="crm-tab-item" id="crmTab-upcoming" onclick="CrmApp.switchTab('upcoming')">Upcoming</button>
   </div>
 
   <!-- Viewport Body -->
@@ -4491,23 +4471,86 @@
       </div>
     </div>
 
-    <!-- 📄 PAGE 5: ACTIVITY TAB (Default Contact Profile View: Interactions & Feed) -->
+    <!-- 📄 PAGE 5: CONTACT PROFILE (Default View: Upcoming + Recent Activity) -->
     <div class="crm-view-page active" id="crmView-activity" style="display: flex;">
-      
-      <div class="crm-section-title" style="margin-bottom: 4px;">
-        <span>Recent Activity</span>
-        <button class="crm-header-link" onclick="CrmApp.drillInto('all-activity')" style="font-weight:600; font-size:12.5px;">
-          See all activity
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+
+      <!-- Upcoming Tasks & Meetings Section (accordion, collapsed by default) -->
+      <div class="crm-accordion collapsed" id="crmAccUpcoming">
+        <button class="crm-accordion-header" onclick="CrmApp.toggleAccordion('crmAccUpcoming')">
+          <span>Upcoming</span>
+          <svg class="crm-acc-chev" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </button>
+
+        <div class="crm-accordion-body">
+          <div class="crm-accordion-content">
+          <div style="display:flex; flex-direction:column; gap:8px;">
+        <div style="display:flex; align-items:center; justify-content:space-between; padding:10px 12px; border-radius:8px; background:#fff; border:1px solid #f1f5f9;">
+          <div style="display:flex; align-items:center; gap:10px; flex:1; min-width:0; margin-right:12px;">
+            <div style="width:32px; height:32px; border-radius:8px; background:#eff6ff; color:var(--titan-blue); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+            </div>
+            <div style="display:flex; flex-direction:column; gap:4px; flex:1; min-width:0;">
+              <span style="font-weight:600; font-size:13px; color:var(--titan-text-main);">Q3 Licensing & Security Sync</span>
+              <span style="font-size:11.5px; color:var(--titan-text-sub);">Today at 3:00 PM</span>
+            </div>
+          </div>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0; cursor:pointer;" title="Join / View Details"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </div>
+
+        <div style="display:flex; align-items:center; justify-content:space-between; padding:10px 12px; border-radius:8px; background:#fff; border:1px solid #f1f5f9;">
+          <div style="display:flex; align-items:center; gap:10px; flex:1; min-width:0; margin-right:12px;">
+            <div style="width:32px; height:32px; border-radius:8px; background:#fffbeb; color:#d97706; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+            </div>
+            <div style="display:flex; flex-direction:column; gap:4px; flex:1; min-width:0;">
+              <span style="font-weight:600; font-size:13px; color:var(--titan-text-main);">Send Revised Enterprise Quote ($32k)</span>
+              <span style="font-size:11.5px; color:var(--titan-text-sub);">Tomorrow at 10:00 AM</span>
+            </div>
+          </div>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0; cursor:pointer;" title="View Details"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </div>
+
+        <div style="display:flex; align-items:center; justify-content:space-between; padding:10px 12px; border-radius:8px; background:#fff; border:1px solid #f1f5f9;">
+          <div style="display:flex; align-items:center; gap:10px; flex:1; min-width:0; margin-right:12px;">
+            <div style="width:32px; height:32px; border-radius:8px; background:#eff6ff; color:var(--titan-blue); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+            </div>
+            <div style="display:flex; flex-direction:column; gap:4px; flex:1; min-width:0;">
+              <span style="font-weight:600; font-size:13px; color:var(--titan-text-main);">Executive Demo with CEO (Marcus Vance)</span>
+              <span style="font-size:11.5px; color:var(--titan-text-sub);">Next Monday at 2:00 PM</span>
+            </div>
+          </div>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0; cursor:pointer;" title="Join / View Details"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </div>
+        </div>
+
+        <button onclick="CrmApp.drillInto('all-tasks')" style="align-self:center; display:flex; align-items:center; gap:5px; background:transparent; border:1px solid #d4e0f5; border-radius:6px; color:var(--titan-blue); padding:6px 14px; font-size:12px; font-weight:600; cursor:pointer; transition:all 0.15s ease;" onmouseover="this.style.background='#f0f6ff';" onmouseout="this.style.background='transparent';">
+          See all
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
             <polyline points="9 18 15 12 9 6"></polyline>
           </svg>
         </button>
+          </div>
+        </div>
       </div>
 
-      <!-- Full-Width Low-Contrast Log Activity Button (Before Timeline) -->
-      <button onclick="CrmApp.logActivityPrompt()" style="width:100%; margin-top:0px; margin-bottom:4px; background:#f8fafc; border:1px dashed #cbd5e1; color:#475569; padding:7px 12px; border-radius:6px; font-size:12px; font-weight:500; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:6px; transition:all 0.15s ease;" onmouseover="this.style.background='#f1f5f9'; this.style.borderColor='#94a3b8';" onmouseout="this.style.background='#f8fafc'; this.style.borderColor='#cbd5e1';">
+      <!-- Recent Activity Section (accordion, collapsed by default) -->
+      <div class="crm-accordion collapsed" id="crmAccRecent">
+        <button class="crm-accordion-header" onclick="CrmApp.toggleAccordion('crmAccRecent')">
+          <span>Recent Activity</span>
+          <svg class="crm-acc-chev" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </button>
+
+        <div class="crm-accordion-body">
+          <div class="crm-accordion-content">
+      <!-- Full-Width Log New Activity Button (Before Timeline) -->
+      <button onclick="CrmApp.logActivityPrompt()" style="width:100%; margin-top:0px; margin-bottom:8px; background:#f8faff; border:1px dashed #bfdbfe; color:var(--titan-blue); padding:8px 12px; border-radius:6px; font-size:12px; font-weight:600; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:6px; transition:all 0.15s ease;" onmouseover="this.style.background='#eff6ff'; this.style.borderColor='#93c5fd';" onmouseout="this.style.background='#f8faff'; this.style.borderColor='#bfdbfe';">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-        <span>Log activity</span>
+        <span>Log new activity</span>
       </button>
 
       <!-- Connected Vertical Timeline Feed -->
@@ -4625,92 +4668,13 @@
 
       </div>
 
-      <!-- Shared Files Vault -->
-      <div class="crm-section-title" style="margin-top: 20px; margin-bottom: 4px;">
-        <span>Shared Files</span>
-      </div>
-
-      <div class="crm-card">
-        <div class="crm-info-row">
-          <div style="display:flex; align-items:center; gap:8px;">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--titan-text-sub)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
-            <div>
-              <div style="font-weight:500;">AvonTech_Proposal_v2.pdf</div>
-              <div style="font-size:11px; color:var(--titan-text-sub);">2.4 MB • Sent 3 days ago</div>
-            </div>
+      <button onclick="CrmApp.drillInto('all-activity')" style="align-self:center; display:flex; align-items:center; gap:5px; background:transparent; border:1px solid #d4e0f5; border-radius:6px; color:var(--titan-blue); padding:6px 14px; font-size:12px; font-weight:600; cursor:pointer; transition:all 0.15s ease;" onmouseover="this.style.background='#f0f6ff';" onmouseout="this.style.background='transparent';">
+        See all activity
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </button>
           </div>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--titan-blue)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="cursor:pointer;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-        </div>
-        <div class="crm-info-row">
-          <div style="display:flex; align-items:center; gap:8px;">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--titan-text-sub)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
-            <div>
-              <div style="font-weight:500;">SOW_Draft_v1.docx</div>
-              <div style="font-size:11px; color:var(--titan-text-sub);">1.1 MB • Sent 5 days ago</div>
-            </div>
-          </div>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--titan-blue)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="cursor:pointer;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-        </div>
-        <div class="crm-info-row">
-          <div style="display:flex; align-items:center; gap:8px;">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--titan-text-sub)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
-            <div>
-              <div style="font-weight:500;">Security_Compliance_SOC2.pdf</div>
-              <div style="font-size:11px; color:var(--titan-text-sub);">4.8 MB • Sent Jul 18</div>
-            </div>
-          </div>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--titan-blue)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="cursor:pointer;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-        </div>
-      </div>
-
-    </div>
-
-    <!-- 📄 PAGE 6: UPCOMING TAB (3rd Contact Profile Tab) -->
-    <div class="crm-view-page" id="crmView-upcoming" style="display: none;">
-      
-      <div class="crm-section-title">
-        <span>Tasks and Meetings</span>
-        <button class="crm-btn-blue" style="padding:4px 10px; font-size:11px;">+ Schedule</button>
-      </div>
-
-      <div style="display:flex; flex-direction:column; gap:8px;">
-        <div style="display:flex; align-items:center; justify-content:space-between; padding:10px 12px; border-radius:8px; background:#fff; border:1px solid #f1f5f9;">
-          <div style="display:flex; align-items:center; gap:10px; flex:1; min-width:0; margin-right:12px;">
-            <div style="width:32px; height:32px; border-radius:8px; background:#eff6ff; color:var(--titan-blue); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-            </div>
-            <div style="display:flex; flex-direction:column; gap:4px; flex:1; min-width:0;">
-              <span style="font-weight:600; font-size:13px; color:var(--titan-text-main);">Q3 Licensing & Security Sync</span>
-              <span style="font-size:11.5px; color:var(--titan-text-sub);">Today at 3:00 PM</span>
-            </div>
-          </div>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0; cursor:pointer;" title="Join / View Details"><polyline points="9 18 15 12 9 6"></polyline></svg>
-        </div>
-
-        <div style="display:flex; align-items:center; justify-content:space-between; padding:10px 12px; border-radius:8px; background:#fff; border:1px solid #f1f5f9;">
-          <div style="display:flex; align-items:center; gap:10px; flex:1; min-width:0; margin-right:12px;">
-            <div style="width:32px; height:32px; border-radius:8px; background:#fffbeb; color:#d97706; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
-            </div>
-            <div style="display:flex; flex-direction:column; gap:4px; flex:1; min-width:0;">
-              <span style="font-weight:600; font-size:13px; color:var(--titan-text-main);">Send Revised Enterprise Quote ($32k)</span>
-              <span style="font-size:11.5px; color:var(--titan-text-sub);">Tomorrow at 10:00 AM</span>
-            </div>
-          </div>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0; cursor:pointer;" title="View Details"><polyline points="9 18 15 12 9 6"></polyline></svg>
-        </div>
-
-        <div style="display:flex; align-items:center; justify-content:space-between; padding:10px 12px; border-radius:8px; background:#fff; border:1px solid #f1f5f9;">
-          <div style="display:flex; align-items:center; gap:10px; flex:1; min-width:0; margin-right:12px;">
-            <div style="width:32px; height:32px; border-radius:8px; background:#eff6ff; color:var(--titan-blue); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-            </div>
-            <div style="display:flex; flex-direction:column; gap:4px; flex:1; min-width:0;">
-              <span style="font-weight:600; font-size:13px; color:var(--titan-text-main);">Executive Demo with CEO (Marcus Vance)</span>
-              <span style="font-size:11.5px; color:var(--titan-text-sub);">Next Monday at 2:00 PM</span>
-            </div>
-          </div>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0; cursor:pointer;" title="Join / View Details"><polyline points="9 18 15 12 9 6"></polyline></svg>
         </div>
       </div>
 
@@ -6414,7 +6378,7 @@
     // ── Pipeline dropdown (§1.3 / §7.1) — anchored, label-menu style ──
     // Available pipelines the user can move an email into (name + label colors).
     const PIPELINES = {
-      sales:      { name: 'Neo partnerships',     color: '#2170f4', tint: '#e7f0fe' },
+      sales:      { name: 'Neo partnerships',     workItem: 'Meridian AI site', color: '#2170f4', tint: '#e7f0fe' },
       onboarding: { name: 'Onboarding Projects', color: '#0ea5e9', tint: '#e3f4fd' },
       hiring:     { name: 'Q3 Hiring',           color: '#f59e0b', tint: '#fef3e0' },
     };
@@ -6455,10 +6419,11 @@
         label.addEventListener('click', function (e) { e.stopPropagation(); openRecordForLabel(label); });
         host.appendChild(label);
       }
-      // Thread header shows "Pipeline: Stage"; tiles show the pipeline name only.
+      // Thread header shows "Work Item: Stage"; tiles show the work item name only.
       const isHeader = host.classList && host.classList.contains('thread-sticky-header');
-      const text = p.name + (isHeader && host.dataset.stage ? ': ' + host.dataset.stage : '');
-      label.title = p.name + ' — open record';
+      const labelName = p.workItem || p.name;
+      const text = labelName + (isHeader && host.dataset.stage ? ': ' + host.dataset.stage : '');
+      label.title = labelName + ' — open record';
       label.innerHTML = PL_LABEL_ICON + '<span>' + text + '</span>';
       label.style.background = p.tint;
       label.style.color = p.color;
@@ -6647,7 +6612,7 @@
       const stage = (header && header.dataset.stage) || 'Proposal Sent';
       setCrmRecord({
         title: 'Project roadmap for Dashboard version 2', subject: 'Project roadmap for Dashboard version 2', contact: 'Ryan Walker',
-        email: 'ryan.walker@meridianlabs.com', company: 'Meridian Labs', avatar: 'RW',
+        email: 'ryan.walker@meridianlabs.com', company: 'Meridian Labs', avatar: 'RW', workItem: 'Meridian AI site',
         key: key, stage: stage, host: header, mirror: tileRow,
       });
       openCrmPanel();

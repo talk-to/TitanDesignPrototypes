@@ -18,6 +18,8 @@ const CrmApp = (function () {
     const btn = document.querySelector('.action-btn-crm');
     if (drawer) drawer.classList.add('open');
     if (btn) btn.classList.add('active');
+    // Covers paths that open the drawer without going through updateContext.
+    renderPinnedNote();
   }
 
   function closeDrawer() {
@@ -74,27 +76,15 @@ const CrmApp = (function () {
       targetPage.style.cssText = 'display: flex !important; flex-direction: column; gap: 16px;';
     }
 
-    const backBtn = document.getElementById('crmBackBtn');
-    const tabsBar = document.getElementById('crmTabsBar');
     const heroHeader = document.querySelector('.crm-profile-hero');
     const titleEl = document.getElementById('crmNavTitle');
 
     const isDrilledIn = navHistory.length > 1;
-    const isProfileTab = viewId === 'overview' || viewId === 'activity' || viewId === 'upcoming';
-
-    // Toggle Back Chevron Button
-    if (backBtn) {
-      backBtn.style.display = isDrilledIn ? 'flex' : 'none';
-    }
+    const isProfileTab = viewId === 'overview' || viewId === 'activity';
 
     // Toggle Profile Hero Header (Only visible on contact profile views)
     if (heroHeader) {
       heroHeader.style.display = (isProfileTab || viewId === 'all-notes' || viewId === 'more-details' || viewId === 'company-details') ? 'flex' : 'none';
-    }
-
-    // Toggle 3-Tab Bar (Only visible when on contact profile overview/activity/upcoming)
-    if (tabsBar) {
-      tabsBar.style.display = isProfileTab ? 'flex' : 'none';
     }
 
     // Update Header Title
@@ -121,17 +111,11 @@ const CrmApp = (function () {
     } else {
       if (titleEl) titleEl.textContent = 'Ella Mathews';
     }
+  }
 
-    // Highlight main top tab based on exact text match
-    if (isProfileTab) {
-      document.querySelectorAll('.crm-tab-item').forEach(tab => {
-        const text = tab.textContent.trim().toLowerCase();
-        const isActive = (viewId === 'overview' && text === 'overview') ||
-                         (viewId === 'activity' && text === 'activity') ||
-                         (viewId === 'upcoming' && text === 'upcoming');
-        tab.classList.toggle('active', isActive);
-      });
-    }
+  function toggleAccordion(id) {
+    const acc = document.getElementById(id);
+    if (acc) acc.classList.toggle('collapsed');
   }
 
   function saveNote() {
@@ -464,6 +448,8 @@ const CrmApp = (function () {
     const m = document.getElementById('crm-stage-menu');
     if (m) m.classList.remove('open');
     document.removeEventListener('click', outsideStageMenu);
+    refreshWorkItemStage();
+    closeWorkItemStageMenu();
     if (panelRecord.host || panelRecord.mirror) {
       [panelRecord.host, panelRecord.mirror].forEach(function (h) {
         if (h) {
@@ -472,6 +458,48 @@ const CrmApp = (function () {
         }
       });
     }
+  }
+
+  function refreshWorkItemStage() {
+    const stageEl = document.getElementById('crmWorkItemStage');
+    if (!stageEl) return;
+    const label = stageEl.querySelector('span');
+    if (label) label.textContent = (panelRecord && panelRecord.stage) || 'New';
+  }
+
+  // Stage dropdown anchored to the work-item row's down-chevron.
+  function toggleWorkItemStageMenu(evt) {
+    if (evt) evt.stopPropagation();
+    const menu = document.getElementById('crmWorkItemStageMenu');
+    if (!menu) return;
+    const isOpen = menu.classList.toggle('open');
+    if (isOpen) {
+      const key = (panelRecord && panelRecord.key) || 'sales';
+      const color = (PIPELINES[key] && PIPELINES[key].color) || '#2170f4';
+      const stages = PIPELINE_STAGES[key] || PIPELINE_STAGES.sales;
+      const active = (panelRecord && panelRecord.stage) || '';
+      menu.innerHTML = stages.map(function (s, i) {
+        return '<div class="crm-wi-stage-option' + (s === active ? ' active' : '') + '" onclick="CrmApp.selectStage(\'' + s + '\')" data-s="' + s + '">' +
+          '<span class="dot" style="background:' + pipeShade(color, i, stages.length) + ';"></span>' + s + '</div>';
+      }).join('');
+      setTimeout(function () { document.addEventListener('click', outsideWorkItemStageMenu); }, 0);
+    } else {
+      document.removeEventListener('click', outsideWorkItemStageMenu);
+    }
+  }
+
+  function outsideWorkItemStageMenu(e) {
+    const menu = document.getElementById('crmWorkItemStageMenu');
+    const pill = document.getElementById('crmWorkItemStage');
+    if (menu && !menu.contains(e.target) && pill && !pill.contains(e.target)) {
+      closeWorkItemStageMenu();
+    }
+  }
+
+  function closeWorkItemStageMenu() {
+    const menu = document.getElementById('crmWorkItemStageMenu');
+    if (menu) menu.classList.remove('open');
+    document.removeEventListener('click', outsideWorkItemStageMenu);
   }
 
   function updateContext(rec) {
@@ -490,6 +518,8 @@ const CrmApp = (function () {
     const heroAvatar = document.getElementById('crmHeroAvatar');
     const act1Title = document.getElementById('crmAct1Title');
     const allAct1Title = document.getElementById('crmAllAct1Title');
+    const workItemTitle = document.getElementById('crmWorkItemTitle');
+    const workItemStage = document.getElementById('crmWorkItemStage');
 
     if (titleEl) titleEl.textContent = rec.contact || rec.title || 'Ella Mathews';
     if (heroName) heroName.textContent = rec.contact || rec.title || 'Ella Mathews';
@@ -498,9 +528,86 @@ const CrmApp = (function () {
     if (act1Title) act1Title.textContent = activeSubject;
     if (allAct1Title) allAct1Title.textContent = activeSubject;
 
+    const workItemName = (rec.workItem || (rec.title !== rec.contact ? rec.title : null) || activeSubject);
+    if (workItemTitle) workItemTitle.textContent = workItemName;
+    if (workItemStage) {
+      const label = workItemStage.querySelector('span');
+      if (label) label.textContent = rec.stage || 'New';
+    }
+
     renderStageLabel(rec.key, rec.stage);
     buildStageMenu(rec.key, rec.stage);
+    renderPinnedNote();
     switchTab('activity');
+  }
+
+  /* ── Pinned contact note ────────────────────────────────────────────────
+     A standing fact about the contact ("prefers weekday mornings"), as
+     opposed to the activity-specific notes that hang off a timeline entry.
+     Kept per contact so switching records never shows the wrong note.     */
+
+  const pinnedNotes = {
+    'Ella Mathews': 'Prefers weekday mornings for calls — never Fridays.',
+    'Ryan Walker': 'Decision maker — loop Dave (VP Tech) into any SSO or security review.'
+  };
+
+  function pinnedNoteKey() {
+    return (panelRecord && (panelRecord.contact || panelRecord.title)) || 'Ella Mathews';
+  }
+
+  function renderPinnedNote() {
+    const empty = document.getElementById('crmPinnedNoteEmpty');
+    const filled = document.getElementById('crmPinnedNoteFilled');
+    const edit = document.getElementById('crmPinnedNoteEdit');
+    const text = document.getElementById('crmPinnedNoteText');
+    if (!empty || !filled || !edit || !text) return;
+
+    const note = pinnedNotes[pinnedNoteKey()];
+    edit.style.display = 'none';
+    if (note) {
+      text.textContent = note;
+      filled.style.display = 'flex';
+      empty.style.display = 'none';
+    } else {
+      filled.style.display = 'none';
+      empty.style.display = 'flex';
+    }
+  }
+
+  function editPinnedNote() {
+    const empty = document.getElementById('crmPinnedNoteEmpty');
+    const filled = document.getElementById('crmPinnedNoteFilled');
+    const edit = document.getElementById('crmPinnedNoteEdit');
+    const input = document.getElementById('crmPinnedNoteInput');
+    if (!empty || !filled || !edit || !input) return;
+
+    input.value = pinnedNotes[pinnedNoteKey()] || '';
+    empty.style.display = 'none';
+    filled.style.display = 'none';
+    edit.style.display = 'flex';
+    input.focus();
+    input.select();
+  }
+
+  function savePinnedNote() {
+    const input = document.getElementById('crmPinnedNoteInput');
+    if (!input) return;
+    const value = input.value.trim();
+    if (value) {
+      pinnedNotes[pinnedNoteKey()] = value;
+    } else {
+      delete pinnedNotes[pinnedNoteKey()];
+    }
+    renderPinnedNote();
+  }
+
+  function cancelPinnedNote() {
+    renderPinnedNote();
+  }
+
+  function removePinnedNote() {
+    delete pinnedNotes[pinnedNoteKey()];
+    renderPinnedNote();
   }
 
   function toggleActivityNotes(cardId) {
@@ -549,12 +656,14 @@ const CrmApp = (function () {
     goHome,
     switchTab,
     selectContact,
+    toggleAccordion,
     saveNote,
     addTask,
     logActivityPrompt,
     openFullView,
     toggleStageMenu,
     selectStage,
+    toggleWorkItemStageMenu,
     updateContext,
     setPipelineStage,
     selectEllaEmail,
@@ -563,7 +672,12 @@ const CrmApp = (function () {
     addLeadToCrm,
     toggleActivityNotes,
     showAddNoteInput,
-    appendActivityNote
+    appendActivityNote,
+    renderPinnedNote,
+    editPinnedNote,
+    savePinnedNote,
+    cancelPinnedNote,
+    removePinnedNote
   };
 })();
 

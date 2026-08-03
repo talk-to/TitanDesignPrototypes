@@ -141,6 +141,7 @@
   display: flex;
   flex-direction: column;
   gap: 14px;
+  flex-shrink: 0;
 }
 
 .crm-profile-top-row {
@@ -238,45 +239,10 @@
   border-color: var(--titan-blue);
 }
 
-/* ── 2 Main Navigation Tabs ── */
-.crm-tabs-bar {
-  display: flex;
-  background: #ffffff;
-  border-bottom: 1px solid var(--titan-grey-border);
-  padding: 2px 16px 0 16px;
-  gap: 8px;
-}
-
-.crm-tab-item {
-  padding: 10px 6px;
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--titan-text-sub);
-  background: none;
-  border: none;
-  border-bottom: 2.5px solid transparent;
-  cursor: pointer;
-  transition: color 0.15s ease, border-color 0.15s ease;
-  flex: 1;
-  text-align: center;
-  letter-spacing: -0.01em !important;
-  font-family: inherit;
-}
-
-.crm-tab-item:hover {
-  color: var(--titan-text-main);
-}
-
-.crm-tab-item.active {
-  color: var(--titan-blue);
-  font-weight: 600;
-  border-bottom: 2.5px solid var(--titan-blue);
-  letter-spacing: -0.01em !important;
-}
-
 /* ── Scrollable Viewport ── */
 .crm-body-viewport {
   flex: 1;
+  min-height: 0;
   overflow-y: auto;
   padding: 18px 16px;
   display: flex;
@@ -310,6 +276,76 @@
   justify-content: space-between;
   margin-bottom: 10px;
   letter-spacing: -0.01em;
+}
+
+/* ── Accordion sections (Upcoming / Recent Activity) ── */
+.crm-accordion {
+  display: flex;
+  flex-direction: column;
+}
+
+.crm-accordion + .crm-accordion {
+  margin-top: -8px;
+}
+
+.crm-accordion-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  background: transparent;
+  border: 1px solid transparent;
+  padding: 10px 12px;
+  margin-left: -12px;
+  width: calc(100% + 24px);
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--titan-text-main);
+  letter-spacing: -0.01em;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+.crm-accordion-header:hover {
+  background: #e8eef5;
+  border-color: #d3dde8;
+  color: var(--titan-blue);
+}
+
+.crm-accordion-header:active {
+  background: #dce5f0;
+}
+
+.crm-accordion-header .crm-acc-chev {
+  color: var(--titan-text-sub);
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+  flex-shrink: 0;
+}
+
+.crm-accordion:not(.collapsed) .crm-accordion-header .crm-acc-chev {
+  transform: rotate(180deg);
+}
+
+/* Collapse via grid-template-rows so height animates smoothly both ways */
+.crm-accordion-body {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.crm-accordion:not(.collapsed) .crm-accordion-body {
+  grid-template-rows: 1fr;
+}
+
+.crm-accordion-content {
+  min-height: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-top: 4px;
 }
 
 /* Bolder See All & More Details Links */
@@ -694,6 +730,94 @@
 
 .crm-pipe-stage.active .crm-pipe-label {
   display: inline-block;
+}
+
+/* Stage pill on the work-item row — same visual language as the pipeline label:
+   small chevron icon + stage name in a light blue pill. Clickable; down-chevron
+   opens the stage dropdown. */
+.crm-wi-stage-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  border-radius: 4px;
+  background: #e7f0fe;
+  color: #1f6fe5;
+  font-size: 11.5px;
+  font-weight: 600;
+  line-height: 1.55;
+  white-space: nowrap;
+  width: fit-content;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.crm-wi-stage-pill:hover {
+  background: #dbe8fd;
+}
+
+.crm-wi-stage-pill .pl-icon {
+  width: 12px;
+  height: 12px;
+  flex-shrink: 0;
+}
+
+.crm-wi-stage-pill .pl-dd {
+  width: 11px;
+  height: 11px;
+  flex-shrink: 0;
+  margin-left: 1px;
+}
+
+/* ── Work-item stage dropdown (anchored under the down-chevron) ── */
+.crm-work-item-stage-menu {
+  position: absolute;
+  top: calc(100% + 4px);
+  right: 14px;
+  left: auto;
+  z-index: 60;
+  display: none;
+  min-width: 168px;
+  background: #ffffff;
+  border: 1px solid #c3d4ef;
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.14);
+  padding: 6px;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.crm-work-item-stage-menu.open {
+  display: flex;
+}
+
+.crm-wi-stage-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 10px;
+  border-radius: 6px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--titan-text-main);
+  cursor: pointer;
+  transition: background 0.12s ease;
+}
+
+.crm-wi-stage-option:hover {
+  background: var(--titan-grey-hover);
+}
+
+.crm-wi-stage-option.active {
+  font-weight: 600;
+  color: var(--titan-blue);
+}
+
+.crm-wi-stage-option .dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  flex-shrink: 0;
 }
 
 /* ── Custom Sleek Dark Tooltip for Pipeline Ribbon Stages ── */
