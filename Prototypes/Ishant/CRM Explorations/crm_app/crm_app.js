@@ -540,6 +540,125 @@ const CrmApp = (function () {
     }
   }
 
+  function toggleStageDropdown(e) {
+    if (e) e.stopPropagation();
+    const menu = document.getElementById('crmStageDropdownMenu');
+    if (menu) {
+      const isHidden = menu.style.display === 'none' || !menu.style.display;
+      menu.style.display = isHidden ? 'block' : 'none';
+    }
+  }
+
+  function selectStage(stageName) {
+    const label = document.getElementById('crmCurrentStageLabel');
+    if (label) label.textContent = stageName;
+    const menu = document.getElementById('crmStageDropdownMenu');
+    if (menu) menu.style.display = 'none';
+
+    // Highlight active option
+    document.querySelectorAll('.crm-stage-opt').forEach(opt => {
+      const isMatch = opt.textContent.includes(stageName);
+      opt.classList.toggle('active', isMatch);
+      opt.style.fontWeight = isMatch ? '600' : '400';
+      opt.style.color = isMatch ? 'var(--titan-blue)' : 'inherit';
+      opt.style.background = isMatch ? '#eff6ff' : 'transparent';
+    });
+  }
+
+  function toggleAddActivityMenu(e) {
+    if (e) e.stopPropagation();
+    const menu = document.getElementById('crmAddActivityMenu');
+    if (menu) {
+      const isHidden = menu.style.display === 'none' || !menu.style.display;
+      menu.style.display = isHidden ? 'block' : 'none';
+    }
+  }
+
+  function triggerAddActivity(type) {
+    const menu = document.getElementById('crmAddActivityMenu');
+    if (menu) menu.style.display = 'none';
+
+    if (type === 'call') {
+      alert('Schedule Call dialog triggered.');
+    } else if (type === 'followup') {
+      alert('Follow-up task created for tomorrow.');
+    } else if (type === 'task') {
+      const title = prompt('Enter task name:', 'Follow up on SOC2 review');
+      if (title && title.trim()) {
+        const feed = document.querySelector('#crmView-activity .crm-record-section div[style*="flex-direction:column"]');
+        if (feed) {
+          const div = document.createElement('div');
+          div.style.cssText = 'display:flex; align-items:center; justify-content:space-between; padding:8px 10px; border-radius:6px; background:#fff; border:1px solid #e2e8f0;';
+          div.innerHTML = `
+            <div style="display:flex; align-items:center; gap:8px; flex:1; min-width:0;">
+              <input type="checkbox" onchange="CrmApp.toggleTaskCompletion(this)" style="cursor:pointer; width:14px; height:14px; accent-color:var(--titan-blue);">
+              <div style="display:flex; flex-direction:column; gap:2px; flex:1; min-width:0;">
+                <span class="crm-task-title" style="font-weight:600; font-size:12.5px; color:var(--titan-text-main);">${title.trim()}</span>
+                <span style="font-size:11px; color:var(--titan-text-sub);">Today</span>
+              </div>
+            </div>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0; cursor:pointer;"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          `;
+          feed.prepend(div);
+        }
+      }
+    }
+  }
+
+  function toggleTaskCompletion(inputEl) {
+    if (!inputEl) return;
+    const container = inputEl.closest('div');
+    const title = container ? container.querySelector('.crm-task-title') : null;
+    if (title) {
+      if (inputEl.checked) {
+        title.style.textDecoration = 'line-through';
+        title.style.color = '#94a3b8';
+      } else {
+        title.style.textDecoration = 'none';
+        title.style.color = 'var(--titan-text-main)';
+      }
+    }
+  }
+
+  function saveInvitingNote() {
+    const input = document.getElementById('crmInvitingNoteField');
+    if (!input || !input.value.trim()) return;
+    const text = input.value.trim();
+
+    const feed = document.getElementById('crmMainTimelineFeed');
+    if (feed) {
+      const div = document.createElement('div');
+      div.className = 'crm-timeline-item';
+      div.innerHTML = `
+        <div class="crm-timeline-badge" style="width:20px; height:20px; border-radius:50%; background:#f1f5f9; color:#64748b; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 1-2 2v16a2 2 0 0 1 2 2h12a2 2 0 0 1 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+        </div>
+        <div class="crm-timeline-content" style="flex:1; min-width:0;">
+          <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:8px; font-size:12px; font-weight:500; color:var(--titan-text-main);">
+            <span style="line-height:1.35; color:#334155;">"${text}"</span>
+            <span style="font-size:10.5px; font-weight:500; color:var(--titan-text-sub); white-space:nowrap; flex-shrink:0;">Just now</span>
+          </div>
+          <span style="font-size:10px; color:#94a3b8; margin-top:2px; display:block;">Note added by Ishant P.</span>
+        </div>
+      `;
+      feed.prepend(div);
+      input.value = '';
+    }
+  }
+
+  // Close menus on outside click
+  document.addEventListener('click', function (e) {
+    const stageMenu = document.getElementById('crmStageDropdownMenu');
+    const stageBtn = document.getElementById('crmStageBadgeBtn');
+    if (stageMenu && stageBtn && !stageBtn.contains(e.target) && !stageMenu.contains(e.target)) {
+      stageMenu.style.display = 'none';
+    }
+    const actMenu = document.getElementById('crmAddActivityMenu');
+    if (actMenu && !e.target.closest('#crmAddActivityMenu') && !e.target.closest('button[onclick*="toggleAddActivityMenu"]')) {
+      actMenu.style.display = 'none';
+    }
+  });
+
   return {
     toggleDrawer,
     openDrawer,
@@ -555,6 +674,11 @@ const CrmApp = (function () {
     openFullView,
     toggleStageMenu,
     selectStage,
+    toggleStageDropdown,
+    toggleAddActivityMenu,
+    triggerAddActivity,
+    toggleTaskCompletion,
+    saveInvitingNote,
     updateContext,
     setPipelineStage,
     selectEllaEmail,

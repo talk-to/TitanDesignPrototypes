@@ -144,4 +144,7 @@ The following user-requested refinements have been applied and synced across `cr
    - Replaced right-side grey timestamp text with clean right-aligned chevron icons (`>`), providing a clear affordance for opening Google Meet or task details.
    - Cleaned up item subtext by removing redundant labels (`Google Meet`, `High Priority`, contact names), leaving crisp, readable schedule subtext (`Today at 3:00 PM`, `Tomorrow at 10:00 AM`, `Next Monday at 2:00 PM`).
    - Increased vertical gap between task/meeting card heading and subtext from `2px` to `4px` for enhanced readability and breathing room.
-
+10. **Record-Centric Sidebar Layout Restructuring**:
+    - Primary Title set to **Record Name** (`Q3 Licensing Deal ($32k)`) with company name (`Avon Technologies`) and social links (`LinkedIn`, `Website`) rendered directly underneath.
+    - Replaced multi-chevron pipeline bar with a scalable & error-safe Stage Selector Dropdown (`Proposal Sent ▾`) capable of handling 10+ stages safely.
+    - Converted layout into a unified single-stream vertical feed (no profile tabs): **Upcoming** (with `+ Add activity` dropdown & checkable task boxes) $\rightarrow$ **Recent Activity** (no action buttons, open note text field, 1-line AI summary under email subject, audit log notes, subtle line icons, deep inline scrollable history) $\rightarrow$ **Files** (record-specific attachments) $\rightarrow$ **More Info** (record metadata).
