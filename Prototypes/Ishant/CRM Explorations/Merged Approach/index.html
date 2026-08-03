@@ -4079,16 +4079,22 @@
   <!-- Profile Hero Header: Record Identity & Scalable Stage Selector -->
   <div class="crm-profile-hero" style="padding-bottom:12px;">
     
-    <!-- Top Row: Record Name Title & View Pipeline Link -->
-    <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:12px; margin-top:8px;">
-      <div style="display:flex; flex-direction:column; gap:3px; flex:1; min-width:0;">
-        <span id="crmRecordTitle" style="font-size:15px; font-weight:700; color:var(--titan-text-main); line-height:1.3;">Q3 Licensing Deal ($32k)</span>
-        <span style="font-size:12px; font-weight:500; color:var(--titan-text-sub);">Ella Mathews • Avon Technologies</span>
+    <!-- Top Row: Pipeline Name Tag & View Pipeline Link -->
+    <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; margin-top:6px;">
+      <div style="display:inline-flex; align-items:center; gap:5px; background:#eff6ff; color:#1d4ed8; padding:3px 8px; border-radius:5px; font-size:11.5px; font-weight:600; border:1px solid #dbeafe;">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="13 17 18 12 13 7"></polyline><polyline points="6 17 11 12 6 7"></polyline></svg>
+        <span id="crmPipelineName">Neo Partnerships</span>
       </div>
-      <div onclick="CrmApp.openFullView()" style="display:flex; align-items:center; gap:2px; cursor:pointer; flex-shrink:0; margin-top:2px;" title="View in Full Pipeline">
+      <div onclick="CrmApp.openFullView()" style="display:flex; align-items:center; gap:2px; cursor:pointer; flex-shrink:0;" title="View in Full Pipeline">
         <span style="font-size:11.5px; font-weight:600; color:var(--titan-blue);">View Pipeline</span>
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--titan-blue)" stroke-width="2.2"><polyline points="9 18 15 12 9 6"></polyline></svg>
       </div>
+    </div>
+
+    <!-- Record Identity: Record Name & Contact • Company Subtext -->
+    <div style="display:flex; flex-direction:column; gap:2px; margin-top:8px;">
+      <span id="crmRecordTitle" style="font-size:16px; font-weight:700; color:var(--titan-text-main); line-height:1.3;">Q3 Licensing Deal ($32k)</span>
+      <span style="font-size:12px; font-weight:500; color:var(--titan-text-sub);">Ella Mathews • Avon Technologies</span>
     </div>
 
     <!-- Chevron Ribbon Stage Depiction & Scalable Dropdown Bar (No "Stage:" label) -->
