@@ -630,7 +630,7 @@ const CrmApp = (function () {
       const div = document.createElement('div');
       div.className = 'crm-timeline-item';
       div.innerHTML = `
-        <div class="crm-timeline-badge" style="width:20px; height:20px; border-radius:50%; background:#f1f5f9; color:#64748b; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+        <div class="crm-timeline-badge">
           <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 1-2 2v16a2 2 0 0 1 2 2h12a2 2 0 0 1 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
         </div>
         <div class="crm-timeline-content" style="flex:1; min-width:0;">

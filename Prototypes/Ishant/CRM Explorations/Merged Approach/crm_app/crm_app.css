@@ -469,20 +469,20 @@
 /* ── 📍 Connected Vertical Timeline Feed (Consistent Vector SVG Badges) ── */
 .crm-timeline-wrapper {
   position: relative;
-  padding-left: 36px;
+  padding-left: 30px;
   display: flex;
   flex-direction: column;
-  gap: 28px;
+  gap: 18px;
   margin-top: 4px;
 }
 
-/* Continuous Vertical Timeline Line */
+/* Continuous Vertical Timeline Line (Perfectly Centered at x = 10px) */
 .crm-timeline-wrapper::before {
   content: '';
   position: absolute;
-  top: 12px;
-  bottom: 12px;
-  left: 13px;
+  top: 10px;
+  bottom: 10px;
+  left: 9px;
   width: 2px;
   background: #e2e8f0;
   z-index: 1;
@@ -497,19 +497,18 @@
 
 .crm-timeline-badge {
   position: absolute;
-  left: -36px;
+  left: -30px;
   top: 1px;
-  width: 26px;
-  height: 26px;
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
-  background: #ffffff;
-  border: 1.5px solid #cbd5e1;
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
   color: #64748b;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
   z-index: 3;
 }
 
