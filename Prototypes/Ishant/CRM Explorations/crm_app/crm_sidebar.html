@@ -180,6 +180,34 @@
               <div style="font-size:11px; color:#475569; margin-top:3px; background:#eff6ff; padding:4px 8px; border-radius:4px; border-left:2px solid var(--titan-blue); line-height:1.35;">
                 ✨ <b>AI Summary:</b> Ella confirmed Q3 licensing terms & requested SOC2 matrix.
               </div>
+
+              <!-- Per-Activity Note Triggers -->
+              <div style="display:flex; align-items:center; justify-content:space-between; margin-top:6px;">
+                <button onclick="CrmApp.showAddNoteInput('actCard-1')" style="background:transparent; color:var(--titan-text-sub); border:1px dashed #cbd5e1; padding:2px 8px; border-radius:12px; font-size:10.5px; font-weight:500; cursor:pointer;">
+                  + Add Note
+                </button>
+                <button class="crm-note-pill-btn" onclick="CrmApp.toggleActivityNotes('actCard-1')" style="background:#eff6ff; color:var(--titan-blue); border:none; padding:2px 8px; border-radius:12px; font-size:10.5px; font-weight:600; cursor:pointer; display:flex; align-items:center; gap:4px;">
+                  <span id="noteCount-actCard-1" style="display:flex; align-items:center; gap:3px;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg> 2 Notes</span>
+                  <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                </button>
+              </div>
+
+              <!-- Collapsible Notes Drawer for Item 1 -->
+              <div class="crm-act-notes-drawer" id="actNotes-actCard-1" style="display:none; flex-direction:column; gap:6px; background:#f8fafc; padding:8px 10px; border-radius:6px; margin-top:6px;">
+                <div class="act-note-list" id="actNoteList-actCard-1" style="display:flex; flex-direction:column; gap:4px;">
+                  <div style="font-size:11px; color:#334155; padding:3px 0; border-bottom:1px solid #e2e8f0;">
+                    <span style="font-weight:600; color:#0f172a;">3d ago:</span> "Ella requested Dave (VP Tech) review SSO specs directly."
+                  </div>
+                  <div style="font-size:11px; color:#334155; padding:3px 0;">
+                    <span style="font-weight:600; color:#0f172a;">2:20 PM:</span> "Async updates preferred over calls."
+                  </div>
+                </div>
+                <div style="display:flex; gap:6px; margin-top:4px;">
+                  <input type="text" placeholder="Write note on this activity..." style="flex:1; font-size:11px; border:1px solid #cbd5e1; border-radius:4px; padding:3px 6px; outline:none;" onkeydown="if(event.key==='Enter')CrmApp.appendActivityNote('actCard-1', this)">
+                  <button style="background:var(--titan-blue); color:#fff; border:none; border-radius:4px; font-size:10.5px; padding:0 8px; cursor:pointer;" onclick="CrmApp.appendActivityNote('actCard-1', this.previousElementSibling)">Save</button>
+                </div>
+              </div>
+
             </div>
           </div>
 
@@ -210,6 +238,31 @@
               <div style="font-size:11px; color:#475569; margin-top:2px;">
                 15 min call logged • SSO integration confirmed as core requirement.
               </div>
+
+              <!-- Per-Activity Note Triggers for Call -->
+              <div style="display:flex; align-items:center; justify-content:space-between; margin-top:6px;">
+                <button onclick="CrmApp.showAddNoteInput('actCard-2')" style="background:transparent; color:var(--titan-text-sub); border:1px dashed #cbd5e1; padding:2px 8px; border-radius:12px; font-size:10.5px; font-weight:500; cursor:pointer;">
+                  + Add Note
+                </button>
+                <button class="crm-note-pill-btn" onclick="CrmApp.toggleActivityNotes('actCard-2')" style="background:#eff6ff; color:var(--titan-blue); border:none; padding:2px 8px; border-radius:12px; font-size:10.5px; font-weight:600; cursor:pointer; display:flex; align-items:center; gap:4px;">
+                  <span id="noteCount-actCard-2" style="display:flex; align-items:center; gap:3px;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg> 1 Note</span>
+                  <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                </button>
+              </div>
+
+              <!-- Collapsible Notes Drawer for Call -->
+              <div class="crm-act-notes-drawer" id="actNotes-actCard-2" style="display:none; flex-direction:column; gap:6px; background:#f8fafc; padding:8px 10px; border-radius:6px; margin-top:6px;">
+                <div class="act-note-list" id="actNoteList-actCard-2" style="display:flex; flex-direction:column; gap:4px;">
+                  <div style="font-size:11px; color:#334155; padding:3px 0;">
+                    <span style="font-weight:600; color:#0f172a;">1w ago:</span> "Confirmed decision maker is Ella + Dave (VP Tech)."
+                  </div>
+                </div>
+                <div style="display:flex; gap:6px; margin-top:4px;">
+                  <input type="text" placeholder="Write note on this activity..." style="flex:1; font-size:11px; border:1px solid #cbd5e1; border-radius:4px; padding:3px 6px; outline:none;" onkeydown="if(event.key==='Enter')CrmApp.appendActivityNote('actCard-2', this)">
+                  <button style="background:var(--titan-blue); color:#fff; border:none; border-radius:4px; font-size:10.5px; padding:0 8px; cursor:pointer;" onclick="CrmApp.appendActivityNote('actCard-2', this.previousElementSibling)">Save</button>
+                </div>
+              </div>
+
             </div>
           </div>
 
