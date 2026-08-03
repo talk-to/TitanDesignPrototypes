@@ -550,8 +550,9 @@ const CrmApp = (function () {
   }
 
   function selectStage(stageName) {
+    const chevronSvg = '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>';
     const label = document.getElementById('crmCurrentStageLabel');
-    if (label) label.textContent = stageName + ' ▾';
+    if (label) label.innerHTML = stageName + ' ' + chevronSvg;
     const menu = document.getElementById('crmStageDropdownMenu');
     if (menu) menu.style.display = 'none';
 
@@ -562,7 +563,7 @@ const CrmApp = (function () {
       stage.classList.toggle('active', isMatch);
       const labelSpan = stage.querySelector('.crm-pipe-label');
       if (labelSpan) {
-        labelSpan.textContent = isMatch ? (stageName + ' ▾') : '';
+        labelSpan.innerHTML = isMatch ? (stageName + ' ' + chevronSvg) : '';
       }
     });
 

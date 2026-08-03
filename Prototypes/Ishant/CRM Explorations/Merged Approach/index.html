@@ -4096,7 +4096,7 @@
       
       <!-- Chevron Ribbon Stage Bar & Dropdown Container -->
       <div style="flex:1; min-width:0; position:relative;">
-        <div class="crm-pipeline-stages" id="crmPipelineStages" onclick="CrmApp.toggleStageDropdown(event)" style="cursor:pointer;" title="Click to change stage">
+        <div class="crm-pipeline-stages" id="crmPipelineStages" onclick="CrmApp.toggleStageDropdown(event)" style="cursor:pointer; position:relative;" title="Click to change stage">
           <div class="crm-pipe-stage" onclick="CrmApp.selectStage('New')" data-tooltip="New" style="background:#1e3a8a;">
             <span class="crm-pipe-label">New</span>
           </div>
@@ -4107,10 +4107,18 @@
             <span class="crm-pipe-label">Qualified</span>
           </div>
           <div class="crm-pipe-stage active" onclick="CrmApp.selectStage('Proposal Sent')" data-tooltip="Proposal Sent" style="background:#3b82f6;">
-            <span class="crm-pipe-label" id="crmCurrentStageLabel">Proposal Sent ▾</span>
+            <span class="crm-pipe-label" id="crmCurrentStageLabel" style="display:inline-flex; align-items:center; gap:4px;">
+              Proposal Sent
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </span>
           </div>
           <div class="crm-pipe-stage" onclick="CrmApp.selectStage('Closed')" data-tooltip="Closed" style="background:#93c5fd;">
             <span class="crm-pipe-label">Closed</span>
+          </div>
+
+          <!-- Explicit Right Dropdown Chevron Affordance Badge -->
+          <div style="position:absolute; right:4px; top:50%; transform:translateY(-50%); z-index:30; background:rgba(255,255,255,0.95); color:var(--titan-blue); width:18px; height:18px; border-radius:50%; display:flex; align-items:center; justify-content:center; box-shadow:0 1px 3px rgba(0,0,0,0.15); pointer-events:none;">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
           </div>
         </div>
 
