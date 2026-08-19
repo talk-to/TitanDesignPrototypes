@@ -17,9 +17,9 @@
     3. **Overview (Hidden Non-Destructively)**: Preserved in code (`style="display: none !important;"`) for easy restoration.
 
 - [x] **1b. Merged Approach Pipeline Integration (`Merged Approach/`)**
-  - *Added*: [Merged Approach/](file:///Users/ishant.p/Documents/Titan%20Design%20Git/Prototypes/Ishant/CRM%20Explorations/Merged%20Approach) synthesizing Usha's pipeline labels and stage dropdown with Ishant's `crm_app` sidebar.
+  - *Added*: [Merged Approach/](file:///Users/ishant.p/Documents/Titan%20Design%20Git/Prototypes/Ishant/CRM%20Explorations%20Merged%20Approach) synthesizing Usha's pipeline labels and stage dropdown with Ishant's `crm_app` sidebar.
   - *Added*: Interactive Pipeline Stage Pill (`Sales · Proposal Sent`) embedded in the header hero of `crm_sidebar.html`.
-  - *Added*: Documented context in [usha_approach_analysis.md](file:///Users/ishant.p/Documents/Titan%20Design%20Git/Prototypes/Ishant/CRM%20Explorations/Merged%20Approach/usha_approach_analysis.md) and cross-linked in [new_chat_context.md](file:///Users/ishant.p/Documents/Titan%20Design%20Git/Prototypes/Ishant/CRM%20Explorations/new_chat_context.md).
+  - *Added*: Documented context in [usha_approach_analysis.md](file:///Users/ishant.p/Documents/Titan%20Design%20Git/Prototypes/Ishant/CRM%20Explorations%20Merged%20Approach/usha_approach_analysis.md) and cross-linked in [new_chat_context.md](file:///Users/ishant.p/Documents/Titan%20Design%20Git/Prototypes/Ishant/CRM%20Explorations/new_chat_context.md).
 
 - [ ] **2. Inline Thread Header Memory Badges (Happy Path)**
   - *Context*: Contextual memory cues inserted directly into the email thread header next to sender metadata.

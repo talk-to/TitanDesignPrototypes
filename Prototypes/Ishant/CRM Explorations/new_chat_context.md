@@ -91,8 +91,8 @@ The `CrmApp` module automatically fetches and mounts `crm_sidebar.html` into `#c
 
 To synthesize different design explorations without breaking isolated prototypes, the **Merged Approach** directory bridges Usha's pipeline-centric markers with Ishant's modular `crm_app` architecture:
 
-- 📁 **[Merged Approach Directory](file:///Users/ishant.p/Documents/Titan%20Design%20Git/Prototypes/Ishant/CRM%20Explorations/Merged%20Approach)**: Standalone prototype combining thread-level pipeline markers and stage advancement with the `crm_app` sidebar drawer.
-- 📄 **[Analysis Document](file:///Users/ishant.p/Documents/Titan%20Design%20Git/Prototypes/Ishant/CRM%20Explorations/Merged%20Approach/usha_approach_analysis.md)**: In-depth architectural analysis of Usha's pipeline labels (`.pipeline-label`, `.pipeline-chip`), single-select radio dropdown, and interactive stage bar.
+- 📁 **[Merged Approach Directory](file:///Users/ishant.p/Documents/Titan%20Design%20Git/Prototypes/Ishant/CRM%20Explorations%20Merged%20Approach)**: Standalone prototype combining thread-level pipeline markers and stage advancement with the `crm_app` sidebar drawer.
+- 📄 **[Analysis Document](file:///Users/ishant.p/Documents/Titan%20Design%20Git/Prototypes/Ishant/CRM%20Explorations%20Merged%20Approach/usha_approach_analysis.md)**: In-depth architectural analysis of Usha's pipeline labels (`.pipeline-label`, `.pipeline-chip`), single-select radio dropdown, and interactive stage bar.
 - ⚡ **Lightweight Integration Bridge**: Clicking any pipeline label or chip in the inbox list or reading pane calls `openCrmPanel()`, which delegates directly to `CrmApp.openDrawer()` and updates the hero header and stage pill (`Sales · Proposal Sent`).
 - 🗂️ **Streamlined 2-Tab Navigation & Outcome-First Layout**:
   - **Top Stage Bar Widget**: Positioned at the very top of the profile hero. Displays the **Pipeline Name** (`Neo Partnerships`), **`View Pipeline >`** link, and interactive **Chevron Stage Bar** with strict left-to-right z-index stacking (`z-index: 20` to `10`) and 2px white ribbon contour separation.

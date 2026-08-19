@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Digitak Portal</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #0b1328;
+      --muted: #65728c;
+      --line: #d9e0ea;
+      --surface: #fff;
+      --focus: #3967c8;
+      --font: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    html,
+    body {
+      width: 100%;
+      min-width: 280px;
+      height: 100%;
+      margin: 0;
+    }
+
+    body {
+      display: grid;
+      min-height: 100dvh;
+      place-items: center;
+      overflow: auto;
+      padding: 32px;
+      background: #fff;
+      color: var(--ink);
+      font-family: var(--font);
+      font-size: 14px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    button,
+    input { font: inherit; }
+
+    .login-card {
+      width: min(416px, 100%);
+      padding: 34px 34px 31px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: var(--surface);
+      box-shadow:
+        0 2px 5px rgba(11, 19, 40, .08),
+        0 1px 2px rgba(11, 19, 40, .04);
+    }
+
+    .brand {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .brand-mark {
+      display: grid;
+      width: 44px;
+      height: 44px;
+      margin-bottom: 18px;
+      place-items: center;
+      border-radius: 10px;
+      background: var(--ink);
+      color: #fff;
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -.45px;
+      line-height: 28px;
+    }
+
+    .subtitle {
+      margin: 5px 0 0;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 22px;
+    }
+
+    form { margin-top: 40px; }
+
+    .field + .field { margin-top: 21px; }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: 600;
+      line-height: 18px;
+    }
+
+    .text-input {
+      width: 100%;
+      height: 44px;
+      padding: 0 14px;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      outline: none;
+      background: #fff;
+      color: var(--ink);
+      font-size: 15px;
+      transition: border-color .15s ease, box-shadow .15s ease;
+    }
+
+    .text-input::placeholder { color: #74829b; opacity: 1; }
+
+    .text-input:focus {
+      border-color: var(--focus);
+      box-shadow: 0 0 0 3px rgba(57, 103, 200, .12);
+    }
+
+    .form-options {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      margin-top: 20px;
+    }
+
+    .remember {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      margin: 0;
+      color: var(--muted);
+      font-weight: 400;
+      white-space: nowrap;
+    }
+
+    .remember input {
+      width: 18px;
+      height: 18px;
+      margin: 0;
+      accent-color: var(--ink);
+    }
+
+    a {
+      color: var(--ink);
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    a:hover { text-decoration: underline; }
+
+    .sign-in {
+      width: 100%;
+      height: 44px;
+      margin-top: 20px;
+      border: 0;
+      border-radius: 9px;
+      background: var(--ink);
+      color: #fff;
+      cursor: pointer;
+      font-weight: 600;
+      transition: transform .12s ease, background .12s ease;
+    }
+
+    .sign-in:hover { background: #14203b; }
+    .sign-in:active { transform: translateY(1px); }
+
+    .support {
+      margin: 28px 0 0;
+      color: var(--muted);
+      text-align: center;
+      line-height: 20px;
+    }
+
+    @media (max-width: 520px) {
+      body { padding: 18px; }
+      .login-card { padding: 28px 22px 25px; }
+      form { margin-top: 32px; }
+    }
+
+    @media (max-height: 650px) {
+      body { place-items: start center; }
+    }
+  </style>
+</head>
+<body>
+  <main class="login-card">
+    <header class="brand">
+      <div class="brand-mark" aria-hidden="true">D</div>
+      <h1>Digitak Portal</h1>
+      <p class="subtitle">Sign in to your account</p>
+    </header>
+
+    <form id="loginForm">
+      <div class="field">
+        <label for="email">Email</label>
+        <input class="text-input" id="email" name="email" type="email" autocomplete="email" placeholder="you@company.com">
+      </div>
+
+      <div class="field">
+        <label for="password">Password</label>
+        <input class="text-input" id="password" name="password" type="password" autocomplete="current-password" placeholder="••••••••">
+      </div>
+
+      <div class="form-options">
+        <label class="remember" for="remember">
+          <input id="remember" name="remember" type="checkbox">
+          <span>Remember me</span>
+        </label>
+        <a href="#" id="forgotPassword">Forgot password?</a>
+      </div>
+
+      <button class="sign-in" type="submit">Sign in</button>
+    </form>
+
+    <p class="support">Need help? <a href="mailto:support@digitak.example">Contact support</a></p>
+  </main>
+
+  <script>
+    const loginForm = document.querySelector('#loginForm');
+    const signInButton = document.querySelector('.sign-in');
+
+    loginForm.addEventListener('submit', (event) => {
+      event.preventDefault();
+      signInButton.textContent = 'Signed in';
+      window.setTimeout(() => { signInButton.textContent = 'Sign in'; }, 1400);
+    });
+
+    document.querySelector('#forgotPassword').addEventListener('click', (event) => {
+      event.preventDefault();
+      document.querySelector('#email').focus();
+    });
+  </script>
+</body>
+</html>

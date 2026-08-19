@@ -1,0 +1,991 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Digital Portal Login | Lovable</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --app-bg: #f7f7f7;
+      --surface: #fff;
+      --canvas: #f0f0f0;
+      --text: #030303;
+      --muted: #636363;
+      --line: rgba(0, 0, 0, 0.09);
+      --blue: #123ec5;
+      --blue-bright: #1459e6;
+      --rail: 424px;
+      --font: "Camera Plain Variable", Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    html,
+    body {
+      width: 100%;
+      min-width: 320px;
+      height: 100%;
+      margin: 0;
+    }
+
+    body {
+      overflow: hidden;
+      background: var(--app-bg);
+      color: var(--text);
+      font-family: var(--font);
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: -0.15px;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: geometricPrecision;
+    }
+
+    button,
+    textarea { font: inherit; }
+
+    button {
+      color: inherit;
+      border: 0;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .app {
+      display: grid;
+      grid-template-rows: 47px minmax(0, 1fr);
+      width: 100%;
+      height: 100dvh;
+      min-height: 560px;
+      background: var(--app-bg);
+    }
+
+    .topbar {
+      position: relative;
+      z-index: 20;
+      display: grid;
+      grid-template-columns: calc(var(--rail) - 16px) minmax(400px, 1fr) auto;
+      align-items: center;
+      height: 47px;
+      padding: 0 14px 0 16px;
+      background: var(--app-bg);
+    }
+
+    .project-area,
+    .project-title,
+    .header-tools,
+    .mode-switcher,
+    .page-controls,
+    .publish-area,
+    .canvas-tools,
+    .composer-actions,
+    .build-mode,
+    .suggestions {
+      display: flex;
+      align-items: center;
+    }
+
+    .project-area {
+      min-width: 0;
+      gap: 10px;
+    }
+
+    .lovable-logo {
+      position: relative;
+      flex: 0 0 16px;
+      width: 16px;
+      height: 16px;
+      overflow: hidden;
+      border-radius: 4px;
+    }
+
+    .lovable-logo::before {
+      position: absolute;
+      inset: 0;
+      content: "";
+      background: url("assets/chat-03.svg") center / 100% 100% no-repeat;
+      -webkit-mask: url("assets/chat-04.svg") center / contain no-repeat;
+      mask: url("assets/chat-04.svg") center / contain no-repeat;
+    }
+
+    .project-title {
+      min-width: 0;
+      max-width: 275px;
+      height: 30px;
+      gap: 4px;
+      padding: 0 4px 0 9px;
+      border-radius: 8px;
+      background: transparent;
+      white-space: nowrap;
+    }
+
+    .project-title:hover,
+    .icon-button:hover,
+    .tool-button:hover { background: rgba(0, 0, 0, 0.055); }
+
+    .project-title span {
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .project-chevron {
+      width: 14px;
+      height: 14px;
+      opacity: .62;
+    }
+
+    .project-utilities {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      margin-left: auto;
+      padding-right: 1px;
+    }
+
+    .icon-button,
+    .tool-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex: 0 0 auto;
+      border-radius: 8px;
+      background: transparent;
+    }
+
+    .icon-button {
+      width: 30px;
+      height: 30px;
+    }
+
+    .icon-button img,
+    .tool-button img,
+    .mode-icon img,
+    .canvas-tools img,
+    .build-mode img {
+      display: block;
+      width: 16px;
+      height: 16px;
+    }
+
+    .header-tools {
+      position: relative;
+      justify-content: center;
+      min-width: 0;
+      height: 100%;
+    }
+
+    .mode-switcher {
+      position: absolute;
+      left: 15px;
+      top: 8px;
+      height: 30px;
+      overflow: hidden;
+      border: 1px solid rgba(0, 0, 0, 0.10);
+      border-radius: 12px;
+      background: rgba(255, 255, 255, .35);
+    }
+
+    .mode-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 35px;
+      height: 28px;
+      background: transparent;
+    }
+
+    .mode-icon.preview {
+      width: 86px;
+      gap: 5px;
+      color: #1249d6;
+      background: #e7edff;
+      box-shadow: 0 2px 7px rgba(18, 62, 197, .11);
+    }
+
+    .mode-icon.preview img { width: 16px; height: 16px; }
+
+    .mode-icon.more { width: 34px; }
+
+    .page-controls {
+      position: fixed;
+      top: 8px;
+      left: calc((100vw + var(--rail)) / 2 + 18px);
+      height: 28px;
+      gap: 0;
+      transform: translateX(-50%);
+    }
+
+    .desktop-button,
+    .external-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 28px;
+      padding: 0 6px;
+      border-radius: 999px;
+      background: transparent;
+    }
+
+    .desktop-button img,
+    .external-button img { width: 16px; height: 16px; }
+
+    .page-pill {
+      display: grid;
+      grid-template-columns: 24px minmax(0, 1fr) 24px;
+      align-items: center;
+      width: 256px;
+      height: 28px;
+      padding: 0 2px 0 4px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, .6);
+      box-shadow: 0 .5px .5px rgba(255, 255, 255, .8);
+    }
+
+    .page-pill button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      background: transparent;
+    }
+
+    .page-pill button:first-child {
+      width: 24px;
+      height: 24px;
+      border-radius: 999px;
+    }
+
+    .page-pill button:last-child {
+      width: 24px;
+      height: 28px;
+    }
+
+    .page-pill button img {
+      display: block;
+      width: 16px;
+      height: 16px;
+    }
+
+    .page-pill button:last-child img { width: 14px; height: 14px; }
+
+    .page-name {
+      overflow: hidden;
+      text-align: center;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      font-size: 14px;
+      line-height: 14px;
+    }
+
+    .publish-area {
+      justify-content: flex-end;
+      gap: 6px;
+      min-width: 164px;
+      padding-left: 10px;
+    }
+
+    .avatar {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      margin-right: -10px;
+      border-radius: 50%;
+      background: #7040cf;
+      color: #fff;
+      font-size: 13px;
+    }
+
+    .share-button,
+    .publish-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 28px;
+      padding: 0;
+      border-radius: 999px;
+      font-size: 14px;
+      letter-spacing: -.1504px;
+      line-height: 21px;
+    }
+
+    .share-button {
+      width: 57.906px;
+      background:
+        linear-gradient(180deg, transparent, rgba(0, 0, 0, .04)),
+        linear-gradient(90deg, rgba(255, 255, 255, .8), rgba(255, 255, 255, .8)),
+        #f5f5f5;
+      box-shadow:
+        0 2px 2px rgba(0, 0, 0, .04),
+        0 4px 4px rgba(0, 0, 0, .02),
+        inset 0 2px 0 #fff,
+        inset 0 -2px 0 rgba(255, 255, 255, .8),
+        inset 0 .5px 0 rgba(0, 0, 0, .08),
+        inset 0 -.5px 0 rgba(0, 0, 0, .16);
+    }
+
+    .publish-button {
+      width: 67.063px;
+      background:
+        linear-gradient(180deg, transparent, rgba(0, 0, 0, .08)),
+        #1f55f1;
+      color: #fff;
+      box-shadow:
+        inset 0 .5px 0 rgba(255, 255, 255, .08),
+        inset 0 -.5px 0 rgba(0, 0, 0, .16);
+    }
+
+    .workspace {
+      display: grid;
+      grid-template-columns: var(--rail) minmax(0, 1fr);
+      min-height: 0;
+    }
+
+    .chat-rail {
+      position: relative;
+      display: flex;
+      min-width: 0;
+      min-height: 0;
+      flex-direction: column;
+      overflow: hidden;
+      padding: 0 0 8px 8px;
+    }
+
+    .chat-rail::after {
+      position: absolute;
+      z-index: 4;
+      right: 0;
+      bottom: 108px;
+      width: 24px;
+      height: 45px;
+      pointer-events: none;
+      content: "";
+      background: linear-gradient(
+        90deg,
+        rgba(247, 247, 247, 0) 0%,
+        rgba(247, 247, 247, .28) 68%,
+        rgba(247, 247, 247, .94) 100%
+      );
+      -webkit-backdrop-filter: blur(1.25px);
+      backdrop-filter: blur(1.25px);
+      -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 68%, #000 100%);
+      mask-image: linear-gradient(90deg, transparent 0%, #000 68%, #000 100%);
+    }
+
+    .conversation {
+      min-height: 0;
+      flex: 1;
+      overflow: auto;
+      scrollbar-width: none;
+    }
+
+    .conversation::-webkit-scrollbar { display: none; }
+
+    .user-message-group {
+      display: flex;
+      width: 100%;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 8px;
+      padding: 14px 12px 0 0;
+    }
+
+    .user-message-bubble {
+      width: min(312.891px, calc(100% - 16px));
+      min-height: 96px;
+      padding: 12px 16px;
+      border-radius: 24px 24px 4px 24px;
+      background: #fff;
+      box-shadow:
+        0 0 0 .5px #fff,
+        0 0 0 1px rgba(119, 119, 113, .28),
+        0 1.5px 1px rgba(0, 0, 0, .04);
+      color: #353532;
+      font-size: 16px;
+      letter-spacing: -.3125px;
+      line-height: 24px;
+    }
+
+    .user-message-bubble p,
+    .assistant-response p { margin: 0; }
+
+    .message-meta,
+    .response-actions,
+    .build-card-header,
+    .build-card-actions {
+      display: flex;
+      align-items: center;
+    }
+
+    .message-meta {
+      justify-content: flex-end;
+      min-height: 28px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 21px;
+    }
+
+    .message-action,
+    .response-action,
+    .bookmark-action {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      flex: 0 0 28px;
+      border-radius: 8px;
+      background: transparent;
+    }
+
+    .message-action:hover,
+    .response-action:hover,
+    .bookmark-action:hover { background: rgba(0, 0, 0, .055); }
+
+    .message-action img,
+    .response-action img,
+    .bookmark-action img {
+      display: block;
+      width: 16px;
+      height: 16px;
+    }
+
+    .message-action.copy img,
+    .response-action.copy img { width: 12px; height: 12px; }
+
+    .message-time {
+      padding: 0 8px;
+      white-space: nowrap;
+    }
+
+    .assistant-response {
+      display: flex;
+      width: 100%;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
+      margin-top: 68px;
+      padding: 0 16px 24px;
+      color: #353532;
+      font-size: 16px;
+      letter-spacing: -.3125px;
+      line-height: 24.96px;
+    }
+
+    .thought-label {
+      height: 22px;
+      padding: 0;
+      background: transparent;
+      color: var(--muted);
+      font-size: 16px;
+      letter-spacing: -.3125px;
+      line-height: 22px;
+    }
+
+    .assistant-copy {
+      width: 100%;
+      max-width: 402px;
+    }
+
+    .build-card {
+      width: min(384px, 100%);
+      height: 100px;
+      overflow: hidden;
+      border-radius: 12px 12px 24px 24px;
+      background: #fafafa;
+      box-shadow:
+        0 1.5px 1px rgba(0, 0, 0, .04),
+        0 3.5px 3px rgba(0, 0, 0, .04),
+        0 6.5px 6px rgba(0, 0, 0, .04);
+    }
+
+    .build-card-header {
+      width: 100%;
+      height: 48px;
+      gap: 8px;
+      padding: 10px 10px 10px 16px;
+      border-radius: 12px;
+      background: #fff;
+      box-shadow:
+        0 1.5px 1px rgba(0, 0, 0, .04),
+        0 3.5px 3px rgba(0, 0, 0, .04);
+    }
+
+    .build-card-title {
+      min-width: 0;
+      flex: 1;
+      overflow: hidden;
+      color: #030303;
+      font-size: 14px;
+      letter-spacing: -.1504px;
+      line-height: 22px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .build-card-actions {
+      height: 52px;
+      gap: 8px;
+      padding: 10px;
+    }
+
+    .build-result-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 0;
+      height: 32px;
+      flex: 1;
+      border-radius: 999px;
+      background: transparent;
+      font-size: 14px;
+      letter-spacing: -.1504px;
+      line-height: 22px;
+    }
+
+    .build-result-button.details {
+      box-shadow: inset 0 0 0 1px rgba(119, 119, 113, .3);
+    }
+
+    .build-result-button.previewing {
+      background: rgba(31, 85, 241, .12);
+      color: #123ec5;
+      opacity: .5;
+    }
+
+    .response-actions {
+      width: 100%;
+    }
+
+    .response-actions .more-dots {
+      color: #030303;
+      font-size: 18px;
+      letter-spacing: 2px;
+      line-height: 12px;
+    }
+
+    .suggestions {
+      flex: 0 0 45px;
+      gap: 6px;
+      margin-right: 0;
+      padding: 9px 8px 8px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      white-space: nowrap;
+    }
+
+    .suggestions::-webkit-scrollbar { display: none; }
+
+    .suggestion {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex: 0 0 auto;
+      height: 28px;
+      padding: 0 9px;
+      border: 1px solid rgba(3, 3, 3, .12);
+      border-radius: 999px;
+      background: linear-gradient(
+        180deg,
+        #fff 0%,
+        #fbfbfb 58%,
+        #f5f5f5 100%
+      );
+      box-shadow:
+        0 2px 2px rgba(0, 0, 0, .04),
+        0 4px 4px rgba(0, 0, 0, .02),
+        inset 0 1px 0 rgba(255, 255, 255, .9);
+      line-height: 21px;
+    }
+
+    .composer {
+      position: relative;
+      flex: 0 0 100px;
+      min-height: 100px;
+      margin-right: 8px;
+      overflow: hidden;
+      border: 1px solid rgba(0, 0, 0, .04);
+      border-radius: 24px;
+      background: #fff;
+      box-shadow:
+        0 1px 2px rgba(0, 0, 0, .06),
+        0 4px 8px -4px rgba(0, 0, 0, .10);
+    }
+
+    .composer textarea {
+      display: block;
+      width: 100%;
+      height: 60px;
+      resize: none;
+      padding: 20px 20px 5px;
+      border: 0;
+      outline: 0;
+      background: transparent;
+      color: var(--text);
+      line-height: 20px;
+    }
+
+    .composer textarea::placeholder { color: #686868; opacity: 1; }
+
+    .composer-actions {
+      position: absolute;
+      right: 12px;
+      bottom: 12px;
+      left: 12px;
+      justify-content: space-between;
+      height: 28px;
+    }
+
+    .composer-right {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .round-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      flex: 0 0 28px;
+      padding: 0;
+      border: 1px solid rgba(3, 3, 3, .14);
+      border-radius: 999px;
+      background: linear-gradient(
+        180deg,
+        #fff 0%,
+        #fbfbfb 58%,
+        #f5f5f5 100%
+      );
+      box-shadow:
+        0 1px 2px rgba(0, 0, 0, .08),
+        0 4px 10px rgba(0, 0, 0, .06),
+        inset 0 1px 0 rgba(255, 255, 255, .9);
+      line-height: 1;
+    }
+
+    .round-button img { width: 16px; height: 16px; }
+
+    .build-mode {
+      justify-content: center;
+      width: 69.844px;
+      height: 28px;
+      gap: 4px;
+      padding: 0;
+      border: 1px solid rgba(3, 3, 3, .14);
+      border-radius: 999px;
+      background: linear-gradient(
+        180deg,
+        #fff 0%,
+        #fbfbfb 58%,
+        #f5f5f5 100%
+      );
+      box-shadow:
+        0 1px 2px rgba(0, 0, 0, .08),
+        0 4px 10px rgba(0, 0, 0, .06),
+        inset 0 1px 0 rgba(255, 255, 255, .9);
+      line-height: 1;
+    }
+
+    .build-mode span {
+      display: block;
+      line-height: 16px;
+    }
+
+    .build-mode img { width: 14px; height: 14px; }
+
+    .send-button {
+      border-color: rgba(0, 0, 0, .06);
+      background: linear-gradient(180deg, #909090 0%, #7f7f7f 100%);
+      box-shadow: 0 1px 2px rgba(0, 0, 0, .12);
+    }
+
+    .send-button img { width: 16px; height: 16px; }
+
+    .preview-wrap {
+      min-width: 0;
+      min-height: 0;
+      padding: 0 11px 8px 6px;
+    }
+
+    .preview-canvas {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      border: 1px solid rgba(0, 0, 0, .085);
+      border-radius: 16px;
+      background: #fff;
+      box-shadow:
+        0 12px 20px -18px rgba(0, 0, 0, .35),
+        0 2px 4px rgba(0, 0, 0, .035);
+    }
+
+    .preview-frame {
+      display: block;
+      width: 100%;
+      height: 100%;
+      border: 0;
+      background: #fff;
+    }
+
+    .canvas-tools {
+      position: absolute;
+      z-index: 2;
+      bottom: 7px;
+      left: 50%;
+      height: 43px;
+      gap: 2px;
+      padding: 6px 9px;
+      border: 1px solid rgba(0, 0, 0, .10);
+      border-radius: 18px;
+      background: rgba(255, 255, 255, .96);
+      box-shadow: 0 2px 5px rgba(0, 0, 0, .07);
+      transform: translateX(-50%);
+    }
+
+    .tool-button {
+      width: 31px;
+      height: 29px;
+    }
+
+    .chat-message {
+      width: calc(100% - 24px);
+      margin: 12px 12px 0;
+      padding: 12px 14px;
+      border-radius: 14px 14px 4px 14px;
+      background: #fff;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, .06);
+      line-height: 20px;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    @media (max-width: 1180px) {
+      :root { --rail: 360px; }
+      .mode-switcher { left: 8px; }
+      .mode-icon:not(.preview) { display: none; }
+      .mode-switcher { width: 86px; }
+      .page-pill { width: 210px; }
+    }
+
+    @media (max-width: 900px) {
+      :root { --rail: min(390px, 44vw); }
+      .topbar { grid-template-columns: calc(var(--rail) - 16px) 1fr auto; }
+      .mode-switcher { display: none; }
+      .publish-area { min-width: 0; }
+      .share-button, .avatar { display: none; }
+      .page-pill { width: min(230px, 34vw); }
+    }
+
+    @media (max-width: 680px) {
+      :root { --rail: 100vw; }
+      .app { grid-template-rows: 47px minmax(0, 1fr); }
+      .topbar { grid-template-columns: minmax(0, 1fr) auto; padding-right: 10px; }
+      .header-tools { display: none; }
+      .project-utilities .history { display: none; }
+      .publish-area { padding-left: 4px; }
+      .workspace { grid-template-columns: 1fr; }
+      .preview-wrap { display: none; }
+      .chat-rail { padding-right: 8px; }
+      .chat-rail::after { display: none; }
+      .composer { margin-right: 0; }
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <header class="topbar">
+      <div class="project-area">
+        <span class="lovable-logo" aria-hidden="true"></span>
+        <button class="project-title" type="button">
+          <span>Digital Portal Login</span>
+          <img class="project-chevron" src="assets/chat-00.svg" alt="">
+        </button>
+        <div class="project-utilities">
+          <button class="icon-button history" type="button" aria-label="History">
+            <img src="assets/chat-16.svg" alt="">
+          </button>
+          <button class="icon-button" type="button" aria-label="Toggle chat panel">
+            <img src="assets/chat-12.svg" alt="">
+          </button>
+        </div>
+      </div>
+
+      <div class="header-tools">
+        <nav class="mode-switcher" aria-label="Workspace mode">
+          <button class="mode-icon preview" type="button" aria-current="page">
+            <img src="assets/chat-07.svg" alt="">
+            <span>Preview</span>
+          </button>
+          <button class="mode-icon" type="button" aria-label="Files">
+            <img src="assets/chat-10.svg" alt="">
+          </button>
+          <button class="mode-icon" type="button" aria-label="Code">
+            <img src="assets/chat-19.svg" alt="">
+          </button>
+          <button class="mode-icon more" type="button" aria-label="More">
+            <img src="assets/chat-06.svg" alt="">
+          </button>
+        </nav>
+
+        <div class="page-controls">
+          <button class="desktop-button" type="button" aria-label="Desktop preview">
+            <img src="assets/chat-header-desktop.svg" alt="">
+          </button>
+          <div class="page-pill">
+            <button type="button" aria-label="Refresh preview"><img src="assets/chat-header-refresh.svg" alt=""></button>
+            <span class="page-name">Homepage</span>
+            <button type="button" aria-label="Select page"><img src="assets/chat-header-chevron.svg" alt=""></button>
+          </div>
+          <button class="external-button" type="button" aria-label="Open preview in a new tab">
+            <img src="assets/chat-header-external.svg" alt="">
+          </button>
+        </div>
+      </div>
+
+      <div class="publish-area">
+        <button class="share-button" type="button">Share</button>
+        <button class="publish-button" type="button">Publish</button>
+      </div>
+    </header>
+
+    <section class="workspace">
+      <aside class="chat-rail" aria-label="Lovable chat">
+        <div class="conversation" id="conversation">
+          <article class="user-message-group">
+            <div class="user-message-bubble">
+              <p>make me a simple and minimal login screen for a random company digitak portal</p>
+            </div>
+            <div class="message-meta">
+              <button class="message-action copy" type="button" aria-label="Copy message">
+                <img src="assets/chat-msg-copy.svg" alt="">
+              </button>
+              <button class="message-action" type="button" aria-label="Edit message">
+                <img src="assets/chat-msg-edit.svg" alt="">
+              </button>
+              <span class="message-time">Today at 10:34 AM</span>
+            </div>
+          </article>
+
+          <article class="assistant-response">
+            <button class="thought-label" type="button">Thought for 3s</button>
+            <p class="assistant-copy">I’ll replace the placeholder with a minimal login screen using the existing design system.</p>
+
+            <section class="build-card" aria-label="Build result">
+              <div class="build-card-header">
+                <span class="build-card-title">Added minimal login screen</span>
+                <button class="bookmark-action" type="button" aria-label="Bookmark in history">
+                  <img src="assets/chat-msg-bookmark.svg" alt="">
+                </button>
+              </div>
+              <div class="build-card-actions">
+                <button class="build-result-button details" type="button">Details</button>
+                <button class="build-result-button previewing" type="button" disabled>Previewing</button>
+              </div>
+            </section>
+
+            <p class="assistant-copy">Done — the placeholder is now a minimal login screen for the Digitak Portal, and the build passes.</p>
+
+            <div class="response-actions" aria-label="Response actions">
+              <button class="response-action" type="button" aria-label="Helpful">
+                <img src="assets/chat-msg-like.svg" alt="">
+              </button>
+              <button class="response-action" type="button" aria-label="Not helpful">
+                <img src="assets/chat-msg-dislike.svg" alt="">
+              </button>
+              <button class="response-action copy" type="button" aria-label="Copy response">
+                <img src="assets/chat-msg-copy.svg" alt="">
+              </button>
+              <button class="response-action" type="button" aria-label="More options">
+                <img src="assets/chat-msg-more.svg" alt="">
+              </button>
+            </div>
+          </article>
+        </div>
+
+        <div class="suggestions" aria-label="Prompt suggestions">
+          <button class="suggestion" type="button" data-prompt="Add real authentication">Add real authentication</button>
+          <button class="suggestion" type="button" data-prompt="Create signup option">Create signup option</button>
+          <button class="suggestion" type="button" data-prompt="Add password reset">Add password reset</button>
+        </div>
+
+        <form class="composer" id="composer">
+          <label class="sr-only" for="prompt">Ask Lovable</label>
+          <textarea id="prompt" rows="1" placeholder="Ask Lovable..."></textarea>
+          <div class="composer-actions">
+            <button class="round-button" type="button" aria-label="Add attachment">
+              <img src="assets/chat-composer-add.svg" alt="">
+            </button>
+            <div class="composer-right">
+              <button class="build-mode" type="button">
+                <span>Build</span>
+                <img src="assets/chat-composer-chevron.svg" alt="">
+              </button>
+              <button class="round-button" type="button" aria-label="Voice input">
+                <img src="assets/chat-composer-mic.svg" alt="">
+              </button>
+              <button class="round-button send-button" type="submit" aria-label="Send prompt">
+                <img src="assets/chat-composer-send.svg" alt="">
+              </button>
+            </div>
+          </div>
+        </form>
+      </aside>
+
+      <div class="preview-wrap">
+        <section class="preview-canvas" aria-label="Application preview">
+          <iframe class="preview-frame" src="preview.html" title="Digitak Portal login preview"></iframe>
+          <div class="canvas-tools" role="toolbar" aria-label="Canvas tools">
+            <button class="tool-button" type="button" aria-label="Select element"><img src="assets/chat-17.svg" alt=""></button>
+            <button class="tool-button" type="button" aria-label="Add text"><img src="assets/chat-11.svg" alt=""></button>
+            <button class="tool-button" type="button" aria-label="Edit"><img src="assets/chat-18.svg" alt=""></button>
+            <button class="tool-button" type="button" aria-label="Comment"><img src="assets/chat-14.svg" alt=""></button>
+          </div>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const promptInput = document.querySelector('#prompt');
+    const composer = document.querySelector('#composer');
+    const conversation = document.querySelector('#conversation');
+
+    document.querySelectorAll('[data-prompt]').forEach((button) => {
+      button.addEventListener('click', () => {
+        promptInput.value = button.dataset.prompt;
+        promptInput.focus();
+      });
+    });
+
+    composer.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const message = promptInput.value.trim();
+      if (!message) return;
+      document.querySelector('#emptyState')?.remove();
+      const bubble = document.createElement('div');
+      bubble.className = 'chat-message';
+      bubble.textContent = message;
+      conversation.appendChild(bubble);
+      promptInput.value = '';
+      conversation.scrollTop = conversation.scrollHeight;
+    });
+  </script>
+</body>
+</html>
