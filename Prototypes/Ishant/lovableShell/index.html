@@ -1,0 +1,1409 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Account settings</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --canvas: #f5f5f5;
+      --panel: #fafafa;
+      --surface: #fff;
+      --text: #030303;
+      --text-soft: #2e2e2d;
+      --muted: #636363;
+      --line: rgba(0, 0, 0, 0.08);
+      --line-strong: rgba(113, 114, 112, 0.30);
+      --selected: rgba(0, 0, 0, 0.08);
+      --purple-bg: #e1def7;
+      --purple-text: #3a2b82;
+      --blue: #2864dc;
+      --danger: #b42318;
+      --sidebar: 273px;
+      --radius-s: 6px;
+      --radius-m: 8px;
+      --radius-l: 12px;
+      --radius-xl: 16px;
+      --font: "Camera Plain Variable", Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    html,
+    body {
+      width: 100%;
+      min-width: 320px;
+      height: 100%;
+      margin: 0;
+    }
+
+    body {
+      overflow: hidden;
+      background: var(--canvas);
+      color: var(--text);
+      font-family: var(--font);
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: -0.1504px;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: geometricPrecision;
+    }
+
+    button,
+    input,
+    select { font: inherit; }
+
+    button,
+    a,
+    select,
+    input { -webkit-tap-highlight-color: transparent; }
+
+    button { color: inherit; }
+
+    .app-shell {
+      display: flex;
+      width: 100%;
+      height: 100dvh;
+      min-height: 560px;
+      background: var(--canvas);
+    }
+
+    .sidebar {
+      position: relative;
+      z-index: 20;
+      display: flex;
+      flex: 0 0 var(--sidebar);
+      flex-direction: column;
+      width: var(--sidebar);
+      height: 100%;
+      background: var(--canvas);
+      overflow: hidden;
+    }
+
+    .sidebar-top {
+      flex: 0 0 auto;
+      width: 100%;
+    }
+
+    .back-wrap {
+      display: flex;
+      align-items: center;
+      height: 64px;
+      padding: 16px;
+    }
+
+    .back-button,
+    .nav-item,
+    .mobile-menu-button,
+    .mobile-close {
+      border: 0;
+      background: transparent;
+      cursor: pointer;
+    }
+
+    .back-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 32px;
+      margin-left: -8px;
+      padding: 6px 10px;
+      gap: 4px;
+      border-radius: var(--radius-m);
+      line-height: 20px;
+    }
+
+    .back-button:hover,
+    .nav-item:hover { background: rgba(0, 0, 0, 0.045); }
+
+    .search-wrap {
+      height: 44px;
+      padding: 0 12px 12px;
+    }
+
+    .search-box {
+      position: relative;
+      display: flex;
+      align-items: center;
+      width: 249px;
+      height: 32px;
+      gap: 6px;
+      padding: 0 8px;
+      border-radius: var(--radius-m);
+      background: linear-gradient(180deg, rgba(0, 0, 0, 0.02), transparent);
+      box-shadow:
+        0 0.5px 0 #fff,
+        inset 0 2px 2px -1px rgba(0, 0, 0, 0.04),
+        inset 0 4px 4px -2px rgba(0, 0, 0, 0.02),
+        inset 0 0 0 0.5px rgba(113, 114, 112, 0.4);
+    }
+
+    .search-box input {
+      min-width: 0;
+      flex: 1;
+      height: 100%;
+      padding: 0;
+      border: 0;
+      outline: none;
+      background: transparent;
+      color: var(--text-soft);
+      letter-spacing: inherit;
+    }
+
+    .search-box input::placeholder { color: var(--muted); opacity: 1; }
+
+    .sidebar-nav {
+      min-height: 0;
+      flex: 1;
+      padding: 0 12px 12px;
+      overflow-y: auto;
+      scrollbar-width: none;
+    }
+
+    .sidebar-nav::-webkit-scrollbar,
+    .main-panel::-webkit-scrollbar { display: none; }
+
+    .nav-section {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      padding-bottom: 8px;
+    }
+
+    .nav-section-title {
+      display: flex;
+      align-items: center;
+      height: 32px;
+      padding: 0 8px;
+      color: var(--muted);
+      line-height: 21px;
+      white-space: nowrap;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      width: 249px;
+      height: 32px;
+      min-height: 32px;
+      padding: 4px 4px 4px 6px;
+      gap: 8px;
+      border-radius: var(--radius-m);
+      color: var(--text-soft);
+      line-height: 21px;
+      text-align: left;
+      white-space: nowrap;
+      transition: background-color 120ms ease;
+    }
+
+    .nav-item.is-active { background: var(--selected); color: var(--text); }
+    .nav-item.is-filtered { display: none; }
+
+    .icon {
+      display: block;
+      flex: 0 0 auto;
+      width: 20px;
+      height: 20px;
+      object-fit: contain;
+    }
+
+    .icon.small { width: 16px; height: 16px; }
+    .icon.tiny { width: 12px; height: 12px; }
+
+    .workspace-avatar {
+      display: inline-grid;
+      place-items: center;
+      width: 20px;
+      height: 20px;
+      flex: 0 0 auto;
+      border-radius: var(--radius-s);
+      background: #a53803;
+      color: #fff;
+      font-size: 10px;
+      line-height: 10px;
+      letter-spacing: 0.1172px;
+    }
+
+    .nav-label {
+      display: block;
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: clip;
+    }
+
+    .plan-badge,
+    .beta-badge,
+    .primary-badge {
+      display: inline-flex;
+      align-items: center;
+      flex: 0 0 auto;
+      border-radius: 4px;
+      white-space: nowrap;
+    }
+
+    .plan-badge {
+      height: 20px;
+      gap: 1px;
+      padding: 1px 6px 1px 2px;
+      background: var(--purple-bg);
+      color: var(--purple-text);
+      font-size: 12px;
+      line-height: 18px;
+      letter-spacing: 0;
+    }
+
+    .plan-badge::before {
+      width: 16px;
+      height: 12px;
+      content: "";
+      background: url("assets/icon-08.svg") center / 16px 12px no-repeat;
+    }
+
+    .main-panel {
+      position: relative;
+      flex: 1;
+      height: calc(100% - 16px);
+      min-width: 0;
+      margin: 8px 8px 8px 0;
+      overflow-x: hidden;
+      overflow-y: auto;
+      border: 1px solid rgba(113, 114, 112, 0.30);
+      border-radius: var(--radius-l);
+      background: var(--panel);
+      scrollbar-width: none;
+    }
+
+    .settings-view[hidden] { display: none !important; }
+
+    .page-column {
+      width: min(896px, calc(100% - 64px));
+      min-height: 100%;
+      margin: 0 auto;
+      padding: 48px 52px 64px;
+    }
+
+    .domains-page {
+      width: min(1280px, calc(100% - 64px));
+      min-height: 100%;
+      margin: 0 auto;
+      padding: 48px 52px 64px;
+    }
+
+    .domains-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      min-height: 55px;
+      margin-bottom: 24px;
+    }
+
+    .domains-title-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .domains-plan-mark {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 20px;
+      height: 20px;
+      padding: 1px 2px;
+      border-radius: 4px;
+      background: var(--purple-bg);
+    }
+
+    .domains-plan-mark img { width: 16px; height: 12px; }
+
+    .domains-body {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .domains-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .domains-search {
+      position: relative;
+      display: flex;
+      align-items: center;
+      width: 320px;
+      max-width: 100%;
+      height: 32px;
+      gap: 6px;
+      overflow: hidden;
+      border-radius: 8px;
+      background: linear-gradient(180deg, rgba(0, 0, 0, .02), transparent);
+      box-shadow:
+        0 .5px 0 #fff,
+        inset 0 2px 2px -1px rgba(0, 0, 0, .04),
+        inset 0 4px 4px -2px rgba(0, 0, 0, .02),
+        inset 0 0 0 .5px rgba(113, 114, 112, .4);
+    }
+
+    .domains-search img {
+      width: 16px;
+      height: 16px;
+      margin-left: 8px;
+    }
+
+    .domains-search input {
+      min-width: 0;
+      height: 100%;
+      flex: 1;
+      padding: 0 8px 0 0;
+      border: 0;
+      outline: 0;
+      background: transparent;
+      color: var(--text);
+    }
+
+    .domains-search input::placeholder { color: var(--muted); opacity: 1; }
+
+    .domains-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .domain-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 32px;
+      padding: 0 10px;
+      border: 0;
+      border-radius: 999px;
+      background: transparent;
+      color: var(--text);
+      cursor: pointer;
+      font-size: 14px;
+      letter-spacing: -.1504px;
+      line-height: 21px;
+      white-space: nowrap;
+    }
+
+    .domain-button.transfer { width: 88.25px; }
+
+    .domain-button.buy {
+      width: 124.281px;
+      gap: 4px;
+      padding: 0;
+      background:
+        linear-gradient(180deg, transparent, rgba(0, 0, 0, .88)),
+        rgba(0, 0, 0, .88);
+      color: #fafafa;
+      box-shadow:
+        inset 0 .5px 0 rgba(255, 255, 255, .08),
+        inset 0 -.5px 0 rgba(0, 0, 0, .16);
+    }
+
+    .domain-button.buy img { width: 16px; height: 16px; }
+
+    .domains-empty-card {
+      display: flex;
+      width: 100%;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      padding: 96px 24px;
+      border-radius: 12px;
+      background: #fff;
+      box-shadow:
+        0 1.5px 1px rgba(0, 0, 0, .04),
+        0 0 0 .5px rgba(119, 119, 113, .13);
+      text-align: center;
+    }
+
+    .domains-empty-icon { width: 24px; height: 24px; }
+
+    .domains-empty-copy {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      line-height: 21px;
+    }
+
+    .domains-empty-copy p:last-child { color: var(--muted); }
+
+    .page-header {
+      height: 55px;
+      padding: 0 24px;
+      margin-bottom: 24px;
+    }
+
+    h1,
+    h2,
+    p { margin: 0; }
+
+    h1 {
+      font-size: 20px;
+      font-weight: 400;
+      line-height: 30px;
+      letter-spacing: -0.3px;
+    }
+
+    .page-subtitle,
+    .section-subtitle,
+    .setting-description {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 21px;
+    }
+
+    .page-subtitle { margin-top: 4px; }
+
+    .content-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    .section-block {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .section-heading {
+      min-height: 45px;
+      padding: 0 24px;
+    }
+
+    .section-heading.compact { min-height: 24px; }
+
+    .section-heading h2,
+    .card-title {
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 24px;
+      letter-spacing: -0.18px;
+    }
+
+    .showcase-card,
+    .settings-card {
+      width: 100%;
+      border-radius: var(--radius-xl);
+      background: var(--surface);
+      box-shadow:
+        0 1.5px 1px rgba(0, 0, 0, 0.04),
+        0 0 0 0.5px rgba(119, 119, 113, 0.13);
+    }
+
+    .showcase-card {
+      min-height: 309px;
+      padding: 20px 24px;
+      border: 1px solid rgba(113, 114, 112, 0.28);
+      box-shadow:
+        0 1.5px 1px rgba(0, 0, 0, 0.04),
+        0 0 0 0 rgba(119, 119, 113, 0.13);
+    }
+
+    .showcase-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 480px) 240px;
+      gap: 24px;
+      min-height: 195px;
+      padding-bottom: 20px;
+    }
+
+    .title-with-badge {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .showcase-card .card-title {
+      font-weight: 600;
+      letter-spacing: -0.28px;
+    }
+
+    .beta-badge,
+    .primary-badge {
+      height: 20px;
+      padding: 1px 8px;
+      background: #efefef;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 18px;
+      letter-spacing: 0;
+      box-shadow: inset 0 0 0 0.5px rgba(0, 0, 0, 0.08);
+    }
+
+    .showcase-copy { display: flex; flex-direction: column; gap: 4px; }
+    .showcase-copy .setting-description { max-width: 480px; }
+
+    .inline-link {
+      color: inherit;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      text-decoration-color: rgba(99, 99, 99, 0.72);
+    }
+
+    .radio-list {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      width: 100%;
+      gap: 12px;
+      padding-top: 1px;
+    }
+
+    .radio-option {
+      position: relative;
+      display: flex;
+      align-items: flex-start;
+      width: 100%;
+      min-height: 21px;
+      cursor: pointer;
+      font-size: 13px;
+      line-height: 16px;
+      letter-spacing: -0.18px;
+    }
+
+    .radio-option input {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .radio-mark {
+      position: relative;
+      width: 16px;
+      height: 16px;
+      flex: 0 0 auto;
+      margin: 0 8px 0 0;
+      border: 1px solid #d5d5d5;
+      border-radius: 50%;
+      background: linear-gradient(#fff, #fafafa);
+      box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+    }
+
+    .radio-option input:checked + .radio-mark {
+      border: 4px solid var(--blue);
+      background: #fff;
+      box-shadow:
+        0 0 0 1px #1549aa,
+        0 1px 1px rgba(0, 0, 0, 0.12);
+    }
+
+    .radio-copy {
+      display: inline;
+      min-width: 0;
+      max-width: calc(100% - 24px);
+      font-weight: 600;
+    }
+
+    .label-tail { white-space: nowrap; }
+
+    .info-dot {
+      display: inline-block;
+      width: 13px;
+      height: 13px;
+      margin-left: 4px;
+      vertical-align: -2px;
+      background: url("assets/icon-19.svg") center / 13px no-repeat;
+    }
+
+    .showcase-footer {
+      display: flex;
+      justify-content: flex-end;
+      align-items: flex-end;
+      min-height: 52.5px;
+      padding-top: 20px;
+      border-top: 1px solid var(--line);
+    }
+
+    .control-button,
+    .select-control,
+    .number-control,
+    .sound-control {
+      border: 0;
+      border-radius: var(--radius-m);
+      background: linear-gradient(180deg, #fff 0%, #fafafa 100%);
+      box-shadow:
+        inset 0 0 0 0.5px rgba(113, 114, 112, 0.36),
+        0 1px 1px rgba(0, 0, 0, 0.04),
+        0 2px 3px rgba(0, 0, 0, 0.035);
+      color: var(--text);
+    }
+
+    .control-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 32px;
+      gap: 6px;
+      padding: 6px 10px;
+      cursor: pointer;
+      line-height: 20px;
+      white-space: nowrap;
+    }
+
+    .control-button.small { height: 28px; padding: 4px 10px; }
+    .control-button.danger { color: var(--danger); }
+    .control-button:hover { background: #f7f7f7; }
+
+    .settings-card {
+      overflow: hidden;
+      padding: 20px 0;
+    }
+
+    .setting-row {
+      display: flex;
+      align-items: center;
+      min-height: 82.5px;
+      margin: 0 24px;
+      gap: 24px;
+      border-top: 1px solid var(--line);
+    }
+
+    .setting-row:first-child { border-top: 0; }
+    .setting-row.short { min-height: 62.5px; }
+    .setting-row.tall { min-height: 103.5px; }
+    .setting-row.model-row { min-height: 124px; }
+
+    .setting-copy {
+      min-width: 0;
+      flex: 1 1 auto;
+      line-height: 21px;
+    }
+
+    .setting-label {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--text);
+      line-height: 21px;
+    }
+
+    .setting-description { max-width: 664px; }
+
+    .setting-action {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      min-width: 160px;
+      flex: 0 1 360px;
+      color: var(--text);
+      text-align: right;
+      line-height: 21px;
+    }
+
+    .setting-action.value { overflow-wrap: anywhere; }
+
+    .select-control,
+    .sound-control {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      height: 32px;
+      min-width: 80px;
+      padding: 5px 31px 5px 12px;
+      appearance: none;
+      outline: none;
+      cursor: pointer;
+      line-height: 21px;
+    }
+
+    .select-wrap { position: relative; display: inline-flex; }
+
+    .select-wrap::after {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      width: 16px;
+      height: 16px;
+      content: "";
+      pointer-events: none;
+      background: url("assets/icon-22.svg") center / 16px no-repeat;
+    }
+
+    .number-control {
+      width: 112px;
+      height: 32px;
+      padding: 5px 12px;
+      outline: none;
+      line-height: 21px;
+    }
+
+    .switch {
+      position: relative;
+      display: inline-flex;
+      width: 32px;
+      height: 20px;
+      flex: 0 0 auto;
+      padding: 0;
+      border: 0;
+      border-radius: 999px;
+      background: #d9d9d9;
+      box-shadow: inset 0 0 0 0.5px rgba(0, 0, 0, 0.15);
+      cursor: pointer;
+      transition: background 130ms ease;
+    }
+
+    .switch::after {
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 16px;
+      height: 16px;
+      content: "";
+      border-radius: 50%;
+      background: #fff;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.22);
+      transition: transform 130ms ease;
+    }
+
+    .switch[aria-checked="true"] { background: #111; }
+    .switch[aria-checked="true"]::after { transform: translateX(12px); }
+
+    .action-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text);
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .row-icon {
+      display: inline-flex;
+      width: 32px;
+      height: 32px;
+      flex: 0 0 auto;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .account-row-copy {
+      display: flex;
+      min-width: 0;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .primary-badge {
+      height: 20px;
+      padding: 1px 7px;
+      background: #efefef;
+      color: var(--muted);
+    }
+
+    .mobile-bar {
+      display: none;
+    }
+
+    .sidebar-scrim { display: none; }
+
+    @media (max-width: 1180px) {
+      .page-column {
+        width: min(896px, calc(100% - 32px));
+        padding-right: 36px;
+        padding-left: 36px;
+      }
+
+      .domains-page {
+        width: calc(100% - 32px);
+        padding-right: 36px;
+        padding-left: 36px;
+      }
+
+      .showcase-grid { grid-template-columns: minmax(0, 1fr) 230px; }
+    }
+
+    @media (max-width: 900px) {
+      body { overflow: auto; }
+
+      .app-shell {
+        display: block;
+        height: auto;
+        min-height: 100dvh;
+      }
+
+      .mobile-bar {
+        position: sticky;
+        top: 0;
+        z-index: 15;
+        display: flex;
+        align-items: center;
+        height: 52px;
+        padding: 0 16px;
+        border-bottom: 1px solid var(--line);
+        background: rgba(250, 250, 250, 0.94);
+        backdrop-filter: blur(12px);
+      }
+
+      .mobile-menu-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 32px;
+        height: 32px;
+        margin-right: 10px;
+        border-radius: var(--radius-m);
+      }
+
+      .hamburger,
+      .hamburger::before,
+      .hamburger::after {
+        display: block;
+        width: 16px;
+        height: 1px;
+        background: #222;
+        content: "";
+      }
+
+      .hamburger { position: relative; }
+      .hamburger::before { position: absolute; top: -5px; }
+      .hamburger::after { position: absolute; top: 5px; }
+
+      .mobile-bar-title { font-size: 16px; line-height: 24px; }
+
+      .sidebar {
+        position: fixed;
+        inset: 0 auto 0 0;
+        z-index: 40;
+        height: 100dvh;
+        box-shadow: 12px 0 32px rgba(0, 0, 0, 0.13);
+        transform: translateX(-105%);
+        transition: transform 180ms ease;
+      }
+
+      .sidebar.is-open { transform: translateX(0); }
+
+      .sidebar-scrim {
+        position: fixed;
+        inset: 0;
+        z-index: 35;
+        display: block;
+        border: 0;
+        background: rgba(0, 0, 0, 0.28);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 180ms ease;
+      }
+
+      .sidebar-scrim.is-open { opacity: 1; pointer-events: auto; }
+
+      .main-panel {
+        width: 100%;
+        height: auto;
+        min-height: calc(100dvh - 52px);
+        margin: 0;
+        overflow: visible;
+        border: 0;
+        border-radius: 0;
+      }
+
+      .page-column {
+        width: min(100%, 896px);
+        padding-top: 36px;
+      }
+
+      .domains-page {
+        width: min(100%, 1280px);
+        padding-top: 36px;
+      }
+    }
+
+    @media (max-width: 700px) {
+      .page-column { padding: 28px 16px 48px; }
+      .domains-page { padding: 28px 16px 48px; }
+      .domains-header { align-items: flex-start; }
+      .domains-toolbar { align-items: stretch; flex-direction: column; gap: 12px; }
+      .domains-search { width: 100%; }
+      .domains-actions { justify-content: flex-end; }
+      .domains-empty-card { padding: 64px 20px; }
+      .page-header,
+      .section-heading { padding-right: 8px; padding-left: 8px; }
+      .content-stack { gap: 28px; }
+
+      .showcase-card { padding: 20px; }
+      .showcase-grid { grid-template-columns: 1fr; gap: 20px; }
+      .radio-list { padding-top: 0; }
+
+      .setting-row,
+      .setting-row.short,
+      .setting-row.tall,
+      .setting-row.model-row {
+        align-items: flex-start;
+        min-height: 0;
+        margin: 0 20px;
+        padding: 18px 0;
+        gap: 12px;
+      }
+
+      .setting-row { flex-direction: column; }
+
+      .setting-action {
+        width: 100%;
+        min-width: 0;
+        flex: 0 0 auto;
+        justify-content: flex-start;
+        text-align: left;
+      }
+
+      .setting-action.switch-action {
+        position: absolute;
+        right: 20px;
+        width: auto;
+      }
+
+      .setting-row:has(.switch-action) { position: relative; padding-right: 52px; }
+      .model-row .setting-description { padding-right: 0; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="mobile-bar">
+      <button class="mobile-menu-button" type="button" aria-label="Open settings navigation" aria-controls="settings-sidebar" aria-expanded="false">
+        <span class="hamburger"></span>
+      </button>
+      <span class="mobile-bar-title">Account</span>
+    </header>
+
+    <button class="sidebar-scrim" type="button" aria-label="Close settings navigation"></button>
+
+    <aside class="sidebar" id="settings-sidebar" aria-label="Settings navigation">
+      <div class="sidebar-top">
+        <div class="back-wrap">
+          <button class="back-button" type="button">
+            <img class="icon small" src="assets/icon-00.svg" alt="">
+            <span>Go back</span>
+          </button>
+        </div>
+        <div class="search-wrap">
+          <label class="search-box">
+            <img class="icon small" src="assets/icon-01.svg" alt="">
+            <input id="settings-search" type="search" placeholder="Search settings" autocomplete="off" aria-label="Search settings">
+          </label>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-section" aria-label="Account">
+          <button class="nav-item is-active" type="button" data-search="your account account profile" data-view="account">
+            <img class="icon" src="assets/icon-02.svg" alt=""><span class="nav-label">Your account</span>
+          </button>
+          <button class="nav-item" type="button" data-search="devices apps">
+            <img class="icon" src="assets/icon-03.svg" alt=""><span class="nav-label">Devices &amp; apps</span>
+          </button>
+        </div>
+
+        <div class="nav-section" aria-label="Workspace">
+          <div class="nav-section-title">Workspace</div>
+          <button class="nav-item" type="button" data-search="workspace product team lovable">
+            <span class="workspace-avatar">P</span><span class="nav-label">product-team's Lovable</span>
+          </button>
+          <button class="nav-item" type="button" data-search="plans credit usage">
+            <img class="icon" src="assets/icon-04.svg" alt=""><span class="nav-label">Plans &amp; credit usage</span>
+          </button>
+          <button class="nav-item" type="button" data-search="slack">
+            <img class="icon" src="assets/icon-05.svg" alt=""><span class="nav-label">Slack</span>
+          </button>
+        </div>
+
+        <div class="nav-section" aria-label="Access">
+          <div class="nav-section-title">Access</div>
+          <button class="nav-item" type="button" data-search="people">
+            <img class="icon" src="assets/icon-06.svg" alt=""><span class="nav-label">People</span>
+          </button>
+          <button class="nav-item" type="button" data-search="groups business">
+            <img class="icon" src="assets/icon-07.svg" alt=""><span class="nav-label">Groups</span><span class="plan-badge">Business</span>
+          </button>
+          <button class="nav-item" type="button" data-search="identity business">
+            <img class="icon" src="assets/icon-09.svg" alt=""><span class="nav-label">Identity</span><span class="plan-badge">Business</span>
+          </button>
+        </div>
+
+        <div class="nav-section" aria-label="Customization">
+          <div class="nav-section-title">Customization</div>
+          <button class="nav-item" type="button" data-search="knowledge">
+            <img class="icon" src="assets/icon-10.svg" alt=""><span class="nav-label">Knowledge</span>
+          </button>
+          <button class="nav-item" type="button" data-search="skills">
+            <img class="icon" src="assets/icon-11.svg" alt=""><span class="nav-label">Skills</span>
+          </button>
+          <button class="nav-item" type="button" data-search="templates business">
+            <img class="icon" src="assets/icon-12.svg" alt=""><span class="nav-label">Templates</span><span class="plan-badge">Business</span>
+          </button>
+          <button class="nav-item" type="button" data-search="connectors">
+            <img class="icon" src="assets/icon-13.svg" alt=""><span class="nav-label">Connectors</span>
+          </button>
+        </div>
+
+        <div class="nav-section" aria-label="Build and deploy">
+          <div class="nav-section-title">Build &amp; deploy</div>
+          <button class="nav-item" type="button" data-search="git">
+            <img class="icon" src="assets/icon-13.svg" alt=""><span class="nav-label">Git</span>
+          </button>
+          <button class="nav-item" type="button" data-search="mcp server">
+            <img class="icon" src="assets/icon-14.svg" alt=""><span class="nav-label">MCP server</span>
+          </button>
+          <button class="nav-item" type="button" data-search="workspace domains" data-view="workspace-domains">
+            <img class="icon" src="assets/icon-15.svg" alt=""><span class="nav-label">Workspace domains</span>
+          </button>
+        </div>
+
+        <div class="nav-section" aria-label="Security">
+          <div class="nav-section-title">Security</div>
+          <button class="nav-item" type="button" data-search="privacy security">
+            <img class="icon" src="assets/icon-16.svg" alt=""><span class="nav-label">Privacy &amp; security</span>
+          </button>
+          <button class="nav-item" type="button" data-search="security center business">
+            <img class="icon" src="assets/icon-17.svg" alt=""><span class="nav-label">Security center</span><span class="plan-badge">Business</span>
+          </button>
+          <button class="nav-item" type="button" data-search="audit logs enterprise">
+            <img class="icon" src="assets/icon-18.svg" alt=""><span class="nav-label">Audit logs</span><span class="plan-badge">Enterprise</span>
+          </button>
+        </div>
+      </nav>
+    </aside>
+
+    <main class="main-panel" id="main-content">
+      <div class="page-column settings-view" data-settings-view="account">
+        <header class="page-header">
+          <h1>Account</h1>
+          <p class="page-subtitle">Personalize how others see and interact with you on Lovable.</p>
+        </header>
+
+        <div class="content-stack">
+          <article class="showcase-card" aria-labelledby="showcase-title">
+            <div class="showcase-grid">
+              <div class="showcase-copy">
+                <div class="title-with-badge">
+                  <h2 class="card-title" id="showcase-title">Showcase skills</h2>
+                  <span class="beta-badge">Beta</span>
+                </div>
+                <p class="setting-description">Choose one skill to showcase on your LinkedIn profile. <a class="inline-link" href="#">Learn how to unlock skills</a></p>
+              </div>
+
+              <fieldset class="radio-list" aria-label="Skill to showcase" style="border:0;margin:0;padding-left:0;padding-right:0;padding-bottom:0;">
+                <label class="radio-option">
+                  <input type="radio" name="showcase-skill" checked>
+                  <span class="radio-mark"></span>
+                  <span class="radio-copy">Business Application <span class="label-tail">Development<span class="info-dot" aria-hidden="true"></span></span></span>
+                </label>
+                <label class="radio-option">
+                  <input type="radio" name="showcase-skill">
+                  <span class="radio-mark"></span>
+                  <span class="radio-copy">AI <span class="label-tail">Tools<span class="info-dot" aria-hidden="true"></span></span></span>
+                </label>
+                <label class="radio-option">
+                  <input type="radio" name="showcase-skill">
+                  <span class="radio-mark"></span>
+                  <span class="radio-copy">Data Visualization &amp; <span class="label-tail">Analytics<span class="info-dot" aria-hidden="true"></span></span></span>
+                </label>
+                <label class="radio-option">
+                  <input type="radio" name="showcase-skill">
+                  <span class="radio-mark"></span>
+                  <span class="radio-copy">Productivity Software <span class="label-tail">Development<span class="info-dot" aria-hidden="true"></span></span></span>
+                </label>
+                <label class="radio-option">
+                  <input type="radio" name="showcase-skill">
+                  <span class="radio-mark"></span>
+                  <span class="radio-copy">Marketplaces &amp; <span class="label-tail">Platforms<span class="info-dot" aria-hidden="true"></span></span></span>
+                </label>
+              </fieldset>
+            </div>
+
+            <div class="showcase-footer">
+              <button class="control-button" type="button">
+                <img class="icon small" src="assets/linkedin.svg" alt="">
+                <span>Add to LinkedIn</span>
+              </button>
+            </div>
+          </article>
+
+          <section class="section-block" aria-labelledby="profile-title">
+            <header class="section-heading">
+              <h2 id="profile-title">Profile</h2>
+              <p class="section-subtitle">Control how you appear on Lovable.</p>
+            </header>
+            <div class="settings-card">
+              <div class="setting-row short">
+                <div class="setting-copy">
+                  <div class="setting-label">Profile</div>
+                  <p class="setting-description">Change name, location, avatar, and banner on your profile.</p>
+                </div>
+                <div class="setting-action"><a class="action-link" href="#">Open profile <img class="icon small" src="assets/icon-20.svg" alt=""></a></div>
+              </div>
+              <div class="setting-row">
+                <div class="setting-copy">
+                  <div class="setting-label">Username</div>
+                  <p class="setting-description">Your public identifier and profile URL.</p>
+                </div>
+                <div class="setting-action value">OKb7buHVbaVeFTyhUtmigDpkC3i1&nbsp; <img class="icon small" src="assets/icon-21.svg" alt="Edit"></div>
+              </div>
+              <div class="setting-row">
+                <div class="setting-copy">
+                  <div class="setting-label">Email</div>
+                  <p class="setting-description">Your email address associated with your account.</p>
+                </div>
+                <div class="setting-action value">product-team@titan.email</div>
+              </div>
+              <div class="setting-row short">
+                <div class="setting-copy">
+                  <div class="setting-label">Profile visibility</div>
+                  <p class="setting-description">Control who can see your public profile.</p>
+                </div>
+                <div class="setting-action">
+                  <span class="select-wrap"><select class="select-control" aria-label="Profile visibility"><option>Public</option><option>Private</option></select></span>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="section-block" aria-labelledby="preferences-title">
+            <header class="section-heading">
+              <h2 id="preferences-title">Preferences</h2>
+              <p class="section-subtitle">Personalize how Lovable works for you.</p>
+            </header>
+            <div class="settings-card">
+              <div class="setting-row short">
+                <div class="setting-copy">
+                  <div class="setting-label">Language</div>
+                  <p class="setting-description">Choose the language Lovable uses for your account.</p>
+                </div>
+                <div class="setting-action"><span class="select-wrap"><select class="select-control" aria-label="Language"><option>English</option></select></span></div>
+              </div>
+              <div class="setting-row">
+                <div class="setting-copy">
+                  <div class="setting-label">Chat suggestions</div>
+                  <p class="setting-description">Show helpful suggestions in the chat interface to enhance your experience.</p>
+                </div>
+                <div class="setting-action switch-action"><button class="switch" type="button" role="switch" aria-label="Chat suggestions" aria-checked="true"></button></div>
+              </div>
+              <div class="setting-row">
+                <div class="setting-copy">
+                  <div class="setting-label">Long-running credit check-ins <span class="beta-badge">Beta</span></div>
+                  <p class="setting-description">Check in when a single message reaches your preset credit threshold to avoid unexpected costs during large tasks.</p>
+                </div>
+                <div class="setting-action switch-action"><button class="switch" type="button" role="switch" aria-label="Long-running credit check-ins" aria-checked="false"></button></div>
+              </div>
+              <div class="setting-row tall">
+                <div class="setting-copy">
+                  <div class="setting-label">Check-in level (credits) <span class="beta-badge">Beta</span></div>
+                  <p class="setting-description">Notification threshold, not a strict cap. The run might go slightly over.</p>
+                </div>
+                <div class="setting-action"><input class="number-control" type="number" value="20" min="1" aria-label="Check-in level in credits"></div>
+              </div>
+              <div class="setting-row">
+                <div class="setting-copy">
+                  <div class="setting-label">Generation complete sound</div>
+                  <p class="setting-description">Plays a satisfying sound notification when a generation is finished.</p>
+                </div>
+                <div class="setting-action">
+                  <span class="select-wrap"><select class="select-control sound-control" aria-label="Generation complete sound"><option>First generation</option><option>None</option></select></span>
+                </div>
+              </div>
+              <div class="setting-row short">
+                <div class="setting-copy">
+                  <div class="setting-label">Auto-accept invitations</div>
+                  <p class="setting-description">Automatically join workspaces and projects when invited instead of requiring manual acceptance.</p>
+                </div>
+                <div class="setting-action switch-action"><button class="switch" type="button" role="switch" aria-label="Auto-accept invitations" aria-checked="true"></button></div>
+              </div>
+            </div>
+          </section>
+
+          <section class="section-block" aria-labelledby="training-title">
+            <header class="section-heading">
+              <h2 id="training-title">AI model training</h2>
+              <p class="section-subtitle">Control how we use your data.</p>
+            </header>
+            <div class="settings-card">
+              <div class="setting-row model-row">
+                <div class="setting-copy">
+                  <div class="setting-label">Use my Lovable content for model training</div>
+                  <p class="setting-description">When enabled, content you provide or create with Lovable may be used to train and improve our models. This includes things like prompts, code, project files, configurations, and generated outputs. It does not include data submitted by people using your apps. <a class="inline-link" href="#">Learn more.</a></p>
+                </div>
+                <div class="setting-action switch-action"><button class="switch" type="button" role="switch" aria-label="Use content for model training" aria-checked="true"></button></div>
+              </div>
+            </div>
+          </section>
+
+          <section class="section-block" aria-labelledby="linked-title">
+            <header class="section-heading">
+              <h2 id="linked-title">Linked accounts</h2>
+              <p class="section-subtitle">Manage accounts linked for sign-in.</p>
+            </header>
+            <div class="settings-card">
+              <div class="setting-row short">
+                <div class="setting-copy account-row-copy">
+                  <span class="row-icon"><img class="icon" src="assets/icon-24.svg" alt=""></span>
+                  <span><span class="setting-label">Password <span class="primary-badge">Primary</span></span><span class="setting-description">product-team@titan.email</span></span>
+                </div>
+              </div>
+              <div class="setting-row short">
+                <div class="setting-copy account-row-copy">
+                  <span class="row-icon"><img class="icon" src="assets/icon-25.svg" alt=""></span>
+                  <span><span class="setting-label">Link company account</span><span class="setting-description">Use your organization's single sign-on.</span></span>
+                </div>
+                <div class="setting-action"><button class="control-button small" type="button">Link account</button></div>
+              </div>
+            </div>
+          </section>
+
+          <section class="section-block" aria-labelledby="security-title">
+            <header class="section-heading">
+              <h2 id="security-title">Security</h2>
+              <p class="section-subtitle">Protect access to your account.</p>
+            </header>
+            <div class="settings-card">
+              <div class="setting-row short">
+                <div class="setting-copy">
+                  <div class="setting-label">Two‑factor authentication</div>
+                  <p class="setting-description">Manage your 2FA methods.</p>
+                </div>
+                <div class="setting-action"><button class="control-button" type="button">Add another method</button></div>
+              </div>
+              <div class="setting-row short">
+                <div class="setting-copy account-row-copy">
+                  <span class="row-icon"><img class="icon" src="assets/icon-25.svg" alt=""></span>
+                  <span class="setting-label">Authenticator app</span>
+                </div>
+                <div class="setting-action"><button class="control-button small" type="button">Disable</button></div>
+              </div>
+            </div>
+          </section>
+
+          <section class="section-block" aria-labelledby="danger-title">
+            <header class="section-heading compact"><h2 id="danger-title">Danger zone</h2></header>
+            <div class="settings-card">
+              <div class="setting-row">
+                <div class="setting-copy">
+                  <div class="setting-label">Delete account</div>
+                  <p class="setting-description">Permanently delete your Lovable account. This cannot be undone.</p>
+                </div>
+                <div class="setting-action"><button class="control-button danger" type="button">Delete account</button></div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+
+      <div class="domains-page settings-view" data-settings-view="workspace-domains" hidden>
+        <header class="domains-header">
+          <div>
+            <div class="domains-title-row">
+              <h1>Workspace domains</h1>
+              <span class="domains-plan-mark" aria-label="Business feature"><img src="assets/workspace-plan.svg" alt=""></span>
+            </div>
+            <p class="page-subtitle">View and manage all domains purchased through Lovable for your workspace.</p>
+          </div>
+        </header>
+
+        <div class="domains-body">
+          <div class="domains-toolbar">
+            <label class="domains-search">
+              <img src="assets/workspace-search.svg" alt="">
+              <input type="search" placeholder="Search workspace domains..." aria-label="Search workspace domains">
+            </label>
+
+            <div class="domains-actions">
+              <button class="domain-button transfer" type="button">Transfer in</button>
+              <button class="domain-button buy" type="button">
+                <img src="assets/workspace-buy.svg" alt="">
+                <span>Buy a domain</span>
+              </button>
+            </div>
+          </div>
+
+          <section class="domains-empty-card" aria-label="Workspace domains empty state">
+            <img class="domains-empty-icon" src="assets/workspace-empty.svg" alt="">
+            <div class="domains-empty-copy">
+              <p>No domains yet</p>
+              <p>Buy a domain here, or from a project's Domains settings.</p>
+            </div>
+            <button class="domain-button buy" type="button">
+              <img src="assets/workspace-buy.svg" alt="">
+              <span>Buy a domain</span>
+            </button>
+          </section>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    const sidebar = document.querySelector('.sidebar');
+    const scrim = document.querySelector('.sidebar-scrim');
+    const menuButton = document.querySelector('.mobile-menu-button');
+    const searchInput = document.querySelector('#settings-search');
+    const mobileTitle = document.querySelector('.mobile-bar-title');
+
+    function setView(view, updateHash = true) {
+      const target = document.querySelector(`[data-settings-view="${view}"]`);
+      if (!target) return;
+
+      document.querySelectorAll('[data-settings-view]').forEach(panel => {
+        panel.hidden = panel !== target;
+      });
+
+      document.querySelectorAll('.nav-item').forEach(item => {
+        item.classList.toggle('is-active', item.dataset.view === view);
+      });
+
+      mobileTitle.textContent = view === 'workspace-domains' ? 'Workspace domains' : 'Account';
+      document.querySelector('.main-panel').scrollTop = 0;
+      if (updateHash) history.replaceState(null, '', view === 'workspace-domains' ? '#workspace-domains' : '#account');
+      setSidebar(false);
+    }
+
+    function setSidebar(open) {
+      sidebar.classList.toggle('is-open', open);
+      scrim.classList.toggle('is-open', open);
+      menuButton.setAttribute('aria-expanded', String(open));
+    }
+
+    menuButton.addEventListener('click', () => setSidebar(!sidebar.classList.contains('is-open')));
+    scrim.addEventListener('click', () => setSidebar(false));
+    document.querySelectorAll('.nav-item[data-view]').forEach(item => {
+      item.addEventListener('click', () => setView(item.dataset.view));
+    });
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Escape') setSidebar(false);
+    });
+
+    document.querySelectorAll('.switch').forEach(toggle => {
+      toggle.addEventListener('click', () => {
+        toggle.setAttribute('aria-checked', String(toggle.getAttribute('aria-checked') !== 'true'));
+      });
+    });
+
+    searchInput.addEventListener('input', () => {
+      const query = searchInput.value.trim().toLowerCase();
+      document.querySelectorAll('.nav-item').forEach(item => {
+        const haystack = (item.dataset.search || item.textContent).toLowerCase();
+        item.classList.toggle('is-filtered', Boolean(query) && !haystack.includes(query));
+      });
+    });
+
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 900) setSidebar(false);
+    });
+
+    window.addEventListener('hashchange', () => {
+      setView(location.hash === '#workspace-domains' ? 'workspace-domains' : 'account', false);
+    });
+
+    setView(location.hash === '#workspace-domains' ? 'workspace-domains' : 'account', false);
+  </script>
+</body>
+</html>

@@ -5,28 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Inbox (367) - Mail</title>
-  <!-- Persona loader: ?u=<id> loads personas/<id>.js ONLY; no param = this page's built-in data. -->
-  <script>
-    (function () {
-      var raw = new URLSearchParams(location.search).get('u');
-      var u = (raw && /^[a-z0-9_-]{1,32}$/.test(raw)) ? raw.toLowerCase() : null;
-      window.PERSONA_ID = u || 'default';
-      window.withPersona = function (href) {
-        if (!u || /[?&]u=/.test(href)) return href;
-        var hash = '', hi = href.indexOf('#');
-        if (hi !== -1) { hash = href.slice(hi); href = href.slice(0, hi); }
-        return href + (href.indexOf('?') === -1 ? '?' : '&') + 'u=' + u + hash;
-      };
-      if (u) {
-        document.documentElement.classList.add('persona-cloak');
-        document.write('<' + 'script src="personas/' + u + '.js?v=' + Date.now() + '"><' + '/script>');
-      }
-    })();
-  </script>
-  <style>
-    .persona-cloak .app-window { visibility: hidden; }
-  </style>
-  <link rel="stylesheet" href="crm_app/crm_app.css">
+  <link rel="stylesheet" href="crm/crm_sidebar.css">
   <style>
     :root {
       --click-scale: 0.97;
@@ -1388,6 +1367,28 @@
       position: relative;
     }
 
+    .msg-avatar {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 600;
+      color: #fff;
+      line-height: 1;
+    }
+
+    .msg-avatar.exp-avatar {
+      width: 36px;
+      height: 36px;
+      font-size: 14px;
+    }
+
+    .av-7 { background: #9B51E0; }
+
     .thread-sender {
       font-size: 15px;
       font-weight: 600;
@@ -1571,6 +1572,16 @@
       justify-content: space-between;
       align-items: flex-start;
       padding: 20px 24px 12px;
+    }
+
+    .exp-left {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .exp-avatar {
+      margin-top: 1px;
     }
 
     .exp-sender {
@@ -1851,9 +1862,10 @@
       height: 37.3px;
     }
 
-    /* SVGs with 30x30 or 30x29 viewBox where shape is 30px (Drive, Tasks, CRM) - Targets 28px background shape */
+    /* SVGs with 30x30 or 30x29 viewBox where shape is 30px (Drive, Tasks, Admin, CRM) - Targets 28px background shape */
     .app-icon-img[src*="drive.svg"],
     .app-icon-img[src*="tasks.svg"],
+    .app-icon-img[src*="admin.svg"],
     .app-icon-img[src*="crm.svg"] {
       width: 28px;
       height: 28px;
@@ -2600,281 +2612,6 @@
     .content-area.reading-pane-hidden .panel-resize-handle {
       display: none !important;
     }
-
-    /* ── CRM: Stage arrow-box (shared component, Streak-style) ── */
-    .stage-arrow-box {
-      display: inline-flex;
-      align-items: center;
-      color: #fff;
-      font-weight: 700;
-      white-space: nowrap;
-      clip-path: polygon(0 0, 85% 0, 100% 50%, 85% 100%, 0% 100%);
-    }
-    .stage-arrow-box.sz-xs { font-size: 10.5px; padding: 2px 12px 2px 7px; }
-    .stage-arrow-box.sz-sm { font-size: 12px; padding: 4px 16px 4px 9px; }
-    .stage-arrow-box.sz-md { font-size: 12.5px; padding: 6px 18px 6px 12px; }
-
-    /* ── CRM: Pipeline label chip (subtle, native-label style) ── */
-    .pipeline-chip {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      margin-top: 6px;
-      font-size: 11.5px;
-      font-weight: 600;
-      cursor: pointer;
-      width: fit-content;
-    }
-    .pipeline-chip .pchip-icon { width: 13px; height: 13px; flex-shrink: 0; }
-    .pipeline-chip.pc-added .pchip-label { color: #888; font-weight: 500; margin-right: 1px; }
-    .pipeline-chip.pc-manual {
-      color: #9aa1a9; border: 1px dashed #d6d9dd; border-radius: 4px; padding: 2px 8px;
-    }
-    .pipeline-chip.pc-manual:hover { color: #6b7280; border-color: #b9bec5; }
-    .pipeline-chip.pc-suggested {
-      color: #2170f4; border: 1px dashed #a9c8f5; border-radius: 4px; padding: 2px 8px; background: #f6faff;
-    }
-    .pipeline-chip.pc-suggested:hover { background: #eaf1ff; }
-    .pc-ai-spark { width: 10px; height: 10px; flex-shrink: 0; }
-
-    /* ── CRM: Pipeline label pill (regular-label style: color card + icon + name) ── */
-    .pipeline-label {
-      display: inline-flex; align-items: center; gap: 5px;
-      margin-top: 6px; padding: 2px 8px; border-radius: 4px;
-      background: #e7f0fe; color: #1f6fe5;
-      font-size: 11.5px; font-weight: 400; line-height: 1.55;
-      cursor: pointer; width: fit-content; white-space: nowrap;
-    }
-    .pipeline-label:hover { background: #dbe8fd; }
-    .pipeline-label .pl-icon { width: 12px; height: 12px; flex-shrink: 0; }
-
-    /* Preview + inline label share one line; preview truncates, label never wraps */
-    .tile-preview-row { display: flex; align-items: center; gap: 8px; min-width: 0; }
-    .tile-preview-row .tile-preview { flex: 1 1 auto; min-width: 0; }
-    .tile-preview-row .pipeline-label { margin-top: 0; flex-shrink: 0; }
-    /* In wide (list) view the wrapper takes the flex role the preview used to have */
-    .middle-panel.wide-view .tile-preview-row { flex: 1; min-width: 0; }
-
-    /* ── CRM: Pipeline dropdown (anchored, label-menu style) ── */
-    .pipeline-dropdown {
-      position: fixed; z-index: 600; display: none;
-      width: 240px; background: #fff; border: 1px solid #e6e6e6;
-      border-radius: 10px; box-shadow: 0 8px 28px rgba(0,0,0,0.16);
-      padding: 8px 0; font-size: 13px;
-    }
-    .pipeline-dropdown.open { display: block; }
-    .pl-dd-title { padding: 6px 14px 4px; font-size: 11px; font-weight: 600; letter-spacing: .02em; color: #8a9099; }
-    .pl-dd-option { display: flex; align-items: center; gap: 10px; padding: 7px 14px; cursor: pointer; }
-    .pl-dd-option:hover { background: #f4f7fb; }
-    .pl-dd-ic { width: 15px; height: 15px; flex-shrink: 0; display: flex; align-items: center; }
-    .pl-dd-name { flex: 1; color: #2b2f36; }
-    /* Radio (single-select): an email belongs to at most one pipeline */
-    .pl-dd-radio {
-      width: 16px; height: 16px; border: 1.5px solid #cdd2d8; border-radius: 50%; flex-shrink: 0;
-      display: flex; align-items: center; justify-content: center;
-    }
-    .pl-dd-option.checked .pl-dd-radio { border-color: #2170f4; }
-    .pl-dd-option.checked .pl-dd-radio::after {
-      content: ''; width: 8px; height: 8px; border-radius: 50%; background: #2170f4;
-    }
-    .pl-dd-sep { height: 1px; background: #eee; margin: 6px 0; }
-    .pl-dd-action { display: flex; align-items: center; gap: 10px; padding: 8px 14px; cursor: pointer; color: #2b2f36; }
-    .pl-dd-action:hover { background: #f4f7fb; }
-    .pl-dd-action .pl-dd-ic { color: #667085; }
-    .pl-dd-ext { color: #9aa1a9; display: flex; align-items: center; flex-shrink: 0; }
-    .pl-dd-ext svg { width: 13px; height: 13px; }
-
-    .tile-pipeline-badge-mini { margin-top: 3px; }
-
-    .thread-empty-state {
-      padding: 40px 24px;
-      color: #9ca3af;
-      font-size: 13.5px;
-      text-align: center;
-    }
-
-    /* ── CRM: Pipeline picker modal ── */
-    .pipeline-picker-overlay {
-      position: fixed; inset: 0; background: rgba(0,0,0,0.25);
-      display: none; align-items: center; justify-content: center; z-index: 500;
-    }
-    .pipeline-picker-overlay.open { display: flex; }
-    .pipeline-picker-modal {
-      background: #fff; border-radius: 10px; width: 380px;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.2); overflow: hidden;
-    }
-    .pipeline-picker-header {
-      padding: 16px 20px; border-bottom: 1px solid #eee;
-      font-size: 15px; font-weight: 600; color: #222;
-      display: flex; align-items: center; justify-content: space-between;
-    }
-    .pipeline-picker-header .close-x { cursor: pointer; color: #999; font-size: 18px; line-height: 1; }
-    .pipeline-picker-body { padding: 10px; }
-    .pipeline-picker-option {
-      display: flex; align-items: center; gap: 12px;
-      padding: 12px; border-radius: 8px; cursor: pointer;
-    }
-    .pipeline-picker-option:hover { background: #eef4ff; }
-    .pipeline-picker-option-icon {
-      width: 32px; height: 32px; border-radius: 8px; background: #eaf1ff;
-      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
-    }
-    .pipeline-picker-option-text .title { font-size: 13.5px; font-weight: 600; color: #222; }
-    .pipeline-picker-option-text .subtitle { font-size: 12px; color: #888; margin-top: 1px; }
-    .pipeline-picker-confirm {
-      margin: 8px 12px 14px; padding: 10px; text-align: center; font-size: 12.5px;
-      color: #15803d; background: #f0fdf4; border-radius: 6px; display: none;
-    }
-    .pipeline-picker-confirm.show { display: block; }
-
-    /* ── CRM: Right panel (inline column, like Streak in Gmail — not an overlay) ── */
-    .crm-panel {
-      width: 0; overflow: hidden; flex-shrink: 0;
-      background: #fff; border-left: 1px solid #dedede;
-      display: flex; flex-direction: column;
-      transition: width 0.2s ease;
-    }
-    .crm-panel.open { width: 360px; }
-    .crm-panel-header {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 16px 20px; border-bottom: 1px solid #eee; flex-shrink: 0;
-    }
-    .crm-panel-header .title { font-size: 15px; font-weight: 700; color: #222; }
-    .crm-panel-header .close-x { cursor: pointer; color: #999; font-size: 20px; }
-    .crm-panel-body { overflow-y: auto; flex: 1; padding: 0 20px 24px; }
-    .crm-section { padding: 16px 0; border-bottom: 1px solid #f0f0f0; }
-    .crm-section:last-child { border-bottom: none; }
-    .crm-section-title {
-      font-size: 12px; font-weight: 700; color: #888; text-transform: uppercase;
-      letter-spacing: 0.04em; margin-bottom: 10px;
-    }
-    .crm-contact-row { display: flex; align-items: center; gap: 12px; }
-    .crm-contact-avatar {
-      width: 32px; height: 32px; border-radius: 50%; background: #8a9099; color: #fff;
-      display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 13px; flex-shrink: 0;
-    }
-    .crm-contact-name { font-size: 14.5px; font-weight: 600; color: #222; }
-    .crm-contact-meta { font-size: 12.5px; color: #888; margin-top: 2px; }
-    .crm-stage-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
-    .crm-deal-name { font-size: 14px; font-weight: 600; color: #222; }
-    .crm-deal-value { font-size: 13px; color: #15803d; font-weight: 600; }
-    .crm-stage-progress { display: flex; gap: 4px; margin-bottom: 8px; }
-    .crm-stage-step { flex: 1; height: 5px; border-radius: 3px; background: #eee; }
-    .crm-stage-step.done { background: #2170f4; }
-    .crm-stage-select {
-      width: 100%; padding: 7px 10px; border: 1px solid #ddd; border-radius: 6px;
-      font-size: 13px; color: #333; background: #fafafa; cursor: pointer;
-    }
-    .crm-activity-row { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid #f5f5f5; cursor: pointer; }
-    .crm-activity-row:last-child { border-bottom: none; }
-    .crm-activity-dir { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
-    .crm-activity-dir.sent { background: #93c5fd; }
-    .crm-activity-dir.received { background: #86efac; }
-    .crm-activity-text { flex: 1; font-size: 13px; color: #333; }
-    .crm-activity-date { font-size: 11.5px; color: #999; }
-    .crm-task-row { display: flex; align-items: center; gap: 10px; padding: 6px 0; font-size: 13px; }
-    .crm-task-row input[type="checkbox"] { width: 15px; height: 15px; accent-color: #2170f4; }
-    .crm-task-due { margin-left: auto; font-size: 11.5px; color: #999; }
-    .crm-task-due.overdue { color: #dc2626; font-weight: 600; }
-    .crm-add-task { font-size: 12.5px; color: #2170f4; font-weight: 600; cursor: pointer; margin-top: 6px; }
-    .crm-note {
-      background: #fafafa; border-radius: 6px; padding: 10px 12px; font-size: 12.5px; color: #444; margin-bottom: 8px;
-    }
-    .crm-note .meta { font-size: 11px; color: #999; margin-bottom: 4px; }
-    .crm-ai-summary-btn {
-      background: #eaf1ff; color: #1257c9; border: none; border-radius: 6px;
-      padding: 7px 14px; font-size: 12.5px; font-weight: 600; cursor: pointer;
-    }
-    .crm-ai-summary-text {
-      font-size: 13px; color: #333; line-height: 1.5; margin-top: 10px; display: none;
-    }
-    .crm-ai-summary-text.show { display: block; }
-    .crm-field-row { display: flex; justify-content: space-between; padding: 6px 0; font-size: 12.5px; }
-    .crm-field-label { color: #888; }
-    .crm-field-value { color: #222; font-weight: 500; }
-
-    /* ── CRM panel: record title in header (name, not "CRM") + open-in-app icon ── */
-    .crm-panel-header { align-items: center; }
-    .crm-record-title {
-      font-size: 15.5px; font-weight: 700; color: #1a1a1a; line-height: 1.3;
-      display: inline-flex; align-items: center; gap: 7px; padding-right: 8px; min-width: 0;
-    }
-    .crm-record-title #crm-record-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-    .crm-record-ext { color: #9aa1a9; cursor: pointer; display: inline-flex; flex-shrink: 0; }
-    .crm-record-ext:hover { color: #2170f4; }
-    .crm-record-ext svg { width: 14px; height: 14px; }
-
-    /* ── CRM panel: pipeline · stage label with change-stage dropdown ── */
-    .crm-ps-wrap { position: relative; }
-    .crm-pipeline-stage {
-      display: flex; align-items: center; gap: 5px; cursor: pointer;
-      padding: 8px 12px 8px 10px; border-radius: 7px; font-size: 13.5px; font-weight: 500;
-      background: #2170f4; color: #fff; width: 100%;
-    }
-    .crm-pipeline-stage:hover { filter: brightness(1.06); }
-    .crm-pipeline-stage .pl-icon { width: 14px; height: 14px; flex-shrink: 0; }
-    .crm-pipeline-stage #crm-ps-text { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-    .crm-pipeline-stage .caret { font-size: 16px; opacity: .95; margin-left: 5px; flex-shrink: 0; display: inline-block; transform: scaleX(1.4); transform-origin: center; }
-    .crm-ps-wrap:has(.crm-stage-menu.open) .crm-pipeline-stage {
-      border-bottom-left-radius: 0; border-bottom-right-radius: 0;
-    }
-    .crm-stage-menu {
-      position: absolute; top: 100%; left: 0; z-index: 40; display: none;
-      background: #fff; border: 1px solid #e6e6e6; border-top: none;
-      border-radius: 0 0 7px 7px;
-      box-shadow: 0 10px 24px rgba(0,0,0,0.14); padding: 6px 0; width: 100%; box-sizing: border-box;
-    }
-    .crm-stage-menu.open { display: block; }
-    .crm-stage-item { display: flex; align-items: center; gap: 9px; padding: 7px 14px; font-size: 13px; color: #2b2f36; cursor: pointer; }
-    .crm-stage-item:hover { background: #f4f7fb; }
-    .crm-stage-item .dot { width: 8px; height: 8px; border-radius: 50%; background: #cbd5e1; flex-shrink: 0; }
-    .crm-stage-item.active { font-weight: 600; }
-    .crm-stage-item.active .dot { background: #2170f4; }
-
-    /* ── CRM panel: company (bigger) + contact email ── */
-    .crm-contact-email { font-size: 12.5px; color: #888; margin-top: 2px; }
-    .crm-company { font-size: 15px; font-weight: 600; color: #1a1a1a; margin-top: 14px; }
-
-    /* ── CRM panel: recent-activity type icons ── */
-    .crm-act-ic {
-      width: 26px; height: 26px; border-radius: 50%; flex-shrink: 0;
-      display: flex; align-items: center; justify-content: center;
-    }
-    .crm-act-ic svg { width: 14px; height: 14px; }
-    /* Neutral (non-colored) activity icons across Upcoming + Recent */
-    .crm-act-ic,
-    .crm-act-ic.email, .crm-act-ic.meeting, .crm-act-ic.phone,
-    .crm-act-ic.task, .crm-act-ic.followup { background: #f2f4f6; color: #667085; }
-    .crm-activity-date.overdue { color: #dc2626; font-weight: 600; }
-
-    /* Task activities: a real checkbox you can mark done */
-    .crm-act-check {
-      width: 26px; height: 26px; flex-shrink: 0; cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
-    }
-    .crm-act-check .box {
-      width: 17px; height: 17px; box-sizing: border-box;
-      border: 1.6px solid #c4c9d0; border-radius: 5px;
-      display: flex; align-items: center; justify-content: center;
-    }
-    .crm-act-check .box svg { width: 11px; height: 11px; display: none; }
-    .crm-act-check.done .box { background: #2170f4; border-color: #2170f4; }
-    .crm-act-check.done .box svg { display: block; }
-    .crm-act-check.done ~ .crm-activity-text { text-decoration: line-through; color: #9aa1a9; }
-
-    /* ── CRM panel: "+ Add activity" menu (mirrors the CRM card action menu) ── */
-    .crm-add-activity { font-size: 12.5px; color: #2170f4; font-weight: 600; cursor: pointer; margin-top: 12px; display: inline-block; }
-    .crm-activity-menu {
-      position: fixed; display: none; background: #fff; border-radius: 8px;
-      box-shadow: 0 6px 24px rgba(0,0,0,0.16); width: 214px; overflow: hidden; z-index: 600;
-    }
-    .crm-activity-menu.open { display: block; }
-    .cam2-bar { font-size: 12.5px; font-weight: 700; padding: 11px 12px; background: #eef0f2; color: #333; }
-    .cam2-items { padding: 6px; }
-    .cam2-item { display: flex; align-items: center; gap: 9px; font-size: 13px; color: #333; padding: 8px 10px; border-radius: 6px; cursor: pointer; }
-    .cam2-item:hover { background: #f4f6f8; }
-    .cam2-item .ic { width: 15px; height: 15px; flex-shrink: 0; display: flex; color: #667085; }
-    .cam2-item .ic svg { width: 15px; height: 15px; }
   </style>
 </head>
 
@@ -3114,7 +2851,14 @@
         </div>
         <div class="toolbar-right">
           <div class="toolbar-icons">
-            <div class="toolbar-icon titan-action-btn" title="View details">
+            <!-- CRM panel toggle -->
+            <div class="toolbar-icon titan-action-btn action-btn-crm" id="crmToggleBtn" title="CRM">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 12C14.21 12 16 10.21 16 8C16 5.79 14.21 4 12 4C9.79 4 8 5.79 8 8C8 10.21 9.79 12 12 12ZM12 14C9.33 14 4 15.34 4 18V19C4 19.55 4.45 20 5 20H19C19.55 20 20 19.55 20 19V18C20 15.34 14.67 14 12 14Z" fill="#e53e3e"/>
+                <circle cx="18" cy="6" r="3.5" fill="#e53e3e" stroke="#ffffff" stroke-width="1.5"/>
+              </svg>
+            </div>
+            <div class="toolbar-icon titan-action-btn" title="Read receipts">
               <img src="assets/ec5d8d32-261b-410c-b07c-310cd6bb915e.svg" alt="">
             </div>
             <div class="toolbar-icon titan-action-btn" title="Settings" onclick="toggleSettingsModal()">
@@ -3171,44 +2915,7 @@
           <div class="email-list">
             <div class="refresh-overlay"></div>
 
-            <!-- New: unlinked sales-inquiry demo -->
-            <div class="email-tile" onclick="selectEmailTile(this, 'unlinked')">
-              <div class="email-tile-inner">
-                <div class="tile-icons">
-                  <div class="tile-chk">
-                    <div class="chk"><img src="assets/392bf29c-08b1-44e8-b95b-b99905e722e6.svg" alt=""></div>
-                  </div>
-                  <div class="tile-dot"></div>
-                  <div class="tile-star"><img src="assets/1e1696aa-5b8d-4409-97fd-4ce5c85c5ae5.svg" alt=""></div>
-                </div>
-                <div class="tile-content">
-                  <div class="tile-top" style="display:flex; justify-content:space-between;">
-                    <div class="tile-sender bold">Emma Clarke</div>
-                    <div class="tile-time">10:12 am</div>
-                  </div>
-                  <div class="tile-subject">Question about Enterprise plan pricing</div>
-                  <div class="tile-preview">We're evaluating Titan Mail for our team of 40 and I had a question...</div>
-                  <div class="tile-hover-actions">
-                    <div class="tile-action-pill" title="Add to pipeline" onclick="openPipelinePicker(event)">
-                      <div class="icon18 icon18-plus">
-                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M2 3.2H9.6L12.4 7L9.6 10.8H2L4.4 7L2 3.2Z" fill="#9aa1a9"/>
-                        </svg>
-                      </div>
-                    </div>
-                    <div class="tile-action-pill">
-                      <div class="icon18"><img src="assets/7c1d5199-2bce-428f-9bff-eb73b6954e12.svg" alt=""></div>
-                    </div>
-                    <div class="tile-action-pill">
-                      <div class="icon18"><img src="assets/65a9156f-d37a-414e-bef2-e5b477cb6436.svg" alt=""></div>
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-
-            <div class="email-tile" onclick="selectEmailTile(this, 'other')">
+            <div class="email-tile">
               <div class="email-tile-inner">
                 <div class="tile-icons">
                   <div class="tile-chk">
@@ -3218,20 +2925,13 @@
                 </div>
                 <div class="tile-content">
                   <div class="tile-top" style="display:flex; justify-content:space-between;">
-                    <div class="tile-sender">Jason Miller</div>
+                    <div class="tile-sender">Sajal Kumar</div>
                     <div class="tile-time">10:45 am</div>
                   </div>
                   <div class="tile-subject">Feedback on grammar and spell check</div>
                   <div class="tile-preview">Looking for a change? How does working on Meatvedcdv...</div>
 
                   <div class="tile-hover-actions">
-                    <div class="tile-action-pill" title="Add to pipeline" onclick="openPipelinePicker(event)">
-                      <div class="icon18 icon18-plus">
-                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M2 3.2H9.6L12.4 7L9.6 10.8H2L4.4 7L2 3.2Z" fill="#9aa1a9"/>
-                        </svg>
-                      </div>
-                    </div>
                     <div class="tile-action-pill">
                       <div class="icon18"><img src="assets/7c1d5199-2bce-428f-9bff-eb73b6954e12.svg" alt=""></div>
                     </div>
@@ -3244,8 +2944,8 @@
               </div>
             </div>
 
-            <!-- Tile 2: selected, unread, linked to Neo partnerships -->
-            <div class="email-tile selected" data-record="linked" onclick="selectEmailTile(this, 'linked')">
+            <!-- Tile 2: selected, unread -->
+            <div class="email-tile selected">
               <div class="email-tile-inner">
                 <div class="tile-icons">
                   <div class="tile-chk">
@@ -3256,25 +2956,12 @@
                 </div>
                 <div class="tile-content">
                   <div class="tile-top" style="display:flex; justify-content:space-between;">
-                    <div class="tile-sender bold">Ryan Walker</div>
+                    <div class="tile-sender bold">Ninad Raval</div>
                     <div class="tile-time">11:20 am</div>
                   </div>
                   <div class="tile-subject">Project roadmap for Dashboard version</div>
-                  <div class="tile-preview-row" data-pipeline="sales" data-stage="Proposal Sent">
-                    <span class="tile-preview">Looking for a change? How does working on Meatvedcdv...</span>
-                    <span class="pipeline-label" onclick="event.stopPropagation(); openCrmForLinked();" title="Neo partnerships — open record">
-                      <svg class="pl-icon" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 3.2H9.6L12.4 7L9.6 10.8H2L4.4 7L2 3.2Z" fill="currentColor"/></svg>
-                      <span>Neo partnerships</span>
-                    </span>
-                  </div>
+                  <div class="tile-preview">Looking for a change? How does working on Meatvedcdv...</div>
                   <div class="tile-hover-actions">
-                    <div class="tile-action-pill" title="Add to pipeline" onclick="openPipelinePicker(event)">
-                      <div class="icon18 icon18-plus">
-                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M2 3.2H9.6L12.4 7L9.6 10.8H2L4.4 7L2 3.2Z" fill="#9aa1a9"/>
-                        </svg>
-                      </div>
-                    </div>
                     <div class="tile-action-pill">
                       <div class="icon18"><img src="assets/7c1d5199-2bce-428f-9bff-eb73b6954e12.svg" alt=""></div>
                     </div>
@@ -3288,7 +2975,7 @@
             </div>
 
             <!-- Tiles 3–7 -->
-            <div class="email-tile" onclick="selectEmailTile(this, 'other')">
+            <div class="email-tile">
               <div class="email-tile-inner">
                 <div class="tile-icons">
                   <div class="tile-chk">
@@ -3304,13 +2991,6 @@
                   <div class="tile-subject">Flock Terms and Condition</div>
                   <div class="tile-preview">We need to get on a meeting for the discuss our T&amp;C...</div>
                   <div class="tile-hover-actions">
-                    <div class="tile-action-pill" title="Add to pipeline" onclick="openPipelinePicker(event)">
-                      <div class="icon18 icon18-plus">
-                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M2 3.2H9.6L12.4 7L9.6 10.8H2L4.4 7L2 3.2Z" fill="#9aa1a9"/>
-                        </svg>
-                      </div>
-                    </div>
                     <div class="tile-action-pill">
                       <div class="icon18"><img src="assets/7c1d5199-2bce-428f-9bff-eb73b6954e12.svg" alt=""></div>
                     </div>
@@ -3323,7 +3003,7 @@
               </div>
             </div>
 
-            <div class="email-tile" onclick="selectEmailTile(this, 'other')">
+            <div class="email-tile">
               <div class="email-tile-inner">
                 <div class="tile-icons">
                   <div class="tile-chk">
@@ -3333,19 +3013,12 @@
                 </div>
                 <div class="tile-content">
                   <div style="display:flex; justify-content:space-between;">
-                    <div class="tile-sender">Chloe</div>
+                    <div class="tile-sender">Shreya</div>
                     <div class="tile-time">1:30 pm</div>
                   </div>
                   <div class="tile-subject">Feedback on snooze feature</div>
                   <div class="tile-preview">I like the design that you have made. Probably we ca...</div>
                   <div class="tile-hover-actions">
-                    <div class="tile-action-pill" title="Add to pipeline" onclick="openPipelinePicker(event)">
-                      <div class="icon18 icon18-plus">
-                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M2 3.2H9.6L12.4 7L9.6 10.8H2L4.4 7L2 3.2Z" fill="#9aa1a9"/>
-                        </svg>
-                      </div>
-                    </div>
                     <div class="tile-action-pill">
                       <div class="icon18"><img src="assets/7c1d5199-2bce-428f-9bff-eb73b6954e12.svg" alt=""></div>
                     </div>
@@ -3358,7 +3031,7 @@
               </div>
             </div>
 
-            <div class="email-tile" onclick="selectEmailTile(this, 'other')">
+            <div class="email-tile">
               <div class="email-tile-inner">
                 <div class="tile-icons">
                   <div class="tile-chk">
@@ -3368,19 +3041,12 @@
                 </div>
                 <div class="tile-content">
                   <div style="display:flex; justify-content:space-between;">
-                    <div class="tile-sender">Jason Miller</div>
+                    <div class="tile-sender">Sajal Kumar</div>
                     <div class="tile-time">2:45 pm</div>
                   </div>
                   <div class="tile-subject">Feedback on link and file tracking feature</div>
                   <div class="tile-preview">Hi, Ella can you please review these mocks.</div>
                   <div class="tile-hover-actions">
-                    <div class="tile-action-pill" title="Add to pipeline" onclick="openPipelinePicker(event)">
-                      <div class="icon18 icon18-plus">
-                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M2 3.2H9.6L12.4 7L9.6 10.8H2L4.4 7L2 3.2Z" fill="#9aa1a9"/>
-                        </svg>
-                      </div>
-                    </div>
                     <div class="tile-action-pill">
                       <div class="icon18"><img src="assets/7c1d5199-2bce-428f-9bff-eb73b6954e12.svg" alt=""></div>
                     </div>
@@ -3393,7 +3059,7 @@
               </div>
             </div>
 
-            <div class="email-tile" onclick="selectEmailTile(this, 'other')">
+            <div class="email-tile">
               <div class="email-tile-inner">
                 <div class="tile-icons">
                   <div class="tile-chk">
@@ -3403,19 +3069,12 @@
                 </div>
                 <div class="tile-content">
                   <div style="display:flex; justify-content:space-between;">
-                    <div class="tile-sender">Ryan Walker</div>
+                    <div class="tile-sender">Ninad Raval</div>
                     <div class="tile-time">3:10 pm</div>
                   </div>
                   <div class="tile-subject">Lets schedule our 1:1 sometime</div>
                   <div class="tile-preview">Hi Ella, we should schedule a 1:1 session next week...</div>
                   <div class="tile-hover-actions">
-                    <div class="tile-action-pill" title="Add to pipeline" onclick="openPipelinePicker(event)">
-                      <div class="icon18 icon18-plus">
-                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M2 3.2H9.6L12.4 7L9.6 10.8H2L4.4 7L2 3.2Z" fill="#9aa1a9"/>
-                        </svg>
-                      </div>
-                    </div>
                     <div class="tile-action-pill">
                       <div class="icon18"><img src="assets/7c1d5199-2bce-428f-9bff-eb73b6954e12.svg" alt=""></div>
                     </div>
@@ -3428,7 +3087,7 @@
               </div>
             </div>
 
-            <div class="email-tile" onclick="selectEmailTile(this, 'other')">
+            <div class="email-tile">
               <div class="email-tile-inner">
                 <div class="tile-icons">
                   <div class="tile-chk">
@@ -3438,19 +3097,12 @@
                 </div>
                 <div class="tile-content">
                   <div style="display:flex; justify-content:space-between;">
-                    <div class="tile-sender">Ryan Walker</div>
+                    <div class="tile-sender">Ninad Raval</div>
                     <div class="tile-time">Yesterday</div>
                   </div>
                   <div class="tile-subject">Lets schedule our 1:1 sometime</div>
                   <div class="tile-preview">Hi Ella, we should schedule a 1:1 session next week...</div>
                   <div class="tile-hover-actions">
-                    <div class="tile-action-pill" title="Add to pipeline" onclick="openPipelinePicker(event)">
-                      <div class="icon18 icon18-plus">
-                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M2 3.2H9.6L12.4 7L9.6 10.8H2L4.4 7L2 3.2Z" fill="#9aa1a9"/>
-                        </svg>
-                      </div>
-                    </div>
                     <div class="tile-action-pill">
                       <div class="icon18"><img src="assets/7c1d5199-2bce-428f-9bff-eb73b6954e12.svg" alt=""></div>
                     </div>
@@ -3505,11 +3157,6 @@
                 Spam
               </div>
               <div class="action-sep"></div>
-              <div class="action-opt" onclick="openPipelinePicker(event)" title="Add to pipeline">
-                <div class="action-icon" style="width:20px;"><svg width="18" height="18" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 3.2H9.6L12.4 7L9.6 10.8H2L4.4 7L2 3.2Z" fill="#888888"/></svg></div>
-                Pipeline
-              </div>
-              <div class="action-sep"></div>
               <div class="action-more">
                 <div class="action-more-icon"><img src="assets/495649bc-11a9-41e0-84b4-81a6600de9f6.svg" alt=""></div>
               </div>
@@ -3518,16 +3165,8 @@
 
           <!-- Thread -->
           <div class="thread-content">
-
-            <!-- ============ LINKED THREAD (Sales Pipeline demo) ============ -->
-            <div id="thread-view-linked" class="thread-view">
-
-            <div class="thread-sticky-header" data-pipeline="sales" data-stage="Proposal Sent">
+            <div class="thread-sticky-header">
               <div class="thread-title">Project roadmap for Dashboard version 2</div>
-              <div class="pipeline-label" onclick="openCrmForLinked()" title="Neo partnerships — open record">
-                <svg class="pl-icon" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 3.2H9.6L12.4 7L9.6 10.8H2L4.4 7L2 3.2Z" fill="currentColor"/></svg>
-                <span>Neo partnerships: Proposal Sent</span>
-              </div>
             </div>
 
             <!-- Collapsed tile 1 -->
@@ -3589,9 +3228,12 @@
             <!-- Expanded tile -->
             <div class="expanded-tile">
               <div class="expanded-header">
-                <div>
-                  <div class="exp-sender">Ryan Walker</div>
-                  <div class="exp-to">To: me, Jason, Owen</div>
+                <div class="exp-left">
+                  <div class="msg-avatar exp-avatar av-7">N</div>
+                  <div>
+                    <div class="exp-sender">Ninad Raval</div>
+                    <div class="exp-to">To: me, Sajal, Viral</div>
+                  </div>
                 </div>
                 <div class="exp-right">
                   <div class="exp-timestamp">Jun 12</div>
@@ -3653,68 +3295,6 @@
 
               </div>
             </div>
-            </div><!-- /thread-view-linked -->
-
-            <!-- ============ UNLINKED THREAD (AI suggestion demo) ============ -->
-            <div id="thread-view-unlinked" class="thread-view" style="display:none;">
-
-              <div class="thread-sticky-header">
-                <div class="thread-title">Question about Enterprise plan pricing</div>
-                <div class="pipeline-chip pc-suggested" onclick="addSuggestedToPipeline(event)" title="AI suggestion">
-                  <svg class="pchip-icon" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 3.2H9.6L12.4 7L9.6 10.8H2L4.4 7L2 3.2Z" fill="currentColor"/></svg>
-                  Neo partnerships
-                  <svg class="pc-ai-spark" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 0L6 4L10 5L6 6L5 10L4 6L0 5L4 4Z" fill="currentColor"/></svg>
-                </div>
-              </div>
-
-              <div class="expanded-tile" style="margin-top:16px;">
-                <div class="expanded-header">
-                  <div>
-                    <div class="exp-sender">Emma Clarke</div>
-                    <div class="exp-to">To: me &middot; Northwind Traders</div>
-                  </div>
-                  <div class="exp-right">
-                    <div class="exp-timestamp">10:12 am</div>
-                  </div>
-                </div>
-
-                <div class="expanded-body">
-                  <p>Hi,</p>
-                  <p>We're evaluating Titan Mail for our team of 40 and I had a question about what's included in
-                    the Enterprise plan, specifically around admin controls and SLA support.</p>
-                  <p>&zwj;</p>
-                  <p>Could someone walk us through pricing and options for a call this week?</p>
-                  <p>&zwj;</p>
-                  <p>Thanks,<br>Emma</p>
-                </div>
-
-                <div class="expanded-footer-hr"></div>
-                <div class="expanded-footer">
-                  <div class="reply-action" onclick="openReplyBox('reply')">
-                    <div class="reply-action-icon"><img src="assets/dc9c9a28-fbff-4efd-8cc6-22604c7cbc3d.svg" alt="">
-                    </div>
-                    Reply
-                  </div>
-                  <div class="reply-action" onclick="openReplyBox('forward')">
-                    <div class="reply-action-icon"><img src="assets/d6d0ae75-01ff-4a38-aeb6-8cee39af4b34.svg" alt="">
-                    </div>
-                    Forward
-                  </div>
-                  <div class="smart-write" onclick="openReplyBox('reply')">
-                    <div class="smart-write-icon"><img src="assets/f2c4a95b-e378-4f23-b049-98f40e998543.svg" alt=""></div>
-                    Reply with AI
-                  </div>
-                </div>
-              </div>
-
-            </div><!-- /thread-view-unlinked -->
-
-            <!-- ============ OTHER (no pipeline association) ============ -->
-            <div id="thread-view-other" class="thread-view" style="display:none;">
-              <div class="thread-empty-state">
-                This is a prototype build. Only the two CRM demo threads (Ryan Walker and Emma Clarke) have full pipeline behavior wired up here.
-              </div>
-            </div><!-- /thread-view-other -->
 
             <!-- Reply Box Card (Embedded Inline) -->
             <div class="reply-box-card" id="reply-box-card" style="display: none; margin-top: 16px; border: 1px solid #dedede; border-radius: 4px; box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06); background: #ffffff; flex-direction: column; overflow: hidden; margin-bottom: 20px;">
@@ -3905,1021 +3485,14 @@
           </div><!-- /thread-content -->
         </div><!-- /reading-pane -->
 
-        <!-- ============ CRM: Right Panel (inline column, like Streak in Gmail) ============ -->
-        <div class="crm-panel" id="crm-panel">
-          <div class="crm-panel-header">
-            <span class="crm-record-title" id="crm-record-title">
-              <span id="crm-record-name">Project roadmap for Dashboard version 2</span>
-              <a class="crm-record-ext" title="Open in Titan CRM" onclick="location.href='crm.html'">
-                <svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.5 3H3.2C2.54 3 2 3.54 2 4.2v6.6C2 11.46 2.54 12 3.2 12h6.6c.66 0 1.2-.54 1.2-1.2V8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><path d="M8.5 2H12v3.5M12 2L6.8 7.2" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </a>
-            </span>
-            <span class="close-x" onclick="closeCrmPanel()">&times;</span>
-          </div>
-          <div class="crm-panel-body">
-
-            <div class="crm-section">
-              <div class="crm-ps-wrap">
-                <div class="crm-pipeline-stage" id="crm-pipeline-stage" onclick="toggleStageMenu(event)">
-                  <svg class="pl-icon" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 3.2H9.6L12.4 7L9.6 10.8H2L4.4 7L2 3.2Z" fill="currentColor"/></svg>
-                  <span id="crm-ps-text">Neo partnerships: Proposal Sent</span>
-                  <span class="caret">&#9662;</span>
-                </div>
-                <div class="crm-stage-menu" id="crm-stage-menu"></div>
-              </div>
-            </div>
-
-            <div class="crm-section">
-              <div class="crm-contact-row">
-                <div class="crm-contact-avatar" id="crm-contact-avatar">RW</div>
-                <div>
-                  <div class="crm-contact-name" id="crm-contact-name">Ryan Walker</div>
-                  <div class="crm-contact-email" id="crm-contact-email">ryan.walker@meridianlabs.com</div>
-                </div>
-              </div>
-              <div class="crm-company" id="crm-company">Meridian Labs</div>
-            </div>
-
-            <div class="crm-section">
-              <div class="crm-section-title">Upcoming Activity</div>
-              <div class="crm-activity-row">
-                <span class="crm-act-ic followup"><svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="8" cy="8.6" r="5.1" stroke="currentColor" stroke-width="1.3"/><path d="M8 6V8.6l1.8 1.1" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><path d="M8 1.8v1.3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></span>
-                <div class="crm-activity-text">Follow-up on proposal</div>
-                <div class="crm-activity-date">Thu</div>
-              </div>
-              <div class="crm-activity-row">
-                <span class="crm-act-ic meeting"><svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2.5" y="3.5" width="11" height="10" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M2.5 6.5h11M5.5 2.3v2.2M10.5 2.3v2.2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></span>
-                <div class="crm-activity-text">Proposal follow-up questions</div>
-                <div class="crm-activity-date">Jul 30, 3:00 PM</div>
-              </div>
-              <div class="crm-activity-row">
-                <span class="crm-act-check" onclick="toggleActTask(this)"><span class="box"><svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3.5 8.2l2.6 2.6L11.8 5" stroke="#fff" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span>
-                <div class="crm-activity-text">Send updated proposal deck</div>
-                <div class="crm-activity-date overdue">Overdue</div>
-              </div>
-              <div class="crm-activity-row">
-                <span class="crm-act-check" onclick="toggleActTask(this)"><span class="box"><svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3.5 8.2l2.6 2.6L11.8 5" stroke="#fff" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span>
-                <div class="crm-activity-text">Schedule follow-up call</div>
-                <div class="crm-activity-date">Mon, 5pm</div>
-              </div>
-              <div class="crm-add-activity" onclick="openActivityMenu(event)">+ Add activity</div>
-              <div class="crm-activity-menu" id="crm-activity-menu">
-                <div class="cam2-bar">Last activity: Email sent 2d ago</div>
-                <div class="cam2-items">
-                  <div class="cam2-item" onclick="addActivity('followup')">
-                    <span class="ic"><svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="3.5" width="12" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M2.6 4.6L8 8.4l5.4-3.8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></span>
-                    Follow-up on email
-                  </div>
-                  <div class="cam2-item" onclick="addActivity('call')">
-                    <span class="ic"><svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.4 2.8H4c-1 0-1.7.8-1.5 1.8.4 2 1.5 3.9 3 5.4s3.4 2.6 5.4 3c1 .2 1.8-.5 1.8-1.5v-1.4c0-.5-.4-.9-.8-1l-1.7-.4c-.4-.1-.9 0-1.2.4l-.5.6C7 8.9 6 7.9 5.4 6.7l.6-.5c.3-.3.5-.8.4-1.2L6 3.6c-.1-.5-.5-.8-1-.8z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg></span>
-                    Schedule a call
-                  </div>
-                  <div class="cam2-item" onclick="addActivity('booking')">
-                    <span class="ic"><svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2.5" y="3.5" width="11" height="10" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M2.5 6.5h11M5.5 2.3v2.2M10.5 2.3v2.2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></span>
-                    Send a booking link
-                  </div>
-                  <div class="cam2-item" onclick="addActivity('task')">
-                    <span class="ic"><svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2.5" y="2.5" width="11" height="11" rx="2.5" stroke="currentColor" stroke-width="1.3"/><path d="M5.4 8l1.8 1.8L11 6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-                    Create a task
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="crm-section">
-              <div class="crm-section-title">Recent Activity</div>
-              <div class="crm-activity-row">
-                <span class="crm-act-ic email"><svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="3.5" width="12" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M2.6 4.6L8 8.4l5.4-3.8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></span>
-                <div class="crm-activity-text">Project roadmap for Dashboard v2</div>
-                <div class="crm-activity-date">Jun 12</div>
-              </div>
-              <div class="crm-activity-row">
-                <span class="crm-act-ic meeting"><svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2.5" y="3.5" width="11" height="10" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M2.5 6.5h11M5.5 2.3v2.2M10.5 2.3v2.2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></span>
-                <div class="crm-activity-text">Design review call</div>
-                <div class="crm-activity-date">Jun 10</div>
-              </div>
-              <div class="crm-activity-row">
-                <span class="crm-act-ic phone"><svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.4 2.8H4c-1 0-1.7.8-1.5 1.8.4 2 1.5 3.9 3 5.4s3.4 2.6 5.4 3c1 .2 1.8-.5 1.8-1.5v-1.4c0-.5-.4-.9-.8-1l-1.7-.4c-.4-.1-.9 0-1.2.4l-.5.6C7 8.9 6 7.9 5.4 6.7l.6-.5c.3-.3.5-.8.4-1.2L6 3.6c-.1-.5-.5-.8-1-.8z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg></span>
-                <div class="crm-activity-text">Intro call with Ryan</div>
-                <div class="crm-activity-date">Jun 8</div>
-              </div>
-              <div class="crm-activity-row">
-                <span class="crm-act-ic task"><svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2.5" y="2.5" width="11" height="11" rx="2.5" stroke="currentColor" stroke-width="1.3"/><path d="M5.4 8l1.8 1.8L11 6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-                <div class="crm-activity-text">Send updated proposal deck</div>
-                <div class="crm-activity-date">Jun 7</div>
-              </div>
-            </div>
-
-            <div class="crm-section">
-              <div class="crm-section-title">Notes</div>
-              <div class="crm-note">
-                <div class="meta">Usha &middot; Jun 10</div>
-                Wants multi-theme support prioritized before signing off on the proposal.
-              </div>
-            </div>
-
-            <div class="crm-section">
-              <div class="crm-section-title">AI Summary</div>
-              <button class="crm-ai-summary-btn" onclick="generateAiSummary(this)">Generate</button>
-              <div class="crm-ai-summary-text" id="crm-ai-summary-text">
-                Ryan at Meridian Labs is evaluating the Dashboard v2 upgrade. Proposal was sent Jun 9; main open item is multi-theme support before he'll sign off. Next step: confirm theming scope on Monday's call.
-              </div>
-            </div>
-
-            <div class="crm-section">
-              <div class="crm-section-title">Fields</div>
-              <div class="crm-field-row"><span class="crm-field-label">Lead Source</span><span class="crm-field-value">Referral</span></div>
-              <div class="crm-field-row"><span class="crm-field-label">Deal Value</span><span class="crm-field-value">$18,000</span></div>
-              <div class="crm-field-row"><span class="crm-field-label">Projected Close Date</span><span class="crm-field-value">Jul 30</span></div>
-              <div class="crm-field-row"><span class="crm-field-label">Decision Maker</span><span class="crm-field-value">Ryan Walker</span></div>
-              <div class="crm-field-row"><span class="crm-field-label">Key Objection</span><span class="crm-field-value">Theming support</span></div>
-              <div class="crm-field-row"><span class="crm-field-label">Next Step</span><span class="crm-field-value">Confirm scope on call</span></div>
-            </div>
-
-          </div>
-        </div><!-- /crm-panel -->
+        <!-- CRM sidebar. In-flow flex panel: squeezes the reading
+             pane rather than covering it. All markup comes from
+             crm_sidebar.js — deliberately empty here. -->
+        <div id="crmSidebar"></div>
 
       </div><!-- /content-area -->
     </div><!-- /main-area -->
 
-    <!-- Full Vertical Viewport Height CRM Panel (Right side of app-window) -->
-    <div id="crmSidebarContainer">
-<!-- Dedicated Minimal CRM Sidebar Drawer -->
-<div class="crm-drawer-container" id="crmSidebar">
-  
-  <!-- Profile Hero Header -->
-  <div class="crm-profile-hero">
-    
-    <!-- Work Item + Stage -->
-    <div style="display:flex; flex-direction:column; gap:8px; padding:12px 14px; background:#f4f8ff; border:1px solid #dbe7fb; border-radius:8px; position:relative; margin-top:12px;">
-      <div style="display:flex; align-items:center; justify-content:space-between; gap:8px; min-width:0;">
-        <div style="display:flex; align-items:center; gap:7px; min-width:0; cursor:pointer; flex:1;" onclick="CrmApp.openFullView()" title="Open pipeline">
-          <svg viewBox="0 0 24 24" fill="none" stroke="var(--titan-blue)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0; width:14px; height:14px;"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
-          <span id="crmWorkItemTitle" style="font-size:13px; font-weight:600; color:var(--titan-text-main); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; transition:color 0.15s ease;" onmouseover="this.style.color='var(--titan-blue)';" onmouseout="this.style.color='var(--titan-text-main)';">Meridian AI site</span>
-        </div>
-        <span id="crmWorkItemStage" class="crm-wi-stage-pill" onclick="CrmApp.toggleWorkItemStageMenu(event)" title="Change stage">
-          <svg class="pl-icon" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 3.2H9.6L12.4 7L9.6 10.8H2L4.4 7L2 3.2Z" fill="currentColor"/></svg>
-          <span>Proposal Sent</span>
-          <svg class="pl-dd" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
-        </span>
-      </div>
-
-      <!-- Stage dropdown menu (positioned under the chevron) -->
-      <div class="crm-work-item-stage-menu" id="crmWorkItemStageMenu"></div>
-    </div>
-
-    <!-- Contact Profile Identity (Avatar, Name & Role) -->
-    <div class="crm-profile-top-row" onclick="CrmApp.drillInto('more-details')" style="display:flex; align-items:center; justify-content:space-between; cursor:pointer;" title="See profile details">
-      <div style="display:flex; align-items:center; gap:12px; flex:1; min-width:0;">
-        <div class="crm-avatar-large" id="crmHeroAvatar">EM</div>
-        <div class="crm-profile-meta">
-          <span class="crm-profile-name" id="crmHeroName">Ella Mathews</span>
-          <span class="crm-profile-role" id="crmHeroRole">Head of Product • Avon Technologies</span>
-        </div>
-      </div>
-      <button class="crm-header-link" style="padding:4px; display:flex; align-items:center; justify-content:center; color:#64748b; background:transparent; border:none; cursor:pointer; flex-shrink:0;" title="See profile details">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-          <polyline points="9 18 15 12 9 6"></polyline>
-        </svg>
-      </button>
-    </div>
-
-    <!-- Pinned Contact Note — a standing fact about the contact, not tied to any one activity.
-         Lives in the hero so it stays visible on every tab. Activity-specific notes are separate
-         and live on their timeline entry. -->
-    <div class="crm-pinned-note" id="crmPinnedNote" style="margin-top:12px;">
-
-      <!-- Empty state -->
-      <button id="crmPinnedNoteEmpty" onclick="CrmApp.editPinnedNote()" title="Pin a standing note about this contact" style="width:100%; background:transparent; border:1px dashed #cbd5e1; color:var(--titan-text-sub); padding:7px 10px; border-radius:6px; font-size:11.5px; font-weight:500; cursor:pointer; display:flex; align-items:center; gap:6px; transition:all 0.15s ease;" onmouseover="this.style.background='#f8fafc'; this.style.borderColor='#94a3b8';" onmouseout="this.style.background='transparent'; this.style.borderColor='#cbd5e1';">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><path d="M12 17v5"></path><path d="M9 10.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24V16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V7a1 1 0 0 1 1-1 2 2 0 0 0 0-4H8a2 2 0 0 0 0 4 1 1 0 0 1 1 1z"></path></svg>
-        <span>Pin a note about this contact</span>
-      </button>
-
-      <!-- Filled state -->
-      <div id="crmPinnedNoteFilled" style="display:none; align-items:flex-start; gap:8px; background:#fffbeb; border:1px solid #fde68a; border-radius:6px; padding:8px 10px;">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#b45309" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0; margin-top:2px;"><path d="M12 17v5"></path><path d="M9 10.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24V16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V7a1 1 0 0 1 1-1 2 2 0 0 0 0-4H8a2 2 0 0 0 0 4 1 1 0 0 1 1 1z"></path></svg>
-        <span id="crmPinnedNoteText" onclick="CrmApp.editPinnedNote()" style="flex:1; min-width:0; font-size:11.5px; line-height:1.45; color:#0f172a; cursor:text;"></span>
-        <button onclick="CrmApp.removePinnedNote()" title="Unpin this note" style="background:transparent; border:none; color:#b45309; cursor:pointer; padding:0 2px; flex-shrink:0; display:flex; align-items:center; margin-top:1px;">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-        </button>
-      </div>
-
-      <!-- Edit state -->
-      <div id="crmPinnedNoteEdit" style="display:none; gap:6px; background:#fffbeb; border:1px solid #fde68a; border-radius:6px; padding:8px 10px;">
-        <input type="text" id="crmPinnedNoteInput" placeholder="e.g. Prefers weekday mornings — never Fridays" style="flex:1; min-width:0; font-size:11.5px; border:1px solid #fcd34d; border-radius:4px; padding:5px 8px; outline:none; background:#fff;" onkeydown="if(event.key==='Enter'){CrmApp.savePinnedNote();}else if(event.key==='Escape'){CrmApp.cancelPinnedNote();}">
-        <button onclick="CrmApp.savePinnedNote()" style="background:var(--titan-blue); color:#fff; border:none; border-radius:4px; padding:5px 10px; font-size:11.5px; font-weight:600; cursor:pointer; flex-shrink:0;">Pin</button>
-      </div>
-
-    </div>
-
-    <!-- Horizontally Scrollable Contact Chips Strip (Hidden for now) -->
-    <div class="crm-chips-strip" style="display: none;">
-      <button class="crm-chip-item crm-chip-primary" onclick="CrmApp.drillInto('more-details')">
-        See all details
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <polyline points="9 18 15 12 9 6"></polyline>
-        </svg>
-      </button>
-      <a href="tel:+14158923019" class="crm-chip-item">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
-        </svg>
-        Call
-      </a>
-      <a href="mailto:elizabethmathews1980@avontech.com" class="crm-chip-item">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-          <polyline points="22,6 12,13 2,6"></polyline>
-        </svg>
-        Email
-      </a>
-      <a href="https://linkedin.com" target="_blank" class="crm-chip-item">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
-          <rect x="2" y="9" width="4" height="12"></rect>
-          <circle cx="4" cy="4" r="2"></circle>
-        </svg>
-        LinkedIn
-      </a>
-      <a href="https://avontech.com" target="_blank" class="crm-chip-item">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="12" cy="12" r="10"></circle>
-          <line x1="2" y1="12" x2="22" y2="12"></line>
-          <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
-        </svg>
-        Website
-      </a>
-    </div>
-  </div>
-
-  <!-- Viewport Body -->
-  <div class="crm-body-viewport">
-    
-    <!-- 📄 PAGE 0: CRM BOARD HOME VIEW (Root View) -->
-    <div class="crm-view-page" id="crmView-home" style="display: none;">
-      
-      <!-- Quick Search Bar -->
-      <div style="display:flex; align-items:center; gap:8px; padding:8px 12px; background:var(--titan-grey-hover); border-radius:8px; border:1px solid #e2e8f0;">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="11" cy="11" r="8"></circle>
-          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-        </svg>
-        <input type="text" placeholder="Search contacts, accounts..." style="border:none; background:transparent; font-size:12.5px; outline:none; width:100%; color:var(--titan-text-main);">
-      </div>
-
-      <!-- Full-Width Clickable Open Pipeline Card -->
-      <div onclick="CrmApp.openFullView()" style="padding:12px 14px; background:#f8fafc; border-radius:8px; border:1px solid #e2e8f0; display:flex; align-items:center; justify-content:space-between; cursor:pointer; transition:all 0.15s ease;">
-        <div style="display:flex; flex-direction:column; gap:2px;">
-          <span style="font-size:10.5px; font-weight:600; color:var(--titan-text-sub); text-transform:uppercase; letter-spacing:0.3px;">Open Pipeline</span>
-          <span style="font-size:17px; font-weight:700; color:var(--titan-blue);">$105,000</span>
-        </div>
-        <div style="display:flex; align-items:center; gap:4px; font-size:12px; color:var(--titan-blue); font-weight:500;">
-          <span>View Pipeline</span>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="9 18 15 12 9 6"></polyline>
-          </svg>
-        </div>
-      </div>
-
-      <!-- Recently Viewed Contacts Strip -->
-      <div class="crm-section-title" style="margin-top:2px;">
-        <span>Recently Viewed</span>
-      </div>
-
-      <div style="display:flex; gap:12px; overflow-x:auto; margin:0 -16px; padding:0 16px 4px 16px; scrollbar-width:none;">
-        <div onclick="CrmApp.selectContact('ella')" style="display:flex; flex-direction:column; align-items:center; gap:4px; cursor:pointer; flex-shrink:0; width:56px;">
-          <div style="width:38px; height:38px; border-radius:50%; background:var(--titan-blue); color:#fff; font-size:12px; font-weight:700; display:flex; align-items:center; justify-content:center; border:2px solid #dbeafe;">EM</div>
-          <span style="font-size:10.5px; font-weight:500; color:var(--titan-text-main); text-align:center; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; width:100%;">Ella</span>
-        </div>
-        <div onclick="CrmApp.selectContact('dave')" style="display:flex; flex-direction:column; align-items:center; gap:4px; cursor:pointer; flex-shrink:0; width:56px;">
-          <div style="width:38px; height:38px; border-radius:50%; background:#64748b; color:#fff; font-size:12px; font-weight:700; display:flex; align-items:center; justify-content:center;">DM</div>
-          <span style="font-size:10.5px; font-weight:500; color:var(--titan-text-main); text-align:center; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; width:100%;">Dave</span>
-        </div>
-        <div onclick="CrmApp.selectContact('priya')" style="display:flex; flex-direction:column; align-items:center; gap:4px; cursor:pointer; flex-shrink:0; width:56px;">
-          <div style="width:38px; height:38px; border-radius:50%; background:#8b5cf6; color:#fff; font-size:12px; font-weight:700; display:flex; align-items:center; justify-content:center;">PS</div>
-          <span style="font-size:10.5px; font-weight:500; color:var(--titan-text-main); text-align:center; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; width:100%;">Priya</span>
-        </div>
-        <div onclick="CrmApp.selectContact('alex')" style="display:flex; flex-direction:column; align-items:center; gap:4px; cursor:pointer; flex-shrink:0; width:56px;">
-          <div style="width:38px; height:38px; border-radius:50%; background:#10b981; color:#fff; font-size:12px; font-weight:700; display:flex; align-items:center; justify-content:center;">AR</div>
-          <span style="font-size:10.5px; font-weight:500; color:var(--titan-text-main); text-align:center; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; width:100%;">Alex</span>
-        </div>
-      </div>
-
-      <!-- Top 5 Upcoming Tasks & Meetings Section -->
-      <div class="crm-section-title" style="margin-top: 4px;">
-        <span>Upcoming Tasks & Meetings (5)</span>
-        <button class="crm-header-link" onclick="CrmApp.drillInto('all-tasks')">
-          See all
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="9 18 15 12 9 6"></polyline>
-          </svg>
-        </button>
-      </div>
-
-      <div style="display:flex; flex-direction:column; gap:8px;">
-        
-        <!-- Task / Meeting 1 -->
-        <div style="display:flex; align-items:center; justify-content:space-between; padding:10px 12px; border-radius:8px; background:#fff; border:1px solid #f1f5f9;">
-          <div style="display:flex; align-items:center; gap:10px; min-width:0;">
-            <div style="width:32px; height:32px; border-radius:8px; background:#eff6ff; color:var(--titan-blue); font-size:14px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">📅</div>
-            <div style="display:flex; flex-direction:column; gap:2px; min-width:0;">
-              <span style="font-weight:600; font-size:13px; color:var(--titan-text-main); text-overflow:ellipsis; overflow:hidden; white-space:nowrap;">Q3 Licensing & Security Review</span>
-              <span style="font-size:11.5px; color:var(--titan-text-sub); text-overflow:ellipsis; overflow:hidden; white-space:nowrap;">With Ella Mathews • Today at 3:00 PM</span>
-            </div>
-          </div>
-          <span style="font-size:10px; font-weight:600; background:#eff6ff; color:var(--titan-blue); padding:2px 8px; border-radius:10px; flex-shrink:0;">Meeting</span>
-        </div>
-
-        <!-- Task / Meeting 2 -->
-        <div style="display:flex; align-items:center; justify-content:space-between; padding:10px 12px; border-radius:8px; background:#fff; border:1px solid #f1f5f9;">
-          <div style="display:flex; align-items:center; gap:10px; min-width:0;">
-            <div style="width:32px; height:32px; border-radius:8px; background:#fffbeb; color:#d97706; font-size:14px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">⚡</div>
-            <div style="display:flex; flex-direction:column; gap:2px; min-width:0;">
-              <span style="font-weight:600; font-size:13px; color:var(--titan-text-main); text-overflow:ellipsis; overflow:hidden; white-space:nowrap;">Send Revised SOC2 Agreement</span>
-              <span style="font-size:11.5px; color:var(--titan-text-sub); text-overflow:ellipsis; overflow:hidden; white-space:nowrap;">For Dave Miller • Today at 5:00 PM</span>
-            </div>
-          </div>
-          <span style="font-size:10px; font-weight:600; background:#fffbeb; color:#d97706; padding:2px 8px; border-radius:10px; flex-shrink:0;">Task</span>
-        </div>
-
-        <!-- Task / Meeting 3 -->
-        <div style="display:flex; align-items:center; justify-content:space-between; padding:10px 12px; border-radius:8px; background:#fff; border:1px solid #f1f5f9;">
-          <div style="display:flex; align-items:center; gap:10px; min-width:0;">
-            <div style="width:32px; height:32px; border-radius:8px; background:#eff6ff; color:var(--titan-blue); font-size:14px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">🤝</div>
-            <div style="display:flex; flex-direction:column; gap:2px; min-width:0;">
-              <span style="font-weight:600; font-size:13px; color:var(--titan-text-main); text-overflow:ellipsis; overflow:hidden; white-space:nowrap;">Discovery Call & Tech Demo</span>
-              <span style="font-size:11.5px; color:var(--titan-text-sub); text-overflow:ellipsis; overflow:hidden; white-space:nowrap;">With Priya Sharma • Tomorrow at 10:30 AM</span>
-            </div>
-          </div>
-          <span style="font-size:10px; font-weight:600; background:#eff6ff; color:var(--titan-blue); padding:2px 8px; border-radius:10px; flex-shrink:0;">Meeting</span>
-        </div>
-
-        <!-- Task / Meeting 4 -->
-        <div style="display:flex; align-items:center; justify-content:space-between; padding:10px 12px; border-radius:8px; background:#fff; border:1px solid #f1f5f9;">
-          <div style="display:flex; align-items:center; gap:10px; min-width:0;">
-            <div style="width:32px; height:32px; border-radius:8px; background:#fffbeb; color:#d97706; font-size:14px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">📝</div>
-            <div style="display:flex; flex-direction:column; gap:2px; min-width:0;">
-              <span style="font-weight:600; font-size:13px; color:var(--titan-text-main); text-overflow:ellipsis; overflow:hidden; white-space:nowrap;">Draft Contract & SLA Terms</span>
-              <span style="font-size:11.5px; color:var(--titan-text-sub); text-overflow:ellipsis; overflow:hidden; white-space:nowrap;">For Alex Rivera • Thursday at 2:00 PM</span>
-            </div>
-          </div>
-          <span style="font-size:10px; font-weight:600; background:#fffbeb; color:#d97706; padding:2px 8px; border-radius:10px; flex-shrink:0;">Task</span>
-        </div>
-
-        <!-- Task / Meeting 5 -->
-        <div style="display:flex; align-items:center; justify-content:space-between; padding:10px 12px; border-radius:8px; background:#fff; border:1px solid #f1f5f9;">
-          <div style="display:flex; align-items:center; gap:10px; min-width:0;">
-            <div style="width:32px; height:32px; border-radius:8px; background:#eff6ff; color:var(--titan-blue); font-size:14px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">👥</div>
-            <div style="display:flex; flex-direction:column; gap:2px; min-width:0;">
-              <span style="font-weight:600; font-size:13px; color:var(--titan-text-main); text-overflow:ellipsis; overflow:hidden; white-space:nowrap;">Executive Sign-off Sync</span>
-              <span style="font-size:11.5px; color:var(--titan-text-sub); text-overflow:ellipsis; overflow:hidden; white-space:nowrap;">With Marcus Vance • Friday at 11:00 AM</span>
-            </div>
-          </div>
-          <span style="font-size:10px; font-weight:600; background:#eff6ff; color:var(--titan-blue); padding:2px 8px; border-radius:10px; flex-shrink:0;">Meeting</span>
-        </div>
-
-      </div>
-
-    </div>
-
-    <!-- 📄 PAGE 1: OVERVIEW TAB (Non-destructively hidden view, preserved for context) -->
-    <div class="crm-view-page" id="crmView-overview" style="display: none;">
-
-      <!-- Personal Notes Section Header -->
-      <div class="crm-section-title">
-        <span>Personal Notes</span>
-        <button class="crm-header-link" onclick="CrmApp.drillInto('all-notes')">
-          See all
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="9 18 15 12 9 6"></polyline>
-          </svg>
-        </button>
-      </div>
-
-      <div class="crm-sticky-note">
-        <div class="crm-note-text" id="crmLatestNoteText">
-          "Prefers async updates over email. Q3 security budget approved up to $45,000. Decision maker alongside VP Tech (Dave)."
-        </div>
-        <span class="crm-note-date">Today at 2:15 PM</span>
-      </div>
-
-      <!-- Quick Note Add Input (1-line tall, auto-expands on type) -->
-      <div class="crm-input-card">
-        <textarea id="crmNoteInput" rows="1" placeholder="Add a personal note for Ella..." oninput="this.style.height='32px';if(this.scrollHeight>32)this.style.height=(this.scrollHeight)+'px'"></textarea>
-        <button class="crm-btn-blue" onclick="CrmApp.saveNote()">+ Add Note</button>
-      </div>
-
-      <!-- Company Section Header -->
-      <div class="crm-section-title" style="margin-top: 10px;">
-        <span>Company</span>
-      </div>
-
-      <!-- Compact Flat Company Row (Clickable) -->
-      <div onclick="CrmApp.drillInto('company-details')" style="display:flex; align-items:center; justify-content:space-between; padding:10px 12px; border-radius:6px; background:var(--titan-grey-hover); cursor:pointer; transition:background 0.15s ease;">
-        <div style="display:flex; align-items:center; gap:10px; flex:1; min-width:0;">
-          <div style="width:34px; height:34px; border-radius:8px; background:#eff6ff; border:1px solid rgba(33,112,244,0.25); color:var(--titan-blue); font-weight:700; font-size:13px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">AT</div>
-          <div style="display:flex; flex-direction:column; gap:2px; min-width:0;">
-            <span style="font-weight:600; font-size:13.5px; color:var(--titan-text-main);">Avon Technologies</span>
-            <span style="font-size:11.5px; color:var(--titan-text-sub);">SaaS • 3 contacts</span>
-          </div>
-        </div>
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;">
-          <polyline points="9 18 15 12 9 6"></polyline>
-        </svg>
-      </div>
-
-    </div>
-
-    <!-- 📄 PAGE 2: ALL NOTES (Drilled View) -->
-    <div class="crm-view-page" id="crmView-all-notes" style="display: none;">
-      <div class="crm-date-divider" style="margin-top:0;">TODAY</div>
-      <div class="crm-sticky-note">
-        <div class="crm-note-text">
-          "Prefers async updates over email. Q3 security budget approved up to $45,000. Decision maker alongside VP Tech (Dave)."
-        </div>
-        <span class="crm-note-date">Today at 2:15 PM</span>
-      </div>
-
-      <div class="crm-date-divider">YESTERDAY</div>
-      <div class="crm-sticky-note">
-        <div class="crm-note-text">
-          "Had a 15-minute discovery call. SSO integration is a must-have requirement before contract signing."
-        </div>
-        <span class="crm-note-date">Yesterday at 4:45 PM</span>
-      </div>
-
-      <div class="crm-date-divider">LAST WEEK</div>
-      <div class="crm-sticky-note">
-        <div class="crm-note-text">
-          "Initial inbound inquiry from Avon Tech web form. Interested in 50 enterprise seat tier."
-        </div>
-        <span class="crm-note-date">Jul 20, 2026</span>
-      </div>
-    </div>
-
-    <!-- 📄 PAGE 3: MORE DETAILS (Drilled View) -->
-    <div class="crm-view-page" id="crmView-more-details" style="display: none;">
-      <div class="crm-card">
-        <div class="crm-info-row">
-          <span class="crm-info-label">Full Name</span>
-          <span class="crm-info-value">Elizabeth (Ella) Mathews</span>
-        </div>
-        <div class="crm-info-row">
-          <span class="crm-info-label">Job Title</span>
-          <span class="crm-info-value">Head of Product</span>
-        </div>
-        <div class="crm-info-row">
-          <span class="crm-info-label">Email</span>
-          <span class="crm-info-value">elizabethmathews1980@avontech.com</span>
-        </div>
-        <div class="crm-info-row">
-          <span class="crm-info-label">Phone</span>
-          <span class="crm-info-value">+1 (415) 892-3019</span>
-        </div>
-        <div class="crm-info-row">
-          <span class="crm-info-label">Company Size</span>
-          <span class="crm-info-value">250-500 Employees</span>
-        </div>
-        <div class="crm-info-row">
-          <span class="crm-info-label">Industry</span>
-          <span class="crm-info-value">SaaS / Cloud Software</span>
-        </div>
-        <div class="crm-info-row">
-          <span class="crm-info-label">Lead Stage</span>
-          <span class="crm-info-value" style="color:var(--titan-blue); font-weight:600;">Proposal Sent</span>
-        </div>
-        <div class="crm-info-row">
-          <span class="crm-info-label">Deal Value</span>
-          <span class="crm-info-value" style="font-weight:600;">$32,000</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- 📄 PAGE 4: COMPANY DETAILS (Drilled View) -->
-    <div class="crm-view-page" id="crmView-company-details" style="display: none;">
-      <div class="crm-card">
-        <div class="crm-info-row">
-          <span class="crm-info-label">Company Name</span>
-          <span class="crm-info-value">Avon Technologies Inc.</span>
-        </div>
-        <div class="crm-info-row">
-          <span class="crm-info-label">Domain</span>
-          <a href="https://avontech.com" target="_blank" class="crm-info-link">avontech.com 🌐</a>
-        </div>
-        <div class="crm-info-row">
-          <span class="crm-info-label">Industry</span>
-          <span class="crm-info-value">Enterprise SaaS / Cloud</span>
-        </div>
-        <div class="crm-info-row">
-          <span class="crm-info-label">Headquarters</span>
-          <span class="crm-info-value">San Francisco, CA</span>
-        </div>
-        <div class="crm-info-row">
-          <span class="crm-info-label">Employee Count</span>
-          <span class="crm-info-value">320 Employees</span>
-        </div>
-        <div class="crm-info-row">
-          <span class="crm-info-label">Annual Revenue</span>
-          <span class="crm-info-value">$45M ARR</span>
-        </div>
-      </div>
-
-      <!-- Teammates at Avon Tech (Flat List with Blue Chevrons) -->
-      <div class="crm-section-title" style="margin-top: 10px;">
-        <span>3 Associated Contacts</span>
-      </div>
-
-      <div style="display:flex; flex-direction:column; gap:8px;">
-        <div style="display:flex; align-items:center; justify-content:space-between; padding:8px 0; border-bottom:1px solid #f8fafc; cursor:pointer;">
-          <div style="display:flex; align-items:center; gap:8px;">
-            <div style="width:24px; height:24px; border-radius:50%; background:#e2e8f0; font-size:10px; font-weight:600; color:#475569; display:flex; align-items:center; justify-content:center;">DM</div>
-            <span style="font-weight:500; color:var(--titan-text-main); font-size:13px;">Dave Miller</span>
-          </div>
-          <div style="display:flex; align-items:center; gap:6px;">
-            <span style="font-size:12px; color:var(--titan-text-sub);">VP Technology</span>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--titan-blue)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="9 18 15 12 9 6"></polyline>
-            </svg>
-          </div>
-        </div>
-
-        <div style="display:flex; align-items:center; justify-content:space-between; padding:8px 0; border-bottom:1px solid #f8fafc; cursor:pointer;">
-          <div style="display:flex; align-items:center; gap:8px;">
-            <div style="width:24px; height:24px; border-radius:50%; background:#e2e8f0; font-size:10px; font-weight:600; color:#475569; display:flex; align-items:center; justify-content:center;">MV</div>
-            <span style="font-weight:500; color:var(--titan-text-main); font-size:13px;">Marcus Vance</span>
-          </div>
-          <div style="display:flex; align-items:center; gap:6px;">
-            <span style="font-size:12px; color:var(--titan-text-sub);">CEO</span>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--titan-blue)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="9 18 15 12 9 6"></polyline>
-            </svg>
-          </div>
-        </div>
-
-        <div style="display:flex; align-items:center; justify-content:space-between; padding:8px 0; cursor:pointer;">
-          <div style="display:flex; align-items:center; gap:8px;">
-            <div style="width:24px; height:24px; border-radius:50%; background:#e2e8f0; font-size:10px; font-weight:600; color:#475569; display:flex; align-items:center; justify-content:center;">SJ</div>
-            <span style="font-weight:500; color:var(--titan-text-main); font-size:13px;">Sarah Jenkins</span>
-          </div>
-          <div style="display:flex; align-items:center; gap:6px;">
-            <span style="font-size:12px; color:var(--titan-text-sub);">Lead Security</span>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--titan-blue)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="9 18 15 12 9 6"></polyline>
-            </svg>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- 📄 PAGE 5: CONTACT PROFILE (Default View: Upcoming + Recent Activity) -->
-    <div class="crm-view-page active" id="crmView-activity" style="display: flex;">
-
-      <!-- Upcoming Tasks & Meetings Section (accordion, collapsed by default) -->
-      <div class="crm-accordion collapsed" id="crmAccUpcoming">
-        <button class="crm-accordion-header" onclick="CrmApp.toggleAccordion('crmAccUpcoming')">
-          <span>Upcoming</span>
-          <svg class="crm-acc-chev" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="6 9 12 15 18 9"></polyline>
-          </svg>
-        </button>
-
-        <div class="crm-accordion-body">
-          <div class="crm-accordion-content">
-          <div style="display:flex; flex-direction:column; gap:8px;">
-        <div style="display:flex; align-items:center; justify-content:space-between; padding:10px 12px; border-radius:8px; background:#fff; border:1px solid #f1f5f9;">
-          <div style="display:flex; align-items:center; gap:10px; flex:1; min-width:0; margin-right:12px;">
-            <div style="width:32px; height:32px; border-radius:8px; background:#eff6ff; color:var(--titan-blue); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-            </div>
-            <div style="display:flex; flex-direction:column; gap:4px; flex:1; min-width:0;">
-              <span style="font-weight:600; font-size:13px; color:var(--titan-text-main);">Q3 Licensing & Security Sync</span>
-              <span style="font-size:11.5px; color:var(--titan-text-sub);">Today at 3:00 PM</span>
-            </div>
-          </div>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0; cursor:pointer;" title="Join / View Details"><polyline points="9 18 15 12 9 6"></polyline></svg>
-        </div>
-
-        <div style="display:flex; align-items:center; justify-content:space-between; padding:10px 12px; border-radius:8px; background:#fff; border:1px solid #f1f5f9;">
-          <div style="display:flex; align-items:center; gap:10px; flex:1; min-width:0; margin-right:12px;">
-            <div style="width:32px; height:32px; border-radius:8px; background:#fffbeb; color:#d97706; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
-            </div>
-            <div style="display:flex; flex-direction:column; gap:4px; flex:1; min-width:0;">
-              <span style="font-weight:600; font-size:13px; color:var(--titan-text-main);">Send Revised Enterprise Quote ($32k)</span>
-              <span style="font-size:11.5px; color:var(--titan-text-sub);">Tomorrow at 10:00 AM</span>
-            </div>
-          </div>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0; cursor:pointer;" title="View Details"><polyline points="9 18 15 12 9 6"></polyline></svg>
-        </div>
-
-        <div style="display:flex; align-items:center; justify-content:space-between; padding:10px 12px; border-radius:8px; background:#fff; border:1px solid #f1f5f9;">
-          <div style="display:flex; align-items:center; gap:10px; flex:1; min-width:0; margin-right:12px;">
-            <div style="width:32px; height:32px; border-radius:8px; background:#eff6ff; color:var(--titan-blue); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-            </div>
-            <div style="display:flex; flex-direction:column; gap:4px; flex:1; min-width:0;">
-              <span style="font-weight:600; font-size:13px; color:var(--titan-text-main);">Executive Demo with CEO (Marcus Vance)</span>
-              <span style="font-size:11.5px; color:var(--titan-text-sub);">Next Monday at 2:00 PM</span>
-            </div>
-          </div>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0; cursor:pointer;" title="Join / View Details"><polyline points="9 18 15 12 9 6"></polyline></svg>
-        </div>
-        </div>
-
-        <button onclick="CrmApp.drillInto('all-tasks')" style="align-self:center; display:flex; align-items:center; gap:5px; background:transparent; border:1px solid #d4e0f5; border-radius:6px; color:var(--titan-blue); padding:6px 14px; font-size:12px; font-weight:600; cursor:pointer; transition:all 0.15s ease;" onmouseover="this.style.background='#f0f6ff';" onmouseout="this.style.background='transparent';">
-          See all
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="9 18 15 12 9 6"></polyline>
-          </svg>
-        </button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Recent Activity Section (accordion, collapsed by default) -->
-      <div class="crm-accordion collapsed" id="crmAccRecent">
-        <button class="crm-accordion-header" onclick="CrmApp.toggleAccordion('crmAccRecent')">
-          <span>Recent Activity</span>
-          <svg class="crm-acc-chev" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="6 9 12 15 18 9"></polyline>
-          </svg>
-        </button>
-
-        <div class="crm-accordion-body">
-          <div class="crm-accordion-content">
-      <!-- Full-Width Log New Activity Button (Before Timeline) -->
-      <button onclick="CrmApp.logActivityPrompt()" style="width:100%; margin-top:0px; margin-bottom:8px; background:#f8faff; border:1px dashed #bfdbfe; color:var(--titan-blue); padding:8px 12px; border-radius:6px; font-size:12px; font-weight:600; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:6px; transition:all 0.15s ease;" onmouseover="this.style.background='#eff6ff'; this.style.borderColor='#93c5fd';" onmouseout="this.style.background='#f8faff'; this.style.borderColor='#bfdbfe';">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-        <span>Log new activity</span>
-      </button>
-
-      <!-- Connected Vertical Timeline Feed -->
-      <div class="crm-timeline-wrapper" style="display:flex; flex-direction:column; gap:18px;">
-        
-        <!-- Timeline Item 1 -->
-        <div class="crm-timeline-item">
-          <div class="crm-timeline-badge">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-          </div>
-          <div class="crm-timeline-content" style="flex:1;">
-            <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:8px; font-size:12.5px; font-weight:600; color:var(--titan-text-main);">
-              <span id="crmAct1Title" style="max-width:195px; line-height:1.35;">Project roadmap for Dashboard version 2</span>
-              <span style="font-size:11px; font-weight:500; color:var(--titan-text-sub); white-space:nowrap; flex-shrink:0; margin-top:1px;">2:15 PM</span>
-            </div>
-
-            <!-- Personal Notes Drawer Trigger -->
-            <div style="display:flex; align-items:center; justify-content:space-between; margin-top:6px;">
-              <button onclick="CrmApp.showAddNoteInput('actCard-1')" style="background:transparent; color:var(--titan-text-sub); border:1px dashed #cbd5e1; padding:2px 8px; border-radius:12px; font-size:11px; font-weight:500; cursor:pointer;">
-                + Add Note
-              </button>
-              <button class="crm-note-pill-btn" onclick="CrmApp.toggleActivityNotes('actCard-1')" style="background:#eff6ff; color:var(--titan-blue); border:none; padding:2px 8px; border-radius:12px; font-size:11px; font-weight:600; cursor:pointer; display:flex; align-items:center; gap:4px;">
-                <span id="noteCount-actCard-1" style="display:flex; align-items:center; gap:3px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg> 2 Notes</span>
-                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-              </button>
-            </div>
-
-            <!-- Collapsible Notes Drawer -->
-            <div class="crm-act-notes-drawer" id="actNotes-actCard-1" style="display:none; flex-direction:column; gap:6px; background:#f8fafc; padding:8px 10px; border-radius:6px; margin-top:6px;">
-              <div class="act-note-list" id="actNoteList-actCard-1" style="display:flex; flex-direction:column; gap:4px;">
-                <div style="font-size:11.5px; color:#334155; padding:4px 0; border-bottom:1px solid #e2e8f0;">
-                  <span style="font-weight:600; color:#0f172a;">3d ago:</span> "Ella requested Dave (VP Tech) review SSO specs directly."
-                </div>
-                <div style="font-size:11.5px; color:#334155; padding:4px 0;">
-                  <span style="font-weight:600; color:#0f172a;">2:20 PM:</span> "Async updates preferred over calls."
-                </div>
-              </div>
-              <div style="display:flex; gap:6px; margin-top:4px;">
-                <input type="text" placeholder="Write personal note..." style="flex:1; font-size:11.5px; border:1px solid #cbd5e1; border-radius:4px; padding:4px 8px; outline:none;" onkeydown="if(event.key==='Enter')CrmApp.appendActivityNote('actCard-1', this)">
-                <button style="background:var(--titan-blue); color:#fff; border:none; border-radius:4px; font-size:11px; padding:0 8px; cursor:pointer;" onclick="CrmApp.appendActivityNote('actCard-1', this.previousElementSibling)">Save</button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Timeline Item 2 -->
-        <div class="crm-timeline-item">
-          <div class="crm-timeline-badge">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-          </div>
-          <div class="crm-timeline-content" style="flex:1;">
-            <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:8px; font-size:12.5px; font-weight:600; color:var(--titan-text-main);">
-              <span style="max-width:195px; line-height:1.35;">Discovery Call: Security & Seat Tiers</span>
-              <span style="font-size:11px; font-weight:500; color:var(--titan-text-sub); white-space:nowrap; flex-shrink:0; margin-top:1px;">Yesterday</span>
-            </div>
-
-            <div style="display:flex; align-items:center; justify-content:space-between; margin-top:6px;">
-              <button onclick="CrmApp.showAddNoteInput('actCard-2')" style="background:transparent; color:var(--titan-text-sub); border:1px dashed #cbd5e1; padding:2px 8px; border-radius:12px; font-size:11px; font-weight:500; cursor:pointer;">
-                + Add Note
-              </button>
-              <button class="crm-note-pill-btn" onclick="CrmApp.toggleActivityNotes('actCard-2')" style="background:#eff6ff; color:var(--titan-blue); border:none; padding:2px 8px; border-radius:12px; font-size:11px; font-weight:600; cursor:pointer; display:flex; align-items:center; gap:4px;">
-                <span id="noteCount-actCard-2" style="display:flex; align-items:center; gap:3px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg> 1 Note</span>
-                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-              </button>
-            </div>
-
-            <div class="crm-act-notes-drawer" id="actNotes-actCard-2" style="display:none; flex-direction:column; gap:6px; background:#f8fafc; padding:8px 10px; border-radius:6px; margin-top:6px;">
-              <div class="act-note-list" id="actNoteList-actCard-2" style="display:flex; flex-direction:column; gap:4px;">
-                <div style="font-size:11.5px; color:#334155; padding:4px 0;">
-                  <span style="font-weight:600; color:#0f172a;">Yesterday:</span> "Confirmed decision maker is Ella + Dave (VP Tech)."
-                </div>
-              </div>
-              <div style="display:flex; gap:6px; margin-top:4px;">
-                <input type="text" placeholder="Write personal note..." style="flex:1; font-size:11.5px; border:1px solid #cbd5e1; border-radius:4px; padding:4px 8px; outline:none;" onkeydown="if(event.key==='Enter')CrmApp.appendActivityNote('actCard-2', this)">
-                <button style="background:var(--titan-blue); color:#fff; border:none; border-radius:4px; font-size:11px; padding:0 8px; cursor:pointer;" onclick="CrmApp.appendActivityNote('actCard-2', this.previousElementSibling)">Save</button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Timeline Item 3 -->
-        <div class="crm-timeline-item">
-          <div class="crm-timeline-badge">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
-          </div>
-          <div class="crm-timeline-content" style="flex:1;">
-            <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:8px; font-size:12.5px; font-weight:600; color:var(--titan-text-main);">
-              <span style="max-width:195px; line-height:1.35;">AvonTech Proposal & Security Documentation</span>
-              <span style="font-size:11px; font-weight:500; color:var(--titan-text-sub); white-space:nowrap; flex-shrink:0; margin-top:1px;">1w ago</span>
-            </div>
-
-            <div style="display:flex; align-items:center; justify-content:space-between; margin-top:6px;">
-              <button onclick="CrmApp.showAddNoteInput('actCard-3')" style="background:transparent; color:var(--titan-text-sub); border:1px dashed #cbd5e1; padding:2px 8px; border-radius:12px; font-size:11px; font-weight:500; cursor:pointer;">
-                + Add Note
-              </button>
-              <button class="crm-note-pill-btn" onclick="CrmApp.toggleActivityNotes('actCard-3')" style="background:#eff6ff; color:var(--titan-blue); border:none; padding:2px 8px; border-radius:12px; font-size:11px; font-weight:600; cursor:pointer; display:flex; align-items:center; gap:4px;">
-                <span id="noteCount-actCard-3" style="display:flex; align-items:center; gap:3px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg> 1 Note</span>
-                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-              </button>
-            </div>
-
-            <div class="crm-act-notes-drawer" id="actNotes-actCard-3" style="display:none; flex-direction:column; gap:6px; background:#f8fafc; padding:8px 10px; border-radius:6px; margin-top:6px;">
-              <div class="act-note-list" id="actNoteList-actCard-3" style="display:flex; flex-direction:column; gap:4px;">
-                <div style="font-size:11.5px; color:#334155; padding:4px 0;">
-                  <span style="font-weight:600; color:#0f172a;">1w ago:</span> "Sent initial proposal v1 with SOC2 attachments."
-                </div>
-              </div>
-              <div style="display:flex; gap:6px; margin-top:4px;">
-                <input type="text" placeholder="Write personal note..." style="flex:1; font-size:11.5px; border:1px solid #cbd5e1; border-radius:4px; padding:4px 8px; outline:none;" onkeydown="if(event.key==='Enter')CrmApp.appendActivityNote('actCard-3', this)">
-                <button style="background:var(--titan-blue); color:#fff; border:none; border-radius:4px; font-size:11px; padding:0 8px; cursor:pointer;" onclick="CrmApp.appendActivityNote('actCard-3', this.previousElementSibling)">Save</button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-      <button onclick="CrmApp.drillInto('all-activity')" style="align-self:center; display:flex; align-items:center; gap:5px; background:transparent; border:1px solid #d4e0f5; border-radius:6px; color:var(--titan-blue); padding:6px 14px; font-size:12px; font-weight:600; cursor:pointer; transition:all 0.15s ease;" onmouseover="this.style.background='#f0f6ff';" onmouseout="this.style.background='transparent';">
-        See all activity
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-          <polyline points="9 18 15 12 9 6"></polyline>
-        </svg>
-      </button>
-          </div>
-        </div>
-      </div>
-
-    </div>
-
-    <!-- 📄 PAGE 7: ALL TASKS & MEETINGS (Dedicated Drilled Page) -->
-    <div class="crm-view-page" id="crmView-all-tasks" style="display: none;">
-      
-      <div class="crm-section-title" style="margin-bottom:0;">
-        <span>All Upcoming Tasks & Meetings</span>
-        <button class="crm-btn-blue" style="padding:4px 10px; font-size:11px;">+ Schedule</button>
-      </div>
-
-      <div class="crm-date-divider" style="margin-top:4px;">TODAY</div>
-      <div style="display:flex; flex-direction:column; gap:6px;">
-        <div style="display:flex; align-items:center; justify-content:space-between; padding:10px 12px; border-radius:8px; background:#fff; border:1px solid #f1f5f9;">
-          <div style="display:flex; align-items:center; gap:10px; flex:1; min-width:0; margin-right:12px;">
-            <div style="width:32px; height:32px; border-radius:8px; background:#eff6ff; color:var(--titan-blue); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-            </div>
-            <div style="display:flex; flex-direction:column; gap:4px; flex:1; min-width:0;">
-              <span style="font-weight:600; font-size:13px; color:var(--titan-text-main);">Q3 Licensing & Security Review</span>
-              <span style="font-size:11.5px; color:var(--titan-text-sub);">Today at 3:00 PM</span>
-            </div>
-          </div>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0; cursor:pointer;" title="Join / View Details"><polyline points="9 18 15 12 9 6"></polyline></svg>
-        </div>
-
-        <div style="display:flex; align-items:center; justify-content:space-between; padding:10px 12px; border-radius:8px; background:#fff; border:1px solid #f1f5f9;">
-          <div style="display:flex; align-items:center; gap:10px; flex:1; min-width:0; margin-right:12px;">
-            <div style="width:32px; height:32px; border-radius:8px; background:#fffbeb; color:#d97706; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
-            </div>
-            <div style="display:flex; flex-direction:column; gap:4px; flex:1; min-width:0;">
-              <span style="font-weight:600; font-size:13px; color:var(--titan-text-main);">Send Revised SOC2 Agreement</span>
-              <span style="font-size:11.5px; color:var(--titan-text-sub);">Today at 5:00 PM</span>
-            </div>
-          </div>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0; cursor:pointer;" title="View Details"><polyline points="9 18 15 12 9 6"></polyline></svg>
-        </div>
-      </div>
-
-      <div class="crm-date-divider">TOMORROW</div>
-      <div style="display:flex; flex-direction:column; gap:6px;">
-        <div style="display:flex; align-items:center; justify-content:space-between; padding:10px 12px; border-radius:8px; background:#fff; border:1px solid #f1f5f9;">
-          <div style="display:flex; align-items:center; gap:10px; flex:1; min-width:0; margin-right:12px;">
-            <div style="width:32px; height:32px; border-radius:8px; background:#eff6ff; color:var(--titan-blue); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-            </div>
-            <div style="display:flex; flex-direction:column; gap:4px; flex:1; min-width:0;">
-              <span style="font-weight:600; font-size:13px; color:var(--titan-text-main);">Discovery Call & Tech Demo</span>
-              <span style="font-size:11.5px; color:var(--titan-text-sub);">Tomorrow at 10:30 AM</span>
-            </div>
-          </div>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0; cursor:pointer;" title="Join / View Details"><polyline points="9 18 15 12 9 6"></polyline></svg>
-        </div>
-      </div>
-
-      <div class="crm-date-divider">THIS WEEK</div>
-      <div style="display:flex; flex-direction:column; gap:6px;">
-        <div style="display:flex; align-items:center; justify-content:space-between; padding:10px 12px; border-radius:8px; background:#fff; border:1px solid #f1f5f9;">
-          <div style="display:flex; align-items:center; gap:10px; flex:1; min-width:0; margin-right:12px;">
-            <div style="width:32px; height:32px; border-radius:8px; background:#fffbeb; color:#d97706; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
-            </div>
-            <div style="display:flex; flex-direction:column; gap:4px; flex:1; min-width:0;">
-              <span style="font-weight:600; font-size:13px; color:var(--titan-text-main);">Draft Contract & SLA Terms</span>
-              <span style="font-size:11.5px; color:var(--titan-text-sub);">Thursday at 2:00 PM</span>
-            </div>
-          </div>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0; cursor:pointer;" title="View Details"><polyline points="9 18 15 12 9 6"></polyline></svg>
-        </div>
-
-        <div style="display:flex; align-items:center; justify-content:space-between; padding:10px 12px; border-radius:8px; background:#fff; border:1px solid #f1f5f9;">
-          <div style="display:flex; align-items:center; gap:10px; flex:1; min-width:0; margin-right:12px;">
-            <div style="width:32px; height:32px; border-radius:8px; background:#eff6ff; color:var(--titan-blue); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-            </div>
-            <div style="display:flex; flex-direction:column; gap:4px; flex:1; min-width:0;">
-              <span style="font-weight:600; font-size:13px; color:var(--titan-text-main);">Executive Sign-off Sync</span>
-              <span style="font-size:11.5px; color:var(--titan-text-sub);">Friday at 11:00 AM</span>
-            </div>
-          </div>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0; cursor:pointer;" title="Join / View Details"><polyline points="9 18 15 12 9 6"></polyline></svg>
-        </div>
-      </div>
-
-    </div>
-
-    <!-- 📄 PAGE 8: ALL ACTIVITY (Dedicated Drilled Page for Indefinite Scrolling) -->
-    <div class="crm-view-page" id="crmView-all-activity" style="display: none;">
-      
-      <div class="crm-section-title" style="margin-bottom:0;">
-        <span>Full Activity History</span>
-        <button class="crm-btn-blue" style="padding:4px 10px; font-size:11px;" onclick="CrmApp.logActivityPrompt()">+ Log Activity</button>
-      </div>
-
-      <div class="crm-timeline-wrapper" style="margin-top:12px;">
-        
-        <!-- Activity 1 -->
-        <div class="crm-timeline-item">
-          <div class="crm-timeline-badge">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-          </div>
-          <div class="crm-timeline-content" style="flex:1;">
-            <div style="display:flex; align-items:center; justify-content:space-between; font-size:12.5px; font-weight:600; color:var(--titan-text-main);">
-              <span id="crmAllAct1Title">Project roadmap for Dashboard version 2</span>
-              <span style="font-size:11px; font-weight:500; color:var(--titan-text-sub);">2:15 PM</span>
-            </div>
-
-            <div style="display:flex; align-items:center; justify-content:space-between; margin-top:6px;">
-              <button onclick="CrmApp.showAddNoteInput('allActCard-1')" style="background:transparent; color:var(--titan-text-sub); border:1px dashed #cbd5e1; padding:2px 8px; border-radius:12px; font-size:11px; font-weight:500; cursor:pointer;">
-                + Add Note
-              </button>
-              <button class="crm-note-pill-btn" onclick="CrmApp.toggleActivityNotes('allActCard-1')" style="background:#eff6ff; color:var(--titan-blue); border:none; padding:2px 8px; border-radius:12px; font-size:11px; font-weight:600; cursor:pointer; display:flex; align-items:center; gap:4px;">
-                <span id="noteCount-allActCard-1" style="display:flex; align-items:center; gap:3px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg> 2 Notes</span>
-                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-              </button>
-            </div>
-
-            <div class="crm-act-notes-drawer" id="actNotes-allActCard-1" style="display:none; flex-direction:column; gap:6px; background:#f8fafc; padding:8px 10px; border-radius:6px; margin-top:6px;">
-              <div class="act-note-list" id="actNoteList-allActCard-1" style="display:flex; flex-direction:column; gap:4px;">
-                <div style="font-size:11.5px; color:#334155; padding:4px 0; border-bottom:1px solid #e2e8f0;">
-                  <span style="font-weight:600; color:#0f172a;">3d ago:</span> "Ella requested Dave (VP Tech) review SSO specs directly."
-                </div>
-                <div style="font-size:11.5px; color:#334155; padding:4px 0;">
-                  <span style="font-weight:600; color:#0f172a;">2:20 PM:</span> "Async updates preferred over calls."
-                </div>
-              </div>
-              <div style="display:flex; gap:6px; margin-top:4px;">
-                <input type="text" placeholder="Write personal note..." style="flex:1; font-size:11.5px; border:1px solid #cbd5e1; border-radius:4px; padding:4px 8px; outline:none;" onkeydown="if(event.key==='Enter')CrmApp.appendActivityNote('allActCard-1', this)">
-                <button style="background:var(--titan-blue); color:#fff; border:none; border-radius:4px; font-size:11px; padding:0 8px; cursor:pointer;" onclick="CrmApp.appendActivityNote('allActCard-1', this.previousElementSibling)">Save</button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Activity 2 -->
-        <div class="crm-timeline-item">
-          <div class="crm-timeline-badge">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-          </div>
-          <div class="crm-timeline-content" style="flex:1;">
-            <div style="display:flex; align-items:center; justify-content:space-between; font-size:12.5px; font-weight:600; color:var(--titan-text-main);">
-              <span>Discovery Call: Security & Seat Tiers</span>
-              <span style="font-size:11px; font-weight:500; color:var(--titan-text-sub);">Yesterday</span>
-            </div>
-
-            <div style="display:flex; align-items:center; justify-content:space-between; margin-top:6px;">
-              <button onclick="CrmApp.showAddNoteInput('allActCard-2')" style="background:transparent; color:var(--titan-text-sub); border:1px dashed #cbd5e1; padding:2px 8px; border-radius:12px; font-size:11px; font-weight:500; cursor:pointer;">
-                + Add Note
-              </button>
-              <button class="crm-note-pill-btn" onclick="CrmApp.toggleActivityNotes('allActCard-2')" style="background:#eff6ff; color:var(--titan-blue); border:none; padding:2px 8px; border-radius:12px; font-size:11px; font-weight:600; cursor:pointer; display:flex; align-items:center; gap:4px;">
-                <span id="noteCount-allActCard-2" style="display:flex; align-items:center; gap:3px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg> 1 Note</span>
-                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-              </button>
-            </div>
-
-            <div class="crm-act-notes-drawer" id="actNotes-allActCard-2" style="display:none; flex-direction:column; gap:6px; background:#f8fafc; padding:8px 10px; border-radius:6px; margin-top:6px;">
-              <div class="act-note-list" id="actNoteList-allActCard-2" style="display:flex; flex-direction:column; gap:4px;">
-                <div style="font-size:11.5px; color:#334155; padding:4px 0;">
-                  <span style="font-weight:600; color:#0f172a;">Yesterday:</span> "Confirmed decision maker is Ella + Dave (VP Tech)."
-                </div>
-              </div>
-              <div style="display:flex; gap:6px; margin-top:4px;">
-                <input type="text" placeholder="Write personal note..." style="flex:1; font-size:11.5px; border:1px solid #cbd5e1; border-radius:4px; padding:4px 8px; outline:none;" onkeydown="if(event.key==='Enter')CrmApp.appendActivityNote('allActCard-2', this)">
-                <button style="background:var(--titan-blue); color:#fff; border:none; border-radius:4px; font-size:11px; padding:0 8px; cursor:pointer;" onclick="CrmApp.appendActivityNote('allActCard-2', this.previousElementSibling)">Save</button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Activity 3 -->
-        <div class="crm-timeline-item">
-          <div class="crm-timeline-badge">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
-          </div>
-          <div class="crm-timeline-content" style="flex:1;">
-            <div style="display:flex; align-items:center; justify-content:space-between; font-size:12.5px; font-weight:600; color:var(--titan-text-main);">
-              <span>AvonTech Proposal & Security Documentation</span>
-              <span style="font-size:11px; font-weight:500; color:var(--titan-text-sub);">1w ago</span>
-            </div>
-
-            <div style="display:flex; align-items:center; justify-content:space-between; margin-top:6px;">
-              <button onclick="CrmApp.showAddNoteInput('allActCard-3')" style="background:transparent; color:var(--titan-text-sub); border:1px dashed #cbd5e1; padding:2px 8px; border-radius:12px; font-size:11px; font-weight:500; cursor:pointer;">
-                + Add Note
-              </button>
-              <button class="crm-note-pill-btn" onclick="CrmApp.toggleActivityNotes('allActCard-3')" style="background:#eff6ff; color:var(--titan-blue); border:none; padding:2px 8px; border-radius:12px; font-size:11px; font-weight:600; cursor:pointer; display:flex; align-items:center; gap:4px;">
-                <span id="noteCount-allActCard-3" style="display:flex; align-items:center; gap:3px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg> 1 Note</span>
-                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-              </button>
-            </div>
-
-            <div class="crm-act-notes-drawer" id="actNotes-allActCard-3" style="display:none; flex-direction:column; gap:6px; background:#f8fafc; padding:8px 10px; border-radius:6px; margin-top:6px;">
-              <div class="act-note-list" id="actNoteList-allActCard-3" style="display:flex; flex-direction:column; gap:4px;">
-                <div style="font-size:11.5px; color:#334155; padding:4px 0;">
-                  <span style="font-weight:600; color:#0f172a;">1w ago:</span> "Sent initial proposal v1 with SOC2 attachments."
-                </div>
-              </div>
-              <div style="display:flex; gap:6px; margin-top:4px;">
-                <input type="text" placeholder="Write personal note..." style="flex:1; font-size:11.5px; border:1px solid #cbd5e1; border-radius:4px; padding:4px 8px; outline:none;" onkeydown="if(event.key==='Enter')CrmApp.appendActivityNote('allActCard-3', this)">
-                <button style="background:var(--titan-blue); color:#fff; border:none; border-radius:4px; font-size:11px; padding:0 8px; cursor:pointer;" onclick="CrmApp.appendActivityNote('allActCard-3', this.previousElementSibling)">Save</button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Activity 4 -->
-        <div class="crm-timeline-item">
-          <div class="crm-timeline-badge">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
-          </div>
-          <div class="crm-timeline-content" style="flex:1;">
-            <div style="display:flex; align-items:center; justify-content:space-between; font-size:12.5px; font-weight:600; color:var(--titan-text-main);">
-              <span>Enterprise Quote Created ($32,000 / yr)</span>
-              <span style="font-size:11px; font-weight:500; color:var(--titan-text-sub);">2w ago</span>
-            </div>
-
-            <div style="display:flex; align-items:center; justify-content:space-between; margin-top:6px;">
-              <button onclick="CrmApp.showAddNoteInput('allActCard-4')" style="background:transparent; color:var(--titan-text-sub); border:1px dashed #cbd5e1; padding:2px 8px; border-radius:12px; font-size:11px; font-weight:500; cursor:pointer;">
-                + Add Note
-              </button>
-              <button class="crm-note-pill-btn" onclick="CrmApp.toggleActivityNotes('allActCard-4')" style="background:#eff6ff; color:var(--titan-blue); border:none; padding:2px 8px; border-radius:12px; font-size:11px; font-weight:600; cursor:pointer; display:flex; align-items:center; gap:4px;">
-                <span id="noteCount-allActCard-4" style="display:flex; align-items:center; gap:3px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg> 0 Notes</span>
-                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-              </button>
-            </div>
-
-            <div class="crm-act-notes-drawer" id="actNotes-allActCard-4" style="display:none; flex-direction:column; gap:6px; background:#f8fafc; padding:8px 10px; border-radius:6px; margin-top:6px;">
-              <div class="act-note-list" id="actNoteList-allActCard-4" style="display:flex; flex-direction:column; gap:4px;"></div>
-              <div style="display:flex; gap:6px; margin-top:4px;">
-                <input type="text" placeholder="Write personal note..." style="flex:1; font-size:11.5px; border:1px solid #cbd5e1; border-radius:4px; padding:4px 8px; outline:none;" onkeydown="if(event.key==='Enter')CrmApp.appendActivityNote('allActCard-4', this)">
-                <button style="background:var(--titan-blue); color:#fff; border:none; border-radius:4px; font-size:11px; padding:0 8px; cursor:pointer;" onclick="CrmApp.appendActivityNote('allActCard-4', this.previousElementSibling)">Save</button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-
-  </div>
-</div>
-
-    </div>
   </div><!-- /app-window -->
 
 
@@ -5086,6 +3659,13 @@
             </div>
             <span class="app-label">Contacts</span>
           </div>
+          <!-- CRM — the full app -->
+          <div class="app-switcher-item" onclick="location.href='crm.html'">
+            <div class="app-icon">
+              <img src="app_switcher_assets/grid_icons/crm.svg" alt="CRM" class="app-icon-img">
+            </div>
+            <span class="app-label">CRM</span>
+          </div>
         </div>
 
         <!-- Second Row of Apps (Bookings, Drive, Backup) -->
@@ -5113,7 +3693,7 @@
           </div>
         </div>
 
-        <!-- Third Row of Apps (Tasks, Site, CRM) -->
+        <!-- Third Row of Apps (Tasks, Site, Admin) -->
         <div class="app-switcher-row">
           <!-- Tasks -->
           <div class="app-switcher-item">
@@ -5129,12 +3709,12 @@
             </div>
             <span class="app-label">Site</span>
           </div>
-          <!-- CRM -->
-          <div class="app-switcher-item" onclick="location.href='crm.html'">
+          <!-- Admin -->
+          <div class="app-switcher-item">
             <div class="app-icon">
-              <img src="app_switcher_assets/grid_icons/crm.svg" alt="CRM" class="app-icon-img">
+              <img src="app_switcher_assets/grid_icons/admin.svg" alt="Admin" class="app-icon-img">
             </div>
-            <span class="app-label">CRM</span>
+            <span class="app-label">Admin</span>
           </div>
         </div>
       </div>
@@ -5196,37 +3776,6 @@
         </div>
       </div>
 
-    </div>
-  </div><!-- /app-switcher-dropdown -->
-
-  <!-- ============ CRM: Pipeline Dropdown (label-menu style) ============ -->
-  <div class="pipeline-dropdown" id="pipeline-dropdown">
-    <div class="pl-dd-title">Pipelines</div>
-    <div class="pl-dd-option checked" data-key="sales" onclick="selectPipelineOption(this); event.stopPropagation();">
-      <span class="pl-dd-ic" style="color:#2170f4;"><svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 3.2H9.6L12.4 7L9.6 10.8H2L4.4 7L2 3.2Z" fill="currentColor"/></svg></span>
-      <span class="pl-dd-name">Neo partnerships</span>
-      <span class="pl-dd-radio"></span>
-    </div>
-    <div class="pl-dd-option" data-key="onboarding" onclick="selectPipelineOption(this); event.stopPropagation();">
-      <span class="pl-dd-ic" style="color:#0ea5e9;"><svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 3.2H9.6L12.4 7L9.6 10.8H2L4.4 7L2 3.2Z" fill="currentColor"/></svg></span>
-      <span class="pl-dd-name">Onboarding Projects</span>
-      <span class="pl-dd-radio"></span>
-    </div>
-    <div class="pl-dd-option" data-key="hiring" onclick="selectPipelineOption(this); event.stopPropagation();">
-      <span class="pl-dd-ic" style="color:#f59e0b;"><svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 3.2H9.6L12.4 7L9.6 10.8H2L4.4 7L2 3.2Z" fill="currentColor"/></svg></span>
-      <span class="pl-dd-name">Q3 Hiring</span>
-      <span class="pl-dd-radio"></span>
-    </div>
-    <div class="pl-dd-sep"></div>
-    <div class="pl-dd-action" onclick="location.href='crm.html#new-pipeline';">
-      <span class="pl-dd-ic"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 2.5V11.5M2.5 7H11.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></span>
-      <span class="pl-dd-name">New pipeline</span>
-      <span class="pl-dd-ext" title="Opens in Titan CRM"><svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.5 3H3.2C2.54 3 2 3.54 2 4.2v6.6C2 11.46 2.54 12 3.2 12h6.6c.66 0 1.2-.54 1.2-1.2V8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><path d="M8.5 2H12v3.5M12 2L6.8 7.2" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-    </div>
-    <div class="pl-dd-action" onclick="location.href='crm.html';">
-      <span class="pl-dd-ic"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 5a2 2 0 100 4 2 2 0 000-4z" stroke="currentColor" stroke-width="1.2"/><path d="M11.4 8.2l1 .6-1 1.7-1.1-.4a3.7 3.7 0 01-.8.5l-.2 1.2H6.7l-.2-1.2a3.7 3.7 0 01-.8-.5l-1.1.4-1-1.7 1-.6a3.6 3.6 0 010-1l-1-.6 1-1.7 1.1.4c.25-.2.52-.36.8-.5l.2-1.2h2.6l.2 1.2c.28.14.55.3.8.5l1.1-.4 1 1.7-1 .6a3.6 3.6 0 010 1z" stroke="currentColor" stroke-width="1.1" stroke-linejoin="round"/></svg></span>
-      <span class="pl-dd-name">Manage pipelines</span>
-      <span class="pl-dd-ext" title="Opens in Titan CRM"><svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.5 3H3.2C2.54 3 2 3.54 2 4.2v6.6C2 11.46 2.54 12 3.2 12h6.6c.66 0 1.2-.54 1.2-1.2V8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><path d="M8.5 2H12v3.5M12 2L6.8 7.2" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
     </div>
   </div>
 
@@ -6337,380 +4886,6 @@
       }
     }
 
-    // ── CRM demo logic ────────────────────────────────────────────────
-    const STAGE_COLORS = {
-      'Lead': '#94a3b8',
-      'Qualified': '#0ea5e9',
-      'Demo Scheduled': '#f59e0b',
-      'Proposal Sent': '#2170f4',
-      'Negotiation': '#ec4899',
-      'Closed': '#15803d',
-    };
-    const PIPELINE_ICON_SVG = '<svg class="pchip-icon" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 3.2H9.6L12.4 7L9.6 10.8H2L4.4 7L2 3.2Z" fill="currentColor"/></svg>';
-
-    function selectEmailTile(el, type) {
-      document.querySelectorAll('.email-tile').forEach(function (t) { t.classList.remove('selected'); });
-      el.classList.add('selected');
-
-      document.querySelectorAll('.thread-view').forEach(function (v) { v.style.display = 'none'; });
-      const view = document.getElementById('thread-view-' + type);
-      if (view) view.style.display = 'block';
-
-      closeCrmPanel();
-    }
-
-    function toggleCrmPanel() {
-      const panel = document.getElementById('crm-panel');
-      if (!panel) return;
-      panel.classList.toggle('open');
-    }
-    function closeCrmPanel() {
-      const panel = document.getElementById('crm-panel');
-      if (panel) panel.classList.remove('open');
-    }
-
-    function generateAiSummary(btn) {
-      const text = document.getElementById('crm-ai-summary-text');
-      if (text) text.classList.add('show');
-      btn.textContent = 'Regenerate';
-    }
-
-    // ── Pipeline dropdown (§1.3 / §7.1) — anchored, label-menu style ──
-    // Available pipelines the user can move an email into (name + label colors).
-    const PIPELINES = {
-      sales:      { name: 'Neo partnerships',     workItem: 'Meridian AI site', color: '#2170f4', tint: '#e7f0fe' },
-      onboarding: { name: 'Onboarding Projects', color: '#0ea5e9', tint: '#e3f4fd' },
-      hiring:     { name: 'Q3 Hiring',           color: '#f59e0b', tint: '#fef3e0' },
-    };
-    const PL_LABEL_ICON = '<svg class="pl-icon" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 3.2H9.6L12.4 7L9.6 10.8H2L4.4 7L2 3.2Z" fill="currentColor"/></svg>';
-
-    // The record (tile row and/or thread header) the open dropdown will edit.
-    let pipelineCtx = null;
-
-    // Wrap a tile's bare preview in a flex row so a label can sit at its end.
-    function ensurePreviewRow(tile) {
-      const preview = tile.querySelector('.tile-preview');
-      if (!preview) return null;
-      let row = preview.closest('.tile-preview-row');
-      if (!row) {
-        row = document.createElement('div');
-        row.className = 'tile-preview-row';
-        preview.parentNode.insertBefore(row, preview);
-        row.appendChild(preview);
-      }
-      return row;
-    }
-
-    // Create / update / remove the pipeline label inside a host (preview-row or thread header).
-    function renderPipelineLabel(host, key) {
-      if (!host) return;
-      let label = host.querySelector(':scope > .pipeline-label');
-      if (!key) {                       // removed from all pipelines
-        if (label) label.remove();
-        delete host.dataset.pipeline;
-        delete host.dataset.stage;
-        return;
-      }
-      const p = PIPELINES[key];
-      if (!p) return;
-      if (!label) {
-        label = document.createElement('span');
-        label.className = 'pipeline-label';
-        label.addEventListener('click', function (e) { e.stopPropagation(); openRecordForLabel(label); });
-        host.appendChild(label);
-      }
-      // Thread header shows "Work Item: Stage"; tiles show the work item name only.
-      const isHeader = host.classList && host.classList.contains('thread-sticky-header');
-      const labelName = p.workItem || p.name;
-      const text = labelName + (isHeader && host.dataset.stage ? ': ' + host.dataset.stage : '');
-      label.title = labelName + ' — open record';
-      label.innerHTML = PL_LABEL_ICON + '<span>' + text + '</span>';
-      label.style.background = p.tint;
-      label.style.color = p.color;
-      host.dataset.pipeline = key;
-    }
-
-    function syncDropdownRadios() {
-      const key = pipelineCtx && pipelineCtx.host ? pipelineCtx.host.dataset.pipeline : null;
-      document.querySelectorAll('#pipeline-dropdown .pl-dd-option').forEach(function (o) {
-        o.classList.toggle('checked', !!key && o.getAttribute('data-key') === key);
-      });
-    }
-
-    function openPipelinePicker(evt) {
-      if (evt) evt.stopPropagation();
-      const dd = document.getElementById('pipeline-dropdown');
-      if (!dd) return;
-      const trigger = evt && (evt.currentTarget || evt.target);
-
-      // Resolve which record's label this dropdown edits, and any mirror to keep in sync.
-      pipelineCtx = null;
-      if (trigger && trigger.closest) {
-        const tile = trigger.closest('.email-tile');
-        if (tile) {
-          pipelineCtx = { host: ensurePreviewRow(tile), mirror: null, tile: tile };
-          const linked = document.getElementById('thread-view-linked');
-          if (tile.classList.contains('selected') && linked && linked.style.display !== 'none') {
-            pipelineCtx.mirror = linked.querySelector('.thread-sticky-header');
-          }
-        } else if (trigger.closest('.reading-action-bar')) {
-          const view = visibleThreadView();
-          const header = view ? view.querySelector('.thread-sticky-header') : null;
-          pipelineCtx = { host: header, mirror: null, tile: null };
-          const sel = document.querySelector('.email-tile.selected');
-          if (sel) pipelineCtx.mirror = ensurePreviewRow(sel);
-        }
-      }
-      syncDropdownRadios();
-
-      dd.classList.add('open');
-      if (trigger && trigger.getBoundingClientRect) {
-        const r = trigger.getBoundingClientRect();
-        const w = dd.offsetWidth || 240;
-        const h = dd.offsetHeight || 260;
-        let left = r.left;
-        if (left + w > window.innerWidth - 8) left = window.innerWidth - w - 8;
-        if (left < 8) left = 8;
-        let top = r.bottom + 6;
-        if (top + h > window.innerHeight - 8) top = Math.max(8, r.top - h - 6);
-        dd.style.left = left + 'px';
-        dd.style.top = top + 'px';
-      }
-      setTimeout(function () { document.addEventListener('click', outsidePipelineDropdown); }, 0);
-    }
-    function outsidePipelineDropdown(e) {
-      const dd = document.getElementById('pipeline-dropdown');
-      if (dd && !dd.contains(e.target)) closePipelinePicker();
-    }
-    function closePipelinePicker() {
-      const dd = document.getElementById('pipeline-dropdown');
-      if (dd) dd.classList.remove('open');
-      document.removeEventListener('click', outsidePipelineDropdown);
-    }
-    // Single-select: an email can belong to only one pipeline (radio behavior).
-    // Clicking the selected option again clears it (removed from the pipeline).
-    // The chosen pipeline is reflected live onto the email's label in the UI.
-    function selectPipelineOption(el) {
-      const already = el.classList.contains('checked');
-      const key = already ? null : el.getAttribute('data-key');
-      document.querySelectorAll('#pipeline-dropdown .pl-dd-option').forEach(function (o) {
-        o.classList.toggle('checked', !already && o === el);
-      });
-      if (!pipelineCtx) return;
-      const prevKey = pipelineCtx.host ? pipelineCtx.host.dataset.pipeline : null;
-      const firstStage = key ? (PIPELINE_STAGES[key] || ['New'])[0] : null;
-      if (key && pipelineCtx.host) pipelineCtx.host.dataset.stage = firstStage;
-      renderPipelineLabel(pipelineCtx.host, key);
-      if (pipelineCtx.mirror) {
-        if (key) pipelineCtx.mirror.dataset.stage = firstStage;
-        renderPipelineLabel(pipelineCtx.mirror, key);
-      }
-      // Adding an unlinked email to a pipeline opens the CRM sidebar for the new record.
-      if (key && !prevKey) {
-        closePipelinePicker();
-        if (pipelineCtx.tile) openCrmForEmail(pipelineCtx.tile, key);
-        else if (pipelineCtx.host) openCrmForThreadHeader(pipelineCtx.host, key);
-      }
-    }
-
-    // ── CRM record sidebar (§2.2 redesigned) ──────────────────────────────
-    const PIPELINE_STAGES = {
-      sales:      ['Lead', 'Qualified', 'Demo Scheduled', 'Proposal Sent', 'Negotiation', 'Closed'],
-      onboarding: ['Scoping', 'Proposal', 'Kickoff', 'In Progress', 'Review', 'Delivered'],
-      hiring:     ['Applied', 'Screen', 'Interview', 'Final Round', 'Offer', 'Hired'],
-    };
-    const CONTACTS = {
-      'Ryan Walker':  { email: 'ryan.walker@meridianlabs.com', company: 'Meridian Labs' },
-      'David Jones':  { email: 'david.jones@flock.io',         company: 'Flock' },
-      'Emma Clarke':  { email: 'emma.clarke@northwind.co',     company: 'Northwind' },
-      'Chloe':        { email: 'chloe@brightpath.co',          company: 'BrightPath' },
-      'Jason Miller': { email: 'jason.miller@lumen.io',        company: 'Lumen' },
-    };
-    function initialsOf(name) {
-      return name.split(/\s+/).map(function (w) { return w[0]; }).join('').slice(0, 2).toUpperCase();
-    }
-    function contactInfo(name) {
-      return CONTACTS[name] || {
-        email: name.toLowerCase().replace(/[^a-z0-9]+/g, '.').replace(/^\.|\.$/g, '') + '@example.com',
-        company: 'Independent',
-      };
-    }
-    // Which record (label hosts) the open panel represents, so stage edits sync back.
-    let panelRecord = null;
-
-    function openCrmPanel() {
-      const p = document.getElementById('crm-panel');
-      if (p) p.classList.remove('open');
-      if (window.CrmApp) {
-        window.CrmApp.openDrawer();
-      }
-    }
-
-    function setCrmRecord(rec) {
-      if (window.CrmApp && window.CrmApp.updateContext) {
-        window.CrmApp.updateContext(rec);
-      }
-      panelRecord = { key: rec.key, stage: rec.stage, host: rec.host || null, mirror: rec.mirror || null };
-    }
-    function renderStageLabel(key, stage) {
-      const p = PIPELINES[key]; if (!p) return;
-      document.getElementById('crm-ps-text').textContent = p.name + ': ' + stage;
-      const el = document.getElementById('crm-pipeline-stage');
-      el.style.background = p.color; el.style.color = '#fff';
-    }
-    // Progressive tint of the pipeline colour, palest first stage → deepest last.
-    function pipeShade(hex, idx, total) {
-      hex = (hex || '#2170f4').replace('#', '');
-      if (hex.length === 3) hex = hex.split('').map(function (c) { return c + c; }).join('');
-      const n = parseInt(hex, 16), r = (n >> 16) & 255, g = (n >> 8) & 255, b = n & 255;
-      const min = 0.35, max = 1, t = total <= 1 ? 1 : idx / (total - 1);
-      return 'rgba(' + r + ',' + g + ',' + b + ',' + (min + (max - min) * t).toFixed(3) + ')';
-    }
-    function buildStageMenu(key, stage) {
-      const menu = document.getElementById('crm-stage-menu');
-      const color = (PIPELINES[key] && PIPELINES[key].color) || '#2170f4';
-      const stages = PIPELINE_STAGES[key] || [];
-      menu.innerHTML = stages.map(function (s, i) {
-        return '<div class="crm-stage-item' + (s === stage ? ' active' : '') +
-          '" onclick="selectStage(this.dataset.s); event.stopPropagation();" data-s="' + s + '">' +
-          '<span class="dot" style="background:' + pipeShade(color, i, stages.length) + ';"></span>' + s + '</div>';
-      }).join('');
-    }
-    function toggleStageMenu(evt) {
-      if (evt) evt.stopPropagation();
-      const m = document.getElementById('crm-stage-menu');
-      if (m.classList.toggle('open')) {
-        setTimeout(function () { document.addEventListener('click', outsideStageMenu); }, 0);
-      } else { document.removeEventListener('click', outsideStageMenu); }
-    }
-    function outsideStageMenu(e) {
-      const w = document.querySelector('.crm-ps-wrap');
-      if (w && !w.contains(e.target)) {
-        document.getElementById('crm-stage-menu').classList.remove('open');
-        document.removeEventListener('click', outsideStageMenu);
-      }
-    }
-    function selectStage(stage) {
-      if (!panelRecord) return;
-      panelRecord.stage = stage;
-      renderStageLabel(panelRecord.key, stage);
-      buildStageMenu(panelRecord.key, stage);
-      document.getElementById('crm-stage-menu').classList.remove('open');
-      document.removeEventListener('click', outsideStageMenu);
-      // Sync the email's labels (thread header shows the stage suffix).
-      [panelRecord.host, panelRecord.mirror].forEach(function (h) {
-        if (h) { h.dataset.stage = stage; renderPipelineLabel(h, panelRecord.key); }
-      });
-    }
-
-    // Open the sidebar for the pre-seeded linked record (Ryan Walker · Neo partnerships).
-    function openCrmForLinked() {
-      const header = document.querySelector('#thread-view-linked .thread-sticky-header');
-      const linkedTile = document.querySelector('.email-tile[data-record="linked"]');
-      const tileRow = linkedTile ? linkedTile.querySelector('.tile-preview-row') : null;
-      const key = (header && header.dataset.pipeline) || 'sales';
-      const stage = (header && header.dataset.stage) || 'Proposal Sent';
-      setCrmRecord({
-        title: 'Project roadmap for Dashboard version 2', subject: 'Project roadmap for Dashboard version 2', contact: 'Ryan Walker',
-        email: 'ryan.walker@meridianlabs.com', company: 'Meridian Labs', avatar: 'RW', workItem: 'Meridian AI site',
-        key: key, stage: stage, host: header, mirror: tileRow,
-      });
-      openCrmPanel();
-    }
-
-    // Open the sidebar for any email tile; record name defaults to the contact name.
-    function openCrmForEmail(tile, key) {
-      if (!tile) return;
-      const row = ensurePreviewRow(tile);
-      const raw = (tile.querySelector('.tile-sender') || {}).textContent || 'New contact';
-      const contact = raw.replace(/\s*\(\d+\)\s*$/, '').split(',')[0].trim();
-      const info = contactInfo(contact);
-      const stage = row.dataset.stage || (PIPELINE_STAGES[key] || ['New'])[0];
-      row.dataset.stage = stage;
-      setCrmRecord({
-        title: contact, contact: contact, email: info.email, company: info.company,
-        avatar: initialsOf(contact), key: key, stage: stage, host: row, mirror: null,
-      });
-      openCrmPanel();
-    }
-
-    // The thread currently shown in the reading pane (linked or unlinked).
-    function visibleThreadView() {
-      return [].slice.call(document.querySelectorAll('.thread-view')).find(function (v) {
-        return v.style.display !== 'none' && v.offsetParent !== null;
-      }) || null;
-    }
-
-    // Open the sidebar from a reading-pane hook (action bar / suggestion pill),
-    // deriving the contact from the visible thread's sender.
-    function openCrmForThreadHeader(header, key) {
-      const view = visibleThreadView();
-      const sEl = view ? view.querySelector('.exp-sender') : null;
-      const contact = sEl ? sEl.textContent.replace(/\s*\(\d+\)\s*$/, '').split(',')[0].trim() : 'New contact';
-      const info = contactInfo(contact);
-      const stage = (header && header.dataset.stage) || (PIPELINE_STAGES[key] || ['New'])[0];
-      if (header) header.dataset.stage = stage;
-      setCrmRecord({
-        title: contact, contact: contact, email: info.email, company: info.company,
-        avatar: initialsOf(contact), key: key, stage: stage, host: header, mirror: null,
-      });
-      openCrmPanel();
-    }
-
-    // Suggestion pill (AI): pipeline is already suggested, so add + open the panel directly.
-    function addSuggestedToPipeline(evt) {
-      if (evt) evt.stopPropagation();
-      const view = document.getElementById('thread-view-unlinked');
-      const header = view ? view.querySelector('.thread-sticky-header') : null;
-      const key = 'sales';
-      const stage = (PIPELINE_STAGES[key] || ['New'])[0];
-      if (header) { header.dataset.stage = stage; renderPipelineLabel(header, key); }
-      const pill = evt && (evt.currentTarget || evt.target.closest('.pc-suggested'));
-      if (pill && pill.classList.contains('pc-suggested')) pill.style.display = 'none';
-      openCrmForThreadHeader(header, key);
-    }
-
-    function openRecordForLabel(label) {
-      const tile = label.closest && label.closest('.email-tile');
-      if (tile && tile.dataset.record === 'linked') return openCrmForLinked();
-      if (tile) {
-        const row = tile.querySelector('.tile-preview-row');
-        return openCrmForEmail(tile, (row && row.dataset.pipeline) || 'sales');
-      }
-      return openCrmForLinked();
-    }
-
-    // "+ Add activity" — same menu the card action icon shows in the CRM board (§3.2.1).
-    function openActivityMenu(evt) {
-      if (evt) evt.stopPropagation();
-      const m = document.getElementById('crm-activity-menu');
-      const trigger = evt && (evt.currentTarget || evt.target);
-      m.classList.add('open');
-      if (trigger && trigger.getBoundingClientRect) {
-        const r = trigger.getBoundingClientRect();
-        const w = m.offsetWidth || 214;
-        const h = m.offsetHeight || 190;
-        let left = r.left;
-        if (left + w > window.innerWidth - 8) left = window.innerWidth - w - 8;
-        let top = r.bottom + 6;
-        if (top + h > window.innerHeight - 8) top = Math.max(8, r.top - h - 6);
-        m.style.left = left + 'px';
-        m.style.top = top + 'px';
-      }
-      setTimeout(function () { document.addEventListener('click', outsideActivityMenu); }, 0);
-    }
-    function outsideActivityMenu(e) {
-      const m = document.getElementById('crm-activity-menu');
-      if (m && !m.contains(e.target)) closeActivityMenu();
-    }
-    function closeActivityMenu() {
-      const m = document.getElementById('crm-activity-menu');
-      if (m) m.classList.remove('open');
-      document.removeEventListener('click', outsideActivityMenu);
-    }
-    function addActivity(kind) { closeActivityMenu(); }
-    function toggleActTask(el) { el.classList.toggle('done'); }
-
     // ── Sticky Header Scroll Listener ────────────────────────────────────
     (function initStickyHeader() {
       const threadContent = document.querySelector('.thread-content');
@@ -6721,268 +4896,6 @@
         });
       }
     })();
-
-    // ── Persona system: ?u=<id> replaces the built-in mailbox + CRM data ──────────
-    function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) {
-      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
-    function initialsOfName(name) {
-      return name.split(/\s+/).map(function (w) { return w[0]; }).join('').slice(0, 2).toUpperCase();
-    }
-    const PL_LABEL_ICON_STR = '<svg class="pl-icon" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 3.2H9.6L12.4 7L9.6 10.8H2L4.4 7L2 3.2Z" fill="currentColor"/></svg>';
-    let PERSONA = null;
-
-    function carryPersonaLinks() {
-      if (window.PERSONA_ID === 'default' || typeof withPersona !== 'function') return;
-      document.querySelectorAll('a[href]').forEach(function (a) {
-        var h = a.getAttribute('href');
-        if (/^(crm|index)\.html/.test(h)) a.setAttribute('href', withPersona(h));
-      });
-      document.querySelectorAll('[onclick]').forEach(function (el) {
-        var oc = el.getAttribute('onclick');
-        if (oc && oc.indexOf('location.href') !== -1) {
-          el.setAttribute('onclick', oc.replace(/(location\.href\s*=\s*')([^']+)(')/g,
-            function (_, a, url, b) { return a + withPersona(url) + b; }));
-        }
-      });
-    }
-
-    function pipeName(key) { return (PIPELINES[key] && PIPELINES[key].name) || key; }
-
-    // Rebuild the CRM data maps (single-select dropdown, stage menus, contact resolution).
-    function rebuildPersonaCrmData(p) {
-      for (var k in PIPELINES) delete PIPELINES[k];
-      for (var k2 in PIPELINE_STAGES) delete PIPELINE_STAGES[k2];
-      for (var k3 in CONTACTS) delete CONTACTS[k3];
-      p.pipelines.forEach(function (pl) {
-        var color = pl.color || '#2170f4';
-        PIPELINES[pl.id] = { name: pl.name, color: color, tint: color + '21' };
-        PIPELINE_STAGES[pl.id] = pl.stages.slice();
-      });
-      (p.contacts || []).forEach(function (c) {
-        CONTACTS[c.name] = { email: c.email, company: (c.company || (c.email.split('@')[1] || '').split('.')[0]) };
-      });
-      p.mailbox.threads.forEach(function (t) {
-        if (!CONTACTS[t.from]) CONTACTS[t.from] = { email: t.email, company: (t.email.split('@')[1] || '').split('.')[0] };
-      });
-      // Rebuild the pipeline dropdown options by CLONING a real default option
-      // (keeps the exact markup: icon + name + radio), then just swapping the data.
-      var dd = document.getElementById('pipeline-dropdown');
-      if (dd) {
-        var tmpl = dd.querySelector('.pl-dd-option');
-        var anchor = dd.querySelector('.pl-dd-sep') || dd.querySelector('.pl-dd-action');
-        if (tmpl && anchor) {
-          dd.querySelectorAll('.pl-dd-option').forEach(function (o) { o.remove(); });
-          p.pipelines.forEach(function (pl, i) {
-            var row = tmpl.cloneNode(true);
-            row.setAttribute('data-key', pl.id);
-            row.classList.toggle('checked', i === 0);
-            var nameEl = row.querySelector('.pl-dd-name'); if (nameEl) nameEl.textContent = pl.name;
-            var ic = row.querySelector('.pl-dd-ic'); if (ic) ic.style.color = pl.color || '#2170f4';
-            dd.insertBefore(row, anchor);
-          });
-        }
-      }
-    }
-
-    function applyPersonaIdentity(acc) {
-      var emails = document.querySelectorAll('.account-email-text');
-      if (emails[0]) emails[0].textContent = acc.email;
-      var av = document.querySelector('.account-header .account-avatar span');
-      if (av) av.textContent = acc.avatar || (acc.name || '?').charAt(0);
-      var search = document.querySelector('.top-toolbar input[placeholder^="Search"], input[placeholder^="Search in"]');
-      if (search) search.setAttribute('placeholder', 'Search in ' + acc.email);
-      // Isolation: hide every account section after the first.
-      var headers = document.querySelectorAll('.nav-scroll .account-header');
-      for (var i = 1; i < headers.length; i++) {
-        var h = headers[i];
-        var prev = h.previousElementSibling;
-        if (prev && prev.classList.contains('sidebar-line')) prev.style.display = 'none';
-        h.style.display = 'none';
-        var n = h.nextElementSibling;
-        while (n && !n.classList.contains('sidebar-line') && !n.classList.contains('account-header')) {
-          var next = n.nextElementSibling; n.style.display = 'none'; n = next;
-        }
-      }
-    }
-
-    // Templates cloned from the REAL default markup, so persona rows inherit the exact
-    // UI (all hover pills, the reply footer, etc.). Personas only supply data.
-    var _tileTmpl = null, _msgTmpl = null;
-    function capturePersonaTemplates() {
-      var tl = document.querySelector('.email-list .email-tile');
-      if (tl) _tileTmpl = tl.cloneNode(true);
-      var m = document.querySelector('#thread-view-unlinked .expanded-tile') ||
-              document.querySelector('.thread-content .expanded-tile');
-      if (m) _msgTmpl = m.cloneNode(true);
-    }
-
-    function clonePersonaTile(t, i) {
-      var tile = _tileTmpl.cloneNode(true);
-      tile.removeAttribute('data-record');
-      tile.classList.toggle('selected', i === 0);
-      tile.dataset.threadId = t.id;
-      tile.onclick = function () { openPersonaThread(t.id); selectPersonaTile(tile); };
-      var sender = tile.querySelector('.tile-sender');
-      if (sender) { sender.textContent = t.from; sender.classList.toggle('bold', !!t.unread); }
-      var time = tile.querySelector('.tile-time'); if (time) time.textContent = t.date;
-      var subj = tile.querySelector('.tile-subject'); if (subj) subj.textContent = t.subject;
-      var prev = tile.querySelector('.tile-preview');
-      var lastMsg = t.messages && t.messages[t.messages.length - 1];
-      if (prev) prev.textContent = lastMsg ? lastMsg.body.join(' ').replace(/\n/g, ' ') : '';
-      var oldLabel = tile.querySelector('.pipeline-label'); if (oldLabel) oldLabel.remove();
-      var dot = tile.querySelector('.tile-dot');
-      if (t.unread && !dot) { var d = document.createElement('div'); d.className = 'tile-dot'; var star = tile.querySelector('.tile-star'); if (star) star.parentNode.insertBefore(d, star); }
-      if (!t.unread && dot) dot.remove();
-      if (t.pipelineRef) {
-        var host = ensurePreviewRow(tile);
-        host.dataset.stage = t.pipelineRef.stage;
-        renderPipelineLabel(host, t.pipelineRef.pipeline);       // reuse the real default label renderer
-        var lbl = tile.querySelector('.pipeline-label');
-        if (lbl) lbl.onclick = function (e) { e.stopPropagation(); openPersonaRecord(t.id); };
-      }
-      return tile;
-    }
-
-    function selectPersonaTile(tile) {
-      document.querySelectorAll('.email-list .email-tile').forEach(function (t) { t.classList.remove('selected'); });
-      tile.classList.add('selected');
-    }
-
-    function fillPersonaMessage(node, m, t) {
-      var sent = m.dir === 'sent';
-      var s = node.querySelector('.exp-sender'); if (s) s.textContent = sent ? PERSONA.account.name : t.from;
-      var to = node.querySelector('.exp-to'); if (to) to.textContent = sent ? 'To: ' + t.from : 'To: me · ' + (t.email || '');
-      var ts = node.querySelector('.exp-timestamp'); if (ts) ts.textContent = m.when || t.date;
-      var body = node.querySelector('.expanded-body');
-      if (body) body.innerHTML = (m.body || []).map(function (p) { return '<p>' + esc(p).replace(/\n/g, '<br>') + '</p>'; }).join('<p>&zwj;</p>');
-    }
-
-    function openPersonaThread(id) {
-      var t = PERSONA.mailbox.threads.find(function (x) { return x.id === id; });
-      var content = document.querySelector('.thread-content');
-      if (!t || !content) return;
-      content.innerHTML = '';
-      var view = document.createElement('div');
-      view.className = 'thread-view'; view.style.display = 'block';
-      var header = document.createElement('div');
-      header.className = 'thread-sticky-header';
-      var title = document.createElement('div');
-      title.className = 'thread-title'; title.textContent = t.subject;
-      header.appendChild(title);
-      view.appendChild(header);
-      (t.messages || []).forEach(function (m) {
-        var node = _msgTmpl ? _msgTmpl.cloneNode(true) : document.createElement('div');
-        fillPersonaMessage(node, m, t);
-        view.appendChild(node);
-      });
-      content.appendChild(view);
-      if (t.pipelineRef) {
-        header.dataset.stage = t.pipelineRef.stage;
-        renderPipelineLabel(header, t.pipelineRef.pipeline);      // identical UI to the default header label
-        var lbl = header.querySelector('.pipeline-label');
-        if (lbl) lbl.onclick = function (e) { e.stopPropagation(); openPersonaRecord(t.id); };
-      }
-    }
-
-    function personaMoney(n) {
-      var s = (PERSONA && PERSONA.account.currency && PERSONA.account.currency.symbol) || '$';
-      return s + Number(n).toLocaleString();
-    }
-
-    // Drive the panel's Notes / AI Summary / Fields from the card's data, so no default
-    // demo content leaks into a persona record. (Activity has no card data yet → cleared.)
-    function fillPersonaPanel(card) {
-      var panel = document.getElementById('crm-panel');
-      if (!panel) return;
-      panel.querySelectorAll('.crm-activity-row').forEach(function (r) { r.remove(); });
-
-      var note = panel.querySelector('.crm-note');
-      if (note) {
-        if (card && card.note) { note.style.display = ''; note.innerHTML = '<div class="meta"></div>'; note.querySelector('.meta').textContent = PERSONA.account.name; note.appendChild(document.createTextNode(card.note)); }
-        else { note.style.display = 'none'; }
-      }
-
-      var sum = document.getElementById('crm-ai-summary-text');
-      if (sum) { sum.textContent = ''; sum.classList.remove('show'); }
-      var sumBtn = panel.querySelector('.crm-ai-summary-btn');
-      if (sumBtn) sumBtn.textContent = 'Generate';
-
-      var fieldSection = null;
-      panel.querySelectorAll('.crm-section-title').forEach(function (ti) { if (ti.textContent.trim() === 'Fields') fieldSection = ti.parentNode; });
-      if (fieldSection && card) {
-        fieldSection.querySelectorAll('.crm-field-row').forEach(function (r) { r.remove(); });
-        var fmtDate = function (iso) {
-          if (!iso || !/^\d{4}-\d{2}-\d{2}$/.test(iso)) return iso;
-          var M = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-          var p = iso.split('-'); return parseInt(p[2], 10) + ' ' + M[parseInt(p[1], 10) - 1] + ' ' + p[0];
-        };
-        var rows = [];
-        if (card.leadSource) rows.push(['Lead source', card.leadSource]);
-        if (card.weddingDate) rows.push(['Wedding date', fmtDate(card.weddingDate)]);
-        if (card.value) rows.push(['Value', personaMoney(card.value)]);
-        if (card.deposit != null) rows.push(['Deposit', personaMoney(card.deposit)]);
-        if (card.balance != null) rows.push(['Balance', personaMoney(card.balance)]);
-        if (card.dropOffDate) rows.push(['Drop-off', fmtDate(card.dropOffDate)]);
-        if (card.framerDue) rows.push(['Framer due', fmtDate(card.framerDue)]);
-        if (card.nextStep) rows.push(['Next step', card.nextStep]);
-        rows.forEach(function (r) {
-          var row = document.createElement('div');
-          row.className = 'crm-field-row';
-          row.innerHTML = '<span class="crm-field-label"></span><span class="crm-field-value"></span>';
-          row.querySelector('.crm-field-label').textContent = r[0];
-          row.querySelector('.crm-field-value').textContent = r[1];
-          fieldSection.appendChild(row);
-        });
-      }
-    }
-
-    function openPersonaRecord(threadId) {
-      var t = PERSONA.mailbox.threads.find(function (x) { return x.id === threadId; });
-      if (!t || !t.pipelineRef) return;
-      var pl = PERSONA.pipelines.find(function (p) { return p.id === t.pipelineRef.pipeline; });
-      var card = pl && (pl.cards.find(function (c) { return c.id === t.pipelineRef.cardId; }) ||
-        pl.cards.find(function (c) { return c.contact === t.from; }));
-      var info = (typeof contactInfo === 'function') ? contactInfo(t.from) : { email: t.email, company: '' };
-      setCrmRecord({
-        title: card ? card.deal : t.from,
-        contact: t.from, email: t.email || info.email, company: (card && card.company) || info.company,
-        avatar: initialsOfName(t.from),
-        key: t.pipelineRef.pipeline, stage: t.pipelineRef.stage, host: null, mirror: null,
-      });
-      fillPersonaPanel(card);
-      openCrmPanel();
-    }
-
-    function renderPersonaMailbox(p) {
-      capturePersonaTemplates();
-      var list = document.querySelector('.email-list');
-      if (list && _tileTmpl) {
-        var overlay = list.querySelector('.refresh-overlay');
-        var tiles = p.mailbox.threads.map(function (t, i) { return clonePersonaTile(t, i); });
-        list.innerHTML = '';
-        if (overlay) list.appendChild(overlay);
-        tiles.forEach(function (n) { list.appendChild(n); });
-      }
-      if (p.mailbox.threads[0]) openPersonaThread(p.mailbox.threads[0].id);
-    }
-
-    function applyPersona() {
-      try {
-        carryPersonaLinks();
-        var p = (window.TITAN_PERSONAS || {})[window.PERSONA_ID];
-        if (p) {
-          PERSONA = p;
-          document.title = 'Inbox - ' + (p.account.brand || 'Mail');
-          applyPersonaIdentity(p.account);
-          rebuildPersonaCrmData(p);
-          renderPersonaMailbox(p);
-        }
-      } finally {
-        document.documentElement.classList.remove('persona-cloak');
-      }
-    }
-    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', applyPersona);
-    else applyPersona();
   </script>
 
   <!-- Settings Sidebar Modal Drawer -->
@@ -7137,7 +5050,21 @@
       <div class="upgrade-subtext" style="font-size:12px; opacity:0.8;">Current plan: Free</div>
     </div>
   </div>
-  <script src="crm_app/crm_app.js"></script>
+
+  <!-- ── CRM sidebar ─────────────────────────────────────────
+       Data files are plain scripts, not JSON: fetch() on a local
+       .json fails under file:// and these prototypes get opened by
+       double-clicking. Order matters — data, then queries, then UI.
+       See crm/README.md §4-5.                          -->
+  <script src="crm/data/pipelines.js"></script>
+  <script src="crm/data/companies.js"></script>
+  <script src="crm/data/contacts.js"></script>
+  <script src="crm/data/opportunities.js"></script>
+  <script src="crm/data/links.js"></script>
+  <script src="crm/data/activities.js"></script>
+  <script src="crm/data/accounts/maya.js"></script>
+  <script src="crm/crm_data.js"></script>
+  <script src="crm/crm_sidebar.js"></script>
 </body>
 
 </html>
