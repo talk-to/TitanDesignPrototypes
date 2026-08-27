@@ -639,6 +639,48 @@
       filter: brightness(0.6);
     }
 
+    /* Help is a solid disc among line icons, so it carries Figma's 14px
+       rather than the 16-18px of its neighbours — at equal size a filled
+       glyph reads heavier. Sized explicitly, not left to the SVG's box. */
+    .toolbar-icon-help img {
+      width: 14px;
+      height: 14px;
+    }
+
+    /* ── Toolbar tooltips ──
+       Dark label below the button, matching Titan's own toolbar tooltips.
+       Label text comes from data-tip; add .tt to any button that has one. */
+    .tt {
+      position: relative;
+    }
+
+    .tt::after {
+      content: attr(data-tip);
+      position: absolute;
+      top: calc(100% + 6px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: #1a1a1a;
+      color: #fff;
+      font-family: inherit;
+      font-size: 13px;
+      line-height: 18px;
+      white-space: nowrap;
+      padding: 6px 10px;
+      border-radius: 6px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.22);
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity 0.12s ease 0.15s, visibility 0.12s ease 0.15s;
+      z-index: 400;
+    }
+
+    .tt:hover::after {
+      opacity: 1;
+      visibility: visible;
+    }
+
     .help-btn {
       border: 1px solid #dedede;
       border-radius: 4px;
@@ -2817,11 +2859,14 @@
         </div>
         <div class="toolbar-right">
           <div class="toolbar-icons">
-            <div class="toolbar-icon titan-action-btn" title="View details">
+            <div class="toolbar-icon titan-action-btn tt" data-tip="Read Receipts">
               <img src="assets/ec5d8d32-261b-410c-b07c-310cd6bb915e.svg" alt="">
             </div>
-            <div class="toolbar-icon titan-action-btn" title="Settings" onclick="toggleSettingsModal()">
+            <div class="toolbar-icon titan-action-btn tt" data-tip="Settings" onclick="toggleSettingsModal()">
               <img src="assets/63a156f6-89b7-4224-b2e1-f2fa32e8f03f.svg" alt="">
+            </div>
+            <div class="toolbar-icon titan-action-btn tt toolbar-icon-help" data-tip="Help">
+              <img src="assets/help-filled.svg" alt="">
             </div>
           </div>
           <div class="powered-by">
@@ -3813,6 +3858,14 @@
         <!-- Prompt / refine bar -->
         <div class="aiw-bar" id="aiw-bar">
           <div class="aiw-row">
+            <!-- Leading AI Write mark. Figma's "Text field" node carries a 20px
+                 `Titan AI non fill` glyph at the left of the *prompt* bar (both the
+                 resting and focused states). It is absent from the refine bar, and
+                 while generating the spinner owns that slot. -->
+            <span class="aiw-badge" id="aiw-badge">
+              <img class="aiw-badge-light" src="ai_write_assets/titan-ai-badge.svg" alt="">
+              <img class="aiw-badge-dark" src="ai_write_assets/titan-ai-badge-dark.svg" alt="">
+            </span>
             <div class="aiw-input-wrap">
               <span class="aiw-spinner" id="aiw-spinner"><img src="ai_write_assets/spinner.svg" alt=""></span>
               <span class="aiw-gen-label" id="aiw-gen-label">Generating...</span>
@@ -4895,6 +4948,41 @@
     }
 
     // ── Reading Pane Toggle ─────────────────────────────────────────────
+    /* ── Theme (light / dark) ─────────────────────────────────────────────
+       One class on <body> drives the whole app: the shell, the composer, the
+       reply box, AI Write and every popover read from it. Nothing is
+       duplicated per surface — see the `body.dark` block at the end of the
+       document for the palette. */
+    function setTheme(mode) {
+      const dark = mode === 'dark';
+      document.body.classList.toggle('dark', dark);
+
+      // The AI Write mark is #4D3BC4 in light and #4B56BA in dark. That is a
+      // hue shift, not a brightness one, so no CSS filter lands on it exactly —
+      // swap the asset instead. (The bar's own leading glyph and the
+      // "Reply with AI" icon are already per-theme: see .aiw-badge and the
+      // #4B56BA artwork in assets/.)
+      document.querySelectorAll('img.aiw-ic-on').forEach(function (img) {
+        img.src = 'ai_write_assets/titan-ai' + (dark ? '-dark' : '') + '.svg';
+      });
+
+      // Theme is the first section of the settings drawer.
+      const section = document.querySelectorAll('.side-modal-section')[0];
+      if (section) {
+        section.querySelectorAll('.side-modal-row').forEach((row, idx) => {
+          const on = (idx === 0) === !dark;
+          const label = row.querySelector('.side-modal-radio-label');
+          const preview = row.querySelector('.theme-layout-preview');
+          const checked = row.querySelector('.radio-btn.checked');
+          const unchecked = row.querySelector('.radio-btn.unchecked');
+          if (label) label.classList.toggle('active', on);
+          if (preview) preview.classList.toggle('active', on);
+          if (checked) checked.style.display = on ? '' : 'none';
+          if (unchecked) unchecked.style.display = on ? 'none' : '';
+        });
+      }
+    }
+
     function setReadingPane(option) {
       const sections = document.querySelectorAll('.side-modal-section');
       if (sections.length >= 2) {
@@ -5024,24 +5112,30 @@
       <div class="side-modal-section">
         <div class="side-modal-section-title">Theme</div>
         <div class="side-modal-row">
-          <div class="side-modal-radio-label active">
+          <div class="side-modal-radio-label active" onclick="setTheme('light')">
             <span class="radio-btn checked">
               <img src="settings_sidebar_assets/radio_selected.svg" alt="Selected">
             </span>
+            <span class="radio-btn unchecked" style="display:none;">
+              <img src="settings_sidebar_assets/radio_unselected.svg" alt="Unselected">
+            </span>
             <span>Light mode</span>
           </div>
-          <div class="theme-layout-preview active">
+          <div class="theme-layout-preview active" onclick="setTheme('light')">
             <img src="settings_sidebar_assets/preview_theme_light.svg" alt="Light theme preview">
           </div>
         </div>
         <div class="side-modal-row">
-          <div class="side-modal-radio-label">
+          <div class="side-modal-radio-label" onclick="setTheme('dark')">
+            <span class="radio-btn checked" style="display:none;">
+              <img src="settings_sidebar_assets/radio_selected.svg" alt="Selected">
+            </span>
             <span class="radio-btn unchecked">
               <img src="settings_sidebar_assets/radio_unselected.svg" alt="Unselected">
             </span>
             <span>Dark mode</span>
           </div>
-          <div class="theme-layout-preview">
+          <div class="theme-layout-preview" onclick="setTheme('dark')">
             <img src="settings_sidebar_assets/preview_theme_dark.svg" alt="Dark theme preview">
           </div>
         </div>
@@ -5442,9 +5536,13 @@
       box-shadow: 0 0 13px rgba(51, 51, 51, 0.16), 0 1px 2px rgba(16, 24, 40, 0.04);
       display: flex;
       flex-direction: column;
-      overflow: hidden;
       transition: background 0.14s, border-color 0.14s, box-shadow 0.14s;
     }
+
+    /* NO `overflow: hidden` on the bar. The undo/redo/thumbs tooltips open
+       upward, out of the bar, and it clipped them. The banner's own
+       `border-radius: 0 0 6px 6px` already matches the bar's inner radius
+       (7px minus the 1px border), so the corners stay clean without it. */
 
     /* Resting prompt box: AI Write is open the moment the composer opens, but
        it isn't focused yet — flat blue fill, no border, no shadow. Clicking it
@@ -5507,6 +5605,38 @@
       gap: 9px;
       min-height: 45px;
       padding: 8px 9px 8px 13px;
+    }
+
+    /* Leading AI Write mark — 20px glyph, 9px gap to the prompt text, matching
+       Figma's Text field node. Hidden by JS whenever the bar is the refine bar
+       or is generating. The dark variant swaps in under `body.dark`. */
+    .aiw-badge {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .aiw-badge.aiw-badge-show {
+      display: flex;
+    }
+
+    .aiw-badge img {
+      width: 20px;
+      height: 20px;
+      display: block;
+    }
+
+    .aiw-badge .aiw-badge-dark {
+      display: none;
+    }
+
+    /* With the mark in the row, the left padding drops to Figma's 9px so the
+       glyph — not the text — sits on the bar's inner margin. */
+    .aiw-row:has(.aiw-badge.aiw-badge-show) {
+      padding-left: 9px;
     }
 
     .aiw-input-wrap {
@@ -6941,7 +7071,7 @@
         });
       }
       const els = {};
-      ['aiw-shell', 'aiw-bar', 'aiw-input', 'aiw-controls', 'aiw-credits', 'aiw-credits-n',
+      ['aiw-shell', 'aiw-bar', 'aiw-input', 'aiw-badge', 'aiw-controls', 'aiw-credits', 'aiw-credits-n',
         'aiw-submit', 'aiw-stop', 'aiw-banner', 'aiw-banner-txt', 'aiw-chip', 'aiw-tool-btn', 'comp-body',
         'aiw-pill-tone', 'aiw-pill-length', 'aiw-pill-lang', 'aiw-undo', 'aiw-redo',
         'aiw-menu-tone', 'aiw-menu-length', 'aiw-menu-lang', 'aiw-nudge', 'aiw-nudge-feature',
@@ -6967,9 +7097,12 @@
           const m = MENUS[kind], box = els['aiw-menu-' + kind];
           box.classList.toggle('aiw-a2', S.approach === 2);
           let html = '';
-          // Approach 1 heads every menu — Tone, Length and now the language
-          // list too ("Translate to"). Approach 2 stays headerless throughout.
-          if (S.approach === 1) {
+          // Approach 1 heads every menu — Tone, Length and the language list.
+          // Approach 2 is headerless for Tone and Length, where the pill already
+          // names the category, but the language list keeps its "Translate to"
+          // heading: the pill there reads `EN`, which names the current value
+          // rather than the action, so the list needs the label.
+          if (S.approach === 1 || kind === 'lang') {
             html += '<div class="aiw-menu-head">' + m.head + '</div>';
           }
           m.opts.forEach(o => {
@@ -7024,6 +7157,11 @@
         // first generation onward it becomes a banner under the refine row.
         const showCredits = atRest && !S.generated && paywall && S.credits > 0;
         const showBanner = atRest && S.generated && paywall;
+
+        // The leading AI mark belongs to the prompt bar only: the refine bar has
+        // no glyph in Figma, and while generating the spinner takes that slot.
+        els['aiw-badge'].classList.toggle('aiw-badge-show',
+          !S.generated && !S.generating);
 
         els['aiw-controls'].style.display = showControls ? 'flex' : 'none';
         els['aiw-credits'].style.display = showCredits ? 'flex' : 'none';
@@ -7484,6 +7622,466 @@
       render();
     })();
   </script>
+
+  <!-- ══════════════════════════════════════════════════════════════════════
+       DARK MODE
+       Driven by a single `dark` class on <body>, applied by setTheme() from the
+       settings drawer. Layered last so it overrides the four preceding style
+       blocks without touching them — light mode is left exactly as it was.
+
+       Palette is Figma's dark-mode variable set
+       (AI Write - Dark Mode Screens, node 5401-205490):
+
+         Left nav / surface        #1f1f20    Theme (Dark Mode)/Sidebar
+         Non-affordance bg         #141414    reading pane, page ground
+         Email tile (unread/sel)   #434343
+         Left nav hover            #292929
+         Left nav clicked          #4a4a4a
+         Line separator           #4a4a4a
+         Composer body            #2c2c2c
+         Composer header          #4d4d4d
+         Composer/modal fill      #333333
+         Primary text             #f2f2f2
+         Secondary text 1 / 2     #dddddd / #bdbdbd
+         Tertiary text            #888888
+         Icon fill                #9c9c9c
+         Disabled icon            #6f6f6f
+         Primary blue             #2170f4    link #a6cfff / #5692f6
+         AI Write bar border      #3c3f69
+         Paywall banner (warn)    #785e01    counter text #d78d37
+         Upgrade fill             #f1bd6c    on #333333
+       ══════════════════════════════════════════════════════════════════════ -->
+  <style>
+    body.dark {
+      --border-color: #4a4a4a;
+      --card-border-color: #4a4a4a;
+      --reading-pane-bg: #141414;
+      --search-bg: #1f1f20;
+      --hover-bg: #292929;
+      --btn-hover-bg: #292929;
+      --selected-bg: #434343;
+      --selected-bg-strong: #4a4a4a;
+      background: #141414;
+    }
+
+    /* ── App shell ─────────────────────────────────────────────────────────
+       Two families of line, and they are NOT the same colour in Figma:
+         #343435  structural chrome — the lines that frame the columns and the
+                  top bars (sidebar edge, toolbar, tabs row, list edge)
+         #4a4a4a  content borders — email tiles, message cards, pills, menus
+       In light mode the sidebar is dark against a white list, so the column
+       edge needed no border. In dark mode both sides are #1f1f20 and the
+       boundary disappears without one. */
+    body.dark .app-window { background: #141414; }
+    body.dark .sidebar {
+      background: #1f1f20;
+      border-right: 1px solid #343435;
+    }
+
+    /* The sidebar header's line and the top toolbar's line are the same line
+       across the app — they must land on the same row. The toolbar's border sits
+       on the 64th pixel of its 64px box, so the header takes a border rather
+       than relying on the first .sidebar-line, which sat 3px lower and made the
+       line visibly step at the column boundary. `visibility: hidden` retires
+       that line while keeping its 1px box and 2px margin, so nothing shifts. */
+    body.dark .sidebar-header { border-bottom: 1px solid #343435; }
+    body.dark .nav-scroll > .sidebar-line:first-of-type { visibility: hidden; }
+    body.dark .sidebar-line,
+    body.dark .footer-divider { background: #4a4a4a; }
+    body.dark .nav-item:hover { background: #292929; }
+    body.dark .nav-item.active { background: #4a4a4a; }
+    body.dark .nav-item-label { color: #f2f2f2; }
+    body.dark .nav-item-label.secondary { color: #888888; }
+    body.dark .footer-btn { background: #1f1f20; }
+    body.dark .tab-switch:hover { background: #4a4a4a; }
+    body.dark #email-tooltip { background: #4a4a4a; }
+
+    /* ── Top toolbar ───────────────────────────────────────────────────── */
+    body.dark .top-toolbar {
+      background: #1f1f20;
+      border-bottom: 1px solid #343435;
+    }
+    body.dark .search-bar {
+      background: #1f1f20;
+      border: 1px solid #4a4a4a;
+    }
+    body.dark .search-bar input { color: #bdbdbd; }
+    body.dark .search-divider { background: #4a4a4a; }
+    body.dark .help-btn {
+      background: #1f1f20;
+      border: 1px solid #4a4a4a;
+      color: #f2f2f2;
+    }
+    /* The POWERED BY TITAN lockup ships as #333333 artwork — flatten it to
+       white rather than filtering the whole toolbar. */
+    body.dark .powered-by img { filter: brightness(0) invert(1); }
+    body.dark .toolbar-icon:hover img { filter: brightness(1.5); }
+
+    /* ── Tabs row ──────────────────────────────────────────────────────── */
+    body.dark .tabs-row {
+      background: #1f1f20;
+      border-bottom: 1px solid #343435;
+    }
+    body.dark .tab-item-label { color: #f2f2f2; }
+    body.dark .tab-item-label.inactive { color: #888888; }
+    body.dark .all-mails-dropdown {
+      background: #1f1f20;
+      border: 1px solid #4a4a4a;
+      color: #f2f2f2;
+    }
+
+    /* ── Email list ────────────────────────────────────────────────────── */
+    body.dark .middle-panel { border-right: 1px solid #343435; }
+    body.dark .email-list { background: #1f1f20; }
+    body.dark .email-list::-webkit-scrollbar-thumb { background: #4a4a4a; }
+    body.dark .email-tile {
+      background: #1f1f20;
+      border-bottom: 1px solid #4a4a4a;
+    }
+    body.dark .email-tile:hover { background: #292929; }
+    body.dark .email-tile.selected { background: #434343; }
+    body.dark .tile-sender { color: #f2f2f2; }
+    body.dark .tile-subject { color: #f2f2f2; }
+    body.dark .tile-preview { color: #bdbdbd; }
+    body.dark .tile-time { color: #888888; }
+    body.dark .middle-panel.wide-view .email-tile { border-bottom: 1px solid #4a4a4a; }
+    body.dark .middle-panel.wide-view .tile-subject { color: #f2f2f2; }
+    body.dark .middle-panel.wide-view .tile-preview { color: #bdbdbd; }
+    body.dark .middle-panel.wide-view .tile-preview::before { color: #6f6f6f; }
+    body.dark .middle-panel.wide-view .tile-time { color: #888888; }
+    body.dark .tile-action-pill {
+      background: #1f1f20;
+      border: 0.5px solid #4a4a4a;
+      box-shadow: none;
+    }
+
+    /* ── Reading pane ──────────────────────────────────────────────────── */
+    body.dark .reading-pane,
+    body.dark .reading-action-bar,
+    body.dark .thread-content,
+    body.dark .thread-sticky-header { background: #141414; }
+    body.dark .thread-sticky-header::after {
+      background: linear-gradient(to bottom, #141414, rgba(20, 20, 20, 0));
+    }
+    body.dark .thread-content::-webkit-scrollbar-thumb { background: #4a4a4a; }
+    body.dark .action-opt { color: #f2f2f2; }
+    body.dark .action-more { color: #bdbdbd; }
+    body.dark .action-more:hover,
+    body.dark .action-opt:hover { background: #292929; }
+    body.dark .thread-title { color: #f2f2f2; }
+    body.dark .thread-tile {
+      background: #1f1f20;
+      border: 1px solid #4a4a4a;
+    }
+    body.dark .thread-sender { color: #f2f2f2; }
+    body.dark .thread-preview,
+    body.dark .thread-date { color: #bdbdbd; }
+    body.dark .stack-card {
+      background: #1f1f20;
+      border: 1px solid #4a4a4a;
+      box-shadow: none;
+    }
+    body.dark .stack-pill {
+      background: #292929;
+      border: 1px solid #4a4a4a;
+      color: #bdbdbd;
+      box-shadow: none;
+    }
+    body.dark .thread-stack:not(.expanded):hover .stack-pill {
+      background: #4a4a4a;
+      border-color: #6f6f6f;
+      color: #f2f2f2;
+      box-shadow: none;
+    }
+    body.dark .expanded-tile {
+      background: #1f1f20;
+      border: 1px solid #4a4a4a;
+    }
+    body.dark .exp-sender { color: #f2f2f2; }
+    body.dark .exp-to,
+    body.dark .exp-timestamp,
+    body.dark .exp-rr-count { color: #bdbdbd; }
+    body.dark .expanded-body { color: #f2f2f2; }
+    body.dark .expanded-footer-hr { background: #4a4a4a; }
+    body.dark .reply-action,
+    body.dark .smart-write { color: #f2f2f2; }
+    body.dark .exp-icon-sm:hover,
+    body.dark .exp-icon:hover,
+    body.dark .reply-action:hover,
+    body.dark .smart-write:hover { background: #292929; }
+
+    /* ── App switcher ──────────────────────────────────────────────────── */
+    body.dark .app-switcher-content { background: #333333; }
+    body.dark .app-switcher-bg img { display: none; }
+    body.dark .app-switcher-item:hover,
+    body.dark .app-switcher-tool-item:hover,
+    body.dark .footer-link-row:hover { background: rgba(85, 85, 85, 0.4); }
+    body.dark .app-label,
+    body.dark .tool-label,
+    body.dark .footer-link-text { color: #dddddd; }
+    body.dark .footer-link-row { border-top: 0.5px solid #4a4a4a; }
+
+    /* ── Composer window ───────────────────────────────────────────────── */
+    body.dark .composer-window {
+      background: #2c2c2c;
+      box-shadow: 0 -4px 32px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(255, 255, 255, 0.08);
+    }
+    body.dark .comp-header { background: #4d4d4d; }
+    body.dark .comp-divider,
+    body.dark .comp-content-divider,
+    body.dark .comp-bar-divider { background: #3b3b3b; }
+    body.dark .comp-lbl { color: #bdbdbd; }
+    body.dark .comp-from-value { color: #f2f2f2; }
+    body.dark .comp-field-input { color: #f2f2f2; }
+    body.dark .comp-field-input::placeholder { color: #6f6f6f; }
+    body.dark .comp-ccbcc span { color: #bdbdbd; }
+    body.dark .comp-ccbcc span:hover { color: #a6cfff; }
+    body.dark .comp-feat > span { color: #f2f2f2; }
+    body.dark .comp-feat:hover { background: #3b3b3b; }
+    body.dark .comp-feat::before,
+    body.dark .comp-feat-active::before { background: #3b3b3b; }
+    body.dark .comp-body { color: #f2f2f2; }
+    body.dark .comp-body::-webkit-scrollbar-thumb { background: #4a4a4a; }
+    body.dark .comp-body:empty:before { color: #6f6f6f; }
+    body.dark .comp-bottom,
+    body.dark .comp-format-bar,
+    body.dark .comp-send-bar { border-top: 1px solid #3b3b3b; }
+    body.dark .comp-send-bar { background: #333333; }
+    body.dark .comp-font-dd,
+    body.dark .comp-size-dd,
+    body.dark .reply-font-dd-pill { color: #bdbdbd; }
+    body.dark .comp-fmt-sep-v,
+    body.dark .comp-vert-sep { background: #4a4a4a; }
+    body.dark .comp-fmt-btn:hover,
+    body.dark .titan-action-btn:hover { background: #4a4a4a; }
+    /* The selected Formatting pill. Figma renders it #414141 in the dark
+       composer strip — a shade lighter than the #333333 bar it sits on. */
+    body.dark .comp-icon-btn.fmt-on { background: #414141; }
+    body.dark .comp-fmt-btn::before { background: #4a4a4a; }
+    body.dark .comp-delete-btn:hover { background: rgba(242, 115, 131, 0.18); }
+    body.dark .comp-hbtn:hover { background: rgba(255, 255, 255, 0.14); }
+
+    /* ── Reply box ─────────────────────────────────────────────────────────
+       The reply box carries its chrome as inline styles, which only
+       `!important` can beat. Confined to this block. */
+    body.dark #reply-box-card {
+      background: #2c2c2c !important;
+      border: 1px solid #4a4a4a !important;
+      box-shadow: none !important;
+    }
+    body.dark .reply-box-from-row,
+    body.dark .reply-box-header { border-bottom: 1px solid #3b3b3b !important; }
+    body.dark .reply-box-from-row,
+    body.dark .reply-box-from-row div { color: #bdbdbd !important; }
+    body.dark #reply-box-from,
+    body.dark #reply-recipient-name { color: #f2f2f2 !important; }
+    body.dark .reply-box-body { color: #f2f2f2 !important; }
+    body.dark .reply-box-body:empty:before { color: #6f6f6f; }
+    body.dark .reply-history-btn {
+      background: #4a4a4a !important;
+      border: 1px solid #6f6f6f !important;
+      color: #dddddd !important;
+    }
+    body.dark .reply-box-popout-btn svg [stroke] { stroke: #9c9c9c; }
+
+    /* ── AI Write: prompt / refine bar ─────────────────────────────────────
+       Rest and focused share the #1f1f20 fill; only the #3c3f69 border and the
+       shadow separate them (Figma nodes 5401:197576 and 5401:201612). */
+    /* No shadow in dark mode — on a #2c2c2c composer body a drop shadow reads
+       as grime rather than lift, and Figma's dark frames carry none. The
+       #3c3f69 border alone separates focused from resting. */
+    body.dark .aiw-bar {
+      background: #1f1f20;
+      border: 1px solid #3c3f69;
+      box-shadow: none;
+    }
+    body.dark .aiw-bar.aiw-rest {
+      background: #1f1f20;
+      border-color: transparent;
+      box-shadow: none;
+    }
+    body.dark .aiw-bar.aiw-gen {
+      background-image: linear-gradient(#1f1f20, #1f1f20),
+        conic-gradient(from var(--aiw-angle),
+          #1b77e3 0deg, #8b5cf6 90deg, #e879f9 180deg, #8b5cf6 270deg, #1b77e3 360deg);
+    }
+    body.dark .aiw-input { color: #f2f2f2; }
+    body.dark .aiw-input::placeholder,
+    body.dark .aiw-input:disabled::placeholder { color: #6f6f6f; }
+    /* Unfocused the prompt reads as a label, so it takes primary text. */
+    body.dark .aiw-bar.aiw-rest .aiw-input::placeholder { color: #f2f2f2; }
+    body.dark .aiw-gen-label { color: #bdbdbd; }
+    body.dark .aiw-sep { background: #4a4a4a; }
+
+    /* Dark variant of the leading mark: indigo disc, white wand. */
+    body.dark .aiw-badge .aiw-badge-light { display: none; }
+    body.dark .aiw-badge .aiw-badge-dark { display: block; }
+
+    /* Pills: #4a4a4a stroke, #dddddd label (node 5401:203532). */
+    body.dark .aiw-pill {
+      background: transparent;
+      border: 1px solid #4a4a4a;
+      color: #dddddd;
+    }
+    body.dark .aiw-pill:hover { background: #292929; }
+    body.dark .aiw-pill.aiw-pill-open {
+      border-color: #3c3f69;
+      background: #292929;
+    }
+    body.dark .aiw-icon-btn:hover { background: #4a4a4a; }
+    body.dark .aiw-tip::after { background: #4a4a4a; }
+
+    /* Counter and banner (nodes 5401:201539, 5401:205406). */
+    body.dark .aiw-credits { color: #d78d37; }
+    body.dark .aiw-credits:hover { background: rgba(215, 141, 55, 0.14); }
+    body.dark .aiw-banner {
+      background: none;
+      border-top: 1px solid transparent;
+    }
+    body.dark .aiw-banner.aiw-banner-warn {
+      background: #785e01;
+      border-top: 1px solid #3c3f69;
+    }
+    body.dark .aiw-banner-txt { color: #f2f2f2; }
+    body.dark .aiw-banner-link { color: #5692f6; }
+    body.dark .aiw-banner.aiw-banner-warn .aiw-banner-link { color: #a6cfff; }
+
+    /* Entry points — the light pill is #e6efff; the dark one is the recessed
+       #1f1f20 well seen in the Figma composer (feature row and icon strip). */
+    body.dark .comp-feat.aiw-chip.aiw-on { background: #1f1f20; }
+    body.dark .comp-feat.aiw-chip.aiw-on:hover { background: #141414; }
+    body.dark .aiw-tool-btn.aiw-on { background: #1f1f20; }
+
+    /* ── AI Write dropdown menus ───────────────────────────────────────── */
+    body.dark .aiw-menu {
+      background: #333333;
+      border: 1px solid #4a4a4a;
+      box-shadow: 0 0 8px -1px rgba(0, 0, 0, 0.65);
+    }
+    body.dark .aiw-menu-head { color: #bdbdbd; }
+    body.dark .aiw-menu-lang .aiw-menu-head { background: #333333; }
+    body.dark .aiw-menu-row { color: #f2f2f2; }
+    body.dark .aiw-menu-row:hover { background: rgba(85, 85, 85, 0.55); }
+    body.dark .aiw-menu-lang::-webkit-scrollbar-thumb { background: #4a4a4a; }
+
+    /* ── Discovery nudge popover ───────────────────────────────────────── */
+    body.dark .aiw-nudge {
+      background: #333333;
+      box-shadow: 0 0 18px 9px rgba(0, 0, 0, 0.5);
+    }
+    body.dark .aiw-nudge-copy { color: #f2f2f2; }
+    body.dark .aiw-nudge-demo { color: #a6cfff; }
+    body.dark .aiw-nudge-demo:hover { background: rgba(85, 85, 85, 0.45); }
+    body.dark .aiw-nudge-tail { border-top-color: #333333; }
+
+    /* ── Feedback popover ──────────────────────────────────────────────── */
+    body.dark .aiw-fb {
+      background: #333333;
+      box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5);
+    }
+    body.dark .aiw-fb-title { color: #f2f2f2; }
+    body.dark .aiw-fb-close { background: #4a4a4a; }
+    body.dark .aiw-fb-close:hover { background: #6f6f6f; }
+    body.dark .aiw-fb-pill {
+      background: transparent;
+      border: 1px solid #4a4a4a;
+      color: #dddddd;
+    }
+    body.dark .aiw-fb-pill:hover { background: rgba(85, 85, 85, 0.45); }
+    body.dark .aiw-fb-pill.aiw-fb-pill-on {
+      background: #1f1f20;
+      border-color: #3c3f69;
+      color: #a6cfff;
+    }
+    body.dark .aiw-fb-text {
+      background: #1f1f20;
+      border: 1px solid #4a4a4a;
+      color: #f2f2f2;
+    }
+    body.dark .aiw-fb-text::placeholder { color: #6f6f6f; }
+    body.dark .aiw-fb-text:focus { border-color: #3c3f69; }
+    body.dark .aiw-fb-submit:disabled { background: #4a4a4a; }
+    body.dark .aiw-fb-tail { border-top-color: #333333; }
+
+    /* ── Toast ─────────────────────────────────────────────────────────── */
+    body.dark .aiw-toast { background: #4a4a4a; }
+
+    /* ── Settings drawer ───────────────────────────────────────────────────
+       Figma's Modals/Fill is #333333; dividers are the shared #4a4a4a rule, so
+       the light-grey line.svg artwork gives way to a real 1px border. */
+    body.dark .side-modal {
+      background: #333333;
+      box-shadow: -4px 0 24px rgba(0, 0, 0, 0.5);
+    }
+    body.dark .side-modal-profile { border-bottom: 1px solid #4a4a4a; }
+    body.dark .side-modal-divider {
+      height: 1px;
+      background: #4a4a4a;
+    }
+    body.dark .side-modal-divider img { display: none; }
+    body.dark .side-modal-edit-btn {
+      background: #4a4a4a;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+    }
+    body.dark .side-modal-username { color: #f2f2f2; }
+    body.dark .side-modal-email { color: #bdbdbd; }
+    body.dark .side-modal-option { color: #f2f2f2; }
+    body.dark .side-modal-option:hover,
+    body.dark .side-modal-close-btn:hover { background: rgba(85, 85, 85, 0.6); }
+    body.dark .side-modal-option.logout { color: #f27383; }
+    body.dark .side-modal-section-title { color: #bdbdbd; }
+    body.dark .side-modal-radio-label { color: #f2f2f2; }
+    body.dark .info-icon { color: #9c9c9c; }
+    body.dark .theme-layout-preview { border: 1px solid #4a4a4a; }
+    body.dark .theme-layout-preview.active { border: 2px solid #2170f4; }
+
+    /* ── Overlays ──────────────────────────────────────────────────────── */
+    body.dark .refresh-overlay,
+    body.dark .middle-refresh-overlay { background: rgba(20, 20, 20, 0.35); }
+    body.dark .sidebar-folder-overlay { background: rgba(31, 31, 32, 0.55); }
+
+    /* ── Icon tone ─────────────────────────────────────────────────────────
+       Almost every icon in the shell ships as #888888 line art (see the SVG
+       inventory in CONTEXT). Figma's dark-mode icon fill is #9c9c9c, so a
+       single brightness lift carries the whole set — no re-export, and the
+       colour-bearing marks (AI Write, avatars, previews, Send) are excluded
+       below so they keep their hues. */
+    body.dark .nav-item-icon img,
+    body.dark .toolbar-icon img,
+    body.dark .search-bar img,
+    body.dark .tabs-row img,
+    body.dark .email-tile img,
+    body.dark .reading-action-bar img,
+    body.dark .expanded-tile img,
+    body.dark .thread-tile img,
+    body.dark .comp-feat .fic img,
+    body.dark .comp-format-bar img,
+    body.dark .comp-send-icons img,
+    body.dark .comp-delete-btn img,
+    body.dark .comp-hbtn img,
+    body.dark .aiw-icon-btn img,
+    body.dark .aiw-pill-caret,
+    body.dark .side-modal-option img,
+    body.dark .side-modal-close-btn img,
+    /* The composer/reply strips draw their icons as inline <svg>, not <img>,
+       so they need naming separately to reach the same #9c9c9c. */
+    body.dark .comp-send-bar button svg,
+    body.dark .comp-format-bar button svg,
+    body.dark .comp-bottom button svg { filter: brightness(1.15); }
+
+    /* Colour-bearing marks keep their hues. */
+    body.dark .aiw-badge img,
+    body.dark .comp-feat.aiw-chip .fic img,
+    body.dark .aiw-tool-btn img,
+    body.dark .aiw-tool-btn svg,
+    body.dark .comp-send-btn svg,
+    body.dark .aiw-ic-on,
+    body.dark .smart-write-icon img,
+    body.dark .comp-send-btn img,
+    body.dark .account-avatar img,
+    body.dark .theme-layout-preview img,
+    body.dark .side-modal-avatar-img { filter: none; }
+  </style>
 </body>
 
 </html>

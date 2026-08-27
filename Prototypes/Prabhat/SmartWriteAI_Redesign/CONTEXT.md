@@ -2,12 +2,12 @@
 
 Running log of everything built in this prototype, so context survives across sessions.
 
-- **Prototype:** `Prototypes/Prabhat/SmartWriteAI_Redesign/index.html` (~7,430 lines, ~249 KB)
+- **Prototype:** `Prototypes/Prabhat/SmartWriteAI_Redesign/index.html` (~8,075 lines, ~275 KB)
 - **Figma source:** [Titan AI Write — node 4584-186621](https://www.figma.com/design/pGfBybT7p0UQpbG198nq2P/Titan-AI-Write?node-id=4584-186621) ("Final Flows" section)
   · [Changes section — node 4651-214235](https://www.figma.com/design/pGfBybT7p0UQpbG198nq2P/Titan-AI-Write?node-id=4651-214235) (four annotated change rows)
-- **Sessions covered:** 31 Jul 2026 → 10 Aug 2026
+- **Sessions covered:** 31 Jul 2026 → 24 Aug 2026
 - **Git status:** folder is **untracked** — nothing has been committed yet
-- **Last edit to `index.html`:** 10 Aug 2026
+- **Last edit to `index.html`:** 24 Aug 2026
 
 ---
 
@@ -35,7 +35,7 @@ The Figma row was titled "Option 2, different dropdown text". The actual differe
 |  | Approach 1 | Approach 2 |
 |---|---|---|
 | Pill labels | selected value (`Professional`, `Long`, `EN`) | category name (`Tone`, `Length`, `EN`) — never changes |
-| Menu | `Tone` header row + blue checkmark on current | no header, no checkmark |
+| Menu | header row + blue checkmark on current | no checkmark; no header on Tone/Length, but the language menu keeps `Translate to` (§15) |
 
 ### States implemented
 - **Prompt bar** — `Try writing with AI - describe your email`, blue 1px border, Figma's two-layer shadow
@@ -236,7 +236,9 @@ while typing a change         counter/banner collapse, blue ↑ takes over
 ```
 
 - **`START_CREDITS` 2 → 7** and **`WARN_AT = 5`**. Figma's row runs 7 → 6 (clear) → 5 (amber), so seven is what demonstrates the threshold.
-- The banner is now a **full-bleed bottom row** of the bar (rounded bottom corners, `overflow: hidden` on `.aiw-bar`), not an inset chip. Padding moved off `.aiw-bar` and onto `.aiw-row`; the generating state's tighter padding moved with it (`.aiw-bar.aiw-gen .aiw-row`).
+- The banner is now a **full-bleed bottom row** of the bar (rounded bottom corners), not an inset chip.
+
+  > ⚠️ This first shipped with `overflow: hidden` on `.aiw-bar`, which **clipped the undo/redo/thumbs tooltips** — they open upward, out of the bar. Removed 14 Aug. The banner's own `border-radius: 0 0 6px 6px` already matches the bar's inner radius (7px minus the 1px border), so the corners stay clean without it. **Never put `overflow: hidden` on `.aiw-bar`.** Padding moved off `.aiw-bar` and onto `.aiw-row`; the generating state's tighter padding moved with it (`.aiw-bar.aiw-gen .aiw-row`).
 - Banner copy gained its Figma full stop: `6 suggestions left. Upgrade to get unlimited suggestions`.
 - Seven credits makes the exhausted/upgrade flows a long walk, so the prototype panel gained a **Suggestions left** row (7 · 6 · 5 · 1 · 0) that jumps the counter and doubles as a live readout. Prototype tooling — hidden in the happy flow, not part of the design.
 - `Upgrade to get unlimited suggestions` is weight **400** (was 500).
@@ -270,23 +272,187 @@ The prompt box measured **38px at rest** and jumped to **45px** the moment the s
 ### Change 5 — "Translate to" heading on the language menu
 `MENUS.lang.head` is now `Translate to`, and `renderMenus()` no longer excludes `lang` from the header row — Approach 1 heads all three menus, Approach 2 stays headerless throughout. The language list scrolls, so `.aiw-menu-lang .aiw-menu-head` is `position: sticky` and keeps the heading in view.
 
+> ⚠️ Superseded on 24 Aug: Approach 2 is no longer headerless *throughout* — the language menu gained the heading there too. See §15.
+
 > **Verification:** every state was rendered in headless Chrome (composer + reply box × happy/paywall × Approach 1/2) and compared against the Figma frames — resting/focused prompt, typed, generating, refine, 7/6/5/0 credits, formatting bar open with and without a draft.
 
 ---
 
-## 11. Packaging
+## 11. Toolbar tooltips + Help button — 14 Aug
 
-Delivered twice as **`~/Downloads/SmartWriteAI_Redesign.zip`** (latest: 218 KB, 198 files, `index.html` at 242,841 bytes).
+The top toolbar's icon-only actions were relying on the browser's native `title`, which renders as an OS tooltip after a long delay. Replaced with Titan's own dark tooltip.
+
+- **`.tt` + `data-tip`** — a reusable CSS-only tooltip: `#1a1a1a`, white 13px, `padding 6px 10px`, radius 6px, positioned 6px **below** the button and centred on it, fading in after a 0.15s delay. Add the class and the attribute to any button; nothing else to wire.
+- Labels: **Read Receipts** (the eye — Figma names that node `Icon/Top action/Read receipts`, so the old `View details` title was wrong), **Settings**, **Help**.
+- **New Help button**, third in the cluster. Asset exported from [Figma node 4692-209780](https://www.figma.com/design/pGfBybT7p0UQpbG198nq2P/Titan-AI-Write?node-id=4692-209780) to `assets/help-filled.svg`.
+
+> **Same viewBox trap as §4:** the exported icon sat in a 35.56 box with the glyph occupying only 14 × 14 of it (~39%), so CSS size would not have been visible size. Re-cropped to `viewBox="10.556 10.8 14 14"` and switched `preserveAspectRatio` from `none` to `xMidYMid meet`. Path data untouched.
+
+Help renders at **14px** against the gear's 16px and the eye's 18px — Figma's own values, and correct because a solid disc reads heavier than a line icon at matching size (§7).
+
+The old `title` attributes were removed so the native and custom tooltips can't both fire. Nothing in the JS keyed off them.
+
+---
+
+## 12. Packaging
+
+Delivered as **`~/Downloads/SmartWriteAI_Redesign_<date>.zip`**.
+
+| Build | File | Size | Files |
+|---|---|---|---|
+| 11 Aug | `SmartWriteAI_Redesign.zip` | 230 KB | 198 | 
+| **24 Aug** | `SmartWriteAI_Redesign_2026-08-24.zip` | **235 KB** | **203** |
+
+The 24 Aug build is the first to include dark mode (§13-14) and the Approach-2 language heading (§15). **Packages are now dated rather than overwriting one filename**, so an older build stays available for comparison — the undated 11 Aug zip predates dark mode entirely and can be deleted once nobody needs it.
+
+Before zipping, two checks worth repeating:
+
+1. **Every referenced asset resolves.** Regex `(?:src|href)="…"` over `index.html` and confirm each path exists — 143 references, all present in the 24 Aug build. A missing file renders imageless with no error, so this cannot be caught by eye.
+   > Static analysis under-reports: assets reached through **string concatenation in JS** (`'ai_write_assets/titan-ai' + (dark ? '-dark' : '') + '.svg'`, and the `check-on`/`check-off` swap) look like orphans. Don't prune on that signal alone.
+2. **Extract the zip to a clean directory and render from there**, not from the source folder — that's the only way to prove the package is self-contained. Both themes verified from the extracted copy for the 24 Aug build.
+
+~51 files in the folder are genuinely unreferenced leftovers from the shell copy. Left in place deliberately: §1's convention is that each prototype carries its own full shell, and pruning risks a subtle break for ~200 KB.
 
 The **whole folder** is zipped, not just the HTML — `index.html` pulls icons and images from five sibling directories (`ai_write_assets/`, `composer_assets/`, `assets/`, `app_switcher_assets/`, `settings_sidebar_assets/`) and renders imageless on its own. The zip lives in `~/Downloads` deliberately so it stays out of git.
 
 ---
+
+---
+
+## 13. Dark mode + prompt-bar AI mark — 24 Aug
+
+Figma added an **AI Write - Dark Mode Screens** section ([node 5401-205490](https://www.figma.com/design/pGfBybT7p0UQpbG198nq2P/Titan-AI-Write?node-id=5401-205490)) — seven frames: the inbox, the composer at rest / focused / refining, the paywall counter and the amber banner, plus a light-mode `Smart Write` frame that carries the new prompt-bar glyph.
+
+### The AI mark in the prompt bar
+The open item from §12 ("the prompt bar has no leading AI icon") is closed. Figma's **Text field** node carries a **20px** `Titan AI non fill` glyph with a **9px** gap to the prompt text, in *both* themes.
+
+- Two assets, because the disc is a different hue per theme:
+  `ai_write_assets/titan-ai-badge.svg` — **#5692F6** disc, transparent cutouts
+  `ai_write_assets/titan-ai-badge-dark.svg` — **#4B56BA** disc on a white circle
+- Same **§4 viewBox trap**: the light export sat in a 28 box with the glyph only spanning 4→24 (~71%), so CSS size ≠ visible size. Re-cropped to `viewBox="4 4 20 20"` and `preserveAspectRatio` switched from `none` to `xMidYMid meet`. Path data untouched. The dark export was already a tight 20 box.
+- `render()` shows it only when `!S.generated && !S.generating` — the refine bar has **no** glyph in Figma, and while generating the spinner owns that slot.
+- `.aiw-row:has(.aiw-badge.aiw-badge-show)` drops the left padding from 13px to Figma's **9px**, so the glyph rather than the text sits on the bar's inner margin. The 45px row height (§10) is unaffected — the glyph is 20px.
+
+### Theme switching
+The settings drawer's Theme radios were **static markup with no handler**. They now mirror the reading-pane pattern: dual `checked`/`unchecked` spans, `onclick="setTheme('light'|'dark')"` on both the label and the preview thumbnail.
+
+`setTheme()` toggles **one class on `<body>`** and syncs the radio pair. Everything else — shell, composer, reply box, AI Write, every menu, popover, modal and toast — reads from that class. Same architecture as the AI Write shell itself: one switch, no per-surface duplication.
+
+### Palette (Figma dark-mode variables)
+
+| Token | Value | Used for |
+|---|---|---|
+| Theme (Dark Mode)/Sidebar | `#1f1f20` | left nav, top bar, tabs, email tiles, cards, **the AI Write bar** |
+| Non-affordance Bg | `#141414` | reading pane, page ground |
+| Email Tile/Unread | `#434343` | selected tile |
+| Left nav/Hover | `#292929` | hover |
+| Left nav/Clicked · Line separater | `#4a4a4a` | selection, every divider, pill strokes, toast |
+| Composer body | `#2c2c2c` | composer + reply-box fields |
+| Composer header | `#4d4d4d` | title bar |
+| Modals/Fill · Composer/modal | `#333333` | send strip, drawer, menus, popovers |
+| — | `#414141` | the selected Formatting (`A`) pill |
+| Primary / Secondary 1 / 2 | `#f2f2f2` · `#dddddd` · `#bdbdbd` | text ladder |
+| Font/Secondary · Icon fill · Disabled | `#888888` · `#9c9c9c` · `#6f6f6f` | tertiary text, icons, placeholders |
+| Theme (Light Mode)/Selection (Sidebar) | `#3c3f69` | **the AI Write bar border** |
+| — | `#785e01` / `#d78d37` | amber banner fill / prompt-bar counter |
+| link button | `#a6cfff` · `#5692f6` | links |
+
+### How the dark styles are layered
+A **fifth `<style>` block appended last**, every rule prefixed `body.dark`. Light mode is untouched — not one existing declaration was edited. That was deliberate: the four preceding blocks carry ~280 colour-bearing rules with hardcoded hex, and tokenising them all would have put light mode at risk for no visual gain.
+
+Specifics worth knowing:
+
+- **AI Write, rest vs focused** — both are `#1f1f20`. Only the `#3c3f69` border and the shadow separate them, where light mode also swaps the fill (`#eff5ff` → `#fff`). The generating state's conic-gradient border keeps its hues; only the two `linear-gradient(#fff,#fff)` interior stops become `#1f1f20`.
+- **Entry-point pill** — light mode's `#e6efff` becomes a *recessed* `#1f1f20` well against the `#2c2c2c` feature row, which is what Figma shows for both the chip and the icon-strip button.
+- **Icons** — nearly the whole set ships as `#888888` line art (`var(--fill-0, #888888)`; an `<img>`-loaded SVG can't inherit the page's custom properties, so the fallback always wins and CSS can't recolour it). Figma's dark icon fill is `#9c9c9c`, so a single `filter: brightness(1.15)` carries the lot — no re-export. Colour-bearing marks (the AI disc, Send, avatars, theme previews) are excluded. The composer/reply strips draw their icons as **inline `<svg>`**, so they're named separately from the `img` selectors.
+- **POWERED BY TITAN** is `#333333` artwork; flattened with `brightness(0) invert(1)` rather than filtering the whole toolbar.
+- **Settings drawer dividers** are a light-grey `line.svg` image. The `img` is hidden and `.side-modal-divider` takes a real 1px `#4a4a4a` background instead.
+- **The reply box** carries its chrome as inline styles, so those overrides are the only `!important` in the block — an inline style cannot be beaten otherwise. Confined to the reply-box section.
+- The theme / reading-pane / email-organisation **preview thumbnails stay light**. They are illustrations *of* a layout, not chrome.
+
+> ### ⚠️ Gotcha: don't group a plain selector with `:hover` selectors
+> `body.dark .comp-fmt-btn:hover, body.dark .titan-action-btn:hover, body.dark .comp-icon-btn.fmt-on { background: #4a4a4a }` — the third selector **silently did not apply**, even though it matched the element and outranked the light rule (verified: the element had `fmt-on`, `body` had `dark`, and a colour-coded `!important` probe confirmed the rule matched). The selected `A` pill kept rendering light-mode `#f0f2f5`. Splitting `.comp-icon-btn.fmt-on` into **its own rule** fixed it immediately. Give state overrides their own rule rather than tucking them into a `:hover` group.
+
+### Verification
+Rendered in headless Chrome across **13 states × both themes** (26 shots): inbox, prompt bar at rest / focused / typed / generating, refine bar, menu open, paywall counter · clear banner · amber banner · exhausted, formatting bar coexisting, reply box, settings drawer, discovery nudge, upgrade modal, feedback popover, toast. Every dark shot measured `#141414` ground with 1-4% near-white pixels (text, Send label, avatar, preview art). Bars and strips were cropped and compared pixel-for-pixel against the Figma frames — the amber banner, refine pills and bottom icon strip all match Figma's sampled values (`#785e01`, `#4a4a4a`/`#dddddd`, `#414141`/`#9c9c9c`).
+
+> **Headless caveat learned the hard way:** `--dump-dom` ignores `--window-size` and lays out at 800×600, so element rects and anything layout-dependent won't line up with `--screenshot` runs. Also, appending a probe element to `<body>` reflows the app (body is a flex column) and corrupts every measurement — append to `document.documentElement` with `position: fixed` instead.
+
+---
+
+## 14. Dark mode review round — 24 Aug
+
+Four fixes off a side-by-side against the live product and the Figma frames.
+
+### 1 + 4 — Two families of line, and they are not the same colour
+The root cause of both "separators are missing" and "the line is broken". Sampling Figma's dark inbox ([node 4692-212740](https://www.figma.com/design/pGfBybT7p0UQpbG198nq2P/Titan-AI-Write?node-id=4692-212740)) row by row shows dark mode uses **two** line colours where the first pass used one:
+
+| | Colour | Where |
+|---|---|---|
+| **Structural chrome** | `#343435` | sidebar edge, top toolbar, tabs row, email-list edge |
+| **Content borders** | `#4a4a4a` | email tiles, message cards, pills, menus, separators |
+
+`#4a4a4a` (Figma's *Line separater* token) had been applied to both, so the framing lines read a shade too bright — and one was absent altogether:
+
+- **The sidebar↔list edge did not exist.** In light mode the `#1c1c1c` sidebar sits against a white list, so the column boundary needs no border. In dark mode both sides are `#1f1f20` and the edge vanishes. Added `border-right: 1px solid #343435` on `.sidebar` — measured at x=249, exactly where Figma puts it.
+- **The top line stepped 3px at the column boundary.** `.top-toolbar` is 64px with `border-bottom`, so its line lands on **y=63**. The sidebar had no border and relied on the first `.sidebar-line` inside `.nav-scroll`, which — 64px header + its own 2px top margin — sat at **y=66**. Two lines, 3px apart, meeting at x=250: a visible step.
+  Fix: `.sidebar-header` takes its own `border-bottom` in dark mode. Because `box-sizing` is global, that border is consumed *inside* the 64px header and lands on y=63 — same row as the toolbar's. The now-redundant first `.sidebar-line` goes to **`visibility: hidden`, not `display: none`**, so it keeps its 1px box and 2px margin and nothing below it shifts.
+
+  > Both lines verified at `y=63`, `#343435`, on both sides of x=250.
+
+### 2 — No shadow on the prompt bar in dark mode
+`.aiw-bar` had a dark-adapted two-layer shadow. On a `#2c2c2c` composer body a drop shadow reads as grime rather than lift, and Figma's dark frames carry none. `box-shadow: none` under `body.dark`; the `#3c3f69` border alone separates focused from resting. Verified: the bar's top edge steps straight from `#2c2c2c` to `#1f1f20` with no intermediate row.
+
+### 3 — The AI Write mark is a different hue per theme
+Not a brightness difference, which is why the `brightness(1.15)` icon lift (§13) could not produce it:
+
+```
+light   #4D3BC4   ai_write_assets/titan-ai.svg
+dark    #4B56BA   ai_write_assets/titan-ai-dark.svg   (new; geometry byte-identical)
+```
+
+No filter chain lands on that hue shift exactly, so **`setTheme()` swaps the `src`** of every `img.aiw-ic-on` instead — one line, and it reaches all four entry points (composer chip, composer strip button, reply chip, reply strip button) without touching the markup or fighting the `.aiw-chip .fic img` specificity from §4.
+
+Two icons were already correct in the artwork and only needed **excluding from the brightness lift**, which had been pushing `#4b56ba` to `#5663d6`:
+- **Reply with AI** — `assets/f2c4a95b-….svg` ships as `#4B56BA`
+- `.aiw-ic-on` generally, now that the swap owns its colour
+
+> The bar's own leading glyph was already right — it has separate per-theme assets (`titan-ai-badge.svg` / `-dark.svg`, §13) and measured `#4b56ba` before this round.
+
+Total near-white pixels across the dark states dropped from ~2.3% to ~1.1% once those exclusions landed — the lift had been washing out more than intended.
+
+### Verification
+Re-rendered all **15 states × both themes** (30 shots). Every dark state asserts `#343435` at the sidebar edge (x=249) and at both ends of the y=63 line; the only two that don't are `settings` and `upgrade`, where the drawer and the modal scrim legitimately cover those pixels. Light mode is byte-for-byte unchanged in the shell — no sidebar border, no header border, `#4d3bc4` mark.
+
+---
+
+## 15. "Translate to" in Approach 2's language menu — 24 Aug
+
+Approach 2 was headerless by definition (§8): its pills keep their category name — `Tone`, `Length` — so a menu header would just repeat the pill. The language pill breaks that rule. It reads **`EN`** in both approaches, which names the *current value*, not the action, so the list had nothing telling you what picking a language does.
+
+`renderMenus()` now heads the language menu in **both** approaches:
+
+```js
+if (S.approach === 1 || kind === 'lang') {
+  html += '<div class="aiw-menu-head">' + m.head + '</div>';
+}
+```
+
+One condition, and it's the only asymmetry between the two approaches' menus that isn't about the checkmark. Tone and Length in Approach 2 stay headerless — verified, not assumed.
+
+Nothing else needed changing: `.aiw-menu-head` is approach-agnostic, and so are the sticky-heading rule (`.aiw-menu-lang .aiw-menu-head`, §10 change 5) and its dark-mode background, so the new header scrolls and themes correctly for free. The `.aiw-a2` row padding (§8) targets `.aiw-menu-row` only, so the heading sits on the same 12px left edge as the rows in both approaches.
+
+**Verified** in the browser across A1/A2 × light/dark: A2 language heads with `Translate to` and carries no checkmark; A2 Tone and Length remain headerless; A1 is unchanged (header + blue checkmark on the current value).
 
 ## Conventions & gotchas worth remembering
 
 - **Single shared component.** The AI Write bar is one instance with one state object, relocated between hosts via `HOSTS` + `mountShell()`. Never duplicate it per surface.
 - **Every change must hold across the full matrix:** happy/A1, happy/A2, paywall/A1, paywall/A2 × composer and reply box.
 - **Verify in a real browser** after each change — measured values, not assumptions. Several "CSS bugs" turned out to be baked-in SVG problems (icon padding in the viewBox, `#DEDEDE` stroke in `redo.svg`).
+- **Dark mode has two line colours**, and they are not interchangeable: `#343435` frames the app (sidebar edge, toolbar, tabs, list edge), `#4a4a4a` borders content (tiles, cards, pills). Reaching for one everywhere is what made the framing lines read wrong and the column edge disappear (§14).
+- **A boundary that light mode gets for free may not exist in dark mode.** The sidebar↔list edge needed no border while the sidebar was the only dark surface; once both sides are `#1f1f20` it has to be drawn (§14).
+- **When two lines are meant to read as one, check they land on the same pixel row.** A `border-bottom` is consumed inside its own box under `box-sizing: border-box`; a sibling divider element is not (§14).
+- **A hue difference between themes needs a second asset, not a filter.** `brightness()` can carry `#888888`→`#9c9c9c`; it cannot carry `#4D3BC4`→`#4B56BA`. Swap the `src` from `setTheme()` (§14).
 - **Don't pin widths on `border-box` elements** to equalise states — the slack lands on one side. Adjust padding in all states instead.
 - **The shell's own CSS out-specifies** naive AI Write selectors. Scope through a parent (`.aiw-chip .fic img...`) rather than reaching for `!important`.
 - Assets are **committed bytes** from Figma, not Figma URLs (which expire in 7 days).
@@ -300,6 +466,7 @@ The **whole folder** is zipped, not just the HTML — `index.html` pulls icons a
 - Code Connect mappings for the Figma components were skipped.
 - **Forward** does not have AI Write wired.
 - If the pill genuinely needs to be wider than 88.83px, do it via symmetric padding (see §7).
-- The prompt bar has **no leading AI icon**, though the Figma "Text field" node carries a 24px `Titan AI non fill` mark at its left. Pre-existing gap, not part of the 10 Aug changes — worth confirming whether it should be added.
 - The `.aiw-mode` class is still toggled on the host frame but no longer drives any CSS (§10, change 3).
-- The zip in `~/Downloads` predates the 10 Aug changes.
+- The zip in `~/Downloads` predates the 10 Aug changes, and so predates dark mode.
+- **Theme choice does not persist** across a reload — `setTheme()` holds it in the DOM only. Fine for a prototype; add `localStorage` if it ever needs to survive a refresh.
+- The settings drawer's **preview thumbnails are light artwork in both themes** (see §13). Figma's dark section doesn't cover the drawer, so this is a judgement call worth confirming.
