@@ -1,0 +1,26 @@
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Onboarding">
+<g id="Titan mail">
+<g id="Frame 2087326569" filter="url(#filter0_d_390_1214)">
+<g id="Frame 2087326564">
+<g id="24*24">
+<rect width="24" height="24" rx="4" fill="black" fill-opacity="0.12"/>
+<path id="Vector" d="M13.3098 12L16.9759 8.33384C17.1499 8.16015 17.2478 7.92446 17.248 7.67861C17.2482 7.43276 17.1508 7.1969 16.9771 7.0229C16.8034 6.84891 16.5677 6.75104 16.3219 6.75082C16.076 6.7506 15.8402 6.84806 15.6662 7.02174L12 10.6879L8.33384 7.02174C8.15985 6.84775 7.92386 6.75 7.67779 6.75C7.43173 6.75 7.19574 6.84775 7.02174 7.02174C6.84775 7.19574 6.75 7.43173 6.75 7.67779C6.75 7.92386 6.84775 8.15985 7.02174 8.33384L10.6879 12L7.02174 15.6662C6.84775 15.8402 6.75 16.0761 6.75 16.3222C6.75 16.5683 6.84775 16.8043 7.02174 16.9783C7.19574 17.1523 7.43173 17.25 7.67779 17.25C7.92386 17.25 8.15985 17.1523 8.33384 16.9783L12 13.3121L15.6662 16.9783C15.8402 17.1523 16.0761 17.25 16.3222 17.25C16.5683 17.25 16.8043 17.1523 16.9783 16.9783C17.1523 16.8043 17.25 16.5683 17.25 16.3222C17.25 16.0761 17.1523 15.8402 16.9783 15.6662L13.3098 12Z" fill="white"/>
+</g>
+</g>
+</g>
+</g>
+</g>
+<defs>
+<filter id="filter0_d_390_1214" x="-347" y="-15" width="396" height="468" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feMorphology radius="1" operator="erode" in="SourceAlpha" result="effect1_dropShadow_390_1214"/>
+<feOffset dy="10"/>
+<feGaussianBlur stdDeviation="7"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0.2 0 0 0 0 0.2 0 0 0 0 0.2 0 0 0 0.2 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_390_1214"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_390_1214" result="shape"/>
+</filter>
+</defs>
+</svg>

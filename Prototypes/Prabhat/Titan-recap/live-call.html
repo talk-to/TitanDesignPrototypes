@@ -1,0 +1,1315 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Zoom Meeting — Titan Recap</title>
+  <link rel="icon" href="app_switcher_assets/grid_icons/recap.svg">
+  <style>
+    /* ══════════════════════════════════════════════════════════════════════
+       Titan Recap — live transcription over a call.
+       Interactions follow live-transcription.html; every Titan surface is
+       restyled to the prototype's own tokens (#2170f4 primary, #333 / #888
+       text, #dedede / #ebebeb rules, 4px controls, 8px surfaces).
+       The Zoom window behind is deliberately NOT Titan-styled — it is
+       another product, recreated in CSS as a backdrop.
+       ══════════════════════════════════════════════════════════════════════ */
+    :root {
+      --blue: #2170f4;
+      --blue-press: #1b62db;
+      --font-primary: #333333;
+      --font-secondary: #888888;
+      --line: #dedede;
+      --line-soft: #ebebeb;
+      --hover: #f4f4f7;
+      --well: #f9f9fa;
+      /* Speaker colours: Titan blue, then two hues dark enough on white */
+      --sp-1: #2170f4;
+      --sp-2: #0e8f7e;
+      --sp-3: #7a5dc7;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+
+    body {
+      margin: 0;
+      background: #0b0b0c;
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', sans-serif;
+      color: var(--font-primary);
+      overflow: hidden;
+    }
+    svg { display: block; }
+    [hidden] { display: none !important; }
+
+    /* ── Zoom backdrop (not Titan UI) ── */
+    .zoom { position: fixed; inset: 0; display: flex; flex-direction: column; }
+    .z-title {
+      position: relative;
+      flex: 0 0 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #131315;
+      color: #d6d6d8;
+      font-size: 13px;
+      font-weight: 600;
+    }
+    .z-lights { position: absolute; left: 12px; display: flex; gap: 8px; }
+    .z-lights i { width: 11px; height: 11px; border-radius: 50%; border: 1px solid #4a4a4e; }
+    .z-body { flex: 1 1 auto; min-height: 0; padding: 8px; }
+    .z-grid {
+      height: 100%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      gap: 6px;
+    }
+    .z-tile {
+      position: relative;
+      border-radius: 6px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .z-tile.active { outline: 3px solid #22c55e; outline-offset: -3px; }
+    .z-initials { font-size: 56px; font-weight: 300; letter-spacing: 2px; color: rgba(255,255,255,0.34); }
+    .z-name {
+      position: absolute;
+      left: 10px;
+      bottom: 10px;
+      padding: 3px 8px;
+      border-radius: 4px;
+      background: rgba(0,0,0,0.62);
+      color: #fff;
+      font-size: 12.5px;
+      font-weight: 500;
+    }
+    .z-bar {
+      flex: 0 0 62px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      background: #131315;
+    }
+    .z-tool {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      min-width: 64px;
+      padding: 6px 8px;
+      border: 0;
+      border-radius: 6px;
+      background: none;
+      color: #e9e9ec;
+      font-family: inherit;
+      font-size: 11px;
+      cursor: pointer;
+    }
+    .z-tool:hover { background: #232327; }
+    .z-tool svg { width: 20px; height: 20px; }
+    .z-leave {
+      margin-left: 10px;
+      padding: 8px 16px;
+      border: 0;
+      border-radius: 6px;
+      background: #e02d2d;
+      color: #fff;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    /* ══════════════ Titan surfaces below — Titan tokens only ══════════════ */
+
+    /* Pre-call nudge */
+    /* Nudge — Figma 10979:124400. Bottom-right, above the Zoom control bar. */
+    .nudge {
+      position: fixed;
+      right: 20px;
+      bottom: 104px;
+      z-index: 40;
+      width: 342px;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      padding: 20px;
+      background: #fff;
+      border-radius: 4px;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.34);
+      animation: rise 340ms cubic-bezier(.16,1,.3,1) both;
+    }
+    @keyframes rise { from { opacity: 0; transform: translateY(10px) } to { opacity: 1; transform: none } }
+    .nudge.gone { animation: sink 220ms ease-in both; pointer-events: none; }
+    @keyframes sink { to { opacity: 0; transform: translateY(8px) } }
+
+    .nudge-head { display: flex; gap: 12px; align-items: flex-start; }
+    /* 20px glyph in a 22px-tall box, so it sits with the title's cap height */
+    .nudge-mark { width: 20px; height: 22px; flex-shrink: 0; display: flex; align-items: flex-start; padding-top: 2px; }
+    .nudge-mark img { width: 20px; height: 20px; display: block; }
+    .nudge-copy { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+    .nudge h4 { margin: 0; font-size: 16px; font-weight: 600; line-height: normal; color: #333; }
+    .nudge p { margin: 0; font-size: 14px; line-height: 1.3; color: #666; }
+    /* Indented to clear the mark, as in Figma */
+    .nudge-actions { display: flex; align-items: center; gap: 8px; padding-left: 32px; }
+
+    .btn-primary {
+      padding: 8px 16px;
+      border: 0;
+      border-radius: 5px;
+      background: var(--blue);
+      color: #fff;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 20px;
+      cursor: pointer;
+    }
+    .btn-primary:hover { background: var(--blue-press); }
+    .btn-primary:disabled { background: var(--hover); color: var(--font-secondary); cursor: default; }
+    .btn-outline {
+      /* Without this the border makes it 2px taller than the primary. */
+      box-sizing: border-box;
+      height: 36px;
+      padding: 8px 20px;
+      border: 1px solid var(--blue);
+      border-radius: 5px;
+      background: #fff;
+      color: var(--blue);
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 20px;
+      cursor: pointer;
+    }
+    .btn-outline:hover { background: rgba(33,112,244,.06); }
+
+    /* Countdown runs along the card's bottom edge */
+    .nudge-timer {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 4px;
+      border-radius: 0 0 4px 4px;
+      background: #d9d9d9;
+      overflow: hidden;
+    }
+    .nudge-timer i {
+      display: block;
+      height: 100%;
+      border-radius: 0 10px 10px 0;
+      background: var(--blue);
+      transform: scaleX(0);
+      transform-origin: left center;
+      animation: countdown 10s linear forwards;
+    }
+    @keyframes countdown { to { transform: scaleX(1) } }
+
+    /* ── Sidebar ── */
+    .sb {
+      position: fixed;
+      right: 16px;
+      top: 44px;
+      bottom: 78px;
+      z-index: 50;
+      width: 380px;
+      min-width: 340px;
+      max-width: 720px;
+      display: flex;
+      flex-direction: column;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 18px 60px rgba(0,0,0,0.42);
+      overflow: hidden;
+      transform: translateX(calc(100% + 28px));
+      opacity: 0;
+      transition: transform 420ms cubic-bezier(.22,.86,.24,1), opacity 260ms ease;
+    }
+    .sb.open { transform: none; opacity: 1; }
+    .sb.max { top: 34px; bottom: 70px; width: 560px; }
+    .sb.min { transform: translateX(calc(100% + 28px)); opacity: 0; pointer-events: none; }
+
+    /* Title bar — Titan icon buttons, not macOS traffic lights: this is a
+       Titan surface sitting over Zoom, not a second OS window. */
+    .sb-title {
+      flex: 0 0 44px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0 8px 0 14px;
+      border-bottom: 1px solid var(--line-soft);
+    }
+    .sb-lights { margin-left: auto; display: flex; align-items: center; gap: 2px; }
+    .sb-brand { display: flex; align-items: center; gap: 8px; min-width: 0; }
+    .sb-brand img { width: 20px; height: 20px; display: block; }
+    .sb-brand span { font-size: 14px; font-weight: 600; color: var(--font-primary); }
+
+    .sb-head { flex: 0 0 auto; padding: 14px 16px 12px; }
+    .sb-head-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
+    .sb-head h3 { margin: 0; font-size: 15px; font-weight: 600; line-height: 20px; color: var(--font-primary);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .sb-sub { margin: 5px 0 0; display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--font-secondary); }
+    .live-dot { width: 7px; height: 7px; border-radius: 50%; background: #d93025; animation: pulse 1.6s ease-in-out infinite; }
+    @keyframes pulse { 0%,100% { opacity: 1 } 50% { opacity: .25 } }
+    .paused .live-dot { animation: none; background: var(--font-secondary); }
+
+    .ibtn {
+      width: 28px;
+      height: 28px;
+      flex: 0 0 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 0;
+      border-radius: 4px;
+      background: none;
+      color: var(--font-secondary);
+      cursor: pointer;
+      padding: 0;
+    }
+    .ibtn:hover, .ibtn.on { background: var(--hover); color: var(--font-primary); }
+    .ibtn svg { width: 17px; height: 17px; }
+    .ibtn:disabled { opacity: .4; cursor: default; }
+
+    .sb-main { flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; padding: 0 16px 14px; }
+
+    /* Transcript card */
+    .tcard {
+      flex: 0 0 65%;
+      min-height: 170px;
+      display: flex;
+      flex-direction: column;
+      background: #fff;
+      border-top: 1px solid var(--line-soft);
+      overflow: hidden;
+    }
+    .tcard-head {
+      flex: 0 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      padding: 10px 4px 8px 0;
+    }
+    .tcard-head h5 {
+      margin: 0;
+      flex: 1 1 auto;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      color: var(--font-secondary);
+    }
+    .tcard-head .sep { width: 1px; height: 16px; background: var(--line); margin: 0 4px; }
+
+    .tfeed {
+      position: relative;
+      flex: 1 1 auto;
+      min-height: 0;
+      overflow: auto;
+      padding: 2px 2px 12px 0;
+      scroll-behavior: smooth;
+    }
+    .tfeed.scrolled {
+      mask-image: linear-gradient(to bottom, transparent 0, #000 26px);
+      -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 26px);
+    }
+    .tcard.collapsed { flex: 0 0 auto; }
+    .tcard.collapsed .tfeed { flex: 0 0 96px; }
+    /* The 26px top fade eats most of a 96px box, washing the line out. */
+    .tcard.collapsed .tfeed { mask-image: none; -webkit-mask-image: none; }
+
+    .tline { display: block; margin: 0 0 14px; animation: rise 260ms ease both; }
+    .tline-head { display: flex; align-items: center; gap: 6px; margin-bottom: 3px; }
+    /* Initial chip carries the speaker colour, so the eye finds the turn
+       before it reads the name. */
+    .tline .av {
+      flex: 0 0 18px;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: 600;
+      color: #fff;
+      background: var(--font-secondary);
+    }
+    .tline .who { font-size: 13px; font-weight: 600; color: var(--font-primary); }
+    .tline[data-sp="s1"] .av { background: var(--sp-1); }
+    .tline[data-sp="you"] .av { background: var(--sp-2); }
+    .tline[data-sp="s3"] .av { background: var(--sp-3); }
+    .tline .stamp { margin-left: auto; font-size: 11px; font-weight: 400; color: var(--font-secondary); font-variant-numeric: tabular-nums; }
+    /* Text sits under the chip, indented to its edge */
+    .tline .tbody { display: block; padding-left: 24px; font-size: 14px; line-height: 20px; color: var(--font-primary); }
+    .tpartial .tbody { color: var(--font-secondary); }
+    .tpartial .tbody::after { content: '▍'; margin-left: 1px; animation: caret 1s steps(1) infinite; }
+    @keyframes caret { 50% { opacity: 0 } }
+
+    .tcard-foot {
+      flex: 0 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 0 2px;
+      border-top: 1px solid var(--line-soft);
+      background: #fff;
+    }
+    .timer { font-size: 13px; color: var(--font-secondary); font-variant-numeric: tabular-nums; }
+    /* Done keeps Titan's 32px control height; .btn-primary is shared with the
+       nudge, which carries Figma's larger 8/16 padding. */
+    #done-btn { height: 32px; padding: 0 16px; font-size: 13px; line-height: 32px; border-radius: 4px; }
+    #pause-btn { margin-left: 4px; }
+    .foot-sep { width: 1px; height: 16px; background: var(--line); }
+    .wave { margin-left: auto; margin-right: 2px; display: flex; align-items: center; gap: 3px; height: 18px; }
+    .wave i { width: 3px; height: 4px; border-radius: 2px; background: #c9cbd1; animation: bar 900ms ease-in-out infinite; }
+    .wave i:nth-child(2) { animation-delay: .1s } .wave i:nth-child(3) { animation-delay: .2s }
+    .wave i:nth-child(4) { animation-delay: .3s } .wave i:nth-child(5) { animation-delay: .4s }
+    .wave i:nth-child(6) { animation-delay: .5s } .wave i:nth-child(7) { animation-delay: .6s }
+    @keyframes bar { 0%,100% { height: 4px } 50% { height: 15px; background: var(--blue) } }
+    .paused .wave i { animation: none; height: 4px; background: #c9cbd1; }
+
+    /* Notes */
+    .v-resizer { flex: 0 0 16px; position: relative; cursor: ns-resize; touch-action: none; }
+    .v-resizer::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 46px;
+      height: 3px;
+      margin: -1.5px 0 0 -23px;
+      border-radius: 2px;
+      background: #d2d4da;
+      opacity: 0;
+      transition: opacity 140ms ease;
+    }
+    .v-resizer:hover::after, body.vresizing .v-resizer::after { opacity: 1; }
+    body.vresizing { cursor: ns-resize; user-select: none; }
+
+    .resizer { position: absolute; left: 0; top: 0; bottom: 0; width: 8px; cursor: ew-resize; z-index: 5; }
+    .resizer::after {
+      content: '';
+      position: absolute;
+      left: 3px;
+      top: 50%;
+      width: 3px;
+      height: 44px;
+      margin-top: -22px;
+      border-radius: 2px;
+      background: #d2d4da;
+      opacity: 0;
+      transition: opacity 140ms ease;
+    }
+    .resizer:hover::after, body.resizing .resizer::after { opacity: 1; }
+    body.resizing { cursor: ew-resize; user-select: none; }
+
+    .notes-region { flex: 1 1 auto; min-height: 0; overflow: auto; }
+    .notes-head {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      width: 100%;
+      margin-bottom: 10px;
+      padding: 0;
+      border: 0;
+      background: none;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--font-primary);
+      text-align: left;
+      cursor: pointer;
+    }
+    .notes-head .count { font-size: 12px; font-weight: 400; color: var(--font-secondary); }
+    .notes-head .chev { margin-left: auto; width: 16px; height: 16px; color: var(--font-secondary); transition: transform 200ms ease; }
+    .notes-head .chev svg { width: 16px; height: 16px; }
+    .sb.docked .notes-region { flex: 0 0 auto; overflow: hidden; border-top: 1px solid var(--line-soft); }
+    .sb.docked .notes-head { margin: 0; padding: 13px 0; }
+    .sb.docked #note-list, .sb.docked #note-input { display: none; }
+    .sb.docked .notes-head .chev { transform: rotate(180deg); }
+
+    .note { display: flex; align-items: baseline; gap: 12px; margin: 0 0 10px; animation: rise 260ms ease both; }
+    .note-text {
+      flex: 1 1 auto;
+      min-width: 0;
+      outline: none;
+      font-size: 14px;
+      line-height: 20px;
+      color: var(--font-primary);
+      word-break: break-word;
+    }
+    .note-text:empty::before { content: attr(data-placeholder); color: #cfcfd4; }
+    .note .at { flex: 0 0 auto; margin-left: auto; font-size: 11px; color: #b3b3b8; font-variant-numeric: tabular-nums; }
+    .note-input {
+      width: 100%;
+      min-height: 22px;
+      border: 0;
+      outline: none;
+      font-family: inherit;
+      font-size: 14px;
+      line-height: 20px;
+      color: var(--font-primary);
+    }
+    .note-input:empty::before { content: attr(data-placeholder); color: #b3b3b8; }
+
+    /* Minimised pill */
+    .pill {
+      position: fixed;
+      right: 16px;
+      bottom: 78px;
+      z-index: 45;
+      display: none;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 16px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: #fff;
+      box-shadow: 0 8px 28px rgba(0,0,0,0.34);
+      cursor: pointer;
+      animation: rise 240ms cubic-bezier(.16,1,.3,1) both;
+    }
+    .pill.shown { display: flex; }
+    .pill:hover { background: var(--well); }
+    .pill-state { display: flex; color: var(--blue); }
+    .pill-state svg { width: 17px; height: 17px; }
+    .pill-wave { display: flex; align-items: center; gap: 3px; height: 18px; }
+    .pill-wave i { width: 3px; height: 5px; border-radius: 2px; background: var(--blue); animation: bar 900ms ease-in-out infinite; }
+    .pill-wave i:nth-child(2) { animation-delay: .12s } .pill-wave i:nth-child(3) { animation-delay: .24s }
+    .pill-wave i:nth-child(4) { animation-delay: .36s } .pill-wave i:nth-child(5) { animation-delay: .48s }
+    .pill.paused .pill-wave i { animation: none; height: 5px; background: #c9cbd1; }
+
+    /* Menus — Titan's menu treatment, 4px radius on a 1px #dedede edge */
+    .menu {
+      position: absolute;
+      z-index: 60;
+      min-width: 232px;
+      padding: 4px;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+    }
+    .menu button {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      padding: 8px 10px;
+      border: 0;
+      border-radius: 4px;
+      background: none;
+      font-family: inherit;
+      font-size: 14px;
+      color: var(--font-primary);
+      text-align: left;
+      cursor: pointer;
+    }
+    .menu button:hover { background: var(--hover); }
+    .menu button svg { width: 16px; height: 16px; flex: 0 0 16px; color: var(--font-secondary); }
+    .menu .grow { flex: 1 1 auto; }
+    .menu .chev { width: 14px; height: 14px; color: #b3b3b8; }
+    .menu-note { padding: 8px 10px 4px; font-size: 12px; color: var(--font-secondary); }
+    .menu-sep { height: 1px; margin: 4px; background: var(--line-soft); }
+    .toggle { width: 38px; height: 22px; flex: 0 0 38px; border-radius: 11px; background: #d6d6db; position: relative; transition: background 160ms ease; }
+    .toggle i {
+      position: absolute;
+      left: 2px;
+      top: 2px;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #fff;
+      box-shadow: 0 1px 2px rgba(0,0,0,.2);
+      transition: transform 160ms ease;
+    }
+    .menu button.on .toggle { background: var(--blue); }
+    .menu button.on .toggle i { transform: translateX(16px); }
+    .lang-list { max-height: 300px; overflow: auto; }
+    .lang-list .check { width: 16px; height: 16px; margin-left: auto; }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 96px;
+      transform: translate(-50%, 16px);
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      padding: 12px 20px;
+      border-radius: 6px;
+      background: #1d2133;
+      color: #fff;
+      font-size: 14px;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.3);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .2s ease, transform .2s ease;
+      z-index: 100;
+    }
+    .toast.show { opacity: 1; transform: translate(-50%, 0); pointer-events: auto; }
+  </style>
+</head>
+
+<body>
+
+  <!-- ── Zoom call (backdrop, not Titan UI) ── -->
+  <div class="zoom">
+    <div class="z-title">
+      <span class="z-lights"><i></i><i></i><i></i></span>Zoom Meeting
+    </div>
+    <div class="z-body">
+      <div class="z-grid">
+        <div class="z-tile active" style="background:linear-gradient(150deg,#3f4d63,#22303f)"><span class="z-initials">PR</span><span class="z-name">Priya Raman</span></div>
+        <div class="z-tile" style="background:linear-gradient(150deg,#4a4058,#2b2436)"><span class="z-initials">DO</span><span class="z-name">Daniel Okoye</span></div>
+        <div class="z-tile" style="background:linear-gradient(150deg,#2f4a58,#1d2f38)"><span class="z-initials">EH</span><span class="z-name">Ella Henderson (You)</span></div>
+        <div class="z-tile" style="background:linear-gradient(150deg,#54463c,#302722)"><span class="z-initials">MS</span><span class="z-name">Meera Shah</span></div>
+      </div>
+    </div>
+    <div class="z-bar">
+      <button class="z-tool"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 19v3"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><rect x="9" y="2" width="6" height="13" rx="3"/></svg><span>Mute</span></button>
+      <button class="z-tool"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg><span>Stop Video</span></button>
+      <button class="z-tool"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg><span>Participants</span></button>
+      <button class="z-tool"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><span>Chat</span></button>
+      <button class="z-tool"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 3v12"/><path d="M7 8l5-5 5 5"/><rect x="3" y="15" width="18" height="6" rx="2"/></svg><span>Share Screen</span></button>
+      <button class="z-tool"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/></svg><span>More</span></button>
+      <button class="z-leave" id="leave-btn">Leave</button>
+    </div>
+  </div>
+
+  <!-- ── Pre-call nudge ── -->
+  <div class="nudge" id="nudge">
+    <div class="nudge-head">
+      <span class="nudge-mark"><img src="assets/nudge-mark.svg" alt=""></span>
+      <div class="nudge-copy">
+        <h4>Add Titan Recap to this call</h4>
+        <p>Transcribe live, and keep notes beside it.</p>
+      </div>
+    </div>
+    <div class="nudge-actions">
+      <button class="btn-primary" id="start-btn">Start transcribing</button>
+      <button class="btn-outline" id="dismiss-btn">Not now</button>
+    </div>
+    <div class="nudge-timer"><i></i></div>
+  </div>
+
+  <!-- ── Sidebar ── -->
+  <aside class="sb" id="sb" aria-label="Titan Recap live transcription">
+    <div class="sb-title">
+      <span class="sb-brand"><img src="app_switcher_assets/grid_icons/recap.svg" alt=""><span>Titan Recap</span></span>
+      <span class="sb-lights">
+        <button class="ibtn" id="min-btn" title="Minimise" aria-label="Minimise"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 12h12"/></svg></button>
+        <button class="ibtn" id="max-btn" title="Maximise" aria-label="Maximise"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4H4v5"/><path d="M15 20h5v-5"/><path d="M20 9V4h-5"/><path d="M4 15v5h5"/></svg></button>
+        <button class="ibtn" id="close-btn" title="Close to pill" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
+      </span>
+    </div>
+
+    <div class="sb-head">
+      <div class="sb-head-row">
+        <div>
+          <h3>Northwind Logistics — Discovery call</h3>
+          <p class="sb-sub"><span class="live-dot"></span><span id="live-label">Transcribing · 4 participants</span></p>
+        </div>
+        <button class="ibtn" id="kebab-btn" aria-label="More"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="12" cy="19" r="1"/></svg></button>
+      </div>
+    </div>
+
+    <div class="resizer" id="resizer" title="Drag to resize"></div>
+
+    <div class="sb-main">
+      <div class="tcard" id="tcard">
+        <div class="tcard-head">
+          <h5>Transcript</h5>
+          <button class="ibtn on" id="voice-btn" title="Mute the call" aria-label="Mute the call"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M11 5L6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M19 5a10 10 0 0 1 0 14"/></svg></button>
+          <button class="ibtn" id="gear-btn" aria-label="Transcript settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6 1.65 1.65 0 0 0 10 3.09V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></button>
+          <span class="sep"></span>
+          <button class="ibtn" id="collapse-btn" aria-label="Collapse"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 14h6v6"/><path d="M20 10h-6V4"/><path d="M14 10l7-7"/><path d="M3 21l7-7"/></svg></button>
+        </div>
+
+        <div class="tfeed" id="tfeed"></div>
+
+        <div class="tcard-foot">
+          <span class="timer" id="timer">00:00:00</span>
+          <span class="foot-sep"></span>
+          <span class="wave"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+          <button class="ibtn" id="pause-btn" aria-label="Pause"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></svg></button>
+          <button class="btn-primary" id="done-btn">Done</button>
+        </div>
+      </div>
+
+      <div class="v-resizer" id="v-resizer" title="Drag to resize the transcript"></div>
+
+      <div class="notes-region" id="notes-region">
+        <div>
+          <button class="notes-head" id="notes-tab" aria-expanded="true">
+            My thoughts
+            <span class="count" id="note-count"></span>
+            <span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></span>
+          </button>
+          <div id="note-list"></div>
+          <div class="note-input" id="note-input" contenteditable="true" role="textbox"
+            data-placeholder="Type your thoughts here…"></div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <button class="pill" id="pill" aria-label="Reopen Titan Recap">
+    <span class="pill-state" id="pill-state"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M6 4l14 8-14 8z"/></svg></span>
+    <span class="pill-wave"><i></i><i></i><i></i><i></i><i></i></span>
+  </button>
+
+  <!-- ── Menus ── -->
+  <div class="menu" id="gear-menu" hidden>
+    <button id="lang-open"><span class="grow">Transcription language</span><span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg></span></button>
+    <button><span class="grow">Microphone settings</span><span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg></span></button>
+  </div>
+  <div class="menu lang-list" id="lang-menu" hidden></div>
+  <div class="menu" id="kebab-menu" hidden>
+    <button id="copy-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M10 13a5 5 0 0 0 7.07 0l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.07 0l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg><span class="grow">Copy link</span></button>
+    <div class="menu-sep"></div>
+    <div class="menu-note">Applies to all new notes</div>
+    <button class="on" data-toggle="summary"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M4 5h16"/><path d="M4 12h10"/><path d="M4 19h13"/></svg><span class="grow">Write the summary when the call ends</span><span class="toggle"><i></i></span></button>
+    <button class="on" data-toggle="goto"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><span class="grow">Open the notes page when done</span><span class="toggle"><i></i></span></button>
+  </div>
+
+  <div class="toast" id="toast"><span id="toast-msg"></span></div>
+
+  <script>
+    (function () {
+      'use strict';
+      var $ = function (id) { return document.getElementById(id); };
+
+      /* Diarisation numbers speakers in the order first heard; the write-up
+         maps them to people afterwards. */
+      var SPEAKERS = { s1: 'Speaker 1', you: 'Speaker 2', s3: 'Speaker 3' };
+
+      var SCRIPT = [
+        ['s1',  "Thanks for making time, Ella. Daniel's joining us from the platform side."],
+        ['you', 'Good to meet you, Daniel. Shall we start with where the current system hurts most?'],
+        ['s3',  'The warehouse system is on-prem, and it falls over every peak season.'],
+        ['s1',  'Last November we lost about six hours of order processing.'],
+        ['you', 'Six hours across how many sites?'],
+        ['s3',  'Four distribution centres. Two up north, two near the port.'],
+        ['you', 'And who owns the integration between that system and the ERP today?'],
+        ['s3',  "Nobody, honestly. It's a nightly batch job someone wrote in 2019."],
+        ['s1',  "That's the part the board keeps asking about."],
+        ['you', "That's usually where the risk sits. I'd want to audit those interfaces first."],
+        ['s1',  'How long would an audit take?'],
+        ['you', 'Three weeks for the assessment, then a readiness review before any migration.'],
+        ['s3',  'Would you need production access, or is staging enough?'],
+        ['you', "Staging is enough to start. I'll send the access list with the proposal."],
+        ['s3',  'And what would you need from us during those three weeks?'],
+        ['you', 'Read access to the interface logs, and an hour with whoever runs the batch.'],
+        ['s1',  "That would be Daniel's team."],
+        ['s3',  'We can make that work. The logs go back about eighteen months.'],
+        ['you', 'Eighteen months is plenty. I mainly want to see the failures around peak.'],
+        ['s1',  'November and the last week of December, mostly.'],
+        ['you', "Then that's where I'll start. And the budget range we talked about still holds?"],
+        ['s1',  "It does on our side. Put the fixed-fee assessment in writing and I'll take it to the board."],
+        ['you', "I'll have it with you this week."],
+        ['s1',  "Perfect. Let's reconvene once the board has seen it."]
+      ];
+
+      var LANGS = ['English', 'Arabic', 'Bengali', 'Chinese (Simplified)', 'Dutch', 'French (France)',
+        'German', 'Hindi', 'Italian', 'Japanese', 'Korean', 'Portuguese (Brazil)', 'Russian',
+        'Spanish (Spain)', 'Tamil', 'Telugu', 'Turkish', 'Vietnamese'];
+
+      var started = false, paused = false, finished = false;
+      var seconds = 0, idx = 0;
+      var tickTimer = null, lineTimer = null, partial = null;
+      var lang = 'English';
+
+      function hhmmss(s) {
+        var h = Math.floor(s / 3600), m = Math.floor((s % 3600) / 60), x = s % 60;
+        return [h, m, x].map(function (n) { return String(n).padStart(2, '0'); }).join(':');
+      }
+      function stamp() { return hhmmss(seconds).slice(3); }
+
+      var toastTimer = null;
+      function showToast(msg) {
+        $('toast-msg').textContent = msg;
+        $('toast').classList.add('show');
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(function () { $('toast').classList.remove('show'); }, 2600);
+      }
+
+      /* ── Voice over ──
+         Browser speech synthesis keeps the file self-contained: no audio
+         assets. When it is on, each line lands as the sentence finishes, so
+         the words on screen match what you hear. */
+      var VOICE = {
+        supported: typeof window.speechSynthesis !== 'undefined' &&
+                   typeof window.SpeechSynthesisUtterance !== 'undefined',
+        on: true,
+        voices: {},
+        // Slightly quicker than natural, which reads as "call pace" rather
+        // than "screen reader". Pitch separates the three speakers.
+        tone: { s1: { pitch: 1.06, rate: 1.16 }, you: { pitch: 0.92, rate: 1.12 }, s3: { pitch: 1.0, rate: 1.18 } }
+      };
+
+      /* Voice quality is the whole problem here: getVoices() returns the
+         novelty voices first on macOS, so taking pool[0..2] produced Albert,
+         Bad News and Bells. Score by name against the good general-purpose
+         voices, reject the novelty set outright, and prefer local ones (remote
+         voices stall on first use and never fire onboundary). */
+      var VOICE_GOOD = ['Samantha','Alex','Daniel','Karen','Moira','Tessa','Serena','Allison','Ava','Susan','Tom','Nicky','Aaron',
+        'Google US English','Google UK English Female','Google UK English Male',
+        'Microsoft Aria','Microsoft Jenny','Microsoft Guy','Microsoft Zira','Microsoft David'];
+      var VOICE_BAD = /albert|bad news|bahh|bells|boing|bubbles|cellos|deranged|good news|jester|junior|kathy|organ|superstar|trinoids|whisper|wobble|zarvox|hysterical|princess|ralph|fred|grandma|grandpa|rocko|shelley|sandy|flo|eddy|reed|rishi|novelty|eloquence/i;
+
+      function voiceScore(v) {
+        if (VOICE_BAD.test(v.name)) return -1;
+        var s = 0;
+        for (var i = 0; i < VOICE_GOOD.length; i++) {
+          if (v.name.indexOf(VOICE_GOOD[i]) === 0) { s += 100 - i; break; }
+        }
+        if (/^en[-_]?(US|GB)/i.test(v.lang)) s += 20;
+        else if (/^en/i.test(v.lang)) s += 10;
+        else s -= 40;
+        if (v.localService) s += 15;
+        return s;
+      }
+
+      function pickVoices() {
+        if (!VOICE.supported) return;
+        var all = (window.speechSynthesis.getVoices() || [])
+          .map(function (v) { return { v: v, s: voiceScore(v) }; })
+          .filter(function (o) { return o.s > 0; })
+          .sort(function (a, b) { return b.s - a.s; })
+          .map(function (o) { return o.v; });
+        if (!all.length) { VOICE.voices = {}; return; }
+        // Three distinct voices where the machine has them, else reuse the best.
+        VOICE.voices = { s1: all[0], you: all[1] || all[0], s3: all[2] || all[0] };
+      }
+
+      if (VOICE.supported) {
+        pickVoices();
+        window.speechSynthesis.onvoiceschanged = pickVoices;
+      } else {
+        $('voice-btn').disabled = true;
+        $('voice-btn').title = 'Voice over not supported in this browser';
+      }
+
+      // No installed voices means onend never arrives; pace on timers instead.
+      function hasVoices() {
+        return !!(VOICE.voices.s1 || VOICE.voices.you || VOICE.voices.s3);
+      }
+
+      function primeVoice() {
+        if (!VOICE.supported || !VOICE.on) return;
+        try { var u = new SpeechSynthesisUtterance('.'); u.volume = 0; window.speechSynthesis.speak(u); } catch (e) {}
+      }
+
+      /* speak() drives the on-screen partial as well as the audio, so the
+         words appear as they are said instead of the whole line landing after
+         the sentence finishes.
+
+         onboundary is the accurate signal but it does not fire on every
+         voice (remote ones in particular), so a timer paces the reveal and a
+         boundary event, when it arrives, snaps it to the true position. */
+      function speak(sp, text, onReveal, done) {
+        if (!VOICE.supported || !VOICE.on) { done(); return; }
+        var settled = false, revealTimer = null;
+        var t = VOICE.tone[sp] || {};
+        var rate = t.rate || 1;
+        // ~14 characters a second at rate 1, scaled by the rate in use.
+        var msPerChar = 1000 / (14 * rate);
+        var cursor = 0;
+
+        function reveal(upto) {
+          cursor = Math.max(cursor, Math.min(upto, text.length));
+          onReveal(text.slice(0, cursor));
+        }
+        function tick() {
+          reveal(cursor + 2);
+          if (cursor < text.length) revealTimer = setTimeout(tick, msPerChar * 2);
+        }
+        function finishOnce() {
+          if (settled) return;
+          settled = true;
+          clearTimeout(guard);
+          clearTimeout(revealTimer);
+          done();
+        }
+
+        var guard = setTimeout(finishOnce, text.length * msPerChar + 1600);
+        revealTimer = setTimeout(tick, msPerChar * 2);
+
+        try {
+          var u = new SpeechSynthesisUtterance(text);
+          var v = VOICE.voices[sp];
+          if (v) u.voice = v;
+          u.pitch = t.pitch || 1;
+          u.rate = rate;
+          u.volume = 1;
+          u.onboundary = function (e) {
+            if (e.name && e.name !== 'word') return;
+            if (typeof e.charIndex !== 'number') return;
+            // Include the word being spoken, not just the ones before it.
+            var end = e.charIndex + (e.charLength || 0);
+            if (!e.charLength) {
+              var sp2 = text.indexOf(' ', e.charIndex);
+              end = sp2 === -1 ? text.length : sp2;
+            }
+            reveal(end);
+          };
+          u.onend = finishOnce;
+          u.onerror = finishOnce;
+          window.speechSynthesis.speak(u);
+        } catch (e) { finishOnce(); }
+      }
+
+      var MIC_ON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M11 5L6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M19 5a10 10 0 0 1 0 14"/></svg>';
+      var MIC_OFF = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M11 5L6 9H2v6h4l5 4z"/><path d="M22 9l-6 6"/><path d="M16 9l6 6"/></svg>';
+
+      function setVoice(on) {
+        VOICE.on = on;
+        $('voice-btn').classList.toggle('on', on);
+        $('voice-btn').innerHTML = on ? MIC_ON : MIC_OFF;
+        $('voice-btn').title = on ? 'Mute the call' : 'Unmute the call';
+        $('voice-btn').setAttribute('aria-label', $('voice-btn').title);
+        if (!on && VOICE.supported) window.speechSynthesis.cancel();
+      }
+
+      $('voice-btn').addEventListener('click', function () {
+        if (!VOICE.supported) return;
+        setVoice(!VOICE.on);
+        if (VOICE.on && started && !paused && !finished) primeVoice();
+      });
+
+      /* ── Transcript ── */
+      /* A turn is a speaker chip over its text, not a run-on paragraph — at
+         380px the old inline layout wrapped the name away from the words. */
+      function buildLine(sp, text, at) {
+        var p = document.createElement('p');
+        p.className = 'tline';
+        p.setAttribute('data-sp', sp);
+
+        var head = document.createElement('span');
+        head.className = 'tline-head';
+        var av = document.createElement('span');
+        av.className = 'av';
+        av.textContent = (SPEAKERS[sp] || '?').replace(/[^0-9A-Za-z]/g, '').slice(-1);
+        var who = document.createElement('span');
+        who.className = 'who';
+        who.textContent = SPEAKERS[sp];
+        var st = document.createElement('span');
+        st.className = 'stamp';
+        st.textContent = at;
+        head.appendChild(av);
+        head.appendChild(who);
+        head.appendChild(st);
+
+        var body = document.createElement('span');
+        body.className = 'tbody';
+        body.textContent = text;
+
+        p.appendChild(head);
+        p.appendChild(body);
+        return p;
+      }
+
+      function addLine(sp, text) {
+        var feed = $('tfeed');
+        feed.appendChild(buildLine(sp, text, stamp()));
+        feed.scrollTop = feed.scrollHeight;
+      }
+
+      function showPartial(sp, text) {
+        clearPartial();
+        partial = buildLine(sp, text, stamp());
+        partial.className = 'tline tpartial';
+        $('tfeed').appendChild(partial);
+        $('tfeed').scrollTop = $('tfeed').scrollHeight;
+      }
+
+      function clearPartial() {
+        if (partial && partial.parentNode) partial.parentNode.removeChild(partial);
+        partial = null;
+      }
+
+      function nextLine() {
+        if (paused || finished) return;
+        if (idx >= SCRIPT.length) { finish(); return; }
+        var row = SCRIPT[idx];
+        showPartial(row[0], '');
+
+        function reveal(sofar) {
+          if (paused || finished || !partial) return;
+          var body = partial.querySelector('.tbody');
+          if (body) body.textContent = sofar;
+          $('tfeed').scrollTop = $('tfeed').scrollHeight;
+        }
+
+        function commit() {
+          if (paused || finished) return;
+          clearPartial();
+          addLine(row[0], row[1]);
+          idx++;
+          // Short beat between turns — long enough to read as a hand-off.
+          lineTimer = setTimeout(nextLine, 260 + Math.random() * 220);
+        }
+
+        if (VOICE.supported && VOICE.on && hasVoices()) speak(row[0], row[1], reveal, commit);
+        else {
+          // Muted, or no usable voice: pace the same reveal on a timer.
+          var msPerChar = 1000 / 16, cursor = 0;
+          (function tick() {
+            if (paused || finished) return;
+            cursor += 3;
+            reveal(row[1].slice(0, cursor));
+            if (cursor < row[1].length) lineTimer = setTimeout(tick, msPerChar * 3);
+            else lineTimer = setTimeout(commit, 220);
+          })();
+        }
+      }
+
+      /* ── My thoughts ── */
+      function updateCount() {
+        var n = $('note-list').children.length;
+        $('note-count').textContent = n ? '(' + n + ')' : '';
+      }
+
+      $('note-input').addEventListener('focus', function () {
+        if (isDocked()) { openNotesHalf(); this.focus(); }
+      });
+
+      $('note-input').addEventListener('keydown', function (e) {
+        if (e.key !== 'Enter') return;
+        e.preventDefault();
+        var text = this.textContent.trim();
+        if (!text) return;
+        var row = document.createElement('div');
+        row.className = 'note';
+        var body = document.createElement('div');
+        body.className = 'note-text';
+        body.contentEditable = 'true';
+        body.setAttribute('data-placeholder', 'Empty note');
+        body.textContent = text;
+        var at = document.createElement('span');
+        at.className = 'at';
+        at.textContent = stamp();
+        body.addEventListener('blur', function () {
+          if (!this.textContent.trim()) { row.remove(); updateCount(); }
+        });
+        row.appendChild(body);
+        row.appendChild(at);
+        $('note-list').appendChild(row);
+        this.textContent = '';
+        updateCount();
+        $('notes-region').scrollTop = $('notes-region').scrollHeight;
+      });
+
+      /* ── Run control ── */
+      function start() {
+        if (started) return;
+        started = true;
+        hideNudge();
+        primeVoice();
+        $('sb').classList.add('open');
+        tickTimer = setInterval(function () {
+          if (!paused && !finished) { seconds++; $('timer').textContent = hhmmss(seconds); }
+        }, 1000);
+        setTimeout(nextLine, 600);
+      }
+
+      var PLAY = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M6 4l14 8-14 8z"/></svg>';
+      var PAUSE = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></svg>';
+
+      function setPaused(p) {
+        paused = p;
+        $('sb').classList.toggle('paused', p);
+        $('pause-btn').innerHTML = p ? PLAY : PAUSE;
+        $('pause-btn').setAttribute('aria-label', p ? 'Resume' : 'Pause');
+        $('live-label').textContent = (p ? 'Paused' : 'Transcribing') + ' · 4 participants';
+        if (p) {
+          clearTimeout(lineTimer);
+          clearPartial();
+          if (VOICE.supported) window.speechSynthesis.cancel();
+        } else {
+          if (VOICE.supported && VOICE.on) primeVoice();
+          nextLine();
+        }
+        if ($('pill').classList.contains('shown')) setMinimised(true);
+      }
+
+      /* Hand the call over to the notes page, carrying the duration and
+         whatever the user typed in My thoughts. */
+      function notesUrl() {
+        var thoughts = [];
+        Array.prototype.forEach.call($('note-list').children, function (row) {
+          var t = row.querySelector('.note-text').textContent.trim();
+          if (t) thoughts.push(t);
+        });
+        var q = 'recap.html?from=call&dur=' + encodeURIComponent(hhmmss(seconds));
+        var joined = thoughts.join(' | ');
+        if (joined) q += '&thoughts=' + encodeURIComponent(joined.slice(0, 1200));
+        return q;
+      }
+
+      function finish() {
+        if (finished) return;
+        finished = true;
+        clearTimeout(lineTimer);
+        clearInterval(tickTimer);
+        clearPartial();
+        if (VOICE.supported) window.speechSynthesis.cancel();
+        $('sb').classList.add('paused');
+        $('live-label').textContent = 'Ended · ' + hhmmss(seconds) + ' · 4 participants';
+        $('done-btn').textContent = 'Saved';
+        $('done-btn').disabled = true;
+        $('pause-btn').disabled = true;
+        showToast('Writing your notes…');
+        var goto = document.querySelector('[data-toggle="goto"]').classList.contains('on');
+        if (goto) setTimeout(function () { window.open(notesUrl(), '_blank'); }, 1400);
+      }
+
+      /* ── Nudge ── */
+      var nudgeTimer = setTimeout(hideNudge, 10000);
+      function hideNudge() {
+        clearTimeout(nudgeTimer);
+        var n = $('nudge');
+        if (n.style.display === 'none') return;
+        n.classList.add('gone');
+        setTimeout(function () { n.style.display = 'none'; }, 220);
+      }
+      $('start-btn').addEventListener('click', start);
+      $('dismiss-btn').addEventListener('click', hideNudge);
+
+      /* ── Window controls ── */
+      function setMinimised(on) {
+        $('sb').classList.toggle('min', on);
+        $('pill').classList.toggle('shown', on);
+        $('pill').classList.toggle('paused', paused || finished);
+        $('pill-state').innerHTML = (paused || finished) ? PAUSE : PLAY;
+      }
+      $('min-btn').addEventListener('click', function () { setMinimised(true); });
+      $('close-btn').addEventListener('click', function () { setMinimised(true); });
+      $('pill').addEventListener('click', function () { setMinimised(false); });
+      $('max-btn').addEventListener('click', function () {
+        var on = $('sb').classList.toggle('max');
+        this.title = on ? 'Restore' : 'Maximise';
+        applyDefaultSplit();
+      });
+      $('pause-btn').addEventListener('click', function () { if (!finished) setPaused(!paused); });
+      $('done-btn').addEventListener('click', function () { if (!finished) finish(); });
+      $('collapse-btn').addEventListener('click', function () {
+        var card = $('tcard');
+        var on = card.classList.toggle('collapsed');
+        this.classList.toggle('on', on);
+        /* The v-resizer writes an inline flex-basis, which outranks
+           `.tcard.collapsed { flex: 0 0 auto }` — so collapsing left the card
+           at its full height with a gap under the transcript. Park the basis
+           while collapsed and put it back on expand. */
+        if (on) {
+          card.dataset.basis = card.style.flex || '';
+          card.style.flex = '';
+        } else if (card.dataset.basis) {
+          card.style.flex = card.dataset.basis;
+        }
+      });
+      $('leave-btn').addEventListener('click', function () { if (started && !finished) finish(); });
+
+      /* ── Menus ── */
+      function closeMenus() {
+        ['gear-menu', 'lang-menu', 'kebab-menu'].forEach(function (id) { $(id).hidden = true; });
+        $('gear-btn').classList.remove('on');
+        $('kebab-btn').classList.remove('on');
+      }
+      function place(menu, anchor) {
+        menu.hidden = false;
+        var r = anchor.getBoundingClientRect(), m = menu.getBoundingClientRect();
+        var left = r.right - m.width;
+        menu.style.left = Math.max(12, Math.min(left, window.innerWidth - m.width - 12)) + 'px';
+        menu.style.top = Math.min(r.bottom + 6, window.innerHeight - m.height - 12) + 'px';
+      }
+      $('gear-btn').addEventListener('click', function (e) {
+        e.stopPropagation();
+        var open = !$('gear-menu').hidden;
+        closeMenus();
+        if (!open) { this.classList.add('on'); place($('gear-menu'), this); }
+      });
+      $('kebab-btn').addEventListener('click', function (e) {
+        e.stopPropagation();
+        var open = !$('kebab-menu').hidden;
+        closeMenus();
+        if (!open) { this.classList.add('on'); place($('kebab-menu'), this); }
+      });
+      $('lang-open').addEventListener('click', function (e) {
+        e.stopPropagation();
+        var menu = $('lang-menu');
+        menu.innerHTML = '';
+        LANGS.forEach(function (name) {
+          var b = document.createElement('button');
+          var s = document.createElement('span');
+          s.className = 'grow';
+          s.textContent = name;
+          b.appendChild(s);
+          if (name === lang) {
+            b.insertAdjacentHTML('beforeend',
+              '<img class="check" src="recap_app_assets/ic-check-blue.svg" alt="">');
+          }
+          b.addEventListener('click', function (ev) {
+            ev.stopPropagation();
+            lang = name;
+            closeMenus();
+            showToast('Transcribing in ' + name);
+          });
+          menu.appendChild(b);
+        });
+        place(menu, $('gear-btn'));
+        $('gear-menu').hidden = true;
+      });
+      Array.prototype.forEach.call(document.querySelectorAll('[data-toggle]'), function (b) {
+        b.addEventListener('click', function (e) { e.stopPropagation(); this.classList.toggle('on'); });
+      });
+      $('copy-link').addEventListener('click', function (e) {
+        e.stopPropagation();
+        closeMenus();
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText('https://app.titan.email/recap/live').catch(function () {});
+        }
+        showToast('Link copied');
+      });
+
+      /* ── Drag the left edge ── */
+      (function () {
+        var handle = $('resizer'), panel = $('sb');
+        var startX = 0, startW = 0, dragging = false;
+        handle.addEventListener('pointerdown', function (e) {
+          dragging = true;
+          startX = e.clientX;
+          startW = panel.getBoundingClientRect().width;
+          document.body.classList.add('resizing');
+          try { handle.setPointerCapture(e.pointerId); } catch (err) {}
+          e.preventDefault();
+        });
+        handle.addEventListener('pointermove', function (e) {
+          if (!dragging) return;
+          var min = parseFloat(getComputedStyle(panel).minWidth) || 380;
+          var max = parseFloat(getComputedStyle(panel).maxWidth) || 820;
+          panel.style.width = Math.max(min, Math.min(max, startW + (startX - e.clientX))) + 'px';
+          applyDefaultSplit();
+        });
+        function end(e) {
+          if (!dragging) return;
+          dragging = false;
+          document.body.classList.remove('resizing');
+          try { handle.releasePointerCapture(e.pointerId); } catch (err) {}
+        }
+        handle.addEventListener('pointerup', end);
+        handle.addEventListener('pointercancel', end);
+        handle.addEventListener('dblclick', function () { panel.style.width = ''; });
+      })();
+
+      /* ── Transcript / notes split ── */
+      var userSplit = false;
+      var DOCK_AT = 48;
+
+      function applyDefaultSplit() {
+        if (userSplit || isDocked()) return;
+        var card = $('tcard'), main = card.parentNode;
+        var panelH = $('sb').getBoundingClientRect().height;
+        var mainH = main.getBoundingClientRect().height;
+        if (!panelH || !mainH) return;
+        card.style.height = '';
+        card.style.flex = '0 0 ' + Math.max(170, Math.min(Math.round(panelH * 0.65), mainH - 24)) + 'px';
+      }
+
+      function dockNotes(on) {
+        $('sb').classList.toggle('docked', on);
+        $('notes-tab').setAttribute('aria-expanded', on ? 'false' : 'true');
+        if (on) { $('tcard').style.height = ''; $('tcard').style.flex = '1 1 auto'; }
+      }
+      function isDocked() { return $('sb').classList.contains('docked'); }
+
+      function setSplitByNotes(notesPx) {
+        var card = $('tcard'), main = card.parentNode;
+        var h = Math.max(170, main.getBoundingClientRect().height - notesPx - $('v-resizer').offsetHeight);
+        card.style.height = '';
+        card.style.flex = '0 0 ' + h + 'px';
+      }
+      function openNotesHalf() {
+        dockNotes(false);
+        userSplit = true;
+        setSplitByNotes(Math.round($('sb').getBoundingClientRect().height * 0.5));
+      }
+      $('notes-tab').addEventListener('click', function () {
+        if (isDocked()) openNotesHalf();
+        else { userSplit = true; dockNotes(true); }
+      });
+
+      (function () {
+        var handle = $('v-resizer'), card = $('tcard'), main = card.parentNode;
+        var startY = 0, startH = 0, dragging = false, MIN_CARD = 170;
+        handle.addEventListener('pointerdown', function (e) {
+          dragging = true;
+          userSplit = true;
+          startY = e.clientY;
+          startH = card.getBoundingClientRect().height;
+          card.style.flex = '0 0 auto';
+          document.body.classList.add('vresizing');
+          try { handle.setPointerCapture(e.pointerId); } catch (err) {}
+          e.preventDefault();
+        });
+        handle.addEventListener('pointermove', function (e) {
+          if (!dragging) return;
+          var room = main.getBoundingClientRect().height - handle.offsetHeight;
+          var h = Math.max(MIN_CARD, Math.min(room, startH + (e.clientY - startY)));
+          if (room - h < DOCK_AT) { dockNotes(true); }
+          else { dockNotes(false); card.style.flex = '0 0 auto'; card.style.height = h + 'px'; }
+        });
+        function end(e) {
+          if (!dragging) return;
+          dragging = false;
+          document.body.classList.remove('vresizing');
+          try { handle.releasePointerCapture(e.pointerId); } catch (err) {}
+        }
+        handle.addEventListener('pointerup', end);
+        handle.addEventListener('pointercancel', end);
+        handle.addEventListener('dblclick', function () {
+          userSplit = false;
+          dockNotes(false);
+          card.style.height = '';
+          card.style.flex = '';
+          applyDefaultSplit();
+        });
+      })();
+
+      document.addEventListener('visibilitychange', function () {
+        if (document.hidden && VOICE.supported) window.speechSynthesis.cancel();
+      });
+      window.addEventListener('beforeunload', function () {
+        if (VOICE.supported) window.speechSynthesis.cancel();
+      });
+      document.addEventListener('click', closeMenus);
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeMenus(); });
+
+      $('tfeed').addEventListener('scroll', function () {
+        this.classList.toggle('scrolled', this.scrollTop > 4);
+      });
+
+      updateCount();
+      applyDefaultSplit();
+      window.addEventListener('resize', applyDefaultSplit);
+
+      /* expose for testing */
+      window.__call = { start: start, finish: finish, notesUrl: notesUrl,
+        mute: function () { setVoice(false); },
+        state: function () { return { started: started, paused: paused, finished: finished, idx: idx, seconds: seconds }; } };
+    })();
+  </script>
+
+</body>
+
+</html>

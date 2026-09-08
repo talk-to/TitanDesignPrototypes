@@ -1,0 +1,17 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="20" height="25" viewBox="0 0 20 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="pptx">
+<path id="Mask" d="M0 2C0 0.89543 0.895431 0 2 0H14.3357L20 5.76458V23C20 24.1046 19.1046 25 18 25H2C0.895431 25 0 24.1046 0 23V2Z" fill="#E75936"/>
+<mask id="mask0_0_67" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="0" width="20" height="25">
+<path id="Mask_2" d="M0 2C0 0.89543 0.895431 0 2 0H14.3357L20 5.76458V23C20 24.1046 19.1046 25 18 25H2C0.895431 25 0 24.1046 0 23V2Z" fill="white"/>
+</mask>
+<g mask="url(#mask0_0_67)">
+<g id="Group 19">
+<rect id="Rectangle 7" x="3.75" y="8.59677" width="8.05369" height="1.25" fill="white"/>
+<rect id="Rectangle 7 Copy" x="3.75613" y="12.5058" width="8.05369" height="1.25" fill="white"/>
+<rect id="Rectangle 7 Copy 2" x="3.75" y="16.25" width="8.05369" height="1.25" fill="white"/>
+<path id="Oval 2" d="M11.7953 8.09677C14.6101 8.09677 16.9259 10.295 16.9261 13.0479C16.9261 15.8011 14.6102 18.0001 11.7953 18.0001C8.98038 18.0001 6.66443 15.8011 6.66443 13.0479C6.66468 10.295 8.98053 8.09678 11.7953 8.09677Z" fill="white" stroke="#E75936"/>
+<path id="Path 3 Copy 2" d="M14.375 0V3.76953C14.375 4.8741 15.2704 5.76953 16.375 5.76953H20.0709L14.375 0Z" fill="#CDC6C6"/>
+</g>
+</g>
+</g>
+</svg>

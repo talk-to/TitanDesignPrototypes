@@ -1,0 +1,13 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="20" height="25" viewBox="0 0 20 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Bitmap">
+<path id="Mask" d="M0 2C0 0.89543 0.895431 0 2 0H14.3357L20 5.76458V23C20 24.1046 19.1046 25 18 25H2C0.895431 25 0 24.1046 0 23V2Z" fill="#4E8BFB"/>
+<mask id="mask0_0_78" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="0" width="20" height="25">
+<path id="Mask_2" d="M0 2C0 0.89543 0.895431 0 2 0H14.3357L20 5.76458V23C20 24.1046 19.1046 25 18 25H2C0.895431 25 0 24.1046 0 23V2Z" fill="white"/>
+</mask>
+<g mask="url(#mask0_0_78)">
+<path id="Shape" fill-rule="evenodd" clip-rule="evenodd" d="M3.05864 15.3761H17.1211V13.8136H3.05864V15.3761V15.3761ZM3.05864 18.5011H13.0586V16.9386H3.05864V18.5011V18.5011ZM3.05864 12.2511H17.1211V10.6886H3.05864V12.2511V12.2511Z" fill="white"/>
+<path id="Path" fill-rule="evenodd" clip-rule="evenodd" d="M3.05864 7.56357V9.12607H17.1211V7.56357H3.05864V7.56357Z" fill="white"/>
+<path id="Path 3" d="M14.3229 -0.0210717V3.74846C14.3229 4.85303 15.2183 5.74846 16.3229 5.74846H20.0188L14.3229 -0.0210717Z" fill="#3858BF"/>
+</g>
+</g>
+</svg>

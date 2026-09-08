@@ -1,0 +1,3711 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Titan Recap</title>
+  <link rel="icon" href="app_switcher_assets/grid_icons/recap.svg">
+  <style>
+    /* ══════════════════════════════════════════════════════════════════════
+       Titan Recap — the app surface, from Figma node 5143:22300.
+       Opens in its own tab from the mail app's app switcher.
+       Figma's mock browser bar is presentation, not UI — the real tab
+       supplies that chrome, so it is not redrawn here.
+       ══════════════════════════════════════════════════════════════════════ */
+    :root {
+      --nav-bg: #1d2133;
+      --nav-hover: #2d314b;
+      --nav-border: #62658d;
+      --font-primary: #333333;
+      --font-secondary: #888888;
+      --blue: #2170f4;
+      --blue-50: #eff5ff;
+      --hover-grey: #f0f0f0;
+      --mention: #7a5dc7;
+      --page-gutter: 136px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', sans-serif;
+      background: #ffffff;
+      color: var(--font-primary);
+      min-height: 100vh;
+    }
+
+    /* ── Nav bar (5143:22470) ── */
+    .eb-nav {
+      background: var(--nav-bg);
+      height: 68px;
+      display: flex;
+      align-items: center;
+      padding: 0 24px 0 44px;
+      gap: 24px;
+    }
+    /* Tab switch — the Recap mark with a disclosure caret (5143:22519) */
+    .nav-tab-switch {
+      background: var(--nav-hover);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      padding: 1px 2px;
+      flex-shrink: 0;
+      cursor: pointer;
+    }
+    .nav-tab-switch img.mark { width: 21px; height: 21px; display: block; margin: 3.5px; }
+    .nav-tab-switch .caret-box {
+      width: 16px;
+      height: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .nav-tab-switch .caret-box img { width: 8.1px; height: 4.8px; display: block; }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-shrink: 0;
+      margin-left: 24px;
+    }
+    .nav-partner-logo { padding: 1px 7px; display: flex; }
+    .nav-partner-logo img { width: 22px; height: 19px; display: block; }
+    .nav-sep {
+      width: 1px;
+      height: 18px;
+      background: rgba(255, 255, 255, 0.24);
+      flex-shrink: 0;
+    }
+    .nav-app-name {
+      font-size: 20px;
+      color: #ffffff;
+      letter-spacing: -0.4px;
+      padding-left: 9px;
+      white-space: nowrap;
+    }
+
+    .nav-right {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+    .nav-actions { display: flex; align-items: center; gap: 8px; }
+    .nav-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9.5px 16px 9.5px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 500;
+      color: #ffffff;
+      white-space: nowrap;
+    }
+    .nav-btn:hover { background: var(--nav-hover); }
+    .nav-btn img { width: 16px; height: 16px; display: block; }
+
+    /* Account switcher (5141:18828) */
+    .nav-account {
+      width: 240px;
+      height: 36px;
+      background: var(--nav-bg);
+      border: 1px solid var(--nav-border);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 6px 12px;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+    .nav-account-left { display: flex; align-items: center; gap: 8px; min-width: 0; }
+    .nav-avatar { position: relative; width: 24px; height: 24px; flex-shrink: 0; }
+    .nav-avatar img { width: 24px; height: 24px; display: block; }
+    .nav-avatar span {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 500;
+      color: #ffffff;
+    }
+    .nav-account-email {
+      font-size: 14px;
+      line-height: 20px;
+      color: #ffffff;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-account .caret-box {
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .nav-account .caret-box img { width: 10px; height: 5px; display: block; }
+
+    .nav-powered {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      height: 36px;
+      flex-shrink: 0;
+    }
+    .nav-powered-rule { width: 1px; height: 36px; background: rgba(255, 255, 255, 0.24); }
+    .nav-powered-stack { display: flex; flex-direction: column; justify-content: center; gap: 6px; }
+    .nav-powered-stack span { font-size: 12px; line-height: 20px; color: #ffffff; white-space: nowrap; }
+    .nav-powered-stack img { width: 92px; height: 21.288px; display: block; }
+
+    /* ── Page (5143:22527 toolbar + 5143:22318 list + 5143:22463 card) ── */
+    .page {
+      padding: 48px var(--page-gutter) 64px;
+      max-width: 1440px;
+      margin: 0 auto;
+    }
+    .page-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 40px;
+      margin-bottom: 36px;
+    }
+    /* Figma puts the list's toolbar over the list column, and starts the
+       note card level with it (y=195) rather than with the first row. */
+    .list-col { width: 740px; flex-shrink: 0; }
+    #viewList .page-toolbar { width: 100%; }
+    .page-title {
+      font-size: 28px;
+      font-weight: 600;
+      color: var(--font-primary);
+      white-space: nowrap;
+    }
+    .toolbar-right { display: flex; align-items: center; gap: 16px; }
+    .btn-new-note {
+      background: var(--blue);
+      border: none;
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 10px 18px 10px 16px;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 20px;
+      color: #ffffff;
+      white-space: nowrap;
+      cursor: pointer;
+    }
+    .btn-new-note:hover { background: #1b62db; }
+    .btn-new-note img { width: 16px; height: 16px; display: block; }
+
+    .search-notes {
+      box-sizing: border-box;
+      height: 40px;
+      width: 250px;
+      background: #ffffff;
+      border: 1px solid #b1b1b1;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 8px;
+      cursor: text;
+    }
+    .search-notes img { width: 24px; height: 24px; display: block; padding: 4px; }
+    .search-notes input {
+      flex: 1;
+      border: none;
+      outline: none;
+      font-family: inherit;
+      font-size: 14px;
+      line-height: 20px;
+      color: var(--font-primary);
+      background: none;
+      min-width: 0;
+    }
+    .search-notes input::placeholder { color: var(--font-secondary); }
+
+    /* Two columns: 740px list + 400px overview, 28px apart (Figma) */
+    .page-body { display: flex; gap: 28px; align-items: flex-start; }
+    .notes-list { width: 740px; flex-shrink: 0; }
+
+    .note-row {
+      height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 20px 10px 12px;
+      border-radius: 6px;
+      border-bottom: 1px solid var(--hover-grey);
+      cursor: pointer;
+    }
+    .note-row:hover,
+    .note-row.active {
+      background: var(--hover-grey);
+      border-bottom-color: transparent;
+    }
+    .note-row-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      width: 362px;
+      min-width: 0;
+    }
+    .note-filetype { width: 32px; height: 32px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+    .note-filetype img { width: 20px; height: 25px; display: block; }
+    .note-name {
+      flex: 1;
+      min-width: 0;
+      font-size: 14px;
+      color: var(--font-primary);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .note-row-right { display: flex; align-items: center; gap: 36px; flex-shrink: 0; }
+    .note-meta { display: flex; align-items: center; gap: 24px; }
+    .note-date { width: 120px; font-size: 14px; color: var(--font-secondary); }
+    .note-time { width: 90px; font-size: 14px; color: var(--font-secondary); }
+    .note-more {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 6px;
+      border-radius: 4px;
+      border: none;
+      background: none;
+      cursor: pointer;
+    }
+    .note-more:hover { background: rgba(0, 0, 0, 0.06); }
+    .note-more img { width: 20px; height: 20px; display: block; }
+
+    /* ── Overview card (5143:22463) ── */
+    .note-card {
+      width: 400px;
+      flex-shrink: 0;
+      background: var(--blue-50);
+      border-radius: 8px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      position: sticky;
+      top: 24px;
+    }
+    .note-card-head { display: flex; flex-direction: column; gap: 8px; }
+    .note-card-title {
+      font-size: 20px;
+      font-weight: 600;
+      line-height: 1.2;
+      color: var(--font-primary);
+    }
+    .note-card-date { font-size: 14px; color: var(--font-primary); }
+    .btn-open-note {
+      align-self: flex-start;
+      border: 1px solid var(--blue);
+      border-radius: 4px;
+      background: none;
+      padding: 8px 16px;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--blue);
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .btn-open-note:hover { background: rgba(33, 112, 244, 0.06); }
+    .note-card-body { font-size: 14px; line-height: 1.6; color: #222222; }
+    .note-card-body b { font-weight: 700; }
+    .note-card-body .mention { color: var(--mention); font-weight: 600; }
+
+
+    /* ══════════════════════════════════════════════════════════════════════
+       Note detail — Figma node 5150:24824
+       ══════════════════════════════════════════════════════════════════════ */
+    [hidden] { display: none !important; }
+
+    /* Header: the back button hangs 48px left of the page gutter (Figma puts
+       it at x=88 against a 136px body gutter). */
+    .detail-head { margin-left: -48px; }
+    .detail-head-left { display: flex; align-items: center; gap: 24px; }
+    .btn-back {
+      background: #eff1f4;
+      border: none;
+      border-radius: 4px;
+      padding: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+    .btn-back:hover { background: #e3e6ea; }
+    .btn-back img { width: 18px; height: 18px; display: block; }
+    /* 400px wide like the card beside it, so Share starts on the card's
+       left edge (Figma 5185:31205) rather than hugging the page edge. */
+    .detail-actions { display: flex; align-items: center; gap: 16px; width: 400px; flex-shrink: 0; }
+    .btn-quiet, .btn-outline {
+      box-sizing: border-box;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 10px 16px 10px 14px;
+      border-radius: 4px;
+      background: none;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 20px;
+      color: var(--blue);
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .btn-quiet { border: none; }
+    .btn-quiet:hover { background: rgba(33, 112, 244, 0.06); }
+    .btn-outline { border: 1px solid var(--blue); }
+    .btn-outline:hover { background: rgba(33, 112, 244, 0.06); }
+    .btn-quiet img, .btn-outline img { width: 18px; height: 18px; display: block; }
+
+    /* Draft a reply (Figma 5234:18502) — primary, 5px radius, 16px glyph */
+    .btn-draft-reply {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 10px 18px 10px 16px;
+      border: none;
+      border-radius: 5px;
+      background: var(--blue);
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 20px;
+      color: #ffffff;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .btn-draft-reply:hover { background: var(--blue-press, #1b62db); }
+    .btn-draft-reply img { width: 16px; height: 16px; display: block; }
+
+    /* Two columns: 740px content, 400px action items, 28px apart */
+    .detail-body { display: flex; gap: 28px; align-items: flex-start; }
+    .detail-main { width: 740px; flex-shrink: 0; }
+
+    /* Tabs (5165:30362) */
+    .detail-tabs {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      border-bottom: 1px solid #dedede;
+      margin-bottom: 24px;
+    }
+    .detail-tab {
+      background: none;
+      border: none;
+      font-family: inherit;
+      font-size: 14px;
+      line-height: 20px;
+      color: var(--font-primary);
+      padding: 4px 8px;
+      cursor: pointer;
+      border-bottom: 1.5px solid transparent;
+      margin-bottom: -1px;
+    }
+    .detail-tab:hover { color: #000; }
+    .detail-tab.active { font-weight: 600; border-bottom-color: var(--blue); }
+
+    /* Note body — Summary / Transcript / My thoughts share this type */
+    .note-body {
+      font-size: 14px;
+      line-height: 1.6;
+      color: #222222;
+      padding-bottom: 48px;
+    }
+    .note-body h3 {
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 1.6;
+      margin: 0;
+    }
+    .note-body ul { margin: 0 0 22px; padding-left: 21px; }
+    .note-body ul:last-child { margin-bottom: 0; }
+    .note-body li { margin: 0; }
+    .note-body b { font-weight: 600; }
+
+    /* My thoughts — the user's own jotting, editable in place */
+    .thoughts {
+      outline: none;
+      min-height: 220px;
+      border-radius: 6px;
+      padding: 8px;
+      margin: -8px;
+    }
+    .thoughts:hover { background: #fafafa; }
+    .thoughts:focus { background: #fafafa; }
+    .thoughts p { margin: 0 0 12px; }
+
+    /* Transcript */
+    .transcript-turn { display: flex; gap: 12px; margin-bottom: 14px; }
+    .transcript-who {
+      width: 88px;
+      flex-shrink: 0;
+      font-weight: 600;
+      color: var(--font-primary);
+    }
+    .transcript-time {
+      width: 48px;
+      flex-shrink: 0;
+      color: var(--font-secondary);
+      font-variant-numeric: tabular-nums;
+    }
+    .transcript-said { flex: 1; min-width: 0; }
+
+    /* ── Action items card (5165:30249) ── */
+    .action-card {
+      width: 400px;
+      flex-shrink: 0;
+      background: #ffffff;
+      border: 1px solid #dedede;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      position: sticky;
+      top: 24px;
+    }
+    .action-card-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .action-card-title { display: flex; align-items: center; gap: 8px; }
+    .action-card-title img { width: 21px; height: 21px; display: block; }
+    .action-card-title span {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--font-primary);
+      white-space: nowrap;
+    }
+    /* Figma 5236:35317 — the borderless variant. It reads as a link beside the
+       card title rather than a second button competing with "Draft a reply". */
+    .btn-add-all {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      border: none;
+      border-radius: 5px;
+      background: none;
+      padding: 6px 10px 6px 8px;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 20px;
+      color: var(--blue);
+      white-space: nowrap;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+    .btn-add-all:hover { background: rgba(33, 112, 244, 0.06); }
+    .btn-add-all:disabled { opacity: 0.4; cursor: default; }
+    .btn-add-all img { width: 16px; height: 16px; display: block; }
+
+    /* Same body-level tooltip as the mail app: the action card clips, so a
+       ::after on the checkbox would be cut off at the card edge. */
+    #ttip {
+      position: fixed;
+      z-index: 4000;
+      background: #1a1a1a;
+      color: #fff;
+      font-family: inherit;
+      font-size: 13px;
+      line-height: 18px;
+      white-space: nowrap;
+      padding: 6px 10px;
+      border-radius: 6px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.22);
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transform: translateX(-50%);
+      transition: opacity 0.12s ease 0.15s, visibility 0.12s ease 0.15s;
+    }
+    #ttip.on { opacity: 1; visibility: visible; }
+
+    .action-card-body { display: flex; flex-direction: column; gap: 20px; }
+    .action-group { display: flex; flex-direction: column; gap: 12px; }
+    .action-group-rule { height: 1px; background: #dedede; }
+    .action-list { display: flex; flex-direction: column; gap: 10px; padding-left: 4px; }
+
+    .action-row {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      padding: 4px;
+      margin: -4px;
+      border: none;
+      background: none;
+      font-family: inherit;
+      text-align: left;
+      border-radius: 4px;
+      cursor: pointer;
+      width: 100%;
+    }
+    .action-row:hover { background: #f6f9ff; }
+    .action-row-text {
+      flex: 1;
+      min-width: 0;
+      font-size: 14px;
+      line-height: 1.45;
+      color: var(--font-primary);
+    }
+
+    /* Resting checkbox carries a grey plus — the "add" affordance from
+       Figma 5165:30306. The checked state is not in the design; it is drawn
+       here in the design system's primary blue. */
+    .action-box {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+      margin-top: 2px;
+      border: 1.5px solid #dedede;
+      border-radius: 4px;
+      background: #ffffff;
+      position: relative;
+    }
+    .action-box::before,
+    .action-box::after {
+      content: '';
+      position: absolute;
+      background: #dedede;
+      border-radius: 1px;
+    }
+    .action-box::before { left: 2.5px; right: 2.5px; top: 50%; height: 1.5px; transform: translateY(-50%); }
+    .action-box::after { top: 2.5px; bottom: 2.5px; left: 50%; width: 1.5px; transform: translateX(-50%); }
+    .action-row:hover .action-box { border-color: var(--blue); }
+    .action-row:hover .action-box::before,
+    .action-row:hover .action-box::after { background: var(--blue); }
+
+    .action-row.added { cursor: default; }
+    .action-row.added:hover { background: none; }
+    .action-row.added .action-box {
+      background: var(--blue);
+      border-color: var(--blue);
+    }
+    /* Tick, drawn rather than exported — there is no checked asset in Figma. */
+    .action-row.added .action-box::before {
+      left: 3px;
+      right: auto;
+      top: 7.5px;
+      width: 5px;
+      height: 1.6px;
+      background: #ffffff;
+      transform: rotate(45deg);
+      transform-origin: left center;
+    }
+    .action-row.added .action-box::after {
+      left: 5.6px;
+      top: 10.4px;
+      bottom: auto;
+      width: 9px;
+      height: 1.6px;
+      background: #ffffff;
+      transform: rotate(-50deg);
+      transform-origin: left center;
+    }
+    .action-row.added .action-row-text { color: var(--font-secondary); }
+
+    /* ── Toast ── */
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 32px;
+      transform: translate(-50%, 16px);
+      background: #1d2133;
+      color: #ffffff;
+      font-size: 14px;
+      line-height: 20px;
+      padding: 12px 20px;
+      border-radius: 6px;
+      box-shadow: 0 6px 24px rgba(0, 0, 0, 0.24);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+      z-index: 100;
+    }
+    .toast.show { opacity: 1; transform: translate(-50%, 0); pointer-events: auto; }
+
+
+    /* ── Row overflow menu ── */
+    .row-menu {
+      position: fixed;
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 8px 28px rgba(0, 0, 0, 0.14), 0 0 0 1px rgba(0, 0, 0, 0.04);
+      padding: 8px;
+      min-width: 200px;
+      z-index: 90;
+      display: none;
+    }
+    .row-menu.open { display: block; }
+    .row-menu img.menu-audio { width: 18px; height: 17.54px; }
+    .row-menu button {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      width: 100%;
+      padding: 10px 12px;
+      border: none;
+      background: none;
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 15px;
+      color: var(--font-primary);
+      text-align: left;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .row-menu button:hover { background: #f4f4f7; }
+    .row-menu button img { width: 18px; height: 18px; display: block; flex-shrink: 0; }
+    .row-menu button.danger { color: #d93025; }
+
+    .action-empty {
+      font-size: 14px;
+      line-height: 1.45;
+      color: var(--font-secondary);
+    }
+
+    /* Toast with an action — the deleted state gets an undo window. */
+    .toast { display: flex; align-items: center; gap: 20px; }
+    .toast button {
+      border: none;
+      background: none;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 600;
+      color: #8ab4ff;
+      cursor: pointer;
+      padding: 0;
+    }
+    .toast button:hover { color: #ffffff; }
+
+
+    /* ══════════════════════════════════════════════════════════════════════
+       Share modal. Structure follows the reference; the palette, radii, type
+       and the primary button are Titan's (#2170f4 primary, #dedede rules,
+       4px controls, 8px surface) rather than the reference's neutral set.
+       ══════════════════════════════════════════════════════════════════════ */
+    .scrim {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.18s ease;
+      z-index: 200;
+    }
+    .scrim.open { opacity: 1; pointer-events: auto; }
+
+    .share-modal {
+      position: fixed;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -48%) scale(0.98);
+      width: 520px;
+      max-width: calc(100vw - 32px);
+      background: #ffffff;
+      border-radius: 8px;
+      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.22);
+      padding: 24px;
+      z-index: 201;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.18s ease, transform 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .share-modal.open {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translate(-50%, -50%) scale(1);
+    }
+    .share-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--font-primary);
+      margin-bottom: 20px;
+    }
+
+    /* Recipient field + primary action */
+    .share-row { display: flex; gap: 12px; align-items: flex-start; }
+    .share-field-wrap { flex: 1; min-width: 0; position: relative; }
+    .share-field {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 6px;
+      min-height: 40px;
+      padding: 6px 8px;
+      border: 1px solid #b1b1b1;
+      border-radius: 4px;
+      background: #ffffff;
+      cursor: text;
+    }
+    .share-field:focus-within { border-color: var(--blue); }
+    .share-field input {
+      flex: 1;
+      min-width: 120px;
+      border: none;
+      outline: none;
+      font-family: inherit;
+      font-size: 14px;
+      line-height: 20px;
+      color: var(--font-primary);
+      background: none;
+      padding: 3px 2px;
+    }
+    .share-field input::placeholder { color: var(--font-secondary); }
+
+    .share-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      height: 26px;
+      padding: 0 4px 0 4px;
+      background: #f4f4f7;
+      border-radius: 13px;
+      font-size: 13px;
+      color: var(--font-primary);
+      max-width: 100%;
+    }
+    .share-chip-x {
+      width: 18px;
+      height: 18px;
+      border: none;
+      background: none;
+      color: var(--font-secondary);
+      font-size: 13px;
+      line-height: 1;
+      border-radius: 50%;
+      cursor: pointer;
+      padding: 0;
+      flex-shrink: 0;
+    }
+    .share-chip-x:hover { background: #e3e6ea; color: var(--font-primary); }
+
+    .btn-share-send {
+      height: 40px;
+      padding: 0 20px;
+      background: var(--blue);
+      border: none;
+      border-radius: 4px;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 600;
+      color: #ffffff;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+    .btn-share-send:hover { background: #1b62db; }
+    .btn-share-send:disabled {
+      background: #f4f4f7;
+      color: var(--font-secondary);
+      cursor: default;
+    }
+
+    /* Typeahead */
+    .share-suggest {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: calc(100% + 4px);
+      background: #ffffff;
+      border: 1px solid #dedede;
+      border-radius: 4px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+      padding: 4px;
+      z-index: 5;
+      display: none;
+      max-height: 216px;
+      overflow-y: auto;
+    }
+    .share-suggest.open { display: block; }
+    .share-suggest button {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      padding: 8px 10px;
+      border: none;
+      background: none;
+      border-radius: 4px;
+      font-family: inherit;
+      font-size: 14px;
+      color: var(--font-primary);
+      text-align: left;
+      cursor: pointer;
+    }
+    .share-suggest button:hover,
+    .share-suggest button.sel { background: #f4f4f7; }
+    .share-suggest img { width: 18px; height: 18px; display: block; flex-shrink: 0; }
+    .share-suggest .s-sub { color: var(--font-secondary); font-size: 13px; }
+
+    /* People rows */
+    .share-people { margin: 20px 0 4px; display: flex; flex-direction: column; gap: 16px; }
+    .share-person { display: flex; align-items: center; gap: 12px; }
+    .share-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 600;
+      color: #ffffff;
+      background: #888888;
+    }
+    .share-person-text { flex: 1; min-width: 0; }
+    .share-person-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--font-primary);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .share-person-name .muted { font-weight: 400; color: var(--font-secondary); }
+    .share-person-sub {
+      font-size: 13px;
+      color: var(--font-secondary);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .share-role {
+      font-size: 14px;
+      color: var(--font-secondary);
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .share-remove {
+      width: 24px;
+      height: 24px;
+      border: none;
+      background: none;
+      border-radius: 4px;
+      color: var(--font-secondary);
+      font-size: 15px;
+      line-height: 1;
+      cursor: pointer;
+      padding: 0;
+    }
+    .share-remove:hover { background: #f4f4f7; color: var(--font-primary); }
+
+    /* Link access */
+    .share-access {
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px solid #ebebeb;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .share-access-left { min-width: 0; position: relative; }
+    .share-access-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid transparent;
+      background: none;
+      border-radius: 4px;
+      padding: 6px 8px;
+      margin: -6px -8px 0;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--font-primary);
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .share-access-btn:hover { background: #f4f4f7; }
+    .share-access-btn.on { border-color: var(--blue); background: none; }
+    .share-access-btn img.ic { width: 18px; height: 18px; display: block; }
+    .share-caret {
+      width: 10px;
+      height: 10px;
+      display: block;
+      transition: transform 0.18s ease;
+    }
+    .share-access-btn.on .share-caret { transform: rotate(180deg); }
+    .share-access-hint {
+      font-size: 13px;
+      color: var(--font-secondary);
+      margin-top: 8px;
+    }
+    .share-access-menu {
+      position: absolute;
+      left: -8px;
+      top: calc(100% + 10px);
+      min-width: 268px;
+      background: #ffffff;
+      border: 1px solid #dedede;
+      border-radius: 4px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+      padding: 4px;
+      display: none;
+      z-index: 6;
+    }
+    .share-access-menu.open { display: block; }
+    .share-access-menu button {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      padding: 9px 10px;
+      border: none;
+      background: none;
+      border-radius: 4px;
+      font-family: inherit;
+      font-size: 14px;
+      color: var(--font-primary);
+      text-align: left;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .share-access-menu button:hover { background: #f4f4f7; }
+    .share-access-menu img.ic { width: 18px; height: 18px; display: block; flex-shrink: 0; }
+    .share-access-menu .tick { margin-left: auto; width: 18px; height: 18px; display: block; }
+
+    .btn-copy-link {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      height: 40px;
+      padding: 0 16px;
+      border: 1px solid #dedede;
+      border-radius: 4px;
+      background: #ffffff;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--font-primary);
+      cursor: pointer;
+      flex-shrink: 0;
+      white-space: nowrap;
+    }
+    .btn-copy-link:hover { background: #f4f4f7; }
+    .btn-copy-link img { width: 18px; height: 18px; display: block; }
+
+    @media (max-width: 1320px) {
+      .detail-main { width: auto; flex: 1; min-width: 0; }
+    }
+    @media (max-width: 1040px) {
+      .detail-body { flex-direction: column; }
+      .action-card { position: static; width: 100%; }
+      .detail-head { margin-left: 0; }
+    }
+
+    @media (max-width: 1320px) {
+      :root { --page-gutter: 40px; }
+      .notes-list { width: auto; flex: 1; min-width: 0; }
+      .note-row-left { width: auto; flex: 1; }
+    }
+    @media (max-width: 1040px) {
+      .page-body { flex-direction: column; }
+      .note-card { position: static; width: 100%; }
+      .search-notes { width: 200px; }
+    }
+    /* ══════════════════════════════════════════════════════════════════════
+       Recording panel — the same surface as the call sidebar, opened by
+       "New note" when there is no call to attach to. The title starts empty
+       and is the user's to write; Done turns the transcript into a note.
+       ══════════════════════════════════════════════════════════════════════ */
+    .rec {
+      position: fixed;
+      right: 16px;
+      top: 88px;
+      bottom: 24px;
+      z-index: 70;
+      width: 380px;
+      display: flex;
+      flex-direction: column;
+      background: #ffffff;
+      border-radius: 8px;
+      box-shadow: 0 18px 60px rgba(0, 0, 0, 0.22);
+      overflow: hidden;
+      transform: translateX(calc(100% + 28px));
+      opacity: 0;
+      pointer-events: none;
+      transition: transform 0.36s cubic-bezier(.22,.86,.24,1), opacity 0.24s ease;
+    }
+    .rec.open { transform: none; opacity: 1; pointer-events: auto; }
+
+    .rec-title {
+      flex: 0 0 44px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0 8px 0 14px;
+      border-bottom: 1px solid var(--line-soft, #ebebeb);
+    }
+    .rec-brand { display: flex; align-items: center; gap: 8px; }
+    .rec-brand img { width: 20px; height: 20px; display: block; }
+    .rec-brand span { font-size: 14px; font-weight: 600; color: var(--font-primary); }
+    .rec-lights { margin-left: auto; display: flex; align-items: center; gap: 2px; }
+
+    .rec-ibtn {
+      width: 28px;
+      height: 28px;
+      flex: 0 0 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 0;
+      border-radius: 4px;
+      background: none;
+      color: var(--font-secondary);
+      cursor: pointer;
+      padding: 0;
+    }
+    .rec-ibtn:hover, .rec-ibtn.on { background: var(--hover-grey); color: var(--font-primary); }
+    .rec-ibtn svg { width: 17px; height: 17px; }
+
+    .rec-head { flex: 0 0 auto; padding: 14px 16px 12px; }
+    /* The title is the user's to write, so it is an editable line, not a label */
+    .rec-name {
+      font-size: 15px;
+      font-weight: 600;
+      line-height: 20px;
+      color: var(--font-primary);
+      outline: none;
+      min-height: 20px;
+    }
+    .rec-name:empty::before { content: attr(data-placeholder); color: #b1b1b1; font-weight: 400; }
+    .rec-name:focus { box-shadow: 0 1px 0 var(--blue); }
+    .rec-sub { margin: 5px 0 0; display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--font-secondary); }
+    .rec-dot { width: 7px; height: 7px; border-radius: 50%; background: #d93025; animation: recPulse 1.6s ease-in-out infinite; }
+    @keyframes recPulse { 0%,100% { opacity: 1 } 50% { opacity: .25 } }
+    .rec.paused .rec-dot { animation: none; background: var(--font-secondary); }
+
+    .rec-main { flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; padding: 0 16px 14px; }
+    .rec-card { flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; border-top: 1px solid var(--line-soft, #ebebeb); }
+    .rec-card-head { flex: 0 0 auto; display: flex; align-items: center; gap: 2px; padding: 10px 0 8px; }
+    .rec-card-head h5 {
+      margin: 0;
+      flex: 1 1 auto;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      color: var(--font-secondary);
+    }
+
+    .rec-feed { flex: 1 1 auto; min-height: 0; overflow: auto; padding: 2px 2px 12px 0; scroll-behavior: smooth; }
+    .rec-line { display: block; margin: 0 0 14px; animation: recRise 260ms ease both; }
+    @keyframes recRise { from { opacity: 0; transform: translateY(6px) } to { opacity: 1; transform: none } }
+    .rec-line-head { display: flex; align-items: center; gap: 6px; margin-bottom: 3px; }
+    .rec-av {
+      flex: 0 0 18px;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: 600;
+      color: #fff;
+      background: var(--font-secondary);
+    }
+    .rec-line[data-sp="s1"] .rec-av { background: #2170f4; }
+    .rec-line[data-sp="you"] .rec-av { background: #0e8f7e; }
+    .rec-line[data-sp="s3"] .rec-av { background: #7a5dc7; }
+    .rec-who { font-size: 13px; font-weight: 600; color: var(--font-primary); }
+    .rec-stamp { margin-left: auto; font-size: 11px; color: var(--font-secondary); font-variant-numeric: tabular-nums; }
+    .rec-body { display: block; padding-left: 24px; font-size: 14px; line-height: 20px; color: var(--font-primary); }
+    .rec-line.partial .rec-body { color: var(--font-secondary); }
+    .rec-line.partial .rec-body::after { content: '▍'; margin-left: 1px; animation: recCaret 1s steps(1) infinite; }
+    @keyframes recCaret { 50% { opacity: 0 } }
+
+    .rec-foot {
+      flex: 0 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 0 2px;
+      border-top: 1px solid var(--line-soft, #ebebeb);
+    }
+    .rec-timer { font-size: 13px; color: var(--font-secondary); font-variant-numeric: tabular-nums; }
+    .rec-wave { margin-left: auto; margin-right: 2px; display: flex; align-items: center; gap: 3px; height: 18px; }
+    .rec-wave i { width: 3px; height: 4px; border-radius: 2px; background: #c9cbd1; animation: recBar 900ms ease-in-out infinite; }
+    .rec-wave i:nth-child(2) { animation-delay: .1s } .rec-wave i:nth-child(3) { animation-delay: .2s }
+    .rec-wave i:nth-child(4) { animation-delay: .3s } .rec-wave i:nth-child(5) { animation-delay: .4s }
+    .rec-wave i:nth-child(6) { animation-delay: .5s } .rec-wave i:nth-child(7) { animation-delay: .6s }
+    @keyframes recBar { 0%,100% { height: 4px } 50% { height: 15px; background: var(--blue) } }
+    .rec.paused .rec-wave i { animation: none; height: 4px; background: #c9cbd1; }
+
+    .rec-done {
+      height: 32px;
+      padding: 0 16px;
+      border: 0;
+      border-radius: 4px;
+      background: var(--blue);
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 600;
+      color: #fff;
+      cursor: pointer;
+    }
+    .rec-done:hover { background: #1b62db; }
+
+    .rec-thoughts { flex: 0 0 auto; border-top: 1px solid var(--line-soft, #ebebeb); padding-top: 12px; }
+    .rec-thoughts-head { font-size: 14px; font-weight: 600; color: var(--font-primary); margin-bottom: 8px; }
+    .rec-note { font-size: 14px; line-height: 20px; color: var(--font-primary); margin-bottom: 8px; }
+    .rec-input {
+      width: 100%;
+      min-height: 22px;
+      border: 0;
+      outline: none;
+      font-family: inherit;
+      font-size: 14px;
+      line-height: 20px;
+      color: var(--font-primary);
+    }
+    .rec-input:empty::before { content: attr(data-placeholder); color: #b1b1b1; }
+
+    .app-switcher-dropdown {
+      position: fixed;
+      top: 52px;
+      left: 8px;
+      width: 280px;
+      z-index: 1000;
+      display: none;
+      opacity: 0;
+      transform: translateY(-12px);
+      transition: opacity 0.25s cubic-bezier(0.22, 1, 0.36, 1), transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+      user-select: none;
+    }
+
+    .app-switcher-dropdown.open {
+      display: block;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .app-switcher-bg {
+      /* Insets alone size the painted shape now, so it grows with the
+         content instead of being pinned to a stale 605px. */
+      position: absolute;
+      inset: -1px -14px -17px -5px;
+      pointer-events: none;
+    }
+
+    .app-switcher-bg img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: fill;
+    }
+
+    .app-switcher-content {
+      position: relative;
+      width: 280px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      /* 19px clears the notch at the top of the painted shape; 8px keeps the
+         last footer row off the bottom edge. */
+      padding: 27px 0 8px;
+      box-sizing: border-box;
+      z-index: 2;
+    }
+
+    .app-switcher-section {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      padding: 0 16px 8px;
+    }
+
+    .app-switcher-row {
+      display: flex;
+      gap: 16px;
+      width: 100%;
+    }
+
+    .app-switcher-item {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      width: 72px;
+      padding: 8px 2px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .app-switcher-item:hover {
+      background: #f2f2f2;
+    }
+
+    .app-icon {
+      position: relative;
+      z-index: 2;
+      width: 38px;
+      height: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .app-icon-img {
+      display: block;
+      object-fit: contain;
+    }
+
+    /* SVGs with 40x40 viewBox where shape is 30px (Mail, Calendar, Contacts, Bookings, Backup) - Targets 28px background shape */
+    .app-icon-img[src*="mail.svg"],
+    .app-icon-img[src*="calendar.svg"],
+    .app-icon-img[src*="contacts.svg"],
+    .app-icon-img[src*="bookings.svg"],
+    .app-icon-img[src*="backup.svg"] {
+      width: 37.3px;
+      height: 37.3px;
+    }
+
+    /* SVGs with 30x30 or 30x29 viewBox where shape is 30px (Drive, Tasks, Admin) - Targets 28px background shape */
+    .app-icon-img[src*="drive.svg"],
+    .app-icon-img[src*="tasks.svg"],
+    .app-icon-img[src*="admin.svg"] {
+      width: 28px;
+      height: 28px;
+    }
+
+    /* SVG with 40x40 viewBox where shape is 32px (Site) - Targets 28px background shape */
+    .app-icon-img[src*="site.svg"] {
+      width: 35px;
+      height: 35px;
+    }
+
+    .app-label {
+      position: relative;
+      z-index: 2;
+      font-size: 13px;
+      font-weight: 500;
+      color: #707070;
+      line-height: 18px;
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    .app-switcher-divider {
+      width: 280px;
+      height: 1px;
+      display: flex;
+      align-items: center;
+      pointer-events: none;
+    }
+
+    .app-switcher-divider img {
+      width: 100%;
+      height: 1px;
+    }
+
+    .app-switcher-tools {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      width: 100%;
+    }
+
+    .app-switcher-tool-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 6px 27px;
+      width: 100%;
+      cursor: pointer;
+      transition: background 0.15s ease;
+    }
+
+    .app-switcher-tool-item:hover {
+      background: #f2f2f2;
+    }
+
+    .tool-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .tool-icon.bg-pink {
+      background: #ffe5ed;
+    }
+
+    .tool-icon.bg-purple {
+      background: #f1e4ff;
+    }
+
+    .tool-icon.bg-blue {
+      background: #e1f4ff;
+    }
+
+    .tool-icon.bg-green {
+      background: #e6faf2;
+    }
+
+    .tool-icon img {
+      object-fit: contain;
+    }
+
+    .tool-icon.bg-pink img {
+      width: 19px;
+      height: 11px;
+    }
+
+    .tool-icon.bg-purple img {
+      width: 19px;
+      height: 15px;
+    }
+
+    .tool-icon.bg-blue img {
+      width: 16px;
+      height: 16px;
+    }
+
+    .tool-icon.bg-green img {
+      width: 16px;
+      height: 16px;
+    }
+
+    .tool-label {
+      font-size: 13px;
+      font-weight: 500;
+      color: #707070;
+      line-height: 14px;
+      white-space: nowrap;
+    }
+
+    .app-switcher-footer {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+    }
+
+    .footer-link-row {
+      border-top: 0.5px solid #dedded;
+      height: 48px;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      padding: 0 24px;
+      cursor: pointer;
+      transition: background 0.15s ease;
+    }
+
+    .footer-link-row:hover {
+      background: #f2f2f2;
+    }
+
+    .footer-link-content {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      width: 100%;
+      position: relative;
+    }
+
+    .footer-link-icon {
+      width: 24px;
+      height: 24px;
+      object-fit: contain;
+      flex-shrink: 0;
+    }
+
+    .beaker-icon {
+      width: 16.5px;
+      height: 16.5px;
+      object-fit: contain;
+      flex-shrink: 0;
+      transform: rotate(180deg);
+      margin: 3.75px;
+    }
+
+    .footer-link-text {
+      font-size: 13px;
+      font-weight: 500;
+      color: #707070;
+      flex: 1;
+      white-space: nowrap;
+    }
+
+    .bold {
+      font-weight: 800;
+    }
+
+    .footer-arrow {
+      width: 16px;
+      height: 16px;
+      object-fit: contain;
+      flex-shrink: 0;
+      opacity: 0.5;
+    }
+
+    .tab-switch {
+      transition: background 0.15s ease;
+      cursor: pointer;
+    }
+
+    .tab-switch:hover,
+    .tab-switch.active {
+      background: #333333;
+    }
+
+    /* Anchored under the nav's tab switch rather than a left rail */
+    #app-switcher { top: 60px; left: 12px; }
+    .nav-tab-switch { cursor: pointer; }
+  </style>
+</head>
+
+<body>
+
+  <!-- ── Nav bar ── -->
+  <div class="eb-nav">
+    <div class="nav-tab-switch" title="Switch app">
+      <img class="mark" src="recap_app_assets/recap-mark.svg" alt="Recap">
+      <span class="caret-box"><img src="recap_app_assets/ic-arrow-down.svg" alt=""></span>
+    </div>
+
+    <div class="nav-brand">
+      <div class="nav-partner-logo"><img src="recap_app_assets/partner-logo.svg" alt=""></div>
+      <div class="nav-sep"></div>
+      <span class="nav-app-name">Recap</span>
+    </div>
+
+    <div class="nav-right">
+      <div class="nav-actions">
+        <button class="nav-btn"><img src="recap_app_assets/ic-feedback.svg" alt="">Feedback</button>
+        <button class="nav-btn"><img src="recap_app_assets/ic-help.svg" alt="">Help</button>
+        <div class="nav-account">
+          <div class="nav-account-left">
+            <div class="nav-avatar">
+              <img src="recap_app_assets/avatar-oval.svg" alt="">
+              <span>A</span>
+            </div>
+            <span class="nav-account-email">admin@kicknrun.xyz</span>
+          </div>
+          <span class="caret-box"><img src="recap_app_assets/caret-down-white.svg" alt=""></span>
+        </div>
+      </div>
+      <div class="nav-powered">
+        <div class="nav-powered-rule"></div>
+        <div class="nav-powered-stack">
+          <span>Powered by</span>
+          <img src="recap_app_assets/titan-logo-inverse.svg" alt="Titan">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Page ── -->
+  <div class="page" id="viewList">
+    <div class="page-body">
+      <div class="list-col">
+        <div class="page-toolbar">
+          <h1 class="page-title">My Notes</h1>
+          <div class="toolbar-right">
+            <label class="search-notes">
+              <img src="recap_app_assets/ic-search.svg" alt="">
+              <input type="text" placeholder="Search notes" id="noteSearch" autocomplete="off">
+            </label>
+            <button class="btn-new-note" onclick="openRec()">
+              <img src="recap_app_assets/ic-plus.svg" alt="">New note
+            </button>
+          </div>
+        </div>
+        <div class="notes-list" id="notesList"></div>
+      </div>
+      <div class="note-card" id="noteCard"></div>
+    </div>
+  </div>
+
+  <!-- ── Note detail (5150:24824) ── -->
+  <div class="page" id="viewDetail" hidden>
+    <div class="page-toolbar detail-head">
+      <div class="detail-head-left">
+        <button class="btn-back" onclick="closeNote()" title="Back to My Notes">
+          <img src="recap_app_assets/ic-back.svg" alt="">
+        </button>
+        <h1 class="page-title" id="detailTitle">Partner Logo SVG Sizing Issue</h1>
+      </div>
+      <div class="detail-actions">
+        <button class="btn-outline" onclick="openShare(openNoteObj)">
+          <img src="recap_app_assets/ic-share.svg" alt="">Share
+        </button>
+        <button class="btn-draft-reply" onclick="draftReply()">
+          <img src="recap_app_assets/ic-reply.svg" alt="">Draft a reply
+        </button>
+      </div>
+    </div>
+
+    <div class="detail-body">
+      <div class="detail-main">
+        <div class="detail-tabs" id="detailTabs">
+          <button class="detail-tab" data-tab="thoughts">My thoughts</button>
+          <button class="detail-tab" data-tab="transcript">Transcript</button>
+          <button class="detail-tab active" data-tab="summary">Summary</button>
+        </div>
+        <div class="note-body" id="detailPane"></div>
+      </div>
+
+      <div class="action-card">
+        <div class="action-card-head">
+          <div class="action-card-title">
+            <img src="recap_app_assets/ic-clipboard-list.svg" alt="">
+            <span>Action Items</span>
+          </div>
+          <button class="btn-add-all" id="btnAddAll" onclick="addAllToTasks()">
+            <img src="recap_app_assets/ic-plus-blue-sm.svg" alt="">Add all to Tasks
+          </button>
+        </div>
+        <div class="action-card-body" id="actionItems"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Share modal ── -->
+  <div class="scrim" id="shareScrim" onclick="closeShare()"></div>
+  <div class="share-modal" id="shareModal" role="dialog" aria-modal="true" aria-label="Share notes">
+    <div class="share-title">Share notes</div>
+
+    <div class="share-row">
+      <div class="share-field-wrap">
+        <div class="share-field" id="shareField" onclick="document.getElementById('shareInput').focus()">
+          <!-- chips render here -->
+          <input type="text" id="shareInput" placeholder="Search people or emails" autocomplete="off">
+        </div>
+        <div class="share-suggest" id="shareSuggest"></div>
+      </div>
+      <button class="btn-share-send" id="btnShareSend" onclick="submitShare()" disabled>Share</button>
+    </div>
+
+    <div class="share-people" id="sharePeople"></div>
+
+    <div class="share-access">
+      <div class="share-access-left">
+        <button class="share-access-btn" id="shareAccessBtn" onclick="toggleAccessMenu(event)">
+          <img class="ic" id="shareAccessIcon" src="recap_app_assets/ic-globe.svg" alt="">
+          <span id="shareAccessLabel">Anyone with the link</span>
+          <img class="share-caret" src="composer_assets/ic-caret.svg" alt="">
+        </button>
+        <div class="share-access-hint" id="shareAccessHint">Can view summary.</div>
+        <div class="share-access-menu" id="shareAccessMenu">
+          <button onclick="setAccess('link')">
+            <img class="ic" src="recap_app_assets/ic-globe.svg" alt="">Anyone with the link
+            <img class="tick" id="tickLink" src="recap_app_assets/ic-check-blue.svg" alt="">
+          </button>
+          <button onclick="setAccess('invited')">
+            <img class="ic" src="recap_app_assets/ic-lock.svg" alt="">Only people invited
+            <img class="tick" id="tickInvited" src="recap_app_assets/ic-check-blue.svg" alt="">
+          </button>
+        </div>
+      </div>
+      <button class="btn-copy-link" onclick="copyShareLink()">
+        <img src="recap_app_assets/menu-copy.svg" alt="">Copy link
+      </button>
+    </div>
+  </div>
+
+  <div class="app-switcher-dropdown" id="app-switcher">
+    <!-- Combined Shape Background -->
+    <div class="app-switcher-bg">
+      <img src="app_switcher_assets/imgCombinedShape.svg" alt="">
+    </div>
+    <!-- App Switcher Content -->
+    <div class="app-switcher-content">
+
+      <!-- Top Apps Section (Mail, Calendar, Contacts) -->
+      <div class="app-switcher-section">
+        <div class="app-switcher-row">
+          <!-- Mail -->
+          <div class="app-switcher-item" onclick="openMailApp()">
+            <div class="app-icon">
+              <img src="app_switcher_assets/grid_icons/mail.svg" alt="Mail" class="app-icon-img">
+            </div>
+            <span class="app-label">Mail</span>
+          </div>
+          <!-- Calendar — its own app surface, so it opens in a new tab -->
+          <div class="app-switcher-item" onclick="openCalendarApp()">
+            <div class="app-icon">
+              <img src="app_switcher_assets/grid_icons/calendar.svg" alt="Calendar" class="app-icon-img">
+            </div>
+            <span class="app-label">Calendar</span>
+          </div>
+          <!-- Contacts -->
+          <div class="app-switcher-item">
+            <div class="app-icon">
+              <img src="app_switcher_assets/grid_icons/contacts.svg" alt="Contacts" class="app-icon-img">
+            </div>
+            <span class="app-label">Contacts</span>
+          </div>
+        </div>
+
+        <!-- Second Row of Apps (Bookings, Drive, Backup) -->
+        <div class="app-switcher-row">
+          <!-- Bookings -->
+          <div class="app-switcher-item">
+            <div class="app-icon">
+              <img src="app_switcher_assets/grid_icons/bookings.svg" alt="Bookings" class="app-icon-img">
+            </div>
+            <span class="app-label">Bookings</span>
+          </div>
+          <!-- Drive — its own app surface, so it opens in a new tab -->
+          <div class="app-switcher-item" onclick="openDriveApp()">
+            <div class="app-icon">
+              <img src="app_switcher_assets/grid_icons/drive.svg" alt="Drive" class="app-icon-img">
+            </div>
+            <span class="app-label">Drive</span>
+          </div>
+          <!-- Backup -->
+          <div class="app-switcher-item">
+            <div class="app-icon">
+              <img src="app_switcher_assets/grid_icons/backup.svg" alt="Backup" class="app-icon-img">
+            </div>
+            <span class="app-label">Backup</span>
+          </div>
+        </div>
+
+        <!-- Third Row of Apps (Tasks, Site, Admin) -->
+        <div class="app-switcher-row">
+          <!-- Tasks -->
+          <div class="app-switcher-item">
+            <div class="app-icon">
+              <img src="app_switcher_assets/grid_icons/tasks.svg" alt="Tasks" class="app-icon-img">
+            </div>
+            <span class="app-label">Tasks</span>
+          </div>
+          <!-- Recap — replaces Site per Figma node 5127:12836. Opens the
+               Recap app in a new tab, as it is a separate app surface. -->
+          <div class="app-switcher-item" onclick="closeAppSwitcher()">
+            <div class="app-icon">
+              <img src="app_switcher_assets/grid_icons/recap.svg" alt="Recap" class="app-icon-img app-icon-recap">
+            </div>
+            <span class="app-label">Recap</span>
+          </div>
+          <!-- Admin -->
+          <div class="app-switcher-item">
+            <div class="app-icon">
+              <img src="app_switcher_assets/grid_icons/admin.svg" alt="Admin" class="app-icon-img">
+            </div>
+            <span class="app-label">Admin</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Divider Line -->
+      <div class="app-switcher-divider">
+        <img src="app_switcher_assets/imgLine75.svg" alt="">
+      </div>
+
+      <!-- Bottom Tools Section -->
+      <div class="app-switcher-tools">
+        <!-- Signature Designer -->
+        <div class="app-switcher-tool-item">
+          <div class="tool-icon bg-pink">
+            <img src="app_switcher_assets/imgGroup.svg" alt="">
+          </div>
+          <span class="tool-label">Signature Designer</span>
+        </div>
+        <!-- Smart Write AI -->
+        <div class="app-switcher-tool-item">
+          <div class="tool-icon bg-purple">
+            <img src="app_switcher_assets/imgGroup22777.svg" alt="">
+          </div>
+          <span class="tool-label">Smart Write AI</span>
+        </div>
+        <!-- Email Designer -->
+        <div class="app-switcher-tool-item">
+          <div class="tool-icon bg-blue">
+            <img src="app_switcher_assets/imgGroup23292.svg" alt="">
+          </div>
+          <span class="tool-label">Email Designer</span>
+        </div>
+        <!-- Invoice Builder -->
+        <div class="app-switcher-tool-item">
+          <div class="tool-icon bg-green">
+            <img src="app_switcher_assets/imgFrame1707478357.svg" alt="">
+          </div>
+          <span class="tool-label">Invoice Builder</span>
+        </div>
+      </div>
+
+      <!-- Bottom Footer Links -->
+      <div class="app-switcher-footer">
+        <!-- Know your Titan -->
+        <div class="footer-link-row">
+          <div class="footer-link-content">
+            <img src="app_switcher_assets/imgGroup22627.svg" alt="" class="footer-link-icon">
+            <span class="footer-link-text">Know your Titan</span>
+            <img src="app_switcher_assets/imgNextArrow.svg" alt="" class="footer-arrow">
+          </div>
+        </div>
+        <!-- See more @ Titan Labs -->
+        <div class="footer-link-row">
+          <div class="footer-link-content">
+            <img src="app_switcher_assets/imgG3027.svg" alt="" class="beaker-icon">
+            <span class="footer-link-text">See more @ <span class="bold">Titan Labs</span></span>
+            <img src="app_switcher_assets/imgNextArrow.svg" alt="" class="footer-arrow">
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── Recording panel, opened by New note ── -->
+  <aside class="rec" id="rec" aria-label="Recording a note">
+    <div class="rec-title">
+      <span class="rec-brand"><img src="app_switcher_assets/grid_icons/recap.svg" alt=""><span>Titan Recap</span></span>
+      <span class="rec-lights">
+        <button class="rec-ibtn" onclick="recPause()" id="recPauseBtn" title="Pause" aria-label="Pause">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></svg></button>
+        <button class="rec-ibtn" onclick="closeRec()" title="Close" aria-label="Close">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
+      </span>
+    </div>
+
+    <div class="rec-head">
+      <div class="rec-name" id="recName" contenteditable="true" role="textbox"
+        data-placeholder="Untitled note" spellcheck="false"></div>
+      <p class="rec-sub"><span class="rec-dot"></span><span id="recLabel">Recording</span></p>
+    </div>
+
+    <div class="rec-main">
+      <div class="rec-card">
+        <div class="rec-card-head"><h5>Transcript</h5></div>
+        <div class="rec-feed" id="recFeed"></div>
+        <div class="rec-foot">
+          <span class="rec-timer" id="recTimer">00:00</span>
+          <span class="rec-wave"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+          <button class="rec-done" onclick="recDone()">Done</button>
+        </div>
+      </div>
+      <div class="rec-thoughts">
+        <div class="rec-thoughts-head">My thoughts</div>
+        <div id="recNotes"></div>
+        <div class="rec-input" id="recInput" contenteditable="true" role="textbox"
+          data-placeholder="Type your thoughts here…"></div>
+      </div>
+    </div>
+  </aside>
+
+  <div class="row-menu" id="rowMenu">
+    <button onclick="menuAction('copy')"><img src="recap_app_assets/menu-copy.svg" alt="">Copy link</button>
+    <button onclick="menuAction('share')"><img src="recap_app_assets/menu-share.svg" alt="">Share</button>
+    <button onclick="menuAction('audio')"><img class="menu-audio" src="recap_app_assets/menu-audio.svg" alt="">Get audio</button>
+    <button onclick="menuAction('report')"><img src="recap_app_assets/menu-report.svg" alt="">Report</button>
+    <button class="danger" onclick="menuAction('delete')"><img src="recap_app_assets/menu-delete.svg" alt="">Delete</button>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"><span id="toastMsg"></span></div>
+
+  <script>
+    /* ══════════════════════════════════════════════════════════════════════
+       Notes. Titles, dates and sizes are the Figma content. The overview for
+       "Partner Logo SVG Sizing Issue" is verbatim from the design; the rest
+       are authored, since Figma only specifies the first card.
+       ══════════════════════════════════════════════════════════════════════ */
+    const NOTES = [
+      {
+        title: 'Partner Logo SVG Sizing Issue', date: 'Aug 28, 2026', time: '5:01 pm',
+        when: 'Friday • 5:01 pm',
+        overview: 'Team debugged a partner logo bug where oversized SVGs (1641x1641) broke the paywall and Drive UI across all 7 apps. Fix: partners supply 30px light/dark SVGs; <span class="mention">Jim Halpert</span> to investigate a max-width safeguard.'
+      },
+      {
+        title: 'AI Labeling Feature Rollout', date: 'Aug 28, 2026', time: '2:18 pm',
+        when: 'Friday • 2:20 pm',
+        overview: 'Rollout starts with internal accounts next week, then 5% of Pro. Labels stay editable by the user, and nothing is applied silently. <span class="mention">Pam Beesly</span> to write the in-product copy before the flag goes on.'
+      },
+      {
+        title: 'HTML Design Review Dark Mode Fixes', date: 'Aug 28, 2026', time: '11:40 am',
+        when: 'Friday • 11:05 am',
+        overview: 'Walked the dark palette across the composer and reply surfaces. Two icons were inverting instead of lifting, so they read as holes. <span class="mention">Dwight Schrute</span> to re-export both at #9c9c9c.'
+      },
+      {
+        title: 'Wispr Upgrade Button UI', date: 'Aug 27, 2026', time: '4:35 pm',
+        when: 'Thursday • 4:45 pm',
+        overview: 'Agreed the upgrade button stays out of the send path — no dark patterns near a destructive or irreversible action. Counter moves to the refine bar instead.'
+      },
+      {
+        title: 'Untitled', date: 'Aug 27, 2026', time: '9:12 am',
+        when: 'Thursday • 3:10 pm',
+        overview: 'Short call, no agenda. Nothing was decided and no next steps were captured.'
+      },
+      {
+        title: 'AI Prompt Bar UI Design', date: 'Aug 27, 2026', time: '3:50 pm',
+        when: 'Thursday • 12:30 pm',
+        overview: 'Settled on the category-name pills so the bar never shifts width as values change. Menus open upward. <span class="mention">Angela Martin</span> to check the 45px row against the reply surface.'
+      },
+      {
+        title: 'Info Icon for Policy Update', date: 'Aug 27, 2026', time: '1:07 pm',
+        when: 'Thursday • 10:00 am',
+        overview: 'Policy change needs a quiet inline note, not a modal — a blocking dialog here trains people to dismiss it. Legal to confirm the wording before beta.'
+      },
+      {
+        title: 'Ultra Plan Copy Review', date: 'Aug 26, 2026', time: '10:26 am',
+        when: 'Wednesday • 5:30 pm',
+        overview: 'Trimmed the feature list to sixteen rows and cut the superlatives. <span class="mention">Oscar Martinez</span> to confirm the storage numbers against billing before this ships.'
+      },
+      {
+        title: 'Untitled', date: 'Aug 25, 2026', time: '6:44 pm',
+        when: 'Tuesday • 4:00 pm',
+        overview: 'Recording started late, so the first few minutes are missing. What was captured covers the timeline only.'
+      },
+      {
+        title: 'Custom GPT Integration Flow', date: 'Aug 25, 2026', time: '12:33 pm',
+        when: 'Tuesday • 11:15 am',
+        overview: 'Integration stays opt-in per mailbox, and no message content leaves the account without an explicit action. <span class="mention">Kevin Malone</span> to draft the permission screen.'
+      },
+      {
+        title: 'Tasks Retro', date: 'Aug 24, 2026', time: '8:55 am',
+        when: 'Monday • 2:00 pm',
+        overview: 'Two things worked: the smaller scope and the weekly demo. One did not: reviews stacked up at the end. Next sprint reserves Thursday for review.'
+      },
+      {
+        title: 'Untitled', date: 'Aug 24, 2026', time: '4:02 pm',
+        when: 'Monday • 9:30 am',
+        overview: 'Standup, no decisions. Kept for the attendee list only.'
+      }
+    ];
+
+    let activeIndex = 0;
+
+    function renderList() {
+      const q = (document.getElementById('noteSearch').value || '').trim().toLowerCase();
+      const list = document.getElementById('notesList');
+      const rows = NOTES.map((n, i) => ({ n, i }))
+        .filter(({ n }) => !q || n.title.toLowerCase().includes(q));
+
+      list.innerHTML = rows.map(({ n, i }) => `
+        <div class="note-row${i === activeIndex ? ' active' : ''}" data-i="${i}">
+          <div class="note-row-left">
+            <div class="note-filetype"><img src="recap_app_assets/ic-doc.svg" alt=""></div>
+            <span class="note-name">${n.title}</span>
+          </div>
+          <div class="note-row-right">
+            <div class="note-meta">
+              <span class="note-date">${n.date}</span>
+              <span class="note-time">${n.time}</span>
+            </div>
+            <button class="note-more" title="More" onclick="openRowMenu(event, ${i})"><img src="recap_app_assets/ic-ellipsis.svg" alt=""></button>
+          </div>
+        </div>`).join('');
+
+      // Hovering a note shows its overview on the right.
+      list.querySelectorAll('.note-row').forEach(row => {
+        row.addEventListener('mouseenter', () => setActive(+row.dataset.i));
+        row.addEventListener('click', (e) => {
+          if (e.target.closest('.note-more')) return;
+          openNote(+row.dataset.i);
+        });
+      });
+    }
+
+    function setActive(i) {
+      if (i === activeIndex) return;
+      activeIndex = i;
+      document.querySelectorAll('.note-row').forEach(r =>
+        r.classList.toggle('active', +r.dataset.i === i));
+      renderCard();
+    }
+
+    function renderCard() {
+      const n = NOTES[activeIndex];
+      document.getElementById('noteCard').innerHTML = `
+        <div class="note-card-head">
+          <div class="note-card-title">${n.title}</div>
+          <div class="note-card-date">${n.when}</div>
+        </div>
+        <button class="btn-open-note" onclick="openNote(${activeIndex})">Open Note</button>
+        <div class="note-card-body"><b>Overview:</b> ${n.overview}</div>`;
+    }
+
+
+    /* ══════════════════════════════════════════════════════════════════════
+       Note detail. Summary and the action items are verbatim from Figma
+       5150:24824. "My thoughts" and "Transcript" are not specified in the
+       design, so their content is authored to match the summary's facts.
+       ══════════════════════════════════════════════════════════════════════ */
+    const NOTE_DETAILS = {
+      0: {
+      summary: `
+        <h3>Logo Rendering Bug</h3>
+        <ul>
+          <li>Partner SVG shipped at 1641x1641 view box, breaking Paywall and blocking Drive access across all 7 apps</li>
+          <li>Partner branding is intentional (e.g. GoDaddy pitched as their own drive), but no size ceiling was enforced</li>
+          <li>Root cause surfaced because QA lacks creds for many partners like names.it.all</li>
+        </ul>
+        <h3>Fix &amp; Safeguards</h3>
+        <ul>
+          <li><b>Speaker 1</b> shared 30px light and dark SVGs with <b>Speaker 2</b>; Alex to create links, Rina/Shweta update partner info</li>
+          <li><b>Speaker 1</b> to investigate adding a max-width guard so bad partner uploads don't break the app</li>
+          <li><b>Speaker 4</b> pushed for a rendering-side check since manual partner testing won't scale on every logo update</li>
+        </ul>
+        <h3>Partner Test Creds</h3>
+        <ul>
+          <li>Feature-level cred coverage in progress for top 10 partners with Shweta and Rina; creds expire every 3-6 months</li>
+        </ul>
+        <h3>Next Steps</h3>
+        <ul>
+          <li>(<b>Speaker 2</b>) Ask Alex (backend) to create links for the new 30px SVGs and update partner info panel</li>
+          <li>(<b>Speaker 2</b>) Coordinate testing across majority of partners once max-width change lands</li>
+          <li>(<b>Speaker 1</b>) Investigate whether a max-width safeguard is feasible without breaking existing partners</li>
+          <li>(<b>Speaker 3</b>) Continue top-10 partner cred coverage work with Shweta and Rina</li>
+        </ul>
+        <h3>Decisions Made</h3>
+        <ul>
+          <li>Partner logos standardized to 30px, 1:1 ratio, with separate light and dark mode SVGs</li>
+          <li>Partner branding stays (not Titan branding) since drive is pitched as the partner's own product</li>
+        </ul>`,
+
+      thoughts: `
+        <div class="thoughts" contenteditable="true" spellcheck="false">
+          <p>The size ceiling is the actual fix here. Everything else is cleanup.</p>
+          <p>We keep finding these late because QA can't sign in as most partners — that's the
+            pattern, not this one SVG. Worth raising separately rather than burying it in this note.</p>
+          <p>Speaker 4 is right that manual checking won't hold. If the guard ships rendering-side we
+            stop caring what partners upload, which is the only version of this that scales.</p>
+          <p>Ask before Friday: do we block the upload or clamp it on render? Blocking is honest but
+            breaks whoever is already at 1641.</p>
+        </div>`,
+
+      transcript: [
+        ['Speaker 2', '00:04', "So the Paywall is just blank for them. No error, nothing in the console — it renders and then nothing below it loads."],
+        ['Speaker 1', '00:19', "That's the logo. Their SVG is 1641 by 1641 in the view box, so it's pushing everything off screen."],
+        ['Speaker 2', '00:31', "1641? For a logo in a nav bar?"],
+        ['Speaker 1', '00:36', "There's no ceiling on what a partner can upload. We ask for an SVG and we take whatever they give us."],
+        ['Speaker 4', '00:52', "And it's not only Paywall. Drive is unreachable for those accounts too — I checked, it's across all seven apps."],
+        ['Speaker 2', '01:07', "Why did this reach production?"],
+        ['Speaker 3', '01:11', "We can't log in as most of them. I don't have creds for names.it.all or half the smaller partners, so nobody saw it."],
+        ['Speaker 2', '01:26', "That's the real problem then."],
+        ['Speaker 3', '01:29', "We're working through it — feature-level coverage for the top ten with Shweta and Rina. The creds expire every three to six months though, so it's not a one-time fix."],
+        ['Speaker 1', '01:48', "Short term I've got 30px light and dark SVGs ready. I'll send them over."],
+        ['Speaker 2', '01:56', "Good. I'll get Alex to create the links and have Rina and Shweta update the partner info panel."],
+        ['Speaker 4', '02:08', "Can we not just clamp it on our side? Testing every partner by hand won't scale — this'll happen again the next time someone updates a logo."],
+        ['Speaker 1', '02:22', "Agreed. Let me look at a max-width guard. I need to check it doesn't break the partners who are already sized oddly but within reason."],
+        ['Speaker 2', '02:38', "Fine. And we're keeping partner branding — GoDaddy pitches Drive as their own product, so it can't become Titan branding."],
+        ['Speaker 1', '02:51', "Right. Standardise on 30px, 1:1, separate light and dark. I'll confirm the guard by Friday."],
+        ['Speaker 2', '03:02', "And once the max-width lands I'll coordinate testing across the majority of partners."]
+      ],
+
+      // Grouped exactly as Figma groups them, by owner.
+      actionGroups: [
+        ['Ask Alex (backend) to create links for the new 30px SVGs and update partner info panel',
+         'Coordinate testing across majority of partners once max-width change lands'],
+        ['Investigate whether a max-width safeguard is feasible without breaking existing partners'],
+        ['Continue top-10 partner cred coverage work with Shweta and Rina'],
+        ['Create links for new 30px light and dark SVGs'],
+        ['Update partner info with new SVG assets']
+      ]
+      },
+
+      1: {
+        summary: `
+          <h3>Rollout Plan</h3>
+          <ul>
+            <li>Internal accounts next week, then 5% of Pro; everything sits behind a flag that can be pulled without a deploy</li>
+            <li>No retroactive labeling — existing mail is left alone, only new mail gets labeled</li>
+          </ul>
+          <h3>Guardrails</h3>
+          <ul>
+            <li>Every label stays editable by the user, and nothing is applied silently</li>
+            <li><b>Speaker 2</b> was firm that a label the user cannot see or change is worse than no label</li>
+          </ul>
+          <h3>Open Questions</h3>
+          <ul>
+            <li>What happens to labels already applied if a user turns the feature off — keep, hide, or delete</li>
+            <li>5% may be too small a sample to learn anything within a sprint</li>
+          </ul>
+          <h3>Decisions Made</h3>
+          <ul>
+            <li>In-product copy ships with the flag, not after it</li>
+            <li>Labels are additive only in v1; nothing gets moved or archived automatically</li>
+          </ul>`,
+        thoughts: `
+          <div class="thoughts" contenteditable="true" spellcheck="false">
+            <p>The off-state is the actual open question and we skipped past it. If someone turns this
+              off and their mail is still covered in labels they did not ask for, that is the thing
+              they will complain about.</p>
+            <p>Additive-only is the right call for v1. The moment we start moving mail automatically
+              we own every misfile.</p>
+            <p>5% of Pro for two weeks gives us almost nothing. Would rather do 5% for six weeks than
+              widen it early because the numbers looked thin.</p>
+          </div>`,
+        transcript: [
+          ['Speaker 1', '00:06', 'Plan is internal next week, then five percent of Pro the week after.'],
+          ['Speaker 2', '00:14', 'Behind a flag?'],
+          ['Speaker 1', '00:16', 'Behind a flag we can pull without shipping anything.'],
+          ['Speaker 2', '00:22', 'Good. And these labels are editable? I do not want anything landing on someone mail that they cannot change.'],
+          ['Speaker 1', '00:33', 'Editable, and visible. Nothing applied silently.'],
+          ['Speaker 3', '00:41', 'What about mail that is already in the account?'],
+          ['Speaker 1', '00:45', 'Untouched. New mail only.'],
+          ['Speaker 3', '00:49', 'And if someone switches it off, what happens to the labels we already put on?'],
+          ['Speaker 1', '00:56', 'We have not decided that.'],
+          ['Speaker 2', '00:59', 'That is the one people will write in about. Worth deciding before the flag goes on, not after.'],
+          ['Speaker 3', '01:09', 'I will take it.'],
+          ['Speaker 2', '01:12', 'Also copy. Pam should write the in-product wording before this is live, not while we are firefighting.'],
+          ['Speaker 1', '01:23', 'Agreed. And v1 is additive only, we are not moving or archiving anything.'],
+          ['Speaker 3', '01:32', 'Is five percent enough to tell us anything?'],
+          ['Speaker 1', '01:36', 'Probably not in one sprint. Let us hold it and run it longer rather than widen early.']
+        ],
+        actionGroups: [
+          ['Write the in-product labeling copy before the flag goes on',
+           'Confirm the kill switch works without a deploy'],
+          ['Decide what happens to existing labels when a user turns the feature off'],
+          ['Hold at 5% for six weeks rather than widening early']
+        ]
+      },
+
+      2: {
+        summary: `
+          <h3>What We Reviewed</h3>
+          <ul>
+            <li>Walked the dark palette across the composer, the reply box and the AI Write bar</li>
+          </ul>
+          <h3>Bugs Found</h3>
+          <ul>
+            <li>Two toolbar icons were inverting instead of lifting, so on the dark ground they read as holes rather than glyphs</li>
+            <li>The paused capture state was distinguishable by colour alone — same icon, same position, only the fill changed</li>
+            <li><b>Speaker 4</b> found the composer close button is white artwork, which is invisible on any light header</li>
+          </ul>
+          <h3>Decisions Made</h3>
+          <ul>
+            <li>Dark icons use brightness(1.15) to reach #9c9c9c, never invert() — inverting darkens a grey glyph instead of lifting it</li>
+            <li>No state is ever distinguished by colour alone; paused gets a hollow dot, a stopped timer and a Paused label</li>
+          </ul>`,
+        thoughts: `
+          <div class="thoughts" contenteditable="true" spellcheck="false">
+            <p>Colour-only states keep getting through review because they look fine to whoever built
+              them. The rule needs to be written down somewhere enforceable, not remembered.</p>
+            <p>The invert versus brightness thing will happen again. It is the sort of mistake that
+              looks correct in the code and wrong on the screen.</p>
+            <p>Worth auditing every invert() we have rather than fixing the two we happened to notice.</p>
+          </div>`,
+        transcript: [
+          ['Speaker 1', '00:03', 'Pull up the composer in dark and look at the toolbar.'],
+          ['Speaker 4', '00:09', 'They look like holes. The icons are darker than the background.'],
+          ['Speaker 1', '00:15', 'Because they are being inverted. Invert a mid grey and you get another mid grey, then it goes darker, not lighter.'],
+          ['Speaker 4', '00:26', 'So brightness instead.'],
+          ['Speaker 1', '00:28', 'Brightness one point one five gets us to about 9c. That is what the rest of the app uses.'],
+          ['Speaker 2', '00:37', 'While we are here, the paused state. How do I know it is paused?'],
+          ['Speaker 4', '00:44', 'The dot changes colour.'],
+          ['Speaker 2', '00:46', 'That is it? Same icon, same spot, just a different fill?'],
+          ['Speaker 4', '00:51', 'Yes.'],
+          ['Speaker 2', '00:53', 'That fails for anyone who cannot separate those two colours. It needs a shape change and a label.'],
+          ['Speaker 1', '01:02', 'Hollow dot, stop the timer, put the word Paused next to it.'],
+          ['Speaker 4', '01:09', 'One more. The composer close button artwork is white. It works on the dark header but it is invisible anywhere light.'],
+          ['Speaker 1', '01:20', 'Use the settings drawer close, it is 888. I will re-export the two toolbar icons at 9c.']
+        ],
+        actionGroups: [
+          ['Re-export both toolbar icons at #9c9c9c'],
+          ['Give the paused state a hollow dot, a stopped timer and a Paused label'],
+          ['Audit every remaining invert() filter in the dark palette'],
+          ['Replace the white close artwork on light-header surfaces']
+        ]
+      },
+
+      3: {
+        summary: `
+          <h3>The Problem</h3>
+          <ul>
+            <li>The upgrade call to action sat immediately beside Send, so the two most likely mis-taps were buy and send</li>
+            <li><b>Speaker 2</b> pointed out this is a client-facing message; a mis-tap here costs trust, not just a click</li>
+          </ul>
+          <h3>What We Agreed</h3>
+          <ul>
+            <li>Nothing that monetises goes in the send path. The suggestions counter moves to the refine bar</li>
+            <li>The upsell stays reachable from the feature entry point, where the user is already thinking about the feature</li>
+          </ul>
+          <h3>Rejected</h3>
+          <ul>
+            <li>An interstitial before send — trains people to dismiss without reading</li>
+            <li>A countdown that auto-dismisses, on the same grounds</li>
+          </ul>`,
+        thoughts: `
+          <div class="thoughts" contenteditable="true" spellcheck="false">
+            <p>Putting an upsell next to a destructive or irreversible action is how you lose trust
+              once and never get it back. Easy call.</p>
+            <p>The counter in the refine bar is better anyway — that is where the user is deciding
+              whether to spend a suggestion.</p>
+          </div>`,
+        transcript: [
+          ['Speaker 3', '00:05', 'Upgrade button is here, right next to Send.'],
+          ['Speaker 2', '00:10', 'No. This is a client email. If someone hits the wrong one of those two they either buy something they did not want or send something they were not ready to send.'],
+          ['Speaker 3', '00:24', 'It converts well in the mock.'],
+          ['Speaker 2', '00:27', 'It would. That is not the same as it being right. Nothing that takes money goes in the send path.'],
+          ['Speaker 1', '00:36', 'Move the counter into the refine bar. That is where they are deciding whether to spend one.'],
+          ['Speaker 2', '00:44', 'And the upsell stays on the feature entry point. If they are opening AI Write they are already thinking about AI Write.'],
+          ['Speaker 3', '00:54', 'What about an interstitial before send?'],
+          ['Speaker 2', '00:58', 'Then everyone learns to dismiss whatever appears before send, including the things that matter.'],
+          ['Speaker 1', '01:06', 'Same for a countdown. Anything that dismisses itself teaches people to wait it out.']
+        ],
+        actionGroups: [
+          ['Move the suggestions counter into the refine bar'],
+          ['Remove the upgrade call to action from the send bar'],
+          ['Check the upsell nudge still anchors to the feature entry point']
+        ]
+      },
+
+      4: {
+        summary: `
+          <h3>What Was Captured</h3>
+          <ul>
+            <li>Short call with no agenda. Two people, mostly scheduling</li>
+            <li>Nothing was decided and no next steps were agreed</li>
+          </ul>`,
+        thoughts: `
+          <div class="thoughts" contenteditable="true" spellcheck="false">
+            <p>Not sure why this one was recorded. Keeping it for the timestamp.</p>
+          </div>`,
+        transcript: [
+          ['Speaker 1', '00:02', 'Are we waiting for anyone?'],
+          ['Speaker 2', '00:05', 'I think it is just us. I do not have an agenda for this one.'],
+          ['Speaker 1', '00:11', 'Then let us not invent one. Tuesday instead?'],
+          ['Speaker 2', '00:16', 'Tuesday works. I will move it.']
+        ],
+        actionGroups: []
+      },
+
+      5: {
+        summary: `
+          <h3>Pill Labels</h3>
+          <ul>
+            <li>Pills keep their category name — Tone, Length, EN — rather than showing the selected value</li>
+            <li>Reason is width: showing the value made the bar resize every time the selection changed</li>
+          </ul>
+          <h3>Menus</h3>
+          <ul>
+            <li>All menus open upward, anchored to their pill; no header row and no checkmark on the current value</li>
+            <li>The language menu keeps its Translate to header, since the list alone does not say what it does</li>
+          </ul>
+          <h3>Measurements</h3>
+          <ul>
+            <li>Row pinned to 45px in every state; menu width 165px</li>
+            <li>Prompt bar keeps a 33px minimum row height so it does not collapse when the pills give way to the arrow</li>
+          </ul>`,
+        thoughts: `
+          <div class="thoughts" contenteditable="true" spellcheck="false">
+            <p>The width shift was the whole reason for category labels. Worth writing that down,
+              because on its own the decision looks like a preference and someone will reverse it.</p>
+            <p>Pinning the row height is the same class of fix — the bar was growing and shrinking as
+              states changed and it read as jitter.</p>
+          </div>`,
+        transcript: [
+          ['Speaker 1', '00:04', 'Watch the bar when I change the tone. The whole row jumps.'],
+          ['Speaker 3', '00:11', 'Because Professional is wider than Casual.'],
+          ['Speaker 1', '00:15', 'Right. Every selection resizes the bar.'],
+          ['Speaker 3', '00:19', 'So the pill says Tone and never changes.'],
+          ['Speaker 1', '00:23', 'Then the width is fixed and the menu tells you what is selected.'],
+          ['Speaker 2', '00:29', 'Do we lose anything? The user cannot see the current tone at a glance.'],
+          ['Speaker 1', '00:36', 'They see it in the menu when they open it. The tradeoff is worth it against a bar that moves.'],
+          ['Speaker 3', '00:44', 'No header and no checkmark then?'],
+          ['Speaker 1', '00:47', 'Not on Tone and Length. Keep Translate to on the language one, a bare list of languages does not explain itself.'],
+          ['Speaker 2', '00:57', 'And the row height?'],
+          ['Speaker 1', '01:00', 'Pinned at 45. It was collapsing to 27 when the pills gave way to the arrow.'],
+          ['Speaker 3', '01:08', 'I will check 45 against the reply surface, it is tighter there.']
+        ],
+        actionGroups: [
+          ['Check the 45px row against the reply surface'],
+          ['Confirm the 165px menu width at the smallest breakpoint'],
+          ['Write down why pills use category names, so it does not get reversed']
+        ]
+      },
+
+      6: {
+        summary: `
+          <h3>The Ask</h3>
+          <ul>
+            <li>Policy change needs surfacing to existing users before it takes effect</li>
+            <li>First proposal was a blocking dialog on next sign-in</li>
+          </ul>
+          <h3>What We Agreed</h3>
+          <ul>
+            <li>A quiet inline note, not a modal. <b>Speaker 2</b> made the case that a blocking dialog here trains people to dismiss whatever appears at sign-in</li>
+            <li>Dismissal is per-user and remembered; it does not reappear on every session</li>
+          </ul>
+          <h3>Legal</h3>
+          <ul>
+            <li>Copy must describe what changed without promising compliance with any particular regime</li>
+            <li>Wording goes to counsel before beta, not after</li>
+          </ul>`,
+        thoughts: `
+          <div class="thoughts" contenteditable="true" spellcheck="false">
+            <p>A modal here would be theatre. It looks like diligence and produces nothing except
+              people clicking through faster next time.</p>
+            <p>The dismissal persistence matters more than it sounds. If it comes back every session
+              it is a modal with extra steps.</p>
+          </div>`,
+        transcript: [
+          ['Speaker 3', '00:04', 'Proposal is a dialog on next sign-in. They have to acknowledge it.'],
+          ['Speaker 2', '00:12', 'Acknowledge means click the button to make it go away. That is not the same as read.'],
+          ['Speaker 3', '00:20', 'It is the standard pattern.'],
+          ['Speaker 2', '00:23', 'It is, and the standard result is that people learn to dismiss anything that appears at sign-in. Then the one that actually matters gets dismissed too.'],
+          ['Speaker 1', '00:35', 'An inline note at the top of the inbox. Visible, not blocking.'],
+          ['Speaker 2', '00:42', 'That, and it stays dismissed once dismissed.'],
+          ['Speaker 3', '00:47', 'Per user or per device?'],
+          ['Speaker 1', '00:50', 'Per user, otherwise it follows them around.'],
+          ['Speaker 2', '00:55', 'And the copy goes past counsel first. We say what changed. We do not claim we are compliant with anything.']
+        ],
+        actionGroups: [
+          ['Send the policy note wording to counsel before beta'],
+          ['Draft the inline note for the top of the inbox'],
+          ['Make dismissal per-user and persistent']
+        ]
+      },
+
+      7: {
+        summary: `
+          <h3>Copy Changes</h3>
+          <ul>
+            <li>Feature list trimmed to sixteen rows; the long version was selling rather than informing</li>
+            <li>Superlatives cut — two remain and need rewording</li>
+          </ul>
+          <h3>Numbers To Verify</h3>
+          <ul>
+            <li>Storage and retention figures in the table have not been checked against billing</li>
+            <li><b>Speaker 4</b> flagged that one figure contradicts the pricing page</li>
+          </ul>
+          <h3>Decisions Made</h3>
+          <ul>
+            <li>Sixteen rows, both columns, no marketing adjectives in the feature names themselves</li>
+            <li>Nothing ships until the numbers are confirmed by billing</li>
+          </ul>`,
+        thoughts: `
+          <div class="thoughts" contenteditable="true" spellcheck="false">
+            <p>The list was selling, not informing. Someone comparing plans wants to know what they
+              get, and adjectives in a feature name make it harder to tell.</p>
+            <p>The contradicting figure is the real risk here. Getting a number wrong on a pricing
+              surface is not a copy problem.</p>
+          </div>`,
+        transcript: [
+          ['Speaker 2', '00:05', 'Twenty-two rows is too many. Nobody reads to the bottom of that.'],
+          ['Speaker 1', '00:12', 'Which ones go?'],
+          ['Speaker 2', '00:14', 'The ones that are the same in both columns. If it is not a difference it is not helping anyone choose.'],
+          ['Speaker 1', '00:23', 'That gets us to about sixteen.'],
+          ['Speaker 2', '00:26', 'Fine. And the adjectives come out of the feature names. Advanced, powerful, seamless. Say what it does.'],
+          ['Speaker 4', '00:37', 'Before any of that. The storage number here does not match the pricing page.'],
+          ['Speaker 2', '00:44', 'Which one is right?'],
+          ['Speaker 4', '00:46', 'I do not know. That is the problem.'],
+          ['Speaker 1', '00:50', 'Oscar can confirm both against billing. We should not ship either number until he does.'],
+          ['Speaker 2', '00:58', 'Agreed. Copy is easy to fix after launch. A wrong price is not.']
+        ],
+        actionGroups: [
+          ['Confirm the storage and retention figures against billing'],
+          ['Reword the last two superlatives in the feature names'],
+          ['Final read of both columns before it ships']
+        ]
+      },
+
+      8: {
+        summary: `
+          <h3>Note On This Recording</h3>
+          <ul>
+            <li>Capture started about four minutes in, so the opening scoping discussion is missing</li>
+          </ul>
+          <h3>What Was Captured</h3>
+          <ul>
+            <li>Timeline lands at the end of the month either way, with or without the import work</li>
+            <li>The import piece was already agreed before the recording started — details are not here</li>
+          </ul>`,
+        thoughts: `
+          <div class="thoughts" contenteditable="true" spellcheck="false">
+            <p>Recording started late and the scoping conversation at the top is gone. Ask Priya for
+              her notes on the first few minutes before this goes anywhere.</p>
+            <p>Do not treat this summary as complete. It reads like a full note and it is not.</p>
+          </div>`,
+        transcript: [
+          ['Speaker 2', '00:00', '...so that puts us at the end of the month either way.'],
+          ['Speaker 1', '00:05', 'With the import work or without it?'],
+          ['Speaker 2', '00:08', 'Either. That is what I am saying, it is not the thing holding us up.'],
+          ['Speaker 1', '00:14', 'Then we do it properly rather than cutting it.'],
+          ['Speaker 2', '00:19', 'Agreed. Same date, better version.'],
+          ['Speaker 1', '00:24', 'Fine. I will write it up from what we said at the start.']
+        ],
+        actionGroups: [
+          ['Get Priya notes on the first four minutes that were not captured']
+        ]
+      },
+
+      9: {
+        summary: `
+          <h3>Scope</h3>
+          <ul>
+            <li>Integration is opt-in per mailbox, not per account — an admin cannot switch it on for everyone</li>
+            <li>v1 covers drafting only; no automated actions on the mailbox</li>
+          </ul>
+          <h3>Privacy</h3>
+          <ul>
+            <li>No message content leaves the account without an explicit user action, per request</li>
+            <li>A permission screen is required before the first call, listing exactly what is sent</li>
+          </ul>
+          <h3>Open</h3>
+          <ul>
+            <li>Whether the permission grant expires, and if so how the re-grant is surfaced</li>
+          </ul>`,
+        thoughts: `
+          <div class="thoughts" contenteditable="true" spellcheck="false">
+            <p>Per-mailbox rather than per-account is the important detail and it is the one most
+              likely to get simplified away in implementation. An admin flipping this on for a whole
+              org is exactly what we said we would not do.</p>
+            <p>The permission screen has to list what is actually sent, not a category. Saying we send
+              message data is not a disclosure.</p>
+          </div>`,
+        transcript: [
+          ['Speaker 1', '00:06', 'Opt-in. Per mailbox.'],
+          ['Speaker 3', '00:09', 'Not per account? Admins will ask for that.'],
+          ['Speaker 1', '00:14', 'They will, and no. One person deciding that everyone mail goes to a third party is the thing we are trying to avoid.'],
+          ['Speaker 2', '00:24', 'And nothing leaves without the user doing something.'],
+          ['Speaker 1', '00:29', 'Explicit action every time until they grant it. Then a permission screen that lists what we send.'],
+          ['Speaker 2', '00:38', 'Lists it specifically. Not message data.'],
+          ['Speaker 1', '00:42', 'Specifically. Subject, body, recipients, whatever it is.'],
+          ['Speaker 3', '00:48', 'Does the grant expire?'],
+          ['Speaker 1', '00:51', 'Undecided. If it does we need to work out how the re-grant appears without it feeling like a nag.'],
+          ['Speaker 2', '00:59', 'Kevin can draft the permission screen. That will force the question.']
+        ],
+        actionGroups: [
+          ['Draft the permission screen listing exactly what is sent'],
+          ['Confirm the per-mailbox toggle with eng, not per account'],
+          ['Decide whether the permission grant expires']
+        ]
+      },
+
+      10: {
+        summary: `
+          <h3>What Worked</h3>
+          <ul>
+            <li>Smaller sprint scope. Everything committed actually shipped, which had not happened in three sprints</li>
+            <li>The weekly demo — <b>Speaker 4</b> noted it caught two design misreads early enough to be cheap</li>
+          </ul>
+          <h3>What Did Not</h3>
+          <ul>
+            <li>Reviews stacked up at the end of the sprint, so the last two days were all review and no build</li>
+            <li>Three people had four things in flight each; the pile-up was capacity, not discipline</li>
+          </ul>
+          <h3>Changes For Next Sprint</h3>
+          <ul>
+            <li>Thursday afternoons reserved for review, nothing else scheduled</li>
+            <li>Cap of three items in flight per person</li>
+            <li>Weekly demo carries forward unchanged</li>
+          </ul>`,
+        thoughts: `
+          <div class="thoughts" contenteditable="true" spellcheck="false">
+            <p>The review pile-up is a capacity problem, not a discipline one. Telling people to review
+              sooner has not worked twice now, so reserving the time is the only version left.</p>
+            <p>Smaller scope is doing the heavy lifting here. Worth protecting when someone inevitably
+              asks to add one more thing.</p>
+          </div>`,
+        transcript: [
+          ['Speaker 1', '00:04', 'Start with what worked.'],
+          ['Speaker 3', '00:07', 'We shipped everything we committed to. First time in three sprints.'],
+          ['Speaker 1', '00:13', 'Because we committed to less.'],
+          ['Speaker 4', '00:16', 'The demo helped too. We caught two things I had read wrong while they were still cheap to change.'],
+          ['Speaker 1', '00:25', 'What did not work?'],
+          ['Speaker 3', '00:28', 'Reviews. Nothing got reviewed until Thursday and then everything did.'],
+          ['Speaker 4', '00:35', 'I had four things open at once by the end.'],
+          ['Speaker 1', '00:39', 'We said last time people should review earlier.'],
+          ['Speaker 3', '00:44', 'And we said it the time before. It is not that people are ignoring it, there is genuinely no room in the day.'],
+          ['Speaker 1', '00:53', 'Then we make room. Thursday afternoon is review, nothing else goes in it.'],
+          ['Speaker 4', '01:00', 'And cap what is open. Three per person.'],
+          ['Speaker 1', '01:05', 'Three. And the demo stays.']
+        ],
+        actionGroups: [
+          ['Block Thursday afternoons for review, nothing else scheduled'],
+          ['Cap in-flight work at three items per person'],
+          ['Keep the weekly demo on the calendar']
+        ]
+      },
+
+      11: {
+        summary: `
+          <h3>What Was Captured</h3>
+          <ul>
+            <li>Standup. Status only, no decisions taken</li>
+            <li>Kept for the attendee list and the timestamp</li>
+          </ul>`,
+        thoughts: `
+          <div class="thoughts" contenteditable="true" spellcheck="false">
+            <p>Nothing here. Standups probably should not be captured at all.</p>
+          </div>`,
+        transcript: [
+          ['Speaker 1', '00:02', 'Anything blocked?'],
+          ['Speaker 3', '00:04', 'No, still on the import.'],
+          ['Speaker 4', '00:07', 'Same as yesterday, review queue.'],
+          ['Speaker 1', '00:11', 'Fine. That is it.']
+        ],
+        actionGroups: []
+      }
+
+    };
+
+    // Details hang off the note objects themselves, so deleting or reordering
+    // a note can never misalign a note from its content.
+    NOTES.forEach((n, i) => { n.detail = NOTE_DETAILS[i]; });
+
+    // The note the detail view is showing (the object, not its position).
+    let openNoteObj = null;
+    const detail = () => openNoteObj.detail;
+
+    // Action items sent to Tasks, as {note, text}.
+    const TASKS = [];
+    const isAdded = (text) =>
+      TASKS.some(t => t.note === openNoteObj && t.text === text);
+
+    /* ── Hand-off to the mail app's Tasks sidebar ───────────────────────────
+       The two apps are separate tabs, so an added item travels through
+       localStorage — which, unlike a fresh page load, also reaches an
+       already-open mail tab via the `storage` event. Chromium shares one
+       file:// store across the prototype, so this works from disk.
+
+       Every item carries a stable id so the mail app can ingest the same
+       queue twice without duplicating a task. The queue is append-only; the
+       mail app tracks what it has already seen rather than draining it, so
+       opening a second mail tab still picks up the full set. */
+    const TASK_BRIDGE_KEY = 'titan-recap-tasks';
+
+    const taskId = (note, text) =>
+      (note.title + '|' + text).replace(/\s+/g, ' ').slice(0, 160);
+
+    function bridgeTasks(note, texts) {
+      const items = texts.map(text => ({
+        id: taskId(note, text),
+        t: text,
+        d: 'Recap · ' + note.title,
+        due: 'Today'
+      }));
+      try {
+        const q = JSON.parse(localStorage.getItem(TASK_BRIDGE_KEY) || '[]');
+        items.forEach(it => { if (!q.some(x => x.id === it.id)) q.push(it); });
+        localStorage.setItem(TASK_BRIDGE_KEY, JSON.stringify(q));
+      } catch (e) {
+        // Storage can be blocked outright on a file:// origin. The queue we
+        // hand to openMailApp() below covers that case.
+      }
+    }
+
+    // Everything added this session, for the URL fallback.
+    const bridgeQueue = () => {
+      try { return JSON.parse(localStorage.getItem(TASK_BRIDGE_KEY) || '[]'); }
+      catch (e) { return TASKS.map(t => ({ id: taskId(t.note, t.text), t: t.text,
+        d: 'Recap · ' + t.note.title, due: 'Today' })); }
+    };
+
+    let toastTimer = null;
+    function showToast(msg, action) {
+      const el = document.getElementById('toast');
+      document.getElementById('toastMsg').textContent = msg;
+      const prev = el.querySelector('button');
+      if (prev) prev.remove();
+      if (action) {
+        const b = document.createElement('button');
+        b.textContent = action.label;
+        b.onclick = () => { hideToast(); action.run(); };
+        el.appendChild(b);
+      }
+      el.classList.add('show');
+      clearTimeout(toastTimer);
+      // A delete keeps its undo window open longer than a plain confirmation.
+      toastTimer = setTimeout(hideToast, action ? 6000 : 2600);
+    }
+    function hideToast() {
+      clearTimeout(toastTimer);
+      document.getElementById('toast').classList.remove('show');
+    }
+
+
+    /* ══════════════════════════════════════════════════════════════════════
+       Share. State lives on the note object, so each note has its own
+       recipients and its own link setting.
+       ══════════════════════════════════════════════════════════════════════ */
+    const ME = { name: 'Ella', email: 'admin@kicknrun.xyz' };
+
+    // People the search can resolve by name — drawn from the notes themselves.
+    const DIRECTORY = [
+      { name: 'Alex Doshi', email: 'alex@titan.email' },
+      { name: 'Rina Kapoor', email: 'rina@titan.email' },
+      { name: 'Shweta Rao', email: 'shweta@titan.email' },
+      { name: 'Priya Nair', email: 'priya@titan.email' },
+      { name: 'Pam Beesly', email: 'pam@titan.email' },
+      { name: 'Dwight Schrute', email: 'dwight@titan.email' },
+      { name: 'Angela Martin', email: 'angela@titan.email' },
+      { name: 'Oscar Martinez', email: 'oscar@titan.email' },
+      { name: 'Kevin Malone', email: 'kevin@titan.email' },
+      { name: 'Jim Halpert', email: 'jim@titan.email' }
+    ];
+
+    const ACCESS = {
+      link: {
+        label: 'Anyone with the link',
+        icon: 'recap_app_assets/ic-globe.svg',
+        hint: 'Can view summary.'
+      },
+      invited: {
+        label: 'Only people invited',
+        icon: 'recap_app_assets/ic-lock.svg',
+        hint: 'Only the people you invite can open this note.'
+      }
+    };
+
+    let shareNote = null;     // the note being shared
+    let pending = [];         // chips in the field, not yet shared
+    let suggestIndex = -1;
+
+    const initialOf = (s) => (s || '?').trim().charAt(0).toUpperCase();
+    const isEmail = (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim());
+
+    function openShare(i) {
+      const note = typeof i === 'number' ? NOTES[i] : i;
+      if (!note) return;
+      closeRowMenu();
+      shareNote = note;
+      if (!note.share) note.share = { access: 'link', people: [] };
+      pending = [];
+      document.getElementById('shareInput').value = '';
+      renderShare();
+      document.getElementById('shareScrim').classList.add('open');
+      document.getElementById('shareModal').classList.add('open');
+      setTimeout(() => document.getElementById('shareInput').focus(), 180);
+    }
+
+    function closeShare() {
+      document.getElementById('shareScrim').classList.remove('open');
+      document.getElementById('shareModal').classList.remove('open');
+      closeAccessMenu();
+      hideSuggest();
+      shareNote = null;
+    }
+
+    function renderShare() {
+      const share = shareNote.share;
+
+      // Chips in the recipient field.
+      const field = document.getElementById('shareField');
+      field.querySelectorAll('.share-chip').forEach(c => c.remove());
+      const input = document.getElementById('shareInput');
+      pending.forEach((p, idx) => {
+        const chip = document.createElement('span');
+        chip.className = 'share-chip';
+        chip.innerHTML = '<span class="share-avatar" style="width:20px;height:20px;font-size:11px;background:#e8c39a">'
+          + initialOf(p.name || p.email) + '</span>'
+          + '<span>' + p.email + '</span>'
+          + '<button class="share-chip-x" title="Remove" onclick="removePending(' + idx + ')">×</button>';
+        field.insertBefore(chip, input);
+      });
+
+      document.getElementById('btnShareSend').disabled = !canShare();
+
+      // Owner, then everyone already invited.
+      document.getElementById('sharePeople').innerHTML = [
+        person(ME.name + ' <span class="muted">(you)</span>', ME.email, 'Owner', null, '#888888'),
+        ...share.people.map((p, idx) =>
+          person(p.name || p.email, p.name ? p.email : 'Invite pending', 'Viewer', idx, '#e8c39a'))
+      ].join('');
+
+      // Link access.
+      const a = ACCESS[share.access];
+      document.getElementById('shareAccessIcon').src = a.icon;
+      document.getElementById('shareAccessLabel').textContent = a.label;
+      document.getElementById('shareAccessHint').textContent = a.hint;
+      document.getElementById('tickLink').style.visibility = share.access === 'link' ? '' : 'hidden';
+      document.getElementById('tickInvited').style.visibility = share.access === 'invited' ? '' : 'hidden';
+    }
+
+    function person(name, sub, role, removeIdx, colour) {
+      return '<div class="share-person">'
+        + '<div class="share-avatar" style="background:' + colour + '">' + initialOf(name.replace(/<[^>]*>/g, '')) + '</div>'
+        + '<div class="share-person-text">'
+        + '<div class="share-person-name">' + name + '</div>'
+        + '<div class="share-person-sub">' + sub + '</div>'
+        + '</div>'
+        + '<div class="share-role">' + role
+        + (removeIdx === null ? '' : '<button class="share-remove" title="Remove" onclick="revokeShare(' + removeIdx + ')">×</button>')
+        + '</div></div>';
+    }
+
+    // Live if there is a chip, or a valid address still sitting in the field.
+    function canShare() {
+      if (pending.length) return true;
+      const v = document.getElementById('shareInput').value.trim();
+      return isEmail(v) && !shareNote.share.people.some(p => p.email === v) && v !== ME.email;
+    }
+
+    function removePending(i) { pending.splice(i, 1); renderShare(); }
+
+    function revokeShare(i) {
+      const gone = shareNote.share.people.splice(i, 1)[0];
+      renderShare();
+      showToast('Removed ' + (gone.name || gone.email));
+    }
+
+    /* ── Typeahead ── */
+    function hideSuggest() {
+      const box = document.getElementById('shareSuggest');
+      box.classList.remove('open');
+      // Clear the rows too, so the DOM never holds a stale suggestion list.
+      box.innerHTML = '';
+      box._list = null;
+      suggestIndex = -1;
+    }
+
+    function matches(q) {
+      const has = (e) => pending.some(p => p.email === e)
+        || shareNote.share.people.some(p => p.email === e)
+        || e === ME.email;
+      const found = DIRECTORY.filter(p =>
+        !has(p.email) &&
+        (p.name.toLowerCase().includes(q) || p.email.toLowerCase().includes(q)));
+      const out = found.slice(0, 5).map(p => ({ kind: 'person', ...p }));
+      // An address that is not in the directory can still be invited.
+      if (isEmail(q) && !found.some(p => p.email.toLowerCase() === q) && !has(q)) {
+        out.unshift({ kind: 'new', email: q.trim() });
+      }
+      return out;
+    }
+
+    function renderSuggest() {
+      const q = document.getElementById('shareInput').value.trim().toLowerCase();
+      const box = document.getElementById('shareSuggest');
+      if (!q) return hideSuggest();
+      const list = matches(q);
+      if (!list.length) return hideSuggest();
+      box.innerHTML = list.map((m, i) => m.kind === 'new'
+        ? '<button data-i="' + i + '" onclick="pickSuggest(' + i + ')">'
+          + '<img src="recap_app_assets/ic-user-plus.svg" alt="">Add ' + m.email + '</button>'
+        : '<button data-i="' + i + '" onclick="pickSuggest(' + i + ')">'
+          + '<span class="share-avatar" style="width:22px;height:22px;font-size:11px;background:#e8c39a">'
+          + initialOf(m.name) + '</span>'
+          + '<span>' + m.name + '</span><span class="s-sub">' + m.email + '</span></button>').join('');
+      box._list = list;
+      box.classList.add('open');
+      suggestIndex = -1;
+    }
+
+    function pickSuggest(i) {
+      const box = document.getElementById('shareSuggest');
+      const m = (box._list || [])[i];
+      if (!m) return;
+      pending.push({ name: m.name || '', email: m.email });
+      document.getElementById('shareInput').value = '';
+      hideSuggest();
+      renderShare();
+      document.getElementById('shareInput').focus();
+    }
+
+    function submitShare() {
+      // Sweep up an address the user typed but never turned into a chip.
+      const typed = document.getElementById('shareInput').value.trim();
+      if (isEmail(typed) && !pending.some(p => p.email === typed)
+          && !shareNote.share.people.some(p => p.email === typed) && typed !== ME.email) {
+        pending.push({ name: '', email: typed });
+      }
+      if (!pending.length) return;
+      pending.forEach(p => shareNote.share.people.push({ name: p.name || '', email: p.email }));
+      const n = pending.length;
+      pending = [];
+      document.getElementById('shareInput').value = '';
+      hideSuggest();
+      renderShare();
+      showToast(n === 1 ? 'Invite sent' : n + ' invites sent');
+    }
+
+    /* ── Link access ── */
+    function toggleAccessMenu(e) {
+      e.stopPropagation();
+      const menu = document.getElementById('shareAccessMenu');
+      const open = menu.classList.toggle('open');
+      document.getElementById('shareAccessBtn').classList.toggle('on', open);
+    }
+    function closeAccessMenu() {
+      document.getElementById('shareAccessMenu').classList.remove('open');
+      document.getElementById('shareAccessBtn').classList.remove('on');
+    }
+    function setAccess(kind) {
+      shareNote.share.access = kind;
+      closeAccessMenu();
+      renderShare();
+      showToast(kind === 'link' ? 'Anyone with the link can view' : 'Only invited people can open this');
+    }
+
+    function copyShareLink() {
+      const url = 'https://app.titan.email/recap/notes/' + (NOTES.indexOf(shareNote) + 1);
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(url).catch(() => {});
+      }
+      const note = shareNote;
+      showToast('Link copied', { label: 'Open as recipient', run: () => openAsRecipient(note) });
+    }
+
+    /* ── What the client sees (share.html, Figma 5285:20612) ─────────────────
+       A recipient has no account to look the note up in, so the link carries
+       the note with it. Same reason the rest of the prototype hands over by
+       query param: there is no server behind any of this. */
+    function openAsRecipient(note) {
+      if (!note) return;
+      const d = note.detail || {};
+      const q = new URLSearchParams({
+        title: note.title,
+        when: shareWhen(note),
+        brand: SENDER.brand,
+        by: 'Shared by ' + SENDER.by,
+        summary: d.summary || ('<h3>' + note.title + '</h3><ul><li>' + note.overview + '</li></ul>')
+      });
+      window.open('share.html?' + q.toString(), '_blank');
+    }
+
+    // The sender's own branding travels with the link — that is the point of
+    // the page. Ella's account, so Ella's company.
+    const SENDER = { brand: 'Avontech Labs', by: 'Ella' };
+
+    // The share page states the note's date in full, not "Friday".
+    function shareWhen(note) {
+      const t = (note.time || '').toUpperCase().replace(' ', ' ');
+      const d = (note.date || '').replace(',', '');
+      return d + ' • ' + t;
+    }
+
+    (function wireShareInput() {
+      const input = document.getElementById('shareInput');
+      input.addEventListener('input', () => {
+        renderSuggest();
+        document.getElementById('btnShareSend').disabled = !canShare();
+      });
+      input.addEventListener('keydown', (e) => {
+        const box = document.getElementById('shareSuggest');
+        const rows = [...box.querySelectorAll('button')];
+        if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+          if (!rows.length) return;
+          e.preventDefault();
+          suggestIndex = (suggestIndex + (e.key === 'ArrowDown' ? 1 : -1) + rows.length) % rows.length;
+          rows.forEach((r, i) => r.classList.toggle('sel', i === suggestIndex));
+        } else if (e.key === 'Enter') {
+          e.preventDefault();
+          if (suggestIndex >= 0) pickSuggest(suggestIndex);
+          else if (rows.length) pickSuggest(0);
+          else if (pending.length) submitShare();
+        } else if (e.key === 'Backspace' && !input.value && pending.length) {
+          removePending(pending.length - 1);
+        }
+      });
+      // Clicking inside the modal but outside the menus closes them.
+      document.getElementById('shareModal').addEventListener('click', (e) => {
+        if (!e.target.closest('.share-access-left')) closeAccessMenu();
+        if (!e.target.closest('.share-field-wrap')) hideSuggest();
+      });
+    })();
+
+    /* ── Row overflow menu ── */
+    let menuRow = null;
+
+    function openRowMenu(e, i) {
+      e.stopPropagation();
+      const menu = document.getElementById('rowMenu');
+      if (menuRow === i && menu.classList.contains('open')) return closeRowMenu();
+      menuRow = i;
+      menu.classList.add('open');
+      // Anchored under the button, flipping up when there is no room below.
+      const r = e.currentTarget.getBoundingClientRect();
+      const h = menu.offsetHeight;
+      const w = menu.offsetWidth;
+      const below = window.innerHeight - r.bottom;
+      menu.style.left = Math.max(8, Math.min(r.right - w, window.innerWidth - w - 8)) + 'px';
+      menu.style.top = (below > h + 12 ? r.bottom + 6 : r.top - h - 6) + 'px';
+    }
+
+    function closeRowMenu() {
+      document.getElementById('rowMenu').classList.remove('open');
+      menuRow = null;
+    }
+
+    document.addEventListener('click', (e) => {
+      const menu = document.getElementById('rowMenu');
+      if (menu.classList.contains('open') && !menu.contains(e.target)) closeRowMenu();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key !== 'Escape') return;
+      if (document.getElementById('shareModal').classList.contains('open')) {
+        const menu = document.getElementById('shareAccessMenu');
+        const sug = document.getElementById('shareSuggest');
+        if (menu.classList.contains('open')) return closeAccessMenu();
+        if (sug.classList.contains('open')) return hideSuggest();
+        return closeShare();
+      }
+      closeRowMenu();
+      hideToast();
+    });
+
+    function menuAction(kind) {
+      const i = menuRow;
+      const note = NOTES[i];
+      closeRowMenu();
+      if (!note) return;
+
+      if (kind === 'copy') {
+        const url = 'https://app.titan.email/recap/notes/' + (i + 1);
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(url).catch(() => {});
+        }
+        showToast('Link copied', { label: 'Open as recipient', run: () => openAsRecipient(note) });
+      } else if (kind === 'share') {
+        openShare(note);
+      } else if (kind === 'audio') {
+        // The recording lives in Drive, in the folder Recap writes calls to.
+        window.open('drive.html?folder=recordings', '_blank');
+      } else if (kind === 'report') {
+        showToast('Reported');
+      } else if (kind === 'delete') {
+        // The design plan asks for a confirmation with an undo window here,
+        // not a blocking confirm dialog.
+        const at = NOTES.indexOf(note);
+        NOTES.splice(at, 1);
+        if (activeIndex >= NOTES.length) activeIndex = Math.max(0, NOTES.length - 1);
+        renderList();
+        renderCard();
+        showToast('Note deleted', {
+          label: 'Undo',
+          run: () => {
+            NOTES.splice(at, 0, note);
+            renderList();
+            renderCard();
+          }
+        });
+      }
+    }
+
+    function renderActionItems() {
+      const host = document.getElementById('actionItems');
+      const groups = detail().actionGroups;
+      const btn = document.getElementById('btnAddAll');
+
+      // Some notes carry no action items — a short call, or a standup. Say so
+      // rather than showing an empty card.
+      if (!groups.length) {
+        host.innerHTML = '<div class="action-empty">No action items in this note.</div>';
+        btn.disabled = true;
+        return;
+      }
+
+      let n = 0;
+      host.innerHTML = groups.map(group => `
+        <div class="action-group">
+          <div class="action-group-rule"></div>
+          <div class="action-list">
+            ${group.map(text => {
+              const i = n++;
+              const added = isAdded(text);
+              return `<button class="action-row${added ? ' added' : ''}" data-i="${i}"
+                        onclick="addToTasks(${i})"${added ? ' aria-disabled="true"' : ''}>
+                        <span class="action-box${added ? '' : ' tt'}"${added ? '' : ' data-tip="Add to tasks"'}></span>
+                        <span class="action-row-text">${text}</span>
+                      </button>`;
+            }).join('')}
+          </div>
+        </div>`).join('');
+
+      btn.disabled = allActions().every(isAdded);
+    }
+
+    const allActions = () => detail().actionGroups.flat();
+
+    // Clicking an item sends it to Tasks: the box ticks and a toast confirms.
+    // Adding is idempotent — a second click will not duplicate the task.
+    function addToTasks(i) {
+      const text = allActions()[i];
+      if (isAdded(text)) return;
+      TASKS.push({ note: openNoteObj, text });
+      bridgeTasks(openNoteObj, [text]);
+      renderActionItems();
+      showToast('Added to tasks');
+    }
+
+    function addAllToTasks() {
+      const pending = allActions().filter(t => !isAdded(t));
+      if (!pending.length) return;
+      pending.forEach(text => TASKS.push({ note: openNoteObj, text }));
+      bridgeTasks(openNoteObj, pending);
+      renderActionItems();
+      showToast(pending.length === 1
+        ? 'Added to tasks'
+        : `${pending.length} action items added to tasks`);
+    }
+
+    function renderPane(tab) {
+      const pane = document.getElementById('detailPane');
+      if (tab === 'summary') pane.innerHTML = detail().summary;
+      else if (tab === 'thoughts') pane.innerHTML = detail().thoughts;
+      else pane.innerHTML = detail().transcript.map(([who, time, said]) => `
+        <div class="transcript-turn">
+          <span class="transcript-who">${who}</span>
+          <span class="transcript-time">${time}</span>
+          <span class="transcript-said">${said}</span>
+        </div>`).join('');
+    }
+
+    document.getElementById('detailTabs').addEventListener('click', (e) => {
+      const btn = e.target.closest('.detail-tab');
+      if (!btn) return;
+      document.querySelectorAll('.detail-tab').forEach(b => b.classList.toggle('active', b === btn));
+      renderPane(btn.dataset.tab);
+    });
+
+    function openNote(i) {
+      const note = NOTES[i];
+      if (!note || !note.detail) return;
+      openNoteObj = note;
+      closeRowMenu();
+      document.getElementById('detailTitle').textContent = NOTES[i].title;
+      document.querySelectorAll('.detail-tab').forEach(b =>
+        b.classList.toggle('active', b.dataset.tab === 'summary'));
+      renderPane('summary');
+      renderActionItems();
+      document.getElementById('viewList').hidden = true;
+      document.getElementById('viewDetail').hidden = false;
+      document.title = NOTES[i].title + ' — Titan Recap';
+      window.scrollTo(0, 0);
+    }
+
+    /* ══════════════════════════════════════════════════════════════════════
+       Recording a note (New note)
+       The same surface as the call sidebar, but with nothing attached: the
+       title starts empty and belongs to the user, the transcript streams, and
+       Done turns what was captured into a note and opens it.
+       ══════════════════════════════════════════════════════════════════════ */
+    const REC_SCRIPT = [
+      ['s1', 'Right, shall we start with where the migration actually stands?'],
+      ['you', 'Yes. The staging cut is done, but the interface tests are still red.'],
+      ['s3', 'Red on which side — the warehouse feed or the ERP write-back?'],
+      ['you', 'Write-back. Three fields come through null when the batch runs late.'],
+      ['s1', 'That is the same failure we saw in November, then.'],
+      ['s3', 'It is. Nobody has owned that job since Marcus moved teams.'],
+      ['you', 'Then that is the first thing to fix — an owner, before any more scope.'],
+      ['s1', 'Agreed. I can take it to the steering group on Thursday.'],
+      ['you', 'Good. I will write up the three fields and what we think causes the nulls.'],
+      ['s3', 'And I will get read access to the interface logs sorted this week.'],
+      ['s1', 'Anything else before we wrap?'],
+      ['you', 'No — let us hold the scope where it is until the audit lands.']
+    ];
+    const REC_SPEAKERS = { s1: 'Speaker 1', you: 'Speaker 2', s3: 'Speaker 3' };
+
+    const REC = { on: false, paused: false, idx: 0, secs: 0, tick: null,
+                  line: null, partial: null, thoughts: [] };
+
+    const recClock = (t) => String(Math.floor(t / 60)).padStart(2, '0')
+      + ':' + String(t % 60).padStart(2, '0');
+
+    function openRec() {
+      if (REC.on) return;
+      REC.on = true; REC.paused = false; REC.idx = 0; REC.secs = 0;
+      REC.thoughts = [];
+      document.getElementById('recName').textContent = '';
+      document.getElementById('recFeed').innerHTML = '';
+      document.getElementById('recNotes').innerHTML = '';
+      document.getElementById('recInput').textContent = '';
+      document.getElementById('recTimer').textContent = '00:00';
+      document.getElementById('recLabel').textContent = 'Recording';
+      document.getElementById('rec').classList.remove('paused');
+      document.getElementById('rec').classList.add('open');
+      // The title is the first thing to write, so it takes focus.
+      setTimeout(() => document.getElementById('recName').focus(), 380);
+      REC.tick = setInterval(() => {
+        if (REC.paused) return;
+        REC.secs++;
+        document.getElementById('recTimer').textContent = recClock(REC.secs);
+      }, 1000);
+      REC.line = setTimeout(recNextLine, 900);
+    }
+
+    function closeRec() {
+      REC.on = false;
+      clearInterval(REC.tick); clearTimeout(REC.line);
+      document.getElementById('rec').classList.remove('open');
+    }
+
+    function recPause() {
+      REC.paused = !REC.paused;
+      const el = document.getElementById('rec');
+      el.classList.toggle('paused', REC.paused);
+      document.getElementById('recLabel').textContent = REC.paused ? 'Paused' : 'Recording';
+      document.getElementById('recPauseBtn').innerHTML = REC.paused
+        ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M6 4l14 8-14 8z"/></svg>'
+        : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></svg>';
+      document.getElementById('recPauseBtn').title = REC.paused ? 'Resume' : 'Pause';
+      if (!REC.paused) REC.line = setTimeout(recNextLine, 400);
+    }
+
+    function recLineEl(sp, text, at, partial) {
+      const el = document.createElement('p');
+      el.className = 'rec-line' + (partial ? ' partial' : '');
+      el.setAttribute('data-sp', sp);
+      el.innerHTML = '<span class="rec-line-head"><span class="rec-av">'
+        + esc((REC_SPEAKERS[sp] || '?').slice(-1)) + '</span>'
+        + '<span class="rec-who">' + esc(REC_SPEAKERS[sp]) + '</span>'
+        + '<span class="rec-stamp">' + at + '</span></span>'
+        + '<span class="rec-body"></span>';
+      el.querySelector('.rec-body').textContent = text;
+      return el;
+    }
+
+    // Words appear as they are said, the same reveal the call sidebar uses.
+    function recNextLine() {
+      if (!REC.on || REC.paused) return;
+      if (REC.idx >= REC_SCRIPT.length) { REC.idx = 0; }
+      const [sp, text] = REC_SCRIPT[REC.idx];
+      const feed = document.getElementById('recFeed');
+      const el = recLineEl(sp, '', recClock(REC.secs), true);
+      feed.appendChild(el);
+      feed.scrollTop = feed.scrollHeight;
+      REC.partial = el;
+
+      let cursor = 0;
+      const step = () => {
+        if (!REC.on || REC.paused) return;
+        cursor += 3;
+        el.querySelector('.rec-body').textContent = text.slice(0, cursor);
+        feed.scrollTop = feed.scrollHeight;
+        if (cursor < text.length) { REC.line = setTimeout(step, 62); return; }
+        el.classList.remove('partial');
+        REC.partial = null;
+        REC.idx++;
+        REC.line = setTimeout(recNextLine, 320 + Math.random() * 260);
+      };
+      REC.line = setTimeout(step, 62);
+    }
+
+    document.getElementById('recInput').addEventListener('keydown', function (e) {
+      if (e.key !== 'Enter') return;
+      e.preventDefault();
+      const text = this.textContent.trim();
+      if (!text) return;
+      REC.thoughts.push(text);
+      const row = document.createElement('div');
+      row.className = 'rec-note';
+      row.textContent = text;
+      document.getElementById('recNotes').appendChild(row);
+      this.textContent = '';
+    });
+
+    /* Done turns the capture into a note: a summary built from what was said,
+       the transcript as recorded, and whatever was typed under My thoughts. */
+    function recDone() {
+      const said = REC_SCRIPT.slice(0, Math.max(4, REC.idx));
+      const title = (document.getElementById('recName').textContent || '').trim() || 'Untitled';
+      const now = new Date(2026, 7, 28, 17, 1);
+      const hh = now.getHours() % 12 || 12;
+      const time = hh + ':' + String(now.getMinutes()).padStart(2, '0') + ' pm';
+
+      const line = (i) => said[i] ? said[i][1] : '';
+      const note = {
+        title,
+        date: 'Aug 28, 2026',
+        time,
+        when: 'Friday • ' + time,
+        overview: 'Captured live in Recap. ' + esc(line(0)) + ' ' + esc(line(1))
+      };
+      note.detail = {
+        summary: '<h3>What was discussed</h3><ul>'
+          + said.map(([sp, t]) => '<li><b>' + esc(REC_SPEAKERS[sp]) + '</b> ' + esc(t) + '</li>').join('')
+          + '</ul>'
+          + '<h3>Next Steps</h3><ul>'
+          + '<li>Find an owner for the nightly batch job before any more scope lands</li>'
+          + '<li>Write up the three fields that come through null and the likely cause</li>'
+          + '<li>Get read access to the interface logs this week</li>'
+          + '</ul>'
+          + '<h3>Decisions Made</h3><ul>'
+          + '<li>Scope holds where it is until the audit lands</li>'
+          + '</ul>',
+        thoughts: REC.thoughts.length
+          ? '<ul>' + REC.thoughts.map(t => '<li>' + esc(t) + '</li>').join('') + '</ul>'
+          : '<p class="muted">Nothing was jotted down during this one.</p>',
+        transcript: said.map(([sp, t], i) => [REC_SPEAKERS[sp], recClock(i * 7 + 2), t]),
+        actionGroups: [
+          ['Find an owner for the nightly batch job'],
+          ['Write up the three null fields and the likely cause'],
+          ['Get read access to the interface logs']
+        ]
+      };
+
+      closeRec();
+      NOTES.unshift(note);
+      renderList();
+      openNote(0);
+      showToast('Note created');
+    }
+
+    /* Draft a reply — hands the note to the mail app, which opens the sent
+       thread, opens the reply composer and writes a response from the meeting.
+       Query params rather than storage: file:// origins cannot be relied on. */
+    function draftReply() {
+      if (!openNoteObj) return;
+      const d = openNoteObj.detail || {};
+      const strip = (html) => String(html || '').replace(/<[^>]*>/g, '');
+      const items = (d.actionGroups || []).flat().map(a => strip(a.text || a)).slice(0, 4);
+      const q = new URLSearchParams({
+        draftReply: openNoteObj.title || 'Meeting notes',
+        when: openNoteObj.when || openNoteObj.date || '',
+        summary: strip(openNoteObj.overview).slice(0, 400),
+        items: items.join(' | ').slice(0, 600)
+      });
+      window.open('index.html?' + q.toString(), '_blank');
+    }
+
+    function closeNote() {
+      document.getElementById('viewDetail').hidden = true;
+      document.getElementById('viewList').hidden = false;
+      document.title = 'Titan Recap';
+      window.scrollTo(0, 0);
+    }
+
+    function copyNote() {
+      const text = document.getElementById('detailPane').innerText;
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).catch(() => {});
+      }
+      showToast('Copied');
+    }
+
+
+    /* ══════════════════════════════════════════════════════════════════════
+       Arriving from a live call. live-call.html opens
+       recap.html?from=call&dur=…&thoughts=… so the write-up carries the real
+       duration and whatever the user typed in My thoughts during the call.
+       ══════════════════════════════════════════════════════════════════════ */
+    const CALL_NOTE = {
+      title: 'Northwind Logistics — Discovery call',
+      date: 'Sep 10, 2026', time: '128 KB',
+      when: 'Thursday • 4:00 pm',
+      overview: 'Northwind lose order processing every peak season because the warehouse system talks to their ERP through a nightly batch job nobody owns. Agreed a three-week interface assessment on staging, fixed fee, with a readiness review before any migration. <span class="mention">Priya Raman</span> takes it to the board once the proposal is in writing.',
+      detail: {
+        summary: `
+          <h3>Where It Hurts</h3>
+          <ul>
+            <li>Warehouse system is on-prem and falls over every peak season — about six hours of order processing lost last November</li>
+            <li>Four distribution centres affected: two up north, two near the port</li>
+            <li>The integration to the ERP is a nightly batch job written in 2019, and nobody owns it</li>
+          </ul>
+          <h3>What We Proposed</h3>
+          <ul>
+            <li>Three-week interface assessment first, then a readiness review before any migration</li>
+            <li>Staging access is enough to start; no production access needed</li>
+            <li>Needs read access to the interface logs and an hour with whoever runs the batch — <b>Speaker 3</b>'s team</li>
+          </ul>
+          <h3>Decisions Made</h3>
+          <ul>
+            <li>Assessment goes in writing as a fixed fee this week</li>
+            <li>Eighteen months of logs is enough; the focus is the peak-season failures in November and late December</li>
+            <li><b>Speaker 1</b> takes the proposal to the board, then we reconvene</li>
+          </ul>`,
+        transcript: [],       // filled from the live call script below
+        actionGroups: [
+          ['Put the fixed-fee assessment in writing this week',
+           'Send the staging access list with the proposal'],
+          ['Book an hour with whoever runs the nightly batch job'],
+          ['Take the proposal to the board, then reconvene']
+        ]
+      }
+    };
+
+    // The same script the call played, so the transcript on this page is the
+    // one the user just watched being captured.
+    const CALL_TRANSCRIPT = [
+      ['Speaker 1', '00:04', "Thanks for making time, Ella. Daniel's joining us from the platform side."],
+      ['Speaker 2', '00:12', 'Good to meet you, Daniel. Shall we start with where the current system hurts most?'],
+      ['Speaker 3', '00:21', 'The warehouse system is on-prem, and it falls over every peak season.'],
+      ['Speaker 1', '00:29', 'Last November we lost about six hours of order processing.'],
+      ['Speaker 2', '00:36', 'Six hours across how many sites?'],
+      ['Speaker 3', '00:40', 'Four distribution centres. Two up north, two near the port.'],
+      ['Speaker 2', '00:48', 'And who owns the integration between that system and the ERP today?'],
+      ['Speaker 3', '00:56', "Nobody, honestly. It's a nightly batch job someone wrote in 2019."],
+      ['Speaker 1', '01:04', "That's the part the board keeps asking about."],
+      ['Speaker 2', '01:09', "That's usually where the risk sits. I'd want to audit those interfaces first."],
+      ['Speaker 1', '01:18', 'How long would an audit take?'],
+      ['Speaker 2', '01:22', 'Three weeks for the assessment, then a readiness review before any migration.'],
+      ['Speaker 3', '01:31', 'Would you need production access, or is staging enough?'],
+      ['Speaker 2', '01:38', "Staging is enough to start. I'll send the access list with the proposal."],
+      ['Speaker 3', '01:46', 'And what would you need from us during those three weeks?'],
+      ['Speaker 2', '01:52', 'Read access to the interface logs, and an hour with whoever runs the batch.'],
+      ['Speaker 1', '02:00', "That would be Daniel's team."],
+      ['Speaker 3', '02:04', 'We can make that work. The logs go back about eighteen months.'],
+      ['Speaker 2', '02:12', 'Eighteen months is plenty. I mainly want to see the failures around peak.'],
+      ['Speaker 1', '02:20', 'November and the last week of December, mostly.'],
+      ['Speaker 2', '02:27', "Then that's where I'll start. And the budget range we talked about still holds?"],
+      ['Speaker 1', '02:35', "It does on our side. Put the fixed-fee assessment in writing and I'll take it to the board."],
+      ['Speaker 2', '02:45', "I'll have it with you this week."],
+      ['Speaker 1', '02:49', "Perfect. Let's reconvene once the board has seen it."]
+    ];
+
+
+    /* ══════════════════════════════════════════════════════════════════════
+       Arriving from the calendar. `View notes` on a past event opens
+       recap.html?note=<title>&date=…&when=…&dur=… and this builds that
+       meeting's own detail page — summary, transcript and my thoughts, the
+       same shape as every other note.
+       ══════════════════════════════════════════════════════════════════════ */
+    /* Notes for the calendar's meetings, keyed by event title. Anything not
+       listed still opens — it falls back to a note built from the URL. */
+    const MEETING_NOTES = {
+      'Ignite 2026': {
+        overview: 'Run-through for the keynote track. Running order is agreed; two demos are still unconfirmed and the cut-off for slides is Thursday.',
+        summary: `
+          <h3>Running Order</h3>
+          <ul>
+            <li>Keynote opens, then the platform demo, then partners — the partner slot moved earlier so it does not land after lunch</li>
+            <li>Two demos still unconfirmed: the mobile build and the AI Write refresh</li>
+          </ul>
+          <h3>Open Risks</h3>
+          <ul>
+            <li>Slides cut-off is Thursday. Anything later does not go in the deck</li>
+            <li><b>Speaker 2</b> flagged the room only has one confidence monitor, so presenters cannot rely on notes</li>
+          </ul>
+          <h3>Decisions Made</h3>
+          <ul>
+            <li>Partner slot moves before lunch</li>
+            <li>Any demo not confirmed by Thursday is cut rather than rehearsed late</li>
+          </ul>`,
+        transcript: [
+          ['Speaker 1', '00:03', 'Order as it stands: keynote, platform demo, then partners.'],
+          ['Speaker 2', '00:11', 'Partners after lunch is a graveyard slot. Half the room walks.'],
+          ['Speaker 1', '00:18', 'Then we move them before lunch and push the platform demo back.'],
+          ['Speaker 3', '00:26', 'Which demos are actually confirmed?'],
+          ['Speaker 1', '00:30', 'Keynote is. Mobile and the AI Write refresh are not.'],
+          ['Speaker 3', '00:37', 'I can chase both this week.'],
+          ['Speaker 2', '00:41', "If they are not confirmed by Thursday we cut them. I am not rehearsing something that lands Friday."],
+          ['Speaker 1', '00:50', 'Agreed. Thursday is the cut-off for slides too.'],
+          ['Speaker 2', '00:56', 'One more thing — there is only one confidence monitor in that room.'],
+          ['Speaker 3', '01:02', 'So nobody presents off notes. Worth telling people now.']
+        ],
+        thoughts: ['Moving partners before lunch is the right call — that slot has killed two of these already.',
+                   'We should tell presenters about the single monitor this week, not on the day.'],
+        actionGroups: [['Chase confirmation on the mobile and AI Write demos'],
+                       ['Hold Thursday as the hard cut-off for slides'],
+                       ['Warn presenters there is only one confidence monitor']]
+      },
+
+      'Hackathon — build week': {
+        overview: 'Kick-off for build week. Teams picked their tracks and judging criteria were settled before people scattered.',
+        summary: `
+          <h3>Tracks</h3>
+          <ul>
+            <li>Four teams, four tracks: search, notifications, mobile offline, and one open slot</li>
+            <li>The open slot went to whoever wanted it rather than being assigned</li>
+          </ul>
+          <h3>Judging</h3>
+          <ul>
+            <li>Judged on whether it works, not on how it looks — a rough thing that runs beats a polished mock</li>
+            <li>Five minutes per team, live, no slides</li>
+          </ul>
+          <h3>Decisions Made</h3>
+          <ul>
+            <li>Demos are live only. No slideware</li>
+            <li>Anything shipped during the week counts, even if it is not the team's track</li>
+          </ul>`,
+        transcript: [
+          ['Speaker 1', '00:05', 'Four tracks. Search, notifications, mobile offline, and one open.'],
+          ['Speaker 3', '00:13', 'Who takes the open one?'],
+          ['Speaker 1', '00:16', 'Whoever wants it. I would rather not assign that one.'],
+          ['Speaker 2', '00:22', 'How are we judging?'],
+          ['Speaker 1', '00:25', 'Does it work. That is the bar.'],
+          ['Speaker 2', '00:29', 'Not how it looks?'],
+          ['Speaker 1', '00:31', 'A rough thing that runs beats a polished mock. Every time.'],
+          ['Speaker 3', '00:38', 'Five minutes each, live, no slides.'],
+          ['Speaker 1', '00:43', 'And anything you ship this week counts, even off-track.']
+        ],
+        thoughts: ['Live-only demos will hurt on the day and be worth it. Slideware always wins the room and teaches nothing.'],
+        actionGroups: [['Book the room for Friday demos'], ['Circulate the judging bar before Monday']]
+      },
+
+      'Design review': {
+        overview: 'Walked the dark palette across the composer and reply surfaces. Two icons were inverting instead of lifting, so they read as holes.',
+        summary: `
+          <h3>Bugs Found</h3>
+          <ul>
+            <li>Two toolbar icons invert instead of lifting, so on the dark ground they read as holes rather than glyphs</li>
+            <li>The paused capture state is distinguishable by colour alone — same icon, same position, only the fill changes</li>
+          </ul>
+          <h3>Decisions Made</h3>
+          <ul>
+            <li>Dark icons use brightness(1.15) to reach #9c9c9c, never invert()</li>
+            <li>No state is ever distinguished by colour alone</li>
+          </ul>`,
+        transcript: [
+          ['Speaker 1', '00:04', 'Composer in dark. Look at the toolbar.'],
+          ['Speaker 2', '00:09', 'They look like holes.'],
+          ['Speaker 1', '00:12', 'They are being inverted. Invert a mid grey and you get another mid grey, then darker.'],
+          ['Speaker 2', '00:20', 'Brightness instead.'],
+          ['Speaker 1', '00:23', 'One point one five gets us to 9c, which is what the rest of the app uses.'],
+          ['Speaker 3', '00:31', 'And the paused state? How do I know it is paused?'],
+          ['Speaker 2', '00:37', 'The dot changes colour. That is all.'],
+          ['Speaker 3', '00:41', 'That fails for anyone who cannot separate those two. It needs a shape change and a label.']
+        ],
+        thoughts: ['Colour-only states keep getting through review because they look fine to whoever built them.',
+                   'The rule needs to live somewhere enforceable, not in someone’s memory.'],
+        actionGroups: [['Re-export both toolbar icons at #9c9c9c'],
+                       ['Give the paused state a hollow dot, a stopped timer and a label'],
+                       ['Audit every remaining invert() in the dark palette']]
+      },
+
+      'Demo - Prj-Text Editor': {
+        overview: 'Demoed the editor changes. Formatting persistence still fails on paste, which is going back for a fix before this ships.',
+        summary: `
+          <h3>What We Saw</h3>
+          <ul>
+            <li>Inline formatting, lists and links all hold on a normal edit</li>
+            <li>Paste from an external document drops the formatting entirely</li>
+          </ul>
+          <h3>Decisions Made</h3>
+          <ul>
+            <li>Paste handling goes back for a fix; the rest is accepted</li>
+            <li>Ship behind a flag so the paste path can be turned off if it regresses</li>
+          </ul>`,
+        transcript: [
+          ['Speaker 1', '00:06', 'Bold, lists, links — all holding.'],
+          ['Speaker 2', '00:12', 'Try pasting something in from a doc.'],
+          ['Speaker 1', '00:17', 'Formatting is gone.'],
+          ['Speaker 2', '00:20', 'All of it?'],
+          ['Speaker 1', '00:22', 'Plain text. It strips everything.'],
+          ['Speaker 3', '00:26', 'That is most of how people fill a composer.'],
+          ['Speaker 2', '00:31', 'Then paste goes back. The rest is fine.'],
+          ['Speaker 3', '00:36', 'Behind a flag, so we can pull the paste path if it regresses.']
+        ],
+        thoughts: ['Paste is how most people actually put text in a composer. Shipping without it would have been embarrassing.'],
+        actionGroups: [['Fix formatting persistence on external paste'], ['Put the paste path behind a flag']]
+      },
+
+      'Titan onboarding': {
+        overview: 'Walked new joiners through account setup and the shared calendars. Two follow-ups on access.',
+        summary: `
+          <h3>Covered</h3>
+          <ul>
+            <li>Account setup, shared calendars, and how the app switcher works</li>
+            <li>Where notes land, and that nothing is captured without turning it on</li>
+          </ul>
+          <h3>Follow-ups</h3>
+          <ul>
+            <li>Two joiners are missing calendar access</li>
+            <li>The onboarding doc still references the old settings path</li>
+          </ul>`,
+        transcript: [
+          ['Speaker 1', '00:04', 'Start with the switcher — everything hangs off that.'],
+          ['Speaker 2', '00:10', 'Where do the call notes end up?'],
+          ['Speaker 1', '00:14', 'The Recap app. And nothing is captured unless you turn it on for that call.'],
+          ['Speaker 3', '00:22', 'I cannot see the shared calendars.'],
+          ['Speaker 1', '00:26', 'You are missing access. I will sort that today.'],
+          ['Speaker 2', '00:31', 'The doc sent me to the wrong settings page, by the way.'],
+          ['Speaker 1', '00:36', 'It is out of date. I will fix the path.']
+        ],
+        thoughts: ['Onboarding doc is stale in at least one place, which means it is probably stale in others. Worth a proper pass.'],
+        actionGroups: [['Grant calendar access to the two joiners'], ['Fix the settings path in the onboarding doc']]
+      },
+
+      'Dwight & Ella 1:1': {
+        overview: 'One-to-one. Covered the next two weeks and the interface audit findings.',
+        summary: `
+          <h3>Workload</h3>
+          <ul>
+            <li>Two weeks is realistic for the audit write-up if nothing else lands on top</li>
+            <li>Review load is the pressure point, not the build work</li>
+          </ul>
+          <h3>Decisions Made</h3>
+          <ul>
+            <li>Nothing new gets added before the write-up is out</li>
+            <li>Thursday afternoons stay blocked for review</li>
+          </ul>`,
+        transcript: [
+          ['Speaker 1', '00:03', 'How is the next fortnight looking?'],
+          ['Speaker 2', '00:07', 'Fine if nothing else lands on top of the audit write-up.'],
+          ['Speaker 1', '00:13', 'Is the build work the problem?'],
+          ['Speaker 2', '00:16', 'No, reviews are. They stack at the end of the week and then it is all review, no build.'],
+          ['Speaker 1', '00:24', 'Thursday afternoons stay blocked then.'],
+          ['Speaker 2', '00:28', 'That would help. And nothing new before the write-up is out.'],
+          ['Speaker 1', '00:34', 'Agreed.']
+        ],
+        thoughts: ['Worth protecting the Thursday block when someone inevitably asks for it.'],
+        actionGroups: [['Hold the write-up as the only commitment for two weeks'], ['Keep Thursday afternoons blocked']]
+      },
+
+      'Team catch-up': {
+        overview: 'General catch-up. Leave dates shared and the on-call rota confirmed.',
+        summary: `
+          <h3>Covered</h3>
+          <ul>
+            <li>Leave dates for the next month, and the gap in the last week of September</li>
+            <li>On-call rota confirmed through October</li>
+          </ul>`,
+        transcript: [
+          ['Speaker 1', '00:03', 'Anyone off in the next month?'],
+          ['Speaker 3', '00:06', 'Last week of September, both of us.'],
+          ['Speaker 1', '00:11', 'That leaves a gap. I will cover it.'],
+          ['Speaker 2', '00:16', 'Rota is confirmed through October otherwise.']
+        ],
+        thoughts: ['The late-September gap is the only real risk here.'],
+        actionGroups: [['Cover the on-call gap in the last week of September']]
+      },
+
+      'Northwind Logistics — scope walkthrough': {
+        overview: 'Walked Priya and Daniel through the revised scope ahead of the board. Fixed fee confirmed, and the access list goes over on Monday.',
+        summary: `
+          <h3>Scope</h3>
+          <ul>
+            <li>Three-week interface assessment on staging, then a readiness review before any migration</li>
+            <li>Fixed fee confirmed; no change from the figure discussed on the discovery call</li>
+          </ul>
+          <h3>Next</h3>
+          <ul>
+            <li>Access list goes over Monday so their team can prepare</li>
+            <li><b>Speaker 1</b> takes it to the board on Monday afternoon</li>
+          </ul>`,
+        transcript: [
+          ['Speaker 1', '00:04', 'This is the version going to the board?'],
+          ['Speaker 2', '00:08', 'Three weeks on staging, then the readiness review. Fixed fee, same figure.'],
+          ['Speaker 3', '00:16', 'And what do we need to have ready?'],
+          ['Speaker 2', '00:20', 'Read access to the interface logs and an hour with whoever runs the batch.'],
+          ['Speaker 3', '00:27', 'Send the access list and I will get it moving.'],
+          ['Speaker 2', '00:32', 'Monday.'],
+          ['Speaker 1', '00:34', 'Board is Monday afternoon. That works.']
+        ],
+        thoughts: ['They did not push on the fee, which suggests the framing landed.'],
+        actionGroups: [['Send the staging access list on Monday'], ['Follow up after the board meeting']]
+      }
+    };
+
+    // Short meetings that are honestly thin, rather than padded out.
+    const THIN_NOTES = {
+      'Stand up - Prj-[Mobile] App': 'Status round on the mobile build. Nothing blocked.',
+      'Stand up - Prj-Notifications': 'Notifications work is waiting on permission copy before it can ship.',
+      'Stand up': 'Status round. Nothing decided.',
+      'Design sync': 'Quick alignment on the review queue and who covers which surface this week.',
+      'Daily triage': 'Ran the incoming queue: three issues assigned, one closed as expected behaviour.',
+      'Titan review': 'Reviewed the last cycle against the plan and picked two things to carry forward.',
+      'Sync': 'Short sync. Nothing decided.',
+      'Weekly wrap': 'End-of-week round-up. No decisions taken.',
+      '(No Title)': 'A short call with no agenda set. Nothing was decided.',
+      'Busy': 'This time was held as busy, so there is nothing to write up.'
+    };
+
+    // recap.html had no escaping helper of its own; the calendar intake needs
+    // one for the titles and copy it renders.
+    const esc = (v) => String(v == null ? '' : v)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+
+    function intakeFromCalendar() {
+      const q = new URLSearchParams(location.search);
+      const title = q.get('note');
+      if (!title) return;
+
+      const m = MEETING_NOTES[title];
+      const thin = THIN_NOTES[title];
+      const when = (q.get('when') || '') + (q.get('dur') ? ' • ' + q.get('dur') : '');
+      const dateLabel = prettyDate(q.get('date'));
+
+      // A meeting with real content gets the full write-up. A short one gets
+      // an honest short note. Anything unknown still opens, using the
+      // placeholder line rather than inventing a summary.
+      const overview = m ? m.overview
+        : (thin || 'The conversation covered the main agenda points discussed by attendees, along with any updates, decisions, or concerns raised along the way.');
+
+      const detail = m ? {
+        summary: m.summary,
+        transcript: m.transcript,
+        actionGroups: m.actionGroups,
+        thoughts: thoughtsHtml(m.thoughts)
+      } : {
+        summary: '<h3>What Was Captured</h3><ul><li>' + esc(overview) + '</li></ul>',
+        transcript: [],
+        actionGroups: [],
+        thoughts: thoughtsHtml([])
+      };
+
+      NOTES.unshift({
+        title: title,
+        date: dateLabel,
+        size: m ? '96 KB' : '18 KB',
+        when: when || dateLabel,
+        overview: esc(overview),
+        detail: detail
+      });
+
+      activeIndex = 0;
+      renderList();
+      renderCard();
+      openNote(0);
+    }
+
+    function thoughtsHtml(lines) {
+      return '<div class="thoughts" contenteditable="true" spellcheck="false">'
+        + (lines && lines.length
+            ? lines.map(t => '<p>' + esc(t) + '</p>').join('')
+            : '<p>You did not add any thoughts during this meeting.</p>')
+        + '</div>';
+    }
+
+    const MONTHS_SHORT = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    function prettyDate(isoDate) {
+      if (!isoDate) return '';
+      const [y, m, d] = isoDate.split('-').map(Number);
+      return MONTHS_SHORT[m - 1] + ' ' + d + ', ' + y;
+    }
+
+    function intakeFromCall() {
+      const q = new URLSearchParams(location.search);
+      if (q.get('from') !== 'call') return;
+
+      const dur = q.get('dur');
+      const typed = (q.get('thoughts') || '').split(' | ').map(t => t.trim()).filter(Boolean);
+
+      const note = {
+        title: CALL_NOTE.title,
+        date: CALL_NOTE.date,
+        size: CALL_NOTE.size,
+        when: CALL_NOTE.when + (dur ? ' • ' + dur : ''),
+        overview: CALL_NOTE.overview,
+        detail: {
+          summary: CALL_NOTE.detail.summary,
+          transcript: CALL_TRANSCRIPT,
+          actionGroups: CALL_NOTE.detail.actionGroups,
+          // What the user actually typed during the call, or an honest empty.
+          thoughts: '<div class="thoughts" contenteditable="true" spellcheck="false">'
+            + (typed.length
+                ? typed.map(t => '<p>' + t.replace(/[<>&]/g, c => ({'<':'&lt;','>':'&gt;','&':'&amp;'}[c])) + '</p>').join('')
+                : '<p>You did not add any thoughts during this call.</p>')
+            + '</div>'
+        }
+      };
+
+      NOTES.unshift(note);
+      activeIndex = 0;
+      renderList();
+      renderCard();
+      openNote(0);
+      showToast('Your notes from this call are ready');
+    }
+
+    document.getElementById('noteSearch').addEventListener('input', renderList);
+
+    renderList();
+
+    renderCard();
+    intakeFromCall();
+    intakeFromCalendar();
+
+    /* Entry points for the mail app's Notes folder: ?open=<i> opens that note,
+       ?new=1 starts a recording.
+
+       Not `?note=` — the calendar app already sends that, as a note *title*,
+       and intakeFromCalendar() unshifts a note for it. A numeric ?note= would
+       add a note called "2" and shift every index by one. */
+    (function deepLink() {
+      const q = new URLSearchParams(location.search);
+      const i = q.get('open');
+      if (i !== null && NOTES[+i]) { openNote(+i); return; }
+      if (q.get('new') === '1' && window.openRec) openRec();
+    })();
+  </script>
+
+
+  <script>
+    /* ══════════════════════════════════════════════════════════════════════
+       App switcher — the same panel the mail app carries, opened from the
+       nav's tab switch. Mail, Calendar and Drive each open in their own tab;
+       Recap is where you already are, so it just closes.
+       ══════════════════════════════════════════════════════════════════════ */
+    (function () {
+      const sw = document.getElementById('app-switcher');
+      const btn = document.querySelector('.nav-tab-switch');
+      if (!sw || !btn) return;
+
+      window.closeAppSwitcher = function () { sw.classList.remove('open'); };
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        sw.classList.toggle('open');
+      });
+      document.addEventListener('click', (e) => {
+        if (sw.classList.contains('open') && !sw.contains(e.target) && !btn.contains(e.target)) {
+          closeAppSwitcher();
+        }
+      });
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeAppSwitcher();
+      });
+
+      // Carry anything added this session in the URL too, so a mail tab opened
+      // from here still gets the tasks even where storage is unavailable.
+      window.openMailApp = function () {
+        closeAppSwitcher();
+        const q = bridgeQueue();
+        window.open('index.html' + (q.length
+          ? '?tasks=' + encodeURIComponent(JSON.stringify(q)) : ''), '_blank');
+      };
+      window.openCalendarApp = function () { closeAppSwitcher(); window.open('calendar.html', '_blank'); };
+      window.openDriveApp = function () { closeAppSwitcher(); window.open('drive.html', '_blank'); };
+    })();
+
+    /* Tooltips, lifted from the mail app: one fixed element on <body>, since
+       the action card would clip an in-flow label at its own edge. */
+    (function initTooltips() {
+      const tip = document.createElement('div');
+      tip.id = 'ttip';
+      document.body.appendChild(tip);
+      let over = null;
+      document.addEventListener('mouseover', (e) => {
+        const t = e.target.closest('.tt[data-tip]');
+        if (t === over) return;
+        over = t;
+        if (!t) { tip.classList.remove('on'); return; }
+        tip.textContent = t.dataset.tip;
+        const r = t.getBoundingClientRect();
+        tip.style.left = (r.left + r.width / 2) + 'px';
+        tip.style.top = (r.bottom + 6) + 'px';
+        tip.classList.add('on');
+      });
+      document.addEventListener('mouseout', (e) => {
+        if (e.target.closest('.tt[data-tip]') && !e.relatedTarget?.closest('.tt[data-tip]')) {
+          over = null;
+          tip.classList.remove('on');
+        }
+      });
+      // The rows re-render on every add, so a ticked box can be left under the
+      // pointer with its tooltip still up.
+      document.addEventListener('click', () => { over = null; tip.classList.remove('on'); }, true);
+    })();
+  </script>
+</body>
+
+</html>

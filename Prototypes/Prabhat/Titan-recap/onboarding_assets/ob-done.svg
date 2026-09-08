@@ -1,0 +1,41 @@
+<svg width="65" height="56" viewBox="0 0 65 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Onboarding">
+<g id="Titan mail">
+<g id="Frame 2087326571" filter="url(#filter0_d_390_1214)">
+<rect x="-188.05" y="-29.4531" width="442" height="219" rx="8" fill="white"/>
+<g id="Frame 2087326576">
+<g id="icon">
+<g id="icon_2">
+<g id="Group 22586">
+<circle id="Ellipse 2097" cx="32.3564" cy="26.4863" r="24.6855" fill="#CDE0FF"/>
+<circle id="Ellipse 2096" cx="32.121" cy="26.7215" r="19.2782" fill="#2170F4"/>
+<path id="Vector 217" d="M24.5977 26.458L27.8273 31.5329C27.9475 31.7217 28.2082 31.7579 28.3752 31.6088L39.644 21.5488" stroke="white" stroke-width="2.17742" stroke-linecap="round"/>
+</g>
+<g id="confetti">
+<circle id="green ellipe" cx="62.9306" cy="16.4296" r="1.8808" fill="#70A9FF"/>
+<g id="star">
+<rect id="Rectangle 25649" x="50.6016" y="49.0996" width="1.8808" height="6.58279" rx="0.940399" fill="#5E84E8"/>
+<rect id="Rectangle 25650" x="48.251" y="53.3301" width="1.8808" height="6.58279" rx="0.940399" transform="rotate(-90 48.251 53.3301)" fill="#5E84E8"/>
+</g>
+<path id="Vector 212" d="M1.08887 36.0918C1.79417 36.0918 3.91006 37.2673 2.73457 39.6183" stroke="#FFCF30" stroke-width="2.17742" stroke-linecap="round"/>
+<path id="Vector 213" d="M51.9121 3.2793C51.5719 2.91446 51.1593 1.25291 52.9425 0.726914" stroke="#E94749" stroke-width="1.45162" stroke-linecap="round"/>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+<defs>
+<filter id="filter0_d_390_1214" x="-200.05" y="-37.4531" width="466" height="243" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset dy="4"/>
+<feGaussianBlur stdDeviation="6"/>
+<feComposite in2="hardAlpha" operator="out"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.08 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_390_1214"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_390_1214" result="shape"/>
+</filter>
+</defs>
+</svg>

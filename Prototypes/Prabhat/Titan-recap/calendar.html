@@ -1,0 +1,1747 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calendar</title>
+  <link rel="icon" href="app_switcher_assets/grid_icons/calendar.svg">
+  <style>
+    /* ══════════════════════════════════════════════════════════════════════
+       Titan Calendar — week view.
+       Tokens come from the mail shell so the two apps read as one product:
+       #1c1c1c sidebar, #2170f4 primary, #333 / #888 text, #e8eaed rules.
+       ══════════════════════════════════════════════════════════════════════ */
+    :root {
+      --blue: #2170f4;
+      --blue-press: #1b62db;
+      --ink: #333333;
+      --muted: #888888;
+      --line: #e8eaed;
+      --line-strong: #dedede;
+      --hover: #f4f4f7;
+      --today: #f5f9ff;
+      --sidebar: #1c1c1c;
+      --hour: 52px;          /* one hour of grid */
+      --gutter: 84px;        /* each timezone column */
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', sans-serif;
+      color: var(--ink);
+      background: #fff;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .cal-app { display: flex; height: 100vh; }
+
+    /* ══════════════ Sidebar ══════════════ */
+    .side {
+      width: 250px;
+      flex-shrink: 0;
+      background: var(--sidebar);
+      display: flex;
+      flex-direction: column;
+      color: #fff;
+    }
+
+    .side-head { height: 64px; flex-shrink: 0; display: flex; align-items: center; padding: 0 12px; gap: 18px; }
+    .app-switch {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 2px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background .15s ease;
+    }
+    .app-switch:hover { background: #333333; }
+    .app-switch > img { width: 28px; height: 28px; display: block; border-radius: 5px; }
+    .app-switch .caret { width: 16px; height: 16px; display: flex; align-items: center; justify-content: center; }
+    .app-switch .caret img { width: 9px; height: 5px; display: block; filter: brightness(0) invert(1); }
+    .side-logo img { height: 25px; display: block; }
+
+    /* Mini month */
+    .mini { padding: 10px 16px 14px; flex-shrink: 0; }
+    .mini-head { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+    .mini-title { flex: 1; text-align: center; font-size: 14px; font-weight: 600; color: #fff; }
+    .mini-nav {
+      width: 24px;
+      height: 24px;
+      border: 0;
+      background: none;
+      border-radius: 4px;
+      color: #cfcfcf;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+    }
+    .mini-nav:hover { background: #333; color: #fff; }
+    .mini-nav svg { width: 14px; height: 14px; }
+    .mini-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px 0; }
+    .mini-dow { font-size: 11px; color: #9a9a9a; text-align: center; padding-bottom: 4px; }
+    .mini-day {
+      height: 26px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      color: #e8e8e8;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .mini-day:hover { background: #333; }
+    .mini-day.out { color: #6a6a6a; }
+    .mini-day.today { background: #4a4a4a; color: #fff; font-weight: 600; }
+
+    /* Accounts + calendar list */
+    .side-scroll { flex: 1 1 auto; min-height: 0; overflow-y: auto; padding-bottom: 12px; }
+    .side-label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px 8px;
+      font-size: 13px;
+      color: #cfcfcf;
+    }
+    .side-label svg { width: 15px; height: 15px; color: #cfcfcf; }
+
+    .acct-select {
+      margin: 0 16px 12px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0 10px 0 12px;
+      background: #2b2b2b;
+      border: 1px solid #3d3d3d;
+      border-radius: 6px;
+      font-size: 14px;
+      color: #fff;
+      cursor: pointer;
+    }
+    .acct-select span { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .acct-select svg { width: 16px; height: 16px; color: #cfcfcf; flex-shrink: 0; }
+
+    .cal-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 7px 16px;
+      font-size: 14px;
+      color: #f0f0f0;
+      cursor: pointer;
+    }
+    .cal-item:hover { background: #262626; }
+    /* Coloured checkbox. The tick is an SVG centred by flex, so it sits
+       true in the box at any size — two rotated pseudo-elements never did. */
+    .cal-box {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+      border-radius: 5px;
+      background: var(--c);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .cal-box svg { width: 13px; height: 13px; display: block; }
+    .cal-box path { stroke: #fff; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+    .cal-item.off .cal-box { background: none; box-shadow: inset 0 0 0 1.5px #6a6a6a; }
+    .cal-item.off .cal-box svg { display: none; }
+    .cal-item.off .cal-name { color: #9a9a9a; }
+    .cal-name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+    .add-cal { display: flex; align-items: center; gap: 12px; padding: 10px 16px; font-size: 14px; color: #cfcfcf; cursor: pointer; }
+    .add-cal:hover { color: #fff; }
+    .add-cal svg { width: 18px; height: 18px; }
+
+    /* Bug / Feature footer, same as the mail shell */
+    .side-foot { flex-shrink: 0; display: flex; border-top: 1px solid #2e2e2e; }
+    .foot-btn {
+      flex: 1;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-size: 13px;
+      color: #e8e8e8;
+      cursor: pointer;
+    }
+    .foot-btn:hover { background: #262626; }
+    .foot-btn img { width: 16px; height: 16px; display: block; }
+    .foot-div { width: 1px; background: #2e2e2e; }
+
+    /* ══════════════ Main ══════════════ */
+    .main { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; }
+
+    .top {
+      height: 64px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 0 20px;
+      border-bottom: 1px solid var(--line);
+    }
+    .btn-new {
+      height: 40px;
+      padding: 0 18px;
+      background: var(--blue);
+      border: 0;
+      border-radius: 4px;
+      font-family: inherit;
+      font-size: 15px;
+      font-weight: 600;
+      color: #fff;
+      cursor: pointer;
+    }
+    .btn-new:hover { background: var(--blue-press); }
+    .btn-today {
+      height: 40px;
+      padding: 0 18px;
+      background: #fff;
+      border: 1px solid var(--blue);
+      border-radius: 4px;
+      font-family: inherit;
+      font-size: 15px;
+      color: var(--blue);
+      cursor: pointer;
+    }
+    .btn-today:hover { background: rgba(33, 112, 244, .06); }
+    .nav-btn {
+      width: 32px;
+      height: 32px;
+      border: 0;
+      background: none;
+      border-radius: 4px;
+      color: #5a5a5e;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+    }
+    .nav-btn:hover { background: var(--hover); }
+    .nav-btn svg { width: 18px; height: 18px; }
+    .range { font-size: 18px; color: var(--ink); white-space: nowrap; }
+    .top-right { margin-left: auto; display: flex; align-items: center; gap: 12px; }
+    .icon-btn {
+      width: 32px;
+      height: 32px;
+      border: 0;
+      background: none;
+      border-radius: 4px;
+      color: #5a5a5e;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+    }
+    .icon-btn:hover { background: var(--hover); }
+    .icon-btn svg { width: 19px; height: 19px; }
+    .view-select {
+      height: 38px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0 12px;
+      background: #fff;
+      border: 1px solid var(--line-strong);
+      border-radius: 4px;
+      font-family: inherit;
+      font-size: 15px;
+      color: var(--ink);
+      cursor: pointer;
+    }
+    .view-select svg { width: 14px; height: 14px; color: var(--muted); }
+    .btn-help {
+      height: 38px;
+      padding: 0 16px;
+      background: #fff;
+      border: 1px solid var(--line-strong);
+      border-radius: 4px;
+      font-family: inherit;
+      font-size: 15px;
+      color: var(--ink);
+      cursor: pointer;
+    }
+    .btn-help:hover { background: var(--hover); }
+
+    /* ── Week grid ── */
+    .grid-wrap { flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; }
+
+    .head-row {
+      flex-shrink: 0;
+      display: grid;
+      grid-template-columns: var(--gutter) repeat(7, minmax(0, 1fr));
+      border-bottom: 1px solid var(--line-strong);
+    }
+    .tz-cell {
+      padding: 44px 8px 8px;
+      text-align: center;
+      font-size: 11px;
+      line-height: 15px;
+      color: #5a5a5e;
+      border-right: 1px solid var(--line);
+    }
+    .day-cell {
+      padding: 10px 0 12px;
+      text-align: center;
+      border-right: 1px solid var(--line);
+      border-top: 3px solid transparent;
+    }
+    .day-cell:last-child { border-right: 0; }
+    .day-cell.today { border-top-color: var(--blue); background: var(--today); }
+    .day-dow { font-size: 14px; color: #5a5a5e; }
+    .day-num { font-size: 26px; font-weight: 400; color: var(--ink); margin-top: 2px; }
+    .day-cell.today .day-num { color: var(--ink); font-weight: 500; }
+
+    .body-scroll { flex: 1 1 auto; min-height: 0; overflow-y: auto; }
+    .body-grid {
+      position: relative;
+      display: grid;
+      grid-template-columns: var(--gutter) repeat(7, minmax(0, 1fr));
+    }
+    .tz-col { border-right: 1px solid var(--line); }
+    .tz-slot {
+      height: var(--hour);
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding-top: 6px;
+      font-size: 12px;
+      color: #5a5a5e;
+      white-space: nowrap;
+    }
+    .day-col { position: relative; border-right: 1px solid var(--line); }
+    .day-col:last-child { border-right: 0; }
+    .day-col.today { background: var(--today); }
+    .hour-slot { height: var(--hour); border-bottom: 1px solid var(--line); }
+
+    /* Events. Outlined is the default; Busy blocks are filled. */
+    .ev {
+      position: absolute;
+      left: 1px;
+      right: 1px;
+      overflow: hidden;
+      padding: 3px 5px;
+      border: 1px solid var(--c);
+      border-radius: 3px;
+      background: #fff;
+      font-size: 11.5px;
+      line-height: 14px;
+      color: var(--c);
+      cursor: pointer;
+      z-index: 2;
+    }
+    .ev:hover { filter: brightness(0.97); z-index: 4; }
+    /* Anything already finished is faded; only what is still ahead carries
+       its calendar colour at full strength. */
+    .ev.past { opacity: .42; }
+    .ev.past:hover { opacity: .7; }
+    .ev-title { font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .ev-time { opacity: .85; }
+    .ev.busy {
+      border: 0;
+      background: var(--fill);
+      color: #4a4a4a;
+    }
+    .ev.tall { background: var(--fill); border-color: var(--c); }
+
+    /* Now line, on today's column only */
+    .now {
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 0;
+      border-top: 2px solid #e02d2d;
+      z-index: 6;
+      pointer-events: none;
+    }
+    .now::before {
+      content: '';
+      position: absolute;
+      left: -4px;
+      top: -5px;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #e02d2d;
+    }
+
+    /* Event popover — Titan's menu treatment */
+    .ev-pop {
+      position: fixed;
+      z-index: 90;
+      width: 300px;
+      background: #fff;
+      border: 1px solid var(--line-strong);
+      border-radius: 8px;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, .18);
+      padding: 16px;
+      display: none;
+    }
+    .ev-pop.open { display: block; }
+    .ev-pop-title { font-size: 15px; font-weight: 600; color: var(--ink); padding-right: 24px; }
+    .ev-pop-when { font-size: 13px; color: var(--muted); margin-top: 4px; }
+    .ev-pop-cal { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--muted); margin-top: 10px; }
+    .ev-pop-dot { width: 10px; height: 10px; border-radius: 3px; background: var(--c); flex-shrink: 0; }
+    .ev-pop-x {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 24px;
+      height: 24px;
+      border: 0;
+      background: none;
+      border-radius: 4px;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1;
+      cursor: pointer;
+    }
+    .ev-pop-x:hover { background: var(--hover); color: var(--ink); }
+    /* Recap's own toggle, so an event can be armed from the calendar (C1) */
+    .ev-pop-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 14px;
+      padding-top: 14px;
+      border-top: 1px solid var(--line);
+    }
+    .ev-pop-row-text { flex: 1; min-width: 0; }
+    .ev-pop-row-label { font-size: 14px; color: var(--ink); }
+    .ev-pop-row-sub { font-size: 12px; color: var(--muted); margin-top: 2px; }
+    .sw {
+      width: 38px;
+      height: 22px;
+      flex-shrink: 0;
+      border: 0;
+      border-radius: 11px;
+      background: #d6d6db;
+      position: relative;
+      cursor: pointer;
+      padding: 0;
+      transition: background .16s ease;
+    }
+    .sw i {
+      position: absolute;
+      left: 2px;
+      top: 2px;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #fff;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, .2);
+      transition: transform .16s ease;
+    }
+    .sw.on { background: var(--blue); }
+    .sw.on i { transform: translateX(16px); }
+
+
+    /* ══════════════════════════════════════════════════════════════════════
+       Past-event modal — Figma 5148:10225. A finished event opens the full
+       detail dialog, led by the Titan Recap card; an upcoming one keeps the
+       light popover with the capture toggle.
+       ══════════════════════════════════════════════════════════════════════ */
+    .ev-scrim {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, .4);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .18s ease;
+      z-index: 200;
+    }
+    .ev-scrim.open { opacity: 1; pointer-events: auto; }
+
+    .ev-modal {
+      position: fixed;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -48%) scale(.98);
+      width: 487px;
+      max-width: calc(100vw - 32px);
+      max-height: calc(100vh - 64px);
+      overflow-y: auto;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 16px 48px rgba(0, 0, 0, .22);
+      padding: 20px;
+      z-index: 201;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .18s ease, transform .18s cubic-bezier(.16, 1, .3, 1);
+    }
+    .ev-modal.open { opacity: 1; pointer-events: auto; transform: translate(-50%, -50%) scale(1); }
+
+    .evm-title {
+      font-size: 18px;
+      font-weight: 600;
+      line-height: 24px;
+      color: var(--ink);
+      padding-right: 44px;
+    }
+    .evm-x {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      width: 32px;
+      height: 32px;
+      border: 0;
+      background: none;
+      border-radius: 4px;
+      color: var(--muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+    }
+    .evm-x:hover { background: var(--hover); color: var(--ink); }
+    .evm-x svg { width: 16px; height: 16px; }
+
+    /* Titan Recap card (5226:16073) */
+    .evm-recap {
+      margin-top: 24px;
+      background: #f5f8fe;
+      border-radius: 8px;
+      padding: 16px;
+    }
+    .evm-recap-head { display: flex; align-items: center; gap: 6px; }
+    .evm-recap-head img { width: 14.1px; height: 14.1px; display: block; }
+    .evm-recap-head span { font-size: 16px; font-weight: 600; color: var(--ink); }
+    .evm-recap-body { font-size: 14px; line-height: 1.5; color: #666; margin-top: 8px; }
+    .evm-recap-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 2px;
+      margin-top: 10px;
+      border: 0;
+      background: none;
+      padding: 0;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 1.5;
+      color: var(--blue);
+      cursor: pointer;
+    }
+    .evm-recap-link:hover { text-decoration: underline; }
+    .evm-recap-link img { width: 20px; height: 20px; display: block; }
+
+    /* Detail rows (5226:16089) */
+    .evm-rows { margin-top: 16px; display: flex; flex-direction: column; gap: 16px; }
+    .evm-row { display: flex; gap: 16px; align-items: flex-start; }
+    .evm-ic {
+      width: 24px;
+      height: 24px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .evm-ic img { display: block; }
+    .evm-ic-clock img { width: 16px; height: 16px; }
+    /* These two export at the full 24px box, unlike the others. */
+    .evm-ic-loc img { width: 24px; height: 24px; }
+    .evm-ic-conf img { width: 24px; height: 24px; }
+    .evm-ic-guests img { width: 16px; height: 10.2px; }
+    .evm-row-main { min-width: 0; flex: 1; }
+    .evm-l1 { font-size: 14px; color: var(--ink); }
+    .evm-l2 { font-size: 12px; color: var(--muted); margin-top: 4px; }
+    .evm-link { font-size: 14px; color: var(--blue); word-break: break-all; }
+    .evm-meta { font-size: 14px; color: #666; margin-top: 12px; }
+    .evm-meta b { color: var(--ink); font-weight: 400; }
+
+    .evm-guests-head { display: flex; align-items: flex-start; gap: 8px; }
+    .evm-guests-head .evm-row-main { flex: 1; }
+    .evm-chev {
+      width: 24px;
+      height: 24px;
+      border: 0;
+      background: none;
+      border-radius: 4px;
+      cursor: pointer;
+      padding: 0;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .evm-chev:hover { background: var(--hover); }
+    .evm-chev img { width: 11.2px; height: 6.6px; display: block; transition: transform .2s ease; }
+    .evm-chev.closed img { transform: rotate(180deg); }
+    .evm-guest-list { margin-top: 14px; display: flex; flex-direction: column; gap: 14px; }
+    .evm-guest-list[hidden] { display: none; }
+    .evm-guest { display: flex; align-items: flex-start; gap: 16px; }
+    .evm-guest img { width: 20px; height: 20px; display: block; flex-shrink: 0; margin: 2px; }
+    .evm-guest-name { font-size: 14px; color: var(--ink); }
+    .evm-guest-role { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+    .evm-foot {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 16px;
+      margin-top: 24px;
+    }
+    .evm-del {
+      height: 36px;
+      padding: 0 16px;
+      border: 0;
+      background: none;
+      border-radius: 4px;
+      font-family: inherit;
+      font-size: 14px;
+      color: var(--ink);
+      cursor: pointer;
+    }
+    .evm-del:hover { background: var(--hover); }
+    .evm-edit {
+      height: 36px;
+      padding: 0 22px;
+      border: 1px solid var(--blue);
+      background: #fff;
+      border-radius: 4px;
+      font-family: inherit;
+      font-size: 14px;
+      color: var(--blue);
+      cursor: pointer;
+    }
+    .evm-edit:hover { background: rgba(33, 112, 244, .06); }
+    .evm-going {
+      height: 36px;
+      display: flex;
+      align-items: center;
+      border: 0;
+      border-radius: 4px;
+      background: var(--blue);
+      color: #fff;
+      font-family: inherit;
+      font-size: 14px;
+      cursor: pointer;
+      padding: 0;
+      overflow: hidden;
+    }
+    .evm-going span { padding: 0 16px; }
+    .evm-going i {
+      width: 34px;
+      align-self: stretch;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-left: 1px solid rgba(255, 255, 255, .35);
+    }
+    .evm-going:hover { background: var(--blue-press); }
+    .evm-going svg { width: 14px; height: 14px; }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 32px;
+      transform: translate(-50%, 16px);
+      padding: 12px 20px;
+      border-radius: 6px;
+      background: #1d2133;
+      color: #fff;
+      font-size: 14px;
+      box-shadow: 0 6px 24px rgba(0, 0, 0, .3);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .2s ease, transform .2s ease;
+      z-index: 100;
+    }
+    .toast.show { opacity: 1; transform: translate(-50%, 0); }
+    /* ── App Switcher Dropdown ── */
+    .app-switcher-dropdown {
+      position: fixed;
+      top: 52px;
+      left: 8px;
+      width: 280px;
+      z-index: 1000;
+      display: none;
+      opacity: 0;
+      transform: translateY(-12px);
+      transition: opacity 0.25s cubic-bezier(0.22, 1, 0.36, 1), transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+      user-select: none;
+    }
+
+    .app-switcher-dropdown.open {
+      display: block;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .app-switcher-bg {
+      /* Insets alone size the painted shape now, so it grows with the
+         content instead of being pinned to a stale 605px. */
+      position: absolute;
+      inset: -1px -14px -17px -5px;
+      pointer-events: none;
+    }
+
+    .app-switcher-bg img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: fill;
+    }
+
+    .app-switcher-content {
+      position: relative;
+      width: 280px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      /* 19px clears the notch at the top of the painted shape; 8px keeps the
+         last footer row off the bottom edge. */
+      padding: 27px 0 8px;
+      box-sizing: border-box;
+      z-index: 2;
+    }
+
+    .app-switcher-section {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      padding: 0 16px 8px;
+    }
+
+    .app-switcher-row {
+      display: flex;
+      gap: 16px;
+      width: 100%;
+    }
+
+    .app-switcher-item {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      width: 72px;
+      padding: 8px 2px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .app-switcher-item:hover {
+      background: #f2f2f2;
+    }
+
+    .app-icon {
+      position: relative;
+      z-index: 2;
+      width: 38px;
+      height: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .app-icon-img {
+      display: block;
+      object-fit: contain;
+    }
+
+    /* SVGs with 40x40 viewBox where shape is 30px (Mail, Calendar, Contacts, Bookings, Backup) - Targets 28px background shape */
+    .app-icon-img[src*="mail.svg"],
+    .app-icon-img[src*="calendar.svg"],
+    .app-icon-img[src*="contacts.svg"],
+    .app-icon-img[src*="bookings.svg"],
+    .app-icon-img[src*="backup.svg"] {
+      width: 37.3px;
+      height: 37.3px;
+    }
+
+    /* SVGs with 30x30 or 30x29 viewBox where shape is 30px (Drive, Tasks, Admin) - Targets 28px background shape */
+    .app-icon-img[src*="drive.svg"],
+    .app-icon-img[src*="tasks.svg"],
+    .app-icon-img[src*="admin.svg"] {
+      width: 28px;
+      height: 28px;
+    }
+
+    /* SVG with 40x40 viewBox where shape is 32px (Site) - Targets 28px background shape */
+    .app-icon-img[src*="site.svg"] {
+      width: 35px;
+      height: 35px;
+    }
+
+    .app-label {
+      position: relative;
+      z-index: 2;
+      font-size: 13px;
+      font-weight: 500;
+      color: #707070;
+      line-height: 18px;
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    .app-switcher-divider {
+      width: 280px;
+      height: 1px;
+      display: flex;
+      align-items: center;
+      pointer-events: none;
+    }
+
+    .app-switcher-divider img {
+      width: 100%;
+      height: 1px;
+    }
+
+    .app-switcher-tools {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      width: 100%;
+    }
+
+    .app-switcher-tool-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 6px 27px;
+      width: 100%;
+      cursor: pointer;
+      transition: background 0.15s ease;
+    }
+
+    .app-switcher-tool-item:hover {
+      background: #f2f2f2;
+    }
+
+    .tool-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .tool-icon.bg-pink {
+      background: #ffe5ed;
+    }
+
+    .tool-icon.bg-purple {
+      background: #f1e4ff;
+    }
+
+    .tool-icon.bg-blue {
+      background: #e1f4ff;
+    }
+
+    .tool-icon.bg-green {
+      background: #e6faf2;
+    }
+
+    .tool-icon img {
+      object-fit: contain;
+    }
+
+    .tool-icon.bg-pink img {
+      width: 19px;
+      height: 11px;
+    }
+
+    .tool-icon.bg-purple img {
+      width: 19px;
+      height: 15px;
+    }
+
+    .tool-icon.bg-blue img {
+      width: 16px;
+      height: 16px;
+    }
+
+    .tool-icon.bg-green img {
+      width: 16px;
+      height: 16px;
+    }
+
+    .tool-label {
+      font-size: 13px;
+      font-weight: 500;
+      color: #707070;
+      line-height: 14px;
+      white-space: nowrap;
+    }
+
+    .app-switcher-footer {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+    }
+
+    .footer-link-row {
+      border-top: 0.5px solid #dedded;
+      height: 48px;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      padding: 0 24px;
+      cursor: pointer;
+      transition: background 0.15s ease;
+    }
+
+    .footer-link-row:hover {
+      background: #f2f2f2;
+    }
+
+    .footer-link-content {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      width: 100%;
+      position: relative;
+    }
+
+    .footer-link-icon {
+      width: 24px;
+      height: 24px;
+      object-fit: contain;
+      flex-shrink: 0;
+    }
+
+    .beaker-icon {
+      width: 16.5px;
+      height: 16.5px;
+      object-fit: contain;
+      flex-shrink: 0;
+      transform: rotate(180deg);
+      margin: 3.75px;
+    }
+
+    .footer-link-text {
+      font-size: 13px;
+      font-weight: 500;
+      color: #707070;
+      flex: 1;
+      white-space: nowrap;
+    }
+
+    .bold {
+      font-weight: 800;
+    }
+
+    .footer-arrow {
+      width: 16px;
+      height: 16px;
+      object-fit: contain;
+      flex-shrink: 0;
+      opacity: 0.5;
+    }
+
+
+    /* The tile is the switcher's trigger, so it stays lit while it is open. */
+    .app-switch.active { background: #333333; }
+    .app-switcher-item-current .app-label { color: #2170f4; font-weight: 600; }
+  </style>
+</head>
+
+<body>
+  <div class="cal-app">
+
+    <!-- ══════════ Sidebar ══════════ -->
+    <aside class="side">
+      <div class="side-head">
+        <div class="app-switch" id="tabSwitch" title="Switch app">
+          <img src="app_switcher_assets/grid_icons/calendar.svg" alt="Calendar">
+          <span class="caret"><img src="assets/1c88a1be-2a78-4065-86f7-8eb060dbb526.svg" alt=""></span>
+        </div>
+        <div class="side-logo"><img src="assets/fa36f613-977c-444a-bef5-e1b5f5f1b340.svg" alt="Titan"></div>
+      </div>
+
+      <div class="mini">
+        <div class="mini-head">
+          <button class="mini-nav" onclick="stepMonth(-1)" aria-label="Previous month"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+          <span class="mini-title" id="miniTitle">September 2026</span>
+          <button class="mini-nav" onclick="stepMonth(1)" aria-label="Next month"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg></button>
+        </div>
+        <div class="mini-grid" id="miniGrid"></div>
+      </div>
+
+      <div class="side-scroll">
+        <div class="side-label">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1"/></svg>
+          Accounts (3)
+        </div>
+        <div class="acct-select">
+          <span>ella@avontech.com</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
+        </div>
+        <div id="calList"></div>
+        <div class="add-cal">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg>
+          Add calendar
+        </div>
+      </div>
+
+      <div class="side-foot">
+        <div class="foot-btn"><img src="assets/34686e57-21d5-4bf6-82c4-1c6e474d25d3.svg" alt=""><span>Bug</span></div>
+        <div class="foot-div"></div>
+        <div class="foot-btn"><img src="assets/03a449fb-b16b-4b26-8eec-0fa033eff13e.svg" alt=""><span>Feature</span></div>
+      </div>
+    </aside>
+
+    <!-- ══════════ Main ══════════ -->
+    <div class="main">
+      <header class="top">
+        <button class="btn-new" onclick="showToast('New event is not built out in this prototype')">New Event</button>
+        <button class="btn-today" onclick="goToday()">Today</button>
+        <button class="nav-btn" onclick="stepWeek(-1)" aria-label="Previous week"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+        <button class="nav-btn" onclick="stepWeek(1)" aria-label="Next week"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg></button>
+        <span class="range" id="range"></span>
+        <div class="top-right">
+          <button class="icon-btn" aria-label="Calendar settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6 1.65 1.65 0 0 0 10 3.09V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></button>
+          <button class="view-select">Week
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <button class="btn-help">Help</button>
+        </div>
+      </header>
+
+      <div class="grid-wrap">
+        <div class="head-row" id="headRow"></div>
+        <div class="body-scroll" id="bodyScroll">
+          <div class="body-grid" id="bodyGrid"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="app-switcher-dropdown" id="app-switcher">
+    <!-- Combined Shape Background -->
+    <div class="app-switcher-bg">
+      <img src="app_switcher_assets/imgCombinedShape.svg" alt="">
+    </div>
+    <!-- App Switcher Content -->
+    <div class="app-switcher-content">
+
+      <!-- Top Apps Section (Mail, Calendar, Contacts) -->
+      <div class="app-switcher-section">
+        <div class="app-switcher-row">
+          <!-- Mail -->
+          <div class="app-switcher-item" onclick="openApp('index.html')">
+            <div class="app-icon">
+              <img src="app_switcher_assets/grid_icons/mail.svg" alt="Mail" class="app-icon-img">
+            </div>
+            <span class="app-label">Mail</span>
+          </div>
+          <!-- Calendar — this app -->
+          <div class="app-switcher-item app-switcher-item-current" onclick="closeAppSwitcher()">
+            <div class="app-icon">
+              <img src="app_switcher_assets/grid_icons/calendar.svg" alt="Calendar" class="app-icon-img">
+            </div>
+            <span class="app-label">Calendar</span>
+          </div>
+          <!-- Contacts -->
+          <div class="app-switcher-item">
+            <div class="app-icon">
+              <img src="app_switcher_assets/grid_icons/contacts.svg" alt="Contacts" class="app-icon-img">
+            </div>
+            <span class="app-label">Contacts</span>
+          </div>
+        </div>
+
+        <!-- Second Row of Apps (Bookings, Drive, Backup) -->
+        <div class="app-switcher-row">
+          <!-- Bookings -->
+          <div class="app-switcher-item">
+            <div class="app-icon">
+              <img src="app_switcher_assets/grid_icons/bookings.svg" alt="Bookings" class="app-icon-img">
+            </div>
+            <span class="app-label">Bookings</span>
+          </div>
+          <!-- Drive -->
+          <div class="app-switcher-item">
+            <div class="app-icon">
+              <img src="app_switcher_assets/grid_icons/drive.svg" alt="Drive" class="app-icon-img">
+            </div>
+            <span class="app-label">Drive</span>
+          </div>
+          <!-- Backup -->
+          <div class="app-switcher-item">
+            <div class="app-icon">
+              <img src="app_switcher_assets/grid_icons/backup.svg" alt="Backup" class="app-icon-img">
+            </div>
+            <span class="app-label">Backup</span>
+          </div>
+        </div>
+
+        <!-- Third Row of Apps (Tasks, Site, Admin) -->
+        <div class="app-switcher-row">
+          <!-- Tasks -->
+          <div class="app-switcher-item">
+            <div class="app-icon">
+              <img src="app_switcher_assets/grid_icons/tasks.svg" alt="Tasks" class="app-icon-img">
+            </div>
+            <span class="app-label">Tasks</span>
+          </div>
+          <!-- Recap — replaces Site per Figma node 5127:12836. Opens the
+               Recap app in a new tab, as it is a separate app surface. -->
+          <div class="app-switcher-item" onclick="openApp('recap.html')">
+            <div class="app-icon">
+              <img src="app_switcher_assets/grid_icons/recap.svg" alt="Recap" class="app-icon-img app-icon-recap">
+            </div>
+            <span class="app-label">Recap</span>
+          </div>
+          <!-- Admin -->
+          <div class="app-switcher-item">
+            <div class="app-icon">
+              <img src="app_switcher_assets/grid_icons/admin.svg" alt="Admin" class="app-icon-img">
+            </div>
+            <span class="app-label">Admin</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Divider Line -->
+      <div class="app-switcher-divider">
+        <img src="app_switcher_assets/imgLine75.svg" alt="">
+      </div>
+
+      <!-- Bottom Tools Section -->
+      <div class="app-switcher-tools">
+        <!-- Signature Designer -->
+        <div class="app-switcher-tool-item">
+          <div class="tool-icon bg-pink">
+            <img src="app_switcher_assets/imgGroup.svg" alt="">
+          </div>
+          <span class="tool-label">Signature Designer</span>
+        </div>
+        <!-- Smart Write AI -->
+        <div class="app-switcher-tool-item">
+          <div class="tool-icon bg-purple">
+            <img src="app_switcher_assets/imgGroup22777.svg" alt="">
+          </div>
+          <span class="tool-label">Smart Write AI</span>
+        </div>
+        <!-- Email Designer -->
+        <div class="app-switcher-tool-item">
+          <div class="tool-icon bg-blue">
+            <img src="app_switcher_assets/imgGroup23292.svg" alt="">
+          </div>
+          <span class="tool-label">Email Designer</span>
+        </div>
+        <!-- Invoice Builder -->
+        <div class="app-switcher-tool-item">
+          <div class="tool-icon bg-green">
+            <img src="app_switcher_assets/imgFrame1707478357.svg" alt="">
+          </div>
+          <span class="tool-label">Invoice Builder</span>
+        </div>
+      </div>
+
+      <!-- Bottom Footer Links -->
+      <div class="app-switcher-footer">
+        <!-- Know your Titan -->
+        <div class="footer-link-row">
+          <div class="footer-link-content">
+            <img src="app_switcher_assets/imgGroup22627.svg" alt="" class="footer-link-icon">
+            <span class="footer-link-text">Know your Titan</span>
+            <img src="app_switcher_assets/imgNextArrow.svg" alt="" class="footer-arrow">
+          </div>
+        </div>
+        <!-- See more @ Titan Labs -->
+        <div class="footer-link-row">
+          <div class="footer-link-content">
+            <img src="app_switcher_assets/imgG3027.svg" alt="" class="beaker-icon">
+            <span class="footer-link-text">See more @ <span class="bold">Titan Labs</span></span>
+            <img src="app_switcher_assets/imgNextArrow.svg" alt="" class="footer-arrow">
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="ev-pop" id="evPop"></div>
+  <div class="ev-scrim" id="evScrim" onclick="closeEvModal()"></div>
+  <div class="ev-modal" id="evModal" role="dialog" aria-modal="true"></div>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    /* ══════════════════════════════════════════════════════════════════════
+       The grid runs in the account's timezone (Asia/Calcutta).
+       "Today" is pinned to Fri 4 Sep 2026 at 2:00 pm so the week and the
+       now-line match the rest of the prototype's fixtures. Anything before
+       that moment is in the past and renders faded.
+       ══════════════════════════════════════════════════════════════════════ */
+    const TODAY = new Date(2026, 8, 4);        // Fri 4 Sep 2026
+    const NOW_MIN = 14 * 60;                    // 2:00 pm — where the marker sits
+    const HOUR_PX = 52;
+    const DOW = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    const MONTHS = ['January','February','March','April','May','June','July',
+      'August','September','October','November','December'];
+
+    // Same identities as the mail app, so the two read as one account.
+    const CALENDARS = [
+      { id: 'prabhat',  name: 'ella@avontech.com',    colour: '#2170f4', fill: '#dbe7fb', on: true },
+      { id: 'charuljh', name: 'jim@avontech.com',     colour: '#f2994a', fill: '#fdeedd', on: true },
+      { id: 'test',     name: 'Ella Test',            colour: '#27ae60', fill: '#ddf4e7', on: true },
+      { id: 'anjali',   name: 'dwight@avontech.com',  colour: '#f2c14e', fill: '#fdf5dd', on: true },
+      { id: 'aahna',    name: 'pam@avontech.com',     colour: '#eb5286', fill: '#fce0e9', on: true },
+      { id: 'michael',  name: 'michael@avontech.com', colour: '#e74c3c', fill: '#fbdedb', on: true }
+    ];
+    const calById = (id) => CALENDARS.find(c => c.id === id);
+
+    /* Events keyed by ISO date. Times are in the grid timezone.
+       `busy` renders filled and untitled, as the real calendar does for
+       events shared without detail. */
+    const EVENTS = {
+      '2026-08-31': [
+        { t: 'Busy', s: '13:00', e: '14:00', cal: 'aahna', busy: true },
+        { t: 'Busy', s: '14:00', e: '15:00', cal: 'prabhat', busy: true },
+        { t: 'Stand up - Prj-[Mobile] App', s: '14:30', e: '15:00', cal: 'anjali' },
+        { t: '(No Title)', s: '17:00', e: '17:45', cal: 'anjali' }
+      ],
+      '2026-09-01': [
+        { t: 'Stand up - Prj-[Mobile] App', s: '12:30', e: '13:00', cal: 'anjali' },
+        { t: 'Busy', s: '14:00', e: '15:00', cal: 'prabhat', busy: true }
+      ],
+      '2026-09-02': [
+        { t: 'Ignite 2026', s: '09:15', e: '10:30', cal: 'prabhat' },
+        { t: 'Ignite 2026', s: '09:15', e: '10:30', cal: 'charuljh' },
+        { t: 'Hackathon — build week', s: '11:00', e: '21:00', cal: 'prabhat', tall: true },
+        { t: 'Design review', s: '13:00', e: '13:45', cal: 'aahna' },
+        { t: 'Design review', s: '13:00', e: '13:45', cal: 'charuljh' },
+        { t: 'Design sync', s: '13:00', e: '13:45', cal: 'anjali' },
+        { t: 'Busy', s: '13:00', e: '13:45', cal: 'michael', busy: true },
+        { t: 'Daily triage', s: '13:00', e: '13:45', cal: 'test' },
+        { t: 'Busy', s: '14:00', e: '15:00', cal: 'prabhat', busy: true },
+        { t: 'Demo - Prj-Text Editor', s: '14:30', e: '15:00', cal: 'prabhat' },
+        { t: 'Stand up - Prj-[Mobile] App', s: '15:00', e: '15:30', cal: 'anjali' },
+        { t: 'Stand up - Prj-Notifications', s: '17:00', e: '17:30', cal: 'prabhat' }
+      ],
+      '2026-09-03': [
+        { t: 'Hackathon — build week', s: '11:00', e: '21:00', cal: 'prabhat', tall: true },
+        { t: 'Busy', s: '14:00', e: '15:00', cal: 'prabhat', busy: true },
+        { t: 'Stand up - Prj-[Mobile] App', s: '14:45', e: '15:15', cal: 'anjali' },
+        { t: 'Titan onboarding', s: '16:00', e: '16:45', cal: 'prabhat' },
+        { t: 'Titan onboarding', s: '16:00', e: '16:45', cal: 'anjali' },
+        { t: 'Titan review', s: '16:00', e: '16:45', cal: 'charuljh' },
+        { t: 'Busy', s: '16:00', e: '16:45', cal: 'aahna', busy: true },
+        { t: 'Team catch-up', s: '16:00', e: '16:45', cal: 'michael' },
+        { t: 'Dwight & Ella 1:1', s: '19:00', e: '19:45', cal: 'anjali' }
+      ],
+      '2026-09-04': [
+        { t: 'Ignite 2026', s: '12:00', e: '19:30', cal: 'prabhat', tall: true },
+        { t: 'Ignite 2026 — floor', s: '12:00', e: '19:30', cal: 'charuljh', tall: true },
+        { t: 'Stand up', s: '12:45', e: '13:15', cal: 'anjali' },
+        { t: 'Sync', s: '17:00', e: '17:30', cal: 'prabhat' }
+      ],
+      '2026-09-05': [
+        { t: 'Ignite 2026 — closing', s: '10:00', e: '11:30', cal: 'prabhat' },
+        { t: 'Ignite 2026 — closing', s: '10:00', e: '11:30', cal: 'charuljh' },
+        { t: 'Northwind Logistics — scope walkthrough', s: '12:00', e: '13:00', cal: 'prabhat' },
+        { t: 'Busy', s: '14:00', e: '15:00', cal: 'prabhat', busy: true },
+        { t: 'Interface audit kick-off', s: '15:00', e: '16:00', cal: 'prabhat' },
+        { t: 'Interface audit kick-off', s: '15:00', e: '16:00', cal: 'anjali' },
+        { t: 'Pam & Ella 1:1', s: '16:30', e: '17:00', cal: 'aahna' },
+        { t: 'Weekly wrap', s: '17:30', e: '18:00', cal: 'test' }
+      ]
+    };
+
+    let weekStart = startOfWeek(TODAY);
+    let miniMonth = new Date(TODAY.getFullYear(), TODAY.getMonth(), 1);
+
+    function startOfWeek(d) {
+      const x = new Date(d.getFullYear(), d.getMonth(), d.getDate());
+      x.setDate(x.getDate() - x.getDay());
+      return x;
+    }
+    const iso = (d) => d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0')
+      + '-' + String(d.getDate()).padStart(2, '0');
+    const sameDay = (a, b) => iso(a) === iso(b);
+    const mins = (hhmm) => (+hhmm.slice(0, 2)) * 60 + (+hhmm.slice(3));
+
+    function label12(totalMin) {
+      let m = ((totalMin % 1440) + 1440) % 1440;
+      const h24 = Math.floor(m / 60), mm = m % 60;
+      const ampm = h24 < 12 ? 'AM' : 'PM';
+      let h = h24 % 12; if (h === 0) h = 12;
+      return h + (mm ? ':' + String(mm).padStart(2, '0') : '') + ' ' + ampm;
+    }
+
+    let toastTimer = null;
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => t.classList.remove('show'), 2400);
+    }
+
+    /* ── Sidebar ── */
+    function renderMini() {
+      document.getElementById('miniTitle').textContent =
+        MONTHS[miniMonth.getMonth()] + ' ' + miniMonth.getFullYear();
+      const grid = document.getElementById('miniGrid');
+      let html = ['S', 'M', 'T', 'W', 'T', 'F', 'S']
+        .map(d => '<div class="mini-dow">' + d + '</div>').join('');
+      const first = startOfWeek(new Date(miniMonth.getFullYear(), miniMonth.getMonth(), 1));
+      for (let i = 0; i < 42; i++) {
+        const d = new Date(first.getFullYear(), first.getMonth(), first.getDate() + i);
+        const cls = ['mini-day'];
+        if (d.getMonth() !== miniMonth.getMonth()) cls.push('out');
+        if (sameDay(d, TODAY)) cls.push('today');
+        html += '<div class="' + cls.join(' ') + '" data-d="' + iso(d) + '">' + d.getDate() + '</div>';
+        if (i >= 34 && d.getDay() === 6) break;
+      }
+      grid.innerHTML = html;
+      grid.querySelectorAll('.mini-day').forEach(el => {
+        el.addEventListener('click', () => {
+          const [y, m, dd] = el.dataset.d.split('-').map(Number);
+          weekStart = startOfWeek(new Date(y, m - 1, dd));
+          renderWeek();
+        });
+      });
+    }
+
+    function stepMonth(n) {
+      miniMonth = new Date(miniMonth.getFullYear(), miniMonth.getMonth() + n, 1);
+      renderMini();
+    }
+
+    function renderCalList() {
+      document.getElementById('calList').innerHTML = CALENDARS.map((c, i) =>
+        '<div class="cal-item' + (c.on ? '' : ' off') + '" data-i="' + i + '" style="--c:' + c.colour + '">'
+        + '<span class="cal-box"><svg viewBox="0 0 24 24"><path d="M4.5 12.5l5 5 10-11"/></svg></span>'
+        + '<span class="cal-name">' + c.name + '</span></div>').join('');
+      document.querySelectorAll('.cal-item').forEach(el => {
+        el.addEventListener('click', () => {
+          const c = CALENDARS[+el.dataset.i];
+          c.on = !c.on;
+          renderCalList();
+          renderWeek();
+        });
+      });
+    }
+
+    /* ── Week grid ── */
+    function renderWeek() {
+      const days = [];
+      for (let i = 0; i < 7; i++) {
+        days.push(new Date(weekStart.getFullYear(), weekStart.getMonth(), weekStart.getDate() + i));
+      }
+
+      // Range label spans months when the week straddles one.
+      const a = days[0], b = days[6];
+      document.getElementById('range').textContent =
+        (a.getMonth() === b.getMonth())
+          ? MONTHS[a.getMonth()].slice(0, 3) + ' ' + a.getFullYear()
+          : MONTHS[a.getMonth()].slice(0, 3) + ' ' + a.getFullYear() + ' - '
+            + MONTHS[b.getMonth()].slice(0, 3) + ' ' + b.getFullYear();
+
+      document.getElementById('headRow').innerHTML =
+        '<div class="tz-cell">Asia/Calcutta<br>GMT+05:30</div>'
+        + days.map(d => '<div class="day-cell' + (sameDay(d, TODAY) ? ' today' : '') + '">'
+          + '<div class="day-dow">' + DOW[d.getDay()] + '</div>'
+          + '<div class="day-num">' + d.getDate() + '</div></div>').join('');
+
+      // One timezone gutter, in the account's own timezone.
+      let html = '<div class="tz-col">';
+      for (let h = 0; h < 24; h++) html += '<div class="tz-slot">' + label12(h * 60) + '</div>';
+      html += '</div>';
+
+      days.forEach(d => {
+        const today = sameDay(d, TODAY);
+        html += '<div class="day-col' + (today ? ' today' : '') + '" data-d="' + iso(d) + '">';
+        for (let h = 0; h < 24; h++) html += '<div class="hour-slot"></div>';
+        html += laidOut(iso(d));
+        if (today) html += nowLine();
+        html += '</div>';
+      });
+
+      document.getElementById('bodyGrid').innerHTML = html;
+      document.querySelectorAll('.ev').forEach(el => {
+        el.addEventListener('click', (e) => {
+          e.stopPropagation();
+          // A finished event has notes to read; an upcoming one does not.
+          openEvModal(el, el.classList.contains('past'));
+        });
+      });
+    }
+
+    /* Overlapping events share the column width, so a busy day reads as busy
+       rather than hiding everything behind one block. */
+    function laidOut(dateKey) {
+      const list = (EVENTS[dateKey] || []).filter(ev => calById(ev.cal).on);
+      if (!list.length) return '';
+
+      const all = list.map(ev => ({ ev, s: mins(ev.s), e: mins(ev.e) }))
+        .sort((x, y) => x.s - y.s || y.e - x.e);
+
+      // A block spanning most of the day must not squeeze everything else
+      // into slivers, so those get their own narrow lanes down the left and
+      // are left out of the clustering for the rest.
+      const tall = all.filter(it => it.ev.tall);
+      const items = all.filter(it => !it.ev.tall);
+
+      let out = '';
+      const TALL_W = 22;                       // % of the column, each
+      const inset = tall.length * TALL_W;
+
+      tall.forEach((it, i) => {
+        const cal = calById(it.ev.cal);
+        out += evHtml(it, cal, i * TALL_W, TALL_W, dateKey, ['ev', 'tall']);
+      });
+
+      // Group the rest into clusters that overlap and share the width.
+      const clusters = [];
+      items.forEach(it => {
+        const c = clusters[clusters.length - 1];
+        if (c && it.s < c.end) { c.items.push(it); c.end = Math.max(c.end, it.e); }
+        else clusters.push({ items: [it], end: it.e });
+      });
+
+      clusters.forEach(c => {
+        const lanes = [];
+        c.items.forEach(it => {
+          let lane = lanes.findIndex(l => l <= it.s);
+          if (lane === -1) { lanes.push(it.e); lane = lanes.length - 1; }
+          else lanes[lane] = it.e;
+          it.lane = lane;
+        });
+        const n = Math.max(1, lanes.length);
+        const w = (100 - inset) / n;
+        c.items.forEach(it => {
+          const cal = calById(it.ev.cal);
+          const cls = ['ev'];
+          if (it.ev.busy) cls.push('busy');
+          out += evHtml(it, cal, inset + it.lane * w, w, dateKey, cls);
+        });
+      });
+      return out;
+    }
+
+    // Minutes from the start of the shown week to the pinned "now".
+    function nowAbs() {
+      return (TODAY - startOfWeek(TODAY)) / 60000 + NOW_MIN;
+    }
+    function absMin(dateKey, m) {
+      const [y, mo, d] = dateKey.split('-').map(Number);
+      return (new Date(y, mo - 1, d) - startOfWeek(new Date(y, mo - 1, d))) / 60000 + m;
+    }
+    function isPast(dateKey, endMin) {
+      const [y, mo, d] = dateKey.split('-').map(Number);
+      const day = new Date(y, mo - 1, d);
+      if (day < TODAY) return true;
+      if (day > TODAY) return false;
+      return endMin <= NOW_MIN;
+    }
+
+    function evHtml(it, cal, leftPct, widthPct, dateKey, cls) {
+      const dur = it.e - it.s;
+      if (isPast(dateKey, it.e)) cls = cls.concat('past');
+      // Times are only worth the room on hour-plus events, and a Busy block
+      // carries no detail to show.
+      const showTime = dur >= 60 && !it.ev.busy;
+      return '<div class="' + cls.join(' ') + '"'
+        + ' style="--c:' + cal.colour + ';--fill:' + cal.fill
+        + ';top:' + (it.s / 60 * HOUR_PX) + 'px'
+        + ';height:' + Math.max(18, dur / 60 * HOUR_PX - 2) + 'px'
+        + ';left:' + leftPct + '%;width:calc(' + widthPct + '% - 2px)"'
+        + ' data-t="' + esc(it.ev.t) + '" data-s="' + it.ev.s + '" data-e="' + it.ev.e
+        + '" data-cal="' + it.ev.cal + '" data-date="' + dateKey + '">'
+        + '<div class="ev-title">' + esc(it.ev.t) + '</div>'
+        + (showTime ? '<div class="ev-time">' + label12(it.s) + ' - ' + label12(it.e) + '</div>' : '')
+        + '</div>';
+    }
+
+    const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+
+    function nowLine() {
+      return '<div class="now" style="top:' + (NOW_MIN / 60 * HOUR_PX) + 'px"></div>';
+    }
+
+    /* ── Event popover, carrying the Recap capture toggle (C1) ── */
+    const armed = {};
+    function keyOf(el) { return el.dataset.date + '|' + el.dataset.t + '|' + el.dataset.s; }
+
+    function openEvent(el) {
+      const cal = calById(el.dataset.cal);
+      const k = keyOf(el);
+      const pop = document.getElementById('evPop');
+      const [y, m, d] = el.dataset.date.split('-').map(Number);
+      const when = DOW[new Date(y, m - 1, d).getDay()] + ' ' + d + ' ' + MONTHS[m - 1].slice(0, 3)
+        + ' · ' + label12(mins(el.dataset.s)) + ' - ' + label12(mins(el.dataset.e));
+
+      pop.style.setProperty('--c', cal.colour);
+      pop.innerHTML = '<button class="ev-pop-x" onclick="closeEvent()">×</button>'
+        + '<div class="ev-pop-title">' + esc(el.dataset.t) + '</div>'
+        + '<div class="ev-pop-when">' + when + '</div>'
+        + '<div class="ev-pop-cal"><span class="ev-pop-dot"></span>' + esc(cal.name) + '</div>'
+        + '<div class="ev-pop-row"><div class="ev-pop-row-text">'
+        + '<div class="ev-pop-row-label">Take notes on this call</div>'
+        + '<div class="ev-pop-row-sub" id="popSub">'
+        + (armed[k] ? 'Attendees will see a note in the invite' : 'Titan will write up the call afterwards')
+        + '</div></div>'
+        + '<button class="sw' + (armed[k] ? ' on' : '') + '" id="popSw" role="switch" aria-checked="'
+        + (armed[k] ? 'true' : 'false') + '"><i></i></button></div>';
+
+      pop.classList.add('open');
+      const r = el.getBoundingClientRect();
+      const w = pop.offsetWidth, h = pop.offsetHeight;
+      pop.style.left = Math.max(12, Math.min(r.right + 10, window.innerWidth - w - 12)) + 'px';
+      pop.style.top = Math.max(12, Math.min(r.top, window.innerHeight - h - 12)) + 'px';
+
+      document.getElementById('popSw').addEventListener('click', () => {
+        armed[k] = !armed[k];
+        const sw = document.getElementById('popSw');
+        sw.classList.toggle('on', armed[k]);
+        sw.setAttribute('aria-checked', String(armed[k]));
+        document.getElementById('popSub').textContent = armed[k]
+          ? 'Attendees will see a note in the invite'
+          : 'Titan will write up the call afterwards';
+        showToast(armed[k] ? 'Titan will take notes on this call' : 'Note-taking turned off');
+      });
+    }
+
+
+    /* ── Event modal — past `5148:10225`, upcoming `5239:36082` ──
+       Same dialog either way; they differ only in the block under the title.
+       A finished event leads with its Recap notes. An upcoming one has nothing
+       to read yet, so it carries C1, the capture toggle, in that slot — the
+       Figma frame omits it, but the toggle would otherwise be unreachable in
+       the calendar now that the light popover is gone. */
+    function openEvModal(el, isPast) {
+      modalEvent = el;
+      const cal = calById(el.dataset.cal);
+      const [y, mo, d] = el.dataset.date.split('-').map(Number);
+      const day = new Date(y, mo - 1, d);
+      const dateLine = DOW_FULL[day.getDay()] + ', ' + d + ordinal(d) + ' '
+        + MONTHS[mo - 1] + ' ' + y;
+      const timeLine = label12(mins(el.dataset.s)) + ' - ' + label12(mins(el.dataset.e));
+
+      // An upcoming event carries nothing above the details — Figma's frame
+      // has no capture toggle there, so C1 no longer appears in the calendar.
+      const lead = isPast
+        ? '<div class="evm-recap">'
+          + '<div class="evm-recap-head"><img src="calendar_assets/recap-mark.svg" alt="">'
+          + '<span>Titan Recap</span></div>'
+          + '<div class="evm-recap-body">' + recapBlurb(el.dataset.t) + '</div>'
+          + '<button class="evm-recap-link" onclick="viewNotes()">View notes'
+          + '<img src="calendar_assets/ic-external.svg" alt=""></button>'
+          + '</div>'
+        : '';
+
+      document.getElementById('evModal').innerHTML =
+        '<button class="evm-x" onclick="closeEvModal()" aria-label="Close">'
+        + '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg></button>'
+        + '<div class="evm-title">' + esc(el.dataset.t) + '</div>'
+        + lead
+
+        + '<div class="evm-rows">'
+        + '<div class="evm-row"><span class="evm-ic evm-ic-clock"><img src="calendar_assets/ic-clock.svg" alt=""></span><div class="evm-row-main">'
+        + '<div class="evm-l1">' + dateLine + '</div>'
+        + '<div class="evm-l2">' + timeLine + '</div>'
+        + '<div class="evm-l2">Does not repeat</div></div></div>'
+
+        + '<div class="evm-row"><span class="evm-ic evm-ic-loc"><img src="calendar_assets/ic-location.svg" alt=""></span><div class="evm-row-main">'
+        + '<div class="evm-l1">Avontech Labs, 4th Floor, Koramangala, Bangalore</div></div></div>'
+
+        + '<div class="evm-row"><span class="evm-ic evm-ic-conf"><img src="calendar_assets/ic-conference.svg" alt=""></span><div class="evm-row-main">'
+        + '<div class="evm-link">https://us04web.zoom.us/j/73437400003?pwd=8cWXJYVX5bZvaiXUD2gcAb0httQb6c.1</div>'
+        + '<div class="evm-meta"><b>Meeting ID:</b> 823 9517 5163</div>'
+        + '<div class="evm-meta" style="margin-top:4px"><b>Passcode:</b> 2BBFKH</div>'
+        + '</div></div>'
+
+        + '<div class="evm-row"><span class="evm-ic evm-ic-guests"><img src="calendar_assets/ic-guests.svg" alt=""></span>'
+        + '<div class="evm-row-main"><div class="evm-guests-head"><div class="evm-row-main">'
+        + '<div class="evm-l1">4 Guests</div>'
+        + '<div class="evm-l2">' + (isPast ? '3 going, 1 awaiting response'
+            : '1 going, 1 not going, 1 maybe, 1 awaiting response') + '</div></div>'
+        + '<button class="evm-chev" id="evmChev" onclick="toggleGuests()" aria-label="Hide guests">'
+        + '<img src="calendar_assets/ic-chevron-up.svg" alt=""></button></div>'
+        + '<div class="evm-guest-list" id="evmGuests">'
+        + GUESTS.map(g => '<div class="evm-guest"><img src="calendar_assets/ic-avatar.svg" alt="">'
+            + '<div><div class="evm-guest-name">' + g.email + '</div>'
+            + (g.role ? '<div class="evm-guest-role">' + g.role + '</div>' : '') + '</div></div>').join('')
+        + '</div></div></div>'
+        + '</div>'
+
+        + '<div class="evm-foot">'
+        + '<button class="evm-del" onclick="showToast(\'Delete is not built out in this prototype\')">Delete</button>'
+        + '<button class="evm-edit" onclick="showToast(\'Edit is not built out in this prototype\')">Edit</button>'
+        + '<button class="evm-going"><span>Going</span><i>'
+        + '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></i></button>'
+        + '</div>';
+
+      document.getElementById('evScrim').classList.add('open');
+      document.getElementById('evModal').classList.add('open');
+
+    }
+
+    const DOW_FULL = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    function ordinal(n) {
+      if (n % 10 === 1 && n !== 11) return 'st';
+      if (n % 10 === 2 && n !== 12) return 'nd';
+      if (n % 10 === 3 && n !== 13) return 'rd';
+      return 'th';
+    }
+    const GUESTS = [
+      { email: 'ella@avontech.com', role: 'Organiser' },
+      { email: 'jim@avontech.com', role: '' },
+      { email: 'pam@avontech.com', role: '' },
+      { email: 'dwight@avontech.com', role: 'Awaiting response' }
+    ];
+
+    // The blurb is the note's opening line, so the card says something real
+    // about that meeting rather than one generic sentence everywhere.
+    const BLURBS = {
+      'Ignite 2026': 'Session run-through for the keynote track, with the running order agreed and two demos still to be confirmed.',
+      'Hackathon — build week': 'Kick-off for build week: teams picked their tracks, and judging criteria were settled before people scattered.',
+      'Design review': 'Walked the dark palette across the composer and reply surfaces. Two icons were inverting instead of lifting, so they read as holes.',
+      'Design sync': 'Quick alignment on the review queue and who is covering which surface this week.',
+      'Daily triage': 'Ran the incoming queue: three issues assigned, one closed as expected behaviour.',
+      'Demo - Prj-Text Editor': 'Demoed the editor changes. Formatting persistence still fails on paste, which is going back for a fix.',
+      'Stand up - Prj-[Mobile] App': 'Status round on the mobile build. Nothing blocked, release candidate still on track.',
+      'Stand up - Prj-Notifications': 'Notifications work is waiting on the permission copy before it can ship.',
+      'Titan onboarding': 'Walked new joiners through the account setup and the shared calendars.',
+      'Titan review': 'Reviewed last cycle against the plan and picked the two things worth carrying forward.',
+      'Team catch-up': 'General catch-up. Leave dates shared and the on-call rota confirmed.',
+      'Dwight & Ella 1:1': 'One-to-one. Covered workload for the next two weeks and the interface audit findings.',
+      '(No Title)': 'A short call with no agenda set. Nothing was decided.',
+      'Busy': 'This time was held as busy, so there is nothing to write up.'
+    };
+    function recapBlurb(title) {
+      return esc(BLURBS[title]
+        || 'The conversation covered the main agenda points discussed by attendees, along with any updates, decisions, or concerns raised along the way.');
+    }
+
+    function toggleGuests() {
+      const list = document.getElementById('evmGuests');
+      const chev = document.getElementById('evmChev');
+      const hide = !list.hidden;
+      list.hidden = hide;
+      chev.classList.toggle('closed', hide);
+      chev.setAttribute('aria-label', hide ? 'Show guests' : 'Hide guests');
+    }
+
+    function closeEvModal() {
+      document.getElementById('evScrim').classList.remove('open');
+      document.getElementById('evModal').classList.remove('open');
+    }
+
+    // The notes live in the Recap app, which is its own tab. Pass the event
+    // through so it opens that meeting's own note, not the list.
+    let modalEvent = null;
+    function viewNotes() {
+      if (!modalEvent) return;
+      const el = modalEvent;
+      const [y, mo, d] = el.dataset.date.split('-').map(Number);
+      const q = new URLSearchParams({
+        note: el.dataset.t,
+        date: el.dataset.date,
+        when: DOW_FULL[new Date(y, mo - 1, d).getDay()] + ' • ' + label12(mins(el.dataset.s)),
+        dur: durLabel(mins(el.dataset.e) - mins(el.dataset.s))
+      });
+      closeEvModal();
+      window.open('recap.html?' + q.toString(), '_blank');
+    }
+
+    function durLabel(m) {
+      const h = Math.floor(m / 60), mm = m % 60;
+      return (h ? h + ' hr' + (h > 1 ? 's' : '') : '') + (h && mm ? ' ' : '') + (mm ? mm + ' min' : '');
+    }
+
+    function closeEvent() { document.getElementById('evPop').classList.remove('open'); }
+    document.addEventListener('click', (e) => {
+      const pop = document.getElementById('evPop');
+      if (pop.classList.contains('open') && !pop.contains(e.target)) closeEvent();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key !== 'Escape') return;
+      if (document.getElementById('evModal').classList.contains('open')) return closeEvModal();
+      closeEvent();
+    });
+
+    function stepWeek(n) {
+      weekStart = new Date(weekStart.getFullYear(), weekStart.getMonth(), weekStart.getDate() + n * 7);
+      renderWeek();
+    }
+    function goToday() {
+      weekStart = startOfWeek(TODAY);
+      miniMonth = new Date(TODAY.getFullYear(), TODAY.getMonth(), 1);
+      renderMini();
+      renderWeek();
+      scrollToMorning();
+    }
+
+    function scrollToMorning() {
+      document.getElementById('bodyScroll').scrollTop = 9 * HOUR_PX - 8;
+    }
+
+    /* ── App switcher, same component as the mail app ── */
+    (function initAppSwitcher() {
+      const btn = document.getElementById('tabSwitch');
+      const panel = document.getElementById('app-switcher');
+      if (!btn || !panel) return;
+
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        panel.classList.contains('open') ? closeAppSwitcher() : openAppSwitcher();
+      });
+
+      window.openAppSwitcher = function () {
+        btn.classList.add('active');
+        panel.style.display = 'block';
+        panel.offsetHeight;
+        panel.classList.add('open');
+      };
+
+      window.closeAppSwitcher = function () {
+        btn.classList.remove('active');
+        panel.classList.remove('open');
+        const done = (ev) => {
+          if (ev.propertyName === 'opacity' && !panel.classList.contains('open')) {
+            panel.style.display = 'none';
+            panel.removeEventListener('transitionend', done);
+          }
+        };
+        panel.addEventListener('transitionend', done);
+      };
+
+      window.openApp = function (href) {
+        closeAppSwitcher();
+        window.open(href, '_blank');
+      };
+
+      document.addEventListener('click', (e) => {
+        if (panel.classList.contains('open') && !panel.contains(e.target) && !btn.contains(e.target)) {
+          closeAppSwitcher();
+        }
+      });
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && panel.classList.contains('open')) closeAppSwitcher();
+      });
+    })();
+
+    renderMini();
+    renderCalList();
+    renderWeek();
+    scrollToMorning();
+
+  </script>
+</body>
+
+</html>

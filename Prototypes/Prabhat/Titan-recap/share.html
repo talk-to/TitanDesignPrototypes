@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Partner Logo SVG Sizing Issue — Shared note</title>
+  <style>
+    /* ══════════════════════════════════════════════════════════════════════
+       Shared note — the client's view of a copied Recap link.
+       Figma 5285:20612 ("Share - Files").
+
+       No sign-in, no app chrome: the Recap nav, the sender's branding, and
+       the note. The blue ground is the giveaway that this is a public page
+       and not the app.
+       ══════════════════════════════════════════════════════════════════════ */
+    :root {
+      --nav-bg: #1d2133;
+      --page-bg: #154698;          /* the frame's own fill */
+      --font-primary: #333333;
+      --font-secondary: #888888;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--page-bg);
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, sans-serif;
+      color: var(--font-primary);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Nav (5285:20653) — the app's bar with nothing to click, since a
+          recipient has no account here. ── */
+    .eb-nav {
+      background: var(--nav-bg);
+      height: 68px;
+      display: flex;
+      align-items: center;
+      padding: 0 68px;
+    }
+    .nav-brand { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
+    .nav-partner-logo { padding: 1px 7px; display: flex; }
+    .nav-partner-logo img { width: 22px; height: 19px; display: block; }
+    .nav-sep { width: 1px; height: 18px; background: rgba(255, 255, 255, 0.24); flex-shrink: 0; }
+    .nav-app-name {
+      font-size: 20px;
+      color: #ffffff;
+      letter-spacing: -0.4px;
+      padding-left: 9px;
+      white-space: nowrap;
+    }
+    .nav-powered {
+      margin-left: auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 6px;
+      height: 36px;
+      flex-shrink: 0;
+    }
+    .nav-powered span { font-size: 12px; line-height: 20px; color: #ffffff; white-space: nowrap; }
+    .nav-powered img { width: 92px; height: 21.288px; display: block; }
+
+    /* ── Page ── */
+    .sh-page {
+      width: 1312px;
+      max-width: calc(100% - 48px);
+      margin: 0 auto;
+      padding: 24px 0 64px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    /* ── Sender's branding (5285:20633) ── */
+    .sh-brand {
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .sh-brand-who { display: flex; align-items: center; gap: 12px; min-width: 0; }
+    /* The sender's mark. Figma calls the layer "Demo Logo" and draws it as
+       four quadrants — a stand-in for whatever the account has uploaded, so
+       it is drawn here rather than exported. */
+    .sh-logo {
+      width: 48px;
+      height: 48px;
+      position: relative;
+      flex-shrink: 0;
+    }
+    .sh-logo i { position: absolute; display: block; }
+    .sh-logo .q1 { left: 0;   top: 0;   width: 70%; height: 30%; background: #f36523; }
+    .sh-logo .q2 { left: 30%; top: 70%; width: 70%; height: 30%; background: #0068a7; }
+    .sh-logo .q3 { left: 70%; top: 0;   width: 30%; height: 70%; background: #f50808; }
+    .sh-logo .q4 { left: 0;   top: 30%; width: 30%; height: 70%; background: #e9a601; }
+    .sh-brand-text { display: flex; flex-direction: column; justify-content: center; gap: 8px; min-width: 0; }
+    .sh-brand-name {
+      font-size: 20px;
+      font-weight: 600;
+      line-height: 20px;
+      color: var(--font-primary);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .sh-brand-by {
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 20px;
+      color: var(--font-secondary);
+      white-space: nowrap;
+    }
+    .sh-social { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+    .sh-social a { display: block; }
+    .sh-social img { width: 28px; height: 28px; display: block; }
+
+    /* ── The note (5285:20623) ── */
+    .sh-note {
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 20px 24px 24px;
+    }
+    .sh-note-head {
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: 20px;
+    }
+    .sh-note-title {
+      margin: 0;
+      font-size: 24px;
+      font-weight: 600;
+      color: var(--font-primary);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .sh-note-when {
+      font-size: 14px;
+      line-height: 20px;
+      color: var(--font-secondary);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    /* Figma insets the body 262px inside a 1264 panel, which is a 740 column
+       centred in it — the same measure the note reads at inside the app. */
+    .sh-panel {
+      background: #eff5ff;
+      border-radius: 8px;
+      padding: 40px 0;
+      display: flex;
+      justify-content: center;
+    }
+    .note-body {
+      width: 740px;
+      max-width: calc(100% - 48px);
+      font-size: 14px;
+      line-height: 1.6;
+      color: #222222;
+    }
+    .note-body h3 {
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 1.6;
+      margin: 0;
+    }
+    .note-body ul { margin: 0 0 22px; padding-left: 21px; }
+    .note-body ul:last-child { margin-bottom: 0; }
+    .note-body li { margin: 0; }
+    .note-body b { font-weight: 600; }
+
+    /* A recipient cannot act on the note, so nothing here is interactive
+       except the sender's own links. */
+    .sh-foot {
+      text-align: center;
+      font-size: 12px;
+      line-height: 20px;
+      color: rgba(255, 255, 255, 0.7);
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ── Nav ── -->
+  <div class="eb-nav">
+    <div class="nav-brand">
+      <div class="nav-partner-logo"><img src="recap_app_assets/partner-logo.svg" alt=""></div>
+      <div class="nav-sep"></div>
+      <span class="nav-app-name">Recap</span>
+    </div>
+    <div class="nav-powered">
+      <span>Powered by</span>
+      <img src="recap_app_assets/titan-logo-inverse.svg" alt="Titan">
+    </div>
+  </div>
+
+  <!-- ── Page ── -->
+  <div class="sh-page">
+
+    <div class="sh-brand">
+      <div class="sh-brand-who">
+        <span class="sh-logo" aria-hidden="true">
+          <i class="q1"></i><i class="q2"></i><i class="q3"></i><i class="q4"></i>
+        </span>
+        <div class="sh-brand-text">
+          <div class="sh-brand-name" id="shBrand">Avontech Labs</div>
+          <div class="sh-brand-by" id="shBy">Shared by Ella</div>
+        </div>
+      </div>
+      <div class="sh-social">
+        <a href="#" onclick="return false;" aria-label="Facebook"><img src="share_assets/ic-facebook.svg" alt=""></a>
+        <a href="#" onclick="return false;" aria-label="Website"><img src="share_assets/ic-globe.svg" alt=""></a>
+      </div>
+    </div>
+
+    <div class="sh-note">
+      <div class="sh-note-head">
+        <h1 class="sh-note-title" id="shTitle">Partner Logo SVG Sizing Issue</h1>
+        <span class="sh-note-when" id="shWhen">12 Sep 2026 • 05:34 PM</span>
+      </div>
+      <div class="sh-panel">
+        <div class="note-body" id="shBody"></div>
+      </div>
+    </div>
+
+    <div class="sh-foot">Shared with you from Titan Recap</div>
+
+  </div>
+
+  <script>
+    /* The link the sender copied carries the note with it — title, when, and
+       the summary — because there is no account here to look it up in.
+       Everything falls back to the note the design uses. */
+    const SHARE_DEFAULT = {
+      title: 'Partner Logo SVG Sizing Issue',
+      when: '12 Sep 2026 • 05:34 PM',
+      brand: 'Avontech Labs',
+      by: 'Shared by Ella',
+      summary: `
+        <h3>Logo Rendering Bug</h3>
+        <ul>
+          <li>Partner SVG shipped at 1641x1641 view box, breaking Paywall and blocking Drive access across all 7 apps</li>
+          <li>Partner branding is intentional (e.g. GoDaddy pitched as their own drive), but no size ceiling was enforced</li>
+          <li>Root cause surfaced because QA lacks creds for many partners like names.it.all</li>
+        </ul>
+        <h3>Fix &amp; Safeguards</h3>
+        <ul>
+          <li><b>Speaker 1</b> shared 30px light and dark SVGs with <b>Speaker 2</b>; Alex to create links, Rina/Shweta update partner info</li>
+          <li><b>Speaker 1</b> to investigate adding a max-width guard so bad partner uploads don't break the app</li>
+          <li><b>Speaker 4</b> pushed for a rendering-side check since manual partner testing won't scale on every logo update</li>
+        </ul>
+        <h3>Partner Test Creds</h3>
+        <ul>
+          <li>Feature-level cred coverage in progress for top 10 partners with Shweta and Rina; creds expire every 3-6 months</li>
+        </ul>
+        <h3>Next Steps</h3>
+        <ul>
+          <li>(<b>Speaker 2</b>) Ask Alex (backend) to create links for the new 30px SVGs and update partner info panel</li>
+          <li>(<b>Speaker 2</b>) Coordinate testing across majority of partners once max-width change lands</li>
+          <li>(<b>Speaker 1</b>) Investigate whether a max-width safeguard is feasible without breaking existing partners</li>
+          <li>(<b>Speaker 3</b>) Continue top-10 partner cred coverage work with Shweta and Rina</li>
+        </ul>
+        <h3>Decisions Made</h3>
+        <ul>
+          <li>Partner logos standardized to 30px, 1:1 ratio, with separate light and dark mode SVGs</li>
+          <li>Partner branding stays (not Titan branding) since drive is pitched as the partner's own product</li>
+        </ul>`
+    };
+
+    (function renderShare() {
+      const q = new URLSearchParams(location.search);
+      const pick = (k) => q.get(k) || SHARE_DEFAULT[k];
+      const title = pick('title');
+      document.getElementById('shTitle').textContent = title;
+      document.getElementById('shWhen').textContent = pick('when');
+      document.getElementById('shBrand').textContent = pick('brand');
+      document.getElementById('shBy').textContent = pick('by');
+      document.getElementById('shBody').innerHTML = pick('summary');
+      document.title = title + ' — Shared note';
+    })();
+  </script>
+
+</body>
+
+</html>

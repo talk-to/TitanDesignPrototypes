@@ -1,0 +1,744 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Titan Drive</title>
+<link rel="icon" href="app_switcher_assets/grid_icons/drive.svg">
+<style>
+  /* ================================================================
+     Titan Drive — built from the supplied Drive shell
+     (Figma "Drive - bulk selection", 4171:51176).
+
+     Two changes from that shell, both deliberate:
+       · The mock browser bar is dropped. The real tab supplies that
+         chrome, and every other app in this prototype does the same.
+       · Icons live in drive_assets/ rather than inline data URIs, so
+         the file stays readable.
+
+     Opened from the Recap app's "Get audio" action, which lands on
+     the Meeting recordings folder via ?folder=recordings.
+     ================================================================ */
+
+  :root {
+    --primary: #2170f4;
+    --ink: #333333;
+    --muted: #888888;
+    --disable: #bdbdbd;
+    --white: #ffffff;
+    --nav-bg: #1d2133;
+    --nav-hover: #2d314b;
+    --nav-active: #484872;
+    --teal: #56bbc5;
+    --orange: #f3ad5e;
+    --line: #dedede;
+    --hover-grey: #f0f0f0;
+    --control-border: #b1b1b1;
+    --thead-bg: #fbfbfb;
+    --toggle-bg: #f6f6f6;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background: #f3f5f8;
+    font-family: "SF Pro Text", "SF Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    color: var(--ink);
+  }
+
+  .app {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-width: 1240px;
+    height: 100vh;
+    background: var(--white);
+    overflow: hidden;
+  }
+
+  img { display: block; }
+  .i16 { width: 16px; height: 16px; }
+  .i20 { width: 20px; height: 20px; }
+
+  .shell { flex: 1 1 auto; display: flex; min-height: 0; }
+
+  /* ================= Sidebar (228px) ================= */
+  .sidebar {
+    width: 228px;
+    flex: 0 0 228px;
+    background: var(--nav-bg);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .side-top-wrap { display: flex; flex-direction: column; gap: 20px; }
+
+  .side-head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 17px 12px;
+    border-bottom: 1px solid #000;
+  }
+
+  .tab-switch {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    padding: 1px 2px;
+    background: var(--nav-hover);
+    border-radius: 4px;
+    border: 0;
+    cursor: pointer;
+  }
+
+  .tab-switch .drive-mark { width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; }
+  .tab-switch .drive-mark img { width: 21px; height: 20px; }
+  .tab-switch .caret { width: 16px; height: 16px; display: flex; align-items: center; justify-content: center; }
+  .tab-switch .caret img { width: 8.1px; height: 4.8px; }
+
+  .brand { display: flex; align-items: center; gap: 4px; }
+  .brand .partner { padding: 1px 7px; }
+  .brand .partner img { width: 22px; height: 19px; }
+  .brand .vrule { align-self: stretch; width: 1px; background: rgba(255, 255, 255, 0.2); }
+  .brand .wordmark { padding-left: 8px; font-size: 22px; font-weight: 500; color: var(--white); white-space: nowrap; }
+
+  .tabs { display: flex; flex-direction: column; gap: 12px; padding: 0 16px; }
+
+  .nav-item {
+    width: 196px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 24px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 14px;
+    color: var(--white);
+    cursor: pointer;
+  }
+
+  .nav-item:hover { background: var(--nav-hover); }
+  .nav-item.is-active { background: var(--nav-active); font-weight: 600; }
+  .nav-rule { height: 1px; width: 100%; background: #000; }
+
+  .storage {
+    height: 64px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 10px 16px;
+    color: var(--disable);
+    line-height: 20px;
+    white-space: nowrap;
+  }
+
+  .storage .label { font-size: 13px; }
+  .storage .value { font-size: 14px; }
+
+  .fh { display: flex; background: var(--nav-hover); }
+
+  .fh a {
+    flex: 1 0 0;
+    min-width: 1px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 9.5px 12px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--white);
+  }
+
+  .fh a:first-child { border-right: 1px solid #000; }
+
+  /* ================= Main ================= */
+  .main { flex: 1 1 auto; display: flex; flex-direction: column; min-width: 0; }
+
+  .topbar {
+    height: 64px;
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 24px;
+    background: var(--white);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .topbar-left { display: flex; align-items: center; gap: 16px; }
+  .topbar-right { display: flex; align-items: center; justify-content: flex-end; gap: 16px; }
+
+  .btn-upload {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 10px 18px 10px 16px;
+    background: var(--primary);
+    border: 0;
+    border-radius: 5px;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 20px;
+    color: var(--white);
+    cursor: pointer;
+  }
+
+  .search {
+    width: 300px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 8px;
+    background: var(--white);
+    border: 1px solid var(--control-border);
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  .search img { width: 12px; height: 12.5px; margin: 0 6px; }
+  .search span { font-size: 14px; line-height: 20px; color: var(--muted); }
+
+  .filters {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 6px 10px 12px;
+    background: var(--white);
+    border: 1px solid var(--control-border);
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  .filters .lhs { display: flex; align-items: center; gap: 6px; }
+  .filters span { font-size: 14px; font-weight: 500; line-height: 20px; color: var(--muted); }
+  .filters .caret img { width: 8.3px; height: 4.2px; }
+
+  .account {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 6px 8px 12px;
+    background: var(--white);
+    border: 1px solid var(--control-border);
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  .avatar { position: relative; width: 24px; height: 24px; }
+  .avatar img { position: absolute; inset: 0; width: 24px; height: 24px; }
+
+  .avatar span {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--white);
+  }
+
+  .account .caret img { width: 10px; height: 5px; }
+
+  .powered { display: flex; align-items: center; gap: 16px; height: 36px; }
+  .powered .vrule { width: 1px; height: 36px; background: var(--line); }
+  .powered .logo { position: relative; width: 55px; height: 24px; }
+  .powered .logo .pb { position: absolute; left: 0; top: 0; width: 49.953px; height: 5px; }
+  .powered .logo .tk { position: absolute; left: 0; top: 11.16px; width: 13.758px; height: 12.844px; }
+  .powered .logo .tw { position: absolute; left: 16.65px; top: 11.99px; width: 38.35px; height: 9.72px; }
+
+  /* ---------- Content ---------- */
+  .content { flex: 1 1 auto; overflow: auto; padding: 24px; }
+  .board { min-width: 0; }
+
+  .folder-head { height: 40px; display: flex; align-items: center; justify-content: space-between; }
+
+  .crumb {
+    height: 36px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 0;
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--ink);
+    white-space: nowrap;
+  }
+
+  .crumb[hidden] { display: none; }
+
+  /* Nested trail is 16px with a chevron separator; the parent is regular
+     weight and the current folder semibold, both in font/primary. */
+  .crumb.is-nested { gap: 20px; font-size: 16px; font-weight: 400; }
+  .crumb.is-nested a { color: var(--ink); text-decoration: none; }
+  .crumb.is-nested a:hover { text-decoration: underline; }
+  .crumb.is-nested .current { font-weight: 600; }
+
+  .crumb-sep { display: flex; align-items: center; justify-content: center; width: 16px; height: 16px; }
+  .crumb-sep svg { display: block; width: 16px; height: 16px; }
+
+  .folder-actions { display: flex; align-items: center; justify-content: flex-end; gap: 24px; }
+
+  .btn-newfolder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 12px 10px 10px;
+    background: transparent;
+    border: 1px solid var(--primary);
+    border-radius: 4px;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 20px;
+    color: var(--primary);
+    cursor: pointer;
+  }
+
+  .view-toggle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px;
+    background: var(--toggle-bg);
+    border: 0;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  .table { margin-top: 20px; }
+  .table[hidden] { display: none; }
+
+  .thead {
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px 0 4px;
+    background: var(--thead-bg);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .thead-left { flex: 1 1 auto; min-width: 0; display: flex; align-items: center; gap: 8px; }
+  .thead-left .col-name { font-size: 14px; font-weight: 600; color: var(--ink); white-space: nowrap; }
+
+  .thead-right { flex: 0 0 auto; display: flex; align-items: center; justify-content: flex-end; gap: 250px; }
+  .thead-right .meta { display: flex; align-items: center; gap: 134px; }
+  .thead-right .col-date,
+  .thead-right .col-size { font-size: 14px; font-weight: 500; color: var(--ink); white-space: nowrap; }
+  .thead-right .spacer { width: 32px; height: 17px; }
+
+  .check-layer { display: flex; align-items: center; justify-content: center; padding: 11px; border-radius: 100px; }
+  .check-box { width: 18px; height: 18px; border-radius: 2px; }
+  .thead .check-box { border: 1px solid var(--disable); }
+  .check-cell { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 4px; }
+
+  .row {
+    height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 14px 0 0;
+    background: var(--white);
+    border-bottom: 1px solid var(--hover-grey);
+  }
+
+  .row:hover { background: var(--hover-grey); }
+  .row.is-folder { cursor: pointer; }
+  /* The recording the current journey produced, so it can be found at a glance */
+  .row.is-new { background: #eff5ff; }
+  .row.is-new:hover { background: #e3edfd; }
+  .row-left { flex: 1 1 auto; min-width: 0; display: flex; align-items: center; }
+  .name-cell { flex: 1 1 auto; min-width: 0; display: flex; align-items: center; gap: 8px; }
+
+  .fname {
+    flex: 1 1 auto;
+    min-width: 0;
+    font-size: 14px;
+    color: var(--ink);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .row-right { flex: 0 0 auto; display: flex; align-items: center; gap: 250px; }
+  .row-right .meta { display: flex; align-items: center; gap: 134px; }
+  .col-date { width: 120px; font-size: 14px; color: var(--muted); white-space: nowrap; }
+  .col-size { width: 90px; font-size: 14px; color: var(--muted); white-space: nowrap; }
+
+  .more-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px;
+    background: none;
+    border: 0;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  .more-btn:hover { background: rgba(0, 0, 0, 0.06); }
+
+  /* ---------- File type glyphs ---------- */
+  .ft { position: relative; width: 32px; height: 32px; flex: 0 0 32px; }
+  .ft-full { width: 32px; height: 32px; }
+  .ft-leaf { width: 20px; height: 25px; }
+  .ft-doc { display: flex; align-items: center; justify-content: center; padding: 5px 4px; }
+
+  /* Microphone stamped in white on the folder face. The folder artwork
+     spans x 4-28 and its face y 8.88-27 in the 32-unit box, so the centre
+     of the face is (16, 17.94) — 50% across, 56% down. */
+  .mic-stamp {
+    position: absolute;
+    left: 16px;
+    top: 17.94px;
+    transform: translate(-50%, -50%);
+    width: 13px;
+    height: 13px;
+    display: block;
+  }
+
+  .mic-stamp svg { display: block; width: 13px; height: 13px; }
+
+  /* ---------- Audio player, opened from a recording ---------- */
+  .scrim {
+    position: fixed;
+    inset: 0;
+    z-index: 80;
+    background: rgba(0, 0, 0, 0.4);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.18s ease, visibility 0.18s ease;
+  }
+
+  .scrim.on { opacity: 1; visibility: visible; }
+
+  .player {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    z-index: 90;
+    width: 460px;
+    transform: translate(-50%, -46%);
+    background: var(--white);
+    border-radius: 8px;
+    box-shadow: 0 18px 60px rgba(0, 0, 0, 0.26);
+    padding: 20px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.18s ease, visibility 0.18s ease, transform 0.18s cubic-bezier(.16,1,.3,1);
+  }
+
+  .player.on { opacity: 1; visibility: visible; transform: translate(-50%, -50%); }
+  .player-head { display: flex; align-items: flex-start; gap: 12px; }
+  .player-title { flex: 1; min-width: 0; font-size: 16px; font-weight: 600; color: var(--ink); }
+  .player-sub { font-size: 13px; color: var(--muted); margin-top: 4px; }
+
+  .player-x {
+    width: 28px;
+    height: 28px;
+    flex-shrink: 0;
+    border: 0;
+    background: none;
+    border-radius: 4px;
+    color: var(--muted);
+    font-size: 17px;
+    line-height: 1;
+    cursor: pointer;
+  }
+
+  .player-x:hover { background: var(--hover-grey); color: var(--ink); }
+
+  .player-bar { margin-top: 18px; height: 4px; border-radius: 2px; background: var(--line); overflow: hidden; }
+  .player-bar i { display: block; width: 34%; height: 100%; border-radius: 2px; background: var(--primary); }
+  .player-times { display: flex; justify-content: space-between; margin-top: 8px; font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; }
+
+  .player-actions { display: flex; align-items: center; gap: 12px; margin-top: 18px; }
+
+  .btn-ghost {
+    padding: 8px 14px;
+    border: 1px solid var(--primary);
+    border-radius: 4px;
+    background: none;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--primary);
+    cursor: pointer;
+  }
+
+  .btn-ghost:hover { background: rgba(33, 112, 244, 0.06); }
+  .player-actions .spacer { margin-left: auto; }
+</style>
+</head>
+<body>
+
+<div class="app">
+  <div class="shell">
+
+    <nav class="sidebar">
+      <div class="side-top-wrap">
+        <div class="side-head">
+          <button class="tab-switch" title="Switch app" onclick="window.close()">
+            <span class="drive-mark"><img src="drive_assets/drive-mark.svg" alt=""></span>
+            <span class="caret"><img src="drive_assets/caret-white.svg" alt=""></span>
+          </button>
+          <div class="brand">
+            <span class="partner"><img src="recap_app_assets/partner-logo.svg" alt=""></span>
+            <span class="vrule"></span>
+            <span class="wordmark">Drive</span>
+          </div>
+        </div>
+
+        <div class="tabs">
+          <a class="nav-item is-active" href="#"><img src="drive_assets/nav-drive.svg" alt="" class="i20"><span>My Drive</span></a>
+          <a class="nav-item" href="#"><img src="drive_assets/nav-shared.svg" alt="" class="i20"><span>Shared with me</span></a>
+          <div class="nav-rule"></div>
+          <a class="nav-item" href="#"><img src="drive_assets/nav-transfers.svg" alt="" class="i20"><span>Transfers</span></a>
+          <a class="nav-item" href="#"><img src="drive_assets/nav-branding.svg" alt="" class="i20"><span>Branding</span></a>
+          <div class="nav-rule"></div>
+          <a class="nav-item" href="#"><img src="drive_assets/nav-trash.svg" alt="" class="i20"><span>Trash</span></a>
+        </div>
+      </div>
+
+      <div>
+        <div class="storage">
+          <span class="label">Storage used:</span>
+          <span class="value">5.5 GB / 50 GB</span>
+        </div>
+        <div class="fh">
+          <a href="#"><img src="recap_app_assets/ic-feedback.svg" alt="" class="i16"><span>Feedback</span></a>
+          <a href="#"><img src="recap_app_assets/ic-help.svg" alt="" class="i16"><span>Help</span></a>
+        </div>
+      </div>
+    </nav>
+
+    <div class="main">
+
+      <div class="topbar">
+        <div class="topbar-left">
+          <button class="btn-upload" type="button"><img src="drive_assets/ic-upload.svg" alt="" class="i16">Upload</button>
+          <div class="search">
+            <img src="recap_app_assets/ic-search.svg" alt="">
+            <span>Search Files</span>
+          </div>
+          <div class="filters">
+            <span class="lhs"><img src="drive_assets/ic-filters.svg" alt="" class="i16"><span>Filters</span></span>
+            <span class="caret"><img src="drive_assets/caret-dark.svg" alt=""></span>
+          </div>
+        </div>
+
+        <div class="topbar-right">
+          <div class="account">
+            <span class="avatar"><img src="recap_app_assets/avatar-oval.svg" alt=""><span>E</span></span>
+            <span class="caret"><img src="drive_assets/caret-ink.svg" alt=""></span>
+          </div>
+          <div class="powered">
+            <span class="vrule"></span>
+            <span class="logo">
+              <img src="drive_assets/pb-poweredby.svg" alt="" class="pb">
+              <img src="drive_assets/pb-titan-mark.svg" alt="" class="tk">
+              <img src="drive_assets/pb-titan-word.svg" alt="" class="tw">
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="board">
+
+          <div class="folder-head">
+            <div class="crumb" id="crumb-root">My Drive</div>
+            <div class="crumb is-nested" id="crumb-nested" hidden>
+              <a href="#" id="crumb-back">My Drive</a>
+              <span class="crumb-sep"><svg viewBox="0 0 24 24" fill="none" stroke="#333333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></span>
+              <span class="current">Meeting recordings</span>
+            </div>
+            <div class="folder-actions">
+              <button class="btn-newfolder" type="button"><img src="drive_assets/ic-newfolder.svg" alt="" class="i20">New Folder</button>
+              <button class="view-toggle" type="button" aria-label="Switch view">
+                <img src="drive_assets/ic-list.svg" alt="" class="i20">
+                <img src="drive_assets/ic-grid.svg" alt="" class="i20">
+              </button>
+            </div>
+          </div>
+
+          <!-- Rows are rendered from FILES so the two folders stay in step -->
+          <div class="table" id="view-root"></div>
+          <div class="table" id="view-recordings" hidden></div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="scrim" id="scrim" onclick="closePlayer()"></div>
+<div class="player" id="player" role="dialog" aria-modal="true" aria-label="Recording">
+  <div class="player-head">
+    <div>
+      <div class="player-title" id="playerTitle"></div>
+      <div class="player-sub" id="playerSub"></div>
+    </div>
+    <button class="player-x" onclick="closePlayer()" aria-label="Close">&times;</button>
+  </div>
+  <div class="player-bar"><i></i></div>
+  <div class="player-times"><span>16:04</span><span id="playerLen">47:12</span></div>
+  <div class="player-actions">
+    <button class="btn-ghost" onclick="closePlayer()">Download</button>
+    <span class="spacer"></span>
+    <button class="btn-ghost" id="playerNotes">Open notes</button>
+  </div>
+</div>
+
+<script>
+  (function () {
+    'use strict';
+
+    var esc = function (v) {
+      return String(v == null ? '' : v)
+        .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    };
+
+    /* Folder glyph carries a mic stamp so the recordings folder reads as
+       Recap's, not just another folder. */
+    var FOLDER = '<span class="ft"><img src="drive_assets/ft-folder.svg" alt="" class="ft-full"></span>';
+    var FOLDER_MIC = '<span class="ft"><img src="drive_assets/ft-folder.svg" alt="" class="ft-full">'
+      + '<span class="mic-stamp"><svg viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="3" '
+      + 'stroke-linecap="round" stroke-linejoin="round"><path d="M12 18.5v3"/>'
+      + '<path d="M18.5 10.5v1.5a6.5 6.5 0 0 1-13 0v-1.5"/>'
+      + '<rect x="9.25" y="2.5" width="5.5" height="11.5" rx="2.75"/></svg></span></span>';
+    var LEAF = function (name) {
+      return '<span class="ft ft-doc"><img src="drive_assets/' + name + '" alt="" class="ft-leaf"></span>';
+    };
+
+    var FILES = {
+      root: [
+        { ico: FOLDER_MIC, name: 'Meeting recordings', date: 'Feb 12, 2026', size: '282 MB', folder: 'recordings' },
+        { ico: FOLDER, name: 'Client Engagements', date: 'Jan 08, 2026', size: '455 KB' },
+        { ico: FOLDER, name: 'Proposals & SOWs', date: 'Jan 08, 2026', size: '455 KB' },
+        { ico: FOLDER, name: 'Technical Audits', date: 'Jan 08, 2026', size: '455 KB' },
+        { ico: FOLDER, name: 'Invoices 2026', date: 'Jan 08, 2026', size: '455 KB' },
+        { ico: LEAF('ft-doc.svg'), name: 'Systems Architecture Diagram', date: 'Jan 08, 2026', size: '455 KB' },
+        { ico: LEAF('ft-doc.svg'), name: 'Target Operating Model', date: 'Jan 08, 2026', size: '455 KB' },
+        { ico: LEAF('ft-ppt.svg'), name: 'Cloud Migration Readiness Review', date: 'Jan 08, 2026', size: '455 KB' },
+        { ico: LEAF('ft-pdf.svg'), name: 'Master Services Agreement', date: 'Jan 08, 2026', size: '455 KB' },
+        { ico: LEAF('ft-xls.svg'), name: 'Engagement Tracker & Billables', date: 'Jan 08, 2026', size: '455 KB' },
+        { ico: LEAF('ft-pdf.svg'), name: 'Infrastructure Assessment Report', date: 'Jan 08, 2026', size: '455 KB' },
+        { ico: LEAF('ft-pdf.svg'), name: 'Data Governance Recommendations', date: 'Jan 08, 2026', size: '455 KB' },
+        { ico: LEAF('ft-pdf.svg'), name: 'Q1 Advisory Retainer Invoice', date: 'Jan 08, 2026', size: '455 KB' }
+      ],
+      recordings: [
+        { ico: LEAF('ft-audio.svg'), name: 'Northwind Logistics — Discovery Call.mp3',
+          date: 'Feb 12, 2026', size: '18.4 MB', len: '45:02', note: 'Discovery call — Northwind Logistics', fresh: true },
+        { ico: LEAF('ft-audio.svg'), name: 'Harbour & Fitch — Architecture Review.mp3', date: 'Feb 09, 2026', size: '42.1 MB', len: '1:04:18' },
+        { ico: LEAF('ft-audio.svg'), name: 'Velocity Retail — Cloud Migration Kickoff.mp3', date: 'Feb 04, 2026', size: '36.8 MB', len: '58:40' },
+        { ico: LEAF('ft-audio.svg'), name: 'Meridian Health — Data Governance Workshop.mp3', date: 'Jan 28, 2026', size: '51.3 MB', len: '1:22:05' },
+        { ico: LEAF('ft-audio.svg'), name: 'Castellan Group — Quarterly Business Review.mp3', date: 'Jan 21, 2026', size: '29.7 MB', len: '47:12' },
+        { ico: LEAF('ft-audio.svg'), name: 'Orbit Fintech — Vendor Assessment Debrief.mp3', date: 'Jan 16, 2026', size: '22.5 MB', len: '35:56' },
+        { ico: LEAF('ft-audio.svg'), name: 'Larkspur Energy — Technical Due Diligence.mp3', date: 'Jan 12, 2026', size: '47.9 MB', len: '1:16:33' },
+        { ico: LEAF('ft-audio.svg'), name: 'Sable Manufacturing — Roadmap Planning.mp3', date: 'Jan 08, 2026', size: '33.2 MB', len: '52:19' }
+      ]
+    };
+
+    var HEAD =
+      '<div class="thead">'
+      + '<div class="thead-left"><span class="check-layer"><span class="check-box"></span></span>'
+      + '<div class="col-name">NAME</div></div>'
+      + '<div class="thead-right"><div class="meta">'
+      + '<div class="col-date">DATE MODIFIED</div><div class="col-size">FILE SIZE</div></div>'
+      + '<div class="spacer"></div></div></div>';
+
+    function rowHtml(f, i) {
+      return '<div class="row' + (f.folder ? ' is-folder' : '') + (f.fresh ? ' is-new' : '') + '" data-i="' + i + '">'
+        + '<div class="row-left">'
+        + '<span class="check-cell"><span class="check-layer"><span class="check-box"></span></span></span>'
+        + '<div class="name-cell">' + f.ico + '<div class="fname">' + esc(f.name) + '</div></div>'
+        + '</div>'
+        + '<div class="row-right"><div class="meta">'
+        + '<div class="col-date">' + esc(f.date) + '</div>'
+        + '<div class="col-size">' + esc(f.size) + '</div></div>'
+        + '<button class="more-btn" type="button" aria-label="More actions">'
+        + '<img src="recap_app_assets/ic-ellipsis.svg" alt="" class="i20"></button>'
+        + '</div></div>';
+    }
+
+    function render(which) {
+      var host = document.getElementById(which === 'root' ? 'view-root' : 'view-recordings');
+      host.innerHTML = HEAD + FILES[which].map(rowHtml).join('');
+      host.querySelectorAll('.row').forEach(function (el) {
+        el.addEventListener('click', function (e) {
+          if (e.target.closest('.more-btn') || e.target.closest('.check-cell')) return;
+          var f = FILES[which][+el.dataset.i];
+          if (f.folder) open(f.folder);
+          else if (f.len) openPlayer(f);
+        });
+      });
+    }
+
+    var views = { root: document.getElementById('view-root'),
+                  recordings: document.getElementById('view-recordings') };
+    var crumbs = { root: document.getElementById('crumb-root'),
+                   recordings: document.getElementById('crumb-nested') };
+
+    function open(which) {
+      Object.keys(views).forEach(function (k) {
+        views[k].hidden = k !== which;
+        crumbs[k].hidden = k !== which;
+      });
+    }
+
+    /* ── Player ── */
+    var current = null;
+
+    function openPlayer(f) {
+      current = f;
+      document.getElementById('playerTitle').textContent = f.name;
+      document.getElementById('playerSub').textContent = f.date + ' · ' + f.size;
+      document.getElementById('playerLen').textContent = f.len;
+      document.getElementById('playerNotes').hidden = !f.note;
+      document.getElementById('scrim').classList.add('on');
+      document.getElementById('player').classList.add('on');
+    }
+
+    window.closePlayer = function () {
+      document.getElementById('scrim').classList.remove('on');
+      document.getElementById('player').classList.remove('on');
+    };
+
+    document.getElementById('playerNotes').addEventListener('click', function () {
+      if (!current || !current.note) return;
+      window.open('recap.html?note=' + encodeURIComponent(current.note), '_blank');
+    });
+
+    document.getElementById('crumb-back').addEventListener('click', function (e) {
+      e.preventDefault();
+      open('root');
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closePlayer();
+    });
+
+    render('root');
+    render('recordings');
+
+    // Recap's "Get audio" lands straight on the recordings folder.
+    var q = new URLSearchParams(location.search);
+    open(q.get('folder') === 'recordings' ? 'recordings' : 'root');
+  })();
+</script>
+
+</body>
+</html>
