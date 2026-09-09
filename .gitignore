@@ -2,4 +2,6 @@
 .vscode/
 .idea/
 *.log
-design system/
+
+# Ishant’s shared local design system
+/design-system/

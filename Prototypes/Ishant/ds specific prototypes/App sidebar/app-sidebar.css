@@ -1,0 +1,78 @@
+/* Screen-owned experiment; shared App tile keeps its internal layout. */
+.app-window { min-height: 0; }
+.app-rail {
+  width: 56px;
+  flex: 0 0 56px;
+  overflow-y: auto;
+  background: var(--titan-surface-base);
+  border-right: 1px solid var(--border-color);
+  padding: 0 var(--titan-space-8) var(--titan-space-12);
+}
+.app-rail-heading {
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--titan-text-secondary);
+  font-size: var(--titan-type-caption-size);
+  font-weight: var(--titan-type-label-weight);
+}
+#app-rail-items { display: flex; flex-direction: column; gap: var(--titan-space-4); }
+.app-rail .titan-app-tile { flex-shrink: 0; border-radius: var(--titan-radius-4); }
+.app-rail .titan-app-tile[aria-current="page"] { background: var(--titan-surface-selected); }
+.app-rail .titan-app-tile[aria-current="page"]::before {
+  content: ''; position: absolute; left: 0; top: var(--titan-space-16); bottom: var(--titan-space-16);
+  width: 3px; border-radius: var(--titan-radius-4); background: var(--titan-indicator-active);
+}
+.app-rail .titan-app-tile[aria-current="page"] .app-label { color: var(--titan-text-link); }
+.sidebar-header .titan-logo { justify-content: flex-start; padding-left: var(--titan-space-12); }
+.main-area { min-width: 0; }
+body:has(.app-window[data-active-app]:not([data-active-app="mail"])) #ds-composer-host { display: none; }
+.app-preview { flex: 1; min-width: 0; background: var(--titan-surface-reading); color: var(--titan-text-primary); }
+.app-preview[hidden], .app-window[data-active-app]:not([data-active-app="mail"]) > .sidebar,
+.app-window[data-active-app]:not([data-active-app="mail"]) > .main-area { display: none; }
+.app-preview-header { height: 64px; padding: var(--titan-space-20) var(--titan-space-24); border-bottom: 1px solid var(--border-color); background: var(--titan-surface-base); font-size: var(--titan-type-label-size); font-weight: var(--titan-type-label-weight); }
+.app-preview-body { height: calc(100% - 64px); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: var(--titan-space-16); padding: var(--titan-space-24); text-align: center; }
+.app-preview-body > img { width: 34px; height: 34px; object-fit: contain; }
+.app-preview-body h1 { font-family: var(--titan-type-heading-family); font-size: var(--titan-type-heading-size); font-weight: var(--titan-type-heading-weight); }
+.app-preview-body p { font-size: var(--titan-type-body-size); line-height: var(--titan-type-body-line-height); color: var(--titan-text-secondary); }
+@media (max-width: 1000px) { .app-window > .sidebar { width: 210px; } }
+
+/* The rail owns this vertical arrangement of the shared tool controls. */
+.app-rail .rail-tools { display: flex; flex-direction: column; gap: var(--titan-space-4); border-top: 1px solid var(--border-color); margin-top: var(--titan-space-8); padding-top: var(--titan-space-12); }
+.app-rail .titan-launcher-item { flex-direction: column; width: 72px; padding: var(--titan-space-8) var(--titan-space-4); gap: var(--titan-gap-icon-label-compact); border-radius: var(--titan-radius-4); }
+.app-rail .tool-label { white-space: normal; text-align: center; overflow-wrap: anywhere; font-size: var(--titan-type-control-compact-size); font-weight: var(--titan-type-label-weight); color: var(--titan-text-secondary); }
+.app-rail .titan-launcher-item[aria-current="page"] { background: var(--titan-surface-selected); }
+.app-rail .titan-launcher-item[aria-current="page"] .tool-label { color: var(--titan-text-link); }
+
+/* Compact, icon-only treatment is local to this prototype. */
+.app-rail .titan-app-tile, .app-rail .titan-launcher-item {
+  width: 40px; height: 40px; min-height: 40px; padding: var(--titan-space-8);
+  gap: 0; justify-content: center; position: relative;
+}
+.app-rail .app-icon, .app-rail .tool-icon { width: var(--titan-icon-size-24); height: var(--titan-icon-size-24); }
+.app-rail .app-icon-img { width: var(--titan-icon-size-24); height: var(--titan-icon-size-24); }
+.app-rail .tool-icon img { width: var(--titan-icon-size-20); height: var(--titan-icon-size-20); }
+.app-rail .app-label, .app-rail .tool-label { display: none; }
+.app-rail .titan-app-tile[aria-current="page"]::before { top: var(--titan-space-8); bottom: var(--titan-space-8); }
+.rail-tooltip {
+  position: fixed; z-index: 10000; pointer-events: none;
+  padding: var(--titan-space-8) var(--titan-space-12);
+  border-radius: var(--titan-radius-4); background: var(--titan-surface-navigation);
+  color: var(--titan-text-inverse); font-family: var(--titan-type-caption-family);
+  font-size: var(--titan-type-caption-size); font-weight: var(--titan-type-caption-weight);
+  white-space: nowrap;
+}
+.rail-tooltip[hidden] { display: none; }
+
+/* Dark rail: apps lead, tools stay at the bottom when space permits. */
+.app-rail {
+  display: flex; flex-direction: column;
+  background: var(--titan-surface-navigation);
+  border-right-color: var(--hover-overlay-on-accent);
+  padding-top: var(--titan-space-12);
+}
+#app-rail-items { flex: 1; min-height: min-content; }
+.app-rail .rail-tools { margin-top: auto; padding-top: var(--titan-space-12); border-top-color: var(--hover-overlay-on-accent); }
+.app-rail .titan-app-tile:hover, .app-rail .titan-launcher-item:hover { background: var(--hover-overlay-on-accent); }
+.app-rail .titan-app-tile[aria-current="page"], .app-rail .titan-launcher-item[aria-current="page"] { background: var(--hover-overlay-on-accent); }
