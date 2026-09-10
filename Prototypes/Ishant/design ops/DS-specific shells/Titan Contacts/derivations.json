@@ -1,0 +1,30 @@
+{
+  "status": "local-unregistered",
+  "scope": "Titan Contacts prototype only",
+  "derivations": [
+    {
+      "name": "Primary outlined import action",
+      "derivedFrom": "button",
+      "selector": ".titan-button--derived-local-unregistered-primary-outlined",
+      "renderer": "TitanActions.button",
+      "changes": [
+        "Primary-blue text and icon",
+        "Primary-blue border",
+        "Outlined Button geometry and interaction retained"
+      ]
+    }
+  ],
+  "sharedSources": [
+    "design-system/components/actions.js",
+    "design-system/components/actions.css"
+  ],
+  "localSources": [
+    "contacts.js",
+    "contacts.css"
+  ],
+  "registrationNextSteps": [
+    "Confirm the primary outlined treatment recurs across Titan surfaces",
+    "Audit other usages, spacing, keyboard behavior and narrow layouts",
+    "Promote to a shared Button variant only when the contract is intentional"
+  ]
+}

@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Titan Contacts</title>
+<script>
+const dsBase=location.pathname.startsWith('/app/')?'/design-system/':'../../../../../design-system/';
+for(const file of ['tokens.css','components/actions.css','components/navigation-input.css','components/selection.css','components/sidebar-header.css','components/avatar.css','icons/icons.css'])document.write('<link rel="stylesheet" href="'+dsBase+file+'">');
+</script>
+<link rel="stylesheet" href="contacts.css">
+</head>
+<body>
+<div class="contacts-app">
+  <aside class="sidebar" aria-label="Contacts sidebar">
+    <div id="sidebar-header-host"></div>
+
+    <section class="account-section" aria-labelledby="accounts-heading">
+      <h2 id="accounts-heading" class="account-heading"><span>Accounts</span><span>(3)</span></h2>
+      <div class="account-control">
+        <span class="account-avatar" aria-hidden="true">I</span>
+        <div id="account-picker-host"></div>
+      </div>
+    </section>
+
+    <nav class="contacts-nav" aria-label="Contact views">
+      <div class="nav-entry" data-view="my">
+        <div id="nav-my-contacts"></div>
+        <button class="nav-info" type="button" aria-label="About My Contacts" data-info="My Contacts"><img src="assets/info.svg" alt=""></button>
+      </div>
+      <div class="nav-entry" data-view="all">
+        <div id="nav-all-contacts"></div>
+        <button class="nav-info" type="button" aria-label="About All Contacts" data-info="All Contacts"><img src="assets/info.svg" alt=""></button>
+      </div>
+      <div class="nav-entry" data-view="groups">
+        <div id="nav-contact-groups"></div>
+        <button class="nav-info" type="button" aria-label="About Contact Groups" data-info="Contact Groups"><img src="assets/info.svg" alt=""></button>
+      </div>
+    </nav>
+
+    <footer class="sidebar-footer">
+      <div id="export-contacts-host"></div>
+    </footer>
+  </aside>
+
+  <main class="main">
+    <header class="toolbar">
+      <div class="toolbar-left">
+        <div id="new-contact-host"></div>
+        <div id="search-host" class="search-host"></div>
+      </div>
+      <div class="toolbar-right">
+        <div id="import-contacts-host"></div>
+      </div>
+    </header>
+
+    <section class="content" aria-labelledby="contacts-title">
+      <h1 id="contacts-title" class="visually-hidden">My Contacts</h1>
+      <div class="contact-table" role="table" aria-label="My contacts">
+        <div class="contact-grid contact-header" role="row">
+          <div class="select-cell" role="columnheader"><span id="select-all-host"></span></div>
+          <div role="columnheader">Name</div>
+          <div role="columnheader">Email</div>
+          <div role="columnheader">Phone</div>
+        </div>
+        <div id="contact-rows"></div>
+      </div>
+    </section>
+
+    <div id="status-message" class="status-message" role="status" aria-live="polite" hidden></div>
+  </main>
+</div>
+
+<script>
+for(const file of ['icons/runtime.js','components/actions.js','components/navigation-input.js','components/selection.js','components/sidebar-header.js','components/avatar.js'])document.write('<script src="'+dsBase+file+'"><\/script>');
+</script>
+<script src="contacts.js"></script>
+<script>
+if(new URLSearchParams(location.search).get('ds')==='true'){
+  const studio=location.pathname.startsWith('/app/');
+  const workspace=new URL('../../../../../',location.href);
+  window.dsInspectorConfig={
+    registryUrl:studio?'/design-system/registry.json':new URL('design-system/registry.json',workspace).href,
+    workbenchUrl:(studio?location.origin:'http://localhost:8032')+'/#components'
+  };
+  const script=document.createElement('script');
+  script.src=studio?'/framework/spacing-inspector.js':new URL('Prototypes/Ishant/design ops/design system/framework/spacing-inspector.js',workspace).href;
+  document.head.append(script);
+}
+</script>
+<script src="../../../ds specific prototypes/App sidebar/derived-inspection.js"></script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Titan Calendar</title>
+<script>
+const dsBase=location.pathname.startsWith('/app/')?'/design-system/':'../../../../../design-system/';
+for(const file of ['tokens.css','components/actions.css','components/selection.css','icons/icons.css','components/sidebar-header.css','components/mini-calendar.css'])document.write('<link rel="stylesheet" href="'+dsBase+file+'">');
+</script>
+<link rel="stylesheet" href="calendar.css">
+</head>
+<body>
+<aside class="sidebar" aria-label="Calendar sidebar">
+  <div id="sidebar-header-host"></div>
+  <div id="mini-calendar-host"></div>
+  <section class="accounts"><div class="account-heading"><svg class="small-icon" aria-hidden="true" viewBox="0 0 20 20"><circle cx="10" cy="10" r="8" fill="currentColor"/><circle cx="10" cy="7" r="2.4" fill="var(--titan-surface-navigation)"/><path d="M6 14a4 4 0 0 1 8 0" fill="var(--titan-surface-navigation)"/></svg> Accounts (3)</div><div id="account-picker-host"></div><label class="calendar-check"><span id="calendar-checkbox"></span>ishant@titan.email</label><span id="add-calendar-host"></span></section>
+  <footer class="sidebar-footer"><button data-info="Bug report"><svg class="small-icon" aria-hidden="true" viewBox="0 0 20 20"><path d="M6 6h8v7a4 4 0 0 1-8 0V6Zm1-1a3 3 0 0 1 6 0" fill="currentColor"/><path d="M3 5l3 3M14 8l3-3M3 10h3m8 0h3M3 16l3-3m8 0 3 3" stroke="currentColor" stroke-width="2"/></svg>Bug</button><button data-info="Feature request"><svg class="small-icon" aria-hidden="true" viewBox="0 0 20 20"><path d="M7 14c0-3-3-4-3-7a6 6 0 0 1 12 0c0 3-3 4-3 7Zm0 1h6v2H7Zm1 3h4v1H8Z" fill="currentColor"/></svg>Feature</button></footer>
+</aside>
+<main class="main">
+  <header class="toolbar"><div class="toolbar-left"><span id="new-event"></span><span id="today"></span><div class="week-navigation"><span id="previous-week"></span><span id="next-week"></span></div><h1 id="current-month"></h1></div><div class="toolbar-right"><span id="settings"></span><span id="view-picker"></span><span id="help"></span></div></header>
+  <div class="calendar-scroll"><section class="calendar" aria-label="Weekly calendar"><div class="day-headers" id="day-headers"></div><div class="all-day" id="all-day" aria-label="All-day events"></div><div class="time-grid" id="time-grid"></div></section></div>
+</main>
+<script>
+for(const file of ['icons/runtime.js','components/actions.js','components/selection.js','components/sidebar-header.js','components/mini-calendar.js'])document.write('<script src="'+dsBase+file+'"><\/script>');
+</script>
+<script src="calendar.js"></script>
+<script>
+if(new URLSearchParams(location.search).get('ds')==='true'){
+ const studio=location.pathname.startsWith('/app/'),workspace=new URL('../../../../../',location.href);
+ window.dsInspectorConfig={registryUrl:studio?'/design-system/registry.json':new URL('design-system/registry.json',workspace).href,workbenchUrl:'http://localhost:8031/#components'};
+ const script=document.createElement('script');script.src=studio?'/framework/spacing-inspector.js':new URL('Prototypes/Ishant/design ops/design system/framework/spacing-inspector.js',workspace).href;document.head.append(script);
+}
+</script>
+</body>
+</html>

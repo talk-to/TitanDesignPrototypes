@@ -42,64 +42,6 @@
       overflow: visible;
     }
 
-    .sidebar-header {
-      height: 64px;
-      display: flex;
-      align-items: center;
-      padding: 0 12px;
-      gap: 11px;
-      flex-shrink: 0;
-    }
-
-    .tab-switch {
-      position: relative;
-      border-radius: 4px;
-      padding: 2px;
-      display: flex;
-      align-items: center;
-      flex-shrink: 0;
-      cursor: pointer;
-      z-index: 1;
-
-    }
-
-
-
-
-    .tab-switch img {
-      width: 28px;
-      height: 28px;
-    }
-
-    .tab-switch-arrow {
-      width: 16px;
-      height: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .tab-switch-arrow img {
-      width: 9px;
-      height: 5px;
-      object-fit: contain;
-    }
-
-    .titan-logo {
-      flex: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding-right: 24px;
-      padding-top: 3px;
-    }
-
-    .titan-logo img {
-      width: 77px;
-      height: 20px;
-      object-fit: contain;
-    }
-
     /* ── Reusable Titan Split Button Component ── */
     .titan-split-btn {
       background: var(--titan-action-primary);
@@ -236,7 +178,7 @@
     .account-header {
       display: flex;
       align-items: center;
-      padding: 10px 8px 10px 0;
+      padding: var(--titan-account-header-inset-block) var(--titan-space-8) var(--titan-account-header-inset-block) 0;
       cursor: pointer;
       flex-shrink: 0;
       position: relative;
@@ -317,7 +259,8 @@
       white-space: nowrap;
       z-index: 9999;
       pointer-events: none;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
+      border: var(--titan-elevation-tooltip-border);
+      box-shadow: var(--titan-elevation-tooltip);
       transform: translateY(-50%);
     }
 
@@ -666,49 +609,6 @@
       z-index: 5;
     }
 
-    .all-mails-dropdown {
-      border: 1px solid #dedede;
-      border-radius: 4px;
-      padding: 6px 10px;
-      white-space: nowrap;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 14px;
-      color: #333;
-      cursor: pointer;
-      background: #fff;
-    }
-
-
-
-
-
-
-
-
-
-
-
-    .all-mails-dropdown span {
-      flex: 1;
-    }
-
-    .all-mails-dropdown .dd-arrow {
-      width: 10px;
-      height: 10px;
-      position: relative;
-      flex-shrink: 0;
-    }
-
-    .all-mails-dropdown .dd-arrow img {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-    }
-
     .tabs-divider {
       display: none;
     }
@@ -862,10 +762,10 @@
     .stack-card {
       position: relative;
       background: var(--titan-surface-base);
-      border: 1px solid #dedede;
+      border: var(--titan-elevation-stacked-surface-border);
       border-radius: 4px;
       box-sizing: border-box;
-      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+      box-shadow: var(--titan-elevation-stacked-surface);
       transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
       overflow: hidden;
     }
@@ -932,10 +832,10 @@
       font-weight: 500;
       color: #666;
       background: #fdfdfd;
-      border: 1px solid #d4d4d4;
+      border: var(--titan-elevation-floating-badge-border);
       border-radius: 6px;
       padding: 4px 12px;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+      box-shadow: var(--titan-elevation-floating-badge);
       transition: opacity 0.3s ease, background 0.15s ease, transform 0.2s ease;
       z-index: 10;
       pointer-events: none;
@@ -943,9 +843,9 @@
 
     .thread-stack:not(.expanded):hover .stack-pill {
       background: #f0f0f0;
-      border-color: #ccc;
+      border: var(--titan-elevation-floating-badge-hover-border);
       transform: translate(-50%, -50%);
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+      box-shadow: var(--titan-elevation-floating-badge-hover);
       color: #333;
     }
 
@@ -1277,14 +1177,7 @@
       opacity: 0.5;
     }
 
-    .tab-switch {
-      transition: background 0.15s ease;
-      cursor: pointer;
-    }
 
-    .tab-switch:hover {
-      background: #333333;
-    }
 
     /* ── Panel resize handle ── */
     .panel-resize-handle {
@@ -1605,7 +1498,8 @@
       bottom: 0;
       width: 316px;
       background: var(--titan-surface-base);
-      box-shadow: -4px 0 24px rgba(0, 0, 0, 0.15);
+      border-left: var(--titan-elevation-side-panel-border);
+      box-shadow: var(--titan-elevation-side-panel);
       z-index: 9999;
       display: flex;
       flex-direction: column;
@@ -1853,7 +1747,8 @@
 .app-switcher-content{position:relative;top:auto;left:auto;height:auto;min-height:568px}
 .app-switcher-bg{inset:0 -14px -8px -5px;width:calc(100% + 19px);height:calc(100% + 8px)}
 .app-switcher-footer{height:auto;flex-shrink:0}.footer-link-row{flex-shrink:0}
-</style></head>
+</style><link rel="stylesheet" href="/design-system/components/sidebar-header.css">
+</head>
 
 <body>
 
@@ -1864,17 +1759,7 @@
     <div class="sidebar">
 
       <!-- Header with logo -->
-      <div class="sidebar-header">
-        <button type="button" class="tab-switch titan-dropdown-trigger titan-dropdown-trigger--app" aria-label="Switch app" aria-haspopup="menu" aria-expanded="false">
-          <img src="/design-system/icons/assets/app-switcher.svg" onerror="this.onerror=null;this.src='../../../../../design-system/icons/assets/app-switcher.svg'" alt="mail">
-          <div class="tab-switch-arrow">
-            <img src="assets/1c88a1be-2a78-4065-86f7-8eb060dbb526.svg" alt="">
-          </div>
-        </button>
-        <div class="titan-logo">
-          <img src="assets/fa36f613-977c-444a-bef5-e1b5f5f1b340.svg" alt="Titan">
-        </div>
-      </div>
+      <div id="sidebar-header-host"></div>
 
       <div class="nav-scroll">
 
@@ -1897,7 +1782,7 @@
         <!-- Inbox (active) -->
         <div class="titan-sidebar-item nav-item active" style="padding-right: 8px;">
           <div class="nav-item-icon">
-            <img src="/design-system/icons/assets/inbox.svg" onerror="this.onerror=null;this.src='../../../../../design-system/icons/assets/inbox.svg'" alt="">
+            <img data-titan-icon="inbox" alt="">
           </div>
           <span class="nav-item-label active">Inbox</span>
 
@@ -1909,7 +1794,7 @@
         <!-- Sent -->
         <div class="titan-sidebar-item nav-item">
           <div class="nav-item-icon">
-            <img src="/design-system/icons/assets/sent.svg" onerror="this.onerror=null;this.src='../../../../../design-system/icons/assets/sent.svg'" alt="">
+            <img data-titan-icon="sent" alt="">
           </div>
           <span class="nav-item-label">Sent</span>
         </div>
@@ -1917,7 +1802,7 @@
         <!-- Less -->
         <div class="titan-sidebar-item nav-item">
           <div class="nav-item-icon">
-            <img src="/design-system/icons/assets/sidebar-more.svg" onerror="this.onerror=null;this.src='../../../../../design-system/icons/assets/sidebar-more.svg'" alt="" style="width:10px; height:6px;">
+            <img data-titan-icon="sidebar-more" alt="" style="width:10px; height:6px;">
           </div>
           <span class="nav-item-label secondary">Less</span>
         </div>
@@ -1996,13 +1881,13 @@
 
         <div class="titan-sidebar-item nav-item">
           <div class="nav-item-icon">
-            <img src="/design-system/icons/assets/inbox.svg" onerror="this.onerror=null;this.src='../../../../../design-system/icons/assets/inbox.svg'" alt="">
+            <img data-titan-icon="inbox" alt="">
           </div>
           <span class="nav-item-label">Inbox</span>
         </div>
         <div class="titan-sidebar-item nav-item">
           <div class="nav-item-icon">
-            <img src="/design-system/icons/assets/sent.svg" onerror="this.onerror=null;this.src='../../../../../design-system/icons/assets/sent.svg'" alt="">
+            <img data-titan-icon="sent" alt="">
           </div>
           <span class="nav-item-label">Sent</span>
         </div>
@@ -2063,16 +1948,16 @@
       <!-- Top toolbar (full width) -->
       <div class="top-toolbar">
         <div class="compose-search">
-          <div class="titan-split-button" role="group" aria-label="New email"><button type="button" class="titan-split-button__main" data-action="main" onclick="openComposer()"><img src="/design-system/icons/assets/compose.svg" onerror="this.onerror=null;this.src='../../../../../design-system/icons/assets/compose.svg'" alt="" draggable="false"><span>New email</span></button><button type="button" class="titan-split-button__secondary" data-action="secondary" aria-label="More email actions — unavailable" disabled><svg viewBox="0 0 10 6" fill="none" aria-hidden="true"><path d="m1 1 4 4 4-4" stroke="currentColor" stroke-width="1.5"/></svg></button></div>
+          <div class="titan-split-button" role="group" aria-label="New email"><button type="button" class="titan-split-button__main" data-action="main" onclick="openComposer()"><img data-titan-icon="compose" alt="" draggable="false"><span>New email</span></button><button type="button" class="titan-split-button__secondary" data-action="secondary" aria-label="More email actions — unavailable" disabled><svg viewBox="0 0 10 6" fill="none" aria-hidden="true"><path d="m1 1 4 4 4-4" stroke="currentColor" stroke-width="1.5"/></svg></button></div>
           <div class="titan-search-field search-bar">
             <div class="search-icon">
-              <img src="/design-system/icons/assets/search.svg" onerror="this.onerror=null;this.src='../../../../../design-system/icons/assets/search.svg'" alt=""
+              <img data-titan-icon="search" alt=""
                 style="inset:0; width:100%; height:100%;">
             </div>
             <input type="text" placeholder="Search in ella@avontech.com" readonly>
             <div class="search-divider"></div>
             <div class="search-dropdown">
-              <img src="/design-system/icons/assets/search-filter.svg" onerror="this.onerror=null;this.src='../../../../../design-system/icons/assets/search-filter.svg'" alt="">
+              <img data-titan-icon="search-filter" alt="">
             </div>
 
           </div>
@@ -2080,7 +1965,7 @@
         <div class="toolbar-right">
           <div class="toolbar-icons">
             <button type="button" class="titan-icon-button titan-icon-button--40 toolbar-icon" data-action="main" aria-label="Read receipts" title="Read receipts"><img src="assets/ec5d8d32-261b-410c-b07c-310cd6bb915e.svg" alt="" draggable="false"></button>
-            <button type="button" class="titan-icon-button titan-icon-button--40 toolbar-icon" data-action="main" onclick="toggleSettingsModal()" aria-label="Settings" title="Settings"><img src="/design-system/icons/assets/settings.svg" onerror="this.onerror=null;this.src='../../../../../design-system/icons/assets/settings.svg'" alt="" draggable="false"></button>
+            <button type="button" class="titan-icon-button titan-icon-button--40 toolbar-icon" data-action="main" onclick="toggleSettingsModal()" aria-label="Settings" title="Settings"><img data-titan-icon="settings" alt="" draggable="false"></button>
           </div>
           <div class="powered-by">
             <div class="powered-by-text">
@@ -2121,10 +2006,7 @@
             </div>
             <div class="tabs-right-container">
 
-              <div class="all-mails-dropdown">
-                <span>All mails</span>
-                <div class="dd-arrow"><img src="assets/7bd47053-31b1-485b-89c1-4496be66b2fd.svg" alt=""></div>
-              </div>
+              <span id="mail-filter-trigger"></span>
             </div>
           </div>
 
@@ -2344,20 +2226,20 @@
           <!-- Action bar (same level as tabs) -->
           <div class="reading-action-bar">
             <div class="email-action-bar titan-action-group">
-              <button type="button" class="action-opt titan-button titan-button--toolbar"><span class="action-icon titan-button__icon"><img src="/design-system/icons/assets/archive.svg" onerror="this.onerror=null;this.src='../../../../../design-system/icons/assets/archive.svg'" alt=""></span><span>Archive</span></button>
+              <button type="button" class="action-opt titan-button titan-button--toolbar"><span class="action-icon titan-button__icon"><img data-titan-icon="archive" alt=""></span><span>Archive</span></button>
               <div class="action-sep"></div>
-              <button type="button" class="action-opt titan-button titan-button--toolbar"><span class="action-icon titan-button__icon"><img src="/design-system/icons/assets/delete.svg" onerror="this.onerror=null;this.src='../../../../../design-system/icons/assets/delete.svg'" alt=""></span><span>Delete</span></button>
+              <button type="button" class="action-opt titan-button titan-button--toolbar"><span class="action-icon titan-button__icon"><img data-titan-icon="delete" alt=""></span><span>Delete</span></button>
               <div class="action-sep"></div>
-              <button type="button" class="action-opt titan-button titan-button--toolbar"><span class="action-icon titan-button__icon"><img src="/design-system/icons/assets/star.svg" onerror="this.onerror=null;this.src='../../../../../design-system/icons/assets/star.svg'" alt=""></span><span>Star</span></button>
+              <button type="button" class="action-opt titan-button titan-button--toolbar"><span class="action-icon titan-button__icon"><img data-titan-icon="star" alt=""></span><span>Star</span></button>
               <div class="action-sep"></div>
-              <button type="button" class="action-opt titan-button titan-button--toolbar"><span class="action-icon titan-button__icon"><img src="/design-system/icons/assets/mark-unread.svg" onerror="this.onerror=null;this.src='../../../../../design-system/icons/assets/mark-unread.svg'" alt=""></span><span>Mark unread</span></button>
+              <button type="button" class="action-opt titan-button titan-button--toolbar"><span class="action-icon titan-button__icon"><img data-titan-icon="mark-unread" alt=""></span><span>Mark unread</span></button>
               <div class="action-sep"></div>
-              <button type="button" class="action-opt titan-button titan-button--toolbar"><span class="action-icon titan-button__icon"><img src="/design-system/icons/assets/block.svg" onerror="this.onerror=null;this.src='../../../../../design-system/icons/assets/block.svg'" alt=""></span><span>Block</span></button>
+              <button type="button" class="action-opt titan-button titan-button--toolbar"><span class="action-icon titan-button__icon"><img data-titan-icon="block" alt=""></span><span>Block</span></button>
               <div class="action-sep"></div>
-              <button type="button" class="action-opt titan-button titan-button--toolbar"><span class="action-icon titan-button__icon"><img src="/design-system/icons/assets/spam.svg" onerror="this.onerror=null;this.src='../../../../../design-system/icons/assets/spam.svg'" alt=""></span><span>Spam</span></button>
+              <button type="button" class="action-opt titan-button titan-button--toolbar"><span class="action-icon titan-button__icon"><img data-titan-icon="spam" alt=""></span><span>Spam</span></button>
               <div class="action-sep"></div>
               <div class="action-more">
-                <div class="action-more-icon"><img src="/design-system/icons/assets/more.svg" onerror="this.onerror=null;this.src='../../../../../design-system/icons/assets/more.svg'" alt=""></div>
+                <div class="action-more-icon"><img data-titan-icon="more" alt=""></div>
               </div>
             </div>
           </div>
@@ -2449,7 +2331,7 @@
                       <img src="assets/f58c5077-66f8-4b70-8f2d-a29cb41ef735.svg" alt="">
                     </div>
                     <div class="exp-icon">
-                      <img src="/design-system/icons/assets/reply.svg" onerror="this.onerror=null;this.src='../../../../../design-system/icons/assets/reply.svg'" alt="">
+                      <img data-titan-icon="reply" alt="">
                     </div>
                     <div class="exp-icon-sm">
                       <img src="assets/1bc6572b-be7e-4809-b54f-48b57701aa6b.svg" alt="">
@@ -2472,9 +2354,9 @@
 
               <div class="expanded-footer-hr"></div>
               <div class="expanded-footer">
-                <button type="button" class="titan-button" data-action="main" onclick="openReplyBox('reply')"><span class="titan-button__icon"><img src="/design-system/icons/assets/reply.svg" onerror="this.onerror=null;this.src='../../../../../design-system/icons/assets/reply.svg'" alt="" draggable="false"></span><span>Reply</span></button>
-                <button type="button" class="titan-button" data-action="main" onclick="openReplyBox('reply-all')"><span class="titan-button__icon"><img src="/design-system/icons/assets/reply-all.svg" onerror="this.onerror=null;this.src='../../../../../design-system/icons/assets/reply-all.svg'" alt="" draggable="false"></span><span>Reply all</span></button>
-                <button type="button" class="titan-button" data-action="main" onclick="openReplyBox('forward')"><span class="titan-button__icon"><img src="/design-system/icons/assets/forward.svg" onerror="this.onerror=null;this.src='../../../../../design-system/icons/assets/forward.svg'" alt="" draggable="false"></span><span>Forward</span></button>
+                <button type="button" class="titan-button" data-action="main" onclick="openReplyBox('reply')"><span class="titan-button__icon"><img data-titan-icon="reply" alt="" draggable="false"></span><span>Reply</span></button>
+                <button type="button" class="titan-button" data-action="main" onclick="openReplyBox('reply-all')"><span class="titan-button__icon"><img data-titan-icon="reply-all" alt="" draggable="false"></span><span>Reply all</span></button>
+                <button type="button" class="titan-button" data-action="main" onclick="openReplyBox('forward')"><span class="titan-button__icon"><img data-titan-icon="forward" alt="" draggable="false"></span><span>Forward</span></button>
                 <div class="smart-write" onclick="openReplyBox('reply')">
                   <div class="smart-write-icon"><img src="assets/f2c4a95b-e378-4f23-b049-98f40e998543.svg" alt=""></div>
                   Reply with AI
@@ -2520,12 +2402,12 @@
                 <!-- Features Toolbar -->
                 <div class="comp-features-row" style="padding: 10px 24px; margin-bottom: 0; background: transparent; display: flex; align-items: center; gap: 8px; height: auto; box-sizing: border-box; justify-content: space-between; border-bottom: 1px solid #ebebeb;">
                   <div style="display: flex; align-items: center; gap: 8px;">
-                    <div class="comp-feat comp-feat-active"><span class="fic"><img src="/design-system/icons/assets/track.svg" onerror="this.onerror=null;this.src='../../../../../design-system/icons/assets/track.svg'" style="filter: invert(51%) sepia(82%) saturate(461%) hue-rotate(71deg) brightness(96%) contrast(85%); width: 15px; height: 15px;" alt=""></span><span>Track</span></div>
-                    <div class="comp-feat"><span class="fic"><img src="/design-system/icons/assets/design.svg" onerror="this.onerror=null;this.src='../../../../../design-system/icons/assets/design.svg'" alt=""></span><span>Design</span></div>
-                    <div class="comp-feat"><span class="fic"><img src="/design-system/icons/assets/ai-write.svg" onerror="this.onerror=null;this.src='../../../../../design-system/icons/assets/ai-write.svg'" alt=""></span><span>AI Write</span></div>
-                    <div class="comp-feat"><span class="fic"><img src="/design-system/icons/assets/templates.svg" onerror="this.onerror=null;this.src='../../../../../design-system/icons/assets/templates.svg'" alt=""></span><span>Templates</span></div>
-                    <div class="comp-feat"><span class="fic"><img src="/design-system/icons/assets/invoices.svg" onerror="this.onerror=null;this.src='../../../../../design-system/icons/assets/invoices.svg'" alt=""></span><span>Invoices</span></div>
-                    <div class="comp-feat"><span class="fic"><img src="/design-system/icons/assets/groups.svg" onerror="this.onerror=null;this.src='../../../../../design-system/icons/assets/groups.svg'" alt=""></span><span>Groups</span></div>
+                    <div class="comp-feat comp-feat-active"><span class="fic"><img data-titan-icon="track" style="filter: invert(51%) sepia(82%) saturate(461%) hue-rotate(71deg) brightness(96%) contrast(85%); width: 15px; height: 15px;" alt=""></span><span>Track</span></div>
+                    <div class="comp-feat"><span class="fic"><img data-titan-icon="design" alt=""></span><span>Design</span></div>
+                    <div class="comp-feat"><span class="fic"><img data-titan-icon="ai-write" alt=""></span><span>AI Write</span></div>
+                    <div class="comp-feat"><span class="fic"><img data-titan-icon="templates" alt=""></span><span>Templates</span></div>
+                    <div class="comp-feat"><span class="fic"><img data-titan-icon="invoices" alt=""></span><span>Invoices</span></div>
+                    <div class="comp-feat"><span class="fic"><img data-titan-icon="groups" alt=""></span><span>Groups</span></div>
                   </div>
                   <button style="border:none; background:none; cursor:pointer; padding: 2px; width:24px; height:24px; display:flex; align-items:center; justify-content:center;">
                     <svg width="14" height="14" viewBox="0 0 4 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -2560,15 +2442,15 @@
                       <img src="composer_assets/figma-ic-triangle.svg" alt="" class="comp-dd-arrow">
                     </div>
                     <div class="comp-vert-sep"></div>
-                    <button class="comp-fmt-btn" title="Bold"><img src="/design-system/icons/assets/bold.svg" onerror="this.onerror=null;this.src='../../../../../design-system/icons/assets/bold.svg'" alt=""></button>
-                    <button class="comp-fmt-btn" title="Italic"><img src="/design-system/icons/assets/italic.svg" onerror="this.onerror=null;this.src='../../../../../design-system/icons/assets/italic.svg'" alt=""></button>
-                    <button class="comp-fmt-btn" title="Underline"><img src="/design-system/icons/assets/underline.svg" onerror="this.onerror=null;this.src='../../../../../design-system/icons/assets/underline.svg'" alt=""></button>
-                    <button class="comp-fmt-btn" title="Text color"><img src="/design-system/icons/assets/colors.svg" onerror="this.onerror=null;this.src='../../../../../design-system/icons/assets/colors.svg'" alt=""></button>
-                    <button class="comp-fmt-btn comp-fmt-align" title="Alignment"><img src="/design-system/icons/assets/align.svg" onerror="this.onerror=null;this.src='../../../../../design-system/icons/assets/align.svg'" alt=""><img src="composer_assets/figma-ic-caret-dd.svg" alt="" class="comp-mini-caret"></button>
-                    <button class="comp-fmt-btn comp-fmt-align" title="Lists"><img src="/design-system/icons/assets/list.svg" onerror="this.onerror=null;this.src='../../../../../design-system/icons/assets/list.svg'" alt=""><img src="composer_assets/figma-ic-caret-dd.svg" alt="" class="comp-mini-caret"></button>
-                    <button class="comp-fmt-btn comp-fmt-align" title="Indent"><img src="/design-system/icons/assets/indent.svg" onerror="this.onerror=null;this.src='../../../../../design-system/icons/assets/indent.svg'" alt=""><img src="composer_assets/figma-ic-caret-dd.svg" alt="" class="comp-mini-caret"></button>
-                    <button class="comp-fmt-btn comp-fmt-link" title="Link"><img src="/design-system/icons/assets/link.svg" onerror="this.onerror=null;this.src='../../../../../design-system/icons/assets/link.svg'" alt=""></button>
-                    <button class="comp-fmt-btn comp-fmt-moredots" title="More"><img src="/design-system/icons/assets/more-vertical.svg" onerror="this.onerror=null;this.src='../../../../../design-system/icons/assets/more-vertical.svg'" alt=""></button>
+                    <button class="comp-fmt-btn" title="Bold"><img data-titan-icon="bold" alt=""></button>
+                    <button class="comp-fmt-btn" title="Italic"><img data-titan-icon="italic" alt=""></button>
+                    <button class="comp-fmt-btn" title="Underline"><img data-titan-icon="underline" alt=""></button>
+                    <button class="comp-fmt-btn" title="Text color"><img data-titan-icon="colors" alt=""></button>
+                    <button class="comp-fmt-btn comp-fmt-align" title="Alignment"><img data-titan-icon="align" alt=""><img src="composer_assets/figma-ic-caret-dd.svg" alt="" class="comp-mini-caret"></button>
+                    <button class="comp-fmt-btn comp-fmt-align" title="Lists"><img data-titan-icon="list" alt=""><img src="composer_assets/figma-ic-caret-dd.svg" alt="" class="comp-mini-caret"></button>
+                    <button class="comp-fmt-btn comp-fmt-align" title="Indent"><img data-titan-icon="indent" alt=""><img src="composer_assets/figma-ic-caret-dd.svg" alt="" class="comp-mini-caret"></button>
+                    <button class="comp-fmt-btn comp-fmt-link" title="Link"><img data-titan-icon="link" alt=""></button>
+                    <button class="comp-fmt-btn comp-fmt-moredots" title="More"><img data-titan-icon="more-vertical" alt=""></button>
                   </div>
                   <!-- Send bar -->
                   <div class="comp-send-bar" style="display: flex; align-items: center; justify-content: space-between; padding: 12px 24px; border-top: 1px solid #ebebeb;">
@@ -2663,7 +2545,7 @@
                       </div>
                     </div>
                     <button class="comp-delete-btn" title="Discard" onclick="discardReply()">
-                      <img src="/design-system/icons/assets/delete.svg" onerror="this.onerror=null;this.src='../../../../../design-system/icons/assets/delete.svg'" alt="">
+                      <img data-titan-icon="delete" alt="">
                     </button>
                   </div>
                 </div>
@@ -2763,12 +2645,12 @@
       display: none !important;
     }
 
-    body[data-iteration="2"] .titan-logo {
+    body[data-iteration="2"] .titan-sidebar-header__logo {
       cursor: pointer;
 
     }
 
-    body[data-iteration="2"] .titan-logo:active {}
+    body[data-iteration="2"] .titan-sidebar-header__logo:active {}
 
     /* ── Iteration 3 overrides ── */
     body[data-iteration="3"] .account-refresh {
@@ -2823,21 +2705,21 @@
           <!-- Mail -->
           <div class="app-switcher-item">
             <div class="app-icon">
-              <img src="/design-system/icons/assets/app-mail.svg" onerror="this.onerror=null;this.src='../../../../../design-system/icons/assets/app-mail.svg'" alt="Mail" class="app-icon-img">
+              <img data-titan-icon="app-mail" alt="Mail" class="app-icon-img">
             </div>
             <span class="app-label">Mail</span>
           </div>
           <!-- Calendar -->
           <div class="app-switcher-item">
             <div class="app-icon">
-              <img src="/design-system/icons/assets/app-calendar.svg" onerror="this.onerror=null;this.src='../../../../../design-system/icons/assets/app-calendar.svg'" alt="Calendar" class="app-icon-img">
+              <img data-titan-icon="app-calendar" alt="Calendar" class="app-icon-img">
             </div>
             <span class="app-label">Calendar</span>
           </div>
           <!-- Contacts -->
           <div class="app-switcher-item">
             <div class="app-icon">
-              <img src="/design-system/icons/assets/app-contacts.svg" onerror="this.onerror=null;this.src='../../../../../design-system/icons/assets/app-contacts.svg'" alt="Contacts" class="app-icon-img">
+              <img data-titan-icon="app-contacts" alt="Contacts" class="app-icon-img">
             </div>
             <span class="app-label">Contacts</span>
           </div>
@@ -2848,21 +2730,21 @@
           <!-- Bookings -->
           <div class="app-switcher-item">
             <div class="app-icon">
-              <img src="/design-system/icons/assets/app-bookings.svg" onerror="this.onerror=null;this.src='../../../../../design-system/icons/assets/app-bookings.svg'" alt="Bookings" class="app-icon-img">
+              <img data-titan-icon="app-bookings" alt="Bookings" class="app-icon-img">
             </div>
             <span class="app-label">Bookings</span>
           </div>
           <!-- Drive -->
           <div class="app-switcher-item">
             <div class="app-icon">
-              <img src="/design-system/icons/assets/app-drive.svg" onerror="this.onerror=null;this.src='../../../../../design-system/icons/assets/app-drive.svg'" alt="Drive" class="app-icon-img">
+              <img data-titan-icon="app-drive" alt="Drive" class="app-icon-img">
             </div>
             <span class="app-label">Drive</span>
           </div>
           <!-- Backup -->
           <div class="app-switcher-item">
             <div class="app-icon">
-              <img src="/design-system/icons/assets/app-backup.svg" onerror="this.onerror=null;this.src='../../../../../design-system/icons/assets/app-backup.svg'" alt="Backup" class="app-icon-img">
+              <img data-titan-icon="app-backup" alt="Backup" class="app-icon-img">
             </div>
             <span class="app-label">Backup</span>
           </div>
@@ -2873,21 +2755,21 @@
           <!-- Tasks -->
           <div class="app-switcher-item">
             <div class="app-icon">
-              <img src="/design-system/icons/assets/app-tasks.svg" onerror="this.onerror=null;this.src='../../../../../design-system/icons/assets/app-tasks.svg'" alt="Tasks" class="app-icon-img">
+              <img data-titan-icon="app-tasks" alt="Tasks" class="app-icon-img">
             </div>
             <span class="app-label">Tasks</span>
           </div>
           <!-- Site -->
           <div class="app-switcher-item">
             <div class="app-icon">
-              <img src="/design-system/icons/assets/app-site.svg" onerror="this.onerror=null;this.src='../../../../../design-system/icons/assets/app-site.svg'" alt="Site" class="app-icon-img">
+              <img data-titan-icon="app-site" alt="Site" class="app-icon-img">
             </div>
             <span class="app-label">Site</span>
           </div>
           <!-- Admin -->
           <div class="app-switcher-item">
             <div class="app-icon">
-              <img src="/design-system/icons/assets/app-admin.svg" onerror="this.onerror=null;this.src='../../../../../design-system/icons/assets/app-admin.svg'" alt="Admin" class="app-icon-img">
+              <img data-titan-icon="app-admin" alt="Admin" class="app-icon-img">
             </div>
             <span class="app-label">Admin</span>
           </div>
@@ -2904,28 +2786,28 @@
         <!-- Signature Designer -->
         <div class="app-switcher-tool-item">
           <div class="tool-icon bg-pink">
-            <img src="/design-system/icons/assets/signature-designer.svg" onerror="this.onerror=null;this.src='../../../../../design-system/icons/assets/signature-designer.svg'" alt="">
+            <img data-titan-icon="signature-designer" alt="">
           </div>
           <span class="tool-label">Signature Designer</span>
         </div>
         <!-- Smart Write AI -->
         <div class="app-switcher-tool-item">
           <div class="tool-icon bg-purple">
-            <img src="/design-system/icons/assets/smart-write.svg" onerror="this.onerror=null;this.src='../../../../../design-system/icons/assets/smart-write.svg'" alt="">
+            <img data-titan-icon="smart-write" alt="">
           </div>
           <span class="tool-label">Smart Write AI</span>
         </div>
         <!-- Email Designer -->
         <div class="app-switcher-tool-item">
           <div class="tool-icon bg-blue">
-            <img src="/design-system/icons/assets/email-designer.svg" onerror="this.onerror=null;this.src='../../../../../design-system/icons/assets/email-designer.svg'" alt="">
+            <img data-titan-icon="email-designer" alt="">
           </div>
           <span class="tool-label">Email Designer</span>
         </div>
         <!-- Invoice Builder -->
         <div class="app-switcher-tool-item">
           <div class="tool-icon bg-green">
-            <img src="/design-system/icons/assets/invoice-builder.svg" onerror="this.onerror=null;this.src='../../../../../design-system/icons/assets/invoice-builder.svg'" alt="">
+            <img data-titan-icon="invoice-builder" alt="">
           </div>
           <span class="tool-label">Invoice Builder</span>
         </div>
@@ -2936,17 +2818,17 @@
         <!-- Know your Titan -->
         <div class="footer-link-row">
           <div class="footer-link-content">
-            <img src="/design-system/icons/assets/know-titan.svg" onerror="this.onerror=null;this.src='../../../../../design-system/icons/assets/know-titan.svg'" alt="" class="footer-link-icon">
+            <img data-titan-icon="know-titan" alt="" class="footer-link-icon">
             <span class="footer-link-text">Know your Titan</span>
-            <img src="/design-system/icons/assets/next-arrow.svg" onerror="this.onerror=null;this.src='../../../../../design-system/icons/assets/next-arrow.svg'" alt="" class="footer-arrow">
+            <img data-titan-icon="next-arrow" alt="" class="footer-arrow">
           </div>
         </div>
         <!-- See more @ Titan Labs -->
         <div class="footer-link-row">
           <div class="footer-link-content">
-            <img src="/design-system/icons/assets/titan-labs.svg" onerror="this.onerror=null;this.src='../../../../../design-system/icons/assets/titan-labs.svg'" alt="" class="beaker-icon">
+            <img data-titan-icon="titan-labs" alt="" class="beaker-icon">
             <span class="footer-link-text">See more @ <span class="bold">Titan Labs</span></span>
-            <img src="/design-system/icons/assets/next-arrow.svg" onerror="this.onerror=null;this.src='../../../../../design-system/icons/assets/next-arrow.svg'" alt="" class="footer-arrow">
+            <img data-titan-icon="next-arrow" alt="" class="footer-arrow">
           </div>
         </div>
       </div>
@@ -2957,8 +2839,12 @@
   <!-- Shared DS composer; original shell remains independent. -->
   <div id="ds-composer-host"></div>
   <link rel="stylesheet" href="/design-system/components/composer.css">
-  <script src="/design-system/components/actions.js"></script>
+  <script src="/design-system/icons/runtime.js"></script><script src="/design-system/components/actions.js"></script>
   <script src="/design-system/components/selection.js"></script>
+  <script src="/design-system/components/sidebar-header.js"></script>
+  <script>
+  document.getElementById('sidebar-header-host').outerHTML=TitanSidebarHeader.render({icon:'app-switcher',logo:'assets/fa36f613-977c-444a-bef5-e1b5f5f1b340.svg'});
+  </script>
   <script src="/design-system/components/composer.js"></script>
   <script>TitanComposer.mount(document.getElementById('ds-composer-host'),'emailComposer',{docked:true,id:'composer-window',toId:'comp-to-input',from:'ella@avontech.com'});</script>
 
@@ -2973,7 +2859,8 @@
       height: 640px;
       background: var(--titan-surface-base);
       border-radius: 4px 4px 0 0;
-      box-shadow: 0 -4px 32px rgba(0, 0, 0, 0.18), 0 0 0 1px rgba(0, 0, 0, 0.09);
+      border: var(--titan-elevation-bottom-panel-border);
+      box-shadow: var(--titan-elevation-bottom-panel);
       display: flex;
       flex-direction: column;
       z-index: 600;
@@ -3678,7 +3565,7 @@
 
     // ── App Switcher ─────────────────────────────────────────────────────
     (function initAppSwitcher() {
-      const tabSwitchBtn = document.querySelector('.tab-switch');
+      const tabSwitchBtn = document.querySelector('.titan-sidebar-header .titan-dropdown-trigger');
       const appSwitcher = document.getElementById('app-switcher');
 
       if (!tabSwitchBtn || !appSwitcher) return;
@@ -3870,7 +3757,7 @@
           <img src="settings_sidebar_assets/profile_avatar.png" alt="Profile" class="side-modal-avatar-img">
         </div>
         <button class="side-modal-edit-btn" title="Edit Profile">
-          <img src="/design-system/icons/assets/edit.svg" onerror="this.onerror=null;this.src='../../../../../design-system/icons/assets/edit.svg'" alt="Edit">
+          <img data-titan-icon="edit" alt="Edit">
         </button>
       </div>
       <div class="side-modal-user-info">
@@ -3962,7 +3849,7 @@
         <div class="side-modal-section-title" style="display:flex; align-items:center; gap:4px;">
           <span>Email organisation</span>
           <span class="info-icon" title="Choose whether to group related replies into threads or show them as separate emails.">
-            <img src="/design-system/icons/assets/help.svg" onerror="this.onerror=null;this.src='../../../../../design-system/icons/assets/help.svg'" alt="Help">
+            <img data-titan-icon="help" alt="Help">
           </span>
         </div>
         <div class="side-modal-row">
@@ -4028,6 +3915,9 @@
     script.onerror = () => console.error('Could not load the design-system inspector. Open the email shell through the DS studio with ?ds=true.');
     document.head.append(script);
   })();
+</script>
+<script>
+TitanSelection.mount(document.getElementById("mail-filter-trigger"),"dropdown",{label:"All mails"});
 </script>
 </body>
 

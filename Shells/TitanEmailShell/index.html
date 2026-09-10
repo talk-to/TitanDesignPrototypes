@@ -57,64 +57,6 @@
       overflow: visible;
     }
 
-    .sidebar-header {
-      height: 64px;
-      display: flex;
-      align-items: center;
-      padding: 0 12px;
-      gap: 11px;
-      flex-shrink: 0;
-    }
-
-    .tab-switch {
-      position: relative;
-      border-radius: 4px;
-      padding: 2px;
-      display: flex;
-      align-items: center;
-      flex-shrink: 0;
-      cursor: pointer;
-      z-index: 1;
-
-    }
-
-
-
-
-    .tab-switch img {
-      width: 28px;
-      height: 28px;
-    }
-
-    .tab-switch-arrow {
-      width: 16px;
-      height: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .tab-switch-arrow img {
-      width: 9px;
-      height: 5px;
-      object-fit: contain;
-    }
-
-    .titan-logo {
-      flex: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding-right: 24px;
-      padding-top: 3px;
-    }
-
-    .titan-logo img {
-      width: 77px;
-      height: 20px;
-      object-fit: contain;
-    }
-
     /* ── Reusable Titan Split Button Component ── */
     .titan-split-btn {
       background: #2170f4;
@@ -2044,15 +1986,6 @@
       opacity: 0.5;
     }
 
-    .tab-switch {
-      transition: background 0.15s ease;
-      cursor: pointer;
-    }
-
-    .tab-switch:hover {
-      background: #333333;
-    }
-
     /* ── Panel resize handle ── */
     .panel-resize-handle {
       position: absolute;
@@ -2611,6 +2544,7 @@
       display: none !important;
     }
   </style>
+<link rel="stylesheet" href="/design-system/components/sidebar-header.css">
 </head>
 
 <body>
@@ -2622,17 +2556,12 @@
     <div class="sidebar">
 
       <!-- Header with logo -->
-      <div class="sidebar-header">
-        <div class="tab-switch">
-          <img src="assets/2f8b4195-6886-4685-9c9c-cf0d3552b789.svg" alt="mail">
-          <div class="tab-switch-arrow">
-            <img src="assets/1c88a1be-2a78-4065-86f7-8eb060dbb526.svg" alt="">
-          </div>
-        </div>
-        <div class="titan-logo">
-          <img src="assets/fa36f613-977c-444a-bef5-e1b5f5f1b340.svg" alt="Titan">
-        </div>
-      </div>
+      <div id="sidebar-header-host"></div>
+      <script src="/design-system/icons/runtime.js"></script><script src="/design-system/components/selection.js"></script>
+      <script src="/design-system/components/sidebar-header.js"></script>
+      <script>
+        document.getElementById('sidebar-header-host').outerHTML=TitanSidebarHeader.render({icon:'app-switcher',logo:'assets/fa36f613-977c-444a-bef5-e1b5f5f1b340.svg'});
+      </script>
 
       <div class="nav-scroll">
 
@@ -3567,12 +3496,12 @@
       display: none !important;
     }
 
-    body[data-iteration="2"] .titan-logo {
+    body[data-iteration="2"] .titan-sidebar-header__logo {
       cursor: pointer;
 
     }
 
-    body[data-iteration="2"] .titan-logo:active {}
+    body[data-iteration="2"] .titan-sidebar-header__logo:active {}
 
     /* ── Iteration 3 overrides ── */
     body[data-iteration="3"] .account-refresh {
@@ -4694,7 +4623,7 @@
 
     // ── App Switcher ─────────────────────────────────────────────────────
     (function initAppSwitcher() {
-      const tabSwitchBtn = document.querySelector('.tab-switch');
+      const tabSwitchBtn = document.querySelector('.titan-sidebar-header .titan-dropdown-trigger');
       const appSwitcher = document.getElementById('app-switcher');
 
       if (!tabSwitchBtn || !appSwitcher) return;
@@ -4710,6 +4639,7 @@
 
       function openAppSwitcher() {
         tabSwitchBtn.classList.add('active');
+        tabSwitchBtn.setAttribute('aria-expanded','true');
         appSwitcher.style.display = 'block';
         // Trigger reflow
         appSwitcher.offsetHeight;
@@ -4718,6 +4648,7 @@
 
       function closeAppSwitcher() {
         tabSwitchBtn.classList.remove('active');
+        tabSwitchBtn.setAttribute('aria-expanded','false');
         appSwitcher.classList.remove('open');
         // Wait for transition to end before setting display none
         const onTransitionEnd = (e) => {
