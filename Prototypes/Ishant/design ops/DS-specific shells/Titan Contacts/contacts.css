@@ -52,7 +52,7 @@ button:focus-visible, input:focus-visible {
   display: flex;
   gap: var(--titan-space-4);
   align-items: center;
-  margin: 0 0 var(--titan-space-8);
+  margin: 0 0 var(--titan-space-12);
   padding: 0 var(--titan-space-4);
   color: var(--contacts-sidebar-muted);
   font-size: var(--titan-type-caption-size);
@@ -85,30 +85,11 @@ button:focus-visible, input:focus-visible {
 }
 
 .contacts-nav { display: flex; flex-direction: column; gap: var(--titan-space-8); }
-.nav-entry { position: relative; }
-.nav-entry .titan-sidebar-item {
-  padding-right: calc(var(--titan-space-12) + var(--titan-space-20) + var(--titan-space-12));
-}
-.nav-entry .titan-sidebar-item.active { background: var(--contacts-sidebar-selected); }
-.nav-entry .titan-sidebar-item:hover { background: var(--contacts-sidebar-selected); }
-.nav-info {
-  position: absolute;
-  top: 50%;
-  right: var(--titan-space-12);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 20px;
-  height: 20px;
-  padding: 0;
-  border: 0;
-  color: var(--contacts-sidebar-muted);
-  background: transparent;
-  border-radius: 50%;
-  transform: translateY(-50%);
-}
-.nav-info img { display: block; width: 18px; height: 18px; }
-.nav-info:hover { color: var(--titan-text-inverse); background: rgba(255,255,255,.10); }
+/* Sidebar item owns the trailing-action row, its insets and the nested Icon
+   button's treatment. The screen sets only its dark-sidebar fill, painted on
+   the row so selection and hover extend behind the trailing action. */
+.contacts-nav .titan-sidebar-item-row:hover,
+.contacts-nav .titan-sidebar-item-row:has(.titan-sidebar-item.active) { background: var(--contacts-sidebar-selected); }
 
 .sidebar-footer {
   margin-top: auto;
@@ -138,47 +119,20 @@ button:focus-visible, input:focus-visible {
 .search-host { width: min(100%, 440px); min-width: 260px; }
 .search-host .titan-search-field { width: 100%; }
 .toolbar #new-contact-host .titan-button { min-height: 38px; padding-inline: var(--titan-space-16); font-weight: var(--titan-font-weight-semibold); }
-.toolbar .contacts-import-button { min-height: 38px; color: var(--titan-action-primary); border-color: var(--titan-action-primary); font-weight: var(--titan-font-weight-semibold); }
 
 .content { flex: 1; min-width: 0; overflow: auto; }
 .contact-table { width: 100%; min-width: 720px; }
-.contact-grid {
-  display: grid;
-  grid-template-columns: 52px minmax(240px, 1.35fr) minmax(220px, 1fr) minmax(190px, 1fr);
-  align-items: center;
+/* The shared data list owns tracks, column gap, control insets, row rhythm and
+   separators. The screen keeps only row geometry, hover colour and avatar size. */
+.contact-table .titan-data-list {
+  --titan-data-list-row-min-height: 66px;
+  --titan-data-list-head-min-height: 62px;
 }
-.contact-header {
-  min-height: 62px;
-  color: var(--titan-text-primary);
-  font-size: var(--titan-type-sender-size);
-  font-weight: var(--titan-font-weight-semibold);
-  border-bottom: var(--titan-border-width-default) solid var(--card-border-color);
-}
-.contact-header > div:not(.select-cell), .contact-row > div:not(.select-cell) { min-width: 0; padding-inline: var(--titan-space-12); }
-.select-cell {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.select-cell .titan-checkbox { width: 20px; height: 20px; }
-.contact-row {
-  min-height: 66px;
-  margin: 0 var(--titan-space-12) 0 0;
-  color: var(--titan-text-primary);
-  font-size: var(--titan-type-body-size);
-  border: var(--titan-border-width-default) solid var(--card-border-color);
-  border-radius: var(--titan-radius-6);
-}
-.contact-row + .contact-row { margin-top: var(--titan-space-8); }
-.contact-row:hover { background: var(--contacts-row-hover); }
-.name-cell { display: flex; align-items: center; gap: var(--titan-gap-icon-label); }
-.name-cell .titan-avatar {
+.contact-table .titan-data-list__row:hover { background: var(--contacts-row-hover); }
+.contact-table .titan-avatar {
   --titan-avatar-size: 28px;
   font-size: var(--titan-font-size-14);
 }
-.contact-name { overflow: hidden; font-weight: var(--titan-font-weight-semibold); text-overflow: ellipsis; white-space: nowrap; }
-.contact-value { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.empty-state { padding: var(--titan-space-24); color: var(--titan-text-muted); }
 
 .status-message {
   position: fixed;

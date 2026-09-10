@@ -6,7 +6,7 @@
 <title>Titan Contacts</title>
 <script>
 const dsBase=location.pathname.startsWith('/app/')?'/design-system/':'../../../../../design-system/';
-for(const file of ['tokens.css','components/actions.css','components/navigation-input.css','components/selection.css','components/sidebar-header.css','components/avatar.css','icons/icons.css'])document.write('<link rel="stylesheet" href="'+dsBase+file+'">');
+for(const file of ['tokens.css','components/actions.css','components/navigation-input.css','components/selection.css','components/sidebar-header.css','components/avatar.css','components/data-list.css','icons/icons.css'])document.write('<link rel="stylesheet" href="'+dsBase+file+'">');
 </script>
 <link rel="stylesheet" href="contacts.css">
 </head>
@@ -24,18 +24,9 @@ for(const file of ['tokens.css','components/actions.css','components/navigation-
     </section>
 
     <nav class="contacts-nav" aria-label="Contact views">
-      <div class="nav-entry" data-view="my">
-        <div id="nav-my-contacts"></div>
-        <button class="nav-info" type="button" aria-label="About My Contacts" data-info="My Contacts"><img src="assets/info.svg" alt=""></button>
-      </div>
-      <div class="nav-entry" data-view="all">
-        <div id="nav-all-contacts"></div>
-        <button class="nav-info" type="button" aria-label="About All Contacts" data-info="All Contacts"><img src="assets/info.svg" alt=""></button>
-      </div>
-      <div class="nav-entry" data-view="groups">
-        <div id="nav-contact-groups"></div>
-        <button class="nav-info" type="button" aria-label="About Contact Groups" data-info="Contact Groups"><img src="assets/info.svg" alt=""></button>
-      </div>
+      <div id="nav-my-contacts"></div>
+      <div id="nav-all-contacts"></div>
+      <div id="nav-contact-groups"></div>
     </nav>
 
     <footer class="sidebar-footer">
@@ -56,15 +47,7 @@ for(const file of ['tokens.css','components/actions.css','components/navigation-
 
     <section class="content" aria-labelledby="contacts-title">
       <h1 id="contacts-title" class="visually-hidden">My Contacts</h1>
-      <div class="contact-table" role="table" aria-label="My contacts">
-        <div class="contact-grid contact-header" role="row">
-          <div class="select-cell" role="columnheader"><span id="select-all-host"></span></div>
-          <div role="columnheader">Name</div>
-          <div role="columnheader">Email</div>
-          <div role="columnheader">Phone</div>
-        </div>
-        <div id="contact-rows"></div>
-      </div>
+      <div id="contact-table" class="contact-table"></div>
     </section>
 
     <div id="status-message" class="status-message" role="status" aria-live="polite" hidden></div>
@@ -72,7 +55,7 @@ for(const file of ['tokens.css','components/actions.css','components/navigation-
 </div>
 
 <script>
-for(const file of ['icons/runtime.js','components/actions.js','components/navigation-input.js','components/selection.js','components/sidebar-header.js','components/avatar.js'])document.write('<script src="'+dsBase+file+'"><\/script>');
+for(const file of ['icons/runtime.js','components/actions.js','components/navigation-input.js','components/selection.js','components/sidebar-header.js','components/avatar.js','components/data-list.js'])document.write('<script src="'+dsBase+file+'"><\/script>');
 </script>
 <script src="contacts.js"></script>
 <script>

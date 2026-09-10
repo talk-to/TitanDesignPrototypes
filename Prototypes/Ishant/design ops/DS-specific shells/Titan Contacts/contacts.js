@@ -6,7 +6,12 @@ const localAssets=new URL('assets/',location.href).href;
 const logo=new URL('../TitanEmailShell/assets/fa36f613-977c-444a-bef5-e1b5f5f1b340.svg',location.href).href;
 
 const contacts=[
-  {id:'ishant',initials:'I',name:'ishant.jp@gmail.com',email:'ishant.jp@gmail.com',phone:'09034401875'}
+  {id:'ishant',initials:'I',name:'ishant.jp@gmail.com',email:'ishant.jp@gmail.com',phone:'09034401875'},
+  {id:'ada',initials:'AL',name:'Ada Lovelace',email:'ada.lovelace@titan.email',phone:'09811204413'},
+  {id:'grace',initials:'GH',name:'Grace Hopper',email:'grace.hopper@titan.email',phone:'09765330128'},
+  {id:'alan',initials:'AT',name:'Alan Turing',email:'alan.turing@titan.email',phone:'09920145577'},
+  {id:'radia',initials:'RP',name:'Radia Perlman',email:'radia.perlman@titan.email',phone:'09604471290'},
+  {id:'karen',initials:'KS',name:'Karen Spärck Jones',email:'karen.sparck.jones@titan.email',phone:'09143398021'}
 ];
 let visibleContacts=[...contacts];
 let noticeTimer;
@@ -26,15 +31,15 @@ function renderNav(){
     ['nav-contact-groups','Contact Groups','contact-groups.svg',false]
   ];
   for(const [host,label,icon,selected] of items){
-    TitanNavigationInput.mount($(host),'sidebarItem',{label,icon:localAssets+icon,selected},{activate:()=>selectView(label)});
+    TitanNavigationInput.mount($(host),'sidebarItem',{
+      label,icon:localAssets+icon,selected,
+      action:{icon:localAssets+'info.svg',label:`About ${label}`,variant:'dark-quiet'}
+    },{activate:()=>selectView(label),action:()=>announce(`${label} information`)});
   }
-  document.querySelectorAll('.nav-entry').forEach(entry=>{
-    entry.querySelector('.nav-info').addEventListener('click',()=>announce(`${entry.dataset.view==='my'?'My Contacts':entry.dataset.view==='all'?'All Contacts':'Contact Groups'} information`));
-  });
 }
 
 function selectView(label){
-  document.querySelectorAll('.nav-entry .titan-sidebar-item').forEach(item=>{
+  document.querySelectorAll('.contacts-nav .titan-sidebar-item').forEach(item=>{
     const selected=item.querySelector('.nav-item-label')?.textContent===label;
     item.classList.toggle('active',selected);
     item.querySelector('.nav-item-label')?.classList.toggle('active',selected);
@@ -43,35 +48,57 @@ function selectView(label){
   announce(`${label} selected`);
 }
 
+// Column contract for the contacts table. The shared data list owns the tracks,
+// column gap, cell insets and row rhythm; this screen owns which columns exist
+// and their content.
+const CONTACT_COLUMNS=[
+  {key:'select',role:'control',width:'auto'},
+  {key:'name',role:'key',label:'Name',width:'minmax(240px, 1.35fr)'},
+  {key:'email',label:'Email',width:'minmax(220px, 1fr)'},
+  {key:'phone',label:'Phone',width:'minmax(190px, 1fr)'}
+];
+
 function renderRows(){
-  const host=$('contact-rows');
-  if(!visibleContacts.length){
-    host.innerHTML='<div class="empty-state">No contacts match your search.</div>';
-    updateSelectAllState();
-    return;
-  }
-  host.innerHTML=visibleContacts.map(contact=>`<div class="contact-row contact-grid" role="row" data-contact-id="${contact.id}">
-    <div class="select-cell" role="cell"><span class="row-checkbox"></span></div>
-    <div class="name-cell" role="cell"><span class="avatar-host"></span><span class="contact-name">${escapeHtml(contact.name)}</span></div>
-    <div class="contact-value" role="cell">${escapeHtml(contact.email)}</div>
-    <div class="contact-value" role="cell">${escapeHtml(contact.phone)}</div>
-  </div>`).join('');
-  host.querySelectorAll('.contact-row').forEach(row=>{
-    const contact=contacts.find(item=>item.id===row.dataset.contactId);
-    row.querySelector('.avatar-host').innerHTML=TitanAvatar.render({initials:contact.initials,label:contact.name});
-    TitanSelection.mount(row.querySelector('.row-checkbox'),'checkbox',{label:`Select ${contact.name}`},{change:updateSelectAllState});
+  const host=$('contact-table');
+  host.innerHTML=TitanDataList.list({
+    columns:CONTACT_COLUMNS,
+    label:'My contacts',
+    emptyText:'No contacts match your search.',
+    rows:visibleContacts.map(contact=>({
+      id:contact.id,
+      cells:{
+        select:{slot:true},
+        name:{slot:true,text:contact.name},
+        email:contact.email,
+        phone:contact.phone
+      }
+    }))
+  });
+  // Fill the head control slot with select-all, then each row's slots with the
+  // shared avatar and checkbox instances.
+  const selectAll=host.querySelector('[data-slot="head:select"]');
+  if(selectAll)TitanSelection.mount(selectAll,'checkbox',{label:'Select all contacts',size:'large'},{change:toggleSelectAll});
+  host.querySelectorAll('.titan-data-list__row').forEach(row=>{
+    const contact=contacts.find(item=>item.id===row.dataset.rowId);
+    if(!contact)return;
+    row.querySelector('[data-slot$=":name"]').innerHTML=TitanAvatar.render({initials:contact.initials,label:contact.name});
+    TitanSelection.mount(row.querySelector('[data-slot$=":select"]'),'checkbox',{label:`Select ${contact.name}`,size:'large'},{change:updateSelectAllState});
   });
   updateSelectAllState();
 }
 
-function escapeHtml(value){
-  return String(value).replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
+const rowCheckboxes=()=>[...document.querySelectorAll('.titan-data-list__row [data-slot$=":select"] input')];
+const selectAllCheckbox=()=>document.querySelector('.titan-data-list__head [data-slot$=":select"] input');
+
+function toggleSelectAll(checked){
+  rowCheckboxes().forEach(input=>{input.checked=checked;});
+  updateSelectAllState();
 }
 
 function updateSelectAllState(){
-  const all=[...document.querySelectorAll('.row-checkbox input')];
+  const all=rowCheckboxes();
   const checked=all.filter(input=>input.checked).length;
-  const selectAll=$('select-all-host input');
+  const selectAll=selectAllCheckbox();
   if(!selectAll)return;
   selectAll.checked=all.length>0&&checked===all.length;
   selectAll.indeterminate=checked>0&&checked<all.length;
@@ -89,17 +116,6 @@ renderNav();
 
 TitanActions.mount($('new-contact-host'),'button',{label:'New Contact',variant:'primary'},{main:()=>announce('New contact action selected')});
 TitanNavigationInput.mount($('search-host'),'searchField',{label:'Search contacts',placeholder:'Search in ishantp@titan.email',icon:'search-outline'},{change:filterContacts,search:filterContacts});
-// Local derived adaptation: reuses the shared Button's Outlined variant and
-// owns only the primary-blue treatment needed by the Contacts screen.
-const importContactsButton=TitanActions.mount($('import-contacts-host'),'button',{label:'Import contacts',variant:'outlined',icon:localAssets+'import.svg',iconColor:'currentColor'},{main:()=>announce('Import contacts action selected')});
-importContactsButton.classList.add('contacts-import-button','titan-button--derived-local-unregistered-primary-outlined');
-importContactsButton.setAttribute('data-inspector-variant','Derived from Button · Primary outlined · Local, unregistered');
-importContactsButton.setAttribute('data-derived-from','button');
-importContactsButton.setAttribute('data-derivation-status','local-unregistered');
-importContactsButton.setAttribute('data-derivation-definition','derivations.json');
+TitanActions.mount($('import-contacts-host'),'button',{label:'Import contacts',variant:'outlined-primary',icon:localAssets+'import.svg',iconColor:'currentColor'},{main:()=>announce('Import contacts action selected')});
 TitanActions.mount($('export-contacts-host'),'button',{label:'Export contacts',variant:'dark',icon:localAssets+'export.svg',iconColor:'currentColor'},{main:()=>announce('Export contacts action selected')});
-TitanSelection.mount($('select-all-host'),'checkbox',{label:'Select all contacts'},{change:checked=>{
-  document.querySelectorAll('.row-checkbox input').forEach(input=>{input.checked=checked;});
-  updateSelectAllState();
-}});
 renderRows();
