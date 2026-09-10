@@ -16,6 +16,14 @@ work in this conversation. No additional “follow the DS” prompt is required.
 
 - Read and follow the linked shared AGENTS.md and USAGE.md. Use their current
   change-specific checklist; do not reread unchanged instructions already loaded.
+- Mandatory: inspect existing components and variants for the whole and its parts
+  before extracting or registering anything new. Compose suitable existing children
+  first; show mismatches for review instead of inventing near-duplicates or variants.
+- Mandatory: reuse components unchanged, including nested children. Do not override
+  their internal styling or add variants without an explicit user request. Leave
+  mismatches visible and report them; follow shared AGENTS.md for the full rule.
+- New components must follow shared AGENTS.md’s mandatory registration rules: clear
+  responsibility, real standalone preview, ownership, direct dependencies and verified consumers.
 - Before building, inspect the catalog and reuse matching shared implementations,
   tokens and icons. A similar-looking copy is not component reuse. Keep one-off
   layout screen-owned and use existing spacing roles or primitives appropriately.

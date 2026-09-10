@@ -2,7 +2,7 @@
    spacing; this file owns placement between those controls and the table. */
 :root {
   --contacts-sidebar-width: 250px;
-  --contacts-toolbar-height: 52px;
+  --contacts-toolbar-height: calc(var(--titan-control-height-default) + 2 * var(--titan-space-16));
   --contacts-sidebar-edge: #373737;
   --contacts-sidebar-selected: #494949;
   --contacts-sidebar-muted: rgba(255, 255, 255, .68);
@@ -33,18 +33,10 @@ button:focus-visible, input:focus-visible {
   flex: 0 0 var(--contacts-sidebar-width);
   flex-direction: column;
   width: var(--contacts-sidebar-width);
-  overflow: hidden;
+  overflow: visible;
   color: var(--titan-text-inverse);
   background: var(--titan-surface-navigation);
   border-right: var(--titan-divider-width-default) solid var(--contacts-sidebar-edge);
-}
-
-/* The supplied reference aligns the app header with the 52px content toolbar.
-   This is a screen-local size adaptation; the shared header still owns its
-   internal insets, logo slot and nested Dropdown behavior. */
-.sidebar #sidebar-header-host .titan-sidebar-header {
-  --titan-sidebar-header-height: var(--contacts-toolbar-height);
-  border-bottom: var(--titan-divider-width-default) solid var(--contacts-sidebar-edge);
 }
 
 .account-section { padding: var(--titan-space-12); }
@@ -93,23 +85,22 @@ button:focus-visible, input:focus-visible {
 
 .sidebar-footer {
   margin-top: auto;
-  padding: 0 var(--titan-space-12) var(--titan-space-20);
+  padding-bottom: var(--titan-space-20);
 }
-.sidebar-footer .titan-button--dark {
-  width: 100%;
-  justify-content: flex-start;
-  padding-left: var(--titan-space-8);
-}
+.sidebar-footer .titan-sidebar-item:hover { background: var(--contacts-sidebar-selected); }
 
 .main { display: flex; flex: 1; min-width: 0; flex-direction: column; background: var(--titan-surface-base); }
 .toolbar {
   display: flex;
-  flex: 0 0 var(--contacts-toolbar-height);
+  flex: 0 0 auto;
   align-items: center;
   justify-content: space-between;
   min-width: 0;
-  height: var(--contacts-toolbar-height);
-  padding: 0 var(--titan-space-12);
+  min-height: var(--contacts-toolbar-height);
+  padding-top: var(--titan-space-16);
+  padding-bottom: var(--titan-space-16);
+  padding-left: var(--titan-space-12);
+  padding-right: var(--titan-space-12);
   gap: var(--titan-space-16);
   border-bottom: var(--titan-divider-width-default) solid var(--card-border-color);
 }
@@ -118,21 +109,11 @@ button:focus-visible, input:focus-visible {
 .toolbar-right { flex: 0 0 auto; }
 .search-host { width: min(100%, 440px); min-width: 260px; }
 .search-host .titan-search-field { width: 100%; }
-.toolbar #new-contact-host .titan-button { min-height: 38px; padding-inline: var(--titan-space-16); font-weight: var(--titan-font-weight-semibold); }
+.toolbar #new-contact-host .titan-button { font-weight: var(--titan-font-weight-semibold); }
 
 .content { flex: 1; min-width: 0; overflow: auto; }
+/* The screen owns table width and scrolling; shared children retain their defaults. */
 .contact-table { width: 100%; min-width: 720px; }
-/* The shared data list owns tracks, column gap, control insets, row rhythm and
-   separators. The screen keeps only row geometry, hover colour and avatar size. */
-.contact-table .titan-data-list {
-  --titan-data-list-row-min-height: 66px;
-  --titan-data-list-head-min-height: 62px;
-}
-.contact-table .titan-data-list__row:hover { background: var(--contacts-row-hover); }
-.contact-table .titan-avatar {
-  --titan-avatar-size: 28px;
-  font-size: var(--titan-font-size-14);
-}
 
 .status-message {
   position: fixed;
@@ -158,7 +139,7 @@ button:focus-visible, input:focus-visible {
 }
 
 @media (max-width: 920px) {
-  .toolbar { padding-inline: var(--titan-space-8); gap: var(--titan-space-8); }
+  .toolbar { padding-left: var(--titan-space-8); padding-right: var(--titan-space-8); gap: var(--titan-space-8); }
   .toolbar-left { min-width: 0; gap: var(--titan-space-8); }
   .search-host { width: clamp(180px, calc(100vw - 650px), 440px); min-width: 0; }
 }

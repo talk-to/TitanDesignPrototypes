@@ -110,12 +110,13 @@ function filterContacts(value){
   renderRows();
 }
 
-$('sidebar-header-host').outerHTML=TitanSidebarHeader.render({icon:'app-contacts',logo});
+$('sidebar-header-host').outerHTML=TitanSidebarHeader.render({appSwitcher:TitanAppSwitcherOptions('contacts'),logo});
+TitanSidebarHeader.bind(document.querySelector('.titan-sidebar-header'));
 TitanSelection.mount($('account-picker-host'),'dropdown',{label:'ishantp@titan.email',variant:'account'},{open:()=>announce('Account switcher opened')});
 renderNav();
 
 TitanActions.mount($('new-contact-host'),'button',{label:'New Contact',variant:'primary'},{main:()=>announce('New contact action selected')});
 TitanNavigationInput.mount($('search-host'),'searchField',{label:'Search contacts',placeholder:'Search in ishantp@titan.email',icon:'search-outline'},{change:filterContacts,search:filterContacts});
 TitanActions.mount($('import-contacts-host'),'button',{label:'Import contacts',variant:'outlined-primary',icon:localAssets+'import.svg',iconColor:'currentColor'},{main:()=>announce('Import contacts action selected')});
-TitanActions.mount($('export-contacts-host'),'button',{label:'Export contacts',variant:'dark',icon:localAssets+'export.svg',iconColor:'currentColor'},{main:()=>announce('Export contacts action selected')});
+TitanNavigationInput.mount($('export-contacts-host'),'sidebarItem',{label:'Export contacts',icon:localAssets+'export.svg'},{activate:()=>announce('Export contacts action selected')});
 renderRows();

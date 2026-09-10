@@ -3,51 +3,53 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Titan Contacts</title>
+<title>Titan Drive</title>
 <script>
 const dsBase=location.pathname.startsWith('/app/')?'/design-system/':'../../../../../design-system/';
-for(const file of ['tokens.css','components/actions.css','components/navigation-input.css','components/selection.css','components/sidebar-header.css','components/avatar.css','components/data-list.css','icons/icons.css'])document.write('<link rel="stylesheet" href="'+dsBase+file+'">');
+for(const file of ['tokens.css','components/actions.css','components/navigation-input.css','components/selection.css','components/sidebar-header.css','components/app-switcher.css','components/avatar.css','components/data-list.css','icons/icons.css'])document.write('<link rel="stylesheet" href="'+dsBase+file+'">');
 </script>
-<link rel="stylesheet" href="contacts.css">
+<link rel="stylesheet" href="drive.css">
 </head>
 <body>
-<div class="contacts-app">
-  <aside class="sidebar" aria-label="Contacts sidebar">
+<div class="drive-app">
+  <aside class="sidebar" aria-label="Drive sidebar">
     <div id="sidebar-header-host"></div>
 
-    <section class="account-section" aria-labelledby="accounts-heading">
-      <h2 id="accounts-heading" class="account-heading"><span>Accounts</span><span>(3)</span></h2>
-      <div class="account-control">
-        <span class="account-avatar" aria-hidden="true">I</span>
-        <div id="account-picker-host"></div>
-      </div>
-    </section>
-
-    <nav class="contacts-nav" aria-label="Contact views">
-      <div id="nav-my-contacts"></div>
-      <div id="nav-all-contacts"></div>
-      <div id="nav-contact-groups"></div>
+    <nav class="drive-nav" aria-label="Drive views">
+      <div id="nav-my-drive"></div>
+      <div id="nav-transfers"></div>
+      <div id="nav-branding"></div>
+      <hr class="nav-divider">
+      <div id="nav-trash"></div>
     </nav>
 
     <footer class="sidebar-footer">
-      <div id="export-contacts-host"></div>
+      <p class="storage-note">Storage used: 7.2 KB / 50 GB</p>
+      <div class="sidebar-links">
+        <div id="nav-feedback"></div>
+        <div id="nav-help"></div>
+      </div>
     </footer>
   </aside>
 
   <main class="main">
     <header class="toolbar">
       <div class="toolbar-left">
-        <div id="new-contact-host"></div>
+        <div id="upload-host"></div>
         <div id="search-host" class="search-host"></div>
+        <div id="filters-host"></div>
       </div>
       <div class="toolbar-right">
-        <div id="import-contacts-host"></div>
+        <div id="account-picker-host"></div>
       </div>
     </header>
 
-    <section class="content" aria-labelledby="contacts-title">
-      <h1 id="contacts-title" class="visually-hidden">My Contacts</h1>
-      <div id="contact-table" class="contact-table"></div>
+    <section class="content" aria-labelledby="drive-title">
+      <div class="content-head">
+        <h1 id="drive-title" class="content-title">My Drive</h1>
+        <div id="new-folder-host"></div>
+      </div>
+      <div id="drive-table" class="drive-table"></div>
     </section>
 
     <div id="status-message" class="status-message" role="status" aria-live="polite" hidden></div>
@@ -57,7 +59,7 @@ for(const file of ['tokens.css','components/actions.css','components/navigation-
 <script>
 for(const file of ['icons/runtime.js','components/actions.js','components/navigation-input.js','components/selection.js','components/app-switcher.js','app-switcher-config.js','components/sidebar-header.js','components/avatar.js','components/data-list.js'])document.write('<script src="'+dsBase+file+'"><\/script>');
 </script>
-<script src="contacts.js"></script>
+<script src="drive.js"></script>
 <script>
 if(new URLSearchParams(location.search).get('ds')==='true'){
   const studio=location.pathname.startsWith('/app/');

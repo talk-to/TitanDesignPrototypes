@@ -175,77 +175,6 @@
       flex-shrink: 0;
     }
 
-    .account-header {
-      display: flex;
-      align-items: center;
-      padding: var(--titan-account-header-inset-block) var(--titan-space-8) var(--titan-account-header-inset-block) 0;
-      cursor: pointer;
-      flex-shrink: 0;
-      position: relative;
-    }
-
-    .account-chevron {
-      width: 24px;
-      height: 24px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-    }
-
-    .account-chevron img {
-      width: 10px;
-      height: 6px;
-      object-fit: contain;
-    }
-
-    .account-email-id {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      flex: 1;
-      min-width: 0;
-    }
-
-    .account-avatar {
-      width: 24px;
-      height: 24px;
-      border-radius: 50%;
-      position: relative;
-      flex-shrink: 0;
-      overflow: hidden;
-    }
-
-    .account-avatar img.bg {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-    }
-
-    .account-avatar span {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 14px;
-      font-weight: 500;
-      color: #fff;
-      line-height: 1;
-    }
-
-    .account-email-text {
-      font-size: 13px;
-      font-weight: var(--titan-font-weight-semibold);
-      color: var(--titan-text-inverse);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      min-width: 0;
-      flex: 1;
-    }
-
     /* Tooltip showing full email on hover */
     #email-tooltip {
       display: none;
@@ -336,49 +265,6 @@
       position: absolute;
       inset: 0;
       width: 100%;
-    }
-
-    .footer-btn {
-      flex: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      padding: 12px 6px;
-      background: #252525;
-      cursor: pointer;
-      position: relative;
-    }
-
-    .footer-btn-icon {
-      width: 16px;
-      height: 16px;
-      position: relative;
-      flex-shrink: 0;
-    }
-
-    .footer-btn-icon.settings-icon {
-      width: 20px;
-      height: 20px;
-    }
-
-    .footer-btn-icon img {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-    }
-
-    .footer-btn span {
-      font-size: 14px;
-      color: #fff;
-    }
-
-    .footer-divider {
-      width: 1px;
-      background: #2d2d2d;
-      flex-shrink: 0;
     }
 
     /* ── Main area (right of sidebar) ── */
@@ -929,255 +815,6 @@
       width: 100%;
       height: 100%;
     }
-
-    /* ── App Switcher Dropdown ── */
-    .app-switcher-dropdown {
-      position: fixed;
-      top: 52px;
-      left: 8px;
-      width: 280px;
-      height: 587px;
-      z-index: 1000;
-      display: none;
-      opacity: 0;
-      transform: translateY(-12px);
-      transition: opacity 0.25s cubic-bezier(0.22, 1, 0.36, 1), transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
-      user-select: none;
-    }
-
-    .app-switcher-dropdown.open {
-      display: block;
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .app-switcher-bg {
-      position: absolute;
-      inset: -0.16% -4.85% -2.79% -1.87%;
-      pointer-events: none;
-      width: 298px;
-      height: 605px;
-    }
-
-    .app-switcher-bg img {
-      width: 100%;
-      height: 100%;
-      display: block;
-      object-fit: fill;
-    }
-
-    .app-switcher-content {
-      position: absolute;
-      left: 0;
-      top: 19px;
-      width: 280px;
-      height: 568px;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-      padding: 8px 0 1px;
-      box-sizing: border-box;
-      z-index: 2;
-    }
-
-    .app-switcher-section {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-      padding: 0 16px 8px;
-    }
-
-    .app-switcher-row {
-      display: flex;
-      gap: 16px;
-      width: 100%;
-    }
-
-    .app-switcher-item {
-      position: relative;
-      z-index: 10;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 2px;
-      width: 72px;
-      padding: 8px 2px;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-
-    .app-switcher-item:hover {
-      background: #f2f2f2;
-    }
-
-    .app-icon {
-      position: relative;
-      z-index: 2;
-      width: 38px;
-      height: 38px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .app-icon-img {
-      display: block;
-      object-fit: contain;
-    }
-
-    .app-icon-img {width:34px;height:34px}
-
-    .app-label {
-      position: relative;
-      z-index: 2;
-      font-size: 13px;
-      font-weight: 500;
-      color: #707070;
-      line-height: 18px;
-      text-align: center;
-      white-space: nowrap;
-    }
-
-    .app-switcher-divider {
-      width: 280px;
-      height: 1px;
-      display: flex;
-      align-items: center;
-      pointer-events: none;
-    }
-
-    .app-switcher-divider img {
-      width: 100%;
-      height: 1px;
-    }
-
-    .app-switcher-tools {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-      width: 100%;
-    }
-
-    .app-switcher-tool-item {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 6px 27px;
-      width: 100%;
-      cursor: pointer;
-      transition: background 0.15s ease;
-    }
-
-    .app-switcher-tool-item:hover {
-      background: #f2f2f2;
-    }
-
-    .tool-icon {
-      width: 28px;
-      height: 28px;
-      border-radius: 4px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-    }
-
-    .tool-icon.bg-pink {
-      background: #ffe5ed;
-    }
-
-    .tool-icon.bg-purple {
-      background: #f1e4ff;
-    }
-
-    .tool-icon.bg-blue {
-      background: #e1f4ff;
-    }
-
-    .tool-icon.bg-green {
-      background: #e6faf2;
-    }
-
-    .tool-icon img {
-      object-fit: contain;
-    }
-
-    .tool-icon img {width:24px;height:24px;object-fit:contain}
-
-    .tool-label {
-      font-size: 13px;
-      font-weight: 500;
-      color: #707070;
-      line-height: 14px;
-      white-space: nowrap;
-    }
-
-    .app-switcher-footer {
-      display: flex;
-      flex-direction: column;
-      width: 100%;
-      height: 96px;
-    }
-
-    .footer-link-row {
-      border-top: 0.5px solid #dedded;
-      height: 48px;
-      width: 100%;
-      display: flex;
-      align-items: center;
-      padding: 0 24px;
-      cursor: pointer;
-      transition: background 0.15s ease;
-    }
-
-    .footer-link-row:hover {
-      background: #f2f2f2;
-    }
-
-    .footer-link-content {
-      display: flex;
-      align-items: center;
-      gap: var(--titan-gap-icon-label);
-      width: 100%;
-      position: relative;
-    }
-
-    .footer-link-icon {
-      width: 24px;
-      height: 24px;
-      object-fit: contain;
-      flex-shrink: 0;
-    }
-
-    .beaker-icon {
-      width: 24px;
-      height: 24px;
-      object-fit: contain;
-      flex-shrink: 0;
-      margin: 0;
-    }
-
-    .footer-link-text {
-      font-size: 13px;
-      font-weight: 500;
-      color: #707070;
-      flex: 1;
-      white-space: nowrap;
-    }
-
-    .bold {
-      font-weight: 800;
-    }
-
-    .footer-arrow {
-      width: 16px;
-      height: 16px;
-      object-fit: contain;
-      flex-shrink: 0;
-      opacity: 0.5;
-    }
-
-
 
     /* ── Panel resize handle ── */
     .panel-resize-handle {
@@ -1741,13 +1378,10 @@
   <link rel="stylesheet" href="/design-system/components/navigation-input.css" onerror="this.onerror=null;this.href='../../../../../design-system/components/navigation-input.css'">
   <link rel="stylesheet" href="/design-system/components/messages.css" onerror="this.onerror=null;this.href='../../../../../design-system/components/messages.css'">
   <link rel="stylesheet" href="/design-system/components/actions.css" onerror="this.onerror=null;this.href='../../../../../design-system/components/actions.css'">
+  <link rel="stylesheet" href="/design-system/components/avatar.css" onerror="this.onerror=null;this.href='../../../../../design-system/components/avatar.css'">
+  <link rel="stylesheet" href="/design-system/components/account-header.css" onerror="this.onerror=null;this.href='../../../../../design-system/components/account-header.css'">
 <link rel="stylesheet" href="../../../../../design-system/components/selection.css">
-<style>
-.app-switcher-dropdown{height:auto;padding-top:19px;padding-bottom:8px}
-.app-switcher-content{position:relative;top:auto;left:auto;height:auto;min-height:568px}
-.app-switcher-bg{inset:0 -14px -8px -5px;width:calc(100% + 19px);height:calc(100% + 8px)}
-.app-switcher-footer{height:auto;flex-shrink:0}.footer-link-row{flex-shrink:0}
-</style><link rel="stylesheet" href="/design-system/components/sidebar-header.css">
+<link rel="stylesheet" href="/design-system/components/sidebar-header.css">
 </head>
 
 <body>
@@ -1765,19 +1399,7 @@
 
         <!-- Account 1 -->
         <div class="sidebar-line" style="margin-top:2px;"></div>
-        <div class="account-header">
-          <div class="account-chevron">
-            <img src="assets/f63230e3-4d61-49cb-95fa-34291315c8a6.svg" alt="">
-          </div>
-          <div class="account-email-id">
-            <div class="account-avatar">
-              <img class="bg" src="assets/d2c6a617-0407-4985-8c8b-740201e73dfe.svg" alt="">
-              <span>E</span>
-            </div>
-            <span class="account-email-text">ella.henderson@avontechlabs.com</span>
-          </div>
-
-        </div>
+        <div id="account-header-ella"></div>
 
         <!-- Inbox (active) -->
         <div class="titan-sidebar-item nav-item active" style="padding-right: 8px;">
@@ -1866,18 +1488,7 @@
         <div class="sidebar-line"></div>
 
         <!-- Account 2 -->
-        <div class="account-header">
-          <div class="account-chevron">
-            <img src="assets/f63230e3-4d61-49cb-95fa-34291315c8a6.svg" alt="">
-          </div>
-          <div class="account-email-id">
-            <div class="account-avatar">
-              <img class="bg" src="assets/1ec36ae6-2aa7-47fb-8241-ad45b652e49a.svg" alt="">
-              <span>S</span>
-            </div>
-            <span class="account-email-text">support.team@avontechlabs.com</span>
-          </div>
-        </div>
+        <div id="account-header-support"></div>
 
         <div class="titan-sidebar-item nav-item">
           <div class="nav-item-icon">
@@ -1917,28 +1528,7 @@
           <img src="assets/0d00b891-46d6-4063-acc9-0db4c8c41036.svg" alt=""
             style="position:absolute; inset:-1px 0; width:100%; height:2px; object-fit:fill;">
         </div>
-        <div class="sidebar-footer">
-          <div class="footer-btn">
-            <div class="footer-btn-icon">
-              <img src="assets/34686e57-21d5-4bf6-82c4-1c6e474d25d3.svg" alt="">
-            </div>
-            <span>Bug</span>
-          </div>
-          <div class="footer-divider"></div>
-          <div class="footer-btn">
-            <div class="footer-btn-icon">
-              <img src="assets/03a449fb-b16b-4b26-8eec-0fa033eff13e.svg" alt="">
-            </div>
-            <span>Feature</span>
-          </div>
-          <div class="footer-divider"></div>
-          <div class="footer-btn" onclick="toggleSettingsModal()">
-            <div class="footer-btn-icon settings-icon">
-              <img src="assets/6ea52e57-1d75-47b1-97cd-e416a5d2372d.svg" alt="">
-            </div>
-
-          </div>
-        </div>
+        <div id="sidebar-footer-host" class="sidebar-footer"></div>
       </div>
 
     </div><!-- /sidebar -->
@@ -2690,742 +2280,68 @@
   <div id="email-tooltip"></div>
 
 
-  <!-- App Switcher Dropdown (App Switcher - Light) -->
-  <div class="app-switcher-dropdown" id="app-switcher">
-    <!-- Combined Shape Background -->
-    <div class="app-switcher-bg">
-      <img src="app_switcher_assets/imgCombinedShape.svg" alt="">
-    </div>
-    <!-- App Switcher Content -->
-    <div class="app-switcher-content">
-
-      <!-- Top Apps Section (Mail, Calendar, Contacts) -->
-      <div class="app-switcher-section">
-        <div class="app-switcher-row">
-          <!-- Mail -->
-          <div class="app-switcher-item">
-            <div class="app-icon">
-              <img data-titan-icon="app-mail" alt="Mail" class="app-icon-img">
-            </div>
-            <span class="app-label">Mail</span>
-          </div>
-          <!-- Calendar -->
-          <div class="app-switcher-item">
-            <div class="app-icon">
-              <img data-titan-icon="app-calendar" alt="Calendar" class="app-icon-img">
-            </div>
-            <span class="app-label">Calendar</span>
-          </div>
-          <!-- Contacts -->
-          <div class="app-switcher-item">
-            <div class="app-icon">
-              <img data-titan-icon="app-contacts" alt="Contacts" class="app-icon-img">
-            </div>
-            <span class="app-label">Contacts</span>
-          </div>
-        </div>
-
-        <!-- Second Row of Apps (Bookings, Drive, Backup) -->
-        <div class="app-switcher-row">
-          <!-- Bookings -->
-          <div class="app-switcher-item">
-            <div class="app-icon">
-              <img data-titan-icon="app-bookings" alt="Bookings" class="app-icon-img">
-            </div>
-            <span class="app-label">Bookings</span>
-          </div>
-          <!-- Drive -->
-          <div class="app-switcher-item">
-            <div class="app-icon">
-              <img data-titan-icon="app-drive" alt="Drive" class="app-icon-img">
-            </div>
-            <span class="app-label">Drive</span>
-          </div>
-          <!-- Backup -->
-          <div class="app-switcher-item">
-            <div class="app-icon">
-              <img data-titan-icon="app-backup" alt="Backup" class="app-icon-img">
-            </div>
-            <span class="app-label">Backup</span>
-          </div>
-        </div>
-
-        <!-- Third Row of Apps (Tasks, Site, Admin) -->
-        <div class="app-switcher-row">
-          <!-- Tasks -->
-          <div class="app-switcher-item">
-            <div class="app-icon">
-              <img data-titan-icon="app-tasks" alt="Tasks" class="app-icon-img">
-            </div>
-            <span class="app-label">Tasks</span>
-          </div>
-          <!-- Site -->
-          <div class="app-switcher-item">
-            <div class="app-icon">
-              <img data-titan-icon="app-site" alt="Site" class="app-icon-img">
-            </div>
-            <span class="app-label">Site</span>
-          </div>
-          <!-- Admin -->
-          <div class="app-switcher-item">
-            <div class="app-icon">
-              <img data-titan-icon="app-admin" alt="Admin" class="app-icon-img">
-            </div>
-            <span class="app-label">Admin</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Divider Line -->
-      <div class="app-switcher-divider">
-        <img src="app_switcher_assets/imgLine75.svg" alt="">
-      </div>
-
-      <!-- Bottom Tools Section -->
-      <div class="app-switcher-tools">
-        <!-- Signature Designer -->
-        <div class="app-switcher-tool-item">
-          <div class="tool-icon bg-pink">
-            <img data-titan-icon="signature-designer" alt="">
-          </div>
-          <span class="tool-label">Signature Designer</span>
-        </div>
-        <!-- Smart Write AI -->
-        <div class="app-switcher-tool-item">
-          <div class="tool-icon bg-purple">
-            <img data-titan-icon="smart-write" alt="">
-          </div>
-          <span class="tool-label">Smart Write AI</span>
-        </div>
-        <!-- Email Designer -->
-        <div class="app-switcher-tool-item">
-          <div class="tool-icon bg-blue">
-            <img data-titan-icon="email-designer" alt="">
-          </div>
-          <span class="tool-label">Email Designer</span>
-        </div>
-        <!-- Invoice Builder -->
-        <div class="app-switcher-tool-item">
-          <div class="tool-icon bg-green">
-            <img data-titan-icon="invoice-builder" alt="">
-          </div>
-          <span class="tool-label">Invoice Builder</span>
-        </div>
-      </div>
-
-      <!-- Bottom Footer Links -->
-      <div class="app-switcher-footer">
-        <!-- Know your Titan -->
-        <div class="footer-link-row">
-          <div class="footer-link-content">
-            <img data-titan-icon="know-titan" alt="" class="footer-link-icon">
-            <span class="footer-link-text">Know your Titan</span>
-            <img data-titan-icon="next-arrow" alt="" class="footer-arrow">
-          </div>
-        </div>
-        <!-- See more @ Titan Labs -->
-        <div class="footer-link-row">
-          <div class="footer-link-content">
-            <img data-titan-icon="titan-labs" alt="" class="beaker-icon">
-            <span class="footer-link-text">See more @ <span class="bold">Titan Labs</span></span>
-            <img data-titan-icon="next-arrow" alt="" class="footer-arrow">
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
   <!-- Shared DS composer; original shell remains independent. -->
-  <div id="ds-composer-host"></div>
+  <div id="ds-composer-host" inert></div>
   <link rel="stylesheet" href="/design-system/components/composer.css">
   <script src="/design-system/icons/runtime.js"></script><script src="/design-system/components/actions.js"></script>
   <script src="/design-system/components/selection.js"></script>
+  <script src="/design-system/components/app-switcher.js"></script>
+  <script src="/design-system/app-switcher-config.js"></script>
   <script src="/design-system/components/sidebar-header.js"></script>
+  <script src="/design-system/components/avatar.js"></script>
+  <script src="/design-system/components/account-header.js"></script>
   <script>
-  document.getElementById('sidebar-header-host').outerHTML=TitanSidebarHeader.render({icon:'app-switcher',logo:'assets/fa36f613-977c-444a-bef5-e1b5f5f1b340.svg'});
+  document.getElementById('sidebar-header-host').outerHTML=TitanSidebarHeader.render({appSwitcher:TitanAppSwitcherOptions('mail'),logo:'assets/fa36f613-977c-444a-bef5-e1b5f5f1b340.svg'});
+  TitanSidebarHeader.bind(document.querySelector('.titan-sidebar-header'));
+  for(const [host,options] of [
+    ['account-header-ella',{id:'ella',email:'ella.henderson@avontechlabs.com',initials:'E'}],
+    ['account-header-support',{id:'support',email:'support.team@avontechlabs.com',initials:'S'}]
+  ])document.getElementById(host).outerHTML=TitanAccountHeader.render(options);
+  TitanActions.mount(document.getElementById('sidebar-footer-host'),'footerActions',{label:'Feedback and settings',items:[
+    {id:'bug',label:'Bug',icon:'report-bug'},
+    {id:'feature',label:'Feature',icon:'request-feature'},
+    {id:'settings',label:'Settings',icon:'settings',labelHidden:true}
+  ]},{settings:()=>toggleSettingsModal()});
   </script>
   <script src="/design-system/components/composer.js"></script>
-  <script>TitanComposer.mount(document.getElementById('ds-composer-host'),'emailComposer',{docked:true,id:'composer-window',toId:'comp-to-input',from:'ella@avontech.com'});</script>
+  <script>let composerReturnFocus=null;TitanComposer.mount(document.getElementById('ds-composer-host'),'emailComposer',{docked:true,id:'composer-window',toId:'comp-to-input',from:'ella@avontech.com'},{close:()=>{document.getElementById('ds-composer-host').inert=true;composerReturnFocus?.focus();}});</script>
 
 
   <style>
-    /* ── Composer window ── */
-    .composer-window {
-      position: fixed;
-      bottom: 0;
-      right: 24px;
-      width: 681px;
-      height: 640px;
-      background: var(--titan-surface-base);
-      border-radius: 4px 4px 0 0;
-      border: var(--titan-elevation-bottom-panel-border);
-      box-shadow: var(--titan-elevation-bottom-panel);
-      display: flex;
-      flex-direction: column;
-      z-index: 600;
-      transform: translateY(100%);
-
-      overflow: hidden;
-      font-family: var(--titan-font-family-ui);
-    }
-
-    .composer-window.comp-open {
-      transform: translateY(0);
-    }
-
-    .composer-window.comp-minimized {
-      transform: translateY(calc(100% - 44px));
-    }
-
-    .comp-header {
-      height: 44px;
-      background: var(--titan-surface-composer-header);
-      display: flex;
-      align-items: center;
-      padding: 0 16px;
-      flex-shrink: 0;
-      cursor: pointer;
-      user-select: none;
-      border-radius: 4px 4px 0 0;
-    }
-
-    .comp-title-text {
-      font-size: var(--titan-type-control-size);
-      font-weight: var(--titan-font-weight-medium);
-      color: var(--titan-text-inverse);
-      flex: 1;
-      letter-spacing: 0.01em;
-    }
-
-    .comp-header-btns {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .comp-hbtn {
-      width: 24px;
-      height: 24px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 4px;
-      cursor: pointer;
-      border: none;
-      background: none;
-      padding: 0;
-      opacity: 0.65;
-      transition: opacity 0.15s, background 0.15s;
-    }
-
-    .comp-hbtn:hover {
-      opacity: 1;
-      background: rgba(255, 255, 255, 0.14);
-    }
-
-    .comp-hbtn img {
-      display: block;
-      max-width: 14px;
-      max-height: 14px;
-      width: auto;
-      height: auto;
-    }
-
-    .comp-hbtn.close-btn img {
-      max-width: 10px;
-      max-height: 10px;
-    }
-
-    /* Form section */
-    .comp-form {
-      padding: 12px 16px 0;
-      flex-shrink: 0;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .comp-row {
-      height: 24px;
-      display: flex;
-      align-items: center;
-      flex-shrink: 0;
-    }
-
-    .comp-divider {
-      height: 2px;
-      background: #ededed;
-      margin: 8px 0;
-      flex-shrink: 0;
-    }
-
-    .comp-lbl {
-      font-size: var(--titan-type-control-size);
-      color: var(--titan-text-muted);
-      flex-shrink: 0;
-      line-height: 20px;
-      margin-right: 6px;
-    }
-
-    .comp-lbl-from {
-      width: 38px;
-    }
-
-    .comp-lbl-to {
-      width: 20px;
-    }
-
-    .comp-lbl-subject {
-      width: 55px;
-    }
-
-    .comp-from-value {
-      font-size: var(--titan-type-control-size);
-      color: var(--titan-text-primary);
-      line-height: 24px;
-    }
-
-    .comp-field-input {
-      flex: 1;
-      border: none;
-      outline: none;
-      font-size: var(--titan-type-control-size);
-      color: var(--titan-text-primary);
-      background: none;
-      font-family: inherit;
-      line-height: 24px;
-      height: 24px;
-      padding: 0;
-    }
-
-    .comp-ccbcc {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      flex-shrink: 0;
-      margin-left: auto;
-    }
-
-    .comp-ccbcc span {
-      font-size: var(--titan-type-control-size);
-      color: var(--titan-text-muted);
-      cursor: pointer;
-      transition: color 0.1s;
-    }
-
-    .comp-ccbcc span:hover {
-      color: var(--titan-text-link);
-    }
-
-    /* Feature chips */
-    .comp-features-row {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      height: 28px;
-      margin-bottom: 8px;
-      overflow-x: auto;
-      flex-shrink: 0;
-    }
-
-    .comp-features-row::-webkit-scrollbar {
-      display: none;
-    }
-
-    .comp-feat {
-      display: flex;
-      align-items: center;
-      gap: var(--titan-gap-icon-label-compact);
-      height: 28px;
-      padding: 2px 6px 2px 4px;
-      border-radius: 4px;
-      background: transparent;
-      white-space: nowrap;
-      cursor: pointer;
-      flex-shrink: 0;
-      transition: background 0.1s;
-    }
-
-    .comp-feat:hover {
-      background: #f4f6fa;
-    }
-
-    .comp-feat .fic {
-      width: 24px;
-      height: 24px;
-      flex-shrink: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .comp-feat .fic img {
-      display: block;
-      max-width: 18px;
-      max-height: 18px;
-      width: auto;
-      height: auto;
-    }
-
-    .comp-feat>span {
-      font-size: 14px;
-      color: #333;
-      line-height: 24px;
-    }
-
-    /* Content divider */
-    .comp-content-divider {
-      height: 1px;
-      background: #ededed;
-      margin: 0 16px;
-      flex-shrink: 0;
-    }
-
-    /* Body */
-    .comp-body {
-      flex: 1;
-      padding: 12px 16px;
-      outline: none;
-      font-size: var(--titan-type-body-size);
-      color: var(--titan-text-primary);
-      line-height: var(--titan-type-body-line-height);
-      overflow-y: auto;
-      min-height: 0;
-      cursor: text;
-    }
-
-    .comp-body::-webkit-scrollbar {
-      width: 4px;
-    }
-
-    .comp-body::-webkit-scrollbar-thumb {
-      background: #ddd;
-      border-radius: 2px;
-    }
-
-    /* Bottom */
-    .comp-bottom {
-      flex-shrink: 0;
-      border-top: 1px solid #ebebeb;
-    }
-
-    /* Format bar */
-    .comp-format-bar {
-      height: 48px;
-      display: flex;
-      align-items: center;
-      padding: 0 14px;
-      gap: 6px;
-      overflow-x: auto;
-      flex-shrink: 0;
-    }
-
-    .comp-format-bar::-webkit-scrollbar {
-      display: none;
-    }
-
-    .comp-font-dd,
-    .comp-size-dd {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      height: 28px;
-      cursor: pointer;
-      font-size: 14px;
-      color: #888;
-      white-space: nowrap;
-      flex-shrink: 0;
-      user-select: none;
-    }
-
-    .comp-dd-arrow {
-      display: block;
-      width: 8px;
-      height: 5px;
-      flex-shrink: 0;
-      opacity: 0.6;
-      transform: rotate(180deg);
-    }
-
-    .comp-fmt-sep-v {
-      width: 1px;
-      height: 24px;
-      background: #dedede;
-      margin: 0 6px;
-      flex-shrink: 0;
-    }
-
-    .comp-fmt-btn {
-      width: 28px;
-      height: 28px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 4px;
-      cursor: pointer;
-      border: none;
-      background: none;
-      flex-shrink: 0;
-      padding: 0;
-      gap: 0;
-      position: relative;
-    }
-
-    .comp-fmt-btn:hover {
-      background: #f0f2f5;
-    }
-
-    .comp-fmt-btn img {
-      display: block;
-      width: 19px;
-      height: 19px;
-      object-fit: contain;
-    }
-
-    .comp-fmt-btn img[src*="underline"] {
-      width: 12px;
-      height: 15px;
-    }
-
-    /* Alignment/list/indent: icon fills, caret overlaid bottom-right */
-    .comp-fmt-align {
-      width: 32px;
-      height: 28px;
-    }
-
-    .comp-fmt-align img:first-child {
-      width: 23px;
-      height: 23px;
-    }
-
-    .comp-mini-caret {
-      position: absolute;
-      bottom: 3px;
-      right: 1px;
-      width: 7px !important;
-      height: 7px !important;
-      object-fit: contain;
-      opacity: 0.65;
-    }
-
-    /* Link icon — chain (24×24 viewBox, render at 21×21) */
-    .comp-fmt-link img {
-      width: 21px;
-      height: 21px;
-    }
-
-    /* More dots — 3 vertical circles (3×12 viewBox, keep tall & narrow) */
-    .comp-fmt-moredots {
-      width: 20px;
-    }
-
-    .comp-fmt-moredots img {
-      width: 4px;
-      height: 15px;
-    }
-
-    /* Send bar */
-    .comp-bar-divider {
-      height: 1px;
-      background: #ededed;
-      flex-shrink: 0;
-    }
-
-    .comp-send-bar {
-      padding: 12px 16px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      flex-shrink: 0;
-    }
-
-    .comp-send-btn {
-      display: flex;
-      align-items: center;
-      height: 32px;
-      background: var(--titan-action-primary);
-      border-radius: 4px;
-      flex-shrink: 0;
-      cursor: pointer;
-      border: none;
-      padding: 0;
-    }
-
-    .comp-send-main {
-      padding: 0 16px;
-      font-size: var(--titan-type-control-size);
-      font-weight: var(--titan-font-weight-semibold);
-      color: var(--titan-text-inverse);
-      height: 100%;
-      display: flex;
-      align-items: center;
-      font-family: inherit;
-      white-space: nowrap;
-      border-top-left-radius: 4px;
-      border-bottom-left-radius: 4px;
-      transition: background 0.15s ease, box-shadow 0.15s ease;
-    }
-
-    .comp-send-main:hover {
-      background: rgba(255, 255, 255, 0.12);
-    }
-
-    .comp-send-main:active {
-      background: rgba(0, 0, 0, 0.15);
-    }
-
-    .comp-send-dd-btn {
-      width: 26px;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-left: 1.5px solid rgba(255, 255, 255, 0.35);
-      flex-shrink: 0;
-      border-top-right-radius: 4px;
-      border-bottom-right-radius: 4px;
-      transition: background 0.15s ease, box-shadow 0.15s ease;
-    }
-
-    .comp-send-dd-btn:hover {
-      background: rgba(255, 255, 255, 0.12);
-    }
-
-    .comp-send-dd-btn:active {
-      background: rgba(0, 0, 0, 0.15);
-    }
-
-    .comp-send-dd-btn img {
-      display: block;
-      width: 9px;
-      height: auto;
-    }
-
-    /* Reusable Action Icon Button Component */
-    .titan-action-btn {
-      width: 32px;
-      height: 32px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 4px;
-      cursor: pointer;
-      border: none;
-      background: none;
-      flex-shrink: 0;
-      padding: 0;
-      transition: transform 0.15s ease, background 0.15s ease;
-    }
-
-    .titan-action-btn:hover {
-      background: var(--btn-hover-bg, #f0f2f5);
-
-    }
-
-    .titan-action-btn:active {}
-
-    .titan-action-btn svg {
-      display: block;
-    }
-
-
-    .ci-campaign {
-      display: block;
-      width: 20px;
-      height: 20px;
-      transform: scale(-1, 1);
-    }
-
-    .comp-vert-sep {
-      width: 1px;
-      height: 28px;
-      background: #dedede;
-      flex-shrink: 0;
-    }
-
-    .comp-send-icons {
-      display: flex;
-      align-items: center;
-      gap: var(--titan-gap-actions-compact);
-      flex: 1;
-    }
-
-    .ci-reminder {
+    /* Inline reply artwork retains its own sizing. */
+#reply-box-card .ci-reminder {
       width: 32px;
       height: 32px;
     }
-
-    .ci-text {
+#reply-box-card .ci-text {
       width: 15px;
       height: 15px;
     }
-
-    .ci-attach {
+#reply-box-card .ci-attach {
       width: 14.5px;
       height: 15.5px;
     }
-
-    .ci-drive {
-      width: 23px;
-      height: 23px;
-    }
-
-    .ci-image {
+#reply-box-card .ci-image {
       width: 16px;
       height: 14px;
     }
-
-    .ci-emoji {
-      width: 15px;
-      height: 15px;
-    }
-
-    .ci-signature {
+#reply-box-card .ci-signature {
       width: 19.5px;
       height: 13px;
     }
-
-    .ci-bookings {
+#reply-box-card .ci-bookings {
       width: 24px;
       height: 24px;
     }
-
-    .ci-html {
-      width: 16.5px;
-      height: 12.5px;
-    }
-
-    .comp-delete-btn {
-      width: 32px;
-      height: 32px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 4px;
-      cursor: pointer;
-      border: none;
-      background: none;
-      flex-shrink: 0;
-      margin-left: auto;
-      padding: 0;
-    }
-
-    .comp-delete-btn:hover {
-      background: #fff0f0;
-    }
-
-    .comp-delete-btn img {
-      display: block;
-      width: 13.4px;
-      height: 16px;
-    }
+    /* Screen owns only placement of the shared docked composer. */
+    #ds-composer-host{position:fixed;bottom:0;right:var(--titan-space-24);z-index:600}
   </style>
 
   <script>
 
 
     // ── Email name tooltip ───────────────────────────────────────────────
-    document.querySelectorAll('.account-email-text').forEach(emailText => {
+    document.querySelectorAll('.titan-account-header__email').forEach(emailText => {
       const tooltip = document.getElementById('email-tooltip');
 
       emailText.addEventListener('mouseenter', () => {
@@ -3509,14 +2425,14 @@
 
       let accountHeader = null;
       if (btn) {
-        accountHeader = btn.closest('.account-header');
+        accountHeader = btn.closest('.titan-account-header');
       }
       if (!accountHeader) {
         const activeNavItem = document.querySelector('.nav-item.active');
         if (activeNavItem) {
           let prev = activeNavItem.previousElementSibling;
           while (prev) {
-            if (prev.classList.contains('account-header')) {
+            if (prev.classList.contains('titan-account-header')) {
               accountHeader = prev;
               break;
             }
@@ -3525,14 +2441,14 @@
         }
       }
       if (!accountHeader) {
-        accountHeader = document.querySelector('.account-header');
+        accountHeader = document.querySelector('.titan-account-header');
       }
       if (!accountHeader) return;
 
       // Collect the folder nav items for this account
       const items = [];
       let el = accountHeader.nextElementSibling;
-      while (el && !el.classList.contains('sidebar-line') && !el.classList.contains('account-header')) {
+      while (el && !el.classList.contains('sidebar-line') && !el.classList.contains('titan-account-header')) {
         if (el.classList.contains('nav-item')) items.push(el);
         el = el.nextElementSibling;
       }
@@ -3563,53 +2479,10 @@
       overlay.classList.add('sweeping');
     }
 
-    // ── App Switcher ─────────────────────────────────────────────────────
-    (function initAppSwitcher() {
-      const tabSwitchBtn = document.querySelector('.titan-sidebar-header .titan-dropdown-trigger');
-      const appSwitcher = document.getElementById('app-switcher');
-
-      if (!tabSwitchBtn || !appSwitcher) return;
-
-      tabSwitchBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        if (appSwitcher.classList.contains('open')) {
-          closeAppSwitcher();
-        } else {
-          openAppSwitcher();
-        }
-      });
-
-      function openAppSwitcher() {
-        tabSwitchBtn.classList.add('active');tabSwitchBtn.setAttribute('aria-expanded','true');
-        appSwitcher.style.display = 'block';
-        // Trigger reflow
-        appSwitcher.offsetHeight;
-        appSwitcher.classList.add('open');
-      }
-
-      function closeAppSwitcher() {
-        tabSwitchBtn.classList.remove('active');tabSwitchBtn.setAttribute('aria-expanded','false');
-        appSwitcher.classList.remove('open');
-        // Wait for transition to end before setting display none
-        const onTransitionEnd = (e) => {
-          if (e.propertyName === 'opacity' && !appSwitcher.classList.contains('open')) {
-            appSwitcher.style.display = 'none';
-            appSwitcher.removeEventListener('transitionend', onTransitionEnd);
-          }
-        };
-        appSwitcher.addEventListener('transitionend', onTransitionEnd);
-      }
-
-      // Close dropdown when clicking outside
-      document.addEventListener('click', (e) => {
-        if (appSwitcher.classList.contains('open') && !appSwitcher.contains(e.target) && !tabSwitchBtn.contains(e.target)) {
-          closeAppSwitcher();
-        }
-      });
-    })();
-
     // ── Composer ────────────────────────────────────────────────────────
     function openComposer() {
+      composerReturnFocus=document.activeElement;
+      document.getElementById('ds-composer-host').inert=false;
       const w = document.getElementById('composer-window');
       w.classList.remove('comp-minimized');
       w.classList.add('comp-open');
@@ -3620,6 +2493,8 @@
     }
 
     function closeComposer() {
+      document.getElementById('ds-composer-host').inert=true;
+      composerReturnFocus?.focus();
       const w = document.getElementById('composer-window');
       w.classList.remove('comp-open', 'comp-minimized');
     }
