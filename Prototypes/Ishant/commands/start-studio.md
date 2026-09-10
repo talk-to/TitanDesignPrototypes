@@ -1,4 +1,4 @@
-# Run the design system
+# Start the design system studio
 
 ## Agent instructions
 

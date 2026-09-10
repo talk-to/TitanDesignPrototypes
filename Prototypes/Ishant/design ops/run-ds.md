@@ -6,7 +6,7 @@ workspace root in `design-system/`, not in the studio folder beside this file.
 - [Using the design system](../../../design-system/USAGE.md) — how to reuse tokens, components and icons.
 - [Agent instructions](../../../design-system/AGENTS.md) — required workflow and further reading.
 - [Component catalog](../../../design-system/registry.json) — registered definitions and source paths.
-- [Run the studio](../commands/RUN-DS.md).
+- [Run the studio](../commands/start-studio.md).
 
 ## Agent instruction: run DS means follow DS
 
@@ -26,7 +26,7 @@ work in this conversation. No additional “follow the DS” prompt is required.
   prototype library; visual consistency and easy reuse remain priorities.
 - If a task accompanies this reference, carry it out using the DS. If the request
   is only this reference or “run DS”, start or reuse the studio by following
-  [Run the studio](../commands/RUN-DS.md), verify it, and return its preview URL.
+  [Run the studio](../commands/start-studio.md), verify it, and return its preview URL.
   Apply DS guidance to subsequent related tasks without requiring it to be repeated.
 - Reuse a studio that is already running. Never stop, kill or restart a live Titan
   studio in order to move it to a different port, and never start a second copy

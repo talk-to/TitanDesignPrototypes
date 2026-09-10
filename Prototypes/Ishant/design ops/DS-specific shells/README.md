@@ -7,7 +7,7 @@ Read `../../AGENTS.md` and `../../../../design-system/AGENTS.md` before changing
 The original `Shells/TitanEmailShell/index.html` was restored to commit `1712bfe`.
 Use this copy for DS work; the original is the independent starting shell.
 
-Run the studio using `../../commands/RUN-DS.md`, then open:
+Run the studio using `../../commands/start-studio.md`, then open:
 http://127.0.0.1:8031/app/Prototypes/Ishant/design%20ops/DS-specific%20shells/TitanEmailShell/index.html
 
 Append `?ds=true` for the inspector. This copy still requires the shared root DS;
