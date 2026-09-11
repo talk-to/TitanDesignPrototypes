@@ -64,7 +64,6 @@ button:focus-visible, input:focus-visible {
 .sidebar-footer {
   margin-top: auto;
   padding-top: var(--titan-space-12);
-  padding-bottom: var(--titan-space-8);
   border-top: var(--titan-divider-width-default) solid var(--drive-sidebar-edge);
 }
 .storage-note {

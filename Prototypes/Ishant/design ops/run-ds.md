@@ -3,6 +3,7 @@
 Start here for Titan design-system work. The shared DS content lives at the
 workspace root in `design-system/`, not in the studio folder beside this file.
 
+- [Component registration contract](../../../design-system/COMPONENT-REGISTRATION.md) — authoritative component boundaries, state categories and preview rules.
 - [Using the design system](../../../design-system/USAGE.md) — how to reuse tokens, components and icons.
 - [Agent instructions](../../../design-system/AGENTS.md) — required workflow and further reading.
 - [Component catalog](../../../design-system/registry.json) — registered definitions and source paths.

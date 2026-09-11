@@ -110,8 +110,8 @@ function filterContacts(value){
   renderRows();
 }
 
-$('sidebar-header-host').outerHTML=TitanSidebarHeader.render({appSwitcher:TitanAppSwitcherOptions('contacts'),logo});
-TitanSidebarHeader.bind(document.querySelector('.titan-sidebar-header'));
+$('sidebar-header-host').outerHTML=TitanSidebarHeader.render({trigger:TitanAppSwitcherPattern.render(TitanAppSwitcherOptions('contacts')),logo});
+TitanAppSwitcherPattern.bind(document.querySelector('.titan-sidebar-header'));
 TitanSelection.mount($('account-picker-host'),'dropdown',{label:'ishantp@titan.email',variant:'account'},{open:()=>announce('Account switcher opened')});
 renderNav();
 
