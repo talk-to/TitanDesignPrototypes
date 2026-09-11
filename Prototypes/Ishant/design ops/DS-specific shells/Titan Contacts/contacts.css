@@ -77,17 +77,11 @@ button:focus-visible, input:focus-visible {
 }
 
 .contacts-nav { display: flex; flex-direction: column; gap: var(--titan-space-8); }
-/* Sidebar item owns the trailing-action row, its insets and the nested Icon
-   button's treatment. The screen sets only its dark-sidebar fill, painted on
-   the row so selection and hover extend behind the trailing action. */
-.contacts-nav .titan-sidebar-item-row:hover,
-.contacts-nav .titan-sidebar-item-row:has(.titan-sidebar-item.active) { background: var(--contacts-sidebar-selected); }
-
 .sidebar-footer {
   margin-top: auto;
   padding-bottom: var(--titan-space-20);
 }
-.sidebar-footer .titan-sidebar-item:hover { background: var(--contacts-sidebar-selected); }
+
 
 .main { display: flex; flex: 1; min-width: 0; flex-direction: column; background: var(--titan-surface-base); }
 .toolbar {
