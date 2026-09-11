@@ -411,45 +411,30 @@
       background: var(--titan-surface-base);
       position: relative;
       flex-shrink: 0;
-      border-bottom: 1px solid #dedede;
+      border-bottom: var(--titan-divider-width-default) solid var(--card-border-color);
     }
 
     .tab-checkbox-wrap {
       position: absolute;
-      left: 12px;
-      top: 18px;
-      width: 20px;
+      left: var(--titan-space-12);
+      top: var(--titan-space-16);
+      width: 14px;
       height: 20px;
       display: flex;
       align-items: center;
       justify-content: center;
     }
 
-    .tab-checkbox-wrap .chk {
-      width: 14px;
-      height: 14px;
-      position: relative;
-    }
-
-    .tab-checkbox-wrap .chk img {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      opacity: 0.5;
-    }
-
     .tab-group {
       display: flex;
-      margin-left: 32px;
+      margin-left: calc(var(--titan-space-24) + var(--titan-space-8));
       align-self: stretch;
     }
 
     .tab-item {
       display: flex;
       align-items: center;
-      padding: 0 8px;
+      padding: 0 var(--titan-space-8);
       cursor: pointer;
       position: relative;
       align-self: stretch;
@@ -480,11 +465,12 @@
 
     .tabs-right-container {
       position: absolute;
-      right: 12px;
-      top: 12px;
+      right: var(--titan-space-12);
+      top: 50%;
+      transform: translateY(-50%);
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: var(--titan-space-8);
       z-index: 5;
     }
 
@@ -1535,9 +1521,7 @@
             </div>
             <input type="text" placeholder="Search in ella@avontech.com" readonly>
             <div class="search-divider"></div>
-            <div class="search-dropdown">
-              <img data-titan-icon="search-filter" alt="">
-            </div>
+            <button type="button" class="titan-dropdown-trigger titan-dropdown-trigger--search" data-inspector-variant="search" aria-label="Search filters" aria-haspopup="menu" aria-expanded="false"><svg data-titan-icon="chevron-down" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><use href="#titan-artwork"></use></svg></button>
 
           </div>
         </div>
@@ -1572,7 +1556,7 @@
           <div class="tabs-row">
 
             <div class="tab-checkbox-wrap">
-              <div class="chk"><img src="assets/392bf29c-08b1-44e8-b95b-b99905e722e6.svg" alt=""></div>
+              <input class="titan-checkbox" type="checkbox" aria-label="Select all messages">
             </div>
             <div class="tab-group">
               <div class="tab-item">
@@ -1596,9 +1580,9 @@
             <div class="email-tile titan-message-row">
               <div class="email-tile-inner">
                 <div class="tile-icons">
-                  <div class="tile-chk">
-                    <div class="chk"><img src="assets/392bf29c-08b1-44e8-b95b-b99905e722e6.svg" alt=""></div>
-                  </div>
+                  <label class="tile-chk">
+                    <input class="titan-checkbox" type="checkbox" aria-label="Select message from Sajal Kumar">
+                  </label>
                   <div class="tile-star"><img src="assets/1e1696aa-5b8d-4409-97fd-4ce5c85c5ae5.svg" alt=""></div>
                 </div>
                 <div class="tile-content">
@@ -1626,9 +1610,9 @@
             <div class="email-tile titan-message-row selected">
               <div class="email-tile-inner">
                 <div class="tile-icons">
-                  <div class="tile-chk">
-                    <div class="chk"><img src="assets/392bf29c-08b1-44e8-b95b-b99905e722e6.svg" alt=""></div>
-                  </div>
+                  <label class="tile-chk">
+                    <input class="titan-checkbox" type="checkbox" aria-label="Select message from Ninad Raval">
+                  </label>
                   <div class="tile-dot"></div>
                   <div class="tile-star"><img src="assets/1e1696aa-5b8d-4409-97fd-4ce5c85c5ae5.svg" alt=""></div>
                 </div>
@@ -1656,9 +1640,9 @@
             <div class="email-tile titan-message-row">
               <div class="email-tile-inner">
                 <div class="tile-icons">
-                  <div class="tile-chk">
-                    <div class="chk"><img src="assets/392bf29c-08b1-44e8-b95b-b99905e722e6.svg" alt=""></div>
-                  </div>
+                  <label class="tile-chk">
+                    <input class="titan-checkbox" type="checkbox" aria-label="Select message from David Jones, Ella">
+                  </label>
                   <div class="tile-star"><img src="assets/1e1696aa-5b8d-4409-97fd-4ce5c85c5ae5.svg" alt=""></div>
                 </div>
                 <div class="tile-content">
@@ -1684,9 +1668,9 @@
             <div class="email-tile titan-message-row">
               <div class="email-tile-inner">
                 <div class="tile-icons">
-                  <div class="tile-chk">
-                    <div class="chk"><img src="assets/392bf29c-08b1-44e8-b95b-b99905e722e6.svg" alt=""></div>
-                  </div>
+                  <label class="tile-chk">
+                    <input class="titan-checkbox" type="checkbox" aria-label="Select message from Shreya">
+                  </label>
                   <div class="tile-star"><img src="assets/1e1696aa-5b8d-4409-97fd-4ce5c85c5ae5.svg" alt=""></div>
                 </div>
                 <div class="tile-content">
@@ -1712,9 +1696,9 @@
             <div class="email-tile titan-message-row">
               <div class="email-tile-inner">
                 <div class="tile-icons">
-                  <div class="tile-chk">
-                    <div class="chk"><img src="assets/392bf29c-08b1-44e8-b95b-b99905e722e6.svg" alt=""></div>
-                  </div>
+                  <label class="tile-chk">
+                    <input class="titan-checkbox" type="checkbox" aria-label="Select message from Sajal Kumar">
+                  </label>
                   <div class="tile-star"><img src="assets/1e1696aa-5b8d-4409-97fd-4ce5c85c5ae5.svg" alt=""></div>
                 </div>
                 <div class="tile-content">
@@ -1740,9 +1724,9 @@
             <div class="email-tile titan-message-row">
               <div class="email-tile-inner">
                 <div class="tile-icons">
-                  <div class="tile-chk">
-                    <div class="chk"><img src="assets/392bf29c-08b1-44e8-b95b-b99905e722e6.svg" alt=""></div>
-                  </div>
+                  <label class="tile-chk">
+                    <input class="titan-checkbox" type="checkbox" aria-label="Select message from Ninad Raval">
+                  </label>
                   <div class="tile-star"><img src="assets/1e1696aa-5b8d-4409-97fd-4ce5c85c5ae5.svg" alt=""></div>
                 </div>
                 <div class="tile-content">
@@ -1768,9 +1752,9 @@
             <div class="email-tile titan-message-row">
               <div class="email-tile-inner">
                 <div class="tile-icons">
-                  <div class="tile-chk">
-                    <div class="chk"><img src="assets/392bf29c-08b1-44e8-b95b-b99905e722e6.svg" alt=""></div>
-                  </div>
+                  <label class="tile-chk">
+                    <input class="titan-checkbox" type="checkbox" aria-label="Select message from Ninad Raval">
+                  </label>
                   <div class="tile-star"><img src="assets/1e1696aa-5b8d-4409-97fd-4ce5c85c5ae5.svg" alt=""></div>
                 </div>
                 <div class="tile-content">
@@ -2377,7 +2361,7 @@
       tile.innerHTML = `
     <div class="email-tile-inner" style="opacity:1;">
       <div class="tile-icons">
-        <div class="tile-chk"><div class="chk"><img src="assets/392bf29c-08b1-44e8-b95b-b99905e722e6.svg" alt=""></div></div>
+        <label class="tile-chk"><input class="titan-checkbox" type="checkbox" aria-label="Select message from ${data.sender}"></label>
         <div class="tile-dot"></div>
         <div class="tile-star"><img src="assets/1e1696aa-5b8d-4409-97fd-4ce5c85c5ae5.svg" alt=""></div>
       </div>

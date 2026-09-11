@@ -1,0 +1,6 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Calendar day</title><link rel="stylesheet" href="../components/mini-calendar.css"><style>
+*{box-sizing:border-box}body{margin:0;padding:16px;font:14px var(--titan-font-family-ui);background:var(--titan-surface-base)}
+main{width:max-content;margin-inline:auto}
+</style><link rel="stylesheet" href="gallery.css"></head><body><main id="sample"></main><script src="../icons/runtime.js"></script><script src="../components/actions.js"></script><script src="../components/mini-calendar.js"></script><script>
+document.getElementById('sample').innerHTML='<section class="titan-mini-calendar" style="width:max-content;padding:var(--titan-space-8)" aria-label="Calendar day"><div class="titan-mini-calendar__days" style="grid-template-columns:32px">'+TitanMiniCalendar.day({date:'2026-09-30',label:'Wednesday, September 30, 2026'})+'</div></section>';
+</script><script src="gallery.js"></script></body></html>

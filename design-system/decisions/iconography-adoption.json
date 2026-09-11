@@ -1,0 +1,128 @@
+[
+  {
+    "file": "design-system/components/actions.css",
+    "selector": ".titan-icon-button>img,.titan-icon-button>svg",
+    "before": "display:block;width:20px;height:20px;object-fit:contain",
+    "after": "display:block;width:var(--titan-icon-size-action);height:var(--titan-icon-size-action);object-fit:contain"
+  },
+  {
+    "file": "design-system/components/actions.css",
+    "selector": ".titan-icon-button--40>img,.titan-icon-button--40>svg",
+    "before": "width:24px;height:24px",
+    "after": "width:var(--titan-icon-size-action-large);height:var(--titan-icon-size-action-large)"
+  },
+  {
+    "file": "design-system/components/actions.css",
+    "selector": ".titan-button__icon>img,.titan-button__icon>svg",
+    "before": "display:block;width:20px;height:20px;object-fit:contain",
+    "after": "display:block;width:var(--titan-icon-size-action);height:var(--titan-icon-size-action);object-fit:contain"
+  },
+  {
+    "file": "design-system/components/actions.css",
+    "selector": ".titan-split-button__main>img,.titan-split-button__main>svg",
+    "before": "width:16px;height:16px;object-fit:contain",
+    "after": "width:var(--titan-icon-size-compact);height:var(--titan-icon-size-compact);object-fit:contain"
+  },
+  {
+    "file": "design-system/components/actions.css",
+    "selector": ".titan-split-button__secondary>svg",
+    "before": "width:12px;height:12px",
+    "after": "width:var(--titan-icon-size-indicator);height:var(--titan-icon-size-indicator)"
+  },
+  {
+    "file": "design-system/components/actions.css",
+    "selector": ".titan-icon-button--composer>img,.titan-icon-button--composer>svg",
+    "before": "width:20px;height:20px",
+    "after": "width:var(--titan-icon-size-action);height:var(--titan-icon-size-action)"
+  },
+  {
+    "file": "design-system/components/actions.css",
+    "selector": ".titan-icon-button--window>img,.titan-icon-button--window>svg",
+    "before": "width:18px;height:18px",
+    "after": "width:var(--titan-icon-size-window);height:var(--titan-icon-size-window)"
+  },
+  {
+    "file": "design-system/components/actions.css",
+    "selector": ".titan-button--composer .titan-button__icon>img,.titan-button--composer .titan-button__icon>svg",
+    "before": "width:20px;height:20px",
+    "after": "width:var(--titan-icon-size-action);height:var(--titan-icon-size-action)"
+  },
+  {
+    "file": "design-system/components/selection.css",
+    "selector": ".titan-dropdown-trigger svg",
+    "before": "width:12px;height:12px;flex-shrink:0;color:var(--titan-text-muted)",
+    "after": "width:var(--titan-icon-size-indicator);height:var(--titan-icon-size-indicator);flex-shrink:0;color:var(--titan-text-muted)"
+  },
+  {
+    "file": "design-system/components/selection.css",
+    "selector": ".titan-dropdown-trigger--app>img",
+    "before": "width:28px;height:28px;display:block",
+    "after": "width:var(--titan-icon-size-launcher-trigger);height:var(--titan-icon-size-launcher-trigger);display:block"
+  },
+  {
+    "file": "design-system/components/selection.css",
+    "selector": ".titan-dropdown-trigger--app svg",
+    "before": "width:12px;height:12px;color:inherit",
+    "after": "width:var(--titan-icon-size-indicator);height:var(--titan-icon-size-indicator);color:inherit"
+  },
+  {
+    "file": "design-system/components/navigation-input.css",
+    "selector": ".nav-item-icon img",
+    "before": "max-width: 18px;\n      max-height: 18px;\n      width: auto;\n      height: auto;",
+    "after": "max-width:var(--titan-icon-size-sidebar);\n      max-height:var(--titan-icon-size-sidebar);\n      width: auto;\n      height: auto;"
+  },
+  {
+    "file": "design-system/components/navigation-input.css",
+    "selector": ".titan-search-field .search-icon svg",
+    "before": "width:16px;height:16px",
+    "after": "width:var(--titan-icon-size-compact);height:var(--titan-icon-size-compact)"
+  },
+  {
+    "file": "design-system/components/navigation-input.css",
+    "selector": ".titan-search-field .search-dropdown svg",
+    "before": "width:12px;height:12px",
+    "after": "width:var(--titan-icon-size-indicator);height:var(--titan-icon-size-indicator)"
+  },
+  {
+    "file": "design-system/components/messages.css",
+    "selector": ".exp-rr-icon img",
+    "before": "max-width: 18px;\n      max-height: 18px;\n      width: auto;\n      height: auto;",
+    "after": "max-width:var(--titan-icon-size-message-status);\n      max-height:var(--titan-icon-size-message-status);\n      width: auto;\n      height: auto;"
+  },
+  {
+    "file": "design-system/components/messages.css",
+    "selector": ".exp-icon img",
+    "before": "max-width: 16px;\n      max-height: 16px;\n      width: auto;\n      height: auto;",
+    "after": "max-width:var(--titan-icon-size-compact);\n      max-height:var(--titan-icon-size-compact);\n      width: auto;\n      height: auto;"
+  },
+  {
+    "file": "design-system/components/app-switcher.css",
+    "selector": ".titan-launcher-scope .app-icon-img",
+    "before": "width:34px;height:34px",
+    "after": "width:var(--titan-icon-size-launcher-app);height:var(--titan-icon-size-launcher-app)"
+  },
+  {
+    "file": "design-system/components/app-switcher.css",
+    "selector": ".titan-launcher-scope .tool-icon img",
+    "before": "width:24px;height:24px",
+    "after": "width:var(--titan-icon-size-supporting);height:var(--titan-icon-size-supporting)"
+  },
+  {
+    "file": "design-system/components/app-switcher.css",
+    "selector": ".titan-launcher-scope .footer-link-icon",
+    "before": "width: 24px;\n      height: 24px;\n      object-fit: contain;\n      flex-shrink: 0;",
+    "after": "width:var(--titan-icon-size-supporting);\n      height:var(--titan-icon-size-supporting);\n      object-fit: contain;\n      flex-shrink: 0;"
+  },
+  {
+    "file": "design-system/components/app-switcher.css",
+    "selector": ".titan-launcher-scope .beaker-icon",
+    "before": "width: 24px;\n      height: 24px;\n      object-fit: contain;\n      flex-shrink: 0;\n      margin: 0;",
+    "after": "width:var(--titan-icon-size-supporting);\n      height:var(--titan-icon-size-supporting);\n      object-fit: contain;\n      flex-shrink: 0;\n      margin: 0;"
+  },
+  {
+    "file": "design-system/components/app-switcher.css",
+    "selector": ".titan-launcher-scope .footer-arrow",
+    "before": "width: 16px;\n      height: 16px;\n      object-fit: contain;\n      flex-shrink: 0;\n      opacity: 0.5;",
+    "after": "width:var(--titan-icon-size-compact);\n      height:var(--titan-icon-size-compact);\n      object-fit: contain;\n      flex-shrink: 0;\n      opacity: 0.5;"
+  }
+]

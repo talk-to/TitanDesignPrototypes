@@ -1,0 +1,66 @@
+{
+  "ai-write": {
+    "previousExtent": 20,
+    "extent": 18
+  },
+  "design": {
+    "previousExtent": 20,
+    "extent": 18.5
+  },
+  "templates": {
+    "previousExtent": 20,
+    "extent": 18.5
+  },
+  "invoices": {
+    "previousExtent": 20,
+    "extent": 19
+  },
+  "text-styling": {
+    "previousExtent": 20,
+    "extent": 18
+  },
+  "composer-bookings": {
+    "previousExtent": 20,
+    "extent": 18.5
+  },
+  "settings": {
+    "previousExtent": 20,
+    "extent": 19
+  },
+  "italic": {
+    "previousExtent": 20,
+    "extent": 18
+  },
+  "underline": {
+    "previousExtent": 20,
+    "extent": 18
+  },
+  "align": {
+    "previousExtent": 20,
+    "extent": 18.5
+  },
+  "indent": {
+    "previousExtent": 20,
+    "extent": 18.5
+  },
+  "colors": {
+    "previousExtent": 20,
+    "extent": 18.5
+  },
+  "signature": {
+    "previousExtent": 20,
+    "extent": 22
+  },
+  "groups": {
+    "previousExtent": 20,
+    "extent": 21
+  },
+  "compose": {
+    "previousExtent": 20,
+    "extent": 22
+  },
+  "link": {
+    "previousExtent": 20,
+    "extent": 19
+  }
+}

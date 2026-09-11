@@ -1,0 +1,132 @@
+@import "../tokens.css";
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: var(--titan-gap-icon-label);
+      --titan-sidebar-item-inset-block: 6px;
+      padding: var(--titan-sidebar-item-inset-block) var(--titan-space-12) var(--titan-sidebar-item-inset-block) var(--titan-space-24);
+      height: 32px;
+      cursor: pointer;
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .nav-item.active {
+      background: #333333;
+    }
+
+    .nav-item-icon {
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .nav-item-icon img {
+      max-width:var(--titan-icon-size-sidebar);
+      max-height:var(--titan-icon-size-sidebar);
+      width: auto;
+      height: auto;
+    }
+
+    .nav-item-label {
+      font-size: var(--titan-type-control-size);
+      color: var(--titan-text-inverse);
+      white-space: nowrap;
+      flex: 1;
+    }
+
+    .nav-item-label.active {
+      font-weight: var(--titan-font-weight-semibold);
+    }
+
+    .nav-item-label.secondary {
+      color: var(--titan-text-muted);
+    }
+
+    .nav-badge {
+      background: transparent;
+      font-size: var(--titan-font-size-13);
+      font-weight: var(--titan-font-weight-semibold);
+      color: #c66f6f;
+      padding: 0 var(--titan-space-4);
+    }
+
+
+    .search-bar {
+      width: 100%;
+      height: var(--titan-search-height);
+      border: 1px solid #dedede;
+      border-radius: var(--titan-radius-4);
+      display: flex;
+      align-items: center;
+      background: var(--titan-surface-base);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .search-icon {
+      width: var(--titan-search-icon-size);
+      height: var(--titan-search-icon-size);
+      margin-left: var(--titan-space-12);
+      margin-right: var(--titan-space-8);
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .search-icon img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .search-bar input {
+      flex: 1;
+      border: none;
+      outline: none;
+      font-size: var(--titan-type-control-size);
+      color: var(--titan-text-muted);
+      background: none;
+      height: 100%;
+    }
+
+    .search-divider {
+      width: 1px;
+      height: 100%;
+      background: #dedede;
+      flex-shrink: 0;
+    }
+
+.titan-search-field,.titan-search-field *,.titan-sidebar-item,.titan-sidebar-item *{box-sizing:border-box}
+.titan-search-field{margin:0;font-family:var(--titan-font-family-ui);min-width:0}
+.titan-search-field input{min-width:0;width:100%;padding:0;font-family:inherit}
+.titan-search-field input::placeholder{color:var(--titan-text-muted);opacity:1}
+.titan-search-field:has(input:disabled){opacity:.5}
+.titan-search-field button:disabled{cursor:default}
+.titan-sidebar-item{width:100%;border:0;border-radius:0;background:transparent;text-align:left;font-family:var(--titan-font-family-ui);text-decoration:none}
+.titan-sidebar-item:has(.nav-badge){padding-right:var(--titan-space-8)}
+.titan-sidebar-item .nav-item-label{min-width:0;overflow:hidden;text-overflow:ellipsis}
+.titan-sidebar-item:hover{background:var(--titan-color-gray-800)}
+/* Trailing action row: the item takes the free width; the row owns the end
+   inset so a selection or hover fill paints behind the action too. The nested
+   Icon button owns its own size, hover, pressed and focus treatment. */
+.titan-sidebar-item-row{display:flex;align-items:center;padding-right:var(--titan-space-12)}
+.titan-sidebar-item-row .titan-sidebar-item{flex:1;min-width:0;background:transparent}
+/* In a row the fill moves to the row, so hover and selection cover the
+   trailing action too. Same value the item uses on its own. */
+.titan-sidebar-item-row:hover,
+.titan-sidebar-item-row:has(.titan-sidebar-item.active){background:var(--titan-color-gray-800)}
+.titan-sidebar-item:disabled{opacity:.5;cursor:default}
+
+.titan-search-field{--titan-search-height:var(--titan-control-height-default);--titan-search-icon-size:var(--titan-icon-size-compact)}
+
+.titan-search-field .search-icon svg{width:var(--titan-search-icon-size);height:var(--titan-search-icon-size)}
+
+/* Inset paint belongs to the component; hit area and row geometry stay intact. */
+.titan-sidebar-item,.titan-sidebar-item-row{--titan-sidebar-item-selection-inset-inline:var(--titan-space-8);position:relative;isolation:isolate}
+.titan-sidebar-item.active,.titan-sidebar-item:hover,.titan-sidebar-item-row:hover,.titan-sidebar-item-row:has(.titan-sidebar-item.active){background:transparent}
+.titan-sidebar-item::before,.titan-sidebar-item-row::before{content:"";position:absolute;inset:0 var(--titan-sidebar-item-selection-inset-inline);border-radius:var(--titan-selection-radius);pointer-events:none;z-index:-1}
+.titan-sidebar-item.active::before,.titan-sidebar-item:hover::before,.titan-sidebar-item-row:hover::before,.titan-sidebar-item-row:has(.titan-sidebar-item.active)::before{background:var(--titan-color-gray-800)}
+.titan-sidebar-item-row .titan-sidebar-item::before{display:none}

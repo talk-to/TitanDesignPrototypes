@@ -1,0 +1,200 @@
+{
+  "scope": "Selected static spacing declarations. Roles remain source-owned; no component extraction.",
+  "beforeSha256": "d876bcdba086a4d6cb827b0da8b4ff84facf857b9ac3570bf4fb6a83f09faf50",
+  "afterSha256": "3538645a7315e49b6f969badc20c5ca499c80186c148d85d7e83881ab65f193d",
+  "declarationCount": 32,
+  "changes": [
+    {
+      "selector": ".top-toolbar",
+      "property": "padding",
+      "previous": "0 16px",
+      "current": "0 var(--titan-space-16)"
+    },
+    {
+      "selector": ".top-toolbar",
+      "property": "gap",
+      "previous": "16px",
+      "current": "var(--titan-space-16)"
+    },
+    {
+      "selector": ".compose-search",
+      "property": "gap",
+      "previous": "16px",
+      "current": "var(--titan-space-16)"
+    },
+    {
+      "selector": ".toolbar-right",
+      "property": "gap",
+      "previous": "16px",
+      "current": "var(--titan-space-16)"
+    },
+    {
+      "selector": ".toolbar-icons",
+      "property": "gap",
+      "previous": "4px",
+      "current": "var(--titan-space-4)"
+    },
+    {
+      "selector": ".tabs-row",
+      "property": "padding",
+      "previous": "0 12px",
+      "current": "0 var(--titan-space-12)"
+    },
+    {
+      "selector": ".email-tile",
+      "property": "padding",
+      "previous": "16px 12px",
+      "current": "var(--titan-mail-row-inset-block) var(--titan-mail-row-inset-inline)"
+    },
+    {
+      "selector": ".email-tile-inner",
+      "property": "gap",
+      "previous": "12px",
+      "current": "var(--titan-space-12)"
+    },
+    {
+      "selector": ".reading-action-bar",
+      "property": "padding",
+      "previous": "0 24px",
+      "current": "0 var(--titan-reading-pane-inset-inline)"
+    },
+    {
+      "selector": ".thread-content",
+      "property": "padding",
+      "previous": "0 24px 24px",
+      "current": "0 var(--titan-reading-pane-inset-inline) var(--titan-space-24)"
+    },
+    {
+      "selector": ".thread-sticky-header",
+      "property": "padding-top",
+      "previous": "16px",
+      "current": "var(--titan-space-16)"
+    },
+    {
+      "selector": ".thread-sticky-header",
+      "property": "padding-bottom",
+      "previous": "12px",
+      "current": "var(--titan-space-12)"
+    },
+    {
+      "selector": ".thread-sticky-header",
+      "property": "margin-bottom",
+      "previous": "8px",
+      "current": "var(--titan-space-8)"
+    },
+    {
+      "selector": ".thread-tile",
+      "property": "margin-bottom",
+      "previous": "8px",
+      "current": "var(--titan-space-8)"
+    },
+    {
+      "selector": ".thread-tile-inner",
+      "property": "gap",
+      "previous": "16px",
+      "current": "var(--titan-message-header-gap)"
+    },
+    {
+      "selector": ".thread-tile-inner",
+      "property": "padding",
+      "previous": "20px 24px",
+      "current": "var(--titan-message-inset-block) var(--titan-message-inset-inline)"
+    },
+    {
+      "selector": ".thread-stack",
+      "property": "margin-bottom",
+      "previous": "8px",
+      "current": "var(--titan-space-8)"
+    },
+    {
+      "selector": ".stack-card-content",
+      "property": "gap",
+      "previous": "16px",
+      "current": "var(--titan-message-header-gap)"
+    },
+    {
+      "selector": ".stack-card-content",
+      "property": "padding",
+      "previous": "20px 24px",
+      "current": "var(--titan-message-inset-block) var(--titan-message-inset-inline)"
+    },
+    {
+      "selector": ".thread-stack.expanded .stack-card",
+      "property": "margin-bottom",
+      "previous": "8px",
+      "current": "var(--titan-space-8)"
+    },
+    {
+      "selector": ".expanded-tile",
+      "property": "margin-bottom",
+      "previous": "8px",
+      "current": "var(--titan-space-8)"
+    },
+    {
+      "selector": ".expanded-header",
+      "property": "padding",
+      "previous": "20px 24px 12px",
+      "current": "var(--titan-message-inset-block) var(--titan-message-inset-inline) var(--titan-space-12)"
+    },
+    {
+      "selector": ".exp-left",
+      "property": "gap",
+      "previous": "12px",
+      "current": "var(--titan-space-12)"
+    },
+    {
+      "selector": ".exp-right",
+      "property": "gap",
+      "previous": "12px",
+      "current": "var(--titan-space-12)"
+    },
+    {
+      "selector": ".exp-actions",
+      "property": "gap",
+      "previous": "12px",
+      "current": "var(--titan-space-12)"
+    },
+    {
+      "selector": ".expanded-body",
+      "property": "padding",
+      "previous": "0 24px 24px",
+      "current": "0 var(--titan-message-inset-inline) var(--titan-space-24)"
+    },
+    {
+      "selector": ".side-modal-profile",
+      "property": "gap",
+      "previous": "16px",
+      "current": "var(--titan-space-16)"
+    },
+    {
+      "selector": ".side-modal-profile",
+      "property": "padding",
+      "previous": "16px 24px",
+      "current": "var(--titan-space-16) var(--titan-space-24)"
+    },
+    {
+      "selector": ".side-modal-option",
+      "property": "padding",
+      "previous": "16px",
+      "current": "var(--titan-space-16)"
+    },
+    {
+      "selector": ".side-modal-section",
+      "property": "padding",
+      "previous": "12px 16px",
+      "current": "var(--titan-space-12) var(--titan-space-16)"
+    },
+    {
+      "selector": ".side-modal-section",
+      "property": "gap",
+      "previous": "8px",
+      "current": "var(--titan-space-8)"
+    },
+    {
+      "selector": ".side-modal-row",
+      "property": "gap",
+      "previous": "12px",
+      "current": "var(--titan-space-12)"
+    }
+  ]
+}

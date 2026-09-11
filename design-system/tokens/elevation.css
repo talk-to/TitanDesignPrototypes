@@ -1,0 +1,101 @@
+/* Shadow recipes are primitives; elevation roles assign their purpose.
+   Recipe names describe treatments, not a universal height scale. */
+:root {
+  --titan-shadow-down-hairline: 0 1px 0.5px rgba(0, 0, 0, 0.05);
+  --titan-shadow-down-soft: 0 1px 2px rgba(0, 0, 0, 0.02);
+  --titan-shadow-down-small: 0 1px 3px rgba(0, 0, 0, 0.06);
+  --titan-shadow-down-medium: 0 2px 4px rgba(0, 0, 0, 0.08);
+  --titan-shadow-down-diffuse: 0 2px 10px rgba(0, 0, 0, 0.35);
+  --titan-shadow-drop-soft: 0 3px 8px #0001;
+  --titan-shadow-left-wide: -4px 0 24px rgba(0, 0, 0, 0.15);
+  --titan-shadow-up-wide-ring: 0 -4px 32px rgba(0, 0, 0, 0.18), 0 0 0 1px rgba(0, 0, 0, 0.09);
+
+  /* Ordered surface levels. Higher numbers increase depth, not z-index. */
+  --titan-shadow-none: none;
+  --titan-shadow-raised: 0 4px 12px rgba(0, 0, 0, 0.12);
+  --titan-shadow-floating: 0 8px 24px rgba(0, 0, 0, 0.18);
+  --titan-border-elevation: var(--titan-border-width-default) solid #dedede;
+  --titan-elevation-0-shadow: var(--titan-shadow-none);
+  --titan-elevation-1-shadow: var(--titan-shadow-down-small);
+  --titan-elevation-2-shadow: var(--titan-shadow-down-medium);
+  --titan-elevation-3-shadow: var(--titan-shadow-raised);
+  --titan-elevation-4-shadow: var(--titan-shadow-floating);
+  --titan-elevation-0-border: var(--titan-border-elevation);
+  --titan-elevation-1-border: var(--titan-border-elevation);
+  --titan-elevation-2-border: var(--titan-border-elevation);
+  --titan-elevation-3-border: var(--titan-border-elevation);
+  --titan-elevation-4-border: var(--titan-border-elevation);
+
+  /* Placement changes direction while retaining each level’s depth. */
+  --titan-shadow-side-0: none;
+  --titan-elevation-0-side-shadow: var(--titan-shadow-side-0);
+  --titan-shadow-bottom-0: none;
+  --titan-elevation-0-bottom-shadow: var(--titan-shadow-bottom-0);
+  --titan-shadow-side-1: -1px 0px 3px rgba(0, 0, 0, 0.06);
+  --titan-elevation-1-side-shadow: var(--titan-shadow-side-1);
+  --titan-shadow-bottom-1: 0px -1px 3px rgba(0, 0, 0, 0.06);
+  --titan-elevation-1-bottom-shadow: var(--titan-shadow-bottom-1);
+  --titan-shadow-side-2: -2px 0px 4px rgba(0, 0, 0, 0.08);
+  --titan-elevation-2-side-shadow: var(--titan-shadow-side-2);
+  --titan-shadow-bottom-2: 0px -2px 4px rgba(0, 0, 0, 0.08);
+  --titan-elevation-2-bottom-shadow: var(--titan-shadow-bottom-2);
+  --titan-shadow-side-3: -4px 0px 12px rgba(0, 0, 0, 0.12);
+  --titan-elevation-3-side-shadow: var(--titan-shadow-side-3);
+  --titan-shadow-bottom-3: 0px -4px 12px rgba(0, 0, 0, 0.12);
+  --titan-elevation-3-bottom-shadow: var(--titan-shadow-bottom-3);
+  --titan-shadow-side-4: -8px 0px 24px rgba(0, 0, 0, 0.18);
+  --titan-elevation-4-side-shadow: var(--titan-shadow-side-4);
+  --titan-shadow-bottom-4: 0px -8px 24px rgba(0, 0, 0, 0.18);
+  --titan-elevation-4-bottom-shadow: var(--titan-shadow-bottom-4);
+
+  --titan-elevation-compact-action: var(--titan-elevation-1-shadow);
+  --titan-elevation-stacked-surface: var(--titan-elevation-1-shadow);
+  --titan-elevation-floating-badge: var(--titan-elevation-2-shadow);
+  --titan-elevation-floating-badge-hover: var(--titan-elevation-3-shadow);
+  --titan-elevation-tooltip: var(--titan-elevation-4-shadow);
+  --titan-elevation-popover: var(--titan-elevation-3-shadow);
+  --titan-elevation-side-panel: var(--titan-elevation-4-side-shadow);
+  --titan-elevation-bottom-panel: var(--titan-elevation-3-bottom-shadow);
+
+  /* Independent edge recipes, composed with shadows by elevation roles. */
+  --titan-border-compact-raised: 0.5px solid #c1c1c1;
+  --titan-border-stacked: 1px solid #dedede;
+  --titan-border-floating: 1px solid #d4d4d4;
+  --titan-border-floating-hover: 1px solid #ccc;
+  --titan-elevation-compact-action-border: var(--titan-elevation-1-border);
+  --titan-elevation-stacked-surface-border: var(--titan-elevation-1-border);
+  --titan-elevation-floating-badge-border: var(--titan-elevation-2-border);
+  --titan-elevation-floating-badge-hover-border: var(--titan-elevation-3-border);
+  --titan-elevation-tooltip-border: var(--titan-elevation-4-border);
+  --titan-elevation-popover-border: var(--titan-elevation-3-border);
+  --titan-elevation-side-panel-border: var(--titan-elevation-4-border);
+  --titan-elevation-bottom-panel-border: var(--titan-elevation-3-border);
+}
+
+/* Apply the complete treatment with one class. Geometry remains caller-owned. */
+.titan-elevation-compact-action { border: var(--titan-elevation-compact-action-border); box-shadow: var(--titan-elevation-compact-action); }
+.titan-elevation-stacked-surface { border: var(--titan-elevation-stacked-surface-border); box-shadow: var(--titan-elevation-stacked-surface); }
+.titan-elevation-floating-badge { border: var(--titan-elevation-floating-badge-border); box-shadow: var(--titan-elevation-floating-badge); }
+.titan-elevation-floating-badge-hover { border: var(--titan-elevation-floating-badge-hover-border); box-shadow: var(--titan-elevation-floating-badge-hover); }
+.titan-elevation-tooltip { border: var(--titan-elevation-tooltip-border); box-shadow: var(--titan-elevation-tooltip); }
+.titan-elevation-popover { filter: drop-shadow(var(--titan-elevation-popover)); }
+.titan-elevation-side-panel { border-left: var(--titan-elevation-side-panel-border); box-shadow: var(--titan-elevation-side-panel); }
+.titan-elevation-bottom-panel { border: var(--titan-elevation-bottom-panel-border); box-shadow: var(--titan-elevation-bottom-panel); }
+
+/* Set one level class per surface. Do not stack multiple levels. */
+.titan-elevation-0 { border: var(--titan-elevation-0-border); box-shadow: var(--titan-elevation-0-shadow); }
+.titan-elevation-1 { border: var(--titan-elevation-1-border); box-shadow: var(--titan-elevation-1-shadow); }
+.titan-elevation-2 { border: var(--titan-elevation-2-border); box-shadow: var(--titan-elevation-2-shadow); }
+.titan-elevation-3 { border: var(--titan-elevation-3-border); box-shadow: var(--titan-elevation-3-shadow); }
+.titan-elevation-4 { border: var(--titan-elevation-4-border); box-shadow: var(--titan-elevation-4-shadow); }
+
+.titan-elevation-0.titan-elevation-side { box-shadow: var(--titan-elevation-0-side-shadow); }
+.titan-elevation-0.titan-elevation-bottom { box-shadow: var(--titan-elevation-0-bottom-shadow); }
+.titan-elevation-1.titan-elevation-side { box-shadow: var(--titan-elevation-1-side-shadow); }
+.titan-elevation-1.titan-elevation-bottom { box-shadow: var(--titan-elevation-1-bottom-shadow); }
+.titan-elevation-2.titan-elevation-side { box-shadow: var(--titan-elevation-2-side-shadow); }
+.titan-elevation-2.titan-elevation-bottom { box-shadow: var(--titan-elevation-2-bottom-shadow); }
+.titan-elevation-3.titan-elevation-side { box-shadow: var(--titan-elevation-3-side-shadow); }
+.titan-elevation-3.titan-elevation-bottom { box-shadow: var(--titan-elevation-3-bottom-shadow); }
+.titan-elevation-4.titan-elevation-side { box-shadow: var(--titan-elevation-4-side-shadow); }
+.titan-elevation-4.titan-elevation-bottom { box-shadow: var(--titan-elevation-4-bottom-shadow); }

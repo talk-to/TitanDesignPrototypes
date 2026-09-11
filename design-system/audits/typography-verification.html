@@ -1,0 +1,9 @@
+<!doctype html><meta charset="utf-8"><title>Typography verification</title>
+<link rel="stylesheet" href="../components/navigation-input.css"><link rel="stylesheet" href="../components/selection.css">
+<style>body{font-family:var(--titan-font-family-ui);margin:24px}#sidebar{width:250px;background:var(--titan-surface-navigation)}#inherited{font-size:var(--titan-type-control-size);color:var(--titan-text-primary)}#literal{font-size:19px}#shorthand{font:400 var(--titan-type-control-size)/var(--titan-line-height-20) var(--titan-font-family-ui)}pre{white-space:pre-wrap}</style>
+<h1>Typography verification</h1><div id="sidebar"></div><div id="dropdown"></div>
+<div id="inherited"><span id="child">Inherited text</span><span id="literal">Local literal override</span></div><div id="shorthand">Mixed shorthand</div>
+<pre id="result">Open Components inspection to verify Label and Badge independently.</pre>
+<script src="../components/navigation-input.js"></script><script src="../components/selection.js"></script>
+<script>TitanNavigationInput.mount(document.querySelector('#sidebar'),'sidebarItem',{label:'Inbox',count:18});document.querySelector('#dropdown').innerHTML=TitanSelection.dropdown({label:'All mails'});</script>
+<script src="/framework/spacing-inspector.js"></script>

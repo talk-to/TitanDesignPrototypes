@@ -1,0 +1,6 @@
+@import '../tokens.css';
+/* Observed received-message avatar. Parent owns placement and optical offset. */
+.titan-avatar{--titan-avatar-size:36px;--titan-avatar-background:#9B51E0;box-sizing:border-box;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;width:var(--titan-avatar-size);height:var(--titan-avatar-size);padding:0;border-radius:50%;background:var(--titan-avatar-background);color:var(--titan-text-inverse);font-family:var(--titan-font-family-ui);font-size:var(--titan-type-control-size);font-weight:var(--titan-font-weight-semibold);line-height:1;white-space:nowrap;overflow:hidden}
+
+/* User-approved compact size; Avatar retains ownership of all internal styling. */
+.titan-avatar--small{--titan-avatar-size:24px}

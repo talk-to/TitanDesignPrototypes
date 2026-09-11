@@ -1,0 +1,3713 @@
+{
+  "scope": "19 registered components; shared CSS declarations including legacy compatibility selectors; excludes consumer overrides and specimen layout. Counts are source inventory, not computed compliance.",
+  "components": [
+    {
+      "id": "icon-button",
+      "name": "Icon button",
+      "css": "components/actions.css",
+      "renderer": "components/actions.js",
+      "preview": "specimens/actions.html?part=icon-button"
+    },
+    {
+      "id": "button",
+      "name": "Button",
+      "css": "components/actions.css",
+      "renderer": "components/actions.js",
+      "preview": "specimens/actions.html?part=button"
+    },
+    {
+      "id": "split-button",
+      "name": "Split button",
+      "css": "components/actions.css",
+      "renderer": "components/actions.js",
+      "preview": "specimens/actions.html?part=split-button"
+    },
+    {
+      "id": "message-list",
+      "name": "Message list",
+      "css": "components/messages.css",
+      "renderer": "components/messages.js",
+      "preview": "specimens/messages.html?part=message-list"
+    },
+    {
+      "id": "message-row",
+      "name": "Message row",
+      "css": "components/messages.css",
+      "renderer": "components/messages.js",
+      "preview": "specimens/messages.html?part=message-row"
+    },
+    {
+      "id": "message-card",
+      "name": "Received message",
+      "css": "components/messages.css",
+      "renderer": "components/messages.js",
+      "preview": "specimens/messages.html?part=message-card"
+    },
+    {
+      "id": "search-field",
+      "name": "Search field",
+      "css": "components/navigation-input.css",
+      "renderer": "components/navigation-input.js",
+      "preview": "specimens/navigation-input.html?part=search-field"
+    },
+    {
+      "id": "sidebar-item",
+      "name": "Sidebar list item",
+      "css": "components/navigation-input.css",
+      "renderer": "components/navigation-input.js",
+      "preview": "specimens/navigation-input.html?part=sidebar-item"
+    },
+    {
+      "id": "tabs",
+      "name": "Tabs",
+      "css": "components/selection.css",
+      "renderer": "components/selection.js",
+      "preview": "specimens/selection.html?part=tabs"
+    },
+    {
+      "id": "dropdown-trigger",
+      "name": "Dropdown trigger",
+      "css": "components/selection.css",
+      "renderer": "components/selection.js",
+      "preview": "specimens/selection.html?part=dropdown"
+    },
+    {
+      "id": "checkbox",
+      "name": "Checkbox",
+      "css": "components/selection.css",
+      "renderer": "components/selection.js",
+      "preview": "specimens/selection.html?part=checkbox"
+    },
+    {
+      "id": "action-group",
+      "name": "Grouped actions",
+      "css": "components/actions.css",
+      "renderer": "components/actions.js",
+      "preview": "specimens/action-group.html"
+    },
+    {
+      "id": "app-switcher",
+      "name": "App switcher",
+      "css": "components/app-switcher.css",
+      "renderer": "components/app-switcher.js",
+      "preview": "specimens/app-switcher.html?part=app-switcher"
+    },
+    {
+      "id": "app-tile",
+      "name": "App tile",
+      "css": "components/app-switcher.css",
+      "renderer": "components/app-switcher.js",
+      "preview": "specimens/app-switcher.html?part=app-tile"
+    },
+    {
+      "id": "launcher-item",
+      "name": "Launcher item",
+      "css": "components/app-switcher.css",
+      "renderer": "components/app-switcher.js",
+      "preview": "specimens/app-switcher.html?part=launcher-item"
+    },
+    {
+      "id": "composer-field",
+      "name": "Composer field row",
+      "css": "components/composer.css",
+      "renderer": "components/composer.js",
+      "preview": "specimens/composer.html?part=fieldRow"
+    },
+    {
+      "id": "formatting-toolbar",
+      "name": "Formatting toolbar",
+      "css": "components/composer.css",
+      "renderer": "components/composer.js",
+      "preview": "specimens/composer.html?part=formattingToolbar"
+    },
+    {
+      "id": "email-composer",
+      "name": "Email composer",
+      "css": "components/composer.css",
+      "renderer": "components/composer.js",
+      "preview": "specimens/composer.html?part=emailComposer"
+    },
+    {
+      "id": "avatar",
+      "name": "Avatar",
+      "css": "components/avatar.css",
+      "renderer": "components/avatar.js",
+      "preview": "specimens/avatar.html"
+    }
+  ],
+  "declarations": [
+    {
+      "file": "components/actions.css",
+      "selector": ".titan-icon-button,.titan-button,.titan-split-button>button",
+      "property": "border",
+      "value": "0",
+      "category": "paint-or-border",
+      "status": "literal-review",
+      "line": 2
+    },
+    {
+      "file": "components/actions.css",
+      "selector": ".titan-icon-button,.titan-button,.titan-split-button>button",
+      "property": "font-family",
+      "value": "var(--titan-font-family-ui)",
+      "category": "typography",
+      "status": "token-reference",
+      "line": 2
+    },
+    {
+      "file": "components/actions.css",
+      "selector": ".titan-icon-button",
+      "property": "--titan-icon-button-size",
+      "value": "32px",
+      "category": "component-token-definition",
+      "status": "scoped-default",
+      "line": 3
+    },
+    {
+      "file": "components/actions.css",
+      "selector": ".titan-icon-button",
+      "property": "--titan-icon-button-radius",
+      "value": "var(--titan-radius-4)",
+      "category": "component-token-definition",
+      "status": "scoped-default",
+      "line": 3
+    },
+    {
+      "file": "components/actions.css",
+      "selector": ".titan-icon-button",
+      "property": "padding",
+      "value": "0",
+      "category": "spacing-or-reservation",
+      "status": "literal-review",
+      "line": 3
+    },
+    {
+      "file": "components/actions.css",
+      "selector": ".titan-icon-button",
+      "property": "border-radius",
+      "value": "var(--titan-icon-button-radius)",
+      "category": "radius",
+      "status": "token-reference",
+      "line": 3
+    },
+    {
+      "file": "components/actions.css",
+      "selector": ".titan-icon-button",
+      "property": "background",
+      "value": "transparent",
+      "category": "paint-or-border",
+      "status": "structural-or-inherited",
+      "line": 3
+    },
+    {
+      "file": "components/actions.css",
+      "selector": ".titan-icon-button",
+      "property": "color",
+      "value": "var(--titan-text-secondary)",
+      "category": "paint-or-border",
+      "status": "token-reference",
+      "line": 3
+    },
+    {
+      "file": "components/actions.css",
+      "selector": ".titan-icon-button--40",
+      "property": "--titan-icon-button-size",
+      "value": "40px",
+      "category": "component-token-definition",
+      "status": "scoped-default",
+      "line": 4
+    },
+    {
+      "file": "components/actions.css",
+      "selector": ".titan-icon-button:hover:not(:disabled)",
+      "property": "background",
+      "value": "var(--hover-bg)",
+      "category": "paint-or-border",
+      "status": "token-reference",
+      "line": 7
+    },
+    {
+      "file": "components/actions.css",
+      "selector": ".titan-icon-button[aria-pressed=true]",
+      "property": "background",
+      "value": "var(--selected-bg)",
+      "category": "paint-or-border",
+      "status": "token-reference",
+      "line": 8
+    },
+    {
+      "file": "components/actions.css",
+      "selector": ".titan-icon-button[aria-pressed=true]",
+      "property": "color",
+      "value": "var(--titan-action-primary)",
+      "category": "paint-or-border",
+      "status": "token-reference",
+      "line": 8
+    },
+    {
+      "file": "components/actions.css",
+      "selector": ".titan-button",
+      "property": "--titan-button-gap",
+      "value": "2px",
+      "category": "component-token-definition",
+      "status": "scoped-default",
+      "line": 9
+    },
+    {
+      "file": "components/actions.css",
+      "selector": ".titan-button",
+      "property": "--titan-button-radius",
+      "value": "var(--titan-radius-4)",
+      "category": "component-token-definition",
+      "status": "scoped-default",
+      "line": 9
+    },
+    {
+      "file": "components/actions.css",
+      "selector": ".titan-button",
+      "property": "gap",
+      "value": "var(--titan-button-gap)",
+      "category": "spacing-or-reservation",
+      "status": "token-reference",
+      "line": 9
+    },
+    {
+      "file": "components/actions.css",
+      "selector": ".titan-button",
+      "property": "padding",
+      "value": "var(--titan-space-4) var(--titan-space-8) var(--titan-space-4) var(--titan-space-4)",
+      "category": "spacing-or-reservation",
+      "status": "token-reference",
+      "line": 9
+    },
+    {
+      "file": "components/actions.css",
+      "selector": ".titan-button",
+      "property": "border-radius",
+      "value": "var(--titan-button-radius)",
+      "category": "radius",
+      "status": "token-reference",
+      "line": 9
+    },
+    {
+      "file": "components/actions.css",
+      "selector": ".titan-button",
+      "property": "background",
+      "value": "transparent",
+      "category": "paint-or-border",
+      "status": "structural-or-inherited",
+      "line": 9
+    },
+    {
+      "file": "components/actions.css",
+      "selector": ".titan-button",
+      "property": "color",
+      "value": "var(--titan-text-primary)",
+      "category": "paint-or-border",
+      "status": "token-reference",
+      "line": 9
+    },
+    {
+      "file": "components/actions.css",
+      "selector": ".titan-button",
+      "property": "font-size",
+      "value": "var(--titan-type-control-size)",
+      "category": "typography",
+      "status": "token-reference",
+      "line": 9
+    },
+    {
+      "file": "components/actions.css",
+      "selector": ".titan-button",
+      "property": "font-weight",
+      "value": "var(--titan-font-weight-regular)",
+      "category": "typography",
+      "status": "token-reference",
+      "line": 9
+    },
+    {
+      "file": "components/actions.css",
+      "selector": ".titan-button",
+      "property": "line-height",
+      "value": "24px",
+      "category": "typography",
+      "status": "literal-review",
+      "line": 9
+    },
+    {
+      "file": "components/actions.css",
+      "selector": ".titan-button:hover:not(:disabled)",
+      "property": "background",
+      "value": "var(--hover-bg)",
+      "category": "paint-or-border",
+      "status": "token-reference",
+      "line": 10
+    },
+    {
+      "file": "components/actions.css",
+      "selector": ".titan-button:not(:has(.titan-button__icon))",
+      "property": "padding-inline",
+      "value": "var(--titan-space-8)",
+      "category": "spacing-or-reservation",
+      "status": "token-reference",
+      "line": 13
+    },
+    {
+      "file": "components/actions.css",
+      "selector": ".titan-split-button",
+      "property": "--titan-split-button-height",
+      "value": "38px",
+      "category": "component-token-definition",
+      "status": "scoped-default",
+      "line": 14
+    },
+    {
+      "file": "components/actions.css",
+      "selector": ".titan-split-button",
+      "property": "--titan-split-button-gap",
+      "value": "var(--titan-gap-icon-label)",
+      "category": "component-token-definition",
+      "status": "scoped-default",
+      "line": 14
+    },
+    {
+      "file": "components/actions.css",
+      "selector": ".titan-split-button",
+      "property": "--titan-split-button-radius",
+      "value": "var(--titan-radius-4)",
+      "category": "component-token-definition",
+      "status": "scoped-default",
+      "line": 14
+    },
+    {
+      "file": "components/actions.css",
+      "selector": ".titan-split-button",
+      "property": "border-radius",
+      "value": "var(--titan-split-button-radius)",
+      "category": "radius",
+      "status": "token-reference",
+      "line": 14
+    },
+    {
+      "file": "components/actions.css",
+      "selector": ".titan-split-button",
+      "property": "background",
+      "value": "var(--titan-action-primary)",
+      "category": "paint-or-border",
+      "status": "token-reference",
+      "line": 14
+    },
+    {
+      "file": "components/actions.css",
+      "selector": ".titan-split-button>button",
+      "property": "background",
+      "value": "transparent",
+      "category": "paint-or-border",
+      "status": "structural-or-inherited",
+      "line": 15
+    },
+    {
+      "file": "components/actions.css",
+      "selector": ".titan-split-button>button",
+      "property": "color",
+      "value": "var(--titan-text-inverse)",
+      "category": "paint-or-border",
+      "status": "token-reference",
+      "line": 15
+    },
+    {
+      "file": "components/actions.css",
+      "selector": ".titan-split-button>button",
+      "property": "font-size",
+      "value": "var(--titan-type-control-size)",
+      "category": "typography",
+      "status": "token-reference",
+      "line": 15
+    },
+    {
+      "file": "components/actions.css",
+      "selector": ".titan-split-button>button",
+      "property": "font-weight",
+      "value": "var(--titan-font-weight-semibold)",
+      "category": "typography",
+      "status": "token-reference",
+      "line": 15
+    },
+    {
+      "file": "components/actions.css",
+      "selector": ".titan-split-button>button",
+      "property": "line-height",
+      "value": "var(--titan-line-height-20)",
+      "category": "typography",
+      "status": "token-reference",
+      "line": 15
+    },
+    {
+      "file": "components/actions.css",
+      "selector": ".titan-split-button__main",
+      "property": "padding",
+      "value": "0 var(--titan-space-12) 0 var(--titan-space-16)",
+      "category": "spacing-or-reservation",
+      "status": "token-reference-with-literal-geometry",
+      "line": 16
+    },
+    {
+      "file": "components/actions.css",
+      "selector": ".titan-split-button__main",
+      "property": "gap",
+      "value": "var(--titan-split-button-gap)",
+      "category": "spacing-or-reservation",
+      "status": "token-reference",
+      "line": 16
+    },
+    {
+      "file": "components/actions.css",
+      "selector": ".titan-split-button__main",
+      "property": "border-radius",
+      "value": "var(--titan-split-button-radius) 0 0 var(--titan-split-button-radius)",
+      "category": "radius",
+      "status": "token-reference-with-literal-geometry",
+      "line": 16
+    },
+    {
+      "file": "components/actions.css",
+      "selector": ".titan-split-button>.titan-split-button__secondary",
+      "property": "padding",
+      "value": "0",
+      "category": "spacing-or-reservation",
+      "status": "literal-review",
+      "line": 18
+    },
+    {
+      "file": "components/actions.css",
+      "selector": ".titan-split-button>.titan-split-button__secondary",
+      "property": "border-left",
+      "value": "1.5px solid rgba(255,255,255,.35)",
+      "category": "paint-or-border",
+      "status": "literal-review",
+      "line": 18
+    },
+    {
+      "file": "components/actions.css",
+      "selector": ".titan-split-button>.titan-split-button__secondary",
+      "property": "border-radius",
+      "value": "0 var(--titan-split-button-radius) var(--titan-split-button-radius) 0",
+      "category": "radius",
+      "status": "token-reference-with-literal-geometry",
+      "line": 18
+    },
+    {
+      "file": "components/actions.css",
+      "selector": ".titan-split-button>button:hover:not(:disabled)",
+      "property": "background",
+      "value": "var(--hover-overlay-on-accent)",
+      "category": "paint-or-border",
+      "status": "token-reference",
+      "line": 20
+    },
+    {
+      "file": "components/actions.css",
+      "selector": ".titan-icon-button:active:not(:disabled),.titan-button:active:not(:disabled)",
+      "property": "background",
+      "value": "var(--selected-bg)",
+      "category": "paint-or-border",
+      "status": "token-reference",
+      "line": 21
+    },
+    {
+      "file": "components/actions.css",
+      "selector": ".titan-split-button>button:active:not(:disabled)",
+      "property": "background",
+      "value": "var(--active-overlay-on-accent)",
+      "category": "paint-or-border",
+      "status": "token-reference",
+      "line": 22
+    },
+    {
+      "file": "components/actions.css",
+      "selector": ".titan-icon-button:focus-visible,.titan-button:focus-visible,.titan-split-button>button:focus-visible",
+      "property": "outline",
+      "value": "2px solid var(--titan-action-primary)",
+      "category": "paint-or-border",
+      "status": "token-reference-with-literal-geometry",
+      "line": 23
+    },
+    {
+      "file": "components/actions.css",
+      "selector": ".titan-button--toolbar",
+      "property": "--titan-button-gap",
+      "value": "var(--titan-gap-icon-label-compact)",
+      "category": "component-token-definition",
+      "status": "scoped-default",
+      "line": 28
+    },
+    {
+      "file": "components/actions.css",
+      "selector": ".titan-button--toolbar",
+      "property": "--titan-button-radius",
+      "value": "5px",
+      "category": "component-token-definition",
+      "status": "scoped-default",
+      "line": 28
+    },
+    {
+      "file": "components/actions.css",
+      "selector": ".titan-button--toolbar",
+      "property": "--titan-toolbar-button-inset",
+      "value": "5px",
+      "category": "component-token-definition",
+      "status": "scoped-default",
+      "line": 28
+    },
+    {
+      "file": "components/actions.css",
+      "selector": ".titan-button--toolbar",
+      "property": "padding",
+      "value": "var(--titan-toolbar-button-inset) var(--titan-space-8) var(--titan-toolbar-button-inset) var(--titan-toolbar-button-inset)",
+      "category": "spacing-or-reservation",
+      "status": "token-reference",
+      "line": 28
+    },
+    {
+      "file": "components/actions.css",
+      "selector": ".titan-button--toolbar",
+      "property": "font-size",
+      "value": "var(--titan-type-control-compact-size)",
+      "category": "typography",
+      "status": "token-reference",
+      "line": 28
+    },
+    {
+      "file": "components/actions.css",
+      "selector": ".titan-button--toolbar",
+      "property": "line-height",
+      "value": "normal",
+      "category": "typography",
+      "status": "structural-or-inherited",
+      "line": 28
+    },
+    {
+      "file": "components/actions.css",
+      "selector": ".titan-action-group",
+      "property": "gap",
+      "value": "var(--titan-gap-actions-compact)",
+      "category": "spacing-or-reservation",
+      "status": "token-reference",
+      "line": 29
+    },
+    {
+      "file": "components/actions.css",
+      "selector": ".titan-icon-button--composer",
+      "property": "--titan-icon-button-size",
+      "value": "28px",
+      "category": "component-token-definition",
+      "status": "scoped-default",
+      "line": 31
+    },
+    {
+      "file": "components/actions.css",
+      "selector": ".titan-icon-button--window",
+      "property": "--titan-icon-button-size",
+      "value": "24px",
+      "category": "component-token-definition",
+      "status": "scoped-default",
+      "line": 32
+    },
+    {
+      "file": "components/actions.css",
+      "selector": ".titan-icon-button--window",
+      "property": "color",
+      "value": "var(--titan-text-inverse)",
+      "category": "paint-or-border",
+      "status": "token-reference",
+      "line": 32
+    },
+    {
+      "file": "components/actions.css",
+      "selector": ".titan-icon-button--window:hover:not(:disabled)",
+      "property": "background",
+      "value": "rgba(255,255,255,.14)",
+      "category": "paint-or-border",
+      "status": "literal-review",
+      "line": 32
+    },
+    {
+      "file": "components/actions.css",
+      "selector": ".titan-button--composer",
+      "property": "--titan-button-gap",
+      "value": "var(--titan-gap-icon-label-compact)",
+      "category": "component-token-definition",
+      "status": "scoped-default",
+      "line": 33
+    },
+    {
+      "file": "components/actions.css",
+      "selector": ".titan-button--composer",
+      "property": "--titan-composer-button-inset",
+      "value": "2px",
+      "category": "component-token-definition",
+      "status": "scoped-default",
+      "line": 33
+    },
+    {
+      "file": "components/actions.css",
+      "selector": ".titan-button--composer",
+      "property": "--titan-composer-button-end",
+      "value": "6px",
+      "category": "component-token-definition",
+      "status": "scoped-default",
+      "line": 33
+    },
+    {
+      "file": "components/actions.css",
+      "selector": ".titan-button--composer",
+      "property": "padding",
+      "value": "var(--titan-composer-button-inset) var(--titan-composer-button-end) var(--titan-composer-button-inset) var(--titan-space-4)",
+      "category": "spacing-or-reservation",
+      "status": "token-reference",
+      "line": 33
+    },
+    {
+      "file": "components/actions.css",
+      "selector": ".titan-split-button--composer",
+      "property": "--titan-split-button-height",
+      "value": "32px",
+      "category": "component-token-definition",
+      "status": "scoped-default",
+      "line": 34
+    },
+    {
+      "file": "components/actions.css",
+      "selector": ".titan-split-button--composer>.titan-split-button__main",
+      "property": "padding-inline",
+      "value": "var(--titan-space-16)",
+      "category": "spacing-or-reservation",
+      "status": "token-reference",
+      "line": 34
+    },
+    {
+      "file": "components/app-switcher.css",
+      "selector": ".titan-launcher-scope .app-switcher-content",
+      "property": "gap",
+      "value": "var(--titan-space-16)",
+      "category": "spacing-or-reservation",
+      "status": "token-reference",
+      "line": 26
+    },
+    {
+      "file": "components/app-switcher.css",
+      "selector": ".titan-launcher-scope .app-switcher-content",
+      "property": "padding",
+      "value": "var(--titan-space-8) 0 var(--titan-launcher-space-1)",
+      "category": "spacing-or-reservation",
+      "status": "token-reference-with-literal-geometry",
+      "line": 27
+    },
+    {
+      "file": "components/app-switcher.css",
+      "selector": ".titan-launcher-scope .app-switcher-section",
+      "property": "gap",
+      "value": "var(--titan-space-16)",
+      "category": "spacing-or-reservation",
+      "status": "token-reference",
+      "line": 35
+    },
+    {
+      "file": "components/app-switcher.css",
+      "selector": ".titan-launcher-scope .app-switcher-section",
+      "property": "padding",
+      "value": "0 var(--titan-space-16) var(--titan-space-8)",
+      "category": "spacing-or-reservation",
+      "status": "token-reference-with-literal-geometry",
+      "line": 36
+    },
+    {
+      "file": "components/app-switcher.css",
+      "selector": ".titan-launcher-scope .app-switcher-row",
+      "property": "gap",
+      "value": "var(--titan-space-16)",
+      "category": "spacing-or-reservation",
+      "status": "token-reference",
+      "line": 41
+    },
+    {
+      "file": "components/app-switcher.css",
+      "selector": ".titan-launcher-scope .app-switcher-item",
+      "property": "gap",
+      "value": "var(--titan-launcher-space-2)",
+      "category": "spacing-or-reservation",
+      "status": "token-reference",
+      "line": 51
+    },
+    {
+      "file": "components/app-switcher.css",
+      "selector": ".titan-launcher-scope .app-switcher-item",
+      "property": "padding",
+      "value": "var(--titan-space-8) var(--titan-launcher-space-2)",
+      "category": "spacing-or-reservation",
+      "status": "token-reference",
+      "line": 53
+    },
+    {
+      "file": "components/app-switcher.css",
+      "selector": ".titan-launcher-scope .app-switcher-item",
+      "property": "border-radius",
+      "value": "var(--titan-radius-4)",
+      "category": "radius",
+      "status": "token-reference",
+      "line": 54
+    },
+    {
+      "file": "components/app-switcher.css",
+      "selector": ".titan-launcher-scope .app-switcher-item:hover",
+      "property": "background",
+      "value": "#f2f2f2",
+      "category": "paint-or-border",
+      "status": "literal-review",
+      "line": 59
+    },
+    {
+      "file": "components/app-switcher.css",
+      "selector": ".titan-launcher-scope .app-label",
+      "property": "font-size",
+      "value": "var(--titan-type-control-compact-size)",
+      "category": "typography",
+      "status": "token-reference",
+      "line": 82
+    },
+    {
+      "file": "components/app-switcher.css",
+      "selector": ".titan-launcher-scope .app-label",
+      "property": "font-weight",
+      "value": "var(--titan-font-weight-medium)",
+      "category": "typography",
+      "status": "token-reference",
+      "line": 83
+    },
+    {
+      "file": "components/app-switcher.css",
+      "selector": ".titan-launcher-scope .app-label",
+      "property": "color",
+      "value": "#707070",
+      "category": "paint-or-border",
+      "status": "literal-review",
+      "line": 84
+    },
+    {
+      "file": "components/app-switcher.css",
+      "selector": ".titan-launcher-scope .app-label",
+      "property": "line-height",
+      "value": "18px",
+      "category": "typography",
+      "status": "literal-review",
+      "line": 85
+    },
+    {
+      "file": "components/app-switcher.css",
+      "selector": ".titan-launcher-scope .app-switcher-tools",
+      "property": "gap",
+      "value": "var(--titan-space-4)",
+      "category": "spacing-or-reservation",
+      "status": "token-reference",
+      "line": 106
+    },
+    {
+      "file": "components/app-switcher.css",
+      "selector": ".titan-launcher-scope .app-switcher-tool-item",
+      "property": "gap",
+      "value": "var(--titan-space-12)",
+      "category": "spacing-or-reservation",
+      "status": "token-reference",
+      "line": 113
+    },
+    {
+      "file": "components/app-switcher.css",
+      "selector": ".titan-launcher-scope .app-switcher-tool-item",
+      "property": "padding",
+      "value": "var(--titan-launcher-space-6) var(--titan-launcher-space-27)",
+      "category": "spacing-or-reservation",
+      "status": "token-reference",
+      "line": 114
+    },
+    {
+      "file": "components/app-switcher.css",
+      "selector": ".titan-launcher-scope .app-switcher-tool-item:hover",
+      "property": "background",
+      "value": "#f2f2f2",
+      "category": "paint-or-border",
+      "status": "literal-review",
+      "line": 121
+    },
+    {
+      "file": "components/app-switcher.css",
+      "selector": ".titan-launcher-scope .tool-icon",
+      "property": "border-radius",
+      "value": "var(--titan-radius-4)",
+      "category": "radius",
+      "status": "token-reference",
+      "line": 127
+    },
+    {
+      "file": "components/app-switcher.css",
+      "selector": ".titan-launcher-scope .tool-icon.bg-pink",
+      "property": "background",
+      "value": "#ffe5ed",
+      "category": "paint-or-border",
+      "status": "literal-review",
+      "line": 135
+    },
+    {
+      "file": "components/app-switcher.css",
+      "selector": ".titan-launcher-scope .tool-icon.bg-purple",
+      "property": "background",
+      "value": "#f1e4ff",
+      "category": "paint-or-border",
+      "status": "literal-review",
+      "line": 139
+    },
+    {
+      "file": "components/app-switcher.css",
+      "selector": ".titan-launcher-scope .tool-icon.bg-blue",
+      "property": "background",
+      "value": "#e1f4ff",
+      "category": "paint-or-border",
+      "status": "literal-review",
+      "line": 143
+    },
+    {
+      "file": "components/app-switcher.css",
+      "selector": ".titan-launcher-scope .tool-icon.bg-green",
+      "property": "background",
+      "value": "#e6faf2",
+      "category": "paint-or-border",
+      "status": "literal-review",
+      "line": 147
+    },
+    {
+      "file": "components/app-switcher.css",
+      "selector": ".titan-launcher-scope .tool-label",
+      "property": "font-size",
+      "value": "var(--titan-type-control-compact-size)",
+      "category": "typography",
+      "status": "token-reference",
+      "line": 157
+    },
+    {
+      "file": "components/app-switcher.css",
+      "selector": ".titan-launcher-scope .tool-label",
+      "property": "font-weight",
+      "value": "var(--titan-font-weight-medium)",
+      "category": "typography",
+      "status": "token-reference",
+      "line": 158
+    },
+    {
+      "file": "components/app-switcher.css",
+      "selector": ".titan-launcher-scope .tool-label",
+      "property": "color",
+      "value": "#707070",
+      "category": "paint-or-border",
+      "status": "literal-review",
+      "line": 159
+    },
+    {
+      "file": "components/app-switcher.css",
+      "selector": ".titan-launcher-scope .tool-label",
+      "property": "line-height",
+      "value": "14px",
+      "category": "typography",
+      "status": "literal-review",
+      "line": 160
+    },
+    {
+      "file": "components/app-switcher.css",
+      "selector": ".titan-launcher-scope .footer-link-row",
+      "property": "border-top",
+      "value": "0.5px solid #dedded",
+      "category": "paint-or-border",
+      "status": "literal-review",
+      "line": 172
+    },
+    {
+      "file": "components/app-switcher.css",
+      "selector": ".titan-launcher-scope .footer-link-row",
+      "property": "padding",
+      "value": "0 var(--titan-space-24)",
+      "category": "spacing-or-reservation",
+      "status": "token-reference-with-literal-geometry",
+      "line": 177
+    },
+    {
+      "file": "components/app-switcher.css",
+      "selector": ".titan-launcher-scope .footer-link-row:hover",
+      "property": "background",
+      "value": "#f2f2f2",
+      "category": "paint-or-border",
+      "status": "literal-review",
+      "line": 183
+    },
+    {
+      "file": "components/app-switcher.css",
+      "selector": ".titan-launcher-scope .footer-link-content",
+      "property": "gap",
+      "value": "var(--titan-gap-icon-label)",
+      "category": "spacing-or-reservation",
+      "status": "token-reference",
+      "line": 189
+    },
+    {
+      "file": "components/app-switcher.css",
+      "selector": ".titan-launcher-scope .beaker-icon",
+      "property": "margin",
+      "value": "0",
+      "category": "spacing-or-reservation",
+      "status": "literal-review",
+      "line": 206
+    },
+    {
+      "file": "components/app-switcher.css",
+      "selector": ".titan-launcher-scope .footer-link-text",
+      "property": "font-size",
+      "value": "var(--titan-type-control-compact-size)",
+      "category": "typography",
+      "status": "token-reference",
+      "line": 210
+    },
+    {
+      "file": "components/app-switcher.css",
+      "selector": ".titan-launcher-scope .footer-link-text",
+      "property": "font-weight",
+      "value": "var(--titan-font-weight-medium)",
+      "category": "typography",
+      "status": "token-reference",
+      "line": 211
+    },
+    {
+      "file": "components/app-switcher.css",
+      "selector": ".titan-launcher-scope .footer-link-text",
+      "property": "color",
+      "value": "#707070",
+      "category": "paint-or-border",
+      "status": "literal-review",
+      "line": 212
+    },
+    {
+      "file": "components/app-switcher.css",
+      "selector": ".titan-launcher-scope .bold",
+      "property": "font-weight",
+      "value": "800",
+      "category": "typography",
+      "status": "literal-review",
+      "line": 218
+    },
+    {
+      "file": "components/app-switcher.css",
+      "selector": ".titan-launcher-scope",
+      "property": "font-family",
+      "value": "var(--titan-font-family-ui)",
+      "category": "typography",
+      "status": "token-reference",
+      "line": 230
+    },
+    {
+      "file": "components/app-switcher.css",
+      "selector": ".titan-launcher-scope",
+      "property": "color",
+      "value": "var(--titan-text-primary)",
+      "category": "paint-or-border",
+      "status": "token-reference",
+      "line": 230
+    },
+    {
+      "file": "components/app-switcher.css",
+      "selector": ".titan-launcher-scope button",
+      "property": "font-family",
+      "value": "inherit",
+      "category": "typography",
+      "status": "structural-or-inherited",
+      "line": 231
+    },
+    {
+      "file": "components/app-switcher.css",
+      "selector": ".titan-launcher-scope .titan-app-tile,.titan-launcher-scope .titan-launcher-item",
+      "property": "border",
+      "value": "0",
+      "category": "paint-or-border",
+      "status": "literal-review",
+      "line": 232
+    },
+    {
+      "file": "components/app-switcher.css",
+      "selector": ".titan-launcher-scope .titan-app-tile,.titan-launcher-scope .titan-launcher-item",
+      "property": "background",
+      "value": "transparent",
+      "category": "paint-or-border",
+      "status": "structural-or-inherited",
+      "line": 232
+    },
+    {
+      "file": "components/app-switcher.css",
+      "selector": ".titan-launcher-scope .titan-app-tile:hover,.titan-launcher-scope .titan-launcher-item:hover",
+      "property": "background",
+      "value": "#f2f2f2",
+      "category": "paint-or-border",
+      "status": "literal-review",
+      "line": 233
+    },
+    {
+      "file": "components/app-switcher.css",
+      "selector": ".titan-launcher-scope button:focus-visible",
+      "property": "outline",
+      "value": "2px solid var(--titan-action-primary)",
+      "category": "paint-or-border",
+      "status": "token-reference-with-literal-geometry",
+      "line": 234
+    },
+    {
+      "file": "components/app-switcher.css",
+      "selector": ".titan-app-switcher-panel",
+      "property": "margin-top",
+      "value": "8px",
+      "category": "spacing-or-reservation",
+      "status": "literal-review",
+      "line": 236
+    },
+    {
+      "file": "components/app-switcher.css",
+      "selector": ".titan-launcher-scope .titan-launcher-item.footer-link-row",
+      "property": "border-top",
+      "value": ".5px solid #dedded",
+      "category": "paint-or-border",
+      "status": "literal-review",
+      "line": 238
+    },
+    {
+      "file": "components/app-switcher.css",
+      "selector": ".titan-launcher-scope",
+      "property": "--titan-launcher-space-1",
+      "value": "1px",
+      "category": "component-token-definition",
+      "status": "scoped-default",
+      "line": 243
+    },
+    {
+      "file": "components/app-switcher.css",
+      "selector": ".titan-launcher-scope",
+      "property": "--titan-launcher-space-2",
+      "value": "2px",
+      "category": "component-token-definition",
+      "status": "scoped-default",
+      "line": 243
+    },
+    {
+      "file": "components/app-switcher.css",
+      "selector": ".titan-launcher-scope",
+      "property": "--titan-launcher-space-6",
+      "value": "6px",
+      "category": "component-token-definition",
+      "status": "scoped-default",
+      "line": 243
+    },
+    {
+      "file": "components/app-switcher.css",
+      "selector": ".titan-launcher-scope",
+      "property": "--titan-launcher-space-27",
+      "value": "27px",
+      "category": "component-token-definition",
+      "status": "scoped-default",
+      "line": 243
+    },
+    {
+      "file": "components/app-switcher.css",
+      "selector": ".titan-app-switcher-panel",
+      "property": "padding-top",
+      "value": "19px",
+      "category": "spacing-or-reservation",
+      "status": "literal-review",
+      "line": 247
+    },
+    {
+      "file": "components/app-switcher.css",
+      "selector": ".titan-app-switcher-panel",
+      "property": "padding-bottom",
+      "value": "var(--titan-space-12)",
+      "category": "spacing-or-reservation",
+      "status": "token-reference",
+      "line": 247
+    },
+    {
+      "file": "components/app-switcher.css",
+      "selector": ".titan-launcher-scope",
+      "property": "--titan-icon-size-launcher-app",
+      "value": "34px",
+      "category": "component-token-definition",
+      "status": "scoped-default",
+      "line": 254
+    },
+    {
+      "file": "components/avatar.css",
+      "selector": ".titan-avatar",
+      "property": "--titan-avatar-size",
+      "value": "36px",
+      "category": "component-token-definition",
+      "status": "scoped-default",
+      "line": 3
+    },
+    {
+      "file": "components/avatar.css",
+      "selector": ".titan-avatar",
+      "property": "--titan-avatar-background",
+      "value": "#9B51E0",
+      "category": "component-token-definition",
+      "status": "scoped-default",
+      "line": 3
+    },
+    {
+      "file": "components/avatar.css",
+      "selector": ".titan-avatar",
+      "property": "padding",
+      "value": "0",
+      "category": "spacing-or-reservation",
+      "status": "literal-review",
+      "line": 3
+    },
+    {
+      "file": "components/avatar.css",
+      "selector": ".titan-avatar",
+      "property": "border-radius",
+      "value": "50%",
+      "category": "radius",
+      "status": "literal-review",
+      "line": 3
+    },
+    {
+      "file": "components/avatar.css",
+      "selector": ".titan-avatar",
+      "property": "background",
+      "value": "var(--titan-avatar-background)",
+      "category": "paint-or-border",
+      "status": "token-reference",
+      "line": 3
+    },
+    {
+      "file": "components/avatar.css",
+      "selector": ".titan-avatar",
+      "property": "color",
+      "value": "var(--titan-text-inverse)",
+      "category": "paint-or-border",
+      "status": "token-reference",
+      "line": 3
+    },
+    {
+      "file": "components/avatar.css",
+      "selector": ".titan-avatar",
+      "property": "font-family",
+      "value": "var(--titan-font-family-ui)",
+      "category": "typography",
+      "status": "token-reference",
+      "line": 3
+    },
+    {
+      "file": "components/avatar.css",
+      "selector": ".titan-avatar",
+      "property": "font-size",
+      "value": "var(--titan-type-control-size)",
+      "category": "typography",
+      "status": "token-reference",
+      "line": 3
+    },
+    {
+      "file": "components/avatar.css",
+      "selector": ".titan-avatar",
+      "property": "font-weight",
+      "value": "var(--titan-font-weight-semibold)",
+      "category": "typography",
+      "status": "token-reference",
+      "line": 3
+    },
+    {
+      "file": "components/avatar.css",
+      "selector": ".titan-avatar",
+      "property": "line-height",
+      "value": "1",
+      "category": "typography",
+      "status": "literal-review",
+      "line": 3
+    },
+    {
+      "file": "components/composer.css",
+      "selector": ":root",
+      "property": "--titan-composer-content-inset",
+      "value": "var(--titan-space-16)",
+      "category": "component-token-definition",
+      "status": "scoped-default",
+      "line": 4
+    },
+    {
+      "file": "components/composer.css",
+      "selector": ".titan-email-composer",
+      "property": "--titan-composer-width",
+      "value": "681px",
+      "category": "component-token-definition",
+      "status": "scoped-default",
+      "line": 6
+    },
+    {
+      "file": "components/composer.css",
+      "selector": ".titan-email-composer",
+      "property": "--titan-composer-height",
+      "value": "640px",
+      "category": "component-token-definition",
+      "status": "scoped-default",
+      "line": 6
+    },
+    {
+      "file": "components/composer.css",
+      "selector": ".titan-email-composer",
+      "property": "--titan-composer-header-height",
+      "value": "44px",
+      "category": "component-token-definition",
+      "status": "scoped-default",
+      "line": 6
+    },
+    {
+      "file": "components/composer.css",
+      "selector": ".titan-email-composer",
+      "property": "background",
+      "value": "var(--titan-surface-base)",
+      "category": "paint-or-border",
+      "status": "token-reference",
+      "line": 6
+    },
+    {
+      "file": "components/composer.css",
+      "selector": ".titan-email-composer",
+      "property": "color",
+      "value": "var(--titan-text-primary)",
+      "category": "paint-or-border",
+      "status": "token-reference",
+      "line": 6
+    },
+    {
+      "file": "components/composer.css",
+      "selector": ".titan-email-composer",
+      "property": "font",
+      "value": "var(--titan-type-control-size) var(--titan-font-family-ui)",
+      "category": "typography",
+      "status": "token-reference",
+      "line": 6
+    },
+    {
+      "file": "components/composer.css",
+      "selector": ".titan-email-composer",
+      "property": "border-radius",
+      "value": "var(--titan-radius-4) var(--titan-radius-4) 0 0",
+      "category": "radius",
+      "status": "token-reference-with-literal-geometry",
+      "line": 6
+    },
+    {
+      "file": "components/composer.css",
+      "selector": ".titan-email-composer__header",
+      "property": "padding-inline",
+      "value": "var(--titan-composer-content-inset)",
+      "category": "spacing-or-reservation",
+      "status": "token-reference",
+      "line": 7
+    },
+    {
+      "file": "components/composer.css",
+      "selector": ".titan-email-composer__header",
+      "property": "background",
+      "value": "var(--titan-surface-composer-header)",
+      "category": "paint-or-border",
+      "status": "token-reference",
+      "line": 7
+    },
+    {
+      "file": "components/composer.css",
+      "selector": ".titan-email-composer__title",
+      "property": "border",
+      "value": "0",
+      "category": "paint-or-border",
+      "status": "literal-review",
+      "line": 8
+    },
+    {
+      "file": "components/composer.css",
+      "selector": ".titan-email-composer__title",
+      "property": "padding",
+      "value": "0",
+      "category": "spacing-or-reservation",
+      "status": "literal-review",
+      "line": 8
+    },
+    {
+      "file": "components/composer.css",
+      "selector": ".titan-email-composer__title",
+      "property": "background",
+      "value": "none",
+      "category": "paint-or-border",
+      "status": "structural-or-inherited",
+      "line": 8
+    },
+    {
+      "file": "components/composer.css",
+      "selector": ".titan-email-composer__title",
+      "property": "color",
+      "value": "var(--titan-text-inverse)",
+      "category": "paint-or-border",
+      "status": "token-reference",
+      "line": 8
+    },
+    {
+      "file": "components/composer.css",
+      "selector": ".titan-email-composer__title",
+      "property": "font",
+      "value": "inherit",
+      "category": "typography",
+      "status": "structural-or-inherited",
+      "line": 8
+    },
+    {
+      "file": "components/composer.css",
+      "selector": ".titan-email-composer__window-actions",
+      "property": "gap",
+      "value": "var(--titan-space-8)",
+      "category": "spacing-or-reservation",
+      "status": "token-reference",
+      "line": 8
+    },
+    {
+      "file": "components/composer.css",
+      "selector": ".titan-email-composer__fields",
+      "property": "padding",
+      "value": "var(--titan-space-12) var(--titan-composer-content-inset) 0",
+      "category": "spacing-or-reservation",
+      "status": "token-reference-with-literal-geometry",
+      "line": 10
+    },
+    {
+      "file": "components/composer.css",
+      "selector": ".titan-composer-field",
+      "property": "--titan-composer-field-gap",
+      "value": "6px",
+      "category": "component-token-definition",
+      "status": "scoped-default",
+      "line": 11
+    },
+    {
+      "file": "components/composer.css",
+      "selector": ".titan-composer-field",
+      "property": "border-bottom",
+      "value": "2px solid #ededed",
+      "category": "paint-or-border",
+      "status": "literal-review",
+      "line": 11
+    },
+    {
+      "file": "components/composer.css",
+      "selector": ".titan-composer-field",
+      "property": "padding-block",
+      "value": "var(--titan-space-8)",
+      "category": "spacing-or-reservation",
+      "status": "token-reference",
+      "line": 11
+    },
+    {
+      "file": "components/composer.css",
+      "selector": ".titan-composer-field",
+      "property": "font",
+      "value": "var(--titan-type-control-size) var(--titan-font-family-ui)",
+      "category": "typography",
+      "status": "token-reference",
+      "line": 11
+    },
+    {
+      "file": "components/composer.css",
+      "selector": ".titan-composer-field",
+      "property": "color",
+      "value": "var(--titan-text-muted)",
+      "category": "paint-or-border",
+      "status": "token-reference",
+      "line": 11
+    },
+    {
+      "file": "components/composer.css",
+      "selector": ".titan-composer-field label",
+      "property": "gap",
+      "value": "var(--titan-composer-field-gap)",
+      "category": "spacing-or-reservation",
+      "status": "token-reference",
+      "line": 12
+    },
+    {
+      "file": "components/composer.css",
+      "selector": ".titan-composer-field input",
+      "property": "border",
+      "value": "0",
+      "category": "paint-or-border",
+      "status": "literal-review",
+      "line": 12
+    },
+    {
+      "file": "components/composer.css",
+      "selector": ".titan-composer-field input",
+      "property": "padding",
+      "value": "0",
+      "category": "spacing-or-reservation",
+      "status": "literal-review",
+      "line": 12
+    },
+    {
+      "file": "components/composer.css",
+      "selector": ".titan-composer-field input",
+      "property": "background",
+      "value": "transparent",
+      "category": "paint-or-border",
+      "status": "structural-or-inherited",
+      "line": 12
+    },
+    {
+      "file": "components/composer.css",
+      "selector": ".titan-composer-field input",
+      "property": "font",
+      "value": "inherit",
+      "category": "typography",
+      "status": "structural-or-inherited",
+      "line": 12
+    },
+    {
+      "file": "components/composer.css",
+      "selector": ".titan-composer-field input",
+      "property": "color",
+      "value": "var(--titan-text-primary)",
+      "category": "paint-or-border",
+      "status": "token-reference",
+      "line": 12
+    },
+    {
+      "file": "components/composer.css",
+      "selector": ".titan-composer-field input:focus-visible",
+      "property": "outline",
+      "value": "2px solid var(--titan-action-primary)",
+      "category": "paint-or-border",
+      "status": "token-reference-with-literal-geometry",
+      "line": 12
+    },
+    {
+      "file": "components/composer.css",
+      "selector": ".titan-composer-field__value",
+      "property": "color",
+      "value": "var(--titan-text-primary)",
+      "category": "paint-or-border",
+      "status": "token-reference",
+      "line": 12
+    },
+    {
+      "file": "components/composer.css",
+      "selector": ".titan-composer-field__extras",
+      "property": "gap",
+      "value": "var(--titan-space-12)",
+      "category": "spacing-or-reservation",
+      "status": "token-reference",
+      "line": 12
+    },
+    {
+      "file": "components/composer.css",
+      "selector": ".titan-composer-field__extras",
+      "property": "margin-left",
+      "value": "auto",
+      "category": "spacing-or-reservation",
+      "status": "structural-or-inherited",
+      "line": 12
+    },
+    {
+      "file": "components/composer.css",
+      "selector": ".titan-composer-field__extras button",
+      "property": "border",
+      "value": "0",
+      "category": "paint-or-border",
+      "status": "literal-review",
+      "line": 12
+    },
+    {
+      "file": "components/composer.css",
+      "selector": ".titan-composer-field__extras button",
+      "property": "padding",
+      "value": "0",
+      "category": "spacing-or-reservation",
+      "status": "literal-review",
+      "line": 12
+    },
+    {
+      "file": "components/composer.css",
+      "selector": ".titan-composer-field__extras button",
+      "property": "background",
+      "value": "none",
+      "category": "paint-or-border",
+      "status": "structural-or-inherited",
+      "line": 12
+    },
+    {
+      "file": "components/composer.css",
+      "selector": ".titan-composer-field__extras button",
+      "property": "font",
+      "value": "inherit",
+      "category": "typography",
+      "status": "structural-or-inherited",
+      "line": 12
+    },
+    {
+      "file": "components/composer.css",
+      "selector": ".titan-composer-field__extras button",
+      "property": "color",
+      "value": "inherit",
+      "category": "paint-or-border",
+      "status": "structural-or-inherited",
+      "line": 12
+    },
+    {
+      "file": "components/composer.css",
+      "selector": ".titan-composer-field__extras button:hover",
+      "property": "color",
+      "value": "var(--titan-text-link)",
+      "category": "paint-or-border",
+      "status": "token-reference",
+      "line": 12
+    },
+    {
+      "file": "components/composer.css",
+      "selector": ".titan-email-composer__features",
+      "property": "gap",
+      "value": "var(--titan-space-8)",
+      "category": "spacing-or-reservation",
+      "status": "token-reference",
+      "line": 13
+    },
+    {
+      "file": "components/composer.css",
+      "selector": ".titan-email-composer__features",
+      "property": "padding",
+      "value": "var(--titan-space-8) var(--titan-composer-content-inset)",
+      "category": "spacing-or-reservation",
+      "status": "token-reference",
+      "line": 13
+    },
+    {
+      "file": "components/composer.css",
+      "selector": ".titan-email-composer__features",
+      "property": "border-bottom",
+      "value": "1px solid #ededed",
+      "category": "paint-or-border",
+      "status": "literal-review",
+      "line": 13
+    },
+    {
+      "file": "components/composer.css",
+      "selector": ".titan-email-composer__editor",
+      "property": "padding",
+      "value": "var(--titan-space-12) var(--titan-composer-content-inset)",
+      "category": "spacing-or-reservation",
+      "status": "token-reference",
+      "line": 14
+    },
+    {
+      "file": "components/composer.css",
+      "selector": ".titan-email-composer__editor",
+      "property": "font-size",
+      "value": "var(--titan-type-body-size)",
+      "category": "typography",
+      "status": "token-reference",
+      "line": 14
+    },
+    {
+      "file": "components/composer.css",
+      "selector": ".titan-email-composer__editor",
+      "property": "line-height",
+      "value": "var(--titan-type-body-line-height)",
+      "category": "typography",
+      "status": "token-reference",
+      "line": 14
+    },
+    {
+      "file": "components/composer.css",
+      "selector": ".titan-email-composer__editor",
+      "property": "outline",
+      "value": "none",
+      "category": "paint-or-border",
+      "status": "structural-or-inherited",
+      "line": 14
+    },
+    {
+      "file": "components/composer.css",
+      "selector": ".titan-email-composer__editor:focus-visible",
+      "property": "box-shadow",
+      "value": "inset 0 0 0 1px var(--titan-action-primary)",
+      "category": "paint-or-border",
+      "status": "token-reference-with-literal-geometry",
+      "line": 14
+    },
+    {
+      "file": "components/composer.css",
+      "selector": ".titan-formatting-toolbar",
+      "property": "--titan-formatting-gap",
+      "value": "6px",
+      "category": "component-token-definition",
+      "status": "scoped-default",
+      "line": 15
+    },
+    {
+      "file": "components/composer.css",
+      "selector": ".titan-formatting-toolbar",
+      "property": "--titan-formatting-inset",
+      "value": "14px",
+      "category": "component-token-definition",
+      "status": "scoped-default",
+      "line": 15
+    },
+    {
+      "file": "components/composer.css",
+      "selector": ".titan-formatting-toolbar",
+      "property": "gap",
+      "value": "var(--titan-formatting-gap)",
+      "category": "spacing-or-reservation",
+      "status": "token-reference",
+      "line": 15
+    },
+    {
+      "file": "components/composer.css",
+      "selector": ".titan-formatting-toolbar",
+      "property": "padding",
+      "value": "0 var(--titan-formatting-inset)",
+      "category": "spacing-or-reservation",
+      "status": "token-reference-with-literal-geometry",
+      "line": 15
+    },
+    {
+      "file": "components/composer.css",
+      "selector": ".titan-formatting-toolbar",
+      "property": "border-block",
+      "value": "1px solid #ededed",
+      "category": "paint-or-border",
+      "status": "literal-review",
+      "line": 15
+    },
+    {
+      "file": "components/composer.css",
+      "selector": ".titan-formatting-toolbar",
+      "property": "background",
+      "value": "var(--titan-surface-base)",
+      "category": "paint-or-border",
+      "status": "token-reference",
+      "line": 15
+    },
+    {
+      "file": "components/composer.css",
+      "selector": ".titan-formatting-toolbar__separator",
+      "property": "background",
+      "value": "#dedede",
+      "category": "paint-or-border",
+      "status": "literal-review",
+      "line": 15
+    },
+    {
+      "file": "components/composer.css",
+      "selector": ".titan-formatting-toolbar__separator",
+      "property": "margin-inline",
+      "value": "var(--titan-formatting-gap)",
+      "category": "spacing-or-reservation",
+      "status": "token-reference",
+      "line": 15
+    },
+    {
+      "file": "components/composer.css",
+      "selector": ".titan-email-composer__send",
+      "property": "gap",
+      "value": "var(--titan-space-8)",
+      "category": "spacing-or-reservation",
+      "status": "token-reference",
+      "line": 16
+    },
+    {
+      "file": "components/composer.css",
+      "selector": ".titan-email-composer__send",
+      "property": "padding",
+      "value": "var(--titan-space-12) var(--titan-composer-content-inset)",
+      "category": "spacing-or-reservation",
+      "status": "token-reference",
+      "line": 16
+    },
+    {
+      "file": "components/composer.css",
+      "selector": ".titan-email-composer button:focus-visible",
+      "property": "outline",
+      "value": "2px solid var(--titan-action-primary)",
+      "category": "paint-or-border",
+      "status": "token-reference-with-literal-geometry",
+      "line": 17
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".email-list::-webkit-scrollbar-thumb",
+      "property": "background",
+      "value": "#ddd",
+      "category": "paint-or-border",
+      "status": "literal-review",
+      "line": 16
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".email-list::-webkit-scrollbar-thumb",
+      "property": "border-radius",
+      "value": "2px",
+      "category": "radius",
+      "status": "literal-review",
+      "line": 17
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".email-tile",
+      "property": "padding",
+      "value": "var(--titan-mail-row-inset-block) var(--titan-mail-row-inset-inline)",
+      "category": "spacing-or-reservation",
+      "status": "token-reference",
+      "line": 21
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".email-tile",
+      "property": "background",
+      "value": "var(--titan-surface-base)",
+      "category": "paint-or-border",
+      "status": "token-reference",
+      "line": 24
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".email-tile",
+      "property": "border-bottom",
+      "value": "1px solid #dedede",
+      "category": "paint-or-border",
+      "status": "literal-review",
+      "line": 25
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".email-tile:hover",
+      "property": "background",
+      "value": "#f0f0f0",
+      "category": "paint-or-border",
+      "status": "literal-review",
+      "line": 29
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".email-tile.selected",
+      "property": "background",
+      "value": "var(--titan-surface-selected)",
+      "category": "paint-or-border",
+      "status": "token-reference",
+      "line": 33
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".middle-panel.wide-view .email-list ,\n.titan-message-list--wide",
+      "property": "padding",
+      "value": "var(--titan-space-4) 0",
+      "category": "spacing-or-reservation",
+      "status": "token-reference-with-literal-geometry",
+      "line": 39
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".middle-panel.wide-view .email-tile ,\n.titan-message-list--wide .email-tile ,\n.titan-message-row--wide",
+      "property": "margin",
+      "value": "0",
+      "category": "spacing-or-reservation",
+      "status": "literal-review",
+      "line": 45
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".middle-panel.wide-view .email-tile ,\n.titan-message-list--wide .email-tile ,\n.titan-message-row--wide",
+      "property": "border-radius",
+      "value": "0",
+      "category": "radius",
+      "status": "literal-review",
+      "line": 46
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".middle-panel.wide-view .email-tile ,\n.titan-message-list--wide .email-tile ,\n.titan-message-row--wide",
+      "property": "--titan-message-row-wide-inset-start",
+      "value": "21px",
+      "category": "component-token-definition",
+      "status": "scoped-default",
+      "line": 47
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".middle-panel.wide-view .email-tile ,\n.titan-message-list--wide .email-tile ,\n.titan-message-row--wide",
+      "property": "padding",
+      "value": "0 var(--titan-space-16) 0 var(--titan-message-row-wide-inset-start)",
+      "category": "spacing-or-reservation",
+      "status": "token-reference-with-literal-geometry",
+      "line": 48
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".middle-panel.wide-view .email-tile ,\n.titan-message-list--wide .email-tile ,\n.titan-message-row--wide",
+      "property": "border-bottom",
+      "value": "1px solid #dedede",
+      "category": "paint-or-border",
+      "status": "literal-review",
+      "line": 52
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".middle-panel.wide-view .email-tile-inner ,\n.titan-message-list--wide .email-tile-inner ,\n.titan-message-row--wide .email-tile-inner",
+      "property": "gap",
+      "value": "0",
+      "category": "spacing-or-reservation",
+      "status": "literal-review",
+      "line": 60
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".middle-panel.wide-view .tile-icons ,\n.titan-message-list--wide .tile-icons ,\n.titan-message-row--wide .tile-icons",
+      "property": "gap",
+      "value": "0",
+      "category": "spacing-or-reservation",
+      "status": "literal-review",
+      "line": 69
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".middle-panel.wide-view .tile-icons ,\n.titan-message-list--wide .tile-icons ,\n.titan-message-row--wide .tile-icons",
+      "property": "--titan-message-row-controls-gap",
+      "value": "10px",
+      "category": "component-token-definition",
+      "status": "scoped-default",
+      "line": 71
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".middle-panel.wide-view .tile-icons ,\n.titan-message-list--wide .tile-icons ,\n.titan-message-row--wide .tile-icons",
+      "property": "margin-right",
+      "value": "var(--titan-message-row-controls-gap)",
+      "category": "spacing-or-reservation",
+      "status": "token-reference",
+      "line": 72
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".middle-panel.wide-view .tile-chk ,\n.titan-message-list--wide .tile-chk ,\n.titan-message-row--wide .tile-chk",
+      "property": "margin-right",
+      "value": "var(--titan-space-8)",
+      "category": "spacing-or-reservation",
+      "status": "token-reference",
+      "line": 82
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".middle-panel.wide-view .tile-content ,\n.titan-message-list--wide .tile-content ,\n.titan-message-row--wide .tile-content",
+      "property": "gap",
+      "value": "0",
+      "category": "spacing-or-reservation",
+      "status": "literal-review",
+      "line": 100
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".middle-panel.wide-view .tile-content ,\n.titan-message-list--wide .tile-content ,\n.titan-message-row--wide .tile-content",
+      "property": "padding-right",
+      "value": "160px",
+      "category": "spacing-or-reservation",
+      "status": "literal-review",
+      "line": 103
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".middle-panel.wide-view .tile-sender ,\n.titan-message-list--wide .tile-sender ,\n.titan-message-row--wide .tile-sender",
+      "property": "font-size",
+      "value": "var(--titan-type-body-size)",
+      "category": "typography",
+      "status": "token-reference",
+      "line": 119
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".middle-panel.wide-view .tile-sender ,\n.titan-message-list--wide .tile-sender ,\n.titan-message-row--wide .tile-sender",
+      "property": "line-height",
+      "value": "44px",
+      "category": "typography",
+      "status": "literal-review",
+      "line": 120
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".middle-panel.wide-view .tile-sender ,\n.titan-message-list--wide .tile-sender ,\n.titan-message-row--wide .tile-sender",
+      "property": "margin-top",
+      "value": "0",
+      "category": "spacing-or-reservation",
+      "status": "literal-review",
+      "line": 124
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".middle-panel.wide-view .tile-subject ,\n.titan-message-list--wide .tile-subject ,\n.titan-message-row--wide .tile-subject",
+      "property": "font-size",
+      "value": "var(--titan-type-body-size)",
+      "category": "typography",
+      "status": "token-reference",
+      "line": 130
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".middle-panel.wide-view .tile-subject ,\n.titan-message-list--wide .tile-subject ,\n.titan-message-row--wide .tile-subject",
+      "property": "color",
+      "value": "var(--titan-text-strong)",
+      "category": "paint-or-border",
+      "status": "token-reference",
+      "line": 131
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".middle-panel.wide-view .tile-subject ,\n.titan-message-list--wide .tile-subject ,\n.titan-message-row--wide .tile-subject",
+      "property": "margin-top",
+      "value": "0",
+      "category": "spacing-or-reservation",
+      "status": "literal-review",
+      "line": 136
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".middle-panel.wide-view .tile-preview ,\n.titan-message-list--wide .tile-preview ,\n.titan-message-row--wide .tile-preview",
+      "property": "font-size",
+      "value": "var(--titan-type-body-size)",
+      "category": "typography",
+      "status": "token-reference",
+      "line": 143
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".middle-panel.wide-view .tile-preview ,\n.titan-message-list--wide .tile-preview ,\n.titan-message-row--wide .tile-preview",
+      "property": "color",
+      "value": "#999",
+      "category": "paint-or-border",
+      "status": "literal-review",
+      "line": 144
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".middle-panel.wide-view .tile-preview ,\n.titan-message-list--wide .tile-preview ,\n.titan-message-row--wide .tile-preview",
+      "property": "margin-top",
+      "value": "0",
+      "category": "spacing-or-reservation",
+      "status": "literal-review",
+      "line": 148
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".middle-panel.wide-view .tile-preview ,\n.titan-message-list--wide .tile-preview ,\n.titan-message-row--wide .tile-preview",
+      "property": "--titan-message-row-summary-gap",
+      "value": "6px",
+      "category": "component-token-definition",
+      "status": "scoped-default",
+      "line": 149
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".middle-panel.wide-view .tile-preview ,\n.titan-message-list--wide .tile-preview ,\n.titan-message-row--wide .tile-preview",
+      "property": "margin-left",
+      "value": "var(--titan-message-row-summary-gap)",
+      "category": "spacing-or-reservation",
+      "status": "token-reference",
+      "line": 150
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".middle-panel.wide-view .tile-preview::before ,\n.titan-message-list--wide .tile-preview::before ,\n.titan-message-row--wide .tile-preview::before",
+      "property": "color",
+      "value": "#ccc",
+      "category": "paint-or-border",
+      "status": "literal-review",
+      "line": 159
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".middle-panel.wide-view .tile-time ,\n.titan-message-list--wide .tile-time ,\n.titan-message-row--wide .tile-time",
+      "property": "margin",
+      "value": "0",
+      "category": "spacing-or-reservation",
+      "status": "literal-review",
+      "line": 169
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".middle-panel.wide-view .tile-time ,\n.titan-message-list--wide .tile-time ,\n.titan-message-row--wide .tile-time",
+      "property": "padding",
+      "value": "0",
+      "category": "spacing-or-reservation",
+      "status": "literal-review",
+      "line": 170
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".middle-panel.wide-view .tile-time ,\n.titan-message-list--wide .tile-time ,\n.titan-message-row--wide .tile-time",
+      "property": "font-size",
+      "value": "var(--titan-type-meta-size)",
+      "category": "typography",
+      "status": "token-reference",
+      "line": 171
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".middle-panel.wide-view .tile-time ,\n.titan-message-list--wide .tile-time ,\n.titan-message-row--wide .tile-time",
+      "property": "color",
+      "value": "var(--titan-text-muted)",
+      "category": "paint-or-border",
+      "status": "token-reference",
+      "line": 172
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".middle-panel.wide-view .tile-hover-actions ,\n.titan-message-list--wide .tile-hover-actions ,\n.titan-message-row--wide .tile-hover-actions",
+      "property": "margin",
+      "value": "0",
+      "category": "spacing-or-reservation",
+      "status": "literal-review",
+      "line": 182
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".email-tile-inner",
+      "property": "gap",
+      "value": "var(--titan-space-12)",
+      "category": "spacing-or-reservation",
+      "status": "token-reference",
+      "line": 200
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".tile-icons",
+      "property": "gap",
+      "value": "var(--titan-space-3)",
+      "category": "spacing-or-reservation",
+      "status": "token-reference",
+      "line": 207
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".tile-dot::after",
+      "property": "background",
+      "value": "var(--titan-indicator-active)",
+      "category": "paint-or-border",
+      "status": "token-reference",
+      "line": 252
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".tile-dot::after",
+      "property": "border-radius",
+      "value": "50%",
+      "category": "radius",
+      "status": "literal-review",
+      "line": 253
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".tile-content",
+      "property": "gap",
+      "value": "var(--titan-gap-text-tight)",
+      "category": "spacing-or-reservation",
+      "status": "token-reference",
+      "line": 285
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".tile-sender",
+      "property": "font-size",
+      "value": "var(--titan-type-sender-size)",
+      "category": "typography",
+      "status": "token-reference",
+      "line": 291
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".tile-sender",
+      "property": "color",
+      "value": "var(--titan-text-strong)",
+      "category": "paint-or-border",
+      "status": "token-reference",
+      "line": 292
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".tile-sender",
+      "property": "line-height",
+      "value": "var(--titan-line-height-20)",
+      "category": "typography",
+      "status": "token-reference",
+      "line": 293
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".tile-sender.bold",
+      "property": "font-weight",
+      "value": "var(--titan-font-weight-semibold)",
+      "category": "typography",
+      "status": "token-reference",
+      "line": 300
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".tile-subject",
+      "property": "font-size",
+      "value": "var(--titan-type-body-size)",
+      "category": "typography",
+      "status": "token-reference",
+      "line": 304
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".tile-subject",
+      "property": "color",
+      "value": "var(--titan-text-primary)",
+      "category": "paint-or-border",
+      "status": "token-reference",
+      "line": 305
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".tile-subject",
+      "property": "line-height",
+      "value": "var(--titan-type-body-line-height)",
+      "category": "typography",
+      "status": "token-reference",
+      "line": 306
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".tile-preview",
+      "property": "font-size",
+      "value": "var(--titan-type-body-size)",
+      "category": "typography",
+      "status": "token-reference",
+      "line": 313
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".tile-preview",
+      "property": "color",
+      "value": "var(--titan-text-secondary)",
+      "category": "paint-or-border",
+      "status": "token-reference",
+      "line": 314
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".tile-preview",
+      "property": "line-height",
+      "value": "var(--titan-type-body-line-height)",
+      "category": "typography",
+      "status": "token-reference",
+      "line": 315
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".tile-time",
+      "property": "font-size",
+      "value": "var(--titan-type-meta-small-size)",
+      "category": "typography",
+      "status": "token-reference",
+      "line": 325
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".tile-time",
+      "property": "color",
+      "value": "var(--titan-text-muted)",
+      "category": "paint-or-border",
+      "status": "token-reference",
+      "line": 326
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".email-tile:has(.tile-dot) .tile-sender,\n    .email-tile:has(.tile-dot) .tile-subject",
+      "property": "font-weight",
+      "value": "var(--titan-font-weight-semibold)",
+      "category": "typography",
+      "status": "token-reference",
+      "line": 332
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".tile-hover-actions",
+      "property": "gap",
+      "value": "var(--titan-gap-actions-compact)",
+      "category": "spacing-or-reservation",
+      "status": "token-reference",
+      "line": 340
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".tile-action-pill",
+      "property": "background",
+      "value": "#fff",
+      "category": "paint-or-border",
+      "status": "literal-review",
+      "line": 353
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".tile-action-pill",
+      "property": "border",
+      "value": "0.5px solid #c1c1c1",
+      "category": "paint-or-border",
+      "status": "literal-review",
+      "line": 354
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".tile-action-pill",
+      "property": "box-shadow",
+      "value": "0 1px 0.5px rgba(0, 0, 0, 0.05)",
+      "category": "paint-or-border",
+      "status": "literal-review",
+      "line": 355
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".tile-action-pill",
+      "property": "border-radius",
+      "value": "var(--titan-radius-4)",
+      "category": "radius",
+      "status": "token-reference",
+      "line": 356
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".thread-tile",
+      "property": "border",
+      "value": "1px solid #dedede",
+      "category": "paint-or-border",
+      "status": "literal-review",
+      "line": 398
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".thread-tile",
+      "property": "border-radius",
+      "value": "var(--titan-radius-4)",
+      "category": "radius",
+      "status": "token-reference",
+      "line": 399
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".thread-tile",
+      "property": "margin-bottom",
+      "value": "var(--titan-space-8)",
+      "category": "spacing-or-reservation",
+      "status": "token-reference",
+      "line": 400
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".thread-tile",
+      "property": "background",
+      "value": "var(--titan-surface-base)",
+      "category": "paint-or-border",
+      "status": "token-reference",
+      "line": 401
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".thread-tile-inner",
+      "property": "gap",
+      "value": "var(--titan-message-header-gap)",
+      "category": "spacing-or-reservation",
+      "status": "token-reference",
+      "line": 407
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".thread-tile-inner",
+      "property": "padding",
+      "value": "var(--titan-message-inset-block) var(--titan-message-inset-inline)",
+      "category": "spacing-or-reservation",
+      "status": "token-reference",
+      "line": 408
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".thread-sender",
+      "property": "font-size",
+      "value": "var(--titan-type-sender-size)",
+      "category": "typography",
+      "status": "token-reference",
+      "line": 413
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".thread-sender",
+      "property": "font-weight",
+      "value": "var(--titan-font-weight-semibold)",
+      "category": "typography",
+      "status": "token-reference",
+      "line": 414
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".thread-sender",
+      "property": "color",
+      "value": "var(--titan-text-primary)",
+      "category": "paint-or-border",
+      "status": "token-reference",
+      "line": 415
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".thread-preview",
+      "property": "font-size",
+      "value": "var(--titan-type-body-size)",
+      "category": "typography",
+      "status": "token-reference",
+      "line": 422
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".thread-preview",
+      "property": "color",
+      "value": "var(--titan-text-muted)",
+      "category": "paint-or-border",
+      "status": "token-reference",
+      "line": 423
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".thread-meta",
+      "property": "gap",
+      "value": "10px",
+      "category": "spacing-or-reservation",
+      "status": "literal-review",
+      "line": 436
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".thread-date",
+      "property": "font-size",
+      "value": "var(--titan-type-meta-size)",
+      "category": "typography",
+      "status": "token-reference",
+      "line": 440
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".thread-date",
+      "property": "color",
+      "value": "var(--titan-text-muted)",
+      "category": "paint-or-border",
+      "status": "token-reference",
+      "line": 441
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".expanded-tile",
+      "property": "border",
+      "value": "1px solid #dedede",
+      "category": "paint-or-border",
+      "status": "literal-review",
+      "line": 463
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".expanded-tile",
+      "property": "border-radius",
+      "value": "var(--titan-radius-4)",
+      "category": "radius",
+      "status": "token-reference",
+      "line": 464
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".expanded-tile",
+      "property": "background",
+      "value": "var(--titan-surface-base)",
+      "category": "paint-or-border",
+      "status": "token-reference",
+      "line": 465
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".expanded-tile",
+      "property": "margin-bottom",
+      "value": "var(--titan-space-8)",
+      "category": "spacing-or-reservation",
+      "status": "token-reference",
+      "line": 466
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".expanded-header",
+      "property": "padding",
+      "value": "var(--titan-message-inset-block) var(--titan-message-inset-inline) var(--titan-space-12)",
+      "category": "spacing-or-reservation",
+      "status": "token-reference",
+      "line": 474
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".exp-left",
+      "property": "gap",
+      "value": "var(--titan-space-12)",
+      "category": "spacing-or-reservation",
+      "status": "token-reference",
+      "line": 480
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".exp-avatar, .expanded-header .titan-avatar",
+      "property": "margin-top",
+      "value": "1px",
+      "category": "spacing-or-reservation",
+      "status": "literal-review",
+      "line": 484
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".exp-sender",
+      "property": "font-size",
+      "value": "var(--titan-type-sender-size)",
+      "category": "typography",
+      "status": "token-reference",
+      "line": 488
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".exp-sender",
+      "property": "font-weight",
+      "value": "var(--titan-font-weight-semibold)",
+      "category": "typography",
+      "status": "token-reference",
+      "line": 489
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".exp-sender",
+      "property": "color",
+      "value": "var(--titan-text-primary)",
+      "category": "paint-or-border",
+      "status": "token-reference",
+      "line": 490
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".exp-sender",
+      "property": "margin-bottom",
+      "value": "var(--titan-gap-text-tight)",
+      "category": "spacing-or-reservation",
+      "status": "token-reference",
+      "line": 491
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".exp-to",
+      "property": "font-size",
+      "value": "var(--titan-type-body-size)",
+      "category": "typography",
+      "status": "token-reference",
+      "line": 495
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".exp-to",
+      "property": "color",
+      "value": "var(--titan-text-muted)",
+      "category": "paint-or-border",
+      "status": "token-reference",
+      "line": 496
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".exp-right",
+      "property": "gap",
+      "value": "var(--titan-space-12)",
+      "category": "spacing-or-reservation",
+      "status": "token-reference",
+      "line": 503
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".exp-timestamp",
+      "property": "font-size",
+      "value": "var(--titan-type-meta-size)",
+      "category": "typography",
+      "status": "token-reference",
+      "line": 507
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".exp-timestamp",
+      "property": "color",
+      "value": "var(--titan-text-muted)",
+      "category": "paint-or-border",
+      "status": "token-reference",
+      "line": 508
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".exp-actions",
+      "property": "gap",
+      "value": "var(--titan-space-12)",
+      "category": "spacing-or-reservation",
+      "status": "token-reference",
+      "line": 514
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".exp-rr",
+      "property": "gap",
+      "value": "2px",
+      "category": "spacing-or-reservation",
+      "status": "literal-review",
+      "line": 520
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".exp-rr",
+      "property": "padding",
+      "value": "0",
+      "category": "spacing-or-reservation",
+      "status": "literal-review",
+      "line": 521
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".exp-rr-count",
+      "property": "font-size",
+      "value": "var(--titan-type-meta-size)",
+      "category": "typography",
+      "status": "token-reference",
+      "line": 541
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".exp-rr-count",
+      "property": "color",
+      "value": "var(--titan-text-muted)",
+      "category": "paint-or-border",
+      "status": "token-reference",
+      "line": 542
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".exp-icon-sm",
+      "property": "border-radius",
+      "value": "5px",
+      "category": "radius",
+      "status": "literal-review",
+      "line": 567
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".expanded-body",
+      "property": "padding",
+      "value": "0 var(--titan-message-inset-inline) var(--titan-space-24)",
+      "category": "spacing-or-reservation",
+      "status": "token-reference-with-literal-geometry",
+      "line": 579
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".expanded-body",
+      "property": "font-size",
+      "value": "var(--titan-type-body-size)",
+      "category": "typography",
+      "status": "token-reference",
+      "line": 580
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".expanded-body",
+      "property": "color",
+      "value": "var(--titan-text-primary)",
+      "category": "paint-or-border",
+      "status": "token-reference",
+      "line": 581
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".expanded-body",
+      "property": "line-height",
+      "value": "var(--titan-type-body-line-height)",
+      "category": "typography",
+      "status": "token-reference",
+      "line": 582
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".expanded-body p",
+      "property": "margin-bottom",
+      "value": "0",
+      "category": "spacing-or-reservation",
+      "status": "literal-review",
+      "line": 586
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".expanded-footer-hr",
+      "property": "background",
+      "value": "#dedede",
+      "category": "paint-or-border",
+      "status": "literal-review",
+      "line": 591
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".expanded-footer",
+      "property": "--titan-message-footer-inset-block",
+      "value": "10px",
+      "category": "component-token-definition",
+      "status": "scoped-default",
+      "line": 598
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".expanded-footer",
+      "property": "padding",
+      "value": "var(--titan-message-footer-inset-block) var(--titan-space-20)",
+      "category": "spacing-or-reservation",
+      "status": "token-reference",
+      "line": 599
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".expanded-footer",
+      "property": "gap",
+      "value": "var(--titan-space-12)",
+      "category": "spacing-or-reservation",
+      "status": "token-reference",
+      "line": 600
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".titan-message-list,.titan-message-card",
+      "property": "font-family",
+      "value": "var(--titan-font-family-ui)",
+      "category": "typography",
+      "status": "token-reference",
+      "line": 605
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".titan-message-list,.titan-message-card",
+      "property": "color",
+      "value": "var(--titan-text-primary)",
+      "category": "paint-or-border",
+      "status": "token-reference",
+      "line": 605
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".titan-message-row__open,.titan-message-card__open",
+      "property": "border",
+      "value": "0",
+      "category": "paint-or-border",
+      "status": "literal-review",
+      "line": 606
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".titan-message-row__open,.titan-message-card__open",
+      "property": "background",
+      "value": "transparent",
+      "category": "paint-or-border",
+      "status": "structural-or-inherited",
+      "line": 606
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".titan-message-row__open,.titan-message-card__open",
+      "property": "font",
+      "value": "inherit",
+      "category": "typography",
+      "status": "structural-or-inherited",
+      "line": 606
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".titan-message-row__open,.titan-message-card__open",
+      "property": "color",
+      "value": "inherit",
+      "category": "paint-or-border",
+      "status": "structural-or-inherited",
+      "line": 606
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".titan-message-row__open,.titan-message-card__open",
+      "property": "padding",
+      "value": "0",
+      "category": "spacing-or-reservation",
+      "status": "literal-review",
+      "line": 606
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".titan-message-card__open",
+      "property": "padding",
+      "value": "var(--titan-message-inset-block) var(--titan-message-inset-inline)",
+      "category": "spacing-or-reservation",
+      "status": "token-reference",
+      "line": 607
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".titan-message-row__open .tile-sender",
+      "property": "padding-right",
+      "value": "64px",
+      "category": "spacing-or-reservation",
+      "status": "literal-review",
+      "line": 609
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".titan-message-list--wide .titan-message-row__open .tile-sender,\n.titan-message-row--wide .titan-message-row__open .tile-sender",
+      "property": "padding-right",
+      "value": "var(--titan-space-12)",
+      "category": "spacing-or-reservation",
+      "status": "token-reference",
+      "line": 614
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".titan-message-row button.tile-star",
+      "property": "padding",
+      "value": "0",
+      "category": "spacing-or-reservation",
+      "status": "literal-review",
+      "line": 620
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".titan-message-row button.tile-star",
+      "property": "border",
+      "value": "0",
+      "category": "paint-or-border",
+      "status": "literal-review",
+      "line": 620
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".titan-message-row button.tile-star",
+      "property": "background",
+      "value": "transparent",
+      "category": "paint-or-border",
+      "status": "structural-or-inherited",
+      "line": 620
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".titan-message-row button.tile-star",
+      "property": "font-size",
+      "value": "16px",
+      "category": "typography",
+      "status": "literal-review",
+      "line": 620
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".titan-message-row button.tile-star",
+      "property": "color",
+      "value": "var(--titan-text-muted)",
+      "category": "paint-or-border",
+      "status": "token-reference",
+      "line": 620
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".titan-message-row button.tile-star[aria-pressed=\"true\"]",
+      "property": "color",
+      "value": "var(--titan-action-primary)",
+      "category": "paint-or-border",
+      "status": "token-reference",
+      "line": 621
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".titan-message-row .tile-chk input",
+      "property": "margin",
+      "value": "0",
+      "category": "spacing-or-reservation",
+      "status": "literal-review",
+      "line": 625
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".titan-message-row .tile-chk input",
+      "property": "accent-color",
+      "value": "var(--titan-action-primary)",
+      "category": "paint-or-border",
+      "status": "token-reference",
+      "line": 625
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".titan-message-row button:focus-visible,.titan-message-card button:focus-visible",
+      "property": "outline",
+      "value": "2px solid var(--titan-action-primary)",
+      "category": "paint-or-border",
+      "status": "token-reference-with-literal-geometry",
+      "line": 626
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".titan-message-card .expanded-header",
+      "property": "gap",
+      "value": "var(--titan-space-12)",
+      "category": "spacing-or-reservation",
+      "status": "token-reference",
+      "line": 627
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".titan-message-card .expanded-body p",
+      "property": "margin",
+      "value": "0",
+      "category": "spacing-or-reservation",
+      "status": "literal-review",
+      "line": 629
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".titan-message-card button.exp-icon",
+      "property": "border",
+      "value": "0",
+      "category": "paint-or-border",
+      "status": "literal-review",
+      "line": 634
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".titan-message-card button.exp-icon",
+      "property": "background",
+      "value": "transparent",
+      "category": "paint-or-border",
+      "status": "structural-or-inherited",
+      "line": 634
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".titan-message-card button.exp-icon",
+      "property": "padding",
+      "value": "0",
+      "category": "spacing-or-reservation",
+      "status": "literal-review",
+      "line": 634
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".titan-message-card .exp-left>div:not(:has(.exp-to)) .exp-sender",
+      "property": "margin-bottom",
+      "value": "0",
+      "category": "spacing-or-reservation",
+      "status": "literal-review",
+      "line": 637
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".titan-message-row",
+      "property": "font-family",
+      "value": "var(--titan-font-family-ui)",
+      "category": "typography",
+      "status": "token-reference",
+      "line": 639
+    },
+    {
+      "file": "components/messages.css",
+      "selector": ".titan-message-row",
+      "property": "color",
+      "value": "var(--titan-text-primary)",
+      "category": "paint-or-border",
+      "status": "token-reference",
+      "line": 639
+    },
+    {
+      "file": "components/navigation-input.css",
+      "selector": ".nav-item",
+      "property": "gap",
+      "value": "var(--titan-gap-icon-label)",
+      "category": "spacing-or-reservation",
+      "status": "token-reference",
+      "line": 5
+    },
+    {
+      "file": "components/navigation-input.css",
+      "selector": ".nav-item",
+      "property": "--titan-sidebar-item-inset-block",
+      "value": "6px",
+      "category": "component-token-definition",
+      "status": "scoped-default",
+      "line": 6
+    },
+    {
+      "file": "components/navigation-input.css",
+      "selector": ".nav-item",
+      "property": "padding",
+      "value": "var(--titan-sidebar-item-inset-block) var(--titan-space-12) var(--titan-sidebar-item-inset-block) var(--titan-space-24)",
+      "category": "spacing-or-reservation",
+      "status": "token-reference",
+      "line": 7
+    },
+    {
+      "file": "components/navigation-input.css",
+      "selector": ".nav-item.active",
+      "property": "background",
+      "value": "#333333",
+      "category": "paint-or-border",
+      "status": "literal-review",
+      "line": 15
+    },
+    {
+      "file": "components/navigation-input.css",
+      "selector": ".nav-item-label",
+      "property": "font-size",
+      "value": "var(--titan-type-control-size)",
+      "category": "typography",
+      "status": "token-reference",
+      "line": 35
+    },
+    {
+      "file": "components/navigation-input.css",
+      "selector": ".nav-item-label",
+      "property": "color",
+      "value": "var(--titan-text-inverse)",
+      "category": "paint-or-border",
+      "status": "token-reference",
+      "line": 36
+    },
+    {
+      "file": "components/navigation-input.css",
+      "selector": ".nav-item-label.active",
+      "property": "font-weight",
+      "value": "var(--titan-font-weight-semibold)",
+      "category": "typography",
+      "status": "token-reference",
+      "line": 42
+    },
+    {
+      "file": "components/navigation-input.css",
+      "selector": ".nav-item-label.secondary",
+      "property": "color",
+      "value": "var(--titan-text-muted)",
+      "category": "paint-or-border",
+      "status": "token-reference",
+      "line": 46
+    },
+    {
+      "file": "components/navigation-input.css",
+      "selector": ".nav-badge",
+      "property": "background",
+      "value": "transparent",
+      "category": "paint-or-border",
+      "status": "structural-or-inherited",
+      "line": 50
+    },
+    {
+      "file": "components/navigation-input.css",
+      "selector": ".nav-badge",
+      "property": "font-size",
+      "value": "var(--titan-font-size-13)",
+      "category": "typography",
+      "status": "token-reference",
+      "line": 51
+    },
+    {
+      "file": "components/navigation-input.css",
+      "selector": ".nav-badge",
+      "property": "font-weight",
+      "value": "var(--titan-font-weight-semibold)",
+      "category": "typography",
+      "status": "token-reference",
+      "line": 52
+    },
+    {
+      "file": "components/navigation-input.css",
+      "selector": ".nav-badge",
+      "property": "color",
+      "value": "#c66f6f",
+      "category": "paint-or-border",
+      "status": "literal-review",
+      "line": 53
+    },
+    {
+      "file": "components/navigation-input.css",
+      "selector": ".nav-badge",
+      "property": "padding",
+      "value": "0 var(--titan-space-4)",
+      "category": "spacing-or-reservation",
+      "status": "token-reference-with-literal-geometry",
+      "line": 54
+    },
+    {
+      "file": "components/navigation-input.css",
+      "selector": ".search-bar",
+      "property": "border",
+      "value": "1px solid #dedede",
+      "category": "paint-or-border",
+      "status": "literal-review",
+      "line": 61
+    },
+    {
+      "file": "components/navigation-input.css",
+      "selector": ".search-bar",
+      "property": "border-radius",
+      "value": "var(--titan-radius-4)",
+      "category": "radius",
+      "status": "token-reference",
+      "line": 62
+    },
+    {
+      "file": "components/navigation-input.css",
+      "selector": ".search-bar",
+      "property": "background",
+      "value": "var(--titan-surface-base)",
+      "category": "paint-or-border",
+      "status": "token-reference",
+      "line": 65
+    },
+    {
+      "file": "components/navigation-input.css",
+      "selector": ".search-icon",
+      "property": "margin-left",
+      "value": "var(--titan-space-12)",
+      "category": "spacing-or-reservation",
+      "status": "token-reference",
+      "line": 73
+    },
+    {
+      "file": "components/navigation-input.css",
+      "selector": ".search-icon",
+      "property": "margin-right",
+      "value": "var(--titan-space-8)",
+      "category": "spacing-or-reservation",
+      "status": "token-reference",
+      "line": 74
+    },
+    {
+      "file": "components/navigation-input.css",
+      "selector": ".search-bar input",
+      "property": "border",
+      "value": "none",
+      "category": "paint-or-border",
+      "status": "structural-or-inherited",
+      "line": 87
+    },
+    {
+      "file": "components/navigation-input.css",
+      "selector": ".search-bar input",
+      "property": "outline",
+      "value": "none",
+      "category": "paint-or-border",
+      "status": "structural-or-inherited",
+      "line": 88
+    },
+    {
+      "file": "components/navigation-input.css",
+      "selector": ".search-bar input",
+      "property": "font-size",
+      "value": "var(--titan-type-control-size)",
+      "category": "typography",
+      "status": "token-reference",
+      "line": 89
+    },
+    {
+      "file": "components/navigation-input.css",
+      "selector": ".search-bar input",
+      "property": "color",
+      "value": "var(--titan-text-muted)",
+      "category": "paint-or-border",
+      "status": "token-reference",
+      "line": 90
+    },
+    {
+      "file": "components/navigation-input.css",
+      "selector": ".search-bar input",
+      "property": "background",
+      "value": "none",
+      "category": "paint-or-border",
+      "status": "structural-or-inherited",
+      "line": 91
+    },
+    {
+      "file": "components/navigation-input.css",
+      "selector": ".search-divider",
+      "property": "background",
+      "value": "#dedede",
+      "category": "paint-or-border",
+      "status": "literal-review",
+      "line": 98
+    },
+    {
+      "file": "components/navigation-input.css",
+      "selector": ".titan-search-field",
+      "property": "margin",
+      "value": "0",
+      "category": "spacing-or-reservation",
+      "status": "literal-review",
+      "line": 120
+    },
+    {
+      "file": "components/navigation-input.css",
+      "selector": ".titan-search-field",
+      "property": "font-family",
+      "value": "var(--titan-font-family-ui)",
+      "category": "typography",
+      "status": "token-reference",
+      "line": 120
+    },
+    {
+      "file": "components/navigation-input.css",
+      "selector": ".titan-search-field input",
+      "property": "padding",
+      "value": "0",
+      "category": "spacing-or-reservation",
+      "status": "literal-review",
+      "line": 121
+    },
+    {
+      "file": "components/navigation-input.css",
+      "selector": ".titan-search-field input",
+      "property": "font-family",
+      "value": "inherit",
+      "category": "typography",
+      "status": "structural-or-inherited",
+      "line": 121
+    },
+    {
+      "file": "components/navigation-input.css",
+      "selector": ".titan-search-field input::placeholder",
+      "property": "color",
+      "value": "var(--titan-text-muted)",
+      "category": "paint-or-border",
+      "status": "token-reference",
+      "line": 122
+    },
+    {
+      "file": "components/navigation-input.css",
+      "selector": ".titan-search-field:focus-within",
+      "property": "outline",
+      "value": "2px solid var(--titan-action-primary)",
+      "category": "paint-or-border",
+      "status": "token-reference-with-literal-geometry",
+      "line": 123
+    },
+    {
+      "file": "components/navigation-input.css",
+      "selector": ".titan-search-field .search-dropdown",
+      "property": "padding",
+      "value": "0",
+      "category": "spacing-or-reservation",
+      "status": "literal-review",
+      "line": 124
+    },
+    {
+      "file": "components/navigation-input.css",
+      "selector": ".titan-search-field .search-dropdown",
+      "property": "border",
+      "value": "0",
+      "category": "paint-or-border",
+      "status": "literal-review",
+      "line": 124
+    },
+    {
+      "file": "components/navigation-input.css",
+      "selector": ".titan-search-field .search-dropdown",
+      "property": "background",
+      "value": "transparent",
+      "category": "paint-or-border",
+      "status": "structural-or-inherited",
+      "line": 124
+    },
+    {
+      "file": "components/navigation-input.css",
+      "selector": ".titan-search-field .search-dropdown:focus-visible",
+      "property": "outline",
+      "value": "2px solid var(--titan-action-primary)",
+      "category": "paint-or-border",
+      "status": "token-reference-with-literal-geometry",
+      "line": 125
+    },
+    {
+      "file": "components/navigation-input.css",
+      "selector": ".titan-sidebar-item",
+      "property": "border",
+      "value": "0",
+      "category": "paint-or-border",
+      "status": "literal-review",
+      "line": 128
+    },
+    {
+      "file": "components/navigation-input.css",
+      "selector": ".titan-sidebar-item",
+      "property": "border-radius",
+      "value": "0",
+      "category": "radius",
+      "status": "literal-review",
+      "line": 128
+    },
+    {
+      "file": "components/navigation-input.css",
+      "selector": ".titan-sidebar-item",
+      "property": "background",
+      "value": "transparent",
+      "category": "paint-or-border",
+      "status": "structural-or-inherited",
+      "line": 128
+    },
+    {
+      "file": "components/navigation-input.css",
+      "selector": ".titan-sidebar-item",
+      "property": "font-family",
+      "value": "var(--titan-font-family-ui)",
+      "category": "typography",
+      "status": "token-reference",
+      "line": 128
+    },
+    {
+      "file": "components/navigation-input.css",
+      "selector": ".titan-sidebar-item:has(.nav-badge)",
+      "property": "padding-right",
+      "value": "var(--titan-space-8)",
+      "category": "spacing-or-reservation",
+      "status": "token-reference",
+      "line": 129
+    },
+    {
+      "file": "components/navigation-input.css",
+      "selector": ".titan-sidebar-item:hover",
+      "property": "background",
+      "value": "var(--titan-color-gray-800)",
+      "category": "paint-or-border",
+      "status": "token-reference",
+      "line": 131
+    },
+    {
+      "file": "components/navigation-input.css",
+      "selector": ".titan-sidebar-item:focus-visible",
+      "property": "outline",
+      "value": "2px solid var(--titan-action-primary)",
+      "category": "paint-or-border",
+      "status": "token-reference-with-literal-geometry",
+      "line": 132
+    },
+    {
+      "file": "components/navigation-input.css",
+      "selector": ".titan-search-field",
+      "property": "--titan-search-height",
+      "value": "38px",
+      "category": "component-token-definition",
+      "status": "scoped-default",
+      "line": 135
+    },
+    {
+      "file": "components/navigation-input.css",
+      "selector": ".titan-search-field",
+      "property": "--titan-search-icon-size",
+      "value": "var(--titan-icon-size-compact)",
+      "category": "component-token-definition",
+      "status": "scoped-default",
+      "line": 135
+    },
+    {
+      "file": "components/navigation-input.css",
+      "selector": ".titan-search-field",
+      "property": "--titan-search-filter-width",
+      "value": "38px",
+      "category": "component-token-definition",
+      "status": "scoped-default",
+      "line": 135
+    },
+    {
+      "file": "components/navigation-input.css",
+      "selector": ".titan-search-field",
+      "property": "--titan-search-chevron-size",
+      "value": "var(--titan-icon-size-indicator)",
+      "category": "component-token-definition",
+      "status": "scoped-default",
+      "line": 135
+    },
+    {
+      "file": "components/selection.css",
+      "selector": ".titan-tabs",
+      "property": "font-family",
+      "value": "var(--titan-font-family-ui)",
+      "category": "typography",
+      "status": "token-reference",
+      "line": 2
+    },
+    {
+      "file": "components/selection.css",
+      "selector": ".titan-tab",
+      "property": "border",
+      "value": "0",
+      "category": "paint-or-border",
+      "status": "literal-review",
+      "line": 3
+    },
+    {
+      "file": "components/selection.css",
+      "selector": ".titan-tab",
+      "property": "background",
+      "value": "transparent",
+      "category": "paint-or-border",
+      "status": "structural-or-inherited",
+      "line": 3
+    },
+    {
+      "file": "components/selection.css",
+      "selector": ".titan-tab",
+      "property": "padding",
+      "value": "0 var(--titan-space-8)",
+      "category": "spacing-or-reservation",
+      "status": "token-reference-with-literal-geometry",
+      "line": 3
+    },
+    {
+      "file": "components/selection.css",
+      "selector": ".titan-tab",
+      "property": "font-family",
+      "value": "inherit",
+      "category": "typography",
+      "status": "structural-or-inherited",
+      "line": 3
+    },
+    {
+      "file": "components/selection.css",
+      "selector": ".titan-tab",
+      "property": "font-size",
+      "value": "var(--titan-type-tab-size)",
+      "category": "typography",
+      "status": "token-reference",
+      "line": 3
+    },
+    {
+      "file": "components/selection.css",
+      "selector": ".titan-tab",
+      "property": "font-weight",
+      "value": "var(--titan-font-weight-regular)",
+      "category": "typography",
+      "status": "token-reference",
+      "line": 3
+    },
+    {
+      "file": "components/selection.css",
+      "selector": ".titan-tab",
+      "property": "line-height",
+      "value": "var(--titan-line-height-20)",
+      "category": "typography",
+      "status": "token-reference",
+      "line": 3
+    },
+    {
+      "file": "components/selection.css",
+      "selector": ".titan-tab",
+      "property": "color",
+      "value": "var(--titan-text-muted)",
+      "category": "paint-or-border",
+      "status": "token-reference",
+      "line": 3
+    },
+    {
+      "file": "components/selection.css",
+      "selector": ".titan-tab[aria-selected=true]",
+      "property": "font-weight",
+      "value": "var(--titan-font-weight-semibold)",
+      "category": "typography",
+      "status": "token-reference",
+      "line": 4
+    },
+    {
+      "file": "components/selection.css",
+      "selector": ".titan-tab[aria-selected=true]",
+      "property": "color",
+      "value": "var(--titan-text-primary)",
+      "category": "paint-or-border",
+      "status": "token-reference",
+      "line": 4
+    },
+    {
+      "file": "components/selection.css",
+      "selector": ".titan-tab[aria-selected=true]::after",
+      "property": "background",
+      "value": "var(--titan-indicator-active)",
+      "category": "paint-or-border",
+      "status": "token-reference",
+      "line": 5
+    },
+    {
+      "file": "components/selection.css",
+      "selector": ".titan-dropdown-trigger",
+      "property": "--titan-dropdown-inset-block",
+      "value": "6px",
+      "category": "component-token-definition",
+      "status": "scoped-default",
+      "line": 6
+    },
+    {
+      "file": "components/selection.css",
+      "selector": ".titan-dropdown-trigger",
+      "property": "--titan-dropdown-inset-inline",
+      "value": "10px",
+      "category": "component-token-definition",
+      "status": "scoped-default",
+      "line": 6
+    },
+    {
+      "file": "components/selection.css",
+      "selector": ".titan-dropdown-trigger",
+      "property": "gap",
+      "value": "var(--titan-gap-icon-label)",
+      "category": "spacing-or-reservation",
+      "status": "token-reference",
+      "line": 6
+    },
+    {
+      "file": "components/selection.css",
+      "selector": ".titan-dropdown-trigger",
+      "property": "padding",
+      "value": "var(--titan-dropdown-inset-block) var(--titan-dropdown-inset-inline)",
+      "category": "spacing-or-reservation",
+      "status": "token-reference",
+      "line": 6
+    },
+    {
+      "file": "components/selection.css",
+      "selector": ".titan-dropdown-trigger",
+      "property": "border",
+      "value": "1px solid var(--card-border-color)",
+      "category": "paint-or-border",
+      "status": "token-reference-with-literal-geometry",
+      "line": 6
+    },
+    {
+      "file": "components/selection.css",
+      "selector": ".titan-dropdown-trigger",
+      "property": "border-radius",
+      "value": "var(--titan-radius-4)",
+      "category": "radius",
+      "status": "token-reference",
+      "line": 6
+    },
+    {
+      "file": "components/selection.css",
+      "selector": ".titan-dropdown-trigger",
+      "property": "background",
+      "value": "var(--titan-surface-base)",
+      "category": "paint-or-border",
+      "status": "token-reference",
+      "line": 6
+    },
+    {
+      "file": "components/selection.css",
+      "selector": ".titan-dropdown-trigger",
+      "property": "color",
+      "value": "var(--titan-text-primary)",
+      "category": "paint-or-border",
+      "status": "token-reference",
+      "line": 6
+    },
+    {
+      "file": "components/selection.css",
+      "selector": ".titan-dropdown-trigger",
+      "property": "font",
+      "value": "var(--titan-font-weight-regular) var(--titan-type-control-size)/var(--titan-line-height-20) var(--titan-font-family-ui)",
+      "category": "typography",
+      "status": "token-reference",
+      "line": 6
+    },
+    {
+      "file": "components/selection.css",
+      "selector": ".titan-dropdown-trigger svg",
+      "property": "color",
+      "value": "var(--titan-text-muted)",
+      "category": "paint-or-border",
+      "status": "token-reference",
+      "line": 7
+    },
+    {
+      "file": "components/selection.css",
+      "selector": ".titan-checkbox",
+      "property": "margin",
+      "value": "0",
+      "category": "spacing-or-reservation",
+      "status": "literal-review",
+      "line": 8
+    },
+    {
+      "file": "components/selection.css",
+      "selector": ".titan-checkbox",
+      "property": "accent-color",
+      "value": "var(--titan-action-primary)",
+      "category": "paint-or-border",
+      "status": "token-reference",
+      "line": 8
+    },
+    {
+      "file": "components/selection.css",
+      "selector": ".titan-tab:focus-visible,.titan-dropdown-trigger:focus-visible,.titan-checkbox:focus-visible",
+      "property": "outline",
+      "value": "2px solid var(--titan-action-primary)",
+      "category": "paint-or-border",
+      "status": "token-reference-with-literal-geometry",
+      "line": 9
+    },
+    {
+      "file": "components/selection.css",
+      "selector": ".titan-dropdown-trigger--app",
+      "property": "--titan-app-trigger-inset",
+      "value": "2px",
+      "category": "component-token-definition",
+      "status": "scoped-default",
+      "line": 11
+    },
+    {
+      "file": "components/selection.css",
+      "selector": ".titan-dropdown-trigger--app",
+      "property": "gap",
+      "value": "0",
+      "category": "spacing-or-reservation",
+      "status": "literal-review",
+      "line": 11
+    },
+    {
+      "file": "components/selection.css",
+      "selector": ".titan-dropdown-trigger--app",
+      "property": "padding",
+      "value": "var(--titan-app-trigger-inset)",
+      "category": "spacing-or-reservation",
+      "status": "token-reference",
+      "line": 11
+    },
+    {
+      "file": "components/selection.css",
+      "selector": ".titan-dropdown-trigger--app",
+      "property": "border",
+      "value": "0",
+      "category": "paint-or-border",
+      "status": "literal-review",
+      "line": 11
+    },
+    {
+      "file": "components/selection.css",
+      "selector": ".titan-dropdown-trigger--app",
+      "property": "border-radius",
+      "value": "var(--titan-radius-4)",
+      "category": "radius",
+      "status": "token-reference",
+      "line": 11
+    },
+    {
+      "file": "components/selection.css",
+      "selector": ".titan-dropdown-trigger--app",
+      "property": "background",
+      "value": "transparent",
+      "category": "paint-or-border",
+      "status": "structural-or-inherited",
+      "line": 11
+    },
+    {
+      "file": "components/selection.css",
+      "selector": ".titan-dropdown-trigger--app",
+      "property": "color",
+      "value": "var(--titan-text-inverse)",
+      "category": "paint-or-border",
+      "status": "token-reference",
+      "line": 11
+    },
+    {
+      "file": "components/selection.css",
+      "selector": ".titan-dropdown-trigger--app svg",
+      "property": "color",
+      "value": "inherit",
+      "category": "paint-or-border",
+      "status": "structural-or-inherited",
+      "line": 12
+    },
+    {
+      "file": "components/selection.css",
+      "selector": ".titan-dropdown-trigger--app:hover",
+      "property": "background",
+      "value": "var(--titan-color-gray-800)",
+      "category": "paint-or-border",
+      "status": "token-reference",
+      "line": 12
+    },
+    {
+      "file": "components/selection.css",
+      "selector": ".titan-dropdown-trigger--composer",
+      "property": "--titan-composer-dropdown-gap",
+      "value": "6px",
+      "category": "component-token-definition",
+      "status": "scoped-default",
+      "line": 13
+    },
+    {
+      "file": "components/selection.css",
+      "selector": ".titan-dropdown-trigger--composer",
+      "property": "padding",
+      "value": "0",
+      "category": "spacing-or-reservation",
+      "status": "literal-review",
+      "line": 13
+    },
+    {
+      "file": "components/selection.css",
+      "selector": ".titan-dropdown-trigger--composer",
+      "property": "border",
+      "value": "0",
+      "category": "paint-or-border",
+      "status": "literal-review",
+      "line": 13
+    },
+    {
+      "file": "components/selection.css",
+      "selector": ".titan-dropdown-trigger--composer",
+      "property": "background",
+      "value": "transparent",
+      "category": "paint-or-border",
+      "status": "structural-or-inherited",
+      "line": 13
+    },
+    {
+      "file": "components/selection.css",
+      "selector": ".titan-dropdown-trigger--composer",
+      "property": "gap",
+      "value": "var(--titan-composer-dropdown-gap)",
+      "category": "spacing-or-reservation",
+      "status": "token-reference",
+      "line": 13
+    },
+    {
+      "file": "components/selection.css",
+      "selector": ".titan-dropdown-trigger--composer",
+      "property": "color",
+      "value": "var(--titan-text-muted)",
+      "category": "paint-or-border",
+      "status": "token-reference",
+      "line": 13
+    },
+    {
+      "file": "components/selection.css",
+      "selector": ".titan-dropdown-trigger--app",
+      "property": "--titan-icon-size-launcher-trigger",
+      "value": "28px",
+      "category": "component-token-definition",
+      "status": "scoped-default",
+      "line": 16
+    }
+  ]
+}

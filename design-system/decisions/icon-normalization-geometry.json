@@ -1,0 +1,1472 @@
+[
+  {
+    "id": "archive",
+    "originalViewBox": [
+      0,
+      0,
+      14.2221,
+      16.0314
+    ],
+    "paintBounds": [
+      -0.002883750000000511,
+      0,
+      14.2278675,
+      16.0314
+    ],
+    "targetExtent": 20,
+    "scale": 1.2475516798283368,
+    "translate": [
+      3.128597627156706,
+      2
+    ]
+  },
+  {
+    "id": "block",
+    "originalViewBox": [
+      0,
+      0,
+      16,
+      16
+    ],
+    "paintBounds": [
+      0,
+      0,
+      16,
+      16
+    ],
+    "targetExtent": 18.5,
+    "scale": 1.15625,
+    "translate": [
+      2.75,
+      2.75
+    ]
+  },
+  {
+    "id": "delete",
+    "originalViewBox": [
+      0,
+      0,
+      13.3934,
+      15.9995
+    ],
+    "paintBounds": [
+      -0.0030906249999999797,
+      0,
+      13.39958125,
+      15.999500000000001
+    ],
+    "targetExtent": 20,
+    "scale": 1.2500390637207413,
+    "translate": [
+      3.6288634019813113,
+      2
+    ]
+  },
+  {
+    "id": "forward",
+    "originalViewBox": [
+      0,
+      0,
+      15.1716,
+      13.1756
+    ],
+    "paintBounds": [
+      0,
+      -0.0023637500000005685,
+      15.1716,
+      13.1803275
+    ],
+    "targetExtent": 20,
+    "scale": 1.3182525244535843,
+    "translate": [
+      2,
+      3.5656160194046773
+    ]
+  },
+  {
+    "id": "mark-unread",
+    "originalViewBox": [
+      0,
+      0,
+      17.0505,
+      13.9959
+    ],
+    "paintBounds": [
+      0,
+      0.0001406249999998769,
+      17.0505,
+      13.99561875
+    ],
+    "targetExtent": 20,
+    "scale": 1.1729861294390194,
+    "translate": [
+      2,
+      3.7915017154922133
+    ]
+  },
+  {
+    "id": "reply",
+    "originalViewBox": [
+      0,
+      0,
+      13.7306,
+      11.1756
+    ],
+    "paintBounds": [
+      0,
+      -0.004558958333334032,
+      13.7306,
+      11.184717916666667
+    ],
+    "targetExtent": 20,
+    "scale": 1.4566005855534354,
+    "translate": [
+      2,
+      4.110807248044514
+    ]
+  },
+  {
+    "id": "reply-all",
+    "originalViewBox": [
+      0,
+      0,
+      16.1186,
+      11.2299
+    ],
+    "paintBounds": [
+      0,
+      -0.009769791666666812,
+      16.1186,
+      11.249439583333334
+    ],
+    "targetExtent": 20,
+    "scale": 1.240802551090045,
+    "translate": [
+      2,
+      5.032955715756952
+    ]
+  },
+  {
+    "id": "spam",
+    "originalViewBox": [
+      0,
+      0,
+      16,
+      16
+    ],
+    "paintBounds": [
+      0,
+      0,
+      16,
+      16
+    ],
+    "targetExtent": 18.5,
+    "scale": 1.15625,
+    "translate": [
+      2.75,
+      2.75
+    ]
+  },
+  {
+    "id": "star",
+    "originalViewBox": [
+      0,
+      0,
+      15.9917,
+      15.3022
+    ],
+    "paintBounds": [
+      0,
+      -0.011589583333333028,
+      15.9917,
+      15.325379166666666
+    ],
+    "targetExtent": 20,
+    "scale": 1.2506487740515393,
+    "translate": [
+      2,
+      2.4311611648542666
+    ]
+  },
+  {
+    "id": "close",
+    "originalViewBox": [
+      0,
+      0,
+      10.6066,
+      10.6066
+    ],
+    "paintBounds": [
+      0,
+      0,
+      10.6066,
+      10.6066
+    ],
+    "targetExtent": 18,
+    "scale": 1.6970565496954726,
+    "translate": [
+      3,
+      3
+    ]
+  },
+  {
+    "id": "edit",
+    "originalViewBox": [
+      0,
+      0,
+      32,
+      32
+    ],
+    "paintBounds": [
+      2.8333333333333335,
+      2.8333333333333335,
+      26.333333333333332,
+      26.333333333333332
+    ],
+    "targetExtent": 20,
+    "scale": 0.759493670886076,
+    "translate": [
+      -0.151898734177216,
+      -0.151898734177216
+    ]
+  },
+  {
+    "id": "expand",
+    "originalViewBox": [
+      0,
+      0,
+      19.2192,
+      19.2192
+    ],
+    "paintBounds": [
+      3.243240000000001,
+      3.243240000000001,
+      12.73272,
+      12.73272
+    ],
+    "targetExtent": 20,
+    "scale": 1.5707562877374197,
+    "translate": [
+      -3.0943396226415096,
+      -3.0943396226415096
+    ]
+  },
+  {
+    "id": "help",
+    "originalViewBox": [
+      0,
+      0,
+      24,
+      24
+    ],
+    "paintBounds": [
+      3.75,
+      3.75,
+      16.5,
+      16.5
+    ],
+    "targetExtent": 20,
+    "scale": 1.2121212121212122,
+    "translate": [
+      -2.5454545454545467,
+      -2.5454545454545467
+    ]
+  },
+  {
+    "id": "minimize",
+    "originalViewBox": [
+      0,
+      0,
+      24,
+      24
+    ],
+    "paintBounds": [
+      4.25,
+      11.25,
+      15.5,
+      1.5
+    ],
+    "targetExtent": 18,
+    "scale": 1.1612903225806452,
+    "translate": [
+      -1.9354838709677438,
+      -1.9354838709677438
+    ]
+  },
+  {
+    "id": "more",
+    "originalViewBox": [
+      0,
+      0,
+      24,
+      24
+    ],
+    "paintBounds": [
+      5,
+      11,
+      15,
+      3
+    ],
+    "targetExtent": 18,
+    "scale": 1.2,
+    "translate": [
+      -3,
+      -3
+    ]
+  },
+  {
+    "id": "settings",
+    "originalViewBox": [
+      0,
+      0,
+      16,
+      16
+    ],
+    "paintBounds": [
+      0,
+      0,
+      16,
+      16
+    ],
+    "targetExtent": 20,
+    "scale": 1.25,
+    "translate": [
+      2,
+      2
+    ]
+  },
+  {
+    "id": "align",
+    "originalViewBox": [
+      0,
+      0,
+      32,
+      32
+    ],
+    "paintBounds": [
+      9,
+      9,
+      14,
+      14
+    ],
+    "targetExtent": 20,
+    "scale": 1.4285714285714286,
+    "translate": [
+      -10.857142857142858,
+      -10.857142857142858
+    ]
+  },
+  {
+    "id": "bold",
+    "originalViewBox": [
+      0,
+      0,
+      19.9999,
+      20
+    ],
+    "paintBounds": [
+      5.520783333333334,
+      3.3125,
+      10.104166666666666,
+      12.6875
+    ],
+    "targetExtent": 18,
+    "scale": 1.4187192118226601,
+    "translate": [
+      -2.9999290640394083,
+      -1.6995073891625623
+    ]
+  },
+  {
+    "id": "indent",
+    "originalViewBox": [
+      0,
+      0,
+      32,
+      32
+    ],
+    "paintBounds": [
+      9,
+      9,
+      14,
+      14
+    ],
+    "targetExtent": 20,
+    "scale": 1.4285714285714286,
+    "translate": [
+      -10.857142857142858,
+      -10.857142857142858
+    ]
+  },
+  {
+    "id": "italic",
+    "originalViewBox": [
+      0,
+      0,
+      20,
+      20
+    ],
+    "paintBounds": [
+      5.604166666666667,
+      3.5208333333333335,
+      8.5,
+      12.479166666666666
+    ],
+    "targetExtent": 20,
+    "scale": 1.6026711185308848,
+    "translate": [
+      -3.79298831385643,
+      -3.6427378964941557
+    ]
+  },
+  {
+    "id": "more-vertical",
+    "originalViewBox": [
+      0,
+      0,
+      3,
+      12
+    ],
+    "paintBounds": [
+      0,
+      0,
+      3,
+      12
+    ],
+    "targetExtent": 18,
+    "scale": 1.5,
+    "translate": [
+      9.75,
+      3
+    ]
+  },
+  {
+    "id": "list",
+    "originalViewBox": [
+      0,
+      0,
+      32,
+      32
+    ],
+    "paintBounds": [
+      9.1,
+      8,
+      13.9,
+      15.6
+    ],
+    "targetExtent": 20,
+    "scale": 1.2820512820512822,
+    "translate": [
+      -8.57692307692308,
+      -8.256410256410259
+    ]
+  },
+  {
+    "id": "colors",
+    "originalViewBox": [
+      0,
+      0,
+      19.9999,
+      20
+    ],
+    "paintBounds": [
+      2.4999500000000006,
+      3,
+      15,
+      14
+    ],
+    "targetExtent": 20,
+    "scale": 1.3333333333333333,
+    "translate": [
+      -1.3332666666666668,
+      -1.3333333333333321
+    ]
+  },
+  {
+    "id": "underline",
+    "originalViewBox": [
+      0,
+      0,
+      12,
+      15
+    ],
+    "paintBounds": [
+      0,
+      0,
+      12,
+      15
+    ],
+    "targetExtent": 20,
+    "scale": 1.3333333333333333,
+    "translate": [
+      4,
+      2
+    ]
+  },
+  {
+    "id": "ai-write",
+    "originalViewBox": [
+      0,
+      0,
+      18,
+      18
+    ],
+    "paintBounds": [
+      0,
+      0,
+      18,
+      18
+    ],
+    "targetExtent": 20,
+    "scale": 1.1111111111111112,
+    "translate": [
+      2,
+      2
+    ]
+  },
+  {
+    "id": "design",
+    "originalViewBox": [
+      0,
+      0,
+      24,
+      24
+    ],
+    "paintBounds": [
+      3.85,
+      3.95,
+      16.3,
+      16.1
+    ],
+    "targetExtent": 20,
+    "scale": 1.2269938650306749,
+    "translate": [
+      -2.7239263803680984,
+      -2.7239263803680984
+    ]
+  },
+  {
+    "id": "track",
+    "originalViewBox": [
+      0,
+      0,
+      18,
+      13.905
+    ],
+    "paintBounds": [
+      0,
+      -0.0037499999999997865,
+      18,
+      13.9125
+    ],
+    "targetExtent": 20,
+    "scale": 1.1111111111111112,
+    "translate": [
+      2,
+      4.275
+    ]
+  },
+  {
+    "id": "groups",
+    "originalViewBox": [
+      0,
+      0,
+      24,
+      24
+    ],
+    "paintBounds": [
+      3,
+      5.2,
+      18.5,
+      14.3
+    ],
+    "targetExtent": 20,
+    "scale": 1.0810810810810811,
+    "translate": [
+      -1.2432432432432439,
+      -1.3513513513513544
+    ]
+  },
+  {
+    "id": "invoices",
+    "originalViewBox": [
+      0,
+      0,
+      24,
+      24
+    ],
+    "paintBounds": [
+      3.5,
+      3.5,
+      17,
+      17
+    ],
+    "targetExtent": 20,
+    "scale": 1.1764705882352942,
+    "translate": [
+      -2.117647058823529,
+      -2.117647058823529
+    ]
+  },
+  {
+    "id": "templates",
+    "originalViewBox": [
+      0,
+      0,
+      24,
+      24
+    ],
+    "paintBounds": [
+      5,
+      4,
+      14,
+      16
+    ],
+    "targetExtent": 20,
+    "scale": 1.25,
+    "translate": [
+      -3,
+      -3
+    ]
+  },
+  {
+    "id": "app-admin",
+    "originalViewBox": [
+      0,
+      0,
+      30,
+      30
+    ],
+    "paintBounds": [
+      0,
+      0,
+      30,
+      30
+    ],
+    "targetExtent": 20,
+    "scale": 0.6666666666666666,
+    "translate": [
+      2,
+      2
+    ]
+  },
+  {
+    "id": "app-backup",
+    "originalViewBox": [
+      0,
+      0,
+      40,
+      40
+    ],
+    "paintBounds": [
+      5,
+      5.5,
+      30,
+      29
+    ],
+    "targetExtent": 20,
+    "scale": 0.6666666666666666,
+    "translate": [
+      -1.3333333333333321,
+      -1.3333333333333321
+    ]
+  },
+  {
+    "id": "app-bookings",
+    "originalViewBox": [
+      0,
+      0,
+      40,
+      40
+    ],
+    "paintBounds": [
+      5,
+      5,
+      30,
+      30
+    ],
+    "targetExtent": 20,
+    "scale": 0.6666666666666666,
+    "translate": [
+      -1.3333333333333321,
+      -1.3333333333333321
+    ]
+  },
+  {
+    "id": "app-calendar",
+    "originalViewBox": [
+      0,
+      0,
+      40,
+      40
+    ],
+    "paintBounds": [
+      5,
+      5,
+      30.041666666666668,
+      30
+    ],
+    "targetExtent": 20,
+    "scale": 0.6657420249653259,
+    "translate": [
+      -1.32871012482663,
+      -1.3148404993065164
+    ]
+  },
+  {
+    "id": "app-contacts",
+    "originalViewBox": [
+      0,
+      0,
+      40,
+      40
+    ],
+    "paintBounds": [
+      5,
+      6.666666666666667,
+      30,
+      26.666666666666668
+    ],
+    "targetExtent": 20,
+    "scale": 0.6666666666666666,
+    "translate": [
+      -1.3333333333333321,
+      -1.3333333333333321
+    ]
+  },
+  {
+    "id": "app-drive",
+    "originalViewBox": [
+      0,
+      0,
+      30,
+      29
+    ],
+    "paintBounds": [
+      0,
+      0,
+      30,
+      29
+    ],
+    "targetExtent": 20,
+    "scale": 0.6666666666666666,
+    "translate": [
+      2,
+      2.333333333333334
+    ]
+  },
+  {
+    "id": "app-mail",
+    "originalViewBox": [
+      0,
+      0,
+      40,
+      40
+    ],
+    "paintBounds": [
+      5,
+      7,
+      30,
+      26.666666666666668
+    ],
+    "targetExtent": 20,
+    "scale": 0.6666666666666666,
+    "translate": [
+      -1.3333333333333321,
+      -1.5555555555555571
+    ]
+  },
+  {
+    "id": "app-site",
+    "originalViewBox": [
+      0,
+      0,
+      40.0049,
+      40
+    ],
+    "paintBounds": [
+      4.00049,
+      6.289987395833334,
+      32.00392,
+      27.420025208333332
+    ],
+    "targetExtent": 20,
+    "scale": 0.6249234468777575,
+    "translate": [
+      -0.5,
+      -0.498468937555149
+    ]
+  },
+  {
+    "id": "app-tasks",
+    "originalViewBox": [
+      0,
+      0,
+      30,
+      30
+    ],
+    "paintBounds": [
+      0,
+      0,
+      30,
+      30
+    ],
+    "targetExtent": 20,
+    "scale": 0.6666666666666666,
+    "translate": [
+      2,
+      2
+    ]
+  },
+  {
+    "id": "email-designer",
+    "originalViewBox": [
+      0,
+      0,
+      16,
+      16.0001
+    ],
+    "paintBounds": [
+      -0.00005000000000016936,
+      0,
+      16.0001,
+      16.0001
+    ],
+    "targetExtent": 20,
+    "scale": 1.2499921875488278,
+    "translate": [
+      2.0000624996093777,
+      2
+    ]
+  },
+  {
+    "id": "invoice-builder",
+    "originalViewBox": [
+      0,
+      0,
+      18,
+      18
+    ],
+    "paintBounds": [
+      0.4875,
+      0.4875,
+      17.025,
+      17.025
+    ],
+    "targetExtent": 20,
+    "scale": 1.1747430249632893,
+    "translate": [
+      1.427312775330396,
+      1.427312775330396
+    ]
+  },
+  {
+    "id": "know-titan",
+    "originalViewBox": [
+      0,
+      0,
+      24,
+      24
+    ],
+    "paintBounds": [
+      3.5,
+      3.5,
+      17.025,
+      17
+    ],
+    "targetExtent": 20,
+    "scale": 1.1747430249632893,
+    "translate": [
+      -2.1116005873715125,
+      -2.096916299559471
+    ]
+  },
+  {
+    "id": "signature-designer",
+    "originalViewBox": [
+      0,
+      0,
+      21.0007,
+      12
+    ],
+    "paintBounds": [
+      0,
+      0.3560618750000001,
+      20.672564062499998,
+      11.659763645833333
+    ],
+    "targetExtent": 21,
+    "scale": 1.0158391545678638,
+    "translate": [
+      1.5,
+      5.716076183703929
+    ]
+  },
+  {
+    "id": "smart-write",
+    "originalViewBox": [
+      0,
+      0,
+      20.9982,
+      17.0002
+    ],
+    "paintBounds": [
+      0.765559375,
+      0.2976781249999996,
+      19.051491875,
+      15.96738125
+    ],
+    "targetExtent": 20,
+    "scale": 1.0497865537892423,
+    "translate": [
+      1.196326061997702,
+      3.3063304392795736
+    ]
+  },
+  {
+    "id": "titan-labs",
+    "originalViewBox": [
+      0,
+      0,
+      15.4261,
+      16.2369
+    ],
+    "paintBounds": [
+      0.000522500000000027,
+      0,
+      15.425054999999999,
+      16.2369
+    ],
+    "targetExtent": 20,
+    "scale": 1.2317622206209315,
+    "translate": [
+      2.499356404239725,
+      2
+    ]
+  },
+  {
+    "id": "campaign",
+    "originalViewBox": [
+      0,
+      0,
+      20,
+      20
+    ],
+    "paintBounds": [
+      0.8541666666666666,
+      2.4166666666666665,
+      19.0625,
+      14.4375
+    ],
+    "targetExtent": 20,
+    "scale": 1.0491803278688525,
+    "translate": [
+      1.1038251366120218,
+      1.890710382513662
+    ]
+  },
+  {
+    "id": "reminder",
+    "originalViewBox": [
+      0,
+      0,
+      32,
+      32
+    ],
+    "paintBounds": [
+      9,
+      8,
+      14.733333333333333,
+      15.033333333333333
+    ],
+    "targetExtent": 18.5,
+    "scale": 1.23059866962306,
+    "translate": [
+      -8.140798226164083,
+      -7.094789356984478
+    ]
+  },
+  {
+    "id": "text-styling",
+    "originalViewBox": [
+      0,
+      0,
+      15,
+      15
+    ],
+    "paintBounds": [
+      0,
+      0,
+      15,
+      15
+    ],
+    "targetExtent": 20,
+    "scale": 1.3333333333333333,
+    "translate": [
+      2,
+      2
+    ]
+  },
+  {
+    "id": "attachment",
+    "originalViewBox": [
+      0,
+      0,
+      14.5457,
+      15.5514
+    ],
+    "paintBounds": [
+      -0.0006693749999989706,
+      0,
+      14.547038749999999,
+      15.5514
+    ],
+    "targetExtent": 20,
+    "scale": 1.2860578468819528,
+    "translate": [
+      2.64669418830459,
+      2
+    ]
+  },
+  {
+    "id": "composer-drive",
+    "originalViewBox": [
+      0,
+      0,
+      24,
+      24
+    ],
+    "paintBounds": [
+      4,
+      5,
+      16,
+      14
+    ],
+    "targetExtent": 20,
+    "scale": 1.25,
+    "translate": [
+      -3,
+      -3
+    ]
+  },
+  {
+    "id": "image",
+    "originalViewBox": [
+      0,
+      0,
+      16.0004,
+      13.713
+    ],
+    "paintBounds": [
+      0,
+      -0.010338333333334034,
+      16.0004,
+      13.733676666666666
+    ],
+    "targetExtent": 20,
+    "scale": 1.2499687507812305,
+    "translate": [
+      2,
+      3.4295892602684948
+    ]
+  },
+  {
+    "id": "emoji",
+    "originalViewBox": [
+      0,
+      0,
+      15,
+      15.0002
+    ],
+    "paintBounds": [
+      -0.00009999999999964264,
+      0,
+      15.0002,
+      15.0002
+    ],
+    "targetExtent": 18.5,
+    "scale": 1.2333168891081452,
+    "translate": [
+      2.7501233316889113,
+      2.75
+    ]
+  },
+  {
+    "id": "signature",
+    "originalViewBox": [
+      0,
+      0,
+      19.4306,
+      13.006
+    ],
+    "paintBounds": [
+      0,
+      -0.014347083333332969,
+      19.4306,
+      13.034694166666666
+    ],
+    "targetExtent": 20,
+    "scale": 1.029304293228207,
+    "translate": [
+      2.0000000000000018,
+      5.30643418113697
+    ]
+  },
+  {
+    "id": "composer-bookings",
+    "originalViewBox": [
+      0,
+      0,
+      24,
+      24
+    ],
+    "paintBounds": [
+      4.5,
+      4.5,
+      15,
+      15
+    ],
+    "targetExtent": 20,
+    "scale": 1.3333333333333333,
+    "translate": [
+      -4,
+      -4
+    ]
+  },
+  {
+    "id": "html",
+    "originalViewBox": [
+      0,
+      0,
+      16.5,
+      12.5011
+    ],
+    "paintBounds": [
+      0,
+      -0.0057000000000004825,
+      16.5,
+      12.512500000000001
+    ],
+    "targetExtent": 20,
+    "scale": 1.2121212121212122,
+    "translate": [
+      2,
+      4.423575757575756
+    ]
+  },
+  {
+    "id": "composer-delete",
+    "originalViewBox": [
+      0,
+      0,
+      13.3935,
+      15.9999
+    ],
+    "paintBounds": [
+      -0.003208124999999766,
+      0,
+      13.39991625,
+      15.9999
+    ],
+    "targetExtent": 20,
+    "scale": 1.2500078125488283,
+    "translate": [
+      3.6290101813136335,
+      2
+    ]
+  },
+  {
+    "id": "link",
+    "originalViewBox": [
+      0,
+      0,
+      24,
+      24
+    ],
+    "paintBounds": [
+      3.7,
+      4.175,
+      16.6,
+      16.65
+    ],
+    "targetExtent": 20,
+    "scale": 1.2012012012012012,
+    "translate": [
+      -2.4144144144144146,
+      -3.015015015015015
+    ]
+  },
+  {
+    "id": "compose",
+    "originalViewBox": [
+      0,
+      0,
+      19.9854,
+      20.3115
+    ],
+    "paintBounds": [
+      -0.014945312499999908,
+      0,
+      20.015290625,
+      20.3115
+    ],
+    "targetExtent": 20,
+    "scale": 0.9846638603746647,
+    "translate": [
+      2.160549442434089,
+      2
+    ]
+  },
+  {
+    "id": "inbox",
+    "originalViewBox": [
+      0,
+      0,
+      14.0185,
+      11.5068
+    ],
+    "paintBounds": [
+      -8.300619451044138e-16,
+      -0.000026041666666885813,
+      14.018500000000001,
+      11.506852083333333
+    ],
+    "targetExtent": 20,
+    "scale": 1.4266861647109177,
+    "translate": [
+      2,
+      3.7917038199522057
+    ]
+  },
+  {
+    "id": "sent",
+    "originalViewBox": [
+      0,
+      0,
+      14.0603,
+      14.022
+    ],
+    "paintBounds": [
+      -8.325370023006448e-16,
+      -0.004503854166666677,
+      14.060300000000002,
+      14.031007708333334
+    ],
+    "targetExtent": 20,
+    "scale": 1.4224447558017963,
+    "translate": [
+      2.0000000000000018,
+      2.027239817073607
+    ]
+  },
+  {
+    "id": "sidebar-more",
+    "originalViewBox": [
+      0,
+      0,
+      11.3995,
+      6.44975
+    ],
+    "paintBounds": [
+      0,
+      -0.004983333333333377,
+      11.3995,
+      6.459716666666667
+    ],
+    "targetExtent": 20,
+    "scale": 1.7544629150401334,
+    "translate": [
+      2,
+      6.34207640685995
+    ]
+  },
+  {
+    "id": "search",
+    "originalViewBox": [
+      0,
+      0,
+      11.6539,
+      12.1324
+    ],
+    "paintBounds": [
+      0.0008704166666669354,
+      0,
+      11.652159166666667,
+      12.1324
+    ],
+    "targetExtent": 20,
+    "scale": 1.6484784543866011,
+    "translate": [
+      2.3943984702119927,
+      2
+    ]
+  },
+  {
+    "id": "search-filter",
+    "originalViewBox": [
+      0,
+      0,
+      10,
+      5
+    ],
+    "paintBounds": [
+      0,
+      0,
+      10,
+      5
+    ],
+    "targetExtent": 20,
+    "scale": 2,
+    "translate": [
+      2,
+      7
+    ]
+  },
+  {
+    "id": "app-switcher",
+    "originalViewBox": [
+      0,
+      0,
+      28,
+      28
+    ],
+    "paintBounds": [
+      3.5,
+      4.666666666666667,
+      21,
+      18.666666666666668
+    ],
+    "targetExtent": 20,
+    "scale": 0.9523809523809523,
+    "translate": [
+      -1.3333333333333321,
+      -1.3333333333333321
+    ]
+  },
+  {
+    "id": "next-arrow",
+    "originalViewBox": [
+      0,
+      0,
+      16,
+      16
+    ],
+    "paintBounds": [
+      5.583333333333333,
+      3.9833333333333334,
+      4.8,
+      8.1
+    ],
+    "targetExtent": 20,
+    "scale": 2.469135802469136,
+    "translate": [
+      -7.7119341563786,
+      -7.835390946502059
+    ]
+  },
+  {
+    "id": "chevron-down",
+    "originalViewBox": [
+      0,
+      0,
+      10,
+      6
+    ],
+    "paintBounds": [
+      0,
+      -2,
+      10,
+      10
+    ],
+    "targetExtent": 20,
+    "scale": 2,
+    "translate": [
+      2,
+      6
+    ]
+  },
+  {
+    "id": "app-chevron-down",
+    "originalViewBox": [
+      0,
+      0,
+      9,
+      5
+    ],
+    "paintBounds": [
+      0.50625,
+      0.42812500000000014,
+      7.9875,
+      4.565625
+    ],
+    "targetExtent": 20,
+    "scale": 2.503912363067293,
+    "translate": [
+      0.7323943661971821,
+      5.212050078247261
+    ]
+  },
+  {
+    "id": "caret-down",
+    "originalViewBox": [
+      0,
+      0,
+      10,
+      10
+    ],
+    "paintBounds": [
+      0,
+      3,
+      10,
+      5
+    ],
+    "targetExtent": 20,
+    "scale": 2,
+    "translate": [
+      2,
+      1
+    ]
+  },
+  {
+    "id": "search-outline",
+    "originalViewBox": [
+      0,
+      0,
+      16,
+      16
+    ],
+    "paintBounds": [
+      0.85,
+      0.85,
+      14.116666666666667,
+      14.116666666666667
+    ],
+    "targetExtent": 20,
+    "scale": 1.4167650531286895,
+    "translate": [
+      0.7957497048406132,
+      0.7957497048406132
+    ]
+  },
+  {
+    "id": "filter-caret",
+    "originalViewBox": [
+      0,
+      0,
+      12,
+      12
+    ],
+    "paintBounds": [
+      2,
+      4,
+      8,
+      4
+    ],
+    "targetExtent": 20,
+    "scale": 2.5,
+    "translate": [
+      -3,
+      -3
+    ]
+  }
+]

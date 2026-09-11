@@ -589,13 +589,13 @@
       background: var(--titan-surface-base);
       position: relative;
       flex-shrink: 0;
-      border-bottom: 1px solid #dedede;
+      border-bottom: var(--titan-divider-width-default) solid var(--card-border-color);
     }
 
     .tab-checkbox-wrap {
       position: absolute;
-      left: 12px;
-      top: 18px;
+      left: var(--titan-space-12);
+      top: var(--titan-space-16);
       width: 20px;
       height: 20px;
       display: flex;
@@ -620,14 +620,14 @@
 
     .tab-group {
       display: flex;
-      margin-left: 32px;
+      margin-left: calc(var(--titan-space-24) + var(--titan-space-8));
       align-self: stretch;
     }
 
     .tab-item {
       display: flex;
       align-items: center;
-      padding: 0 8px;
+      padding: 0 var(--titan-space-8);
       cursor: pointer;
       position: relative;
       align-self: stretch;
@@ -658,11 +658,12 @@
 
     .tabs-right-container {
       position: absolute;
-      right: 12px;
-      top: 12px;
+      right: var(--titan-space-12);
+      top: 50%;
+      transform: translateY(-50%);
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: var(--titan-space-8);
       z-index: 5;
     }
 
@@ -2070,9 +2071,7 @@
             </div>
             <input type="text" placeholder="Search in ella@avontech.com" readonly>
             <div class="search-divider"></div>
-            <div class="search-dropdown">
-              <img src="/design-system/icons/assets/search-filter.svg" onerror="this.onerror=null;this.src='/design-system/icons/assets/search-filter.svg'" alt="">
-            </div>
+            <button type="button" class="titan-dropdown-trigger titan-dropdown-trigger--search" data-inspector-variant="search" aria-label="Search filters" aria-haspopup="menu" aria-expanded="false"><svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><use href="/design-system/icons/assets/chevron-down.svg#titan-artwork"></use></svg></button>
 
           </div>
         </div>
