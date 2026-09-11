@@ -117,7 +117,7 @@ button:focus-visible, input:focus-visible {
   gap: var(--titan-space-16);
   padding-left: var(--titan-drive-content-head-inset-inline);
   padding-right: var(--titan-drive-content-head-inset-inline);
-  padding-bottom: var(--titan-space-20);
+  padding-bottom: var(--titan-space-16);
 }
 .content-title {
   margin: 0;
