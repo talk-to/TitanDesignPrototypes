@@ -22,8 +22,21 @@ work in this conversation. No additional “follow the DS” prompt is required.
 - Mandatory: reuse components unchanged, including nested children. Do not override
   their internal styling or add variants without an explicit user request. Leave
   mismatches visible and report them; follow shared AGENTS.md for the full rule.
+- Mandatory: distinguish caller-owned state values from child-owned control treatment
+  and parent-owned actions. State alone does not justify a new component; read
+  USAGE.md’s mandatory state ownership and component boundary rule.
+- Every independently interactive section must use a registered component instance.
+  Follow USAGE.md’s interaction ownership and registration rule for all components,
+  not just split controls. Parent state targets cannot replace child registration.
 - New components must follow shared AGENTS.md’s mandatory registration rules: clear
   responsibility, real standalone preview, ownership, direct dependencies and verified consumers.
+- Existing components/compositions come first, including Action group and App grid.
+  Reuse a suitable registered implementation before consulting layout guidance for
+  uncovered arrangements; the guidance does not deprecate those components.
+- For screen layouts, read the shared DS layouts/README.md for list, grid,
+  row and footer guidelines. Apply tokenized spacing in existing screen code; no
+  required recipe import or class. Parent layout choices are freely configurable;
+  child component internals remain protected.
 - Before building, inspect the catalog and reuse matching shared implementations,
   tokens and icons. A similar-looking copy is not component reuse. Keep one-off
   layout screen-owned and use existing spacing roles or primitives appropriately.
