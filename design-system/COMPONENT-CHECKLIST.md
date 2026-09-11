@@ -197,3 +197,10 @@ component contract. Extend the vocabulary explicitly as new cases are establishe
 Gallery registration gate: run `node design-system/specimens/check-gallery.js`
 from the workspace for new registrations or preview changes, alongside attachment
 validation. A passing static check does not replace the visual checks above.
+
+## Theme coverage
+
+For new components or color changes, verify Light and Dark in Foundations,
+including representative interaction states. Use semantic color roles for changing
+surfaces/text/borders; preserve fixed dark-surface treatments. Check light-theme
+appearance remains unchanged when making value-preserving substitutions.

@@ -4157,7 +4157,22 @@
     }
   ],
   "visualizations": [],
-  "themes": [],
+  "themes": [
+    {
+      "id": "light",
+      "name": "Light",
+      "file": "themes/light.css",
+      "description": "Light surfaces with fixed dark navigation.",
+      "colorScheme": "light"
+    },
+    {
+      "id": "dark",
+      "name": "Dark",
+      "file": "themes/dark.css",
+      "description": "Dark reading surfaces; existing dark navigation remains unchanged.",
+      "colorScheme": "dark"
+    }
+  ],
   "screens": [
     {
       "id": "titan-email-shell",
@@ -4447,28 +4462,44 @@
         "layer": "primitive"
       },
       "--titan-color-white": {
-        "layer": "primitive"
+        "layer": "primitive",
+        "colorFamily": "Neutrals",
+        "colorOrder": 0
       },
       "--titan-color-paper": {
-        "layer": "primitive"
+        "layer": "primitive",
+        "colorFamily": "Neutrals",
+        "colorOrder": 157
       },
       "--titan-color-ink": {
-        "layer": "primitive"
+        "layer": "primitive",
+        "colorFamily": "Neutrals",
+        "colorOrder": 8980
       },
       "--titan-color-charcoal": {
-        "layer": "primitive"
+        "layer": "primitive",
+        "colorFamily": "Neutrals",
+        "colorOrder": 8902
       },
       "--titan-color-gray-800": {
-        "layer": "primitive"
+        "layer": "primitive",
+        "colorFamily": "Neutrals",
+        "colorOrder": 8000
       },
       "--titan-color-gray-600": {
-        "layer": "primitive"
+        "layer": "primitive",
+        "colorFamily": "Neutrals",
+        "colorOrder": 6000
       },
       "--titan-color-gray-500": {
-        "layer": "primitive"
+        "layer": "primitive",
+        "colorFamily": "Neutrals",
+        "colorOrder": 4667
       },
       "--titan-color-blue": {
-        "layer": "primitive"
+        "layer": "primitive",
+        "colorFamily": "Blue",
+        "colorOrder": 4569
       },
       "--titan-font-system": {
         "layer": "primitive"
@@ -4552,10 +4583,14 @@
         "layer": "semantic"
       },
       "--titan-color-blue-50": {
-        "layer": "primitive"
+        "layer": "primitive",
+        "colorFamily": "Blue",
+        "colorOrder": 314
       },
       "--titan-color-blue-100": {
-        "layer": "primitive"
+        "layer": "primitive",
+        "colorFamily": "Blue",
+        "colorOrder": 725
       },
       "--titan-surface-selected": {
         "label": "Selected surface",
@@ -4825,6 +4860,198 @@
       },
       "--titan-elevation-4-bottom-shadow": {
         "layer": "semantic"
+      },
+      "--titan-color-night-10": {
+        "layer": "primitive",
+        "colorFamily": "Neutrals",
+        "colorOrder": 8745
+      },
+      "--titan-color-night-20": {
+        "layer": "primitive",
+        "colorFamily": "Neutrals",
+        "colorOrder": 9216
+      },
+      "--titan-color-night-30": {
+        "layer": "primitive",
+        "colorFamily": "Neutrals",
+        "colorOrder": 1569
+      },
+      "--titan-color-night-40": {
+        "layer": "primitive",
+        "colorFamily": "Neutrals",
+        "colorOrder": 549
+      },
+      "--titan-color-night-50": {
+        "layer": "primitive",
+        "colorFamily": "Neutrals",
+        "colorOrder": 3098
+      },
+      "--titan-color-night-60": {
+        "layer": "primitive",
+        "colorFamily": "Neutrals",
+        "colorOrder": 4000
+      },
+      "--titan-color-night-70": {
+        "layer": "primitive",
+        "colorFamily": "Blue",
+        "colorOrder": 7647
+      },
+      "--titan-color-night-80": {
+        "layer": "primitive",
+        "colorFamily": "Blue",
+        "colorOrder": 2549
+      },
+      "--titan-color-night-90": {
+        "layer": "primitive",
+        "colorFamily": "Neutrals",
+        "colorOrder": 7961
+      },
+      "--titan-color-night-100": {
+        "layer": "primitive",
+        "colorFamily": "Neutrals",
+        "colorOrder": 7686
+      },
+      "--titan-color-night-110": {
+        "layer": "primitive",
+        "colorFamily": "Neutrals",
+        "colorOrder": 9020
+      },
+      "--titan-color-night-120": {
+        "layer": "primitive",
+        "colorFamily": "Neutrals",
+        "colorOrder": 8118
+      },
+      "--titan-color-night-130": {
+        "layer": "primitive",
+        "colorFamily": "Blue",
+        "colorOrder": 7078
+      },
+      "--titan-color-night-140": {
+        "layer": "primitive",
+        "colorFamily": "Neutrals",
+        "colorOrder": 8275
+      },
+      "--titan-color-night-150": {
+        "layer": "primitive",
+        "colorFamily": "Neutrals",
+        "colorOrder": 8392
+      },
+      "--titan-color-night-160": {
+        "layer": "primitive",
+        "colorFamily": "Neutrals",
+        "colorOrder": 6667
+      },
+      "--titan-color-night-170": {
+        "layer": "primitive",
+        "colorFamily": "Neutrals",
+        "colorOrder": 5608
+      },
+      "--titan-icon-button-pressed-surface": {
+        "layer": "semantic"
+      },
+      "--titan-surface-hover": {
+        "layer": "semantic"
+      },
+      "--titan-surface-subtle": {
+        "layer": "semantic"
+      },
+      "--titan-divider-subtle": {
+        "layer": "semantic"
+      },
+      "--titan-scrollbar": {
+        "layer": "semantic"
+      },
+      "--titan-text-faint": {
+        "layer": "semantic"
+      },
+      "--titan-text-disabled": {
+        "layer": "semantic"
+      },
+      "--titan-launcher-text": {
+        "layer": "semantic"
+      },
+      "--titan-launcher-divider": {
+        "layer": "semantic"
+      },
+      "--titan-color-gray-25": {
+        "layer": "primitive",
+        "colorFamily": "Neutrals",
+        "colorOrder": 216
+      },
+      "--titan-color-gray-175": {
+        "layer": "primitive",
+        "colorFamily": "Neutrals",
+        "colorOrder": 804
+      },
+      "--titan-color-gray-200": {
+        "layer": "primitive",
+        "colorFamily": "Neutrals",
+        "colorOrder": 1294
+      },
+      "--titan-color-gray-50": {
+        "layer": "primitive",
+        "colorFamily": "Neutrals",
+        "colorOrder": 373
+      },
+      "--titan-color-gray-150": {
+        "layer": "primitive",
+        "colorFamily": "Neutrals",
+        "colorOrder": 824
+      },
+      "--titan-color-blue-75": {
+        "layer": "primitive",
+        "colorFamily": "Blue",
+        "colorOrder": 667
+      },
+      "--titan-color-gray-700": {
+        "layer": "primitive",
+        "colorFamily": "Neutrals",
+        "colorOrder": 7137
+      },
+      "--titan-color-gray-900": {
+        "layer": "primitive",
+        "colorFamily": "Neutrals",
+        "colorOrder": 8549
+      },
+      "--titan-color-gray-850": {
+        "layer": "primitive",
+        "colorFamily": "Neutrals",
+        "colorOrder": 8235
+      },
+      "--titan-color-black": {
+        "layer": "primitive",
+        "colorFamily": "Neutrals",
+        "colorOrder": 10000
+      },
+      "--titan-color-gray-100": {
+        "layer": "primitive",
+        "colorFamily": "Neutrals",
+        "colorOrder": 588
+      },
+      "--titan-color-gray-75": {
+        "layer": "primitive",
+        "colorFamily": "Neutrals",
+        "colorOrder": 510
+      },
+      "--titan-color-gray-125": {
+        "layer": "primitive",
+        "colorFamily": "Neutrals",
+        "colorOrder": 706
+      },
+      "--titan-color-gray-250": {
+        "layer": "primitive",
+        "colorFamily": "Neutrals",
+        "colorOrder": 1333
+      },
+      "--titan-color-gray-300": {
+        "layer": "primitive",
+        "colorFamily": "Neutrals",
+        "colorOrder": 2000
+      },
+      "--titan-color-gray-225": {
+        "layer": "primitive",
+        "colorFamily": "Neutrals",
+        "colorOrder": 1020
       }
     },
     "textStyles": [
@@ -4939,6 +5166,78 @@
         "token": "--titan-surface-selected",
         "kind": "surface",
         "label": "Selected surface"
+      },
+      {
+        "token": "--titan-surface-navigation",
+        "label": "Surface Navigation"
+      },
+      {
+        "token": "--titan-surface-reading",
+        "label": "Surface Reading"
+      },
+      {
+        "token": "--titan-surface-composer-header",
+        "label": "Surface Composer Header"
+      },
+      {
+        "token": "--titan-icon-button-pressed-surface",
+        "label": "Icon button pressed surface"
+      },
+      {
+        "token": "--reading-pane-bg",
+        "label": "Reading pane bg"
+      },
+      {
+        "token": "--border-color",
+        "label": "Border color"
+      },
+      {
+        "token": "--card-border-color",
+        "label": "Card border color"
+      },
+      {
+        "token": "--search-bg",
+        "label": "Search bg"
+      },
+      {
+        "token": "--hover-bg",
+        "label": "Hover bg"
+      },
+      {
+        "token": "--selected-bg-strong",
+        "label": "Selected bg strong"
+      },
+      {
+        "token": "--titan-surface-hover",
+        "label": "Surface hover"
+      },
+      {
+        "token": "--titan-surface-subtle",
+        "label": "Surface subtle"
+      },
+      {
+        "token": "--titan-divider-subtle",
+        "label": "Divider subtle"
+      },
+      {
+        "token": "--titan-scrollbar",
+        "label": "Scrollbar"
+      },
+      {
+        "token": "--titan-text-faint",
+        "label": "Text faint"
+      },
+      {
+        "token": "--titan-text-disabled",
+        "label": "Text disabled"
+      },
+      {
+        "token": "--titan-launcher-text",
+        "label": "Launcher text"
+      },
+      {
+        "token": "--titan-launcher-divider",
+        "label": "Launcher divider"
       }
     ],
     "spacingRoles": [

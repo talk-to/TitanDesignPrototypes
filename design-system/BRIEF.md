@@ -14,8 +14,8 @@ Proposed review viewports: 1440×900, 1280×800 and 768×900. Narrow-screen beha
 unverified; do not claim mobile support. Preserve compose/reply, selection, search,
 menus, settings and dock behavior. Use fictional data in new examples.
 
-Do not redesign the shell, normalize exceptions, introduce themes, or extract whole
-panes as components during setup. Keep original screen and asset paths in place.
+The original setup excluded themes. Light/Dark themes are now explicitly authorized
+and implemented; follow THEMES.md. Do not redesign the shell or normalize unrelated exceptions. Keep original screen and asset paths in place.
 
 Historical foundation passes: phase 2a covered color/type; phase 2b covered
 value-preserving spacing extraction. Their component exclusions applied to those
@@ -58,8 +58,8 @@ Show designer-relevant typography information explicitly: full font fallback ord
 size with units, named numeric weight and assigned line height. Do not substitute
 a vague font name or imply an unassigned property is an established style value.
 
-Current location: workspace-root design-system/, intentionally gitignored for
-Ishant’s local use across prototypes. appRoot is the workspace, and registered
+Current location: workspace-root design-system/, tracked on Titan-design-system
+for shared use across prototypes. appRoot is the workspace, and registered
 previews use their paths under /app/. Studio tooling remains a separate checkout.
 
 ## Current implementation scope

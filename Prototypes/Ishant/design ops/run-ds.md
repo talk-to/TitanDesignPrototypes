@@ -77,6 +77,6 @@ files so this entry point does not become a second checklist.
 - `DS-specific shells/` — shells connected to the shared DS.
 - `design-system-recovery/` — recovery material.
 
-The root `design-system/` folder is currently gitignored. These links point to local
-files; they do not copy or track that content. A fresh clone needs the shared content
-restored before the links can work. Keep instructions at their source to avoid drift.
+The root `design-system/` folder is tracked on the `Titan-design-system` branch.
+Studio is a separate submodule. For theme/color work, read the shared
+[theme contract](../../../design-system/THEMES.md). Keep instructions at their source to avoid drift.

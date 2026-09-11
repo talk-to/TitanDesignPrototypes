@@ -503,3 +503,21 @@ See [Separate popup surfaces and page-owned coordination](COMPONENT-REGISTRATION
 
 See [state categories and preview contracts](COMPONENT-REGISTRATION.md#mandatory-state-categories-and-preview-contracts) in the mandatory registration contract.
 
+
+## Light and dark themes
+
+Use the sun/moon button in the Studio sidebar. The selection persists for this catalog and
+applies to foundation role values, component galleries, focused variants,
+interaction states, iconography and registered previews. Studio chrome follows the selection using separate Studio-owned colors.
+
+Adopting HTML screens load `theme.js` from the shared design-system directory.
+The runtime accepts `?theme=light` or `?theme=dark` only, defaulting to Light.
+It loads base tokens and the selected semantic override file. Keep primitives
+stable. Theme-responsive surfaces, foregrounds, dividers and state colors use
+semantic roles. Intentionally dark navigation/composer headers and inverse text
+retain the same values across themes; do not invert them.
+
+New components must demonstrate both themes, including hover/selected/disabled
+states. Preserve brand artwork; monochrome icons should inherit a foreground role.
+
+See [THEMES.md](THEMES.md) for the complete theme implementation and validation contract.

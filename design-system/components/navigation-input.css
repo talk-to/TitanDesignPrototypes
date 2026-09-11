@@ -58,7 +58,7 @@
     .search-bar {
       width: 100%;
       height: var(--titan-search-height);
-      border: 1px solid #dedede;
+      border: 1px solid var(--card-border-color);
       border-radius: var(--titan-radius-4);
       display: flex;
       align-items: center;
@@ -95,7 +95,7 @@
     .search-divider {
       width: 1px;
       height: 100%;
-      background: #dedede;
+      background: var(--card-border-color);
       flex-shrink: 0;
     }
 

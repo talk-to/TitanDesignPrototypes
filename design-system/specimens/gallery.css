@@ -19,7 +19,7 @@ body[data-gallery=true] .specimen-gallery-source.example{padding:0!important;bor
 body[data-gallery=true] .specimen-gallery-source.example>.mount{justify-content:center}
 /* The catalog owns example order and column count for every component. */
 body[data-gallery=true] main{display:block!important;width:max-content!important;min-width:100%;max-width:none!important;margin:0!important;padding:0!important}
-body[data-gallery=true] .specimen-gallery-cell{border-right:1px solid #cdd0d6;border-bottom:1px solid #cdd0d6;background:#fff}
+body[data-gallery=true] .specimen-gallery-cell{border-right:1px solid var(--card-border-color);border-bottom:1px solid var(--card-border-color);background:var(--titan-surface-base)}
 body[data-gallery=true] .specimen-gallery-source{width:var(--specimen-source-width,auto);max-width:none!important}
 /* Equalize paired examples within each row, not unrelated rows of wide content. */
 body[data-gallery=true] .specimen-gallery{grid-auto-rows:auto}

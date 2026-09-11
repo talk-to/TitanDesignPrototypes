@@ -29,9 +29,14 @@ Consult FINDINGS.md when extraction history or a recorded exception is relevant.
 Its studio-refresh details are historical, not a live version report. Use the upstream native presentation; do not
 restore archived local studio overrides.
 
-This root-level, gitignored content folder serves Ishant’s prototypes across the
+This root-level, version-controlled content folder serves Ishant’s prototypes across the
 workspace. The email shell is one source screen, not the owner of the system.
 Read USAGE.md when applying the system to a new screen.
+
+## Theme work
+
+Read [THEMES.md](THEMES.md) before changing colors, themes, or themed previews.
+It is the current theme contract, including fixed dark treatments and verification.
 
 ## Mandatory: reuse components unchanged
 

@@ -16,7 +16,7 @@
 
     body {
       font-family: var(--titan-font-family-ui);
-      background: #e0e0e0;
+      background:#e0e0e0;
       height: 100vh;
       display: flex;
       flex-direction: column;
@@ -175,7 +175,7 @@
 
     .sidebar-line {
       height: 1px;
-      background: #2d2d2d;
+      background:#2d2d2d;
       margin: 8px 0 0;
       flex-shrink: 0;
     }
@@ -184,8 +184,8 @@
     #email-tooltip {
       display: none;
       position: fixed;
-      background: #2d2d2d;
-      color: #fff;
+      background:#2d2d2d;
+      color:#fff;
       font-size: 13px;
       font-weight: 600;
       padding: 3px 8px 3px 4px;
@@ -222,7 +222,7 @@
 
     .account-refresh:hover {
       opacity: 1;
-      background: #333333;
+      background:#333333;
     }
 
     .account-refresh.spinning img {
@@ -277,7 +277,7 @@
     /* ── Middle Panel ── */
     .middle-panel {
       width: 443px;
-      border-right: 1px solid #dedede;
+      border-right: 1px solid var(--border-color);
       display: flex;
       flex-direction: column;
       flex-shrink: 0;
@@ -286,7 +286,7 @@
     /* ── Top Toolbar (full width above middle + reading pane) ── */
     .top-toolbar {
       height: 64px;
-      border-bottom: 1px solid #dedede;
+      border-bottom: 1px solid var(--border-color);
       display: flex;
       align-items: center;
       padding: 0 var(--titan-space-16);
@@ -336,12 +336,12 @@
     }
 
     .help-btn {
-      border: 1px solid #dedede;
+      border: 1px solid var(--border-color);
       border-radius: 4px;
       padding: 11px 8px;
       font-size: 14px;
-      color: #333;
-      background: #fff;
+      color:var(--titan-text-primary);
+      background:var(--titan-surface-base);
       cursor: pointer;
       white-space: nowrap;
     }
@@ -536,7 +536,7 @@
       padding: 5px 8px;
       cursor: pointer;
       font-size: 18px;
-      color: #666;
+      color:var(--titan-text-secondary);
       border-radius: 5px;
       position: relative;
       z-index: 1;
@@ -546,7 +546,7 @@
 
 
     .action-more:hover {
-      background: #eaeaea;
+      background:#eaeaea;
     }
 
     .action-more-icon {
@@ -577,7 +577,7 @@
     }
 
     .thread-content::-webkit-scrollbar-thumb {
-      background: #ddd;
+      background:#ddd;
       border-radius: 2px;
     }
 
@@ -598,7 +598,7 @@
       left: 0;
       right: 0;
       height: 16px;
-      background: linear-gradient(to bottom, #fbfbfb, rgba(251, 251, 251, 0));
+      background: linear-gradient(to bottom, var(--titan-surface-reading), transparent);
       pointer-events: none;
       opacity: 0;
       transition: opacity 0.15s ease;
@@ -695,8 +695,8 @@
       justify-content: center;
       font-size: 11px;
       font-weight: 500;
-      color: #666;
-      background: #fdfdfd;
+      color:var(--titan-text-secondary);
+      background:var(--titan-surface-base);
       border: var(--titan-elevation-floating-badge-border);
       border-radius: 6px;
       padding: 4px 12px;
@@ -707,11 +707,11 @@
     }
 
     .thread-stack:not(.expanded):hover .stack-pill {
-      background: #f0f0f0;
+      background:var(--titan-surface-hover);
       border: var(--titan-elevation-floating-badge-hover-border);
       transform: translate(-50%, -50%);
       box-shadow: var(--titan-elevation-floating-badge-hover);
-      color: #333;
+      color:var(--titan-text-primary);
     }
 
     /* Expanded state */
@@ -812,7 +812,7 @@
     }
     .reply-box-body:empty:before {
       content: attr(placeholder);
-      color: #999999;
+      color:#999999;
     }
 
     /* Feature chips */
@@ -884,7 +884,7 @@
     }
     .comp-feat > span {
       font-size: 14px;
-      color: #333;
+      color:var(--titan-text-primary);
       line-height: 24px;
     }
 
@@ -913,7 +913,7 @@
       height: 28px;
       cursor: pointer;
       font-size: 14px;
-      color: #888;
+      color:var(--titan-text-muted);
       white-space: nowrap;
       flex-shrink: 0;
       user-select: none;
@@ -922,7 +922,7 @@
     .comp-vert-sep {
       width: 1px;
       height: 20px;
-      background: #dedede;
+      background:#dedede;
       flex-shrink: 0;
       margin: 0 4px;
     }
@@ -1074,7 +1074,7 @@
     .comp-vert-sep {
       width: 1px;
       height: 20px;
-      background: #dedede;
+      background:#dedede;
       flex-shrink: 0;
     }
     .comp-send-icons {
@@ -1160,7 +1160,7 @@
       width: 20px;
       height: 20px;
       border-radius: 50%;
-      background: #ffffff;
+      background:var(--titan-surface-base);
       border: none;
       box-shadow: 0px 1px 4px rgba(0,0,0,0.25);
       display: flex;
@@ -1240,7 +1240,7 @@
       background: var(--hover-bg);
     }
     .side-modal-option.logout {
-      color: #d93025;
+      color:#d93025;
     }
 
     /* Preference Sections */
@@ -1285,7 +1285,7 @@
       display: inline-flex;
       align-items: center;
       cursor: help;
-      color: #999;
+      color:#999;
     }
 
     /* Preview Boxes */
@@ -1293,7 +1293,7 @@
       width: 80px;
       height: 42px;
       border-radius: 4px;
-      border: 1px solid #dedede;
+      border: 1px solid var(--border-color);
       position: relative;
       overflow: hidden;
       flex-shrink: 0;
@@ -1311,14 +1311,14 @@
 
     /* Upgrade Footer */
     .side-modal-upgrade-cta {
-      background: #f1bd6c;
+      background:#f1bd6c;
       padding: 12px 16px;
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 4px;
       flex-shrink: 0;
-      color: #333;
+      color:var(--titan-text-primary);
     }
     .upgrade-btn {
       display: flex;
@@ -1328,7 +1328,7 @@
       border: none;
       font-size: 14px;
       font-weight: 700;
-      color: #333;
+      color:var(--titan-text-primary);
       cursor: pointer;
     }
     .upgrade-btn img {
@@ -1338,7 +1338,7 @@
     }
     .upgrade-subtext {
       font-size: 12px;
-      color: #333;
+      color:var(--titan-text-primary);
       opacity: 0.8;
     }
 
@@ -1361,7 +1361,7 @@
   <link rel="stylesheet" href="/design-system/components/account-header.css" onerror="this.onerror=null;this.href='../../../../../design-system/components/account-header.css'">
 <link rel="stylesheet" href="../../../../../design-system/components/selection.css">
 <link rel="stylesheet" href="/design-system/components/sidebar-header.css">
-</head>
+<script src="/design-system/theme.js" onerror="this.onerror=null;this.src='../../../../../design-system/theme.js'"></script></head>
 
 <body>
 
@@ -1929,11 +1929,11 @@
             </div>
 
             <!-- Reply Box Card (Embedded Inline) -->
-            <div class="reply-box-card" id="reply-box-card" style="display: none; margin-top: 16px; border: 1px solid #dedede; border-radius: 4px; box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06); background: #ffffff; flex-direction: column; overflow: hidden; margin-bottom: 20px;">
+            <div class="reply-box-card" id="reply-box-card" style="display: none; margin-top: 16px; border: 1px solid var(--border-color); border-radius: 4px; box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06); background:var(--titan-surface-base); flex-direction: column; overflow: hidden; margin-bottom: 20px;">
                 <!-- From row -->
                 <div class="reply-box-from-row" style="display: flex; align-items: center; justify-content: space-between; padding: 10px 24px; border-bottom: 1px solid #ebebeb;">
-                  <div style="font-size: 14px; color: #888888;">From: <span id="reply-box-from" style="color: #333333;">ishantp@titan.email</span></div>
-                  <div style="display: flex; align-items: center; gap: 6px; font-size: 13px; color: #888888;">
+                  <div style="font-size: 14px; color:var(--titan-text-muted);">From: <span id="reply-box-from" style="color:var(--titan-text-primary);">ishantp@titan.email</span></div>
+                  <div style="display: flex; align-items: center; gap: 6px; font-size: 13px; color:var(--titan-text-muted);">
                     <span>Saved</span>
                     <button class="reply-box-popout-btn" style="border: none; background: none; cursor: pointer; padding: 3px; width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; border-radius: 5px; transition: background 0.15s;" onmouseenter="this.style.background='var(--hover-bg)'" onmouseleave="this.style.background='none'" onclick="popoutToComposer()" title="Pop out">
                       <svg width="14" height="14" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1948,17 +1948,17 @@
                 <!-- Header -->
                 <div class="reply-box-header" style="display: flex; align-items: center; justify-content: space-between; padding: 10px 24px; border-bottom: 1px solid #ebebeb;">
                   <div class="reply-box-recipient" id="reply-box-recipient" style="display: flex; align-items: center; gap: 8px; font-size: 14px;">
-                    <span id="reply-recipient-name" style="color: #333333; font-weight: 500;">Usha Loutongbam</span>
+                    <span id="reply-recipient-name" style="color:var(--titan-text-primary); font-weight: 500;">Usha Loutongbam</span>
                   </div>
-                  <div style="display: flex; align-items: center; gap: 14px; font-size: 13px; color: #888888; font-weight: 500;">
+                  <div style="display: flex; align-items: center; gap: 14px; font-size: 13px; color:var(--titan-text-muted); font-weight: 500;">
                     <span id="reply-subject-toggle" onclick="toggleReplySubject()" style="cursor: pointer; transition: color 0.15s; padding-bottom: 2px;" onmouseenter="this.style.color='#333333'" onmouseleave="this.style.color='#888888'">Subject</span>
                   </div>
                 </div>
 
                 <!-- Subject Row (hidden by default) -->
                 <div id="reply-subject-row" style="overflow: hidden; max-height: 0; opacity: 0; transition: max-height 0.25s cubic-bezier(0.22,1,0.36,1), opacity 0.2s ease; padding: 0 24px; border-bottom: 1px solid #ebebeb;">
-                  <div style="font-size: 14px; color: #444; padding-top: 10px; padding-bottom: 10px;">
-                    <span contenteditable="true" spellcheck="false" id="reply-subject-field" style="outline: none; display: block; color: #444; font-size: 14px; font-family: inherit; min-width: 20px;">Re: Project roadmap for Dashboard version</span>
+                  <div style="font-size: 14px; color:#444; padding-top: 10px; padding-bottom: 10px;">
+                    <span contenteditable="true" spellcheck="false" id="reply-subject-field" style="outline: none; display: block; color:#444; font-size: 14px; font-family: inherit; min-width: 20px;">Re: Project roadmap for Dashboard version</span>
                   </div>
                 </div>
 
@@ -1983,11 +1983,11 @@
 
                 <!-- Text Area / Editor -->
                 <div style="padding: 16px 24px; position: relative;">
-                  <div class="reply-box-body" id="reply-box-body" contenteditable="true" spellcheck="true" placeholder="Reply to email..." style="min-height: 100px; max-height: 250px; overflow-y: auto; outline: none; font-size: 14px; color: #333333; line-height: 1.5; font-family: inherit;"></div>
+                  <div class="reply-box-body" id="reply-box-body" contenteditable="true" spellcheck="true" placeholder="Reply to email..." style="min-height: 100px; max-height: 250px; overflow-y: auto; outline: none; font-size: 14px; color:var(--titan-text-primary); line-height: 1.5; font-family: inherit;"></div>
                   
                   <!-- History ellipsis button (...) -->
                   <div style="margin-top: 12px; display: flex; align-items: center;">
-                    <button class="reply-history-btn" style="background: #f1f3f4; border: 1px solid #dcdcdc; border-radius: 4px; padding: 2px 8px; font-size: 12px; font-weight: 600; color: #666666; cursor: pointer;">...</button>
+                    <button class="reply-history-btn" style="background:#f1f3f4; border: 1px solid #dcdcdc; border-radius: 4px; padding: 2px 8px; font-size: 12px; font-weight: 600; color:var(--titan-text-secondary); cursor: pointer;">...</button>
                   </div>
                 </div>
 

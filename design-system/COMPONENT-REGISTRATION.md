@@ -413,3 +413,7 @@ For an approved specialization, use the boundary decision above: a variant belon
 at the existing owner only when it retains that responsibility; a genuinely separate
 responsibility may warrant a registered composed component. Update its contract and
 preview before consumers use the approved change.
+
+## Theme contract
+
+For all color and themed-preview work, follow [THEMES.md](THEMES.md). New registrations must support both themes while preserving fixed dark-surface variants.

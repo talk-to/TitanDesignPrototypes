@@ -56,7 +56,7 @@
     }
 
     .titan-app-tile:hover {
-      background: #f2f2f2;
+      background: var(--titan-surface-subtle);
     }
 
     .titan-launcher-scope .app-icon {
@@ -81,7 +81,7 @@
       z-index: 2;
       font-size: var(--titan-type-control-compact-size);
       font-weight: var(--titan-font-weight-medium);
-      color: #707070;
+      color: var(--titan-launcher-text);
       line-height: 18px;
       text-align: center;
       white-space: nowrap;
@@ -118,7 +118,7 @@
     }
 
     .titan-launcher-item.app-switcher-tool-item:hover {
-      background: #f2f2f2;
+      background: var(--titan-surface-subtle);
     }
 
     .titan-launcher-scope .tool-icon {
@@ -156,7 +156,7 @@
     .titan-launcher-scope .tool-label {
       font-size: var(--titan-type-control-compact-size);
       font-weight: var(--titan-font-weight-medium);
-      color: #707070;
+      color: var(--titan-launcher-text);
       line-height: 14px;
       white-space: nowrap;
     }
@@ -169,7 +169,7 @@
     }
 
     .titan-launcher-item.footer-link-row {
-      border-top: 0.5px solid #dedded;
+      border-top: 0.5px solid var(--titan-launcher-divider);
       height: 48px;
       width: 100%;
       display: flex;
@@ -180,7 +180,7 @@
     }
 
     .titan-launcher-item.footer-link-row:hover {
-      background: #f2f2f2;
+      background: var(--titan-surface-subtle);
     }
 
     .titan-launcher-scope .footer-link-content {
@@ -209,7 +209,7 @@
     .titan-launcher-scope .footer-link-text {
       font-size: var(--titan-type-control-compact-size);
       font-weight: var(--titan-font-weight-medium);
-      color: #707070;
+      color: var(--titan-launcher-text);
       flex: 1;
       white-space: nowrap;
     }
@@ -230,11 +230,11 @@
 .titan-launcher-scope{font-family:var(--titan-font-family-ui);color:var(--titan-text-primary);box-sizing:border-box}
 .titan-app-tile,.titan-launcher-item{font-family:var(--titan-font-family-ui)}
 .titan-app-tile,.titan-launcher-item{border:0;background:transparent;text-align:left;box-sizing:border-box}
-.titan-app-tile:hover,.titan-launcher-item:hover{background:#f2f2f2}
+.titan-app-tile:hover,.titan-launcher-item:hover{background:var(--titan-surface-subtle)}
 /* Current app: a resting container so the app you are in reads as selected. */
 .titan-app-tile--selected{background:var(--titan-surface-selected);box-shadow:inset 0 0 0 var(--titan-border-width-default) var(--card-border-color)}
 .titan-app-switcher-panel{position:relative;width:280px;max-width:100%;height:587px;margin-top:0;filter:drop-shadow(var(--titan-elevation-popover))}
-.titan-launcher-item.footer-link-row{border-top:.5px solid #dedded}
+.titan-launcher-item.footer-link-row{border-top:.5px solid var(--titan-launcher-divider)}
 .titan-app-switcher-panel{animation:launcher-open .25s cubic-bezier(.22,1,.36,1)}
 @keyframes launcher-open{from{opacity:0;transform:translateY(-12px)}to{opacity:1;transform:translateY(0)}}
 @media(prefers-reduced-motion:reduce){.titan-app-switcher-panel{animation:none}}
@@ -260,4 +260,4 @@
 .titan-launcher-item{position:relative;isolation:isolate}
 .titan-launcher-item:hover,.titan-launcher-item.footer-link-row:hover,.titan-launcher-item.app-switcher-tool-item:hover{background:transparent}
 .titan-launcher-item::before{content:"";position:absolute;inset:0 var(--titan-selection-inset);border-radius:var(--titan-selection-radius);pointer-events:none;z-index:-1}
-.titan-launcher-item:hover::before{background:#f2f2f2}
+.titan-launcher-item:hover::before{background:var(--titan-surface-subtle)}

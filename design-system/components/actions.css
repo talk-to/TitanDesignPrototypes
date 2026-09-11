@@ -5,7 +5,7 @@
 .titan-icon-button>img,.titan-icon-button>svg{display:block;width:var(--titan-icon-size-action);height:var(--titan-icon-size-action);object-fit:contain}
 .titan-icon-button--40>img,.titan-icon-button--40>svg{width:var(--titan-icon-size-action-large);height:var(--titan-icon-size-action-large)}
 .titan-icon-button:hover:not(:disabled){background:var(--hover-bg);transform:scale(1.1)}
-.titan-icon-button[aria-pressed=true]{background:var(--selected-bg);color:var(--titan-action-primary)}
+.titan-icon-button[aria-pressed=true]{background:var(--titan-icon-button-pressed-surface);color:var(--titan-action-primary)}
 .titan-button{--titan-button-gap:var(--titan-gap-icon-label);--titan-button-radius:var(--titan-radius-4);gap:var(--titan-button-gap);padding:var(--titan-space-4) var(--titan-space-16);min-height:var(--titan-control-height-default);border-radius:var(--titan-button-radius);background:transparent;color:var(--titan-text-primary);font-size:var(--titan-type-control-size);font-weight:var(--titan-font-weight-regular);line-height:24px}
 .titan-button:hover:not(:disabled){background:var(--hover-bg)}
 .titan-button__icon{display:flex;width:24px;height:24px;align-items:center;justify-content:center;flex-shrink:0}
@@ -27,7 +27,8 @@
 .titan-half-button__icon>img,.titan-half-button__icon>svg{display:block;width:100%;height:100%;object-fit:contain}
 .titan-half-button:hover:not(:disabled){background:linear-gradient(var(--hover-overlay-on-accent),var(--hover-overlay-on-accent)),var(--titan-action-primary)}
 .titan-half-button:active:not(:disabled){background:linear-gradient(var(--active-overlay-on-accent),var(--active-overlay-on-accent)),var(--titan-action-primary);transform:scale(.97)}
-.titan-icon-button:active:not(:disabled),.titan-button:active:not(:disabled){background:var(--selected-bg)}
+.titan-icon-button:active:not(:disabled){background:var(--titan-icon-button-pressed-surface)}
+.titan-button:active:not(:disabled){background:var(--selected-bg)}
 .titan-icon-button:disabled,.titan-button:disabled{opacity:.45;cursor:default;transform:none}
 /* Joined halves keep their surface when disabled; only content and divider fade so
    the pair still reads as one control, matching the observed source treatment. */

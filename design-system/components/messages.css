@@ -13,7 +13,7 @@
     }
 
     .email-list::-webkit-scrollbar-thumb {
-      background: #ddd;
+      background: var(--titan-scrollbar);
       border-radius: 2px;
     }
 
@@ -30,7 +30,7 @@
     }
 
     .email-tile:hover {
-      background: #f0f0f0;
+      background: var(--titan-surface-hover);
     }
 
     .email-tile.selected {
@@ -150,7 +150,7 @@
 .titan-message-list--wide .tile-preview ,
 .titan-message-row--wide .tile-preview{
       font-size: var(--titan-type-body-size);
-      color: #999;
+      color: var(--titan-text-faint);
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -165,7 +165,7 @@
 .titan-message-list--wide .tile-preview::before ,
 .titan-message-row--wide .tile-preview::before{
       content: '·  ';
-      color: #ccc;
+      color: var(--titan-text-disabled);
     }
 
     .middle-panel.wide-view .tile-time ,
@@ -359,7 +359,7 @@
     }
 
     .tile-action-pill {
-      background: #fff;
+      background: var(--titan-surface-base);
       border: var(--titan-elevation-compact-action-border);
       box-shadow: var(--titan-elevation-compact-action);
       border-radius: var(--titan-radius-4);
@@ -404,7 +404,7 @@
     .thread-tile {
       position: relative;
       z-index: 5;
-      border: 1px solid #dedede;
+      border: 1px solid var(--card-border-color);
       border-radius: var(--titan-radius-4);
       margin-bottom: var(--titan-space-8);
       background: var(--titan-surface-base);
@@ -469,7 +469,7 @@
 
     /* Expanded tile */
     .expanded-tile {
-      border: 1px solid #dedede;
+      border: 1px solid var(--card-border-color);
       border-radius: var(--titan-radius-4);
       background: var(--titan-surface-base);
       margin-bottom: var(--titan-space-8);
@@ -597,7 +597,7 @@
 
     .expanded-footer-hr {
       height: 1px;
-      background: #dedede;
+      background: var(--card-border-color);
       width: 100%;
     }
 
@@ -647,5 +647,5 @@
 .titan-message-row{isolation:isolate}
 .titan-message-row:hover,.titan-message-row.selected{background:var(--titan-surface-base)}
 .titan-message-row::before{content:"";position:absolute;inset:0 var(--titan-selection-inset);border-radius:var(--titan-selection-radius);pointer-events:none;z-index:-1}
-.titan-message-row:hover::before{background:#f0f0f0}
+.titan-message-row:hover::before{background:var(--titan-surface-hover)}
 .titan-message-row.selected::before{background:var(--titan-surface-selected)}

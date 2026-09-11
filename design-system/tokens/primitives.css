@@ -27,3 +27,44 @@
   --titan-radius-4: 4px;
   --titan-radius-6: 6px;
 }
+
+/* Dark palette primitives: stable values shared by theme roles. */
+:root {
+  --titan-color-night-10: #202020;
+  --titan-color-night-20: #141414;
+  --titan-color-night-30: #d7d7d7;
+  --titan-color-night-40: #f1f1f1;
+  --titan-color-night-50: #b0b0b0;
+  --titan-color-night-60: #999999;
+  --titan-color-night-70: #1d385b;
+  --titan-color-night-80: #7db4ff;
+  --titan-color-night-90: #343434;
+  --titan-color-night-100: #3b3b3b;
+  --titan-color-night-110: #191919;
+  --titan-color-night-120: #303030;
+  --titan-color-night-130: #28486d;
+  --titan-color-night-140: #2c2c2c;
+  --titan-color-night-150: #292929;
+  --titan-color-night-160: #555555;
+  --titan-color-night-170: #707070;
+}
+
+/* Additional observed colors: value-preserving Light-role aliases. */
+:root {
+  --titan-color-gray-25: #f9f9fa;
+  --titan-color-gray-175: #e8eaed;
+  --titan-color-gray-200: #dedede;
+  --titan-color-gray-50: #f4f4f7;
+  --titan-color-gray-150: #eaeaea;
+  --titan-color-blue-75: #e0ecfc;
+  --titan-color-gray-700: #494949;
+  --titan-color-gray-900: #252525;
+  --titan-color-gray-850: #2d2d2d;
+  --titan-color-black: #000000;
+  --titan-color-gray-100: #f0f0f0;
+  --titan-color-gray-75: #f2f2f2;
+  --titan-color-gray-125: #ededed;
+  --titan-color-gray-250: #dddddd;
+  --titan-color-gray-300: #cccccc;
+  --titan-color-gray-225: #dedded;
+}
