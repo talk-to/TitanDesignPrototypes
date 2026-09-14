@@ -34,3 +34,10 @@ labels and arbitrary placement near viewport edges are not fully reviewed.
 Follow-up (explicit user request): the app grid's 8px bottom inset was removed so the
 panel content gap (`--titan-space-16`) is the single owner of section spacing; the
 grid's side insets and row gaps are unchanged.
+
+Follow-up (explicit user request): the catalog pattern was named after the feature and
+read as implementation-specific. The entry is now Anchored popover disclosure
+(id `anchored-popover`, category Interaction Patterns): it documents the general
+trigger + floating panel + page-owned coordination contract, with the App switcher
+kept as the reference implementation and preview. The studio keeps old
+`#patterns/app-switcher` links working through a route alias.

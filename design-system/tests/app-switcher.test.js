@@ -13,7 +13,8 @@ test('grid renders all apps including partial rows and escapes content',()=>{
 });
 test('standalone panel owns its surface without requiring shell assets or a trigger',()=>{
  const html=L.appSwitcherPanel({apps:[{id:'mail',label:'Mail',icon:'app-mail'}]});
- assert(html.includes('components/assets/app-switcher-surface.svg'));
+ assert(html.includes('class="app-switcher-bg" aria-hidden="true"'));
+ assert(!html.includes('app-switcher-surface.svg'));
  assert(!html.includes('titan-dropdown-trigger'));
  assert(!html.includes('app-switcher-tools'));
  assert(!html.includes('app-switcher-footer'));

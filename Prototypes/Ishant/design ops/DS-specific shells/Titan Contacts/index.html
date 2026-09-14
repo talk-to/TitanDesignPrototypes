@@ -7,6 +7,7 @@
 <script>
 const dsBase=location.pathname.startsWith('/app/')?'/design-system/':'../../../../../design-system/';
 for(const file of ['tokens.css','components/actions.css','components/navigation-input.css','components/selection.css','components/sidebar-header.css','patterns/app-switcher.css','components/avatar.css','components/data-list.css','icons/icons.css'])document.write('<link rel="stylesheet" href="'+dsBase+file+'">');
+document.write('<script src="'+dsBase+'theme.js"><\/script>');
 </script>
 <link rel="stylesheet" href="contacts.css">
 </head>

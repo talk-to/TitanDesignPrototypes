@@ -24,7 +24,8 @@
  }
  else if(part==='search-field')TitanNavigationInput.mount(host,'searchField',{label:'Search messages',placeholder:'Search messages',filter:target!=='search-only',disabled:mode==='disabled',readOnly:mode==='read-only'},{change:()=>say(''),search:value=>say(value?'Search: '+value:'Enter a search'),filter:()=>say('Filter action')});
  else if(part==='sidebar-item'){const config={default:{label:'Sent',icon:'sent'},'with-count':{label:'Inbox',icon:'inbox',count:18},'trailing-action':{label:'My Contacts',icon:'inbox',action:{icon:'help',label:'About My Contacts',variant:'dark-quiet',disabled:mode==='disabled'}}}[target]||{label:'Sent',icon:'sent'};TitanNavigationInput.mount(host,'sidebarItem',{...config,selected:mode==='selected',muted:mode==='muted',disabled:mode==='disabled'},{activate:event=>{event.currentTarget.classList.toggle('active');event.currentTarget.querySelector('.nav-item-label').classList.toggle('active');const active=event.currentTarget.classList.contains('active');if(active)event.currentTarget.setAttribute('aria-current','page');else event.currentTarget.removeAttribute('aria-current');say('Inbox selected');}});}
- else if(part==='tabs')TitanSelection.mount(host,'tabs',{label:'Message categories',items:[{id:'priority',label:'Priority',count:25},{id:'other',label:'Other',count:50}],value:mode==='selected'?'other':'priority'},{change:value=>say(value)});
+ else if(part==='tab'){control=TitanSelection.mount(host,'tab',{id:'category',label:'Priority',count:25,variant:target==='underline'?'underline':'filled',selected:mode==='selected',tabIndex:0},{activate:()=>{control.update({selected:true});}});}
+ else if(part==='tabs')control=TitanSelection.mount(host,'tabs',{label:'Categories',variant:target==='underline'?'underline':'filled',items:[{id:'priority',label:'Priority',count:25},{id:'other',label:'Other',count:50}]},{change:value=>say(value)});
  else if(part==='dropdown-trigger')TitanSelection.mount(host,'dropdown',{label:target==='account'?'alex@example.com':target==='app'?'Switch app':target==='search'?'Search filters':'All mails',variant:target==='account'?'account':target==='account-light'?'account-light':target==='composer'?'composer':target==='app'?'app-switcher':target==='search'?'search':undefined,icon:'app-switcher'},{open:()=>say('Menu content is not defined.')});
  else if(part==='footer-actions')TitanActions.mount(host,'footerActions',{label:'Feedback and settings',items:(target==='one'?[{id:'settings',label:'Settings',icon:'settings'}]:[{id:'bug',label:'Bug',icon:'report-bug'},{id:'feature',label:'Feature',icon:'request-feature'},...(target==='three'?[{id:'settings',label:'Settings',icon:'settings'}]:[])]).map(item=>({...item,disabled:mode==='disabled'}))},{});
  else if(part==='avatar')host.innerHTML=TitanAvatar.render({initials:'AM',label:'Alex Morgan',variant:target==='small'?'small':'default'});
@@ -50,7 +51,7 @@
   window.addEventListener('message',event=>{if(event.source===parent&&event.origin===location.origin&&event.data?.type==='titan-clear-preview-selection')clear();});
  }
  const selectors={
-  'tabs':'[role=tab]','dropdown-trigger':'button','checkbox':'input','account-header':'button','data-list-row':'.titan-data-list__row','data-list':'.titan-data-list','calendar-day':'.titan-calendar-day',
+  'tab':'[role=tab]','tabs':'[role=tab]','dropdown-trigger':'button','checkbox':'input','account-header':'button','data-list-row':'.titan-data-list__row','data-list':'.titan-data-list','calendar-day':'.titan-calendar-day',
   'icon-button':'button','button':'button','split-button':target.endsWith('secondary')?'.titan-half-button--right':'.titan-half-button--left',
   'half-button':target.includes('right')?'.titan-half-button--right':'.titan-half-button--left',
   'search-field':'input',

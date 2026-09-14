@@ -63,6 +63,13 @@ original source appearance. This supersedes the earlier note that the former no-
 secondary was explicitly disabled. `secondaryDisabled` remains available on the
 renderer for callers that need a genuinely disabled half.
 
+Follow-up (explicit user request): the default and primary Button inline insets read
+too wide at 16px. Base `.titan-button` padding is now `--titan-space-4`
+`--titan-space-12` with a tighter `--titan-space-8` left inset (left and right are
+decoupled). The text-only override keeps symmetric 12px insets. Outlined keeps its
+16px insets; Toolbar, Composer and Dark retain their scoped paddings. Registry
+spacing mappings updated accordingly.
+
 Follow-up (explicit user request): Half button's active state now adds a subtle
 `scale(.97)` press-down on top of the existing active overlay, with a .1s transform
 transition; reduced-motion disables that transition. Each half scales about its joined

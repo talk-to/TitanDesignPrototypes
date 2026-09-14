@@ -19,3 +19,9 @@ narrow widths and unusually long labels have not been visually reviewed.
 Follow-up: the user found the 33px icon-only segment squeezed. It now has a
 component-owned 48px minimum width, using twice the existing 24px spacing primitive.
 The labelled actions retain content-based sizing and share the remaining width.
+
+Follow-up (explicit user request): the vertical item dividers read almost invisible
+against the footer surface (gray-850 #2d2d2d on gray-900 #292929, a 4-level step).
+`--titan-footer-actions-divider` was stepped up, then eased back after review to
+grey-910 (#373737): visible on the charcoal surface without drawing a hard line.
+The horizontal top line (black) and the surface role are unchanged.

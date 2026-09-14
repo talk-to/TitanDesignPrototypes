@@ -4,8 +4,8 @@
   color-scheme: dark;
   --titan-icon-button-pressed-surface: var(--titan-color-night-130);
   --titan-elevation-stacked-surface-border: 1px solid var(--card-border-color);
-  --titan-surface-base: var(--titan-color-night-10);
-  --titan-surface-reading: var(--titan-color-night-20);
+  --titan-surface-base: var(--titan-color-night-15);
+  --titan-surface-reading: var(--titan-color-night-25);
   --titan-text-primary: var(--titan-color-night-30);
   --titan-text-strong: var(--titan-color-night-40);
   --titan-text-secondary: var(--titan-color-night-50);
@@ -27,3 +27,7 @@
   --titan-launcher-text: var(--titan-color-night-50);
   --titan-launcher-divider: var(--titan-color-night-90);
 }
+
+:root:root { --titan-launcher-surface: var(--titan-color-grey-910); --titan-launcher-divider: var(--titan-color-grey-820); }
+
+:root:root { --titan-launcher-selected-surface: var(--titan-color-blue-600); }

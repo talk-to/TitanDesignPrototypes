@@ -1,6 +1,5 @@
 (function(root,factory){const api=factory(typeof module==='object'&&module.exports?require('./selection.js'):root.TitanSelection);if(typeof module==='object'&&module.exports)module.exports=api;else root.TitanLauncher=api;})(globalThis,function(Selection){
 const Icons=typeof module==='object'&&module.exports?require('../icons/runtime.js'):globalThis.TitanIcons;
-const assetBase=typeof document!=='undefined'?new URL('./assets/',document.currentScript.src).href:'/design-system/components/assets/';
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const label=v=>{if(typeof v!=='string'||!v.trim())throw Error('Label required');return esc(v);};
 const image=(id,cls)=>Icons.render(id).replace('<img ','<img class="'+esc(cls)+'" ');
@@ -14,7 +13,7 @@ function appGrid(o={}){
 }
 function appSwitcherPanel(o={}){
  const tools=o.tools||[],footer=o.footer||[];
- return '<div class="titan-launcher-scope titan-app-switcher-panel" role="dialog" aria-label="'+label(o.panelLabel||'Choose an app or tool')+'"><div class="app-switcher-bg">'+image(o.background||assetBase+'app-switcher-surface.svg','')+'</div><div class="app-switcher-content">'+appGrid({apps:o.apps,selected:o.selected})+(tools.length?'<div class="app-switcher-divider">'+image(o.divider||assetBase+'app-switcher-divider.svg','')+'</div><div class="app-switcher-tools">'+tools.map(launcherItem).join('')+'</div>':'')+(footer.length?'<div class="app-switcher-footer">'+footer.map(item=>launcherItem({...item,variant:'footer'})).join('')+'</div>':'')+'</div></div>';
+ return '<div class="titan-launcher-scope titan-app-switcher-panel" role="dialog" aria-label="'+label(o.panelLabel||'Choose an app or tool')+'"><div class="app-switcher-bg" aria-hidden="true"></div><div class="app-switcher-content">'+appGrid({apps:o.apps,selected:o.selected})+(tools.length?'<div class="app-switcher-divider" aria-hidden="true"></div><div class="app-switcher-tools">'+tools.map(launcherItem).join('')+'</div>':'')+(footer.length?'<div class="app-switcher-footer">'+footer.map(item=>launcherItem({...item,variant:'footer'})).join('')+'</div>':'')+'</div></div>';
 }
 function mount(host,kind,o,callbacks={}){const render={appTile,appGrid,launcherItem,appSwitcherPanel}[kind];if(!render)throw Error('Unknown launcher component');host.classList.add('titan-launcher-scope');host.innerHTML=render(o);return bind(host,callbacks);}
 function bind(host,callbacks={}){const click=e=>{const item=e.target.closest('[data-launcher-item]');if(item&&host.contains(item))callbacks.select?.(item.dataset.launcherItem);};host.addEventListener('click',click);return ()=>host.removeEventListener('click',click);}

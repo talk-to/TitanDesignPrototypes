@@ -51,7 +51,7 @@
 /* Account Dropdown appearance, observed in Calendar sidebar. */
 :root { --titan-dropdown-account-surface: var(--titan-color-gray-700); --titan-dropdown-account-text: color-mix(in srgb,var(--titan-text-inverse) 85%,transparent); }
 :root { --titan-dropdown-account-light-surface: var(--titan-surface-base); --titan-dropdown-account-light-text: var(--titan-text-primary); }
-:root { --titan-footer-actions-surface: var(--titan-color-gray-900); --titan-footer-actions-divider: var(--titan-color-gray-850); --titan-footer-actions-line: var(--titan-color-black); }
+:root { --titan-footer-actions-surface: var(--titan-color-gray-900); --titan-footer-actions-divider: var(--titan-color-grey-910); --titan-footer-actions-line: var(--titan-color-black); }
 
 :root { --titan-icon-button-dark-color: color-mix(in srgb,var(--titan-text-inverse) 65%,transparent); --titan-icon-button-dark-hover: rgba(255,255,255,.12); --titan-icon-button-dark-pressed: rgba(255,255,255,.18); }
 
@@ -68,3 +68,7 @@
 }
 
 :root { --titan-icon-button-pressed-surface: var(--selected-bg); }
+
+:root { --titan-launcher-surface: var(--titan-color-grey-white); }
+
+:root { --titan-launcher-selected-surface: var(--titan-surface-selected); }

@@ -30,7 +30,7 @@
         "pressed": "Optional boolean; caller owns toggle state",
         "pressedIcon": "Required for the toggle variant; registered icon ID or custom image path shown while pressed. The resting asset comes from icon.",
         "size": "32 (default) or 40; observed action and toolbar sizes",
-        "variant": "default, compact, composer, dark, dark-quiet, or toggle. Toggle is the quiet artwork-swap treatment: 24px target, 16px artwork, no container, accent artwork while pressed. Dark and dark-quiet are for dark surfaces; dark-quiet has no hover container — its artwork sits at reduced opacity and reaches full opacity on hover, active and pressed. Opacity is used rather than colour so artwork supplied as a path (rendered as <img>) is affected too."
+        "variant": "default, compact, composer, dark, dark-quiet, or toggle. Toggle is the quiet artwork-swap treatment: 24px target, 16px artwork, no container, accent artwork while pressed. Dark and dark-quiet are for dark surfaces; dark-quiet has no hover container \u2014 its artwork sits at reduced opacity and reaches full opacity on hover, active and pressed. Opacity is used rather than colour so artwork supplied as a path (rendered as <img>) is affected too."
       },
       "anatomy": {
         "parts": [
@@ -52,7 +52,7 @@
         "targets": [
           {
             "id": "main",
-            "name": "Default · 32px",
+            "name": "Default \u00b7 32px",
             "states": [
               "default",
               "hover",
@@ -65,7 +65,7 @@
           },
           {
             "id": "large",
-            "name": "Default · 40px",
+            "name": "Default \u00b7 40px",
             "states": [
               "default",
               "hover",
@@ -154,13 +154,13 @@
       "previewConfigurations": [
         {
           "id": "main",
-          "name": "Default · 32px",
+          "name": "Default \u00b7 32px",
           "selector": "#examples > .example:nth-child(1)",
           "interactionTarget": "main"
         },
         {
           "id": "large",
-          "name": "Default · 40px",
+          "name": "Default \u00b7 40px",
           "selector": "#examples > .example:nth-child(2)",
           "interactionTarget": "large"
         },
@@ -196,7 +196,7 @@
         },
         {
           "id": "toggle-on",
-          "name": "Icon toggle · On",
+          "name": "Icon toggle \u00b7 On",
           "selector": "#examples > .example:nth-child(8)",
           "interactionTarget": "toggle"
         }
@@ -225,7 +225,7 @@
       "usage": "An action with an optional icon. Use primary for the main action. Optional iconColor tints catalog monochrome icons; currentColor follows the control color.",
       "props": {
         "label": "Required visible or accessible label",
-        "icon": "Optional registered icon ID (custom image paths supported). The icon is a content slot the component owns — a 24px box with --titan-icon-size-action artwork and the icon-to-label gap — so every variant renders with or without one. Supplying an icon is an instance, not a variant.",
+        "icon": "Optional registered icon ID (custom image paths supported). The icon is a content slot the component owns \u2014 a 24px box with --titan-icon-size-action artwork and the icon-to-label gap \u2014 so every variant renders with or without one. Supplying an icon is an instance, not a variant.",
         "disabled": "Boolean; prevents interaction",
         "variant": "default, toolbar, composer, outlined, outlined-primary, primary, or dark. Primary uses accent fill with inverse text and standard button sizing. Outlined primary reuses Outlined geometry with accent text, icon and border, and semibold weight."
       },
@@ -265,19 +265,19 @@
           },
           {
             "label": "Left inset",
-            "token": "--titan-space-16",
+            "token": "--titan-space-8",
             "selector": ".titan-button:has(.titan-button__icon):not(.titan-button--outlined)",
             "property": "padding-left"
           },
           {
             "label": "Left inset without icon",
-            "token": "--titan-space-16",
+            "token": "--titan-space-12",
             "selector": ".titan-button:not(:has(.titan-button__icon)):not(.titan-button--outlined)",
             "property": "padding-left"
           },
           {
             "label": "Right inset",
-            "token": "--titan-space-16",
+            "token": "--titan-space-12",
             "selector": ".titan-button:not(.titan-button--toolbar):not(.titan-button--outlined)",
             "property": "padding-right"
           },
@@ -372,7 +372,7 @@
         "targets": [
           {
             "id": "main",
-            "name": "Default · With icon",
+            "name": "Default \u00b7 With icon",
             "states": [
               "default",
               "hover",
@@ -384,7 +384,7 @@
           },
           {
             "id": "label-only",
-            "name": "Default · Label only",
+            "name": "Default \u00b7 Label only",
             "states": [
               "default",
               "hover",
@@ -468,7 +468,7 @@
           },
           {
             "id": "primary-icon",
-            "name": "Primary · With icon",
+            "name": "Primary \u00b7 With icon",
             "owner": "button",
             "states": [
               "default",
@@ -480,7 +480,7 @@
           },
           {
             "id": "outlined-primary-icon",
-            "name": "Outlined primary · With icon",
+            "name": "Outlined primary \u00b7 With icon",
             "owner": "button",
             "states": [
               "default",
@@ -499,9 +499,9 @@
         "Composer",
         "Outlined",
         "Outlined primary",
-        "Outlined primary · With icon",
+        "Outlined primary \u00b7 With icon",
         "Primary",
-        "Primary · With icon",
+        "Primary \u00b7 With icon",
         "Dark"
       ],
       "searchTags": [
@@ -512,19 +512,19 @@
       "previewConfigurations": [
         {
           "id": "main",
-          "name": "Default · With icon",
+          "name": "Default \u00b7 With icon",
           "selector": "#examples > .example:nth-child(1)",
           "interactionTarget": "main"
         },
         {
           "id": "label-only",
-          "name": "Default · Label only",
+          "name": "Default \u00b7 Label only",
           "selector": "#examples > .example:nth-child(2)",
           "interactionTarget": "label-only"
         },
         {
           "id": "primary-icon",
-          "name": "Primary · With icon",
+          "name": "Primary \u00b7 With icon",
           "selector": "#examples > .example:nth-child(6)",
           "interactionTarget": "primary-icon"
         },
@@ -536,7 +536,7 @@
         },
         {
           "id": "outlined-primary-icon",
-          "name": "Outlined primary · With icon",
+          "name": "Outlined primary \u00b7 With icon",
           "selector": "#examples > .example:nth-child(9)",
           "interactionTarget": "outlined-primary-icon"
         },
@@ -757,7 +757,7 @@
         "targets": [
           {
             "id": "icon-text-left",
-            "name": "Icon and text · Left",
+            "name": "Icon and text \u00b7 Left",
             "owner": "half-button",
             "states": [
               "default",
@@ -769,7 +769,7 @@
           },
           {
             "id": "text-left",
-            "name": "Text only · Left",
+            "name": "Text only \u00b7 Left",
             "owner": "half-button",
             "states": [
               "default",
@@ -781,7 +781,7 @@
           },
           {
             "id": "icon-left",
-            "name": "Icon only · Left",
+            "name": "Icon only \u00b7 Left",
             "owner": "half-button",
             "states": [
               "default",
@@ -793,7 +793,7 @@
           },
           {
             "id": "icon-text-right",
-            "name": "Text and icon · Right",
+            "name": "Text and icon \u00b7 Right",
             "owner": "half-button",
             "states": [
               "default",
@@ -805,7 +805,7 @@
           },
           {
             "id": "text-right",
-            "name": "Text only · Right",
+            "name": "Text only \u00b7 Right",
             "owner": "half-button",
             "states": [
               "default",
@@ -817,7 +817,7 @@
           },
           {
             "id": "icon-right",
-            "name": "Icon only · Right",
+            "name": "Icon only \u00b7 Right",
             "owner": "half-button",
             "states": [
               "default",
@@ -829,7 +829,7 @@
           },
           {
             "id": "composer-left",
-            "name": "Composer · Left",
+            "name": "Composer \u00b7 Left",
             "owner": "half-button",
             "states": [
               "default",
@@ -841,7 +841,7 @@
           },
           {
             "id": "composer-right",
-            "name": "Composer · Right",
+            "name": "Composer \u00b7 Right",
             "owner": "half-button",
             "states": [
               "default",
@@ -855,62 +855,62 @@
         "width": 300
       },
       "variants": [
-        "Icon and text · Left",
-        "Text only · Left",
-        "Icon only · Left",
-        "Text and icon · Right",
-        "Text only · Right",
-        "Icon only · Right",
-        "Composer · Left",
-        "Composer · Right"
+        "Icon and text \u00b7 Left",
+        "Text only \u00b7 Left",
+        "Icon only \u00b7 Left",
+        "Text and icon \u00b7 Right",
+        "Text only \u00b7 Right",
+        "Icon only \u00b7 Right",
+        "Composer \u00b7 Left",
+        "Composer \u00b7 Right"
       ],
       "dependencies": [],
       "previewConfigurations": [
         {
           "id": "icon-text-left",
-          "name": "Icon and text · Left",
+          "name": "Icon and text \u00b7 Left",
           "selector": "main > section:nth-of-type(1)",
           "interactionTarget": "icon-text-left"
         },
         {
           "id": "icon-text-right",
-          "name": "Text and icon · Right",
+          "name": "Text and icon \u00b7 Right",
           "selector": "main > section:nth-of-type(4)",
           "interactionTarget": "icon-text-right"
         },
         {
           "id": "text-left",
-          "name": "Text only · Left",
+          "name": "Text only \u00b7 Left",
           "selector": "main > section:nth-of-type(2)",
           "interactionTarget": "text-left"
         },
         {
           "id": "text-right",
-          "name": "Text only · Right",
+          "name": "Text only \u00b7 Right",
           "selector": "main > section:nth-of-type(5)",
           "interactionTarget": "text-right"
         },
         {
           "id": "icon-left",
-          "name": "Icon only · Left",
+          "name": "Icon only \u00b7 Left",
           "selector": "main > section:nth-of-type(3)",
           "interactionTarget": "icon-left"
         },
         {
           "id": "icon-right",
-          "name": "Icon only · Right",
+          "name": "Icon only \u00b7 Right",
           "selector": "main > section:nth-of-type(6)",
           "interactionTarget": "icon-right"
         },
         {
           "id": "composer-left",
-          "name": "Composer · Left",
+          "name": "Composer \u00b7 Left",
           "selector": "main > section:nth-of-type(7)",
           "interactionTarget": "composer-left"
         },
         {
           "id": "composer-right",
-          "name": "Composer · Right",
+          "name": "Composer \u00b7 Right",
           "selector": "main > section:nth-of-type(8)",
           "interactionTarget": "composer-right"
         }
@@ -973,9 +973,15 @@
             "token": "--titan-mail-row-gap",
             "selector": ".titan-message-list > .titan-message-row + .titan-message-row",
             "property": "margin-top"
+          },
+          {
+            "label": "Stacked list right inset",
+            "token": "--titan-space-4",
+            "selector": ".titan-message-list:not(.titan-message-list--wide)",
+            "property": "padding-right"
           }
         ],
-        "ownership": "List owns row arrangement, the between-row gap, wide-layout outer insets and scrolling. Message row owns each item’s internal spacing.",
+        "ownership": "List owns row arrangement, the between-row gap, wide-layout outer insets and scrolling. Message row owns each item\u2019s internal spacing.",
         "behavior": "Composes Message rows unchanged; open, check and star callbacks. Caller owns message data and selected row. Single-line rows retain a 640px minimum width and scroll horizontally in narrow containers.",
         "alignment": "Rows share aligned sender/subject columns in wide layout; stacked rows align text to a common left edge.",
         "interactionOwnership": "Composes Message row; row opening, selection, focus and star behavior belong to that component."
@@ -1132,7 +1138,7 @@
           },
           {
             "label": "Wide right inset",
-            "token": "--titan-space-16",
+            "token": "--titan-space-24",
             "selector": ".titan-message-row--wide",
             "property": "padding-right"
           },
@@ -1775,31 +1781,36 @@
       }
     },
     {
-      "id": "tabs",
-      "name": "Tabs",
+      "id": "tab",
+      "name": "Tab",
       "category": "Navigation",
-      "class": "titan-tabs",
+      "class": "titan-tab",
       "css": "components/selection.css",
       "module": "components/selection.js",
-      "render": "TitanSelection.tabs(options)",
-      "preview": "specimens/selection.html?part=tabs",
+      "render": "TitanSelection.tab(options)",
+      "preview": "specimens/tab.html",
       "previewAutoHeight": true,
       "galleryWidth": 360,
       "states": [
         "default",
+        "hover",
         "focus",
         "selected"
       ],
-      "usage": "Switch between message categories.",
+      "usage": "One selectable tab within a Tabs group.",
       "props": {
-        "label": "Required accessible label",
-        "options": "items with id, label, optional count/panel; value selects a tab"
+        "id": "Required stable id",
+        "label": "Required text",
+        "count": "Optional count, including zero",
+        "variant": "filled (default) or underline",
+        "selected": "Caller-owned boolean",
+        "panel": "Optional panel id for aria-controls"
       },
       "anatomy": {
         "parts": [
           {
-            "name": "Control",
-            "selector": ".titan-tabs"
+            "name": "Tab control",
+            "selector": ".titan-tab"
           }
         ],
         "spacing": [
@@ -1816,37 +1827,135 @@
             "property": "padding-right"
           }
         ],
-        "ownership": "Control owns internal spacing; parent owns surrounding layout.",
-        "behavior": "Arrow keys, Home and End move focus and select tabs. change callback reports selected id. Caller owns panels.",
-        "interactionOwnership": "Owns selection and keyboard focus movement across its internal tabs.",
-        "selectionSurface": "Highlight paint spans the full control height, is inset horizontally by --titan-selection-inset (4px), and uses --titan-selection-radius (4px). Control hit area and content geometry are unchanged. Selected/hover fills stay within this surface; keyboard focus remains independently visible. Selected uses a rounded inset fill instead of the former boundary underline."
+        "ownership": "Tab owns its hit area, horizontal insets, label/count and state paint.",
+        "behavior": "Native button activation emits activate(id). Caller supplies selected via mount handle.update({selected}).",
+        "interactionOwnership": "Tab owns hover, focus and activation; selected is supplied state."
+      },
+      "interactions": {
+        "preview": "specimens/interactions.html?part=tab",
+        "width": 360,
+        "targets": [
+          {
+            "id": "filled",
+            "name": "Filled",
+            "states": [
+              "default",
+              "hover",
+              "focus",
+              "selected"
+            ],
+            "owner": "tab"
+          },
+          {
+            "id": "underline",
+            "name": "Underline",
+            "states": [
+              "default",
+              "hover",
+              "focus",
+              "selected"
+            ],
+            "owner": "tab"
+          }
+        ]
+      },
+      "previewConfigurations": [
+        {
+          "id": "filled",
+          "name": "Filled",
+          "selector": "#filled",
+          "interactionTarget": "filled"
+        },
+        {
+          "id": "underline",
+          "name": "Underline",
+          "selector": "#underline",
+          "interactionTarget": "underline"
+        }
+      ],
+      "previewLayout": {
+        "columns": 1
+      }
+    },
+    {
+      "id": "tabs",
+      "name": "Tabs",
+      "category": "Navigation",
+      "class": "titan-tabs",
+      "css": "components/selection.css",
+      "module": "components/selection.js",
+      "render": "TitanSelection.tabs(options)",
+      "preview": "specimens/tab.html?group=1",
+      "previewAutoHeight": true,
+      "galleryWidth": 360,
+      "states": [
+        "default"
+      ],
+      "usage": "Arrange tabs and coordinate selection and keyboard navigation; content panels belong to the caller.",
+      "props": {
+        "label": "Required accessible label",
+        "options": "One or more items with unique id, label, optional count/panel; value selects a tab. No fixed item-count limit.",
+        "variant": "filled (default) or underline, forwarded to each Tab"
+      },
+      "anatomy": {
+        "parts": [
+          {
+            "name": "Control",
+            "selector": ".titan-tabs"
+          }
+        ],
+        "spacing": [
+          {
+            "label": "Between tabs",
+            "token": "--titan-space-8",
+            "selector": ".titan-tabs",
+            "property": "column-gap"
+          }
+        ],
+        "ownership": "Group owns horizontal arrangement and keyboard traversal. Tab owns child geometry and states.",
+        "behavior": "Arrow keys/Home/End focus and request selection. With value, caller updates via handle.update({value}); without value, group manages selection. Cleanup handle removes listeners.",
+        "interactionOwnership": "Composes registered Tab controls; coordinates one keyboard entry and selection requests."
       },
       "interactions": {
         "preview": "specimens/interactions.html?part=tabs",
         "width": 360,
         "targets": [
           {
-            "id": "main",
-            "name": "Tabs",
-            "states": [
-              "default",
-              "focus",
-              "selected"
-            ],
+            "id": "filled",
+            "name": "Filled",
+            "states": [],
+            "previewOnly": true,
+            "owner": "tabs"
+          },
+          {
+            "id": "underline",
+            "name": "Underline",
+            "states": [],
+            "previewOnly": true,
             "owner": "tabs"
           }
         ]
       },
       "previewConfigurations": [
         {
-          "id": "default",
-          "name": "Default",
-          "interactionTarget": "main"
+          "id": "filled",
+          "name": "Filled",
+          "selector": "#filled",
+          "interactionTarget": "filled"
+        },
+        {
+          "id": "underline",
+          "name": "Underline",
+          "selector": "#underline",
+          "interactionTarget": "underline"
         }
       ],
       "previewLayout": {
         "columns": 1
-      }
+      },
+      "dependencies": [
+        "tab"
+      ]
     },
     {
       "id": "dropdown-trigger",
@@ -2190,7 +2299,7 @@
             "property": "gap"
           }
         ],
-        "ownership": "Group owns horizontal alignment, the 4px gap and the action wrappers that carry routing ids; child Button markup stays unchanged. Button owns each action’s inset and icon-label spacing. Parent supplies available width.",
+        "ownership": "Group owns horizontal alignment, the 4px gap and the action wrappers that carry routing ids; child Button markup stays unchanged. Button owns each action\u2019s inset and icon-label spacing. Parent supplies available width.",
         "interactionOwnership": "No group-owned interaction. Child Button owns hover, focus, pressing and disabled states; the group only routes wrapper ids to callbacks.",
         "behavior": "Semantic group with native child buttons; routing ids live on group-owned wrappers. No toolbar-specific arrow navigation or additional group state is implied."
       },
@@ -3115,7 +3224,7 @@
             "property": "padding-bottom"
           }
         ],
-        "ownership": "Owns outer 681px × 640px composition, field-region insets and editable body. Header, tools, formatting and send actions are registered children with their own spacing. Parent owns placement and available width.",
+        "ownership": "Owns outer 681px \u00d7 640px composition, field-region insets and editable body. Header, tools, formatting and send actions are registered children with their own spacing. Parent owns placement and available width.",
         "behavior": "Preferred width 681px and height 640px, constrained by parent width. Body fills remaining height and scrolls; fields and toolbars remain fixed. Open/close/minimize belong to the window. Sending, menus, formatting, recipients and feature operations are caller-owned.",
         "interactionOwnership": "Owns minimize state and close request. Native body editing is local. Child controls emit commands; host owns sending, formatting, menus, expansion and navigation."
       },
@@ -3197,14 +3306,14 @@
         "targets": [
           {
             "id": "default",
-            "name": "Default · 36px",
+            "name": "Default \u00b7 36px",
             "owner": "avatar",
             "states": [],
             "previewOnly": true
           },
           {
             "id": "small",
-            "name": "Small · 24px",
+            "name": "Small \u00b7 24px",
             "owner": "avatar",
             "states": [],
             "previewOnly": true
@@ -3214,13 +3323,13 @@
       "previewConfigurations": [
         {
           "id": "default",
-          "name": "Default · 36px",
+          "name": "Default \u00b7 36px",
           "selector": "main > section:nth-of-type(1)",
           "interactionTarget": "default"
         },
         {
           "id": "small",
-          "name": "Small · 24px",
+          "name": "Small \u00b7 24px",
           "selector": "main > section:nth-of-type(2)",
           "interactionTarget": "small"
         }
@@ -4003,7 +4112,7 @@
           }
         ],
         "ownership": "Account header owns the chevron box, external avatar-to-address gap and address truncation. It renders the nested Avatar using its registered small variant at 24px and purple surface. No child styling overrides are supported. Parent owns sidebar placement and surrounding rules.",
-        "behavior": "Native button. Toggles aria-expanded on click and reports the new state through the toggle callback; the caller owns showing or hiding the folders beneath it. Collapsing rotates the chevron. Addresses longer than the row truncate with an ellipsis — that is inherent, not a separate variant.",
+        "behavior": "Native button. Toggles aria-expanded on click and reports the new state through the toggle callback; the caller owns showing or hiding the folders beneath it. Collapsing rotates the chevron. Addresses longer than the row truncate with an ellipsis \u2014 that is inherent, not a separate variant.",
         "alignment": "Chevron, avatar and address share one centred row; the address takes the remaining width.",
         "interactionOwnership": "Owns its own click, expanded state, focus and disabled treatment."
       },
@@ -4047,19 +4156,20 @@
       "category": "Layouts",
       "preview": "specimens/workspace-pattern.html",
       "previewHeight": 600,
-      "summary": "Navigation, message list and reading pane with a top bar.",
+      "summary": "Three adjacent sections with a full-height left section and a shared upper section above the middle and right.",
       "structure": [
-        "Navigation pane",
-        "Message list",
-        "Reading pane",
-        "Top bar"
+        "Full-height left section",
+        "Middle section",
+        "Right section",
+        "Upper section spanning the middle and right"
       ],
       "requirements": [
-        "Pane sizing and scrolling follow the referenced email shell.",
-        "Content controls retain their component contracts."
+        "The left section spans the full height; the upper section spans the two remaining columns.",
+        "Column widths, scrolling and the smaller-screen arrangement are chosen by the consuming screen.",
+        "Sections accept any content; this layout assigns no content roles."
       ],
       "useWhen": [
-        "Browsing a collection while reading an item."
+        "Arranging three adjacent sections with a shared upper section over the last two."
       ],
       "previewAutoHeight": true
     },
@@ -4136,23 +4246,38 @@
       ]
     },
     {
-      "id": "app-switcher",
-      "name": "App switcher",
-      "category": "Interactions",
+      "id": "anchored-popover",
+      "name": "Anchored popover disclosure",
+      "category": "Interaction Patterns",
       "preview": "specimens/app-switcher.html?part=app-switcher",
       "previewHeight": 680,
       "previewAutoHeight": true,
-      "summary": "Page-initialized coordination between Dropdown trigger and App switcher panel.",
+      "summary": "A registered trigger reveals a caller-owned floating panel anchored to it; the page coordinates visibility, placement, dismissal and focus.",
       "structure": [
-        "Dropdown trigger",
-        "App switcher panel"
+        "Trigger (a registered control, e.g. Dropdown trigger).",
+        "Floating panel (a separate registered surface; App switcher panel is the reference implementation).",
+        "Page-owned coordination: visibility, placement, dismissal and focus return."
       ],
       "requirements": [
-        "Page supplies the trigger slot and initializes patterns/app-switcher.js bind; import patterns/app-switcher.css for anchoring.",
-        "Pattern coordinates visibility, outside dismissal, Escape, focus return and selection callbacks. Each component retains its own interaction states."
+        "Trigger and panel stay independently registered; do not fold the panel into the trigger component or treat it as the trigger's hover, pressed or selected state.",
+        "The page owns open/close state, outside-click and Escape dismissal, focus return and the panel's actions.",
+        "Render the panel in a container that can extend outside the sidebar or parent layout, and keep it within the viewport.",
+        "Reference implementation: the App switcher coordination (patterns/app-switcher.js and patterns/app-switcher.css, bound by the page)."
       ],
       "useWhen": [
-        "Opening the app launcher from a page header."
+        "A short-lived choice or navigation surface anchored to its trigger.",
+        "The panel content is page-owned or a separate registered surface."
+      ],
+      "avoid": [
+        "Do not restyle the trigger or the panel internals from the parent.",
+        "Do not imply a route or a persistent page change; the disclosure is transient."
+      ],
+      "searchTags": [
+        "popover",
+        "disclosure",
+        "dropdown",
+        "menu",
+        "anchor"
       ]
     }
   ],
@@ -4343,11 +4468,11 @@
         "layer": "semantic"
       },
       "--titan-mail-row-inset-block": {
-        "label": "Mail row · vertical",
+        "label": "Mail row \u00b7 vertical",
         "layer": "semantic"
       },
       "--titan-mail-row-inset-inline": {
-        "label": "Mail row · horizontal",
+        "label": "Mail row \u00b7 horizontal",
         "layer": "semantic"
       },
       "--titan-mail-row-gap": {
@@ -4355,11 +4480,11 @@
         "layer": "semantic"
       },
       "--titan-message-inset-inline": {
-        "label": "Message · horizontal",
+        "label": "Message \u00b7 horizontal",
         "layer": "semantic"
       },
       "--titan-message-inset-block": {
-        "label": "Message header · vertical",
+        "label": "Message header \u00b7 vertical",
         "layer": "semantic"
       },
       "--titan-message-header-gap": {
@@ -4368,21 +4493,21 @@
       },
       "--card-border-radius": {
         "label": "Card",
-        "status": "Defined · not yet applied",
+        "status": "Defined \u00b7 not yet applied",
         "layer": "semantic"
       },
       "--compose-border-radius": {
         "label": "Composer",
-        "status": "Defined · not yet applied",
+        "status": "Defined \u00b7 not yet applied",
         "layer": "semantic"
       },
       "--search-border-radius": {
         "label": "Search",
-        "status": "Defined · not yet applied",
+        "status": "Defined \u00b7 not yet applied",
         "layer": "semantic"
       },
       "--reading-pane-bg": {
-        "label": "Reading surface · legacy",
+        "label": "Reading surface \u00b7 legacy",
         "layer": "semantic"
       },
       "--search-bg": {
@@ -4398,7 +4523,7 @@
         "layer": "semantic"
       },
       "--selected-bg-strong": {
-        "label": "Selected · strong",
+        "label": "Selected \u00b7 strong",
         "layer": "semantic"
       },
       "--border-color": {
@@ -4418,7 +4543,7 @@
         "layer": "semantic"
       },
       "--card-spacing": {
-        "label": "Card spacing · legacy",
+        "label": "Card spacing \u00b7 legacy",
         "layer": "semantic"
       },
       "--click-scale": {
@@ -4460,46 +4585,6 @@
       },
       "--titan-space-24": {
         "layer": "primitive"
-      },
-      "--titan-color-white": {
-        "layer": "primitive",
-        "colorFamily": "Neutrals",
-        "colorOrder": 0
-      },
-      "--titan-color-paper": {
-        "layer": "primitive",
-        "colorFamily": "Neutrals",
-        "colorOrder": 157
-      },
-      "--titan-color-ink": {
-        "layer": "primitive",
-        "colorFamily": "Neutrals",
-        "colorOrder": 8980
-      },
-      "--titan-color-charcoal": {
-        "layer": "primitive",
-        "colorFamily": "Neutrals",
-        "colorOrder": 8902
-      },
-      "--titan-color-gray-800": {
-        "layer": "primitive",
-        "colorFamily": "Neutrals",
-        "colorOrder": 8000
-      },
-      "--titan-color-gray-600": {
-        "layer": "primitive",
-        "colorFamily": "Neutrals",
-        "colorOrder": 6000
-      },
-      "--titan-color-gray-500": {
-        "layer": "primitive",
-        "colorFamily": "Neutrals",
-        "colorOrder": 4667
-      },
-      "--titan-color-blue": {
-        "layer": "primitive",
-        "colorFamily": "Blue",
-        "colorOrder": 4569
       },
       "--titan-font-system": {
         "layer": "primitive"
@@ -4583,14 +4668,16 @@
         "layer": "semantic"
       },
       "--titan-color-blue-50": {
+        "label": "Blue 50",
         "layer": "primitive",
         "colorFamily": "Blue",
         "colorOrder": 314
       },
       "--titan-color-blue-100": {
+        "label": "Blue 100",
         "layer": "primitive",
         "colorFamily": "Blue",
-        "colorOrder": 725
+        "colorOrder": 490
       },
       "--titan-surface-selected": {
         "label": "Selected surface",
@@ -4861,90 +4948,15 @@
       "--titan-elevation-4-bottom-shadow": {
         "layer": "semantic"
       },
-      "--titan-color-night-10": {
-        "layer": "primitive",
-        "colorFamily": "Neutrals",
-        "colorOrder": 8745
-      },
-      "--titan-color-night-20": {
-        "layer": "primitive",
-        "colorFamily": "Neutrals",
-        "colorOrder": 9216
-      },
-      "--titan-color-night-30": {
-        "layer": "primitive",
-        "colorFamily": "Neutrals",
-        "colorOrder": 1569
-      },
-      "--titan-color-night-40": {
-        "layer": "primitive",
-        "colorFamily": "Neutrals",
-        "colorOrder": 549
-      },
-      "--titan-color-night-50": {
-        "layer": "primitive",
-        "colorFamily": "Neutrals",
-        "colorOrder": 3098
-      },
-      "--titan-color-night-60": {
-        "layer": "primitive",
-        "colorFamily": "Neutrals",
-        "colorOrder": 4000
-      },
       "--titan-color-night-70": {
         "layer": "primitive",
         "colorFamily": "Blue",
         "colorOrder": 7647
       },
-      "--titan-color-night-80": {
-        "layer": "primitive",
-        "colorFamily": "Blue",
-        "colorOrder": 2549
-      },
-      "--titan-color-night-90": {
-        "layer": "primitive",
-        "colorFamily": "Neutrals",
-        "colorOrder": 7961
-      },
-      "--titan-color-night-100": {
-        "layer": "primitive",
-        "colorFamily": "Neutrals",
-        "colorOrder": 7686
-      },
-      "--titan-color-night-110": {
-        "layer": "primitive",
-        "colorFamily": "Neutrals",
-        "colorOrder": 9020
-      },
-      "--titan-color-night-120": {
-        "layer": "primitive",
-        "colorFamily": "Neutrals",
-        "colorOrder": 8118
-      },
       "--titan-color-night-130": {
         "layer": "primitive",
         "colorFamily": "Blue",
         "colorOrder": 7078
-      },
-      "--titan-color-night-140": {
-        "layer": "primitive",
-        "colorFamily": "Neutrals",
-        "colorOrder": 8275
-      },
-      "--titan-color-night-150": {
-        "layer": "primitive",
-        "colorFamily": "Neutrals",
-        "colorOrder": 8392
-      },
-      "--titan-color-night-160": {
-        "layer": "primitive",
-        "colorFamily": "Neutrals",
-        "colorOrder": 6667
-      },
-      "--titan-color-night-170": {
-        "layer": "primitive",
-        "colorFamily": "Neutrals",
-        "colorOrder": 5608
       },
       "--titan-icon-button-pressed-surface": {
         "layer": "semantic"
@@ -4973,85 +4985,301 @@
       "--titan-launcher-divider": {
         "layer": "semantic"
       },
-      "--titan-color-gray-25": {
-        "layer": "primitive",
-        "colorFamily": "Neutrals",
-        "colorOrder": 216
-      },
-      "--titan-color-gray-175": {
-        "layer": "primitive",
-        "colorFamily": "Neutrals",
-        "colorOrder": 804
-      },
-      "--titan-color-gray-200": {
-        "layer": "primitive",
-        "colorFamily": "Neutrals",
-        "colorOrder": 1294
-      },
-      "--titan-color-gray-50": {
-        "layer": "primitive",
-        "colorFamily": "Neutrals",
-        "colorOrder": 373
-      },
-      "--titan-color-gray-150": {
-        "layer": "primitive",
-        "colorFamily": "Neutrals",
-        "colorOrder": 824
-      },
-      "--titan-color-blue-75": {
+      "--titan-color-blue-120": {
+        "label": "Blue 120",
         "layer": "primitive",
         "colorFamily": "Blue",
-        "colorOrder": 667
+        "colorOrder": 922
       },
-      "--titan-color-gray-700": {
+      "--titan-color-blue-150": {
+        "label": "Blue 150",
+        "layer": "primitive",
+        "colorFamily": "Blue",
+        "colorOrder": 1745
+      },
+      "--titan-color-blue-180": {
+        "label": "Blue 180",
+        "layer": "primitive",
+        "colorFamily": "Blue",
+        "colorOrder": 2784
+      },
+      "--titan-color-blue-200": {
+        "label": "Blue 200",
+        "layer": "primitive",
+        "colorFamily": "Blue",
+        "colorOrder": 3314
+      },
+      "--titan-color-blue-300": {
+        "label": "Blue 300",
+        "layer": "primitive",
+        "colorFamily": "Blue",
+        "colorOrder": 3490
+      },
+      "--titan-color-blue-350": {
+        "label": "Blue 350",
+        "layer": "primitive",
+        "colorFamily": "Blue",
+        "colorOrder": 4373
+      },
+      "--titan-color-blue-400-primary": {
+        "label": "Blue 400 Primary",
+        "layer": "primitive",
+        "colorFamily": "Blue",
+        "colorOrder": 4569
+      },
+      "--titan-color-blue-500": {
+        "label": "Blue 500",
+        "layer": "primitive",
+        "colorFamily": "Blue",
+        "colorOrder": 5353
+      },
+      "--titan-color-blue-600": {
+        "label": "Blue 600",
+        "layer": "primitive",
+        "colorFamily": "Blue",
+        "colorOrder": 6608
+      },
+      "--titan-color-green-100": {
+        "label": "Green 100",
+        "layer": "primitive",
+        "colorFamily": "Cyan",
+        "colorOrder": 5784
+      },
+      "--titan-color-green-150": {
+        "label": "Green 150",
+        "layer": "primitive",
+        "colorFamily": "Green",
+        "colorOrder": 5922
+      },
+      "--titan-color-green-200": {
+        "label": "Green 200",
+        "layer": "primitive",
+        "colorFamily": "Cyan",
+        "colorOrder": 7627
+      },
+      "--titan-color-green-50": {
+        "label": "Green 50",
+        "layer": "primitive",
+        "colorFamily": "Green",
+        "colorOrder": 294
+      },
+      "--titan-color-grey-400": {
+        "label": "Grey 400",
         "layer": "primitive",
         "colorFamily": "Neutrals",
-        "colorOrder": 7137
+        "colorOrder": 157
       },
-      "--titan-color-gray-900": {
-        "layer": "primitive",
-        "colorFamily": "Neutrals",
-        "colorOrder": 8549
-      },
-      "--titan-color-gray-850": {
-        "layer": "primitive",
-        "colorFamily": "Neutrals",
-        "colorOrder": 8235
-      },
-      "--titan-color-black": {
-        "layer": "primitive",
-        "colorFamily": "Neutrals",
-        "colorOrder": 10000
-      },
-      "--titan-color-gray-100": {
-        "layer": "primitive",
-        "colorFamily": "Neutrals",
-        "colorOrder": 588
-      },
-      "--titan-color-gray-75": {
+      "--titan-color-grey-450": {
+        "label": "Grey 450",
         "layer": "primitive",
         "colorFamily": "Neutrals",
         "colorOrder": 510
       },
-      "--titan-color-gray-125": {
+      "--titan-color-grey-500": {
+        "label": "Grey 500",
         "layer": "primitive",
         "colorFamily": "Neutrals",
-        "colorOrder": 706
+        "colorOrder": 588
       },
-      "--titan-color-gray-250": {
+      "--titan-color-grey-550": {
+        "label": "Grey 550",
         "layer": "primitive",
         "colorFamily": "Neutrals",
         "colorOrder": 1333
       },
-      "--titan-color-gray-300": {
+      "--titan-color-grey-600": {
+        "label": "Grey 600",
         "layer": "primitive",
         "colorFamily": "Neutrals",
-        "colorOrder": 2000
+        "colorOrder": 1294
       },
-      "--titan-color-gray-225": {
+      "--titan-color-grey-700": {
+        "label": "Grey 700",
         "layer": "primitive",
         "colorFamily": "Neutrals",
-        "colorOrder": 1020
+        "colorOrder": 2588
+      },
+      "--titan-color-grey-750": {
+        "label": "Grey 750",
+        "layer": "primitive",
+        "colorFamily": "Neutrals",
+        "colorOrder": 3882
+      },
+      "--titan-color-grey-800": {
+        "label": "Grey 800",
+        "layer": "primitive",
+        "colorFamily": "Neutrals",
+        "colorOrder": 4667
+      },
+      "--titan-color-grey-810": {
+        "label": "Grey 810",
+        "layer": "primitive",
+        "colorFamily": "Neutrals",
+        "colorOrder": 5647
+      },
+      "--titan-color-grey-815": {
+        "label": "Grey 815",
+        "layer": "primitive",
+        "colorFamily": "Neutrals",
+        "colorOrder": 6000
+      },
+      "--titan-color-grey-820": {
+        "label": "Grey 820",
+        "layer": "primitive",
+        "colorFamily": "Neutrals",
+        "colorOrder": 7098
+      },
+      "--titan-color-grey-830": {
+        "label": "Grey 830",
+        "layer": "primitive",
+        "colorFamily": "Neutrals",
+        "colorOrder": 8235
+      },
+      "--titan-color-grey-850": {
+        "label": "Grey 850",
+        "layer": "primitive",
+        "colorFamily": "Neutrals",
+        "colorOrder": 8392
+      },
+      "--titan-color-grey-900": {
+        "label": "Grey 900",
+        "layer": "primitive",
+        "colorFamily": "Neutrals",
+        "colorOrder": 8000
+      },
+      "--titan-color-grey-910": {
+        "label": "Grey 910",
+        "layer": "primitive",
+        "colorFamily": "Neutrals",
+        "colorOrder": 7843
+      },
+      "--titan-color-grey-950": {
+        "label": "Grey 950",
+        "layer": "primitive",
+        "colorFamily": "Neutrals",
+        "colorOrder": 8765
+      },
+      "--titan-color-grey-965": {
+        "label": "Grey 965",
+        "layer": "primitive",
+        "colorFamily": "Neutrals",
+        "colorOrder": 8980
+      },
+      "--titan-color-grey-980": {
+        "label": "Grey 980",
+        "layer": "primitive",
+        "colorFamily": "Neutrals",
+        "colorOrder": 9216
+      },
+      "--titan-color-grey-990": {
+        "label": "Grey 990",
+        "layer": "primitive",
+        "colorFamily": "Neutrals",
+        "colorOrder": 9410
+      },
+      "--titan-color-grey-black": {
+        "label": "Grey Black",
+        "layer": "primitive",
+        "colorFamily": "Neutrals",
+        "colorOrder": 10000
+      },
+      "--titan-color-grey-white": {
+        "label": "Grey White",
+        "layer": "primitive",
+        "colorFamily": "Neutrals",
+        "colorOrder": 0
+      },
+      "--titan-color-pink-100": {
+        "label": "Pink 100",
+        "layer": "primitive",
+        "colorFamily": "Pink",
+        "colorOrder": 3000
+      },
+      "--titan-color-pink-200": {
+        "label": "Pink 200",
+        "layer": "primitive",
+        "colorFamily": "Pink",
+        "colorOrder": 4725
+      },
+      "--titan-color-purple-100": {
+        "label": "Purple 100",
+        "layer": "primitive",
+        "colorFamily": "Purple",
+        "colorOrder": 373
+      },
+      "--titan-color-purple-200": {
+        "label": "Purple 200",
+        "layer": "primitive",
+        "colorFamily": "Purple",
+        "colorOrder": 5000
+      },
+      "--titan-color-red-100": {
+        "label": "Red 100",
+        "layer": "primitive",
+        "colorFamily": "Red",
+        "colorOrder": 2392
+      },
+      "--titan-color-red-900": {
+        "label": "Red 900",
+        "layer": "primitive",
+        "colorFamily": "Orange",
+        "colorOrder": 4431
+      },
+      "--titan-color-violet-700": {
+        "label": "Violet 700",
+        "layer": "primitive",
+        "colorFamily": "Purple",
+        "colorOrder": 6353
+      },
+      "--titan-color-violet-720": {
+        "label": "Violet 720",
+        "layer": "primitive",
+        "colorFamily": "Purple",
+        "colorOrder": 6843
+      },
+      "--titan-color-violet-750": {
+        "label": "Violet 750",
+        "layer": "primitive",
+        "colorFamily": "Purple",
+        "colorOrder": 7569
+      },
+      "--titan-color-violet-800": {
+        "label": "Violet 800",
+        "layer": "primitive",
+        "colorFamily": "Purple",
+        "colorOrder": 7647
+      },
+      "--titan-color-violet-900": {
+        "label": "Violet 900",
+        "layer": "primitive",
+        "colorFamily": "Purple",
+        "colorOrder": 8098
+      },
+      "--titan-color-yellow-100": {
+        "label": "Yellow 100",
+        "layer": "primitive",
+        "colorFamily": "Orange",
+        "colorOrder": 3392
+      },
+      "--titan-color-yellow-200": {
+        "label": "Yellow 200",
+        "layer": "primitive",
+        "colorFamily": "Orange",
+        "colorOrder": 5980
+      },
+      "--titan-color-yellow-50-upgrade": {
+        "label": "Yellow 50 Upgrade",
+        "layer": "primitive",
+        "colorFamily": "Orange",
+        "colorOrder": 3157
+      },
+      "--titan-launcher-surface": {
+        "label": "App switcher surface",
+        "layer": "semantic"
+      },
+      "--titan-launcher-selected-surface": {
+        "label": "Selected app surface",
+        "layer": "semantic"
       }
     },
     "textStyles": [
@@ -5238,6 +5466,16 @@
       {
         "token": "--titan-launcher-divider",
         "label": "Launcher divider"
+      },
+      {
+        "token": "--titan-launcher-surface",
+        "label": "App switcher surface",
+        "kind": "surface"
+      },
+      {
+        "token": "--titan-launcher-selected-surface",
+        "label": "Selected app surface",
+        "kind": "surface"
       }
     ],
     "spacingRoles": [
@@ -5256,7 +5494,7 @@
       },
       {
         "token": "--titan-mail-row-inset-inline",
-        "primitive": "--titan-space-12",
+        "primitive": "--titan-space-20",
         "kind": "inline",
         "label": "Mail row inset",
         "textGap": "--titan-gap-text-tight"
@@ -5459,35 +5697,35 @@
     ],
     "elevationLevels": [
       {
-        "label": "Level 0 · Flat",
+        "label": "Level 0 \u00b7 Flat",
         "token": "--titan-elevation-0-shadow",
         "border": "--titan-elevation-0-border",
         "primitive": "--titan-shadow-none",
         "class": "titan-elevation-0"
       },
       {
-        "label": "Level 1 · Resting surface",
+        "label": "Level 1 \u00b7 Resting surface",
         "token": "--titan-elevation-1-shadow",
         "border": "--titan-elevation-1-border",
         "primitive": "--titan-shadow-down-small",
         "class": "titan-elevation-1"
       },
       {
-        "label": "Level 2 · Raised control",
+        "label": "Level 2 \u00b7 Raised control",
         "token": "--titan-elevation-2-shadow",
         "border": "--titan-elevation-2-border",
         "primitive": "--titan-shadow-down-medium",
         "class": "titan-elevation-2"
       },
       {
-        "label": "Level 3 · Floating surface",
+        "label": "Level 3 \u00b7 Floating surface",
         "token": "--titan-elevation-3-shadow",
         "border": "--titan-elevation-3-border",
         "primitive": "--titan-shadow-raised",
         "class": "titan-elevation-3"
       },
       {
-        "label": "Level 4 · Prominent overlay",
+        "label": "Level 4 \u00b7 Prominent overlay",
         "token": "--titan-elevation-4-shadow",
         "border": "--titan-elevation-4-border",
         "primitive": "--titan-shadow-floating",

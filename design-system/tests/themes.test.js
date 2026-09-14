@@ -21,3 +21,11 @@ test('primary and secondary text retain readable contrast on both base surfaces'
 test('every registered color role resolves through a primitive in each theme',()=>{
  for(const theme of registry.themes){const rows=themeRows(theme.id);for(const role of registry.foundationPresentation.colorRoles){let name=role.token;const seen=new Set();while(!seen.has(name)){seen.add(name);const row=rows.filter(r=>r.isRoot&&r.name===name).at(-1);const alias=row?.value.match(/^var\((--[\w-]+)\)$/);if(!alias)break;name=alias[1];}assert.equal(registry.foundationPresentation.tokens[name]?.layer,'primitive',theme.id+' '+role.token);}}
 });
+test('the complete supplied Figma palette is registered with exact values in both themes',()=>{
+ const source=fs.readFileSync(path.join(root,'../Prototypes/Ishant/design ops/DS-specific shells/colorVariables'),'utf8');
+ const entries=[...source.matchAll(/--([^:;\n]+):\s*(#[0-9a-fA-F]{6})/g)];
+ const expected=new Map();
+ for(const [,raw,hex] of entries){const name='--titan-color-'+raw.replace(/-\(([^)]+)\)/g,'-$1');if(expected.has(name))assert.equal(expected.get(name),hex,'conflicting duplicate '+name);expected.set(name,hex);}
+ assert(expected.size>0);
+ for(const [name,hex] of expected){assert.equal(registry.foundationPresentation.tokens[name]?.layer,'primitive',name);for(const id of ['light','dark'])assert.equal(value(themeRows(id),name),hex,id+' '+name);}
+});

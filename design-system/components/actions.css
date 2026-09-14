@@ -6,11 +6,11 @@
 .titan-icon-button--40>img,.titan-icon-button--40>svg{width:var(--titan-icon-size-action-large);height:var(--titan-icon-size-action-large)}
 .titan-icon-button:hover:not(:disabled){background:var(--hover-bg);transform:scale(1.1)}
 .titan-icon-button[aria-pressed=true]{background:var(--titan-icon-button-pressed-surface);color:var(--titan-action-primary)}
-.titan-button{--titan-button-gap:var(--titan-gap-icon-label);--titan-button-radius:var(--titan-radius-4);gap:var(--titan-button-gap);padding:var(--titan-space-4) var(--titan-space-16);min-height:var(--titan-control-height-default);border-radius:var(--titan-button-radius);background:transparent;color:var(--titan-text-primary);font-size:var(--titan-type-control-size);font-weight:var(--titan-font-weight-regular);line-height:24px}
+.titan-button{--titan-button-gap:var(--titan-gap-icon-label);--titan-button-radius:var(--titan-radius-4);gap:var(--titan-button-gap);padding:var(--titan-space-4) var(--titan-space-12) var(--titan-space-4) var(--titan-space-8);min-height:var(--titan-control-height-default);border-radius:var(--titan-button-radius);background:transparent;color:var(--titan-text-primary);font-size:var(--titan-type-control-size);font-weight:var(--titan-font-weight-regular);line-height:24px}
 .titan-button:hover:not(:disabled){background:var(--hover-bg)}
 .titan-button__icon{display:flex;width:24px;height:24px;align-items:center;justify-content:center;flex-shrink:0}
 .titan-button__icon>img,.titan-button__icon>svg{display:block;width:var(--titan-icon-size-action);height:var(--titan-icon-size-action);object-fit:contain}
-.titan-button:not(:has(.titan-button__icon)){padding-inline:var(--titan-space-16)}
+.titan-button:not(:has(.titan-button__icon)){padding-inline:var(--titan-space-12)}
 /* Split button composes two Half button instances; the group only arranges them. */
 .titan-split-button{display:inline-flex;align-items:stretch;flex-shrink:0}
 /* Half button: one joined segment of a split control. Left/right variants own the

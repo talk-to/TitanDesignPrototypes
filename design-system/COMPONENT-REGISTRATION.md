@@ -340,7 +340,8 @@ one component or treat the popup as the trigger's hover/pressed/selected state.
 This surface-boundary rule does not turn ordinary in-flow disclosure into a new
 variant or remove the existing requirement to register independent controls.
 
-App switcher is now such a pattern under Layouts & patterns → Interactions.
+Anchored popover disclosure (the App switcher coordination) is now such a pattern
+under Layouts & patterns → Interaction Patterns.
 Load patterns/app-switcher.js and patterns/app-switcher.css, supply its render()
 output in Sidebar header's trusted trigger content slot, and call the pattern's
 bind() from the page. Dropdown trigger and App switcher panel remain components.
@@ -417,3 +418,14 @@ preview before consumers use the approved change.
 ## Theme contract
 
 For all color and themed-preview work, follow [THEMES.md](THEMES.md). New registrations must support both themes while preserving fixed dark-surface variants.
+
+## Tab and Tabs
+
+`Tab` owns a native tab button, its label/count, insets and filled/underline
+treatments. Hover and focus are direct states; selected is caller-supplied.
+`Tabs` composes Tab instances and coordinates roving focus and selection requests.
+With an explicit value it is controlled: change(id) must be followed by
+handle.update({value}) from the caller. Without value it manages selection internally.
+The mount return remains a cleanup function and exposes update for silent state updates.
+The consuming page owns panels and data filtering. The email shell uses underline
+Tabs; its static message fixture does not implement category filtering.

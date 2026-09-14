@@ -277,7 +277,7 @@
     /* ── Middle Panel ── */
     .middle-panel {
       width: 443px;
-      border-right: 1px solid var(--border-color);
+      border-right: var(--titan-divider-width-default) solid var(--card-border-color);
       display: flex;
       flex-direction: column;
       flex-shrink: 0;
@@ -286,7 +286,7 @@
     /* ── Top Toolbar (full width above middle + reading pane) ── */
     .top-toolbar {
       height: 64px;
-      border-bottom: 1px solid var(--border-color);
+      border-bottom: var(--titan-divider-width-default) solid var(--card-border-color);
       display: flex;
       align-items: center;
       padding: 0 var(--titan-space-16);
@@ -407,7 +407,7 @@
       height: 52px;
       display: flex;
       align-items: center;
-      padding: 0 var(--titan-space-12);
+      padding: 0 var(--titan-space-20);
       background: var(--titan-surface-base);
       position: relative;
       flex-shrink: 0;
@@ -416,7 +416,7 @@
 
     .tab-checkbox-wrap {
       position: absolute;
-      left: var(--titan-space-12);
+      left: var(--titan-space-20);
       top: var(--titan-space-16);
       width: 14px;
       height: 20px;
@@ -429,38 +429,6 @@
       display: flex;
       margin-left: calc(var(--titan-space-24) + var(--titan-space-8));
       align-self: stretch;
-    }
-
-    .tab-item {
-      display: flex;
-      align-items: center;
-      padding: 0 var(--titan-space-8);
-      cursor: pointer;
-      position: relative;
-      align-self: stretch;
-    }
-
-    .tab-item-label {
-      font-size: var(--titan-type-tab-size);
-      font-weight: var(--titan-font-weight-semibold);
-      color: var(--titan-text-primary);
-      white-space: nowrap;
-      line-height: 20px;
-    }
-
-    .tab-item-label.inactive {
-      color: var(--titan-text-muted);
-      font-weight: var(--titan-font-weight-regular);
-    }
-
-    .tab-item-underline {
-      position: absolute;
-      bottom: -1px;
-      left: 0;
-      right: 0;
-      height: 2px;
-      background: var(--titan-indicator-active);
-      border-radius: 0;
     }
 
     .tabs-right-container {
@@ -891,7 +859,7 @@
     /* Bottom / Format bar */
     .comp-bottom {
       flex-shrink: 0;
-      border-top: 1px solid #ebebeb;
+      border-top: var(--titan-divider-width-default) solid var(--card-border-color);
     }
     .comp-format-bar {
       height: 48px;
@@ -901,7 +869,7 @@
       gap: 6px;
       overflow-x: auto;
       flex-shrink: 0;
-      border-top: 1px solid #ebebeb;
+      border-top: var(--titan-divider-width-default) solid var(--card-border-color);
     }
     .comp-format-bar::-webkit-scrollbar {
       display: none;
@@ -999,7 +967,7 @@
       align-items: center;
       gap: 8px;
       flex-shrink: 0;
-      border-top: 1px solid #ebebeb;
+      border-top: var(--titan-divider-width-default) solid var(--card-border-color);
     }
     .comp-send-btn {
       display: flex;
@@ -1133,7 +1101,7 @@
       align-items: center;
       gap: var(--titan-space-16);
       padding: var(--titan-space-16) var(--titan-space-24);
-      border-bottom: 1px solid #f0f0f0;
+      border-bottom: var(--titan-divider-width-default) solid var(--card-border-color);
       position: relative;
       flex-shrink: 0;
     }
@@ -1558,15 +1526,7 @@
             <div class="tab-checkbox-wrap">
               <input class="titan-checkbox" type="checkbox" aria-label="Select all messages">
             </div>
-            <div class="tab-group">
-              <div class="tab-item">
-                <div class="tab-item-label">Priority (25)</div>
-                <div class="tab-item-underline"></div>
-              </div>
-              <div class="tab-item">
-                <div class="tab-item-label inactive">Other (50)</div>
-              </div>
-            </div>
+            <div class="tab-group" id="mail-tabs"></div>
             <div class="tabs-right-container">
 
               <span id="mail-filter-trigger"></span>
@@ -1931,7 +1891,7 @@
             <!-- Reply Box Card (Embedded Inline) -->
             <div class="reply-box-card" id="reply-box-card" style="display: none; margin-top: 16px; border: 1px solid var(--border-color); border-radius: 4px; box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06); background:var(--titan-surface-base); flex-direction: column; overflow: hidden; margin-bottom: 20px;">
                 <!-- From row -->
-                <div class="reply-box-from-row" style="display: flex; align-items: center; justify-content: space-between; padding: 10px 24px; border-bottom: 1px solid #ebebeb;">
+                <div class="reply-box-from-row" style="display: flex; align-items: center; justify-content: space-between; padding: 10px 24px; border-bottom: var(--titan-divider-width-default) solid var(--card-border-color);">
                   <div style="font-size: 14px; color:var(--titan-text-muted);">From: <span id="reply-box-from" style="color:var(--titan-text-primary);">ishantp@titan.email</span></div>
                   <div style="display: flex; align-items: center; gap: 6px; font-size: 13px; color:var(--titan-text-muted);">
                     <span>Saved</span>
@@ -1946,7 +1906,7 @@
                 </div>
 
                 <!-- Header -->
-                <div class="reply-box-header" style="display: flex; align-items: center; justify-content: space-between; padding: 10px 24px; border-bottom: 1px solid #ebebeb;">
+                <div class="reply-box-header" style="display: flex; align-items: center; justify-content: space-between; padding: 10px 24px; border-bottom: var(--titan-divider-width-default) solid var(--card-border-color);">
                   <div class="reply-box-recipient" id="reply-box-recipient" style="display: flex; align-items: center; gap: 8px; font-size: 14px;">
                     <span id="reply-recipient-name" style="color:var(--titan-text-primary); font-weight: 500;">Usha Loutongbam</span>
                   </div>
@@ -1956,14 +1916,14 @@
                 </div>
 
                 <!-- Subject Row (hidden by default) -->
-                <div id="reply-subject-row" style="overflow: hidden; max-height: 0; opacity: 0; transition: max-height 0.25s cubic-bezier(0.22,1,0.36,1), opacity 0.2s ease; padding: 0 24px; border-bottom: 1px solid #ebebeb;">
+                <div id="reply-subject-row" style="overflow: hidden; max-height: 0; opacity: 0; transition: max-height 0.25s cubic-bezier(0.22,1,0.36,1), opacity 0.2s ease; padding: 0 24px; border-bottom: var(--titan-divider-width-default) solid var(--card-border-color);">
                   <div style="font-size: 14px; color:#444; padding-top: 10px; padding-bottom: 10px;">
                     <span contenteditable="true" spellcheck="false" id="reply-subject-field" style="outline: none; display: block; color:#444; font-size: 14px; font-family: inherit; min-width: 20px;">Re: Project roadmap for Dashboard version</span>
                   </div>
                 </div>
 
                 <!-- Features Toolbar -->
-                <div class="comp-features-row" style="padding: 10px 24px; margin-bottom: 0; background: transparent; display: flex; align-items: center; gap: 8px; height: auto; box-sizing: border-box; justify-content: space-between; border-bottom: 1px solid #ebebeb;">
+                <div class="comp-features-row" style="padding: 10px 24px; margin-bottom: 0; background: transparent; display: flex; align-items: center; gap: 8px; height: auto; box-sizing: border-box; justify-content: space-between; border-bottom: var(--titan-divider-width-default) solid var(--card-border-color);">
                   <div style="display: flex; align-items: center; gap: 8px;">
                     <div class="comp-feat comp-feat-active"><span class="fic"><img data-titan-icon="track" style="filter: invert(51%) sepia(82%) saturate(461%) hue-rotate(71deg) brightness(96%) contrast(85%); width: 15px; height: 15px;" alt=""></span><span>Track</span></div>
                     <div class="comp-feat"><span class="fic"><img data-titan-icon="design" alt=""></span><span>Design</span></div>
@@ -1994,7 +1954,7 @@
                 <!-- Bottom Toolbar (Format & Send) -->
                 <div class="comp-bottom" style="border-top: none;">
                   <!-- Formatting bar -->
-                  <div class="comp-format-bar" style="border-top: 1px solid #ebebeb; padding-left: 24px; padding-right: 24px; display: flex; align-items: center; gap: 8px;">
+                  <div class="comp-format-bar" style="border-top: var(--titan-divider-width-default) solid var(--card-border-color); padding-left: 24px; padding-right: 24px; display: flex; align-items: center; gap: 8px;">
                     <div class="reply-font-dd-pill">
                       <span>Sans Serif</span>
                       <img src="composer_assets/figma-ic-triangle.svg" alt="" class="comp-dd-arrow">
@@ -2016,7 +1976,7 @@
                     <button class="comp-fmt-btn comp-fmt-moredots" title="More"><img data-titan-icon="more-vertical" alt=""></button>
                   </div>
                   <!-- Send bar -->
-                  <div class="comp-send-bar" style="display: flex; align-items: center; justify-content: space-between; padding: 12px 24px; border-top: 1px solid #ebebeb;">
+                  <div class="comp-send-bar" style="display: flex; align-items: center; justify-content: space-between; padding: 12px 24px; border-top: var(--titan-divider-width-default) solid var(--card-border-color);">
                     <div style="display: flex; align-items: center; gap: 8px;">
                       <button class="comp-send-btn titan-split-btn" onclick="discardReply()">
                         <span class="comp-send-main split-btn-main">
@@ -2765,6 +2725,8 @@
   })();
 </script>
 <script>
+let mailCategory="priority";
+const mailTabs=TitanSelection.mount(document.getElementById("mail-tabs"),"tabs",{label:"Message categories",variant:"underline",value:mailCategory,items:[{id:"priority",label:"Priority",count:25},{id:"other",label:"Other",count:50}]},{change:value=>{mailCategory=value;mailTabs.update({value});}});
 TitanSelection.mount(document.getElementById("mail-filter-trigger"),"dropdown",{label:"All mails"});
 </script>
 </body>

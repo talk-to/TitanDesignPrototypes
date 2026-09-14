@@ -11,7 +11,7 @@
 
   --titan-reading-pane-inset-inline: var(--titan-space-24);
   --titan-mail-row-inset-block: var(--titan-space-16);
-  --titan-mail-row-inset-inline: var(--titan-space-12);
+  --titan-mail-row-inset-inline: var(--titan-space-20);
   --titan-mail-row-gap: var(--titan-space-4);
   --titan-message-inset-inline: var(--titan-space-24);
   --titan-message-inset-block: var(--titan-space-20);

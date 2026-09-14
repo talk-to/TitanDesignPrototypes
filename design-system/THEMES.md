@@ -33,7 +33,7 @@ stylesheet URLs from user input. Use the existing runtime.
   Show the complete primitive palette in both themes. Slightly fade the inactive
   theme column without hiding its mappings; repeat shared uses in both columns. Keep headings outside sorted
   rows. Group primitives in named family containers using colorFamily metadata. The
-  color wheel filters hue families, with Neutrals and All available separately.
+  color wheel filters hue families; the center selects Neutrals, and clicking the selected segment again restores All.
   Order colors by the number of unique semantic roles using them across themes,
   highest first; break ties light to dark by colorOrder. Preserve both theme-use columns. New colors need
   these presentation fields; missing metadata falls under Other colors.
@@ -94,3 +94,19 @@ possible. For value-preserving cleanup, verify resolved colors before and after.
 
 Launcher icon backing tints are fixed asset artwork treatments in app-switcher.css.
 They are not semantic theme roles or palette primitives and must not change with theme.
+
+## Preferred Figma palette
+
+The 48 colors from the user-supplied `colorVariables` file are canonical. See
+[the palette mapping](decisions/figma-color-palette.md) for source names, compatibility
+aliases, replacements and the two supplemental navy colors. Prefer these supplied
+values for new roles. Do not generate approximate shades when a supplied color fits.
+Unused source colors remain registered primitives; do not invent semantic uses.
+
+The app switcher panel uses `--titan-launcher-surface` (Light white, Dark grey-910),
+with `--titan-launcher-divider` for its outline, pointer and separators. These are
+CSS surfaces, never SVG backgrounds. Legacy background/divider image props are ignored;
+app and tool artwork remains unchanged.
+
+Selected app tiles use `--titan-launcher-selected-surface`: the shared selected
+surface in Light and Figma blue-600 (#154698) in Dark. This role is launcher-only.
