@@ -1,0 +1,148 @@
+/* Screen-owned Drive layout. Shared controls retain their own internal spacing;
+   this file owns placement between those controls and the file list. Sidebar
+   colours match the existing Titan shells rather than the reference's navy. */
+:root {
+  --drive-sidebar-width: 250px;
+  --drive-toolbar-height: calc(var(--titan-control-height-default) + 2 * var(--titan-space-16));
+  --drive-sidebar-edge: #373737;
+  --drive-sidebar-selected: #494949;
+  --drive-sidebar-muted: rgba(255, 255, 255, .68);
+  --drive-row-hover: var(--titan-surface-selected);
+}
+
+* { box-sizing: border-box; }
+html, body { width: 100%; height: 100%; min-height: 100%; margin: 0; }
+body {
+  overflow: hidden;
+  background: var(--titan-surface-base);
+  color: var(--titan-text-primary);
+  font-family: var(--titan-font-family-ui);
+  font-size: var(--titan-type-body-size);
+  line-height: var(--titan-type-body-line-height);
+}
+
+button, input { font: inherit; }
+button { cursor: pointer; }
+
+.drive-app { display: flex; width: 100%; height: 100vh; min-width: 760px; overflow: hidden; }
+
+.sidebar {
+  display: flex;
+  flex: 0 0 var(--drive-sidebar-width);
+  flex-direction: column;
+  width: var(--drive-sidebar-width);
+  overflow: visible;
+  color: var(--titan-text-inverse);
+  background: var(--titan-surface-navigation);
+  border-right: var(--titan-divider-width-default) solid var(--drive-sidebar-edge);
+}
+
+.drive-nav {
+  display: flex;
+  flex-direction: column;
+  gap: var(--titan-space-4);
+  padding-top: var(--titan-space-12);
+}
+
+
+/* Full-bleed rule: dividers are a token convention here, not a component, so
+   this is screen-owned and uses the shared divider width. */
+.nav-divider {
+  height: 0;
+  margin-top: var(--titan-space-12);
+  margin-bottom: var(--titan-space-12);
+  margin-left: 0;
+  margin-right: 0;
+  border: 0;
+  border-top: var(--titan-divider-width-default) solid var(--drive-sidebar-edge);
+}
+
+.sidebar-footer {
+  margin-top: auto;
+  padding-top: var(--titan-space-12);
+  border-top: var(--titan-divider-width-default) solid var(--drive-sidebar-edge);
+}
+.storage-note {
+  margin: 0;
+  padding-left: var(--titan-space-24);
+  padding-right: var(--titan-space-12);
+  padding-bottom: var(--titan-space-12);
+  color: var(--drive-sidebar-muted);
+  font-size: var(--titan-type-caption-size);
+}
+.sidebar-links { display: flex; flex-direction: column; gap: var(--titan-space-4); }
+
+
+.main { display: flex; flex: 1; min-width: 0; flex-direction: column; background: var(--titan-surface-base); }
+
+.toolbar {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: space-between;
+  min-width: 0;
+  min-height: var(--drive-toolbar-height);
+  padding-top: var(--titan-space-16);
+  padding-bottom: var(--titan-space-16);
+  padding-left: var(--titan-space-12);
+  padding-right: var(--titan-space-12);
+  gap: var(--titan-space-16);
+  border-bottom: var(--titan-divider-width-default) solid var(--card-border-color);
+}
+.toolbar-left, .toolbar-right { display: flex; align-items: center; min-width: 0; }
+.toolbar-left { gap: var(--titan-space-16); flex: 1; }
+.toolbar-right { flex: 0 0 auto; }
+.toolbar-right #account-picker-host { width: 220px; }
+.search-host { width: min(100%, 400px); min-width: 240px; }
+.search-host .titan-search-field { width: 100%; }
+
+.content {
+  flex: 1;
+  min-width: 0;
+  overflow: auto;
+  padding-top: var(--titan-space-20);
+}
+/* Both insets come from one shared token, so the space left of the heading and
+   the space right of the action stay equal and move together. Nothing else uses
+   that token. */
+.content-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--titan-space-16);
+  padding-left: var(--titan-drive-content-head-inset-inline);
+  padding-right: var(--titan-drive-content-head-inset-inline);
+  padding-bottom: var(--titan-space-16);
+}
+.content-title {
+  margin: 0;
+  font-family: var(--titan-type-heading-family);
+  font-size: var(--titan-type-heading-size);
+  font-weight: var(--titan-type-heading-weight);
+}
+
+/* The screen owns table width and scrolling; shared children retain their defaults. */
+.drive-table { width: 100%; min-width: 720px; }
+/* Raw folder artwork is screen content, not a registered component. */
+.drive-folder-icon { display: inline-flex; color: var(--titan-text-secondary); }
+.drive-folder-icon svg { width: var(--titan-icon-size-action); height: var(--titan-icon-size-action); }
+
+.status-message {
+  position: fixed;
+  right: var(--titan-space-16);
+  bottom: var(--titan-space-16);
+  padding-top: var(--titan-space-8);
+  padding-bottom: var(--titan-space-8);
+  padding-left: var(--titan-space-12);
+  padding-right: var(--titan-space-12);
+  border-radius: var(--titan-radius-6);
+  background: var(--titan-surface-navigation);
+  color: var(--titan-text-inverse);
+  font-size: var(--titan-type-caption-size);
+}
+
+@media (max-width: 1100px) {
+  .toolbar { padding-left: var(--titan-space-8); padding-right: var(--titan-space-8); gap: var(--titan-space-8); }
+  .toolbar-left { min-width: 0; gap: var(--titan-space-8); }
+  .search-host { width: clamp(180px, calc(100vw - 700px), 400px); min-width: 0; }
+}

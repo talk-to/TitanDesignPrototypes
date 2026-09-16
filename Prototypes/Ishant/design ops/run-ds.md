@@ -15,6 +15,13 @@ Referencing this file or saying “run DS” in this workspace instructs the age
 follow the Titan design system for the current task and subsequent related screen
 work in this conversation. No additional “follow the DS” prompt is required.
 
+- Mandatory, overriding everything below: never create, edit or delete anything under the
+  workspace-root `design-system/` folder unless the user explicitly asks for a design-system
+  change in that message. Following the DS means consuming its tokens, components and icons,
+  never editing them. If a fix seems to belong in the DS, stop and ask first, naming the file
+  and the change; questions are welcome, silent DS edits are not. Solve it in the prototype's
+  own screen-owned code instead, and say plainly in the report whether `design-system/` was
+  touched at all.
 - Read and follow the linked shared AGENTS.md and USAGE.md. Use their current
   change-specific checklist; do not reread unchanged instructions already loaded.
 - Mandatory: inspect existing components and variants for the whole and its parts

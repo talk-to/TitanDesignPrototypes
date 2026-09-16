@@ -314,6 +314,13 @@ controls; 3 floating surfaces; 4 prominent overlays. All use the same 1px border
 recipe so the progression comes from increasing shadow depth. Numbers do not set
 z-index. Remove the old level class when changing levels; do not stack them.
 
+The default edge is intended for light or theme-responsive surfaces. On a surface
+that is intentionally dark in every application theme, add
+`.titan-elevation-native-dark` beside the level or role class. It preserves the
+same 1px stroke and selected shadow, but resolves the edge to Titan Grey 830 rather
+than the bright default border. This is an explicit surface context; do not infer
+it from the global Light/Dark theme or use it to add elevation to a flush surface.
+
 Compact action and stacked surface map to 1, floating badge to 2, badge hover to
 3, and tooltip to 4. Existing consumers inherit those mappings through role tokens.
 This deliberately normalizes their previous distinct values. For a component-specific change, follow the mandatory unchanged-reuse rule:

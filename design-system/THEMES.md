@@ -46,6 +46,12 @@ existing treatment in both themes. A component's `dark` variant is a surface
 context, not the application's theme. Do not switch variants merely because the
 global theme changed. Preserve brand artwork and its intentional colors.
 
+Elevated surfaces that are intentionally dark in both themes use the explicit
+`.titan-elevation-native-dark` context with their elevation level or role class.
+It retains the default 1px stroke width and shadow level while replacing the light
+edge with `--titan-border-elevation-native-dark`. Do not apply it based only on the
+global Dark theme; responsive surfaces continue to use their theme-aware roles.
+
 Responsive content surfaces (reading pane, cards, inputs) change along with their
 text, border, hover and selected roles. Pair foregrounds with backgrounds; never
 change only one and assume contrast remains readable.

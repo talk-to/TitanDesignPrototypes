@@ -1,0 +1,11 @@
+/* Observed UI line widths. SVG artwork retains its own drawing geometry. */
+:root {
+  --titan-stroke-1: 1px;
+  --titan-stroke-1-5: 1.5px;
+  --titan-stroke-2: 2px;
+  --titan-border-width-default: var(--titan-stroke-1);
+  --titan-divider-width-default: var(--titan-stroke-1);
+  --titan-focus-ring-width: var(--titan-stroke-2);
+  --titan-split-divider-width: var(--titan-stroke-1-5);
+  --titan-composer-field-divider-width: var(--titan-stroke-2);
+}

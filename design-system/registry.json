@@ -4876,6 +4876,10 @@
       "--titan-border-elevation": {
         "layer": "primitive"
       },
+      "--titan-border-elevation-native-dark": {
+        "layer": "semantic",
+        "label": "Native-dark elevation border"
+      },
       "--titan-elevation-tooltip-border": {
         "layer": "semantic"
       },

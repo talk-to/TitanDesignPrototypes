@@ -126,3 +126,13 @@ panel. Popover remains unchanged at Level 3. The side-panel alias now resolves t
 the Level 4 directional shadow and border. This supersedes its earlier Level 3
 mapping. Existing shell z-indices already place Settings (9999) above Composer
 (600), so no stacking-order change is needed.
+
+## Native-dark surface edge
+
+Elevation levels retain a one-CSS-pixel edge, but the original fixed `#dedede`
+recipe is too bright on surfaces that remain dark in both application themes.
+`.titan-elevation-native-dark` now redirects the shared elevation border alias to
+`--titan-border-elevation-native-dark`, a 1px Titan Grey 830 (`#2d2d2d`) recipe.
+The context changes neither level nor shadow and is selected by surface treatment,
+not by the global Light/Dark theme. The fixed-dark sidebar tooltip is the first
+consumer. Flush navigation surfaces still receive no elevation treatment.
