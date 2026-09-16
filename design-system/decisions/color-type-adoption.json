@@ -1,0 +1,709 @@
+{
+  "scope": "Selected static stylesheet declarations only. Inline styles, JavaScript and SVG attributes remain local.",
+  "beforeSha256": "1f681469d2b31b701d76d5c7ec588a7a3106a8839fc60f7005cfd9823df2fb4f",
+  "afterSha256": "d876bcdba086a4d6cb827b0da8b4ff84facf857b9ac3570bf4fb6a83f09faf50",
+  "declarationCount": 116,
+  "changes": [
+    {
+      "selector": "body",
+      "property": "font-family",
+      "previous": "-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', sans-serif",
+      "token": "--titan-font-family-ui"
+    },
+    {
+      "selector": ".app-window",
+      "property": "background",
+      "previous": "#fff",
+      "token": "--titan-surface-base"
+    },
+    {
+      "selector": ".sidebar",
+      "property": "background",
+      "previous": "#1c1c1c",
+      "token": "--titan-surface-navigation"
+    },
+    {
+      "selector": ".titan-split-btn",
+      "property": "background",
+      "previous": "#2170f4",
+      "token": "--titan-action-primary"
+    },
+    {
+      "selector": ".compose-main-btn span",
+      "property": "color",
+      "previous": "#fff",
+      "token": "--titan-text-inverse"
+    },
+    {
+      "selector": ".compose-main-btn span",
+      "property": "font-size",
+      "previous": "14px",
+      "token": "--titan-type-control-size"
+    },
+    {
+      "selector": ".compose-main-btn span",
+      "property": "font-weight",
+      "previous": "600",
+      "token": "--titan-font-weight-semibold"
+    },
+    {
+      "selector": ".account-email-text",
+      "property": "color",
+      "previous": "#fff",
+      "token": "--titan-text-inverse"
+    },
+    {
+      "selector": ".account-email-text",
+      "property": "font-weight",
+      "previous": "600",
+      "token": "--titan-font-weight-semibold"
+    },
+    {
+      "selector": ".nav-item-label",
+      "property": "color",
+      "previous": "#fff",
+      "token": "--titan-text-inverse"
+    },
+    {
+      "selector": ".nav-item-label",
+      "property": "font-size",
+      "previous": "14px",
+      "token": "--titan-type-control-size"
+    },
+    {
+      "selector": ".nav-item-label.active",
+      "property": "font-weight",
+      "previous": "600",
+      "token": "--titan-font-weight-semibold"
+    },
+    {
+      "selector": ".top-toolbar",
+      "property": "background",
+      "previous": "#fff",
+      "token": "--titan-surface-base"
+    },
+    {
+      "selector": ".search-bar",
+      "property": "background",
+      "previous": "#fff",
+      "token": "--titan-surface-base"
+    },
+    {
+      "selector": ".search-bar input",
+      "property": "font-size",
+      "previous": "14px",
+      "token": "--titan-type-control-size"
+    },
+    {
+      "selector": ".tabs-row",
+      "property": "background",
+      "previous": "#fff",
+      "token": "--titan-surface-base"
+    },
+    {
+      "selector": ".tab-item-label",
+      "property": "color",
+      "previous": "#333",
+      "token": "--titan-text-primary"
+    },
+    {
+      "selector": ".tab-item-label",
+      "property": "font-size",
+      "previous": "15px",
+      "token": "--titan-type-tab-size"
+    },
+    {
+      "selector": ".tab-item-label",
+      "property": "font-weight",
+      "previous": "600",
+      "token": "--titan-font-weight-semibold"
+    },
+    {
+      "selector": ".tab-item-label.inactive",
+      "property": "color",
+      "previous": "#888",
+      "token": "--titan-text-muted"
+    },
+    {
+      "selector": ".tab-item-label.inactive",
+      "property": "font-weight",
+      "previous": "400",
+      "token": "--titan-font-weight-regular"
+    },
+    {
+      "selector": ".tab-item-underline",
+      "property": "background",
+      "previous": "#2170f4",
+      "token": "--titan-indicator-active"
+    },
+    {
+      "selector": ".email-tile",
+      "property": "background",
+      "previous": "#fff",
+      "token": "--titan-surface-base"
+    },
+    {
+      "selector": ".middle-panel.wide-view .tile-sender",
+      "property": "font-size",
+      "previous": "14px",
+      "token": "--titan-type-body-size"
+    },
+    {
+      "selector": ".middle-panel.wide-view .tile-subject",
+      "property": "color",
+      "previous": "#1a1a1a",
+      "token": "--titan-text-strong"
+    },
+    {
+      "selector": ".middle-panel.wide-view .tile-subject",
+      "property": "font-size",
+      "previous": "14px",
+      "token": "--titan-type-body-size"
+    },
+    {
+      "selector": ".middle-panel.wide-view .tile-preview",
+      "property": "font-size",
+      "previous": "14px",
+      "token": "--titan-type-body-size"
+    },
+    {
+      "selector": ".middle-panel.wide-view .tile-time",
+      "property": "font-size",
+      "previous": "12px",
+      "token": "--titan-type-meta-size"
+    },
+    {
+      "selector": ".tile-dot::after",
+      "property": "background",
+      "previous": "#2170f4",
+      "token": "--titan-indicator-active"
+    },
+    {
+      "selector": ".tile-sender",
+      "property": "color",
+      "previous": "#1a1a1a",
+      "token": "--titan-text-strong"
+    },
+    {
+      "selector": ".tile-sender",
+      "property": "font-size",
+      "previous": "15px",
+      "token": "--titan-type-sender-size"
+    },
+    {
+      "selector": ".tile-sender.bold",
+      "property": "font-weight",
+      "previous": "600",
+      "token": "--titan-font-weight-semibold"
+    },
+    {
+      "selector": ".tile-subject",
+      "property": "color",
+      "previous": "#333333",
+      "token": "--titan-text-primary"
+    },
+    {
+      "selector": ".tile-subject",
+      "property": "font-size",
+      "previous": "14px",
+      "token": "--titan-type-body-size"
+    },
+    {
+      "selector": ".tile-subject",
+      "property": "line-height",
+      "previous": "20px",
+      "token": "--titan-type-body-line-height"
+    },
+    {
+      "selector": ".tile-preview",
+      "property": "color",
+      "previous": "#666666",
+      "token": "--titan-text-secondary"
+    },
+    {
+      "selector": ".tile-preview",
+      "property": "font-size",
+      "previous": "14px",
+      "token": "--titan-type-body-size"
+    },
+    {
+      "selector": ".tile-preview",
+      "property": "line-height",
+      "previous": "20px",
+      "token": "--titan-type-body-line-height"
+    },
+    {
+      "selector": ".tile-time",
+      "property": "color",
+      "previous": "#888888",
+      "token": "--titan-text-muted"
+    },
+    {
+      "selector": ".tile-time",
+      "property": "font-size",
+      "previous": "11px",
+      "token": "--titan-type-meta-small-size"
+    },
+    {
+      "selector": ".reading-pane",
+      "property": "background",
+      "previous": "#fbfbfb",
+      "token": "--titan-surface-reading"
+    },
+    {
+      "selector": ".reading-action-bar",
+      "property": "background",
+      "previous": "#fbfbfb",
+      "token": "--titan-surface-reading"
+    },
+    {
+      "selector": ".action-opt",
+      "property": "color",
+      "previous": "#333",
+      "token": "--titan-text-primary"
+    },
+    {
+      "selector": ".action-opt",
+      "property": "font-size",
+      "previous": "13px",
+      "token": "--titan-type-control-compact-size"
+    },
+    {
+      "selector": ".thread-content",
+      "property": "background",
+      "previous": "#fbfbfb",
+      "token": "--titan-surface-reading"
+    },
+    {
+      "selector": ".thread-sticky-header",
+      "property": "background",
+      "previous": "#fbfbfb",
+      "token": "--titan-surface-reading"
+    },
+    {
+      "selector": ".thread-title",
+      "property": "color",
+      "previous": "#333",
+      "token": "--titan-text-primary"
+    },
+    {
+      "selector": ".thread-title",
+      "property": "font-size",
+      "previous": "24px",
+      "token": "--titan-type-thread-title-size"
+    },
+    {
+      "selector": ".thread-title",
+      "property": "font-weight",
+      "previous": "600",
+      "token": "--titan-font-weight-semibold"
+    },
+    {
+      "selector": ".thread-tile",
+      "property": "background",
+      "previous": "#fff",
+      "token": "--titan-surface-base"
+    },
+    {
+      "selector": ".thread-sender",
+      "property": "color",
+      "previous": "#333",
+      "token": "--titan-text-primary"
+    },
+    {
+      "selector": ".thread-sender",
+      "property": "font-size",
+      "previous": "15px",
+      "token": "--titan-type-sender-size"
+    },
+    {
+      "selector": ".thread-sender",
+      "property": "font-weight",
+      "previous": "600",
+      "token": "--titan-font-weight-semibold"
+    },
+    {
+      "selector": ".thread-preview",
+      "property": "color",
+      "previous": "#888",
+      "token": "--titan-text-muted"
+    },
+    {
+      "selector": ".thread-preview",
+      "property": "font-size",
+      "previous": "14px",
+      "token": "--titan-type-body-size"
+    },
+    {
+      "selector": ".thread-date",
+      "property": "color",
+      "previous": "#888",
+      "token": "--titan-text-muted"
+    },
+    {
+      "selector": ".thread-date",
+      "property": "font-size",
+      "previous": "12px",
+      "token": "--titan-type-meta-size"
+    },
+    {
+      "selector": ".stack-card",
+      "property": "background",
+      "previous": "#fff",
+      "token": "--titan-surface-base"
+    },
+    {
+      "selector": ".expanded-tile",
+      "property": "background",
+      "previous": "#fff",
+      "token": "--titan-surface-base"
+    },
+    {
+      "selector": ".exp-sender",
+      "property": "color",
+      "previous": "#333",
+      "token": "--titan-text-primary"
+    },
+    {
+      "selector": ".exp-sender",
+      "property": "font-size",
+      "previous": "15px",
+      "token": "--titan-type-sender-size"
+    },
+    {
+      "selector": ".exp-sender",
+      "property": "font-weight",
+      "previous": "600",
+      "token": "--titan-font-weight-semibold"
+    },
+    {
+      "selector": ".exp-to",
+      "property": "color",
+      "previous": "#888",
+      "token": "--titan-text-muted"
+    },
+    {
+      "selector": ".exp-to",
+      "property": "font-size",
+      "previous": "14px",
+      "token": "--titan-type-body-size"
+    },
+    {
+      "selector": ".exp-timestamp",
+      "property": "color",
+      "previous": "#888",
+      "token": "--titan-text-muted"
+    },
+    {
+      "selector": ".exp-timestamp",
+      "property": "font-size",
+      "previous": "12px",
+      "token": "--titan-type-meta-size"
+    },
+    {
+      "selector": ".exp-rr-count",
+      "property": "color",
+      "previous": "#888",
+      "token": "--titan-text-muted"
+    },
+    {
+      "selector": ".exp-rr-count",
+      "property": "font-size",
+      "previous": "12px",
+      "token": "--titan-type-meta-size"
+    },
+    {
+      "selector": ".expanded-body",
+      "property": "color",
+      "previous": "#333",
+      "token": "--titan-text-primary"
+    },
+    {
+      "selector": ".expanded-body",
+      "property": "font-size",
+      "previous": "14px",
+      "token": "--titan-type-body-size"
+    },
+    {
+      "selector": ".expanded-body",
+      "property": "line-height",
+      "previous": "20px",
+      "token": "--titan-type-body-line-height"
+    },
+    {
+      "selector": ".reply-action",
+      "property": "color",
+      "previous": "#333",
+      "token": "--titan-text-primary"
+    },
+    {
+      "selector": ".reply-action",
+      "property": "font-size",
+      "previous": "14px",
+      "token": "--titan-type-control-size"
+    },
+    {
+      "selector": ".smart-write",
+      "property": "color",
+      "previous": "#333",
+      "token": "--titan-text-primary"
+    },
+    {
+      "selector": ".smart-write",
+      "property": "font-size",
+      "previous": "14px",
+      "token": "--titan-type-control-size"
+    },
+    {
+      "selector": ".comp-send-btn",
+      "property": "background",
+      "previous": "#2170f4",
+      "token": "--titan-action-primary"
+    },
+    {
+      "selector": ".comp-send-main",
+      "property": "color",
+      "previous": "#fff",
+      "token": "--titan-text-inverse"
+    },
+    {
+      "selector": ".comp-send-main",
+      "property": "font-size",
+      "previous": "14px",
+      "token": "--titan-type-control-size"
+    },
+    {
+      "selector": ".comp-send-main",
+      "property": "font-weight",
+      "previous": "600",
+      "token": "--titan-font-weight-semibold"
+    },
+    {
+      "selector": ".side-modal",
+      "property": "font-family",
+      "previous": "-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', sans-serif",
+      "token": "--titan-font-family-ui"
+    },
+    {
+      "selector": ".side-modal",
+      "property": "background",
+      "previous": "#ffffff",
+      "token": "--titan-surface-base"
+    },
+    {
+      "selector": ".side-modal-username",
+      "property": "color",
+      "previous": "#333",
+      "token": "--titan-text-primary"
+    },
+    {
+      "selector": ".side-modal-username",
+      "property": "font-weight",
+      "previous": "600",
+      "token": "--titan-font-weight-semibold"
+    },
+    {
+      "selector": ".side-modal-email",
+      "property": "color",
+      "previous": "#888",
+      "token": "--titan-text-muted"
+    },
+    {
+      "selector": ".side-modal-email",
+      "property": "font-size",
+      "previous": "12px",
+      "token": "--titan-type-meta-size"
+    },
+    {
+      "selector": ".side-modal-option",
+      "property": "color",
+      "previous": "#333",
+      "token": "--titan-text-primary"
+    },
+    {
+      "selector": ".side-modal-option",
+      "property": "font-size",
+      "previous": "14px",
+      "token": "--titan-type-control-size"
+    },
+    {
+      "selector": ".side-modal-option",
+      "property": "font-weight",
+      "previous": "500",
+      "token": "--titan-font-weight-medium"
+    },
+    {
+      "selector": ".side-modal-section-title",
+      "property": "color",
+      "previous": "#888",
+      "token": "--titan-text-muted"
+    },
+    {
+      "selector": ".side-modal-section-title",
+      "property": "font-size",
+      "previous": "12px",
+      "token": "--titan-type-meta-size"
+    },
+    {
+      "selector": ".side-modal-section-title",
+      "property": "font-weight",
+      "previous": "600",
+      "token": "--titan-font-weight-semibold"
+    },
+    {
+      "selector": ".side-modal-radio-label",
+      "property": "color",
+      "previous": "#333",
+      "token": "--titan-text-primary"
+    },
+    {
+      "selector": ".side-modal-radio-label",
+      "property": "font-size",
+      "previous": "14px",
+      "token": "--titan-type-control-size"
+    },
+    {
+      "selector": ".side-modal-radio-label",
+      "property": "font-weight",
+      "previous": "500",
+      "token": "--titan-font-weight-medium"
+    },
+    {
+      "selector": ".composer-window",
+      "property": "font-family",
+      "previous": "-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', sans-serif",
+      "token": "--titan-font-family-ui"
+    },
+    {
+      "selector": ".composer-window",
+      "property": "background",
+      "previous": "#fff",
+      "token": "--titan-surface-base"
+    },
+    {
+      "selector": ".comp-header",
+      "property": "background",
+      "previous": "#1c1c1c",
+      "token": "--titan-surface-composer-header"
+    },
+    {
+      "selector": ".comp-title-text",
+      "property": "color",
+      "previous": "#fff",
+      "token": "--titan-text-inverse"
+    },
+    {
+      "selector": ".comp-title-text",
+      "property": "font-size",
+      "previous": "14px",
+      "token": "--titan-type-control-size"
+    },
+    {
+      "selector": ".comp-title-text",
+      "property": "font-weight",
+      "previous": "500",
+      "token": "--titan-font-weight-medium"
+    },
+    {
+      "selector": ".comp-lbl",
+      "property": "color",
+      "previous": "#888",
+      "token": "--titan-text-muted"
+    },
+    {
+      "selector": ".comp-lbl",
+      "property": "font-size",
+      "previous": "14px",
+      "token": "--titan-type-control-size"
+    },
+    {
+      "selector": ".comp-from-value",
+      "property": "color",
+      "previous": "#333",
+      "token": "--titan-text-primary"
+    },
+    {
+      "selector": ".comp-from-value",
+      "property": "font-size",
+      "previous": "14px",
+      "token": "--titan-type-control-size"
+    },
+    {
+      "selector": ".comp-field-input",
+      "property": "color",
+      "previous": "#333",
+      "token": "--titan-text-primary"
+    },
+    {
+      "selector": ".comp-field-input",
+      "property": "font-size",
+      "previous": "14px",
+      "token": "--titan-type-control-size"
+    },
+    {
+      "selector": ".comp-ccbcc span",
+      "property": "color",
+      "previous": "#888",
+      "token": "--titan-text-muted"
+    },
+    {
+      "selector": ".comp-ccbcc span",
+      "property": "font-size",
+      "previous": "14px",
+      "token": "--titan-type-control-size"
+    },
+    {
+      "selector": ".comp-ccbcc span:hover",
+      "property": "color",
+      "previous": "#2170f4",
+      "token": "--titan-text-link"
+    },
+    {
+      "selector": ".comp-body",
+      "property": "color",
+      "previous": "#333",
+      "token": "--titan-text-primary"
+    },
+    {
+      "selector": ".comp-body",
+      "property": "font-size",
+      "previous": "14px",
+      "token": "--titan-type-body-size"
+    },
+    {
+      "selector": ".comp-body",
+      "property": "line-height",
+      "previous": "20px",
+      "token": "--titan-type-body-line-height"
+    },
+    {
+      "selector": ".comp-send-btn",
+      "property": "background",
+      "previous": "#2170f4",
+      "token": "--titan-action-primary"
+    },
+    {
+      "selector": ".comp-send-main",
+      "property": "color",
+      "previous": "#fff",
+      "token": "--titan-text-inverse"
+    },
+    {
+      "selector": ".comp-send-main",
+      "property": "font-size",
+      "previous": "14px",
+      "token": "--titan-type-control-size"
+    },
+    {
+      "selector": ".comp-send-main",
+      "property": "font-weight",
+      "previous": "600",
+      "token": "--titan-font-weight-semibold"
+    }
+  ],
+  "stylesheetIntegration": {
+    "previous": "<link rel=\"stylesheet\" href=\"./app-design-system/tokens.css\">",
+    "current": "<link rel=\"stylesheet\" href=\"/design-system/tokens.css\" onerror=\"this.onerror=null;this.href='./app-design-system/tokens.css'\">",
+    "reason": "Studio blocks DS content under /app/. Use its canonical mount with a one-time relative fallback for standalone usage."
+  }
+}

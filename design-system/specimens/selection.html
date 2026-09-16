@@ -1,0 +1,23 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Selection controls</title><link rel="stylesheet" href="../components/selection.css"><style>body{margin:0;padding:12px;font-family:var(--titan-font-family-ui)}main{display:grid;place-items:center;gap:16px}.result:empty{display:none}.result{margin:0;font-size:12px;color:var(--titan-text-muted)}.caption{font:11px var(--titan-font-family-ui);color:var(--titan-text-muted);margin:0 0 8px}</style><link rel="stylesheet" href="gallery.css"><script src="../theme.js"></script></head><body><main><div id="sample"></div><p id="result" class="result" role="status"></p></main><script src="../icons/runtime.js"></script><script src="../components/selection.js"></script><script>
+const part=new URLSearchParams(location.search).get('part')||'tabs';const options={tabs:{label:'Message categories',items:[{id:'priority',label:'Priority',count:25},{id:'other',label:'Other',count:50}]},dropdown:{label:'All mails'},checkbox:{label:'Select all messages'}};
+TitanSelection.mount(document.getElementById('sample'),part,options[part],{change:value=>document.getElementById('result').textContent='Selected: '+value,open:()=>document.getElementById('result').textContent='Menu content is not defined.'});
+
+if(part==='checkbox'){const caption=document.createElement('p');caption.textContent='Default';caption.className='caption';document.getElementById('sample').prepend(caption);const section=document.createElement('section');section.style.marginTop='24px';const label=document.createElement('p');label.textContent='Large';label.className='caption';const sample=document.createElement('div');section.append(label,sample);document.querySelector('main').append(section);TitanSelection.mount(sample,'checkbox',{label:'Select all contacts',size:'large'},{change:value=>document.getElementById('result').textContent='Selected: '+value});}
+if(part==='dropdown'){const caption=document.createElement('p');caption.textContent='Default';caption.className='caption';caption.style.cssText='font-size:12px;margin:0 0 8px';document.getElementById('sample').prepend(caption);const section=document.createElement('section');section.style.marginTop='24px';const label=document.createElement('p');label.textContent='Composer';label.className='caption';label.style.cssText='font-size:11px;color:var(--titan-text-muted);margin:0 0 8px';const sample=document.createElement('div');section.append(label,sample);document.querySelector('main').append(section);TitanSelection.mount(sample,'dropdown',{label:'Sans Serif',variant:'composer'});}
+if(part==='dropdown'){const section=document.createElement('section');section.style.cssText='width:240px;max-width:100%';section.innerHTML='<p class="caption">Account</p><div id="account-example"></div>';document.querySelector('main').append(section);TitanSelection.mount(document.getElementById('account-example'),'dropdown',{label:'alex@example.com',variant:'account'},{open:()=>document.getElementById('result').textContent='Account trigger activated.'});}
+if(part==='dropdown'){const section=document.createElement('section');section.style.cssText='width:240px;max-width:100%';section.innerHTML='<p class="caption">Account light</p><div id="account-light-example"></div>';document.querySelector('main').append(section);TitanSelection.mount(document.getElementById('account-light-example'),'dropdown',{label:'alex@example.com',variant:'account-light'},{open:()=>document.getElementById('result').textContent='Account light trigger activated.'});}
+if(part==='dropdown'){
+ const section=document.createElement('section');
+ const caption=document.createElement('p');caption.className='caption';caption.textContent='App switcher';
+ const surface=document.createElement('div');surface.style.cssText='background:var(--titan-surface-navigation);padding:var(--titan-space-12);width:max-content';
+ section.append(caption,surface);document.querySelector('main').append(section);
+ TitanSelection.mount(surface,'dropdown',{label:'Switch app',variant:'app-switcher',icon:'app-mail'},{open:()=>document.getElementById('result').textContent='App switcher trigger activated.'});
+}
+if(part==='dropdown'){
+ const section=document.createElement('section');
+ const caption=document.createElement('p');caption.className='caption';caption.textContent='Search filters';
+ const sample=document.createElement('div');
+ section.append(caption,sample);document.querySelector('main').append(section);
+ TitanSelection.mount(sample,'dropdown',{label:'Search filters',variant:'search'},{open:()=>document.getElementById('result').textContent='Search filters trigger activated.'});
+}
+</script><script src="gallery.js"></script></body></html>

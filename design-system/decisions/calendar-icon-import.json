@@ -1,0 +1,62 @@
+[
+  {
+    "id": "avatar",
+    "source": "Prototypes/Prabhat/Titan-recap/calendar_assets/ic-avatar.svg",
+    "bounds": [
+      0,
+      0,
+      20,
+      20
+    ],
+    "scale": 1,
+    "translate": [
+      2,
+      2
+    ]
+  },
+  {
+    "id": "clock",
+    "source": "Prototypes/Prabhat/Titan-recap/calendar_assets/ic-clock.svg",
+    "bounds": [
+      0,
+      0,
+      16,
+      16
+    ],
+    "scale": 1.25,
+    "translate": [
+      2,
+      2
+    ]
+  },
+  {
+    "id": "video-conference",
+    "source": "Prototypes/Prabhat/Titan-recap/calendar_assets/ic-conference.svg",
+    "bounds": [
+      4,
+      7,
+      20,
+      17.675
+    ],
+    "scale": 1.25,
+    "translate": [
+      -3,
+      -3.421875
+    ]
+  },
+  {
+    "id": "location",
+    "source": "Prototypes/Prabhat/Titan-recap/calendar_assets/ic-location.svg",
+    "bounds": [
+      6,
+      4,
+      17.2,
+      19.525
+    ],
+    "scale": 1.2882447665056362,
+    "translate": [
+      -2.943639291465379,
+      -3.152979066022546
+    ]
+  }
+]

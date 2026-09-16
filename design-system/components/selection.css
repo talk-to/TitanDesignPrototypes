@@ -1,0 +1,45 @@
+@import '../tokens.css';
+.titan-tabs{display:flex;gap:var(--titan-space-8);min-height:52px;align-items:stretch;width:max-content;max-width:100%;font-family:var(--titan-font-family-ui)}
+.titan-tab{position:relative;appearance:none;border:0;background:transparent;padding:0 var(--titan-space-8);font-family:inherit;font-size:var(--titan-type-tab-size);font-weight:var(--titan-font-weight-regular);line-height:var(--titan-line-height-20);color:var(--titan-text-muted);white-space:nowrap;cursor:pointer}
+.titan-tab[aria-selected=true]{font-weight:var(--titan-font-weight-semibold);color:var(--titan-text-primary)}
+.titan-tab[aria-selected=true]::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:2px;background:var(--titan-indicator-active)}
+.titan-dropdown-trigger{--titan-dropdown-inset-block:6px;--titan-dropdown-inset-inline:10px;display:inline-flex;align-items:center;gap:var(--titan-gap-icon-label);padding:var(--titan-dropdown-inset-block) var(--titan-dropdown-inset-inline);border:var(--titan-border-width-default) solid var(--card-border-color);border-radius:var(--titan-radius-4);background:var(--titan-surface-base);color:var(--titan-text-primary);font:var(--titan-font-weight-regular) var(--titan-type-control-size)/var(--titan-line-height-20) var(--titan-font-family-ui);white-space:nowrap;cursor:pointer}
+.titan-dropdown-trigger svg{width:var(--titan-icon-size-indicator);height:var(--titan-icon-size-indicator);flex-shrink:0;color:var(--titan-text-muted)}
+.titan-checkbox{--titan-checkbox-size:14px;box-sizing:border-box;width:var(--titan-checkbox-size);height:var(--titan-checkbox-size);margin:0;accent-color:var(--titan-action-primary);cursor:pointer}
+/* Large: denser-list hit area. Same native control and interactions. */
+.titan-checkbox--large{--titan-checkbox-size:20px}
+
+.titan-dropdown-trigger--app{--titan-app-trigger-inset:2px;gap:0;padding:var(--titan-app-trigger-inset);border:0;border-radius:var(--titan-radius-4);background:transparent;color:var(--titan-text-inverse);transition:background .15s ease;flex-shrink:0}
+.titan-dropdown-trigger--app>img{width:var(--titan-icon-size-launcher-trigger);height:var(--titan-icon-size-launcher-trigger);display:block}.titan-dropdown-chevron{width:16px;height:16px;display:flex;align-items:center;justify-content:center}.titan-dropdown-trigger--app svg{width:var(--titan-icon-size-indicator);height:var(--titan-icon-size-indicator);color:inherit}.titan-dropdown-trigger--app:hover{background:var(--titan-color-gray-800)}
+.titan-dropdown-trigger--composer{--titan-composer-dropdown-gap:6px;height:28px;padding:0;border:0;background:transparent;gap:var(--titan-composer-dropdown-gap);color:var(--titan-text-muted);white-space:nowrap;flex-shrink:0}
+.titan-dropdown-trigger--search{--titan-dropdown-search-width:38px;width:var(--titan-dropdown-search-width);height:var(--titan-control-height-default);justify-content:center;padding:0;border:0;background:transparent;flex-shrink:0;transition:background .15s ease}
+.titan-dropdown-trigger--search:hover:not(:disabled){background:var(--hover-bg)}
+.titan-dropdown-trigger--search:disabled{cursor:default}
+
+/* Observed app-switcher artwork size, outside the interface-icon scale. */
+.titan-dropdown-trigger--app{--titan-icon-size-launcher-trigger:28px}
+
+/* Account: full-width dark trigger; label is instance data. Parent owns width
+   and external spacing; trigger owns inset and minimum label/chevron separation. */
+.titan-dropdown-trigger--account,.titan-dropdown-trigger--account-light{--titan-dropdown-inset-block:var(--titan-dropdown-account-inset-block);--titan-dropdown-inset-inline:var(--titan-dropdown-account-inset-inline);box-sizing:border-box;width:100%;min-width:0;justify-content:space-between}
+.titan-dropdown-trigger--account{border:0;background:var(--titan-dropdown-account-surface);color:var(--titan-dropdown-account-text)}
+/* Account light: same trigger on a light surface, so it keeps a border
+   instead of relying on contrast against a dark sidebar. */
+.titan-dropdown-trigger--account-light{border:var(--titan-border-width-default) solid var(--card-border-color);background:var(--titan-dropdown-account-light-surface);color:var(--titan-dropdown-account-light-text)}
+.titan-dropdown-trigger--account-light:hover{background:var(--search-bg)}
+.titan-dropdown-trigger--account .titan-dropdown-trigger__label,.titan-dropdown-trigger--account-light .titan-dropdown-trigger__label{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.titan-dropdown-trigger--account>svg,.titan-dropdown-trigger--account-light>svg{color:inherit}
+
+.titan-tab{isolation:isolate}
+.titan-tab[aria-selected=true]::after{inset:0 var(--titan-selection-inset);height:auto;border-radius:var(--titan-selection-radius);background:var(--titan-surface-selected);z-index:-1;pointer-events:none}
+
+/* Tab owns both visual treatments; Tabs only arranges its children. */
+.titan-tab{min-height:52px;font-family:var(--titan-font-family-ui)}
+.titan-tab:not([aria-selected=true]):hover::after{content:"";position:absolute;inset:0 var(--titan-selection-inset);border-radius:var(--titan-selection-radius);background:var(--titan-surface-hover);z-index:-1;pointer-events:none}
+.titan-tab--underline[aria-selected=true]::after{inset:auto 0 -1px;height:2px;border-radius:0;background:var(--titan-indicator-active)}
+.titan-tab:focus-visible{outline:2px solid var(--titan-indicator-active);outline-offset:-2px}
+
+/* Selection grows from the center, without changing the tab's hit area. */
+.titan-tab--underline[aria-selected=true]::after{transform-origin:center;animation:titan-tab-underline-in 220ms cubic-bezier(.16,1,.3,1)}
+@keyframes titan-tab-underline-in{from{transform:scaleX(0);opacity:0}to{transform:scaleX(1);opacity:1}}
+@media(prefers-reduced-motion:reduce){.titan-tab--underline[aria-selected=true]::after{animation:none}}

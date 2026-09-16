@@ -28,9 +28,10 @@ function renderNav(){
   for(const [host,label,icon,selected] of views){
     TitanNavigationInput.mount($(host),'sidebarItem',{label,icon:localAssets+icon,selected},{activate:()=>selectView(label)});
   }
-  for(const [host,label,icon] of [['nav-feedback','Feedback','feedback.svg'],['nav-help','Help','help-outline.svg']]){
-    TitanNavigationInput.mount($(host),'sidebarItem',{label,icon:localAssets+icon},{activate:()=>announce(`${label} selected`)});
-  }
+  TitanActions.mount($('nav-footer'),'footerActions',{label:'Feedback and help',items:[
+    {id:'feedback',label:'Feedback',icon:localAssets+'feedback.svg'},
+    {id:'help',label:'Help',icon:localAssets+'help-outline.svg'}
+  ]},{feedback:()=>announce('Feedback selected'),help:()=>announce('Help selected')});
 }
 
 function selectView(label){
@@ -109,8 +110,8 @@ function filterItems(value){
 
 // The shared App switcher owns the trigger, panel and selected app; Drive only
 // supplies the app data and says which app it is on.
-$('sidebar-header-host').outerHTML=TitanSidebarHeader.render({logo,appSwitcher:TitanAppSwitcherOptions('drive')});
-TitanSidebarHeader.bind(document.querySelector('.titan-sidebar-header'),{select:id=>announce(id+' selected')});
+$('sidebar-header-host').outerHTML=TitanSidebarHeader.render({logo,trigger:TitanAppSwitcherPattern.render(TitanAppSwitcherOptions('drive'))});
+TitanAppSwitcherPattern.bind(document.querySelector('.titan-sidebar-header'),{select:id=>announce(id+' selected')});
 renderNav();
 
 TitanActions.mount($('upload-host'),'button',{label:'Upload',variant:'primary',icon:localAssets+'upload.svg',iconColor:'currentColor'},{main:()=>announce('Upload action selected')});

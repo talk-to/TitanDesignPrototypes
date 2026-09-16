@@ -1,0 +1,33 @@
+/* Doubled :root keeps overrides above later component imports of base tokens.
+   Semantic overrides only. Navigation, inverse text and brand colors stay fixed. */
+:root:root {
+  color-scheme: dark;
+  --titan-icon-button-pressed-surface: var(--titan-color-night-130);
+  --titan-elevation-stacked-surface-border: 1px solid var(--card-border-color);
+  --titan-surface-base: var(--titan-color-night-15);
+  --titan-surface-reading: var(--titan-color-night-25);
+  --titan-text-primary: var(--titan-color-night-30);
+  --titan-text-strong: var(--titan-color-night-40);
+  --titan-text-secondary: var(--titan-color-night-50);
+  --titan-text-muted: var(--titan-color-night-60);
+  --titan-surface-selected: var(--titan-color-night-70);
+  --titan-text-link: var(--titan-color-night-80);
+  --reading-pane-bg: var(--titan-color-night-20);
+  --border-color: var(--titan-color-night-90);
+  --card-border-color: var(--titan-color-night-100);
+  --search-bg: var(--titan-color-night-110);
+  --hover-bg: var(--titan-color-night-120);
+  --selected-bg-strong: var(--titan-color-night-130);
+  --titan-surface-hover: var(--titan-color-night-140);
+  --titan-surface-subtle: var(--titan-color-night-150);
+  --titan-divider-subtle: var(--titan-color-night-90);
+  --titan-scrollbar: var(--titan-color-night-160);
+  --titan-text-faint: var(--titan-color-night-60);
+  --titan-text-disabled: var(--titan-color-night-170);
+  --titan-launcher-text: var(--titan-color-night-50);
+  --titan-launcher-divider: var(--titan-color-night-90);
+}
+
+:root:root { --titan-launcher-surface: var(--titan-color-grey-910); --titan-launcher-divider: var(--titan-color-grey-820); }
+
+:root:root { --titan-launcher-selected-surface: var(--titan-color-blue-600); }

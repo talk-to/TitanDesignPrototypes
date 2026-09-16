@@ -1,0 +1,25 @@
+/* Specimen scaffolding only. Never target component classes or descendants. */
+body[data-gallery=true]{margin:0;padding:0;background:transparent}
+/* The studio sizes the embedded frame to the gallery content; an exact-fit
+   viewport can bootstrap both scrollbars from one another. Hide the frame's
+   scrollbar chrome — content stays scrollable, no bars are shown. */
+html:has(body[data-gallery=true]){scrollbar-width:none}
+html:has(body[data-gallery=true])::-webkit-scrollbar{display:none}
+body[data-gallery=true]{scrollbar-width:none}
+body[data-gallery=true]::-webkit-scrollbar{display:none}
+body[data-gallery=true] .specimen-gallery{display:grid!important;grid-template-columns:repeat(var(--gallery-columns,1),minmax(max-content,1fr))!important;grid-auto-rows:1fr;gap:0!important;width:max-content!important;min-width:100%;max-width:none!important;margin:0!important;padding:0!important;justify-items:stretch!important}
+body[data-gallery=true] .specimen-gallery::before{display:none!important}
+body[data-gallery=true] .specimen-gallery-cell{box-sizing:border-box;min-width:max-content;display:flex;flex-direction:column;gap:12px;padding:20px 24px;border-right:1px solid #80848c29;border-bottom:1px solid #80848c29;background:transparent}
+body[data-gallery=true] .specimen-gallery-caption{font:500 10px/1.5 var(--titan-font-family-ui,system-ui);letter-spacing:.03em;color:var(--titan-text-muted,#747780);margin:0;padding:0;text-align:left}
+body[data-gallery=true] .specimen-gallery-content{display:flex;align-items:center;justify-content:center;flex:1;min-height:40px}
+body[data-gallery=true] .specimen-gallery-source{margin:0!important;flex:none}
+body[data-gallery=true] #result,body[data-gallery=true] .result{display:none}
+
+body[data-gallery=true] .specimen-gallery-source.example{padding:0!important;border:0!important;gap:0;align-items:center;overflow:visible}
+body[data-gallery=true] .specimen-gallery-source.example>.mount{justify-content:center}
+/* The catalog owns example order and column count for every component. */
+body[data-gallery=true] main{display:block!important;width:max-content!important;min-width:100%;max-width:none!important;margin:0!important;padding:0!important}
+body[data-gallery=true] .specimen-gallery-cell{border-right:1px solid var(--card-border-color);border-bottom:1px solid var(--card-border-color);background:var(--titan-surface-base)}
+body[data-gallery=true] .specimen-gallery-source{width:var(--specimen-source-width,auto);max-width:none!important}
+/* Equalize paired examples within each row, not unrelated rows of wide content. */
+body[data-gallery=true] .specimen-gallery{grid-auto-rows:auto}

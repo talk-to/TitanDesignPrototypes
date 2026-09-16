@@ -1,0 +1,127 @@
+[
+  {
+    "file": "design-system/components/actions.css",
+    "before": "font-weight:400",
+    "after": "font-weight:var(--titan-font-weight-regular)"
+  },
+  {
+    "file": "design-system/components/actions.css",
+    "before": "font-weight:600",
+    "after": "font-weight:var(--titan-font-weight-semibold)"
+  },
+  {
+    "file": "design-system/components/actions.css",
+    "before": "line-height:20px",
+    "after": "line-height:var(--titan-line-height-20)"
+  },
+  {
+    "file": "design-system/components/selection.css",
+    "before": "line-height:20px",
+    "after": "line-height:var(--titan-line-height-20)"
+  },
+  {
+    "file": "design-system/components/selection.css",
+    "before": "font:400 var(--titan-type-control-size)/20px",
+    "after": "font:var(--titan-font-weight-regular) var(--titan-type-control-size)/var(--titan-line-height-20)"
+  },
+  {
+    "file": "design-system/components/messages.css",
+    "before": "font-weight: 600",
+    "after": "font-weight: var(--titan-font-weight-semibold)"
+  },
+  {
+    "file": "design-system/components/messages.css",
+    "before": "line-height: 20px",
+    "after": "line-height: var(--titan-line-height-20)"
+  },
+  {
+    "file": "design-system/components/messages.css",
+    "before": "border-radius: 4px",
+    "after": "border-radius: var(--titan-radius-4)"
+  },
+  {
+    "file": "design-system/components/messages.css",
+    "before": "border-radius: 4px",
+    "after": "border-radius: var(--titan-radius-4)"
+  },
+  {
+    "file": "design-system/components/messages.css",
+    "before": "border-radius: 4px",
+    "after": "border-radius: var(--titan-radius-4)"
+  },
+  {
+    "file": "design-system/components/messages.css",
+    "before": "color: #888",
+    "after": "color: var(--titan-text-muted)"
+  },
+  {
+    "file": "design-system/components/composer.css",
+    "before": "border-radius:4px 4px 0 0",
+    "after": "border-radius:var(--titan-radius-4) var(--titan-radius-4) 0 0"
+  },
+  {
+    "file": "design-system/components/app-switcher.css",
+    "before": "font-weight: 500",
+    "after": "font-weight: var(--titan-font-weight-medium)"
+  },
+  {
+    "file": "design-system/components/app-switcher.css",
+    "before": "font-weight: 500",
+    "after": "font-weight: var(--titan-font-weight-medium)"
+  },
+  {
+    "file": "design-system/components/app-switcher.css",
+    "before": "font-weight: 500",
+    "after": "font-weight: var(--titan-font-weight-medium)"
+  },
+  {
+    "file": "design-system/components/app-switcher.css",
+    "before": "border-radius: 4px",
+    "after": "border-radius: var(--titan-radius-4)"
+  },
+  {
+    "file": "design-system/components/app-switcher.css",
+    "before": "border-radius: 4px",
+    "after": "border-radius: var(--titan-radius-4)"
+  },
+  {
+    "file": "design-system/components/app-switcher.css",
+    "before": "font-size: 13px",
+    "after": "font-size: var(--titan-type-control-compact-size)"
+  },
+  {
+    "file": "design-system/components/app-switcher.css",
+    "before": "font-size: 13px",
+    "after": "font-size: var(--titan-type-control-compact-size)"
+  },
+  {
+    "file": "design-system/components/app-switcher.css",
+    "before": "font-size: 13px",
+    "after": "font-size: var(--titan-type-control-compact-size)"
+  },
+  {
+    "file": "design-system/components/navigation-input.css",
+    "before": "font-weight: 600",
+    "after": "font-weight: var(--titan-font-weight-semibold)"
+  },
+  {
+    "file": "design-system/components/navigation-input.css",
+    "before": "border-radius: 4px",
+    "after": "border-radius: var(--titan-radius-4)"
+  },
+  {
+    "file": "design-system/components/navigation-input.css",
+    "before": "color: #888",
+    "after": "color: var(--titan-text-muted)"
+  },
+  {
+    "file": "design-system/components/navigation-input.css",
+    "before": "color: #888",
+    "after": "color: var(--titan-text-muted)"
+  },
+  {
+    "file": "design-system/components/navigation-input.css",
+    "before": "font-size: 13px",
+    "after": "font-size: var(--titan-font-size-13)"
+  }
+]

@@ -1,0 +1,24 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Data list</title>
+<link rel="stylesheet" href="../tokens.css"><link rel="stylesheet" href="../components/avatar.css"><link rel="stylesheet" href="../components/selection.css"><link rel="stylesheet" href="../components/data-list.css">
+<style>body{margin:0;padding:24px;font:14px var(--titan-font-family-ui);color:var(--titan-text-primary)}section+section{margin-top:32px}.caption{font:11px var(--titan-font-family-ui);color:var(--titan-text-muted);margin-bottom:12px}</style>
+<link rel="stylesheet" href="gallery.css"><script src="../theme.js"></script></head><body>
+<main>
+<section><div class="caption">With header</div><div id="card"></div></section>
+<section><div class="caption">Two columns, no header</div><div id="plain"></div></section>
+<section><div class="caption">Empty state</div><div id="empty"></div></section>
+</main>
+<script src="../icons/runtime.js"></script><script src="../components/avatar.js"></script><script src="../components/selection.js"></script><script src="../components/data-list.js"></script>
+<script>
+const columns=[{key:'select',role:'control',width:'auto'},{key:'name',role:'key',label:'Name',width:'minmax(240px, 1.35fr)'},{key:'email',label:'Email',width:'minmax(220px, 1fr)'},{key:'phone',label:'Phone',width:'minmax(190px, 1fr)'}];
+const people=[{id:'ada',initials:'AL',name:'Ada Lovelace',email:'ada@titan.email',phone:'09034401875'},{id:'grace',initials:'GH',name:'Grace Hopper with a very long display name that must clip',email:'grace.hopper.with.a.long.address@titan.email',phone:'09034401876'}];
+const card=document.getElementById('card');
+card.innerHTML=TitanDataList.list({columns,label:'People',rows:people.map(p=>({id:p.id,cells:{select:{slot:true},name:{slot:true,text:p.name},email:p.email,phone:p.phone}}))});
+TitanSelection.mount(card.querySelector('[data-slot="head:select"]'),'checkbox',{label:'Select all people',size:'large'},{});
+card.querySelectorAll('.titan-data-list__row').forEach(row=>{
+  const person=people.find(p=>p.id===row.dataset.rowId);
+  row.querySelector('[data-slot$=":name"]').innerHTML=TitanAvatar.render({initials:person.initials,label:person.name});
+  TitanSelection.mount(row.querySelector('[data-slot$=":select"]'),'checkbox',{label:'Select '+person.name,size:'large'},{});
+});
+document.getElementById('plain').innerHTML=TitanDataList.list({columns:[{key:'label',role:'key',width:'minmax(160px, 1fr)'},{key:'value',width:'minmax(160px, 1fr)'}],head:false,label:'Details',rows:[{id:'r1',cells:{label:'Company',value:'Titan'}},{id:'r2',cells:{label:'Role',value:'Design'}}]});
+document.getElementById('empty').innerHTML=TitanDataList.list({columns,label:'People',rows:[],emptyText:'No contacts match your search.'});
+</script><script src="gallery.js"></script></body></html>

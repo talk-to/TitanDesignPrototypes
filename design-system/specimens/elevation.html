@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Titan · Elevation foundations</title>
+  <link rel="stylesheet" href="../tokens.css">
+  <style>
+    :root { color-scheme: light; }
+    * { box-sizing: border-box; }
+    body { margin: 0; padding: 32px; background:var(--titan-surface-reading); color:var(--titan-text-primary); font: 14px/1.5 var(--titan-font-family-ui); }
+    main { max-width: 1040px; margin: 0 auto; }
+    header { margin-bottom: 28px; }
+    .eyebrow { color:var(--titan-text-secondary); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; }
+    h1 { margin: 4px 0 8px; color:var(--titan-text-strong); font-size: 28px; line-height: 1.2; }
+    .intro { max-width: 700px; margin: 0; color:var(--titan-text-secondary); }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
+    article { min-height: 214px; padding: 16px; border: 1px solid var(--border-color); border-radius: 6px; background:var(--titan-surface-base); }
+    .sample-wrap { display: grid; place-items: center; min-height: 98px; margin-bottom: 14px; background:var(--titan-surface-subtle); border-radius: 4px; }
+    .sample { width: 150px; min-height: 58px; padding: 16px; border: 1px solid var(--border-color); border-radius: 4px; background:var(--titan-surface-base); color:var(--titan-text-primary); text-align: center; }
+    .message-action { width: 64px; min-height: 32px; padding: 6px; }
+    .stack-pill { width: 82px; min-height: 32px; padding: 6px; }
+    .sample.elevation-tooltip-sample { width: 118px; padding: 6px 8px; border:var(--titan-elevation-tooltip-border); border-radius: 4px; background:#333; color:#fff; }
+    .app-switcher { width: 132px; min-height: 66px; padding: 12px; filter: drop-shadow(var(--titan-elevation-popover)); }
+    .side-modal { width: 118px; min-height: 86px; margin-left: auto; border-radius: 4px 0 0 4px; box-shadow: var(--titan-elevation-side-panel); }
+    .composer { width: 150px; min-height: 72px; align-self: end; border-radius: 4px 4px 0 0; box-shadow: var(--titan-elevation-bottom-panel); }
+    h2 { margin: 0 0 4px; color:var(--titan-text-strong); font-size: 15px; line-height: 1.3; }
+    code { color:var(--titan-text-secondary); font: 12px/1.4 ui-monospace, SFMono-Regular, Menlo, monospace; overflow-wrap: anywhere; }
+    p { margin: 8px 0 0; color:var(--titan-text-secondary); font-size: 12px; }
+    .note { margin-top: 24px; padding: 12px 14px; border-left: 3px solid #2170f4; background:#eff6ff; color:var(--titan-text-primary); }
+    @media (max-width: 520px) { body { padding: 20px 12px; } }
+  </style>
+<script src="../theme.js"></script></head>
+<body>
+  <main>
+    <header>
+      <div class="eyebrow">Titan design system · foundations</div>
+      <h1>Observed elevation roles</h1>
+      <p class="intro">These treatments are extracted from the Titan email shell and registered implementations. They are named roles, not a universal numeric scale.</p>
+    </header>
+    <section class="grid" aria-label="Elevation role samples">
+      <article><div class="sample-wrap"><div class="sample message-action" style="box-shadow:var(--titan-elevation-compact-action)">Action</div></div><h2>Compact action</h2><code>--titan-elevation-compact-action</code><p>Registered Message row action pill.</p></article>
+      <article><div class="sample-wrap"><div class="sample" style="box-shadow:var(--titan-elevation-stacked-surface)">Thread card</div></div><h2>Stacked surface</h2><code>--titan-elevation-stacked-surface</code><p>Collapsed thread stack card.</p></article>
+      <article><div class="sample-wrap"><div class="sample stack-pill" style="box-shadow:var(--titan-elevation-floating-badge)">3 messages</div></div><h2>Floating badge</h2><code>--titan-elevation-floating-badge</code><p>Collapsed thread count pill.</p></article>
+      <article><div class="sample-wrap"><div class="sample stack-pill" style="box-shadow:var(--titan-elevation-floating-badge-hover)">Hover</div></div><h2>Floating badge hover</h2><code>--titan-elevation-floating-badge-hover</code><p>Observed hover treatment for the count pill.</p></article>
+      <article><div class="sample-wrap"><div class="sample elevation-tooltip-sample titan-elevation-tooltip titan-elevation-native-dark">Tooltip</div></div><h2>Tooltip</h2><code>--titan-elevation-tooltip</code><p>Fixed-dark surface with the native-dark edge context.</p></article>
+      <article><div class="sample-wrap"><div class="sample app-switcher">App switcher</div></div><h2>Popover</h2><code>--titan-elevation-popover</code><p>Registered App switcher panel.</p></article>
+      <article><div class="sample-wrap"><div class="sample side-modal">Settings</div></div><h2>Side panel</h2><code>--titan-elevation-side-panel</code><p>Right-side settings panel.</p></article>
+      <article><div class="sample-wrap"><div class="sample composer">Composer</div></div><h2>Bottom panel</h2><code>--titan-elevation-bottom-panel</code><p>Bottom-docked composer with its observed boundary ring.</p></article>
+    </section>
+    <div class="note">Focus rings, inset editor focus effects, borders, motion and z-order are intentionally not elevation tokens.</div>
+  </main>
+</body>
+</html>

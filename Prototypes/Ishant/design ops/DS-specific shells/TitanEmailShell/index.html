@@ -16,7 +16,7 @@
 
     body {
       font-family: var(--titan-font-family-ui);
-      background: #e0e0e0;
+      background:#e0e0e0;
       height: 100vh;
       display: flex;
       flex-direction: column;
@@ -164,23 +164,29 @@
       position: relative;
     }
 
+    /* Parent-owned spacing between navigation rows. */
+    .nav-scroll > .nav-item + .nav-item {
+      margin-top: var(--titan-space-4);
+    }
+
     .nav-scroll::-webkit-scrollbar {
       width: 0;
     }
 
     .sidebar-line {
       height: 1px;
-      background: #2d2d2d;
+      background:#2d2d2d;
       margin: 8px 0 0;
       flex-shrink: 0;
     }
 
     /* Tooltip showing full email on hover */
     #email-tooltip {
+      --titan-border-elevation: var(--titan-border-elevation-native-dark);
       display: none;
       position: fixed;
-      background: #2d2d2d;
-      color: #fff;
+      background:#2d2d2d;
+      color:#fff;
       font-size: 13px;
       font-weight: 600;
       padding: 3px 8px 3px 4px;
@@ -217,7 +223,7 @@
 
     .account-refresh:hover {
       opacity: 1;
-      background: #333333;
+      background:#333333;
     }
 
     .account-refresh.spinning img {
@@ -255,18 +261,6 @@
       position: relative;
     }
 
-    .sidebar-footer-line {
-      height: 1px;
-      background: transparent;
-      position: relative;
-    }
-
-    .sidebar-footer-line img {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-    }
-
     /* ── Main area (right of sidebar) ── */
     .main-area {
       flex: 1;
@@ -284,7 +278,7 @@
     /* ── Middle Panel ── */
     .middle-panel {
       width: 443px;
-      border-right: 1px solid #dedede;
+      border-right: var(--titan-divider-width-default) solid var(--card-border-color);
       display: flex;
       flex-direction: column;
       flex-shrink: 0;
@@ -293,7 +287,7 @@
     /* ── Top Toolbar (full width above middle + reading pane) ── */
     .top-toolbar {
       height: 64px;
-      border-bottom: 1px solid #dedede;
+      border-bottom: var(--titan-divider-width-default) solid var(--card-border-color);
       display: flex;
       align-items: center;
       padding: 0 var(--titan-space-16);
@@ -343,12 +337,12 @@
     }
 
     .help-btn {
-      border: 1px solid #dedede;
+      border: 1px solid var(--border-color);
       border-radius: 4px;
       padding: 11px 8px;
       font-size: 14px;
-      color: #333;
-      background: #fff;
+      color:var(--titan-text-primary);
+      background:var(--titan-surface-base);
       cursor: pointer;
       white-space: nowrap;
     }
@@ -414,84 +408,38 @@
       height: 52px;
       display: flex;
       align-items: center;
-      padding: 0 var(--titan-space-12);
+      padding: 0 var(--titan-space-20);
       background: var(--titan-surface-base);
       position: relative;
       flex-shrink: 0;
-      border-bottom: 1px solid #dedede;
+      border-bottom: var(--titan-divider-width-default) solid var(--card-border-color);
     }
 
     .tab-checkbox-wrap {
       position: absolute;
-      left: 12px;
-      top: 18px;
-      width: 20px;
+      left: var(--titan-space-20);
+      top: var(--titan-space-16);
+      width: 14px;
       height: 20px;
       display: flex;
       align-items: center;
       justify-content: center;
     }
 
-    .tab-checkbox-wrap .chk {
-      width: 14px;
-      height: 14px;
-      position: relative;
-    }
-
-    .tab-checkbox-wrap .chk img {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      opacity: 0.5;
-    }
-
     .tab-group {
       display: flex;
-      margin-left: 32px;
+      margin-left: calc(var(--titan-space-24) + var(--titan-space-8));
       align-self: stretch;
-    }
-
-    .tab-item {
-      display: flex;
-      align-items: center;
-      padding: 0 8px;
-      cursor: pointer;
-      position: relative;
-      align-self: stretch;
-    }
-
-    .tab-item-label {
-      font-size: var(--titan-type-tab-size);
-      font-weight: var(--titan-font-weight-semibold);
-      color: var(--titan-text-primary);
-      white-space: nowrap;
-      line-height: 20px;
-    }
-
-    .tab-item-label.inactive {
-      color: var(--titan-text-muted);
-      font-weight: var(--titan-font-weight-regular);
-    }
-
-    .tab-item-underline {
-      position: absolute;
-      bottom: -1px;
-      left: 0;
-      right: 0;
-      height: 2px;
-      background: var(--titan-indicator-active);
-      border-radius: 0;
     }
 
     .tabs-right-container {
       position: absolute;
-      right: 12px;
-      top: 12px;
+      right: var(--titan-space-12);
+      top: 50%;
+      transform: translateY(-50%);
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: var(--titan-space-8);
       z-index: 5;
     }
 
@@ -557,7 +505,7 @@
       padding: 5px 8px;
       cursor: pointer;
       font-size: 18px;
-      color: #666;
+      color:var(--titan-text-secondary);
       border-radius: 5px;
       position: relative;
       z-index: 1;
@@ -567,7 +515,7 @@
 
 
     .action-more:hover {
-      background: #eaeaea;
+      background:#eaeaea;
     }
 
     .action-more-icon {
@@ -598,7 +546,7 @@
     }
 
     .thread-content::-webkit-scrollbar-thumb {
-      background: #ddd;
+      background:#ddd;
       border-radius: 2px;
     }
 
@@ -619,7 +567,7 @@
       left: 0;
       right: 0;
       height: 16px;
-      background: linear-gradient(to bottom, #fbfbfb, rgba(251, 251, 251, 0));
+      background: linear-gradient(to bottom, var(--titan-surface-reading), transparent);
       pointer-events: none;
       opacity: 0;
       transition: opacity 0.15s ease;
@@ -716,8 +664,8 @@
       justify-content: center;
       font-size: 11px;
       font-weight: 500;
-      color: #666;
-      background: #fdfdfd;
+      color:var(--titan-text-secondary);
+      background:var(--titan-surface-base);
       border: var(--titan-elevation-floating-badge-border);
       border-radius: 6px;
       padding: 4px 12px;
@@ -728,11 +676,11 @@
     }
 
     .thread-stack:not(.expanded):hover .stack-pill {
-      background: #f0f0f0;
+      background:var(--titan-surface-hover);
       border: var(--titan-elevation-floating-badge-hover-border);
       transform: translate(-50%, -50%);
       box-shadow: var(--titan-elevation-floating-badge-hover);
-      color: #333;
+      color:var(--titan-text-primary);
     }
 
     /* Expanded state */
@@ -833,7 +781,7 @@
     }
     .reply-box-body:empty:before {
       content: attr(placeholder);
-      color: #999999;
+      color:#999999;
     }
 
     /* Feature chips */
@@ -905,14 +853,14 @@
     }
     .comp-feat > span {
       font-size: 14px;
-      color: #333;
+      color:var(--titan-text-primary);
       line-height: 24px;
     }
 
     /* Bottom / Format bar */
     .comp-bottom {
       flex-shrink: 0;
-      border-top: 1px solid #ebebeb;
+      border-top: var(--titan-divider-width-default) solid var(--card-border-color);
     }
     .comp-format-bar {
       height: 48px;
@@ -922,7 +870,7 @@
       gap: 6px;
       overflow-x: auto;
       flex-shrink: 0;
-      border-top: 1px solid #ebebeb;
+      border-top: var(--titan-divider-width-default) solid var(--card-border-color);
     }
     .comp-format-bar::-webkit-scrollbar {
       display: none;
@@ -934,7 +882,7 @@
       height: 28px;
       cursor: pointer;
       font-size: 14px;
-      color: #888;
+      color:var(--titan-text-muted);
       white-space: nowrap;
       flex-shrink: 0;
       user-select: none;
@@ -943,7 +891,7 @@
     .comp-vert-sep {
       width: 1px;
       height: 20px;
-      background: #dedede;
+      background:#dedede;
       flex-shrink: 0;
       margin: 0 4px;
     }
@@ -1020,7 +968,7 @@
       align-items: center;
       gap: 8px;
       flex-shrink: 0;
-      border-top: 1px solid #ebebeb;
+      border-top: var(--titan-divider-width-default) solid var(--card-border-color);
     }
     .comp-send-btn {
       display: flex;
@@ -1095,7 +1043,7 @@
     .comp-vert-sep {
       width: 1px;
       height: 20px;
-      background: #dedede;
+      background:#dedede;
       flex-shrink: 0;
     }
     .comp-send-icons {
@@ -1154,7 +1102,7 @@
       align-items: center;
       gap: var(--titan-space-16);
       padding: var(--titan-space-16) var(--titan-space-24);
-      border-bottom: 1px solid #f0f0f0;
+      border-bottom: var(--titan-divider-width-default) solid var(--card-border-color);
       position: relative;
       flex-shrink: 0;
     }
@@ -1181,7 +1129,7 @@
       width: 20px;
       height: 20px;
       border-radius: 50%;
-      background: #ffffff;
+      background:var(--titan-surface-base);
       border: none;
       box-shadow: 0px 1px 4px rgba(0,0,0,0.25);
       display: flex;
@@ -1261,7 +1209,7 @@
       background: var(--hover-bg);
     }
     .side-modal-option.logout {
-      color: #d93025;
+      color:#d93025;
     }
 
     /* Preference Sections */
@@ -1306,7 +1254,7 @@
       display: inline-flex;
       align-items: center;
       cursor: help;
-      color: #999;
+      color:#999;
     }
 
     /* Preview Boxes */
@@ -1314,7 +1262,7 @@
       width: 80px;
       height: 42px;
       border-radius: 4px;
-      border: 1px solid #dedede;
+      border: 1px solid var(--border-color);
       position: relative;
       overflow: hidden;
       flex-shrink: 0;
@@ -1332,14 +1280,14 @@
 
     /* Upgrade Footer */
     .side-modal-upgrade-cta {
-      background: #f1bd6c;
+      background:#f1bd6c;
       padding: 12px 16px;
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 4px;
       flex-shrink: 0;
-      color: #333;
+      color:var(--titan-text-primary);
     }
     .upgrade-btn {
       display: flex;
@@ -1349,7 +1297,7 @@
       border: none;
       font-size: 14px;
       font-weight: 700;
-      color: #333;
+      color:var(--titan-text-primary);
       cursor: pointer;
     }
     .upgrade-btn img {
@@ -1359,7 +1307,7 @@
     }
     .upgrade-subtext {
       font-size: 12px;
-      color: #333;
+      color:var(--titan-text-primary);
       opacity: 0.8;
     }
 
@@ -1382,7 +1330,7 @@
   <link rel="stylesheet" href="/design-system/components/account-header.css" onerror="this.onerror=null;this.href='../../../../../design-system/components/account-header.css'">
 <link rel="stylesheet" href="../../../../../design-system/components/selection.css">
 <link rel="stylesheet" href="/design-system/components/sidebar-header.css">
-</head>
+<script src="/design-system/theme.js" onerror="this.onerror=null;this.src='../../../../../design-system/theme.js'"></script></head>
 
 <body>
 
@@ -1524,10 +1472,6 @@
 
       <!-- Footer -->
       <div style="position:relative; flex-shrink:0;">
-        <div style="height:1px; position:relative; overflow:visible;">
-          <img src="assets/0d00b891-46d6-4063-acc9-0db4c8c41036.svg" alt=""
-            style="position:absolute; inset:-1px 0; width:100%; height:2px; object-fit:fill;">
-        </div>
         <div id="sidebar-footer-host" class="sidebar-footer"></div>
       </div>
 
@@ -1546,9 +1490,7 @@
             </div>
             <input type="text" placeholder="Search in ella@avontech.com" readonly>
             <div class="search-divider"></div>
-            <div class="search-dropdown">
-              <img data-titan-icon="search-filter" alt="">
-            </div>
+            <button type="button" class="titan-dropdown-trigger titan-dropdown-trigger--search" data-inspector-variant="search" aria-label="Search filters" aria-haspopup="menu" aria-expanded="false"><svg data-titan-icon="chevron-down" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><use href="#titan-artwork"></use></svg></button>
 
           </div>
         </div>
@@ -1583,17 +1525,9 @@
           <div class="tabs-row">
 
             <div class="tab-checkbox-wrap">
-              <div class="chk"><img src="assets/392bf29c-08b1-44e8-b95b-b99905e722e6.svg" alt=""></div>
+              <input class="titan-checkbox" type="checkbox" aria-label="Select all messages">
             </div>
-            <div class="tab-group">
-              <div class="tab-item">
-                <div class="tab-item-label">Priority (25)</div>
-                <div class="tab-item-underline"></div>
-              </div>
-              <div class="tab-item">
-                <div class="tab-item-label inactive">Other (50)</div>
-              </div>
-            </div>
+            <div class="tab-group" id="mail-tabs"></div>
             <div class="tabs-right-container">
 
               <span id="mail-filter-trigger"></span>
@@ -1607,9 +1541,9 @@
             <div class="email-tile titan-message-row">
               <div class="email-tile-inner">
                 <div class="tile-icons">
-                  <div class="tile-chk">
-                    <div class="chk"><img src="assets/392bf29c-08b1-44e8-b95b-b99905e722e6.svg" alt=""></div>
-                  </div>
+                  <label class="tile-chk">
+                    <input class="titan-checkbox" type="checkbox" aria-label="Select message from Sajal Kumar">
+                  </label>
                   <div class="tile-star"><img src="assets/1e1696aa-5b8d-4409-97fd-4ce5c85c5ae5.svg" alt=""></div>
                 </div>
                 <div class="tile-content">
@@ -1637,9 +1571,9 @@
             <div class="email-tile titan-message-row selected">
               <div class="email-tile-inner">
                 <div class="tile-icons">
-                  <div class="tile-chk">
-                    <div class="chk"><img src="assets/392bf29c-08b1-44e8-b95b-b99905e722e6.svg" alt=""></div>
-                  </div>
+                  <label class="tile-chk">
+                    <input class="titan-checkbox" type="checkbox" aria-label="Select message from Ninad Raval">
+                  </label>
                   <div class="tile-dot"></div>
                   <div class="tile-star"><img src="assets/1e1696aa-5b8d-4409-97fd-4ce5c85c5ae5.svg" alt=""></div>
                 </div>
@@ -1667,9 +1601,9 @@
             <div class="email-tile titan-message-row">
               <div class="email-tile-inner">
                 <div class="tile-icons">
-                  <div class="tile-chk">
-                    <div class="chk"><img src="assets/392bf29c-08b1-44e8-b95b-b99905e722e6.svg" alt=""></div>
-                  </div>
+                  <label class="tile-chk">
+                    <input class="titan-checkbox" type="checkbox" aria-label="Select message from David Jones, Ella">
+                  </label>
                   <div class="tile-star"><img src="assets/1e1696aa-5b8d-4409-97fd-4ce5c85c5ae5.svg" alt=""></div>
                 </div>
                 <div class="tile-content">
@@ -1695,9 +1629,9 @@
             <div class="email-tile titan-message-row">
               <div class="email-tile-inner">
                 <div class="tile-icons">
-                  <div class="tile-chk">
-                    <div class="chk"><img src="assets/392bf29c-08b1-44e8-b95b-b99905e722e6.svg" alt=""></div>
-                  </div>
+                  <label class="tile-chk">
+                    <input class="titan-checkbox" type="checkbox" aria-label="Select message from Shreya">
+                  </label>
                   <div class="tile-star"><img src="assets/1e1696aa-5b8d-4409-97fd-4ce5c85c5ae5.svg" alt=""></div>
                 </div>
                 <div class="tile-content">
@@ -1723,9 +1657,9 @@
             <div class="email-tile titan-message-row">
               <div class="email-tile-inner">
                 <div class="tile-icons">
-                  <div class="tile-chk">
-                    <div class="chk"><img src="assets/392bf29c-08b1-44e8-b95b-b99905e722e6.svg" alt=""></div>
-                  </div>
+                  <label class="tile-chk">
+                    <input class="titan-checkbox" type="checkbox" aria-label="Select message from Sajal Kumar">
+                  </label>
                   <div class="tile-star"><img src="assets/1e1696aa-5b8d-4409-97fd-4ce5c85c5ae5.svg" alt=""></div>
                 </div>
                 <div class="tile-content">
@@ -1751,9 +1685,9 @@
             <div class="email-tile titan-message-row">
               <div class="email-tile-inner">
                 <div class="tile-icons">
-                  <div class="tile-chk">
-                    <div class="chk"><img src="assets/392bf29c-08b1-44e8-b95b-b99905e722e6.svg" alt=""></div>
-                  </div>
+                  <label class="tile-chk">
+                    <input class="titan-checkbox" type="checkbox" aria-label="Select message from Ninad Raval">
+                  </label>
                   <div class="tile-star"><img src="assets/1e1696aa-5b8d-4409-97fd-4ce5c85c5ae5.svg" alt=""></div>
                 </div>
                 <div class="tile-content">
@@ -1779,9 +1713,9 @@
             <div class="email-tile titan-message-row">
               <div class="email-tile-inner">
                 <div class="tile-icons">
-                  <div class="tile-chk">
-                    <div class="chk"><img src="assets/392bf29c-08b1-44e8-b95b-b99905e722e6.svg" alt=""></div>
-                  </div>
+                  <label class="tile-chk">
+                    <input class="titan-checkbox" type="checkbox" aria-label="Select message from Ninad Raval">
+                  </label>
                   <div class="tile-star"><img src="assets/1e1696aa-5b8d-4409-97fd-4ce5c85c5ae5.svg" alt=""></div>
                 </div>
                 <div class="tile-content">
@@ -1956,11 +1890,11 @@
             </div>
 
             <!-- Reply Box Card (Embedded Inline) -->
-            <div class="reply-box-card" id="reply-box-card" style="display: none; margin-top: 16px; border: 1px solid #dedede; border-radius: 4px; box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06); background: #ffffff; flex-direction: column; overflow: hidden; margin-bottom: 20px;">
+            <div class="reply-box-card" id="reply-box-card" style="display: none; margin-top: 16px; border: 1px solid var(--border-color); border-radius: 4px; box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06); background:var(--titan-surface-base); flex-direction: column; overflow: hidden; margin-bottom: 20px;">
                 <!-- From row -->
-                <div class="reply-box-from-row" style="display: flex; align-items: center; justify-content: space-between; padding: 10px 24px; border-bottom: 1px solid #ebebeb;">
-                  <div style="font-size: 14px; color: #888888;">From: <span id="reply-box-from" style="color: #333333;">ishantp@titan.email</span></div>
-                  <div style="display: flex; align-items: center; gap: 6px; font-size: 13px; color: #888888;">
+                <div class="reply-box-from-row" style="display: flex; align-items: center; justify-content: space-between; padding: 10px 24px; border-bottom: var(--titan-divider-width-default) solid var(--card-border-color);">
+                  <div style="font-size: 14px; color:var(--titan-text-muted);">From: <span id="reply-box-from" style="color:var(--titan-text-primary);">ishantp@titan.email</span></div>
+                  <div style="display: flex; align-items: center; gap: 6px; font-size: 13px; color:var(--titan-text-muted);">
                     <span>Saved</span>
                     <button class="reply-box-popout-btn" style="border: none; background: none; cursor: pointer; padding: 3px; width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; border-radius: 5px; transition: background 0.15s;" onmouseenter="this.style.background='var(--hover-bg)'" onmouseleave="this.style.background='none'" onclick="popoutToComposer()" title="Pop out">
                       <svg width="14" height="14" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1973,24 +1907,24 @@
                 </div>
 
                 <!-- Header -->
-                <div class="reply-box-header" style="display: flex; align-items: center; justify-content: space-between; padding: 10px 24px; border-bottom: 1px solid #ebebeb;">
+                <div class="reply-box-header" style="display: flex; align-items: center; justify-content: space-between; padding: 10px 24px; border-bottom: var(--titan-divider-width-default) solid var(--card-border-color);">
                   <div class="reply-box-recipient" id="reply-box-recipient" style="display: flex; align-items: center; gap: 8px; font-size: 14px;">
-                    <span id="reply-recipient-name" style="color: #333333; font-weight: 500;">Usha Loutongbam</span>
+                    <span id="reply-recipient-name" style="color:var(--titan-text-primary); font-weight: 500;">Usha Loutongbam</span>
                   </div>
-                  <div style="display: flex; align-items: center; gap: 14px; font-size: 13px; color: #888888; font-weight: 500;">
+                  <div style="display: flex; align-items: center; gap: 14px; font-size: 13px; color:var(--titan-text-muted); font-weight: 500;">
                     <span id="reply-subject-toggle" onclick="toggleReplySubject()" style="cursor: pointer; transition: color 0.15s; padding-bottom: 2px;" onmouseenter="this.style.color='#333333'" onmouseleave="this.style.color='#888888'">Subject</span>
                   </div>
                 </div>
 
                 <!-- Subject Row (hidden by default) -->
-                <div id="reply-subject-row" style="overflow: hidden; max-height: 0; opacity: 0; transition: max-height 0.25s cubic-bezier(0.22,1,0.36,1), opacity 0.2s ease; padding: 0 24px; border-bottom: 1px solid #ebebeb;">
-                  <div style="font-size: 14px; color: #444; padding-top: 10px; padding-bottom: 10px;">
-                    <span contenteditable="true" spellcheck="false" id="reply-subject-field" style="outline: none; display: block; color: #444; font-size: 14px; font-family: inherit; min-width: 20px;">Re: Project roadmap for Dashboard version</span>
+                <div id="reply-subject-row" style="overflow: hidden; max-height: 0; opacity: 0; transition: max-height 0.25s cubic-bezier(0.22,1,0.36,1), opacity 0.2s ease; padding: 0 24px; border-bottom: var(--titan-divider-width-default) solid var(--card-border-color);">
+                  <div style="font-size: 14px; color:#444; padding-top: 10px; padding-bottom: 10px;">
+                    <span contenteditable="true" spellcheck="false" id="reply-subject-field" style="outline: none; display: block; color:#444; font-size: 14px; font-family: inherit; min-width: 20px;">Re: Project roadmap for Dashboard version</span>
                   </div>
                 </div>
 
                 <!-- Features Toolbar -->
-                <div class="comp-features-row" style="padding: 10px 24px; margin-bottom: 0; background: transparent; display: flex; align-items: center; gap: 8px; height: auto; box-sizing: border-box; justify-content: space-between; border-bottom: 1px solid #ebebeb;">
+                <div class="comp-features-row" style="padding: 10px 24px; margin-bottom: 0; background: transparent; display: flex; align-items: center; gap: 8px; height: auto; box-sizing: border-box; justify-content: space-between; border-bottom: var(--titan-divider-width-default) solid var(--card-border-color);">
                   <div style="display: flex; align-items: center; gap: 8px;">
                     <div class="comp-feat comp-feat-active"><span class="fic"><img data-titan-icon="track" style="filter: invert(51%) sepia(82%) saturate(461%) hue-rotate(71deg) brightness(96%) contrast(85%); width: 15px; height: 15px;" alt=""></span><span>Track</span></div>
                     <div class="comp-feat"><span class="fic"><img data-titan-icon="design" alt=""></span><span>Design</span></div>
@@ -2010,18 +1944,18 @@
 
                 <!-- Text Area / Editor -->
                 <div style="padding: 16px 24px; position: relative;">
-                  <div class="reply-box-body" id="reply-box-body" contenteditable="true" spellcheck="true" placeholder="Reply to email..." style="min-height: 100px; max-height: 250px; overflow-y: auto; outline: none; font-size: 14px; color: #333333; line-height: 1.5; font-family: inherit;"></div>
+                  <div class="reply-box-body" id="reply-box-body" contenteditable="true" spellcheck="true" placeholder="Reply to email..." style="min-height: 100px; max-height: 250px; overflow-y: auto; outline: none; font-size: 14px; color:var(--titan-text-primary); line-height: 1.5; font-family: inherit;"></div>
                   
                   <!-- History ellipsis button (...) -->
                   <div style="margin-top: 12px; display: flex; align-items: center;">
-                    <button class="reply-history-btn" style="background: #f1f3f4; border: 1px solid #dcdcdc; border-radius: 4px; padding: 2px 8px; font-size: 12px; font-weight: 600; color: #666666; cursor: pointer;">...</button>
+                    <button class="reply-history-btn" style="background:#f1f3f4; border: 1px solid #dcdcdc; border-radius: 4px; padding: 2px 8px; font-size: 12px; font-weight: 600; color:var(--titan-text-secondary); cursor: pointer;">...</button>
                   </div>
                 </div>
 
                 <!-- Bottom Toolbar (Format & Send) -->
                 <div class="comp-bottom" style="border-top: none;">
                   <!-- Formatting bar -->
-                  <div class="comp-format-bar" style="border-top: 1px solid #ebebeb; padding-left: 24px; padding-right: 24px; display: flex; align-items: center; gap: 8px;">
+                  <div class="comp-format-bar" style="border-top: var(--titan-divider-width-default) solid var(--card-border-color); padding-left: 24px; padding-right: 24px; display: flex; align-items: center; gap: 8px;">
                     <div class="reply-font-dd-pill">
                       <span>Sans Serif</span>
                       <img src="composer_assets/figma-ic-triangle.svg" alt="" class="comp-dd-arrow">
@@ -2043,7 +1977,7 @@
                     <button class="comp-fmt-btn comp-fmt-moredots" title="More"><img data-titan-icon="more-vertical" alt=""></button>
                   </div>
                   <!-- Send bar -->
-                  <div class="comp-send-bar" style="display: flex; align-items: center; justify-content: space-between; padding: 12px 24px; border-top: 1px solid #ebebeb;">
+                  <div class="comp-send-bar" style="display: flex; align-items: center; justify-content: space-between; padding: 12px 24px; border-top: var(--titan-divider-width-default) solid var(--card-border-color);">
                     <div style="display: flex; align-items: center; gap: 8px;">
                       <button class="comp-send-btn titan-split-btn" onclick="discardReply()">
                         <span class="comp-send-main split-btn-main">
@@ -2285,14 +2219,14 @@
   <link rel="stylesheet" href="/design-system/components/composer.css">
   <script src="/design-system/icons/runtime.js"></script><script src="/design-system/components/actions.js"></script>
   <script src="/design-system/components/selection.js"></script>
-  <script src="/design-system/components/app-switcher.js"></script>
+  <script src="/design-system/components/app-switcher.js"></script><script src="/design-system/patterns/app-switcher.js"></script><link rel="stylesheet" href="/design-system/patterns/app-switcher.css">
   <script src="/design-system/app-switcher-config.js"></script>
   <script src="/design-system/components/sidebar-header.js"></script>
   <script src="/design-system/components/avatar.js"></script>
   <script src="/design-system/components/account-header.js"></script>
   <script>
-  document.getElementById('sidebar-header-host').outerHTML=TitanSidebarHeader.render({appSwitcher:TitanAppSwitcherOptions('mail'),logo:'assets/fa36f613-977c-444a-bef5-e1b5f5f1b340.svg'});
-  TitanSidebarHeader.bind(document.querySelector('.titan-sidebar-header'));
+  document.getElementById('sidebar-header-host').outerHTML=TitanSidebarHeader.render({trigger:TitanAppSwitcherPattern.render(TitanAppSwitcherOptions('mail')),logo:'assets/fa36f613-977c-444a-bef5-e1b5f5f1b340.svg'});
+  TitanAppSwitcherPattern.bind(document.querySelector('.titan-sidebar-header'));
   for(const [host,options] of [
     ['account-header-ella',{id:'ella',email:'ella.henderson@avontechlabs.com',initials:'E'}],
     ['account-header-support',{id:'support',email:'support.team@avontechlabs.com',initials:'S'}]
@@ -2388,7 +2322,7 @@
       tile.innerHTML = `
     <div class="email-tile-inner" style="opacity:1;">
       <div class="tile-icons">
-        <div class="tile-chk"><div class="chk"><img src="assets/392bf29c-08b1-44e8-b95b-b99905e722e6.svg" alt=""></div></div>
+        <label class="tile-chk"><input class="titan-checkbox" type="checkbox" aria-label="Select message from ${data.sender}"></label>
         <div class="tile-dot"></div>
         <div class="tile-star"><img src="assets/1e1696aa-5b8d-4409-97fd-4ce5c85c5ae5.svg" alt=""></div>
       </div>
@@ -2792,6 +2726,8 @@
   })();
 </script>
 <script>
+let mailCategory="priority";
+const mailTabs=TitanSelection.mount(document.getElementById("mail-tabs"),"tabs",{label:"Message categories",variant:"underline",value:mailCategory,items:[{id:"priority",label:"Priority",count:25},{id:"other",label:"Other",count:50}]},{change:value=>{mailCategory=value;mailTabs.update({value});}});
 TitanSelection.mount(document.getElementById("mail-filter-trigger"),"dropdown",{label:"All mails"});
 </script>
 </body>

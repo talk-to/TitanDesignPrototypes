@@ -1,0 +1,5745 @@
+{
+  "contractVersion": 1,
+  "name": "Titan design system",
+  "version": "0.3.1",
+  "description": "A growing Titan design system, initially informed by the email shell and enriched by future screens and products.",
+  "components": [
+    {
+      "id": "icon-button",
+      "name": "Icon button",
+      "category": "Buttons",
+      "class": "titan-icon-button",
+      "css": "components/actions.css",
+      "module": "components/actions.js",
+      "render": "TitanActions.iconButton(options)",
+      "preview": "specimens/actions.html?part=icon-button",
+      "previewHeight": 160,
+      "states": [
+        "default",
+        "hover",
+        "active",
+        "focus-visible",
+        "disabled",
+        "pressed"
+      ],
+      "usage": "Variants: default, compact, composer, dark, dark-quiet, toggle. Dark uses a 24px target; iconSize 16 (default) or 18 supports navigation or window usages with one treatment. Toggle requires icon + pressedIcon and an explicit pressed state; it swaps artwork instead of painting a container. Use monochrome assets with iconColor: currentColor. Legacy window/dark-compact inputs normalize to dark.",
+      "props": {
+        "label": "Required visible or accessible label",
+        "icon": "Required registered icon ID (custom image paths supported)",
+        "disabled": "Boolean; prevents interaction",
+        "pressed": "Optional boolean; caller owns toggle state",
+        "pressedIcon": "Required for the toggle variant; registered icon ID or custom image path shown while pressed. The resting asset comes from icon.",
+        "size": "32 (default) or 40; observed action and toolbar sizes",
+        "variant": "default, compact, composer, dark, dark-quiet, or toggle. Toggle is the quiet artwork-swap treatment: 24px target, 16px artwork, no container, accent artwork while pressed. Dark and dark-quiet are for dark surfaces; dark-quiet has no hover container \u2014 its artwork sits at reduced opacity and reaches full opacity on hover, active and pressed. Opacity is used rather than colour so artwork supplied as a path (rendered as <img>) is affected too."
+      },
+      "anatomy": {
+        "parts": [
+          {
+            "name": "Control",
+            "selector": ".titan-icon-button"
+          }
+        ],
+        "spacing": [],
+        "alignment": "Centered image canvases: 20px for normal 32px and composer 28px controls, 24px for 40px controls, 18px for 24px window controls. Artwork has shared optical corrections inside each canvas.",
+        "behavior": "Native keyboard activation; disabled controls cannot activate. Split actions have independent callbacks. The dark-quiet variant paints no hover background; it changes artwork opacity only, so it can sit directly on a filled row without drawing a second container. The toggle variant swaps between its two supplied artwork states with no container in any state.",
+        "ownership": "Component owns its internal spacing and hit area. Parent owns spacing between controls.",
+        "interactionOwnership": "Owns control semantics and visual treatment for activation, focus, disabled and optional pressed values for each size. The caller owns the toggle value and updates the documented pressed input (aria-pressed); this is distinct from transient active interaction. The toggle variant swaps artwork between icon and pressedIcon under the same contract."
+      },
+      "previewAutoHeight": true,
+      "galleryWidth": 360,
+      "interactions": {
+        "preview": "specimens/interactions.html?part=icon-button",
+        "targets": [
+          {
+            "id": "main",
+            "name": "Default \u00b7 32px",
+            "states": [
+              "default",
+              "hover",
+              "active",
+              "pressed",
+              "focus",
+              "disabled"
+            ],
+            "owner": "icon-button"
+          },
+          {
+            "id": "large",
+            "name": "Default \u00b7 40px",
+            "states": [
+              "default",
+              "hover",
+              "active",
+              "pressed",
+              "focus",
+              "disabled"
+            ],
+            "owner": "icon-button"
+          },
+          {
+            "id": "composer",
+            "name": "Composer",
+            "owner": "icon-button",
+            "states": [
+              "default",
+              "hover",
+              "active",
+              "focus",
+              "disabled"
+            ]
+          },
+          {
+            "id": "dark",
+            "name": "Dark",
+            "owner": "icon-button",
+            "states": [
+              "default",
+              "hover",
+              "focus",
+              "pressed",
+              "disabled"
+            ]
+          },
+          {
+            "id": "dark-quiet",
+            "name": "Dark quiet",
+            "owner": "icon-button",
+            "states": [
+              "default",
+              "hover",
+              "focus",
+              "pressed",
+              "disabled"
+            ]
+          },
+          {
+            "id": "compact",
+            "name": "Compact",
+            "owner": "icon-button",
+            "states": [
+              "default",
+              "hover",
+              "focus",
+              "pressed",
+              "disabled"
+            ]
+          },
+          {
+            "id": "toggle",
+            "name": "Icon toggle",
+            "owner": "icon-button",
+            "states": [
+              "default",
+              "pressed",
+              "focus",
+              "disabled"
+            ]
+          }
+        ],
+        "width": 280
+      },
+      "variants": [
+        "Default",
+        "Compact",
+        "Composer",
+        "Dark",
+        "Dark quiet",
+        "Icon toggle"
+      ],
+      "searchTags": [
+        "action",
+        "glyph",
+        "toolbar"
+      ],
+      "previewConfigurations": [
+        {
+          "id": "main",
+          "name": "Default \u00b7 32px",
+          "selector": "#examples > .example:nth-child(1)",
+          "interactionTarget": "main"
+        },
+        {
+          "id": "large",
+          "name": "Default \u00b7 40px",
+          "selector": "#examples > .example:nth-child(2)",
+          "interactionTarget": "large"
+        },
+        {
+          "id": "compact",
+          "name": "Compact",
+          "selector": "#examples > .example:nth-child(4)",
+          "interactionTarget": "compact"
+        },
+        {
+          "id": "composer",
+          "name": "Composer",
+          "selector": "#examples > .example:nth-child(3)",
+          "interactionTarget": "composer"
+        },
+        {
+          "id": "dark",
+          "name": "Dark",
+          "selector": "#examples > .example:nth-child(5)",
+          "interactionTarget": "dark"
+        },
+        {
+          "id": "dark-quiet",
+          "name": "Dark quiet",
+          "selector": "#examples > .example:nth-child(6)",
+          "interactionTarget": "dark-quiet"
+        },
+        {
+          "id": "toggle",
+          "name": "Icon toggle",
+          "selector": "#examples > .example:nth-child(7)",
+          "interactionTarget": "toggle"
+        },
+        {
+          "id": "toggle-on",
+          "name": "Icon toggle \u00b7 On",
+          "selector": "#examples > .example:nth-child(8)",
+          "interactionTarget": "toggle"
+        }
+      ],
+      "previewLayout": {
+        "columns": 2
+      }
+    },
+    {
+      "id": "button",
+      "name": "Button",
+      "category": "Buttons",
+      "class": "titan-button",
+      "css": "components/actions.css",
+      "module": "components/actions.js",
+      "render": "TitanActions.button(options)",
+      "preview": "specimens/actions.html?part=button",
+      "previewHeight": 160,
+      "states": [
+        "default",
+        "hover",
+        "active",
+        "focus-visible",
+        "disabled"
+      ],
+      "usage": "An action with an optional icon. Use primary for the main action. Optional iconColor tints catalog monochrome icons; currentColor follows the control color.",
+      "props": {
+        "label": "Required visible or accessible label",
+        "icon": "Optional registered icon ID (custom image paths supported). The icon is a content slot the component owns \u2014 a 24px box with --titan-icon-size-action artwork and the icon-to-label gap \u2014 so every variant renders with or without one. Supplying an icon is an instance, not a variant.",
+        "disabled": "Boolean; prevents interaction",
+        "variant": "default, toolbar, composer, outlined, outlined-primary, primary, or dark. Primary uses accent fill with inverse text and standard button sizing. Outlined primary reuses Outlined geometry with accent text, icon and border, and semibold weight."
+      },
+      "anatomy": {
+        "parts": [
+          {
+            "name": "Control",
+            "selector": ".titan-button"
+          },
+          {
+            "name": "Icon slot",
+            "selector": ".titan-button__icon"
+          },
+          {
+            "name": "Label",
+            "selector": ".titan-button>span:last-child"
+          }
+        ],
+        "spacing": [
+          {
+            "label": "Icon to label",
+            "token": "--titan-button-gap",
+            "selector": ".titan-button:not(.titan-button--toolbar):not(.titan-button--outlined)",
+            "property": "gap"
+          },
+          {
+            "label": "Top inset",
+            "token": "--titan-space-4",
+            "selector": ".titan-button:not(.titan-button--toolbar):not(.titan-button--outlined)",
+            "property": "padding-top"
+          },
+          {
+            "label": "Bottom inset",
+            "token": "--titan-space-4",
+            "selector": ".titan-button:not(.titan-button--toolbar):not(.titan-button--outlined)",
+            "property": "padding-bottom"
+          },
+          {
+            "label": "Left inset",
+            "token": "--titan-space-8",
+            "selector": ".titan-button:has(.titan-button__icon):not(.titan-button--outlined)",
+            "property": "padding-left"
+          },
+          {
+            "label": "Left inset without icon",
+            "token": "--titan-space-12",
+            "selector": ".titan-button:not(:has(.titan-button__icon)):not(.titan-button--outlined)",
+            "property": "padding-left"
+          },
+          {
+            "label": "Right inset",
+            "token": "--titan-space-12",
+            "selector": ".titan-button:not(.titan-button--toolbar):not(.titan-button--outlined)",
+            "property": "padding-right"
+          },
+          {
+            "label": "Toolbar top inset",
+            "token": "--titan-toolbar-button-inset",
+            "selector": ".titan-button--toolbar",
+            "property": "padding-top"
+          },
+          {
+            "label": "Toolbar right inset",
+            "token": "--titan-space-8",
+            "selector": ".titan-button--toolbar",
+            "property": "padding-right"
+          },
+          {
+            "label": "Toolbar bottom inset",
+            "token": "--titan-toolbar-button-inset",
+            "selector": ".titan-button--toolbar",
+            "property": "padding-bottom"
+          },
+          {
+            "label": "Toolbar left inset",
+            "token": "--titan-toolbar-button-inset",
+            "selector": ".titan-button--toolbar",
+            "property": "padding-left"
+          },
+          {
+            "label": "Toolbar icon to label",
+            "token": "--titan-gap-icon-label-compact",
+            "selector": ".titan-button--toolbar",
+            "property": "gap"
+          },
+          {
+            "label": "Outlined padding-left",
+            "token": "--titan-space-16",
+            "selector": ".titan-button--outlined",
+            "property": "padding-left"
+          },
+          {
+            "label": "Outlined padding-right",
+            "token": "--titan-space-16",
+            "selector": ".titan-button--outlined",
+            "property": "padding-right"
+          },
+          {
+            "label": "Outlined icon to label",
+            "token": "--titan-gap-icon-label",
+            "selector": ".titan-button--outlined",
+            "property": "gap"
+          },
+          {
+            "label": "Dark action top inset",
+            "token": "--titan-space-4",
+            "selector": ".titan-button--dark",
+            "property": "padding-top"
+          },
+          {
+            "label": "Dark action bottom inset",
+            "token": "--titan-space-4",
+            "selector": ".titan-button--dark",
+            "property": "padding-bottom"
+          },
+          {
+            "label": "Dark action start inset",
+            "token": "--titan-space-8",
+            "selector": ".titan-button--dark",
+            "property": "padding-left"
+          },
+          {
+            "label": "Dark action end inset",
+            "token": "--titan-space-8",
+            "selector": ".titan-button--dark",
+            "property": "padding-right"
+          },
+          {
+            "label": "Dark action icon-label gap",
+            "token": "--titan-gap-icon-label",
+            "selector": ".titan-button--dark",
+            "property": "gap"
+          }
+        ],
+        "alignment": "Content centered inside controls.",
+        "behavior": "Native keyboard activation; disabled controls cannot activate. Split actions have independent callbacks.",
+        "ownership": "Component owns its internal spacing and hit area: the base button matches the shared control height (--titan-control-height-default) with 16px horizontal insets, while Toolbar, Composer and Dark pin their own compact heights. Parent owns spacing between controls.",
+        "interactionOwnership": "Owns button states across variants. Action-group spacing is layout, not an additional interaction owner."
+      },
+      "previewAutoHeight": true,
+      "galleryWidth": 360,
+      "interactions": {
+        "preview": "specimens/interactions.html?part=button",
+        "targets": [
+          {
+            "id": "main",
+            "name": "Default \u00b7 With icon",
+            "states": [
+              "default",
+              "hover",
+              "active",
+              "focus",
+              "disabled"
+            ],
+            "owner": "button"
+          },
+          {
+            "id": "label-only",
+            "name": "Default \u00b7 Label only",
+            "states": [
+              "default",
+              "hover",
+              "active",
+              "focus",
+              "disabled"
+            ],
+            "owner": "button"
+          },
+          {
+            "id": "toolbar",
+            "name": "Toolbar",
+            "states": [
+              "default",
+              "hover",
+              "active",
+              "focus",
+              "disabled"
+            ],
+            "owner": "button"
+          },
+          {
+            "id": "composer",
+            "name": "Composer",
+            "owner": "button",
+            "states": [
+              "default",
+              "hover",
+              "active",
+              "focus",
+              "disabled"
+            ]
+          },
+          {
+            "id": "outlined",
+            "name": "Outlined",
+            "owner": "button",
+            "states": [
+              "default",
+              "hover",
+              "active",
+              "focus",
+              "disabled"
+            ]
+          },
+          {
+            "id": "outlined-primary",
+            "name": "Outlined primary",
+            "owner": "button",
+            "states": [
+              "default",
+              "hover",
+              "active",
+              "focus",
+              "disabled"
+            ]
+          },
+          {
+            "id": "primary",
+            "name": "Primary",
+            "owner": "button",
+            "states": [
+              "default",
+              "hover",
+              "active",
+              "focus",
+              "disabled"
+            ]
+          },
+          {
+            "id": "dark",
+            "name": "Dark",
+            "owner": "button",
+            "states": [
+              "default",
+              "hover",
+              "active",
+              "focus",
+              "disabled"
+            ]
+          },
+          {
+            "id": "primary-icon",
+            "name": "Primary \u00b7 With icon",
+            "owner": "button",
+            "states": [
+              "default",
+              "hover",
+              "active",
+              "focus",
+              "disabled"
+            ]
+          },
+          {
+            "id": "outlined-primary-icon",
+            "name": "Outlined primary \u00b7 With icon",
+            "owner": "button",
+            "states": [
+              "default",
+              "hover",
+              "active",
+              "focus",
+              "disabled"
+            ]
+          }
+        ],
+        "width": 280
+      },
+      "variants": [
+        "Default",
+        "Toolbar",
+        "Composer",
+        "Outlined",
+        "Outlined primary",
+        "Outlined primary \u00b7 With icon",
+        "Primary",
+        "Primary \u00b7 With icon",
+        "Dark"
+      ],
+      "searchTags": [
+        "action",
+        "click",
+        "press"
+      ],
+      "previewConfigurations": [
+        {
+          "id": "main",
+          "name": "Default \u00b7 With icon",
+          "selector": "#examples > .example:nth-child(1)",
+          "interactionTarget": "main"
+        },
+        {
+          "id": "label-only",
+          "name": "Default \u00b7 Label only",
+          "selector": "#examples > .example:nth-child(2)",
+          "interactionTarget": "label-only"
+        },
+        {
+          "id": "primary-icon",
+          "name": "Primary \u00b7 With icon",
+          "selector": "#examples > .example:nth-child(6)",
+          "interactionTarget": "primary-icon"
+        },
+        {
+          "id": "primary",
+          "name": "Primary",
+          "selector": "#examples > .example:nth-child(5)",
+          "interactionTarget": "primary"
+        },
+        {
+          "id": "outlined-primary-icon",
+          "name": "Outlined primary \u00b7 With icon",
+          "selector": "#examples > .example:nth-child(9)",
+          "interactionTarget": "outlined-primary-icon"
+        },
+        {
+          "id": "outlined-primary",
+          "name": "Outlined primary",
+          "selector": "#examples > .example:nth-child(8)",
+          "interactionTarget": "outlined-primary"
+        },
+        {
+          "id": "outlined",
+          "name": "Outlined",
+          "selector": "#examples > .example:nth-child(7)",
+          "interactionTarget": "outlined"
+        },
+        {
+          "id": "toolbar",
+          "name": "Toolbar",
+          "selector": "#examples > .example:nth-child(3)",
+          "interactionTarget": "toolbar"
+        },
+        {
+          "id": "dark",
+          "name": "Dark",
+          "selector": "#examples > .example:nth-child(4)",
+          "interactionTarget": "dark"
+        },
+        {
+          "id": "composer",
+          "name": "Composer",
+          "selector": "#examples > .example:nth-child(10)",
+          "interactionTarget": "composer"
+        }
+      ],
+      "previewLayout": {
+        "columns": 2
+      }
+    },
+    {
+      "id": "split-button",
+      "name": "Split button",
+      "category": "Buttons",
+      "class": "titan-split-button",
+      "css": "components/actions.css",
+      "module": "components/actions.js",
+      "render": "TitanActions.splitButton(options)",
+      "preview": "specimens/actions.html?part=split-button",
+      "previewHeight": 160,
+      "states": [
+        "default"
+      ],
+      "usage": "A main action and a separate secondary trigger, composed from two registered Half button instances. Optional iconColor tints catalog monochrome icons; currentColor follows the control color.",
+      "props": {
+        "label": "Required visible or accessible label",
+        "icon": "Optional registered icon ID (custom image paths supported)",
+        "disabled": "Boolean; prevents interaction",
+        "secondaryLabel": "Required accessible name for secondary action",
+        "secondaryDisabled": "Disables only the secondary action",
+        "secondaryIcon": "Optional registered icon ID for the secondary half; defaults to chevron-down",
+        "secondaryHaspopup": "Optional aria-haspopup for the secondary half; defaults to menu. Pass false to omit.",
+        "secondaryExpanded": "Optional boolean reflected on the secondary half's aria-expanded"
+      },
+      "anatomy": {
+        "parts": [
+          {
+            "name": "Control",
+            "selector": ".titan-split-button"
+          }
+        ],
+        "spacing": [],
+        "alignment": "Arranges two Half button instances; each half owns its content alignment.",
+        "behavior": "Composes the left and right Half button renderers unchanged; the group provides role=group and the accessible label. Split actions have independent callbacks; neither half fires the other's action.",
+        "ownership": "Split button owns only the group arrangement and accessible label. Half button owns the segment surface, radii, divider, insets and states.",
+        "interactionOwnership": "Value ownership: none; caller supplies disabled and expanded values to the halves. Control ownership: Half button owns each segment's semantics and hover, active, focus and disabled treatment for both side variants. Action ownership: the caller connects independent main (left) and secondary (right) callbacks. Composes registered children unchanged; do not restate their state previews here."
+      },
+      "previewAutoHeight": true,
+      "galleryWidth": 360,
+      "interactions": {
+        "preview": "specimens/interactions.html?part=split-button",
+        "targets": [
+          {
+            "id": "default",
+            "name": "Default",
+            "owner": "split-button",
+            "states": [],
+            "previewOnly": true
+          },
+          {
+            "id": "composer",
+            "name": "Composer",
+            "owner": "split-button",
+            "states": [],
+            "previewOnly": true
+          }
+        ],
+        "width": 300
+      },
+      "variants": [
+        "Default",
+        "Composer"
+      ],
+      "dependencies": [
+        "half-button"
+      ],
+      "previewConfigurations": [
+        {
+          "id": "default",
+          "name": "Default",
+          "selector": "#examples > .example:nth-child(1)",
+          "interactionTarget": "default"
+        },
+        {
+          "id": "composer",
+          "name": "Composer",
+          "selector": "#examples > .example:nth-child(2)",
+          "interactionTarget": "composer"
+        }
+      ],
+      "previewLayout": {
+        "columns": 1
+      }
+    },
+    {
+      "id": "half-button",
+      "name": "Half button",
+      "category": "Buttons",
+      "class": "titan-half-button",
+      "css": "components/actions.css",
+      "module": "components/actions.js",
+      "render": "TitanActions.halfButton(options)",
+      "preview": "specimens/half-button.html",
+      "previewAutoHeight": true,
+      "states": [
+        "default",
+        "hover",
+        "active",
+        "focus-visible",
+        "disabled"
+      ],
+      "usage": "One segment of a split control, used on the left or right side. Content instances: icon only, text only, or icon and text. The preview shows each half as an individual component.",
+      "props": {
+        "side": "Required: left or right; selects the registered variant and joining geometry.",
+        "label": "Required accessible name; visible unless labelHidden.",
+        "icon": "Optional registered icon ID (custom image paths supported).",
+        "labelHidden": "Boolean; renders an icon-only segment and uses label as the accessible name.",
+        "disabled": "Boolean; prevents interaction.",
+        "size": "default or composer; composer uses the observed 32px split geometry.",
+        "haspopup": "Optional aria-haspopup value for menu-trigger halves.",
+        "expanded": "Optional boolean reflected on aria-expanded; caller owns menu visibility."
+      },
+      "anatomy": {
+        "parts": [
+          {
+            "name": "Control",
+            "selector": ".titan-half-button"
+          },
+          {
+            "name": "Icon slot",
+            "selector": ".titan-half-button__icon"
+          },
+          {
+            "name": "Label",
+            "selector": ".titan-half-button__label"
+          }
+        ],
+        "spacing": [
+          {
+            "label": "Icon to label",
+            "token": "--titan-gap-icon-label",
+            "selector": ".titan-half-button--left",
+            "property": "gap"
+          },
+          {
+            "label": "Left start inset",
+            "token": "--titan-space-16",
+            "selector": ".titan-half-button--left",
+            "property": "padding-left"
+          },
+          {
+            "label": "Left end inset",
+            "token": "--titan-space-12",
+            "selector": ".titan-half-button--left:has(.titan-half-button__icon):has(.titan-half-button__label)",
+            "property": "padding-right"
+          },
+          {
+            "label": "Text-only inset",
+            "token": "--titan-space-16",
+            "selector": ".titan-half-button--left:not(:has(.titan-half-button__icon))",
+            "property": "padding-left"
+          },
+          {
+            "label": "Icon-only inset",
+            "token": "--titan-space-12",
+            "selector": ".titan-half-button--left:not(:has(.titan-half-button__label))",
+            "property": "padding-left"
+          },
+          {
+            "label": "Leading divider",
+            "token": "--titan-split-divider-width",
+            "selector": ".titan-half-button--right",
+            "property": "border-left-width"
+          },
+          {
+            "label": "Composer start inset",
+            "token": "--titan-space-16",
+            "selector": ".titan-half-button--left.titan-half-button--composer",
+            "property": "padding-left"
+          }
+        ],
+        "alignment": "Left and right variants share the joined split geometry; icon-only and text-only instances rebalance their own insets.",
+        "behavior": "Native button with independent focus, disabled and menu-expanded semantics. The caller connects activation callbacks; neither half fires the other's action.",
+        "ownership": "Half button owns its surface, outer radii, leading divider, insets, icon slot and states. Split button owns only the group arrangement and accessible label.",
+        "interactionOwnership": "Value ownership: caller-supplied disabled and expanded values. Control ownership: Half button owns activation, hover, active, focus and disabled treatment for both side variants. Action ownership: the caller connects the left (main) and right (secondary) callbacks; neither half fires the other's action."
+      },
+      "galleryWidth": 320,
+      "interactions": {
+        "preview": "specimens/interactions.html?part=half-button",
+        "targets": [
+          {
+            "id": "icon-text-left",
+            "name": "Icon and text \u00b7 Left",
+            "owner": "half-button",
+            "states": [
+              "default",
+              "hover",
+              "active",
+              "focus",
+              "disabled"
+            ]
+          },
+          {
+            "id": "text-left",
+            "name": "Text only \u00b7 Left",
+            "owner": "half-button",
+            "states": [
+              "default",
+              "hover",
+              "active",
+              "focus",
+              "disabled"
+            ]
+          },
+          {
+            "id": "icon-left",
+            "name": "Icon only \u00b7 Left",
+            "owner": "half-button",
+            "states": [
+              "default",
+              "hover",
+              "active",
+              "focus",
+              "disabled"
+            ]
+          },
+          {
+            "id": "icon-text-right",
+            "name": "Text and icon \u00b7 Right",
+            "owner": "half-button",
+            "states": [
+              "default",
+              "hover",
+              "active",
+              "focus",
+              "disabled"
+            ]
+          },
+          {
+            "id": "text-right",
+            "name": "Text only \u00b7 Right",
+            "owner": "half-button",
+            "states": [
+              "default",
+              "hover",
+              "active",
+              "focus",
+              "disabled"
+            ]
+          },
+          {
+            "id": "icon-right",
+            "name": "Icon only \u00b7 Right",
+            "owner": "half-button",
+            "states": [
+              "default",
+              "hover",
+              "active",
+              "focus",
+              "disabled"
+            ]
+          },
+          {
+            "id": "composer-left",
+            "name": "Composer \u00b7 Left",
+            "owner": "half-button",
+            "states": [
+              "default",
+              "hover",
+              "active",
+              "focus",
+              "disabled"
+            ]
+          },
+          {
+            "id": "composer-right",
+            "name": "Composer \u00b7 Right",
+            "owner": "half-button",
+            "states": [
+              "default",
+              "hover",
+              "active",
+              "focus",
+              "disabled"
+            ]
+          }
+        ],
+        "width": 300
+      },
+      "variants": [
+        "Icon and text \u00b7 Left",
+        "Text only \u00b7 Left",
+        "Icon only \u00b7 Left",
+        "Text and icon \u00b7 Right",
+        "Text only \u00b7 Right",
+        "Icon only \u00b7 Right",
+        "Composer \u00b7 Left",
+        "Composer \u00b7 Right"
+      ],
+      "dependencies": [],
+      "previewConfigurations": [
+        {
+          "id": "icon-text-left",
+          "name": "Icon and text \u00b7 Left",
+          "selector": "main > section:nth-of-type(1)",
+          "interactionTarget": "icon-text-left"
+        },
+        {
+          "id": "icon-text-right",
+          "name": "Text and icon \u00b7 Right",
+          "selector": "main > section:nth-of-type(4)",
+          "interactionTarget": "icon-text-right"
+        },
+        {
+          "id": "text-left",
+          "name": "Text only \u00b7 Left",
+          "selector": "main > section:nth-of-type(2)",
+          "interactionTarget": "text-left"
+        },
+        {
+          "id": "text-right",
+          "name": "Text only \u00b7 Right",
+          "selector": "main > section:nth-of-type(5)",
+          "interactionTarget": "text-right"
+        },
+        {
+          "id": "icon-left",
+          "name": "Icon only \u00b7 Left",
+          "selector": "main > section:nth-of-type(3)",
+          "interactionTarget": "icon-left"
+        },
+        {
+          "id": "icon-right",
+          "name": "Icon only \u00b7 Right",
+          "selector": "main > section:nth-of-type(6)",
+          "interactionTarget": "icon-right"
+        },
+        {
+          "id": "composer-left",
+          "name": "Composer \u00b7 Left",
+          "selector": "main > section:nth-of-type(7)",
+          "interactionTarget": "composer-left"
+        },
+        {
+          "id": "composer-right",
+          "name": "Composer \u00b7 Right",
+          "selector": "main > section:nth-of-type(8)",
+          "interactionTarget": "composer-right"
+        }
+      ],
+      "previewLayout": {
+        "columns": 2
+      }
+    },
+    {
+      "id": "message-list",
+      "name": "Message list",
+      "category": "Messages",
+      "class": "titan-message-list",
+      "css": "components/messages.css",
+      "module": "components/messages.js",
+      "render": "TitanMessages.list(options)",
+      "preview": "specimens/messages.html?part=message-list",
+      "previewAutoHeight": true,
+      "previewHeight": 360,
+      "variants": [
+        "Stacked",
+        "Single line"
+      ],
+      "states": [
+        "default"
+      ],
+      "usage": "Browse messages in stacked or single-line rows.",
+      "props": {
+        "variant": "stacked / wide",
+        "content": "messages[] with id, sender, subject, preview, time, unread, selected, checked, starred"
+      },
+      "anatomy": {
+        "parts": [
+          {
+            "name": "Rows",
+            "selector": ".titan-message-row"
+          }
+        ],
+        "spacing": [
+          {
+            "label": "Wide list top inset",
+            "token": "--titan-space-4",
+            "selector": ".titan-message-list--wide",
+            "property": "padding-top"
+          },
+          {
+            "label": "Wide list bottom inset",
+            "token": "--titan-space-4",
+            "selector": ".titan-message-list--wide",
+            "property": "padding-bottom"
+          },
+          {
+            "label": "Stacked list top inset",
+            "token": "--titan-space-4",
+            "selector": ".titan-message-list:not(.titan-message-list--wide)",
+            "property": "padding-top"
+          },
+          {
+            "label": "Between rows",
+            "token": "--titan-mail-row-gap",
+            "selector": ".titan-message-list > .titan-message-row + .titan-message-row",
+            "property": "margin-top"
+          },
+          {
+            "label": "Stacked list right inset",
+            "token": "--titan-space-4",
+            "selector": ".titan-message-list:not(.titan-message-list--wide)",
+            "property": "padding-right"
+          }
+        ],
+        "ownership": "List owns row arrangement, the between-row gap, wide-layout outer insets and scrolling. Message row owns each item\u2019s internal spacing.",
+        "behavior": "Composes Message rows unchanged; open, check and star callbacks. Caller owns message data and selected row. Single-line rows retain a 640px minimum width and scroll horizontally in narrow containers.",
+        "alignment": "Rows share aligned sender/subject columns in wide layout; stacked rows align text to a common left edge.",
+        "interactionOwnership": "Composes Message row; row opening, selection, focus and star behavior belong to that component."
+      },
+      "galleryWidth": 760,
+      "interactions": {
+        "preview": "specimens/interactions.html?part=message-list",
+        "targets": [
+          {
+            "id": "stacked",
+            "name": "Stacked",
+            "owner": "message-list",
+            "states": [],
+            "previewOnly": true
+          },
+          {
+            "id": "wide",
+            "name": "Single line",
+            "owner": "message-list",
+            "states": [],
+            "previewOnly": true
+          }
+        ],
+        "width": 520
+      },
+      "dependencies": [
+        "message-row"
+      ],
+      "previewConfigurations": [
+        {
+          "id": "stacked",
+          "name": "Stacked",
+          "selector": "main > section:nth-of-type(1)",
+          "interactionTarget": "stacked"
+        },
+        {
+          "id": "wide",
+          "name": "Single line",
+          "selector": "main > section:nth-of-type(2)",
+          "interactionTarget": "wide"
+        }
+      ],
+      "previewLayout": {
+        "columns": 1
+      }
+    },
+    {
+      "id": "message-row",
+      "name": "Message row",
+      "category": "Messages",
+      "class": "titan-message-row",
+      "css": "components/messages.css",
+      "module": "components/messages.js",
+      "render": "TitanMessages.row(options)",
+      "preview": "specimens/messages.html?part=message-row",
+      "previewAutoHeight": true,
+      "previewHeight": 360,
+      "variants": [
+        "Stacked",
+        "Single line"
+      ],
+      "states": [
+        "default",
+        "selected",
+        "unread",
+        "starred",
+        "checked",
+        "focus-visible"
+      ],
+      "usage": "Individual message summary with selection, star and open actions.",
+      "props": {
+        "variant": "stacked / wide",
+        "content": "id, sender, subject, preview, time, unread, selected, checked, starred"
+      },
+      "anatomy": {
+        "parts": [
+          {
+            "name": "Row",
+            "selector": ".titan-message-row"
+          },
+          {
+            "name": "Selection",
+            "selector": ".tile-chk input"
+          },
+          {
+            "name": "Star",
+            "selector": ".titan-message-row__star"
+          },
+          {
+            "name": "Open message",
+            "selector": ".titan-message-row__open"
+          },
+          {
+            "name": "Sender",
+            "selector": ".tile-sender"
+          },
+          {
+            "name": "Subject",
+            "selector": ".tile-subject"
+          },
+          {
+            "name": "Summary",
+            "selector": ".tile-preview"
+          }
+        ],
+        "spacing": [
+          {
+            "label": "Stacked row top inset",
+            "token": "--titan-mail-row-inset-block",
+            "selector": ".titan-message-row:not(.titan-message-row--wide)",
+            "property": "padding-top"
+          },
+          {
+            "label": "Stacked row bottom inset",
+            "token": "--titan-mail-row-inset-block",
+            "selector": ".titan-message-row:not(.titan-message-row--wide)",
+            "property": "padding-bottom"
+          },
+          {
+            "label": "Stacked row left inset",
+            "token": "--titan-mail-row-inset-inline",
+            "selector": ".titan-message-row:not(.titan-message-row--wide)",
+            "property": "padding-left"
+          },
+          {
+            "label": "Stacked row right inset",
+            "token": "--titan-mail-row-inset-inline",
+            "selector": ".titan-message-row:not(.titan-message-row--wide)",
+            "property": "padding-right"
+          },
+          {
+            "label": "Controls to text",
+            "token": "--titan-space-12",
+            "selector": ".titan-message-row:not(.titan-message-row--wide) .email-tile-inner",
+            "property": "gap"
+          },
+          {
+            "label": "Selection to star",
+            "token": "--titan-space-3",
+            "selector": ".titan-message-row:not(.titan-message-row--wide) .tile-icons",
+            "property": "gap"
+          },
+          {
+            "label": "Text stack",
+            "token": "--titan-gap-text-tight",
+            "selector": ".titan-message-row:not(.titan-message-row--wide) .tile-content",
+            "property": "gap"
+          },
+          {
+            "label": "Wide left inset",
+            "token": "--titan-message-row-wide-inset-start",
+            "selector": ".titan-message-row--wide",
+            "property": "padding-left"
+          },
+          {
+            "label": "Wide right inset",
+            "token": "--titan-space-24",
+            "selector": ".titan-message-row--wide",
+            "property": "padding-right"
+          },
+          {
+            "label": "Wide controls to text",
+            "token": "--titan-message-row-controls-gap",
+            "selector": ".titan-message-row--wide .tile-icons",
+            "property": "margin-right"
+          },
+          {
+            "label": "Wide selection to star",
+            "token": "--titan-space-8",
+            "selector": ".titan-message-row--wide .tile-chk",
+            "property": "margin-right"
+          },
+          {
+            "label": "Subject to summary",
+            "token": "--titan-message-row-summary-gap",
+            "selector": ".titan-message-row--wide .tile-preview",
+            "property": "margin-left"
+          },
+          {
+            "label": "Sender column inset",
+            "token": "--titan-space-12",
+            "selector": ".titan-message-row--wide .titan-message-row__open .tile-sender",
+            "property": "padding-right"
+          }
+        ],
+        "ownership": "Row owns insets, internal gaps and summary layout. Parent owns list arrangement, outer spacing and scrolling.",
+        "behavior": "Composes the shared Checkbox and Icon button (Icon toggle variant, pressed) unchanged; open is a row-owned button. Open, check and star callbacks. Caller owns message data and selected row. Single-line rows retain a 640px minimum width and scroll horizontally in narrow containers.",
+        "alignment": "Rows share aligned sender/subject columns in wide layout; stacked rows align text to a common left edge.",
+        "interactionOwnership": "Owns row opening, selected/read state and row-specific star action. The caller owns checked/starred values; the row routes check/star actions and callbacks. Shared Checkbox and Icon button own control semantics and rendering of those supplied values, including focus, pressed treatment and the Icon toggle artwork swap. Do not duplicate child visual state galleries here; verify row state propagation and callback integration.",
+        "selectionSurface": "Highlight paint spans the full control height, is inset horizontally by --titan-selection-inset (4px), and uses --titan-selection-radius (4px). Control hit area and content geometry are unchanged. Selected/hover fills stay within this surface; keyboard focus remains independently visible."
+      },
+      "galleryWidth": 760,
+      "interactions": {
+        "preview": "specimens/interactions.html?part=message-row",
+        "targets": [
+          {
+            "id": "stacked",
+            "name": "Stacked",
+            "owner": "message-row",
+            "states": [
+              "default",
+              "hover",
+              "selected",
+              "focus"
+            ]
+          },
+          {
+            "id": "wide",
+            "name": "Single line",
+            "owner": "message-row",
+            "states": [
+              "default",
+              "hover",
+              "selected",
+              "focus"
+            ]
+          }
+        ],
+        "width": 520
+      },
+      "dependencies": [
+        "checkbox",
+        "icon-button"
+      ],
+      "previewConfigurations": [
+        {
+          "id": "stacked",
+          "name": "Stacked",
+          "selector": "main > section:nth-of-type(1)",
+          "interactionTarget": "stacked"
+        },
+        {
+          "id": "wide",
+          "name": "Single line",
+          "selector": "main > section:nth-of-type(2)",
+          "interactionTarget": "wide"
+        }
+      ],
+      "previewLayout": {
+        "columns": 1
+      }
+    },
+    {
+      "id": "message-card",
+      "name": "Received message",
+      "category": "Messages",
+      "class": "titan-message-card",
+      "css": "components/messages.css",
+      "module": "components/messages.js",
+      "render": "TitanMessages.card(options)",
+      "preview": "specimens/messages.html?part=message-card",
+      "previewAutoHeight": true,
+      "previewHeight": 360,
+      "states": [
+        "collapsed",
+        "expanded"
+      ],
+      "usage": "A received message, collapsed or expanded.",
+      "props": {
+        "variant": "collapsed / expanded",
+        "content": "id, sender, initials?, recipients?, time, preview, paragraphs[], headerActions[], actions[]",
+        "headerActions": "Uses shared TitanActions.iconButton (compact, unchanged); each action has id, label, icon and disabled.",
+        "actions": "Uses shared TitanActions.button (unchanged); each action has id, label, optional icon and disabled. Actions are routed through external wrappers."
+      },
+      "anatomy": {
+        "parts": [
+          {
+            "name": "Header",
+            "selector": ".expanded-header"
+          },
+          {
+            "name": "Sender",
+            "selector": ".exp-sender"
+          },
+          {
+            "name": "Recipients",
+            "selector": ".exp-to"
+          },
+          {
+            "name": "Header actions",
+            "selector": ".exp-actions"
+          },
+          {
+            "name": "Body",
+            "selector": ".expanded-body"
+          },
+          {
+            "name": "Actions",
+            "selector": ".expanded-footer"
+          }
+        ],
+        "spacing": [
+          {
+            "label": "Horizontal inset",
+            "token": "--titan-message-inset-inline",
+            "selector": ".expanded-header",
+            "property": "padding-left"
+          },
+          {
+            "label": "Top inset",
+            "token": "--titan-message-inset-block",
+            "selector": ".expanded-header",
+            "property": "padding-top"
+          },
+          {
+            "label": "Sender to recipients",
+            "token": "--titan-gap-text-tight",
+            "selector": ".exp-sender",
+            "property": "margin-bottom"
+          },
+          {
+            "label": "Footer action gap",
+            "token": "--titan-space-12",
+            "selector": ".expanded-footer",
+            "property": "gap"
+          },
+          {
+            "label": "Avatar to sender",
+            "token": "--titan-space-12",
+            "selector": ".exp-left",
+            "property": "gap"
+          },
+          {
+            "label": "Date to actions",
+            "token": "--titan-space-12",
+            "selector": ".exp-right",
+            "property": "gap"
+          },
+          {
+            "label": "Header action gap",
+            "token": "--titan-space-12",
+            "selector": ".exp-actions",
+            "property": "gap"
+          },
+          {
+            "label": "Collapsed header gap",
+            "token": "--titan-message-header-gap",
+            "selector": ".thread-tile-inner",
+            "property": "gap"
+          },
+          {
+            "label": "Header bottom inset",
+            "token": "--titan-message-header-inset-bottom",
+            "selector": ".expanded-header",
+            "property": "padding-bottom"
+          },
+          {
+            "label": "Header right inset",
+            "token": "--titan-message-inset-inline",
+            "selector": ".expanded-header",
+            "property": "padding-right"
+          },
+          {
+            "label": "Body left inset",
+            "token": "--titan-message-inset-inline",
+            "selector": ".expanded-body",
+            "property": "padding-left"
+          },
+          {
+            "label": "Body right inset",
+            "token": "--titan-message-inset-inline",
+            "selector": ".expanded-body",
+            "property": "padding-right"
+          },
+          {
+            "label": "Body bottom inset",
+            "token": "--titan-space-24",
+            "selector": ".expanded-body",
+            "property": "padding-bottom"
+          },
+          {
+            "label": "Footer top inset",
+            "token": "--titan-message-footer-inset-block",
+            "selector": ".expanded-footer",
+            "property": "padding-top"
+          },
+          {
+            "label": "Footer bottom inset",
+            "token": "--titan-message-footer-inset-block",
+            "selector": ".expanded-footer",
+            "property": "padding-bottom"
+          },
+          {
+            "label": "Footer left inset",
+            "token": "--titan-space-20",
+            "selector": ".expanded-footer",
+            "property": "padding-left"
+          },
+          {
+            "label": "Footer right inset",
+            "token": "--titan-space-20",
+            "selector": ".expanded-footer",
+            "property": "padding-right"
+          },
+          {
+            "label": "Header groups",
+            "token": "--titan-space-12",
+            "selector": ".expanded-header",
+            "property": "gap"
+          },
+          {
+            "label": "Collapsed top inset",
+            "token": "--titan-message-inset-block",
+            "selector": ".thread-tile-inner",
+            "property": "padding-top"
+          },
+          {
+            "label": "Collapsed bottom inset",
+            "token": "--titan-message-inset-block",
+            "selector": ".thread-tile-inner",
+            "property": "padding-bottom"
+          },
+          {
+            "label": "Collapsed left inset",
+            "token": "--titan-message-inset-inline",
+            "selector": ".thread-tile-inner",
+            "property": "padding-left"
+          },
+          {
+            "label": "Collapsed right inset",
+            "token": "--titan-message-inset-inline",
+            "selector": ".thread-tile-inner",
+            "property": "padding-right"
+          }
+        ],
+        "ownership": "Component owns internal spacing. Parent owns placement, external spacing and pane dimensions. Existing shell retains its 8px card stack gap.",
+        "behavior": "Collapsed trigger requests expansion through callback. Expanded body wraps text. Optional footer and header actions compose shared Button and Icon button instances unchanged behind action wrappers. Caller owns expansion, reply handling and message data.",
+        "alignment": "Sender and recipients form a tight text stack; footer actions wrap when needed.",
+        "interactionOwnership": "Owns collapsed-to-expanded message presentation and action routing through external wrappers. Footer actions reuse Button and header actions reuse Icon button (compact); their hover, focus, pressed and disabled states stay documented at those owners. Do not duplicate child state previews here."
+      },
+      "galleryWidth": 680,
+      "interactions": {
+        "preview": "specimens/interactions.html?part=message-card",
+        "targets": [
+          {
+            "id": "main",
+            "name": "Message",
+            "owner": "message-card",
+            "states": [
+              "collapsed",
+              "expanded"
+            ]
+          }
+        ],
+        "width": 560
+      },
+      "dependencies": [
+        "button",
+        "avatar",
+        "icon-button"
+      ],
+      "previewConfigurations": [
+        {
+          "id": "collapsed",
+          "name": "Collapsed",
+          "selector": "main > section:nth-of-type(1)",
+          "interactionTarget": "main"
+        },
+        {
+          "id": "expanded",
+          "name": "Expanded",
+          "selector": "main > section:nth-of-type(2)",
+          "interactionTarget": "main"
+        }
+      ],
+      "previewLayout": {
+        "columns": 1
+      }
+    },
+    {
+      "id": "search-field",
+      "name": "Search field",
+      "category": "Inputs",
+      "class": "titan-search-field",
+      "css": "components/navigation-input.css",
+      "module": "components/navigation-input.js",
+      "preview": "specimens/navigation-input.html?part=search-field",
+      "dependencies": [
+        "dropdown-trigger"
+      ],
+      "previewAutoHeight": true,
+      "previewHeight": 260,
+      "states": [
+        "with filters",
+        "without filters",
+        "focus",
+        "disabled",
+        "read-only"
+      ],
+      "props": {
+        "label": "Required accessible name",
+        "options": "placeholder, value, filter, filterLabel, icon, disabled, readOnly",
+        "sizing": "Fluid parent width; component-owned height 38px and 16px search icon. The filter slot is the Dropdown trigger's own 38px width."
+      },
+      "anatomy": {
+        "parts": [
+          {
+            "name": "Field",
+            "selector": ".search-bar"
+          },
+          {
+            "name": "Icon",
+            "selector": ".search-icon"
+          },
+          {
+            "name": "Input",
+            "selector": "input"
+          },
+          {
+            "name": "Filter divider",
+            "selector": ".search-divider"
+          }
+        ],
+        "spacing": [
+          {
+            "label": "Left inset",
+            "token": "--titan-space-12",
+            "selector": ".search-icon",
+            "property": "margin-left"
+          },
+          {
+            "label": "Icon to input",
+            "token": "--titan-space-8",
+            "selector": ".search-icon",
+            "property": "margin-right"
+          }
+        ],
+        "ownership": "Component owns field geometry and insets; parent owns width, surrounding spacing and placement. The filter action is an unchanged Dropdown trigger instance that retains its own hit area and states.",
+        "behavior": "Native search input; Enter invokes search. The filter trigger is an unchanged Dropdown trigger whose activation calls the filter callback. No menu or backend is implied.",
+        "alignment": "Centered icon in a fixed slot. Fixed hit-area dimensions are not padding tokens.",
+        "interactionOwnership": "Owns input editing and field layout. The filter trigger is a registered Dropdown trigger instance (search variant); it owns its hit area, hover, focus, disabled and activation semantics, and the caller connects activation to the filter callback.",
+        "geometry": [
+          {
+            "label": "Search icon centering",
+            "container": ".search-bar",
+            "selector": ".search-icon",
+            "axis": "vertical",
+            "token": "--titan-search-height"
+          },
+          {
+            "label": "Flexible input width",
+            "selector": "input",
+            "kind": "fluid",
+            "token": "--titan-search-height"
+          }
+        ]
+      },
+      "galleryWidth": 608,
+      "interactions": {
+        "preview": "specimens/interactions.html?part=search-field",
+        "targets": [
+          {
+            "id": "main",
+            "name": "With filters",
+            "states": [
+              "default",
+              "focus",
+              "read-only",
+              "disabled"
+            ],
+            "owner": "search-field"
+          },
+          {
+            "id": "search-only",
+            "name": "Search only",
+            "states": [
+              "default",
+              "focus",
+              "read-only",
+              "disabled"
+            ],
+            "owner": "search-field"
+          }
+        ],
+        "width": 400
+      },
+      "variants": [
+        "With filters",
+        "Search only"
+      ],
+      "searchTags": [
+        "find",
+        "lookup",
+        "query",
+        "filter"
+      ],
+      "previewConfigurations": [
+        {
+          "id": "main",
+          "name": "With filters",
+          "selector": "main > section:nth-of-type(1)",
+          "interactionTarget": "main"
+        },
+        {
+          "id": "search-only",
+          "name": "Search only",
+          "selector": "main > section:nth-of-type(2)",
+          "interactionTarget": "search-only"
+        }
+      ],
+      "previewLayout": {
+        "columns": 1
+      }
+    },
+    {
+      "id": "sidebar-item",
+      "name": "Sidebar list item",
+      "category": "Navigation",
+      "class": "titan-sidebar-item",
+      "css": "components/navigation-input.css",
+      "module": "components/navigation-input.js",
+      "render": "TitanNavigationInput.sidebarItem(options)",
+      "preview": "specimens/navigation-input.html?part=sidebar-item",
+      "previewAutoHeight": true,
+      "previewHeight": 260,
+      "states": [
+        "default",
+        "hover",
+        "selected",
+        "disabled",
+        "focus"
+      ],
+      "props": {
+        "label": "Required accessible name",
+        "options": "icon, count, selected, muted, disabled, expanded",
+        "action": "Optional trailing action, passed straight to Icon button: {icon, label, variant, size, iconSize, disabled}. Selects the With trailing action variant. Its label is required. Use Icon button's dark-quiet variant on dark navigation surfaces: it changes artwork opacity on hover instead of painting a container, so it does not draw a second box inside the row's own fill."
+      },
+      "anatomy": {
+        "specimen": ".titan-sidebar-item-row, .titan-sidebar-item",
+        "parts": [
+          {
+            "name": "Item",
+            "selector": ".titan-sidebar-item"
+          },
+          {
+            "name": "Icon slot",
+            "selector": ".nav-item-icon"
+          },
+          {
+            "name": "Label",
+            "selector": ".nav-item-label"
+          },
+          {
+            "name": "Count",
+            "selector": ".nav-badge"
+          },
+          {
+            "name": "Trailing action row",
+            "selector": ".titan-sidebar-item-row"
+          },
+          {
+            "name": "Trailing action (Icon button)",
+            "selector": ".titan-sidebar-item-row .titan-icon-button"
+          }
+        ],
+        "spacing": [
+          {
+            "label": "Icon / label / count gap",
+            "token": "--titan-gap-icon-label",
+            "selector": ".titan-sidebar-item",
+            "property": "gap"
+          },
+          {
+            "label": "Top inset",
+            "token": "--titan-sidebar-item-inset-block",
+            "selector": ".titan-sidebar-item",
+            "property": "padding-top"
+          },
+          {
+            "label": "Bottom inset",
+            "token": "--titan-sidebar-item-inset-block",
+            "selector": ".titan-sidebar-item",
+            "property": "padding-bottom"
+          },
+          {
+            "label": "Left inset",
+            "token": "--titan-space-24",
+            "selector": ".titan-sidebar-item",
+            "property": "padding-left"
+          },
+          {
+            "label": "Right inset",
+            "token": "--titan-space-12",
+            "selector": ".titan-sidebar-item:not(:has(.nav-badge))",
+            "property": "padding-right"
+          },
+          {
+            "label": "Right inset with count",
+            "token": "--titan-space-8",
+            "selector": ".titan-sidebar-item:has(.nav-badge)",
+            "property": "padding-right"
+          },
+          {
+            "label": "Count left inset",
+            "token": "--titan-space-4",
+            "selector": ".nav-badge",
+            "property": "padding-left"
+          },
+          {
+            "label": "Count right inset",
+            "token": "--titan-space-4",
+            "selector": ".nav-badge",
+            "property": "padding-right"
+          },
+          {
+            "label": "Trailing action row end inset",
+            "token": "--titan-space-12",
+            "selector": ".titan-sidebar-item-row",
+            "property": "padding-right"
+          }
+        ],
+        "ownership": "Item owns its icon slot, label, count and insets. In the With trailing action variant the row owns the arrangement and the end inset, and carries the selection/hover fill and the item's focus ring so they extend behind the action. The nested Icon button owns its own size, artwork, hover, pressed and focus treatment. Parent owns external placement and the navigation surface colours.",
+        "behavior": "Native button. Reports activation through the activate callback; selection, count, muted and disabled are caller-supplied. A trailing action renders the registered Icon button as a sibling, not nested inside the item, so both stay separately focusable; the item element remains a button in both variants. Load components/actions.js before this module for the trailing-action variant.",
+        "alignment": "18px image centered in the existing 20px slot. The hit area and all spacing are unchanged.",
+        "interactionOwnership": "Owns navigation activation, selection and its defined states. The trailing action is an Icon button instance and retains that component's interaction contract, accessible name and disabled state; its click is reported through the action callback and stops propagation so it does not also activate the item.",
+        "selectionSurface": "Highlight paint spans the full control height, is inset horizontally by --titan-selection-inset (4px), and uses --titan-selection-radius (4px). Control hit area and content geometry are unchanged. Selected/hover fills stay within this surface; keyboard focus remains independently visible."
+      },
+      "galleryWidth": 380,
+      "interactions": {
+        "preview": "specimens/interactions.html?part=sidebar-item",
+        "targets": [
+          {
+            "id": "default",
+            "inspectorSelector": ".titan-sidebar-item:not(.titan-sidebar-item-row .titan-sidebar-item):not(:has(.nav-badge))",
+            "name": "Default",
+            "owner": "sidebar-item",
+            "states": [
+              "default",
+              "hover",
+              "selected",
+              "muted",
+              "focus",
+              "disabled"
+            ]
+          },
+          {
+            "id": "with-count",
+            "inspectorSelector": ".titan-sidebar-item:not(.titan-sidebar-item-row .titan-sidebar-item):has(.nav-badge)",
+            "name": "With count",
+            "owner": "sidebar-item",
+            "states": [
+              "default",
+              "hover",
+              "selected",
+              "muted",
+              "focus",
+              "disabled"
+            ]
+          },
+          {
+            "id": "trailing-action",
+            "inspectorSelector": ".titan-sidebar-item-row > .titan-sidebar-item",
+            "name": "With trailing action",
+            "owner": "sidebar-item",
+            "states": [
+              "default",
+              "hover",
+              "selected",
+              "muted",
+              "focus",
+              "disabled"
+            ]
+          }
+        ],
+        "width": 320
+      },
+      "variants": [
+        "Default",
+        "With count",
+        "With trailing action"
+      ],
+      "dependencies": [
+        "icon-button"
+      ],
+      "previewConfigurations": [
+        {
+          "id": "default",
+          "name": "Default",
+          "selector": "main > section:nth-of-type(2)",
+          "interactionTarget": "default"
+        },
+        {
+          "id": "with-count",
+          "name": "With count",
+          "selector": "main > section:nth-of-type(1)",
+          "interactionTarget": "with-count"
+        },
+        {
+          "id": "trailing-action",
+          "name": "With trailing action",
+          "selector": "main > section:nth-of-type(3)",
+          "interactionTarget": "trailing-action"
+        }
+      ],
+      "previewLayout": {
+        "columns": 1
+      }
+    },
+    {
+      "id": "tab",
+      "name": "Tab",
+      "category": "Navigation",
+      "class": "titan-tab",
+      "css": "components/selection.css",
+      "module": "components/selection.js",
+      "render": "TitanSelection.tab(options)",
+      "preview": "specimens/tab.html",
+      "previewAutoHeight": true,
+      "galleryWidth": 360,
+      "states": [
+        "default",
+        "hover",
+        "focus",
+        "selected"
+      ],
+      "usage": "One selectable tab within a Tabs group.",
+      "props": {
+        "id": "Required stable id",
+        "label": "Required text",
+        "count": "Optional count, including zero",
+        "variant": "filled (default) or underline",
+        "selected": "Caller-owned boolean",
+        "panel": "Optional panel id for aria-controls"
+      },
+      "anatomy": {
+        "parts": [
+          {
+            "name": "Tab control",
+            "selector": ".titan-tab"
+          }
+        ],
+        "spacing": [
+          {
+            "label": "Tab left inset",
+            "token": "--titan-space-8",
+            "selector": ".titan-tab",
+            "property": "padding-left"
+          },
+          {
+            "label": "Tab right inset",
+            "token": "--titan-space-8",
+            "selector": ".titan-tab",
+            "property": "padding-right"
+          }
+        ],
+        "ownership": "Tab owns its hit area, horizontal insets, label/count and state paint.",
+        "behavior": "Native button activation emits activate(id). Caller supplies selected via mount handle.update({selected}).",
+        "interactionOwnership": "Tab owns hover, focus and activation; selected is supplied state."
+      },
+      "interactions": {
+        "preview": "specimens/interactions.html?part=tab",
+        "width": 360,
+        "targets": [
+          {
+            "id": "filled",
+            "name": "Filled",
+            "states": [
+              "default",
+              "hover",
+              "focus",
+              "selected"
+            ],
+            "owner": "tab"
+          },
+          {
+            "id": "underline",
+            "name": "Underline",
+            "states": [
+              "default",
+              "hover",
+              "focus",
+              "selected"
+            ],
+            "owner": "tab"
+          }
+        ]
+      },
+      "previewConfigurations": [
+        {
+          "id": "filled",
+          "name": "Filled",
+          "selector": "#filled",
+          "interactionTarget": "filled"
+        },
+        {
+          "id": "underline",
+          "name": "Underline",
+          "selector": "#underline",
+          "interactionTarget": "underline"
+        }
+      ],
+      "previewLayout": {
+        "columns": 1
+      }
+    },
+    {
+      "id": "tabs",
+      "name": "Tabs",
+      "category": "Navigation",
+      "class": "titan-tabs",
+      "css": "components/selection.css",
+      "module": "components/selection.js",
+      "render": "TitanSelection.tabs(options)",
+      "preview": "specimens/tab.html?group=1",
+      "previewAutoHeight": true,
+      "galleryWidth": 360,
+      "states": [
+        "default"
+      ],
+      "usage": "Arrange tabs and coordinate selection and keyboard navigation; content panels belong to the caller.",
+      "props": {
+        "label": "Required accessible label",
+        "options": "One or more items with unique id, label, optional count/panel; value selects a tab. No fixed item-count limit.",
+        "variant": "filled (default) or underline, forwarded to each Tab"
+      },
+      "anatomy": {
+        "parts": [
+          {
+            "name": "Control",
+            "selector": ".titan-tabs"
+          }
+        ],
+        "spacing": [
+          {
+            "label": "Between tabs",
+            "token": "--titan-space-8",
+            "selector": ".titan-tabs",
+            "property": "column-gap"
+          }
+        ],
+        "ownership": "Group owns horizontal arrangement and keyboard traversal. Tab owns child geometry and states.",
+        "behavior": "Arrow keys/Home/End focus and request selection. With value, caller updates via handle.update({value}); without value, group manages selection. Cleanup handle removes listeners.",
+        "interactionOwnership": "Composes registered Tab controls; coordinates one keyboard entry and selection requests."
+      },
+      "interactions": {
+        "preview": "specimens/interactions.html?part=tabs",
+        "width": 360,
+        "targets": [
+          {
+            "id": "filled",
+            "name": "Filled",
+            "states": [],
+            "previewOnly": true,
+            "owner": "tabs"
+          },
+          {
+            "id": "underline",
+            "name": "Underline",
+            "states": [],
+            "previewOnly": true,
+            "owner": "tabs"
+          }
+        ]
+      },
+      "previewConfigurations": [
+        {
+          "id": "filled",
+          "name": "Filled",
+          "selector": "#filled",
+          "interactionTarget": "filled"
+        },
+        {
+          "id": "underline",
+          "name": "Underline",
+          "selector": "#underline",
+          "interactionTarget": "underline"
+        }
+      ],
+      "previewLayout": {
+        "columns": 1
+      },
+      "dependencies": [
+        "tab"
+      ]
+    },
+    {
+      "id": "dropdown-trigger",
+      "name": "Dropdown trigger",
+      "category": "Inputs",
+      "class": "titan-dropdown-trigger",
+      "css": "components/selection.css",
+      "module": "components/selection.js",
+      "render": "TitanSelection.dropdown(options)",
+      "preview": "specimens/selection.html?part=dropdown",
+      "previewAutoHeight": true,
+      "galleryWidth": 300,
+      "states": [
+        "default",
+        "hover",
+        "focus",
+        "disabled"
+      ],
+      "usage": "A trigger for caller-owned menu content. The search variant is an icon-only chevron filter trigger for input rows.",
+      "props": {
+        "label": "Required accessible label",
+        "options": "expanded reflects caller-owned menu visibility",
+        "variant": "Text (default), app-switcher (icon required), composer, account (full-width dark trigger), account-light (the same trigger on a light surface, bordered instead of filled) or search (icon-only filter trigger filling an input row's height).",
+        "disabled": "Boolean; disables the trigger. Supported by the search variant.",
+        "controls": "Optional controlled panel DOM id for app-switcher trigger; emits aria-controls. App trigger advertises a nonmodal dialog."
+      },
+      "anatomy": {
+        "parts": [
+          {
+            "name": "Control",
+            "selector": ".titan-dropdown-trigger"
+          },
+          {
+            "name": "Account label slot",
+            "selector": ".titan-dropdown-trigger--account .titan-dropdown-trigger__label"
+          }
+        ],
+        "spacing": [
+          {
+            "label": "top inset",
+            "token": "--titan-dropdown-inset-block",
+            "selector": ".titan-dropdown-trigger:not(.titan-dropdown-trigger--app)",
+            "property": "padding-top"
+          },
+          {
+            "label": "right inset",
+            "token": "--titan-dropdown-inset-inline",
+            "selector": ".titan-dropdown-trigger:not(.titan-dropdown-trigger--app)",
+            "property": "padding-right"
+          },
+          {
+            "label": "bottom inset",
+            "token": "--titan-dropdown-inset-block",
+            "selector": ".titan-dropdown-trigger:not(.titan-dropdown-trigger--app)",
+            "property": "padding-bottom"
+          },
+          {
+            "label": "left inset",
+            "token": "--titan-dropdown-inset-inline",
+            "selector": ".titan-dropdown-trigger:not(.titan-dropdown-trigger--app)",
+            "property": "padding-left"
+          },
+          {
+            "label": "Label to chevron",
+            "token": "--titan-gap-icon-label",
+            "selector": ".titan-dropdown-trigger:not(.titan-dropdown-trigger--app)",
+            "property": "gap"
+          },
+          {
+            "label": "App trigger top inset",
+            "token": "--titan-app-trigger-inset",
+            "selector": ".titan-dropdown-trigger--app",
+            "property": "padding-top"
+          },
+          {
+            "label": "App trigger right inset",
+            "token": "--titan-app-trigger-inset",
+            "selector": ".titan-dropdown-trigger--app",
+            "property": "padding-right"
+          },
+          {
+            "label": "App trigger bottom inset",
+            "token": "--titan-app-trigger-inset",
+            "selector": ".titan-dropdown-trigger--app",
+            "property": "padding-bottom"
+          },
+          {
+            "label": "App trigger left inset",
+            "token": "--titan-app-trigger-inset",
+            "selector": ".titan-dropdown-trigger--app",
+            "property": "padding-left"
+          }
+        ],
+        "ownership": "Control owns internal spacing; parent owns surrounding layout.",
+        "behavior": "Native button invokes open callback; caller supplies and manages the menu. Account label truncates with ellipsis at constrained widths while retaining its full accessible name. Account uses shared focus and native keyboard activation. No account menu is supplied.",
+        "interactionOwnership": "Owns trigger activation and focus; caller owns menu content and visibility.",
+        "geometry": [
+          {
+            "label": "Search trigger width",
+            "container": ".titan-dropdown-trigger--search",
+            "selector": ".titan-dropdown-trigger--search",
+            "axis": "horizontal",
+            "token": "--titan-dropdown-search-width"
+          }
+        ]
+      },
+      "interactions": {
+        "preview": "specimens/interactions.html?part=dropdown-trigger",
+        "width": 280,
+        "targets": [
+          {
+            "id": "main",
+            "name": "Default",
+            "states": [
+              "default",
+              "focus"
+            ],
+            "owner": "dropdown-trigger"
+          },
+          {
+            "id": "app",
+            "name": "App switcher",
+            "owner": "dropdown-trigger",
+            "states": [
+              "default",
+              "hover",
+              "focus"
+            ]
+          },
+          {
+            "id": "composer",
+            "name": "Composer",
+            "owner": "dropdown-trigger",
+            "states": [
+              "default",
+              "hover",
+              "focus"
+            ]
+          },
+          {
+            "id": "account",
+            "name": "Account",
+            "owner": "dropdown-trigger",
+            "states": [
+              "default",
+              "focus"
+            ]
+          },
+          {
+            "id": "account-light",
+            "name": "Account light",
+            "owner": "dropdown-trigger",
+            "states": [
+              "default",
+              "focus"
+            ]
+          },
+          {
+            "id": "search",
+            "name": "Search filters",
+            "owner": "dropdown-trigger",
+            "states": [
+              "default",
+              "hover",
+              "focus",
+              "disabled"
+            ]
+          }
+        ]
+      },
+      "variants": [
+        "Default",
+        "App switcher",
+        "Composer",
+        "Account",
+        "Account light",
+        "Search filters"
+      ],
+      "previewConfigurations": [
+        {
+          "id": "main",
+          "name": "Default",
+          "selector": "#sample",
+          "interactionTarget": "main"
+        },
+        {
+          "id": "composer",
+          "name": "Composer",
+          "selector": "main > section:nth-of-type(1)",
+          "interactionTarget": "composer"
+        },
+        {
+          "id": "account",
+          "name": "Account",
+          "selector": "main > section:nth-of-type(2)",
+          "interactionTarget": "account"
+        },
+        {
+          "id": "account-light",
+          "name": "Account light",
+          "selector": "main > section:nth-of-type(3)",
+          "interactionTarget": "account-light"
+        },
+        {
+          "id": "app",
+          "name": "App switcher",
+          "selector": "main > section:nth-of-type(4)",
+          "interactionTarget": "app"
+        },
+        {
+          "id": "search",
+          "name": "Search filters",
+          "selector": "main > section:nth-of-type(5)",
+          "interactionTarget": "search"
+        }
+      ],
+      "previewLayout": {
+        "columns": 2
+      }
+    },
+    {
+      "id": "checkbox",
+      "name": "Checkbox",
+      "category": "Inputs",
+      "class": "titan-checkbox",
+      "css": "components/selection.css",
+      "module": "components/selection.js",
+      "render": "TitanSelection.checkbox(options)",
+      "preview": "specimens/selection.html?part=checkbox",
+      "previewAutoHeight": true,
+      "galleryWidth": 300,
+      "variants": [
+        "Default",
+        "Large"
+      ],
+      "states": [
+        "default",
+        "focus",
+        "checked"
+      ],
+      "usage": "Native selection control.",
+      "props": {
+        "label": "Required accessible label",
+        "size": "default (14px) / large (20px)",
+        "options": "checked controls initial selection"
+      },
+      "anatomy": {
+        "parts": [
+          {
+            "name": "Control",
+            "selector": ".titan-checkbox"
+          }
+        ],
+        "spacing": [],
+        "ownership": "Control owns its size through --titan-checkbox-size (14px default, 20px on the Large variant); parent owns surrounding layout. Consumers select a supported size rather than overriding width/height.",
+        "behavior": "Native checkbox reports checked state through change callback. No padding. Two supported sizes: 14px default and 20px Large for denser list rows; both keep the same native control and interactions.",
+        "interactionOwnership": "Owns native checked state and focus."
+      },
+      "interactions": {
+        "preview": "specimens/interactions.html?part=checkbox",
+        "width": 280,
+        "targets": [
+          {
+            "id": "main",
+            "name": "Default",
+            "states": [
+              "default",
+              "focus",
+              "checked"
+            ],
+            "owner": "checkbox"
+          },
+          {
+            "id": "large",
+            "name": "Large",
+            "owner": "checkbox",
+            "states": [
+              "default",
+              "focus",
+              "checked"
+            ]
+          }
+        ]
+      },
+      "previewConfigurations": [
+        {
+          "id": "main",
+          "name": "Default",
+          "selector": "#sample",
+          "interactionTarget": "main"
+        },
+        {
+          "id": "large",
+          "name": "Large",
+          "selector": "main > section",
+          "interactionTarget": "large"
+        }
+      ],
+      "previewLayout": {
+        "columns": 2
+      }
+    },
+    {
+      "id": "action-group",
+      "name": "Grouped actions",
+      "category": "Buttons",
+      "class": "titan-action-group",
+      "css": "components/actions.css",
+      "module": "components/actions.js",
+      "render": "TitanActions.actionGroup(options)",
+      "preview": "specimens/action-group.html",
+      "previewAutoHeight": true,
+      "galleryWidth": 360,
+      "states": [
+        "default"
+      ],
+      "dependencies": [
+        "button"
+      ],
+      "usage": "A horizontal group of icon-and-label action buttons.",
+      "props": {
+        "label": "Required accessible group label",
+        "items": "Button options; observed toolbar sizing is applied."
+      },
+      "anatomy": {
+        "parts": [
+          {
+            "name": "Group",
+            "selector": ".titan-action-group"
+          },
+          {
+            "name": "Action",
+            "selector": ".titan-button"
+          }
+        ],
+        "spacing": [
+          {
+            "label": "Between actions",
+            "token": "--titan-gap-actions-compact",
+            "selector": ".titan-action-group",
+            "property": "gap"
+          }
+        ],
+        "ownership": "Group owns horizontal alignment, the 4px gap and the action wrappers that carry routing ids; child Button markup stays unchanged. Button owns each action\u2019s inset and icon-label spacing. Parent supplies available width.",
+        "interactionOwnership": "No group-owned interaction. Child Button owns hover, focus, pressing and disabled states; the group only routes wrapper ids to callbacks.",
+        "behavior": "Semantic group with native child buttons; routing ids live on group-owned wrappers. No toolbar-specific arrow navigation or additional group state is implied."
+      },
+      "previewConfigurations": [
+        {
+          "id": "default",
+          "name": "Default",
+          "interactionTarget": "main"
+        }
+      ],
+      "previewLayout": {
+        "columns": 1
+      }
+    },
+    {
+      "id": "app-switcher-panel",
+      "name": "App switcher panel",
+      "category": "Navigation",
+      "class": "titan-app-switcher-panel",
+      "css": "components/app-switcher.css",
+      "module": "components/app-switcher.js",
+      "render": "TitanLauncher.appSwitcherPanel(options)",
+      "preview": "specimens/app-switcher.html?part=app-switcher-panel",
+      "previewAutoHeight": true,
+      "galleryWidth": 320,
+      "states": [
+        "default"
+      ],
+      "dependencies": [
+        "app-grid",
+        "launcher-item"
+      ],
+      "props": {
+        "apps": "Array of app tile data: id, label, icon.",
+        "selected": "Optional current app id; host-owned.",
+        "tools": "Optional Launcher item data.",
+        "footer": "Optional supporting-link data.",
+        "panelLabel": "Accessible name for the panel.",
+        "background": "Optional surface artwork path; defaults to shared bubble asset.",
+        "divider": "Optional divider artwork path; defaults to shared asset."
+      },
+      "anatomy": {
+        "parts": [
+          {
+            "name": "Root",
+            "selector": ".titan-app-switcher-panel"
+          },
+          {
+            "name": "App grid",
+            "selector": ".titan-app-grid"
+          },
+          {
+            "name": "Tool list",
+            "selector": ".app-switcher-tools"
+          },
+          {
+            "name": "Supporting links",
+            "selector": ".app-switcher-footer"
+          }
+        ],
+        "spacing": [
+          {
+            "label": "gap",
+            "selector": ".titan-app-switcher-panel .app-switcher-content",
+            "property": "gap",
+            "token": "--titan-space-16"
+          },
+          {
+            "label": "padding top",
+            "selector": ".titan-app-switcher-panel .app-switcher-content",
+            "property": "padding-top",
+            "token": "--titan-space-8"
+          },
+          {
+            "label": "padding bottom",
+            "selector": ".titan-app-switcher-panel .app-switcher-content",
+            "property": "padding-bottom",
+            "token": "--titan-launcher-space-1"
+          },
+          {
+            "label": "gap",
+            "selector": ".titan-app-switcher-panel .app-switcher-tools",
+            "property": "gap",
+            "token": "--titan-space-4"
+          },
+          {
+            "label": "Panel bottom inset",
+            "selector": ".titan-app-switcher-panel",
+            "property": "padding-bottom",
+            "token": "--titan-space-12"
+          },
+          {
+            "label": "Pointer area top inset",
+            "token": "--titan-launcher-panel-inset-top",
+            "selector": ".titan-app-switcher-panel",
+            "property": "padding-top"
+          }
+        ],
+        "ownership": "Owns white bubble surface and pointer, section spacing, divider, tool list and supporting-link layout. App grid owns tile arrangement. No trigger or opening behavior; selection is bound through mount/bind and emits an item id.",
+        "behavior": "Presentational composition; native child buttons retain accessible names and keyboard activation. Parent owns placement.",
+        "interactionOwnership": "Child controls own hover/focus. Does not own popup visibility."
+      },
+      "usage": "White popover surface containing App grid, tools and supporting links.",
+      "previewConfigurations": [
+        {
+          "id": "default",
+          "name": "Default",
+          "interactionTarget": "main"
+        }
+      ],
+      "previewLayout": {
+        "columns": 1
+      }
+    },
+    {
+      "id": "app-grid",
+      "name": "App grid",
+      "category": "Navigation",
+      "class": "titan-app-grid",
+      "css": "components/app-switcher.css",
+      "module": "components/app-switcher.js",
+      "render": "TitanLauncher.appGrid(options)",
+      "preview": "specimens/app-switcher.html?part=app-grid",
+      "previewAutoHeight": true,
+      "galleryWidth": 320,
+      "states": [
+        "default"
+      ],
+      "dependencies": [
+        "app-tile"
+      ],
+      "props": {
+        "apps": "Array of app tile data: id, label, icon.",
+        "selected": "Optional current app id; host-owned."
+      },
+      "anatomy": {
+        "parts": [
+          {
+            "name": "Root",
+            "selector": ".titan-app-grid"
+          }
+        ],
+        "spacing": [
+          {
+            "label": "gap",
+            "selector": ".titan-app-grid",
+            "property": "gap",
+            "token": "--titan-space-16"
+          },
+          {
+            "label": "padding right",
+            "selector": ".titan-app-grid",
+            "property": "padding-right",
+            "token": "--titan-space-16"
+          },
+          {
+            "label": "padding left",
+            "selector": ".titan-app-grid",
+            "property": "padding-left",
+            "token": "--titan-space-16"
+          },
+          {
+            "label": "gap",
+            "selector": ".titan-app-grid .app-switcher-row",
+            "property": "gap",
+            "token": "--titan-space-16"
+          }
+        ],
+        "ownership": "Owns a three-column arrangement, row gaps and grid insets. App tile owns each tile. Supports any number of app items, including a partial final row; selected identifies the current app.",
+        "behavior": "Three columns at the observed 280px width. Any item count is rendered, including partial final rows. Each child is a native button; mount/bind emit the selected item id and return cleanup. Very narrow containers and long labels are not approved variants.",
+        "interactionOwnership": "Child controls own hover/focus. Does not own popup visibility."
+      },
+      "usage": "Three-column grid of shared App tiles.",
+      "previewConfigurations": [
+        {
+          "id": "default",
+          "name": "Default",
+          "interactionTarget": "main"
+        }
+      ],
+      "previewLayout": {
+        "columns": 1
+      }
+    },
+    {
+      "id": "app-tile",
+      "name": "App tile",
+      "category": "App controls",
+      "class": "titan-app-tile",
+      "css": "components/app-switcher.css",
+      "module": "components/app-switcher.js",
+      "render": "TitanLauncher.appTile(options)",
+      "preview": "specimens/app-switcher.html?part=app-tile",
+      "previewAutoHeight": true,
+      "galleryWidth": 360,
+      "states": [
+        "default",
+        "hover",
+        "focus",
+        "selected"
+      ],
+      "usage": "An app icon and label as one action.",
+      "anatomy": {
+        "parts": [
+          {
+            "name": "Root",
+            "selector": ".titan-app-tile"
+          }
+        ],
+        "spacing": [
+          {
+            "label": "gap",
+            "selector": ".titan-app-tile",
+            "property": "gap",
+            "token": "--titan-launcher-space-2"
+          },
+          {
+            "label": "padding top",
+            "selector": ".titan-app-tile",
+            "property": "padding-top",
+            "token": "--titan-space-8"
+          },
+          {
+            "label": "padding right",
+            "selector": ".titan-app-tile",
+            "property": "padding-right",
+            "token": "--titan-launcher-space-2"
+          },
+          {
+            "label": "padding bottom",
+            "selector": ".titan-app-tile",
+            "property": "padding-bottom",
+            "token": "--titan-space-8"
+          },
+          {
+            "label": "padding left",
+            "selector": ".titan-app-tile",
+            "property": "padding-left",
+            "token": "--titan-launcher-space-2"
+          }
+        ],
+        "interactionOwnership": "Owns its action hover/focus.",
+        "ownership": "Parent owns placement; this component owns internal spacing.",
+        "behavior": "Native action; caller handles selection. A selected tile is the app the user is currently in: it carries a resting container and aria-current, supplied through the renderer selected input by App grid."
+      },
+      "interactions": {
+        "preview": "specimens/app-switcher.html?part=app-tile",
+        "width": 320,
+        "targets": [
+          {
+            "id": "main",
+            "name": "App tile",
+            "owner": "app-tile",
+            "states": [
+              "default",
+              "hover",
+              "focus",
+              "selected"
+            ]
+          }
+        ]
+      },
+      "dependencies": [],
+      "previewConfigurations": [
+        {
+          "id": "default",
+          "name": "Default",
+          "interactionTarget": "main"
+        }
+      ],
+      "previewLayout": {
+        "columns": 1
+      }
+    },
+    {
+      "id": "launcher-item",
+      "name": "Launcher item",
+      "category": "App controls",
+      "class": "titan-launcher-item",
+      "css": "components/app-switcher.css",
+      "module": "components/app-switcher.js",
+      "render": "TitanLauncher.launcherItem(options)",
+      "preview": "specimens/app-switcher.html?part=launcher-item",
+      "previewAutoHeight": true,
+      "galleryWidth": 360,
+      "states": [
+        "default",
+        "hover",
+        "focus"
+      ],
+      "usage": "A tool or supporting link in the app launcher.",
+      "anatomy": {
+        "parts": [
+          {
+            "name": "Root",
+            "selector": ".titan-launcher-item"
+          }
+        ],
+        "spacing": [
+          {
+            "label": "gap",
+            "selector": ".titan-launcher-item.app-switcher-tool-item",
+            "property": "gap",
+            "token": "--titan-space-12"
+          },
+          {
+            "label": "padding top",
+            "selector": ".titan-launcher-item.app-switcher-tool-item",
+            "property": "padding-top",
+            "token": "--titan-launcher-space-6"
+          },
+          {
+            "label": "padding right",
+            "selector": ".titan-launcher-item.app-switcher-tool-item",
+            "property": "padding-right",
+            "token": "--titan-launcher-space-27"
+          },
+          {
+            "label": "padding bottom",
+            "selector": ".titan-launcher-item.app-switcher-tool-item",
+            "property": "padding-bottom",
+            "token": "--titan-launcher-space-6"
+          },
+          {
+            "label": "padding left",
+            "selector": ".titan-launcher-item.app-switcher-tool-item",
+            "property": "padding-left",
+            "token": "--titan-launcher-space-27"
+          },
+          {
+            "label": "padding right",
+            "selector": ".titan-launcher-item.footer-link-row",
+            "property": "padding-right",
+            "token": "--titan-space-24"
+          },
+          {
+            "label": "padding left",
+            "selector": ".titan-launcher-item.footer-link-row",
+            "property": "padding-left",
+            "token": "--titan-space-24"
+          },
+          {
+            "label": "gap",
+            "selector": ".titan-launcher-scope .footer-link-content",
+            "property": "gap",
+            "token": "--titan-gap-icon-label"
+          }
+        ],
+        "interactionOwnership": "Owns its action hover/focus.",
+        "ownership": "Parent owns placement; this component owns internal spacing.",
+        "behavior": "Native action; caller handles selection.",
+        "alignment": "Supporting-link icons occupy 24px square regions; the beaker uses the full region with zero margins.",
+        "selectionSurface": "Highlight paint spans the full control height, is inset horizontally by --titan-selection-inset (4px), and uses --titan-selection-radius (4px). Control hit area and content geometry are unchanged. Selected/hover fills stay within this surface; keyboard focus remains independently visible."
+      },
+      "interactions": {
+        "preview": "specimens/app-switcher.html?part=launcher-item",
+        "width": 320,
+        "targets": [
+          {
+            "id": "main",
+            "name": "Tool",
+            "owner": "launcher-item",
+            "states": [
+              "default",
+              "hover",
+              "focus"
+            ]
+          },
+          {
+            "id": "footer",
+            "name": "Supporting link",
+            "owner": "launcher-item",
+            "states": [
+              "default",
+              "hover",
+              "focus"
+            ]
+          }
+        ]
+      },
+      "variants": [
+        "Tool",
+        "Supporting link"
+      ],
+      "dependencies": [],
+      "previewConfigurations": [
+        {
+          "id": "main",
+          "name": "Tool",
+          "selector": "#sample > section:nth-of-type(1)",
+          "interactionTarget": "main"
+        },
+        {
+          "id": "footer",
+          "name": "Supporting link",
+          "selector": "#sample > section:nth-of-type(2)",
+          "interactionTarget": "footer"
+        }
+      ],
+      "previewLayout": {
+        "columns": 1
+      }
+    },
+    {
+      "id": "composer-field",
+      "name": "Composer field row",
+      "category": "Composer",
+      "css": "components/composer.css",
+      "module": "components/composer.js",
+      "preview": "specimens/composer.html?part=fieldRow",
+      "states": [
+        "default",
+        "focus"
+      ],
+      "dependencies": [
+        "button"
+      ],
+      "variants": [
+        "From",
+        "To",
+        "Subject"
+      ],
+      "galleryWidth": 440,
+      "previewAutoHeight": true,
+      "anatomy": {
+        "parts": [
+          {
+            "name": "Composer field row",
+            "selector": ".titan-composer-field"
+          },
+          {
+            "name": "Input",
+            "selector": ".titan-composer-field input"
+          },
+          {
+            "name": "Read-only value",
+            "selector": ".titan-composer-field__value"
+          },
+          {
+            "name": "Extras",
+            "selector": ".titan-composer-field__extras"
+          }
+        ],
+        "spacing": [
+          {
+            "label": "Label to value",
+            "token": "--titan-composer-field-gap",
+            "selector": ".titan-composer-field label",
+            "property": "gap"
+          },
+          {
+            "label": "Row breathing room",
+            "token": "--titan-space-8",
+            "selector": ".titan-composer-field",
+            "property": "padding-top"
+          },
+          {
+            "label": "Row breathing room",
+            "token": "--titan-space-8",
+            "selector": ".titan-composer-field",
+            "property": "padding-bottom"
+          },
+          {
+            "label": "Cc/Bcc gap",
+            "token": "--titan-space-12",
+            "selector": ".titan-composer-field__extras",
+            "property": "gap"
+          }
+        ],
+        "ownership": "Component owns row layout, insets and the input area; parent owns placement and available width. Cc/Bcc are unchanged Button instances that retain their own spacing and control states.",
+        "behavior": "Fluid parent width. Input shrinks with min-width:0; label and trailing actions retain intrinsic width. Sender is read-only. Cc/Bcc emit commands through the caller callback; recipient completion and expansion are not implemented.",
+        "interactionOwnership": "Value ownership: the caller supplies the initial input value; editing stays native and the row stores no value after mount. Control ownership: the field row owns the input and row semantics; Cc/Bcc control treatment belongs to their Button instances. Action ownership: the caller connects the Cc/Bcc command callback."
+      },
+      "interactions": {
+        "preview": "specimens/composer.html?part=fieldRow",
+        "width": 440,
+        "targets": [
+          {
+            "id": "sender",
+            "name": "From",
+            "owner": "composer-field",
+            "states": [],
+            "previewOnly": true
+          },
+          {
+            "id": "main",
+            "name": "To",
+            "owner": "composer-field",
+            "states": [
+              "default",
+              "focus"
+            ]
+          },
+          {
+            "id": "subject",
+            "name": "Subject",
+            "owner": "composer-field",
+            "states": [
+              "default",
+              "focus"
+            ]
+          }
+        ]
+      },
+      "class": "titan-composer-field",
+      "props": {
+        "label": "Required visible field label.",
+        "value": "Initial text or input value.",
+        "readOnly": "Renders sender value as text.",
+        "recipient": "Shows Cc and Bcc actions, each an unchanged composer Button instance.",
+        "id": "Optional input DOM id.",
+        "callbacks.action": "Cc or Bcc command; native input editing remains local."
+      },
+      "previewConfigurations": [
+        {
+          "id": "sender",
+          "name": "From",
+          "selector": "#sample > section:nth-of-type(1)",
+          "interactionTarget": "sender"
+        },
+        {
+          "id": "main",
+          "name": "To",
+          "selector": "#sample > section:nth-of-type(2)",
+          "interactionTarget": "main"
+        },
+        {
+          "id": "subject",
+          "name": "Subject",
+          "selector": "#sample > section:nth-of-type(3)",
+          "interactionTarget": "subject"
+        }
+      ],
+      "previewLayout": {
+        "columns": 1
+      }
+    },
+    {
+      "id": "formatting-toolbar",
+      "name": "Formatting toolbar",
+      "category": "Composer",
+      "css": "components/composer.css",
+      "module": "components/composer.js",
+      "preview": "specimens/composer.html?part=formattingToolbar",
+      "states": [
+        "default"
+      ],
+      "dependencies": [
+        "icon-button",
+        "dropdown-trigger"
+      ],
+      "galleryWidth": 681,
+      "previewAutoHeight": true,
+      "anatomy": {
+        "parts": [
+          {
+            "name": "Formatting toolbar",
+            "selector": ".titan-formatting-toolbar"
+          }
+        ],
+        "spacing": [
+          {
+            "label": "Between controls",
+            "token": "--titan-formatting-gap",
+            "selector": ".titan-formatting-toolbar",
+            "property": "gap"
+          },
+          {
+            "label": "Start inset",
+            "token": "--titan-formatting-inset",
+            "selector": ".titan-formatting-toolbar",
+            "property": "padding-left"
+          },
+          {
+            "label": "End inset",
+            "token": "--titan-formatting-inset",
+            "selector": ".titan-formatting-toolbar",
+            "property": "padding-right"
+          },
+          {
+            "label": "Separator start",
+            "token": "--titan-formatting-gap",
+            "selector": ".titan-formatting-toolbar__separator",
+            "property": "margin-left"
+          },
+          {
+            "label": "Separator end",
+            "token": "--titan-formatting-gap",
+            "selector": ".titan-formatting-toolbar__separator",
+            "property": "margin-right"
+          }
+        ],
+        "ownership": "Component owns internal spacing; parent owns placement and available width. Nested controls retain their spacing contracts.",
+        "behavior": "Parent-controlled width, 48px height; horizontal overflow keeps controls reachable. Formatting and menus are caller-owned callbacks; source supplies no editor commands.",
+        "interactionOwnership": "Child interactions belong to the dependency components. Field editing is native. Product operations require caller callbacks."
+      },
+      "interactions": {
+        "preview": "specimens/composer.html?part=formattingToolbar",
+        "width": 681,
+        "targets": []
+      },
+      "class": "titan-formatting-toolbar",
+      "props": {
+        "callbacks.action": "Named formatting command; dropdowns emit their visible label. mount returns cleanup. No formatting operation is implemented."
+      },
+      "previewConfigurations": [
+        {
+          "id": "default",
+          "name": "Default",
+          "interactionTarget": "main"
+        }
+      ],
+      "previewLayout": {
+        "columns": 1
+      }
+    },
+    {
+      "id": "composer-header",
+      "name": "Composer header",
+      "category": "Composer",
+      "class": "titan-composer-header",
+      "css": "components/composer-header.css",
+      "module": "components/composer.js",
+      "render": "TitanComposer.composerHeader(options)",
+      "preview": "specimens/composer.html?part=composerHeader",
+      "previewAutoHeight": true,
+      "galleryWidth": 681,
+      "states": [
+        "default"
+      ],
+      "dependencies": [
+        "icon-button"
+      ],
+      "props": {
+        "callbacks.action": "command string and original event; mount returns cleanup. No window/editor mutations when mounted standalone.",
+        "title": "Visible title; defaults to New email. Title activation emits Minimize."
+      },
+      "anatomy": {
+        "parts": [
+          {
+            "name": "Root",
+            "selector": ".titan-composer-header"
+          }
+        ],
+        "spacing": [
+          {
+            "label": "Aligned content inset",
+            "token": "--titan-space-16",
+            "selector": ".titan-composer-header",
+            "property": "padding-left"
+          },
+          {
+            "label": "Aligned content inset",
+            "token": "--titan-space-16",
+            "selector": ".titan-composer-header",
+            "property": "padding-right"
+          },
+          {
+            "label": "Actions gap",
+            "token": "--titan-space-8",
+            "selector": ".titan-composer-header__actions",
+            "property": "gap"
+          }
+        ],
+        "ownership": "Owns title, 44px height, insets and window-action arrangement. Reuses unchanged dark Icon buttons.",
+        "behavior": "Native child controls emit semantic commands through mount callbacks. No sending, formatting or page action is implied.",
+        "interactionOwnership": "Owns the title button focus and activation (Minimize command). Window-icon states belong to Icon button. The host handles window effects."
+      },
+      "interactions": {
+        "preview": "specimens/composer.html?part=composerHeader",
+        "width": 720,
+        "targets": [
+          {
+            "id": "title",
+            "name": "Title action",
+            "owner": "composer-header",
+            "states": [
+              "default",
+              "focus"
+            ]
+          }
+        ]
+      },
+      "previewConfigurations": [
+        {
+          "id": "default",
+          "name": "Default",
+          "interactionTarget": "title"
+        }
+      ],
+      "previewLayout": {
+        "columns": 1
+      }
+    },
+    {
+      "id": "composer-tools",
+      "name": "Composer tools",
+      "category": "Composer",
+      "class": "titan-composer-tools",
+      "css": "components/composer-tools.css",
+      "module": "components/composer.js",
+      "render": "TitanComposer.composerTools(options)",
+      "preview": "specimens/composer.html?part=composerTools",
+      "previewAutoHeight": true,
+      "galleryWidth": 681,
+      "states": [
+        "default"
+      ],
+      "dependencies": [
+        "button"
+      ],
+      "props": {
+        "callbacks.action": "command string and original event; mount returns cleanup. No window/editor mutations when mounted standalone."
+      },
+      "anatomy": {
+        "parts": [
+          {
+            "name": "Root",
+            "selector": ".titan-composer-tools"
+          }
+        ],
+        "spacing": [
+          {
+            "label": "Aligned content inset",
+            "token": "--titan-space-16",
+            "selector": ".titan-composer-tools",
+            "property": "padding-left"
+          },
+          {
+            "label": "Aligned content inset",
+            "token": "--titan-space-16",
+            "selector": ".titan-composer-tools",
+            "property": "padding-right"
+          },
+          {
+            "label": "Actions gap",
+            "token": "--titan-space-8",
+            "selector": ".titan-composer-tools",
+            "property": "gap"
+          },
+          {
+            "label": "Feature inset",
+            "token": "--titan-space-8",
+            "selector": ".titan-composer-tools",
+            "property": "padding-top"
+          },
+          {
+            "label": "Feature inset",
+            "token": "--titan-space-8",
+            "selector": ".titan-composer-tools",
+            "property": "padding-bottom"
+          }
+        ],
+        "ownership": "Owns compose-feature row insets, 8px external control gaps and horizontal scrolling. Reuses unchanged composer Buttons. This is not Action group.",
+        "behavior": "Native child controls emit semantic commands through mount callbacks. No sending, formatting or page action is implied.",
+        "interactionOwnership": "Child button states belong to their registered owners. Standalone composition emits commands; host handles effects."
+      },
+      "interactions": {
+        "preview": "specimens/composer.html?part=composerTools",
+        "width": 720,
+        "targets": []
+      },
+      "previewConfigurations": [
+        {
+          "id": "default",
+          "name": "Default",
+          "interactionTarget": "main"
+        }
+      ],
+      "previewLayout": {
+        "columns": 1
+      }
+    },
+    {
+      "id": "composer-send-actions",
+      "name": "Composer send actions",
+      "category": "Composer",
+      "class": "titan-composer-send-actions",
+      "css": "components/composer-send-actions.css",
+      "module": "components/composer.js",
+      "render": "TitanComposer.composerSendActions(options)",
+      "preview": "specimens/composer.html?part=composerSendActions",
+      "previewAutoHeight": true,
+      "galleryWidth": 681,
+      "states": [
+        "default"
+      ],
+      "dependencies": [
+        "split-button",
+        "icon-button"
+      ],
+      "props": {
+        "callbacks.action": "command string and original event; mount returns cleanup. No window/editor mutations when mounted standalone."
+      },
+      "anatomy": {
+        "parts": [
+          {
+            "name": "Root",
+            "selector": ".titan-composer-send-actions"
+          }
+        ],
+        "spacing": [
+          {
+            "label": "Aligned content inset",
+            "token": "--titan-space-16",
+            "selector": ".titan-composer-send-actions",
+            "property": "padding-left"
+          },
+          {
+            "label": "Aligned content inset",
+            "token": "--titan-space-16",
+            "selector": ".titan-composer-send-actions",
+            "property": "padding-right"
+          },
+          {
+            "label": "Block inset",
+            "token": "--titan-space-12",
+            "selector": ".titan-composer-send-actions",
+            "property": "padding-top"
+          },
+          {
+            "label": "Block inset",
+            "token": "--titan-space-12",
+            "selector": ".titan-composer-send-actions",
+            "property": "padding-bottom"
+          },
+          {
+            "label": "Actions gap",
+            "token": "--titan-space-8",
+            "selector": ".titan-composer-send-actions",
+            "property": "gap"
+          }
+        ],
+        "ownership": "Owns send/insert action arrangement, insets, spacer and scrolling. Reuses unchanged composer Split button and Icon buttons.",
+        "behavior": "Native child controls emit semantic commands through mount callbacks. No sending, formatting or page action is implied.",
+        "interactionOwnership": "Child button states belong to their registered owners. Standalone composition emits commands; host handles effects."
+      },
+      "interactions": {
+        "preview": "specimens/composer.html?part=composerSendActions",
+        "width": 720,
+        "targets": []
+      },
+      "previewConfigurations": [
+        {
+          "id": "default",
+          "name": "Default",
+          "interactionTarget": "main"
+        }
+      ],
+      "previewLayout": {
+        "columns": 1
+      }
+    },
+    {
+      "id": "email-composer",
+      "name": "Email composer",
+      "category": "Composer",
+      "css": "components/composer.css",
+      "module": "components/composer.js",
+      "preview": "specimens/composer.html?part=emailComposer",
+      "states": [
+        "default",
+        "minimized"
+      ],
+      "dependencies": [
+        "composer-header",
+        "composer-field",
+        "composer-tools",
+        "formatting-toolbar",
+        "composer-send-actions"
+      ],
+      "galleryWidth": 720,
+      "previewAutoHeight": true,
+      "anatomy": {
+        "parts": [
+          {
+            "name": "Email composer",
+            "selector": ".titan-email-composer"
+          }
+        ],
+        "spacing": [
+          {
+            "label": "Aligned content inset",
+            "token": "--titan-composer-content-inset",
+            "selector": ".titan-email-composer__fields",
+            "property": "padding-left"
+          },
+          {
+            "label": "Aligned content inset",
+            "token": "--titan-composer-content-inset",
+            "selector": ".titan-email-composer__fields",
+            "property": "padding-right"
+          },
+          {
+            "label": "Aligned content inset",
+            "token": "--titan-composer-content-inset",
+            "selector": ".titan-email-composer__editor",
+            "property": "padding-left"
+          },
+          {
+            "label": "Aligned content inset",
+            "token": "--titan-composer-content-inset",
+            "selector": ".titan-email-composer__editor",
+            "property": "padding-right"
+          },
+          {
+            "label": "Block inset",
+            "token": "--titan-space-12",
+            "selector": ".titan-email-composer__fields",
+            "property": "padding-top"
+          },
+          {
+            "label": "Block inset",
+            "token": "--titan-space-12",
+            "selector": ".titan-email-composer__editor",
+            "property": "padding-top"
+          },
+          {
+            "label": "Block inset",
+            "token": "--titan-space-12",
+            "selector": ".titan-email-composer__editor",
+            "property": "padding-bottom"
+          }
+        ],
+        "ownership": "Owns outer 681px \u00d7 640px composition, field-region insets and editable body. Header, tools, formatting and send actions are registered children with their own spacing. Parent owns placement and available width.",
+        "behavior": "Preferred width 681px and height 640px, constrained by parent width. Body fills remaining height and scrolls; fields and toolbars remain fixed. Open/close/minimize belong to the window. Sending, menus, formatting, recipients and feature operations are caller-owned.",
+        "interactionOwnership": "Owns minimize state and close request. Native body editing is local. Child controls emit commands; host owns sending, formatting, menus, expansion and navigation."
+      },
+      "interactions": {
+        "preview": "specimens/composer.html?part=emailComposer",
+        "width": 720,
+        "targets": [
+          {
+            "id": "main",
+            "name": "Composer window",
+            "owner": "email-composer",
+            "states": [
+              "default",
+              "minimized"
+            ]
+          }
+        ]
+      },
+      "class": "titan-email-composer",
+      "patterns": [
+        "docked-composer"
+      ],
+      "props": {
+        "from": "Sender text; defaults to alex@example.com.",
+        "title": "Header title; defaults to New email.",
+        "id": "Optional section DOM id.",
+        "toId": "Optional To input DOM id.",
+        "docked": "Uses existing bottom-docked motion and elevation; host supplies placement and comp-open state.",
+        "callbacks": "action(command,event), minimize(boolean), close(). mount returns listener cleanup. Split Send emits main/secondary; other controls emit named commands."
+      },
+      "previewConfigurations": [
+        {
+          "id": "default",
+          "name": "Default",
+          "interactionTarget": "main"
+        }
+      ],
+      "previewLayout": {
+        "columns": 1
+      }
+    },
+    {
+      "id": "avatar",
+      "name": "Avatar",
+      "category": "Identity",
+      "class": "titan-avatar",
+      "css": "components/avatar.css",
+      "module": "components/avatar.js",
+      "preview": "specimens/avatar.html",
+      "previewAutoHeight": true,
+      "galleryWidth": 300,
+      "props": {
+        "initials": "Required short initials",
+        "label": "Required accessible name unless decorative",
+        "decorative": "Boolean; renders aria-hidden with no accessible name, for use inside a control that already names it",
+        "variant": "default (36px) or small (24px); omitted defaults to default"
+      },
+      "states": [
+        "default"
+      ],
+      "anatomy": {
+        "parts": [
+          {
+            "name": "Initials",
+            "selector": ".titan-avatar"
+          }
+        ],
+        "spacing": [],
+        "ownership": "Avatar owns its circle (36px default, 24px small), purple surface, centred initials and zero padding in both variants. Parent owns external placement and gaps. Consumers select a variant without overriding internal styling.",
+        "behavior": "Fixed square that does not grow or shrink. Both sizes retain --titan-type-control-size typography and the same appearance. Initials must be short; overflow is clipped. No color variants are registered.",
+        "interactionOwnership": "Presentational only; no interactions defined."
+      },
+      "variants": [
+        "default",
+        "small"
+      ],
+      "interactions": {
+        "preview": "specimens/interactions.html?part=avatar",
+        "targets": [
+          {
+            "id": "default",
+            "name": "Default \u00b7 36px",
+            "owner": "avatar",
+            "states": [],
+            "previewOnly": true
+          },
+          {
+            "id": "small",
+            "name": "Small \u00b7 24px",
+            "owner": "avatar",
+            "states": [],
+            "previewOnly": true
+          }
+        ]
+      },
+      "previewConfigurations": [
+        {
+          "id": "default",
+          "name": "Default \u00b7 36px",
+          "selector": "main > section:nth-of-type(1)",
+          "interactionTarget": "default"
+        },
+        {
+          "id": "small",
+          "name": "Small \u00b7 24px",
+          "selector": "main > section:nth-of-type(2)",
+          "interactionTarget": "small"
+        }
+      ],
+      "previewLayout": {
+        "columns": 2
+      }
+    },
+    {
+      "id": "sidebar-header",
+      "name": "Sidebar header",
+      "category": "Navigation",
+      "class": "titan-sidebar-header",
+      "css": "components/sidebar-header.css",
+      "module": "components/sidebar-header.js",
+      "preview": "specimens/sidebar-header.html",
+      "previewAutoHeight": true,
+      "galleryWidth": 300,
+      "states": [
+        "default"
+      ],
+      "dependencies": [
+        "dropdown-trigger"
+      ],
+      "anatomy": {
+        "parts": [
+          {
+            "name": "Header",
+            "selector": ".titan-sidebar-header"
+          },
+          {
+            "name": "App switcher",
+            "selector": ".titan-app-switcher"
+          },
+          {
+            "name": "Logo slot",
+            "selector": ".titan-sidebar-header__logo"
+          }
+        ],
+        "spacing": [
+          {
+            "label": "Horizontal inset",
+            "token": "--titan-space-12",
+            "selector": ".titan-sidebar-header",
+            "property": "padding-left"
+          },
+          {
+            "label": "Horizontal inset end",
+            "token": "--titan-space-12",
+            "selector": ".titan-sidebar-header",
+            "property": "padding-right"
+          },
+          {
+            "label": "Trigger to logo",
+            "token": "--titan-sidebar-header-gap",
+            "selector": ".titan-sidebar-header",
+            "property": "column-gap"
+          },
+          {
+            "label": "Logo end inset",
+            "token": "--titan-sidebar-header-logo-end",
+            "selector": ".titan-sidebar-header .titan-sidebar-header__logo",
+            "property": "padding-right"
+          },
+          {
+            "label": "Logo optical inset",
+            "token": "--titan-sidebar-header-logo-top",
+            "selector": ".titan-sidebar-header .titan-sidebar-header__logo",
+            "property": "padding-top"
+          }
+        ],
+        "ownership": "Header owns 64px height, 12px inline insets, 11px trigger-to-logo gap and logo placement. Parent owns width. Dropdown owns its internal padding. App icon is instance content, not a variant.",
+        "behavior": "64px header with logo and trigger content slot. The page supplies a trigger or rendered interaction pattern and initializes its behavior.",
+        "interactionOwnership": "No header-owned actions. Dropdown trigger owns its own states; the consuming page initializes any associated popup interaction pattern."
+      },
+      "usage": "TitanSidebarHeader.render({icon,logo,label,expanded}); load icons/runtime.js, then selection.js first. One default layout; icon varies per instance. Menu handlers remain caller-owned. Content slots: icon is a registered app icon ID or custom image path; logo is the brand image path (current alt: Titan). These accept asset paths, not arbitrary markup. Changing either is instance data, never a variant.",
+      "props": {
+        "trigger": "Optional trusted rendered trigger slot, supplied by page code. The page initializes any associated interaction pattern."
+      },
+      "previewConfigurations": [
+        {
+          "id": "default",
+          "name": "Default",
+          "interactionTarget": "main"
+        }
+      ],
+      "previewLayout": {
+        "columns": 1
+      }
+    },
+    {
+      "id": "mini-calendar",
+      "name": "Mini calendar",
+      "category": "Navigation",
+      "class": "titan-mini-calendar",
+      "css": "components/mini-calendar.css",
+      "module": "components/mini-calendar.js",
+      "preview": "specimens/mini-calendar.html",
+      "previewAutoHeight": true,
+      "galleryWidth": 300,
+      "states": [
+        "default",
+        "selected",
+        "disabled"
+      ],
+      "dependencies": [
+        "icon-button",
+        "calendar-day"
+      ],
+      "usage": "TitanMiniCalendar.mount(host,{value,month,locale,disabled},{dateChange,monthChange}) returns update(props) and destroy(). Emits optional callbacks and bubbling titan:dateChange / titan:monthChange events. Date is YYYY-MM-DD; month is YYYY-MM. No page navigation or fetching.",
+      "anatomy": {
+        "parts": [
+          {
+            "name": "Month header",
+            "selector": ".titan-mini-calendar__header"
+          },
+          {
+            "name": "Weekday labels",
+            "selector": ".titan-mini-calendar__weekdays"
+          },
+          {
+            "name": "Date controls",
+            "selector": ".titan-calendar-day"
+          }
+        ],
+        "spacing": [
+          {
+            "label": "Top inset",
+            "selector": ".titan-mini-calendar",
+            "property": "padding-top",
+            "token": "--titan-mini-calendar-inset-block"
+          },
+          {
+            "label": "Bottom inset",
+            "selector": ".titan-mini-calendar",
+            "property": "padding-bottom",
+            "token": "--titan-mini-calendar-inset-block"
+          },
+          {
+            "label": "Left inset",
+            "selector": ".titan-mini-calendar",
+            "property": "padding-left",
+            "token": "--titan-mini-calendar-inset-inline"
+          },
+          {
+            "label": "Right inset",
+            "selector": ".titan-mini-calendar",
+            "property": "padding-right",
+            "token": "--titan-mini-calendar-inset-inline"
+          },
+          {
+            "label": "Header inset start",
+            "selector": ".titan-mini-calendar__header",
+            "property": "padding-left",
+            "token": "--titan-mini-calendar-header-inset"
+          },
+          {
+            "label": "Header inset end",
+            "selector": ".titan-mini-calendar__header",
+            "property": "padding-right",
+            "token": "--titan-mini-calendar-header-inset"
+          },
+          {
+            "label": "Header to weekdays",
+            "selector": ".titan-mini-calendar__header",
+            "property": "margin-bottom",
+            "token": "--titan-mini-calendar-header-gap"
+          },
+          {
+            "label": "Weekdays to dates",
+            "selector": ".titan-mini-calendar__weekdays",
+            "property": "margin-bottom",
+            "token": "--titan-mini-calendar-weekdays-gap"
+          }
+        ],
+        "geometry": [
+          {
+            "label": "Fixed width",
+            "selector": ".titan-mini-calendar",
+            "kind": "fluid",
+            "token": "--titan-mini-calendar-width"
+          }
+        ],
+        "behavior": "Sunday-first month grid, adjacent-month dates, date selection, month browsing, arrow/Home/End/PageUp/PageDown keyboard focus. Enter/Space select; focus movement alone does not select. Fixed 250px width; no date-range selection.",
+        "ownership": "Calendar owns its fixed width, internal insets, header arrangement, grid and navigation wrappers. Calendar day owns the day buttons; Icon button owns arrow states. Parent owns placement, divider and external spacing.",
+        "interactionOwnership": "Owns date selection value, roving keyboard focus across the grid, visible month and arrow routing through wrappers. Calendar day owns each day button's semantics and visual states; Icon button owns the arrows. Emits signals only; optional host callbacks decide effects elsewhere."
+      },
+      "interactions": {
+        "preview": "specimens/mini-calendar.html",
+        "width": 280,
+        "targets": [
+          {
+            "id": "dates",
+            "name": "Date selection",
+            "owner": "mini-calendar",
+            "states": [
+              "default",
+              "selected",
+              "focus",
+              "disabled"
+            ]
+          }
+        ]
+      },
+      "previewConfigurations": [
+        {
+          "id": "default",
+          "name": "Default",
+          "interactionTarget": "dates"
+        }
+      ],
+      "previewLayout": {
+        "columns": 1
+      }
+    },
+    {
+      "id": "calendar-day",
+      "name": "Calendar day",
+      "category": "Navigation",
+      "class": "titan-calendar-day",
+      "css": "components/mini-calendar.css",
+      "module": "components/mini-calendar.js",
+      "render": "TitanMiniCalendar.day(options)",
+      "preview": "specimens/calendar-day.html",
+      "previewAutoHeight": true,
+      "galleryWidth": 300,
+      "states": [
+        "default",
+        "hover",
+        "selected",
+        "focus-visible",
+        "disabled",
+        "outside"
+      ],
+      "usage": "One date button in a Mini calendar grid. Required context: the calendar surface; the preview shows a single day on it.",
+      "props": {
+        "date": "Required YYYY-MM-DD date",
+        "label": "Required accessible name (full date)",
+        "selected": "Boolean; reflected on aria-pressed",
+        "outside": "Boolean; marks an adjacent-month date",
+        "focus": "Boolean; caller-managed roving tabindex",
+        "disabled": "Boolean; prevents interaction"
+      },
+      "anatomy": {
+        "parts": [
+          {
+            "name": "Control",
+            "selector": ".titan-calendar-day"
+          }
+        ],
+        "spacing": [],
+        "alignment": "The parent grid sizes each cell; the day owns its radius, color and states.",
+        "behavior": "Native button. Mini calendar owns the selection value, roving tabindex, arrow-key movement and visible month; the day renders its own state.",
+        "ownership": "Calendar day owns its button semantics, color, radius and hover, selected, focus and disabled treatment. Mini calendar owns the grid arrangement and focus movement.",
+        "interactionOwnership": "Value ownership: caller supplies selected, outside and disabled values. Control ownership: Calendar day owns the button semantics and visual states. Action ownership: Mini calendar routes activation to the dateChange callback.",
+        "selectionSurface": "Highlight paint spans the full control height, is inset horizontally by --titan-selection-inset (4px), and uses --titan-selection-radius (4px). Control hit area and content geometry are unchanged. Selected/hover fills stay within this surface; keyboard focus remains independently visible."
+      },
+      "interactions": {
+        "preview": "specimens/interactions.html?part=calendar-day",
+        "targets": [
+          {
+            "id": "day",
+            "name": "Calendar day",
+            "owner": "calendar-day",
+            "states": [
+              "default",
+              "hover",
+              "selected",
+              "focus",
+              "disabled",
+              "outside"
+            ]
+          }
+        ],
+        "width": 300
+      },
+      "dependencies": [],
+      "previewConfigurations": [
+        {
+          "id": "default",
+          "name": "Default",
+          "interactionTarget": "day"
+        }
+      ],
+      "previewLayout": {
+        "columns": 1
+      }
+    },
+    {
+      "id": "data-list-row",
+      "name": "Data list row",
+      "category": "Data",
+      "class": "titan-data-list__row",
+      "css": "components/data-list-row.css",
+      "module": "components/data-list.js",
+      "render": "TitanDataList.row(options)",
+      "preview": "specimens/data-list-row.html",
+      "previewAutoHeight": true,
+      "previewHeight": 240,
+      "states": [
+        "default",
+        "hover"
+      ],
+      "usage": "One tabular record with control, key and value cells; used unchanged by Data list.",
+      "props": {
+        "columns": "columns[] with key, label, role (control/key/value) and width track",
+        "id": "Row identifier used in slot addresses; use unique IDs, reserving head for the table header.",
+        "cells": "Values keyed by column: text or {slot:true,text}; mount unchanged components into slots.",
+        "sharedTracks": "true only when hosted in a grid with the same column tracks; Data list supplies this for subgrid alignment. Default false uses independent tracks."
+      },
+      "anatomy": {
+        "parts": [
+          {
+            "name": "Rows",
+            "selector": ".titan-data-list__row"
+          },
+          {
+            "name": "Control cell",
+            "selector": ".titan-data-list__cell--control"
+          },
+          {
+            "name": "Key cell",
+            "selector": ".titan-data-list__cell--key"
+          },
+          {
+            "name": "Value cell",
+            "selector": ".titan-data-list__cell--value"
+          },
+          {
+            "name": "Key text",
+            "selector": ".titan-data-list__key-text"
+          },
+          {
+            "name": "Cell slot",
+            "selector": ".titan-data-list__slot"
+          }
+        ],
+        "spacing": [
+          {
+            "label": "Column gap",
+            "token": "--titan-data-list-column-gap",
+            "selector": ".titan-data-list__row",
+            "property": "column-gap"
+          },
+          {
+            "label": "Row trailing inset",
+            "token": "--titan-data-list-edge-inset",
+            "selector": ".titan-data-list__row",
+            "property": "padding-right"
+          },
+          {
+            "label": "Control cell left inset",
+            "token": "--titan-data-list-control-inset",
+            "selector": ".titan-data-list__cell--control",
+            "property": "padding-left"
+          },
+          {
+            "label": "Control cell right inset",
+            "token": "--titan-data-list-control-inset",
+            "selector": ".titan-data-list__cell--control",
+            "property": "padding-right"
+          },
+          {
+            "label": "Key slot to key text",
+            "token": "--titan-gap-icon-label",
+            "selector": ".titan-data-list__cell--key",
+            "property": "column-gap"
+          }
+        ],
+        "ownership": "Row owns 66px minimum height, cell alignment, gap, insets, typography, separators and hover. Parent supplies column tracks, width and placement. Slots accept unchanged components; their sizes and behaviors belong to those components. Internal CSS variables are not customization APIs.",
+        "behavior": "Static role=row markup with role=cell children. Plain text is escaped. Key and value text truncate; slots retain child geometry. No events or selection state; callers mount and wire slotted controls.",
+        "alignment": "Independent tracks by default; sharedTracks opts into parent subgrid columns. Without subgrid support, fixed/fr tracks align but auto tracks may differ.",
+        "interactionOwnership": "Owns row hover appearance only. No activation or selection behavior; slotted controls retain their own states and callbacks.",
+        "selectionSurface": "Highlight paint spans the full control height, is inset horizontally by --titan-selection-inset (4px), and uses --titan-selection-radius (4px). Control hit area and content geometry are unchanged. Selected/hover fills stay within this surface; keyboard focus remains independently visible."
+      },
+      "galleryWidth": 760,
+      "dependencies": [],
+      "interactions": {
+        "preview": "specimens/interactions.html?part=data-list-row",
+        "targets": [
+          {
+            "id": "main",
+            "name": "Data list row",
+            "owner": "data-list-row",
+            "states": [
+              "default",
+              "hover"
+            ]
+          }
+        ],
+        "width": 760
+      },
+      "previewConfigurations": [
+        {
+          "id": "default",
+          "name": "Default",
+          "interactionTarget": "main",
+          "selector": "main > .example"
+        }
+      ],
+      "previewLayout": {
+        "columns": 1
+      }
+    },
+    {
+      "id": "data-list",
+      "name": "Data list",
+      "category": "Data",
+      "class": "titan-data-list",
+      "css": "components/data-list.css",
+      "module": "components/data-list.js",
+      "render": "TitanDataList.list(options)",
+      "preview": "specimens/data-list.html",
+      "previewAutoHeight": true,
+      "previewHeight": 640,
+      "states": [
+        "default"
+      ],
+      "usage": "Tabular rows separated by dividers, with caller-defined columns, one primary key column and per-cell component slots.",
+      "props": {
+        "columns": "columns[] with key, label, role (control/key/value) and width track",
+        "rows": "rows[] with id and cells keyed by column; a cell is text or {slot:true, text}",
+        "head": "false hides the column header row",
+        "label": "accessible name for the table",
+        "emptyText": "message shown when rows is empty"
+      },
+      "anatomy": {
+        "parts": [
+          {
+            "name": "Header row",
+            "selector": ".titan-data-list__head"
+          },
+          {
+            "name": "Rows",
+            "selector": ".titan-data-list__row"
+          },
+          {
+            "name": "Empty state",
+            "selector": ".titan-data-list__empty"
+          }
+        ],
+        "spacing": [
+          {
+            "label": "Header column gap",
+            "token": "--titan-data-list-column-gap",
+            "selector": ".titan-data-list__head",
+            "property": "column-gap"
+          },
+          {
+            "label": "Empty state top inset",
+            "token": "--titan-space-24",
+            "selector": ".titan-data-list__empty",
+            "property": "padding-top"
+          },
+          {
+            "label": "Empty state left inset",
+            "token": "--titan-space-24",
+            "selector": ".titan-data-list__empty",
+            "property": "padding-left"
+          },
+          {
+            "label": "Header trailing inset",
+            "token": "--titan-data-list-edge-inset",
+            "selector": ".titan-data-list__head",
+            "property": "padding-right"
+          },
+          {
+            "label": "Header Control cell left inset",
+            "token": "--titan-data-list-control-inset",
+            "selector": ".titan-data-list__head .titan-data-list__cell--control",
+            "property": "padding-left"
+          },
+          {
+            "label": "Header Control cell right inset",
+            "token": "--titan-data-list-control-inset",
+            "selector": ".titan-data-list__head .titan-data-list__cell--control",
+            "property": "padding-right"
+          },
+          {
+            "label": "Header Key slot to key text",
+            "token": "--titan-gap-icon-label",
+            "selector": ".titan-data-list__head .titan-data-list__cell--key",
+            "property": "column-gap"
+          },
+          {
+            "label": "Empty state bottom inset",
+            "token": "--titan-space-24",
+            "selector": ".titan-data-list__empty",
+            "property": "padding-bottom"
+          },
+          {
+            "label": "Empty state right inset",
+            "token": "--titan-space-24",
+            "selector": ".titan-data-list__empty",
+            "property": "padding-right"
+          }
+        ],
+        "ownership": "List owns shared column tracks, header (62px minimum height), header rule and empty state. It composes Data list row unchanged. Parent owns available width and scrolling; callers supply data and mount unchanged children. Internal CSS variables are not customization APIs.",
+        "behavior": "Rows form one continuous surface divided by separators; there is no per-row container. Exactly one key column is required; control columns declare their own left/right insets and should use an auto track so no leftover width remains; value cells clip overflow with an ellipsis. Cells accept plain text or an empty slot host the caller fills with a component instance, addressed as [data-slot=\"<rowId>:<columnKey>\"] with the header row using the id 'head'. Static markup only; the caller owns data, selection state and mounting.",
+        "alignment": "The list owns one set of column tracks; the header and every row span all columns and subgrid them, so each column resolves once from all content and stays aligned even with auto-sized control columns. Without subgrid support the header and rows fall back to repeating the same track list, which aligns fixed and fr tracks but not auto ones.",
+        "interactionOwnership": "Presentational container. Slotted controls retain their own interaction contracts and callbacks."
+      },
+      "galleryWidth": 760,
+      "variants": [
+        "With header",
+        "Two columns, no header",
+        "Empty state"
+      ],
+      "dependencies": [
+        "data-list-row"
+      ],
+      "interactions": {
+        "preview": "specimens/interactions.html?part=data-list",
+        "targets": [
+          {
+            "id": "with-header",
+            "name": "With header",
+            "owner": "data-list",
+            "states": [],
+            "previewOnly": true
+          },
+          {
+            "id": "plain",
+            "name": "Two columns, no header",
+            "owner": "data-list",
+            "states": [],
+            "previewOnly": true
+          },
+          {
+            "id": "empty",
+            "name": "Empty state",
+            "owner": "data-list",
+            "states": [],
+            "previewOnly": true
+          }
+        ],
+        "width": 760
+      },
+      "previewConfigurations": [
+        {
+          "id": "with-header",
+          "name": "With header",
+          "selector": "main > section:nth-of-type(1)",
+          "interactionTarget": "with-header"
+        },
+        {
+          "id": "plain",
+          "name": "Two columns, no header",
+          "selector": "main > section:nth-of-type(2)",
+          "interactionTarget": "plain"
+        },
+        {
+          "id": "empty",
+          "name": "Empty state",
+          "selector": "main > section:nth-of-type(3)",
+          "interactionTarget": "empty"
+        }
+      ],
+      "previewLayout": {
+        "columns": 1
+      }
+    },
+    {
+      "id": "footer-actions",
+      "name": "Sidebar footer actions",
+      "category": "Navigation",
+      "class": "titan-footer-actions",
+      "css": "components/actions.css",
+      "module": "components/actions.js",
+      "render": "TitanActions.footerActions(options)",
+      "preview": "specimens/footer-actions.html",
+      "previewAutoHeight": true,
+      "previewHeight": 360,
+      "galleryWidth": 320,
+      "variants": [
+        "One action",
+        "Two actions",
+        "Three actions"
+      ],
+      "states": [
+        "default",
+        "hover",
+        "focus-visible",
+        "disabled"
+      ],
+      "usage": "One to three content-sized actions at the foot of a navigation surface. With three actions, the last is always icon-only.",
+      "props": {
+        "label": "Required accessible group label",
+        "items": "One to three actions: {id, label, icon, iconColor, labelHidden, disabled}. Every label is required. Three actions always show the first two labels and hide the last label visually. With one or two actions, labelHidden is optional."
+      },
+      "anatomy": {
+        "parts": [
+          {
+            "name": "Group",
+            "selector": ".titan-footer-actions"
+          },
+          {
+            "name": "Segment",
+            "selector": ".titan-footer-actions__item"
+          },
+          {
+            "name": "Icon slot",
+            "selector": ".titan-footer-actions__icon"
+          },
+          {
+            "name": "Label",
+            "selector": ".titan-footer-actions__label"
+          }
+        ],
+        "spacing": [
+          {
+            "label": "Segment top inset",
+            "token": "--titan-footer-actions-inset-block",
+            "selector": ".titan-footer-actions__item",
+            "property": "padding-top"
+          },
+          {
+            "label": "Segment bottom inset",
+            "token": "--titan-footer-actions-inset-block",
+            "selector": ".titan-footer-actions__item",
+            "property": "padding-bottom"
+          },
+          {
+            "label": "Segment left inset",
+            "token": "--titan-footer-actions-inset-inline",
+            "selector": ".titan-footer-actions__item",
+            "property": "padding-left"
+          },
+          {
+            "label": "Segment right inset",
+            "token": "--titan-footer-actions-inset-inline",
+            "selector": ".titan-footer-actions__item",
+            "property": "padding-right"
+          },
+          {
+            "label": "Icon to label",
+            "token": "--titan-gap-icon-label-compact",
+            "selector": ".titan-footer-actions__item:not(.titan-footer-actions__item--icon-only)",
+            "property": "column-gap"
+          }
+        ],
+        "ownership": "Group owns content-based width allocation, insets, the leading rule and between-segment dividers, and centered icon/label alignment. Labelled actions share spare width and shrink when necessary; icon-only actions reserve at least 48px, with centered artwork. Parent owns placement and available width. No consumer overrides.",
+        "behavior": "One to three native buttons. Three actions show two labels followed by one icon-only button with an accessible name. Labelled actions use intrinsic content widths plus an equal share of spare space; labels ellipsize only when the available width is exhausted, with full text retained in the accessible name and title. Clicks route by item id. Disabled actions do not invoke callbacks.",
+        "alignment": "Icon and label are centred together within each segment.",
+        "interactionOwnership": "Each segment is a native button owning its own hover, focus and disabled state; the caller owns what each action does."
+      },
+      "dependencies": [],
+      "interactions": {
+        "preview": "specimens/interactions.html?part=footer-actions",
+        "targets": [
+          {
+            "id": "one",
+            "name": "One action",
+            "owner": "footer-actions",
+            "states": [
+              "hover",
+              "focus",
+              "disabled"
+            ]
+          },
+          {
+            "id": "two",
+            "name": "Two actions",
+            "owner": "footer-actions",
+            "states": [
+              "hover",
+              "focus",
+              "disabled"
+            ]
+          },
+          {
+            "id": "three",
+            "name": "Three actions",
+            "owner": "footer-actions",
+            "states": [
+              "hover",
+              "focus",
+              "disabled"
+            ]
+          }
+        ]
+      },
+      "previewConfigurations": [
+        {
+          "id": "one",
+          "name": "One action",
+          "selector": "main > section:nth-of-type(3)",
+          "interactionTarget": "one"
+        },
+        {
+          "id": "two",
+          "name": "Two actions",
+          "selector": "main > section:nth-of-type(2)",
+          "interactionTarget": "two"
+        },
+        {
+          "id": "three",
+          "name": "Three actions, last icon-only",
+          "selector": "main > section:nth-of-type(1)",
+          "interactionTarget": "three"
+        }
+      ],
+      "previewLayout": {
+        "columns": 1
+      }
+    },
+    {
+      "id": "account-header",
+      "name": "Account header",
+      "category": "Identity",
+      "class": "titan-account-header",
+      "css": "components/account-header.css",
+      "module": "components/account-header.js",
+      "render": "TitanAccountHeader.render(options)",
+      "preview": "specimens/account-header.html",
+      "previewAutoHeight": true,
+      "previewHeight": 320,
+      "galleryWidth": 320,
+      "states": [
+        "default",
+        "collapsed",
+        "focus-visible",
+        "disabled"
+      ],
+      "usage": "Expandable account row heading a group of folders in a navigation sidebar.",
+      "props": {
+        "email": "Required address shown as the account name; truncates with an ellipsis",
+        "initials": "Required initials passed to the nested Avatar",
+        "expanded": "Boolean, default true; reflected on aria-expanded",
+        "id": "Reported as data-action and to the toggle callback",
+        "disabled": "Boolean; prevents interaction"
+      },
+      "anatomy": {
+        "parts": [
+          {
+            "name": "Header",
+            "selector": ".titan-account-header"
+          },
+          {
+            "name": "Chevron",
+            "selector": ".titan-account-header__chevron"
+          },
+          {
+            "name": "Identity",
+            "selector": ".titan-account-header__identity"
+          },
+          {
+            "name": "Address",
+            "selector": ".titan-account-header__email"
+          },
+          {
+            "name": "Avatar",
+            "selector": ".titan-account-header__avatar .titan-avatar"
+          }
+        ],
+        "spacing": [
+          {
+            "label": "Top inset",
+            "token": "--titan-account-header-inset-block",
+            "selector": ".titan-account-header",
+            "property": "padding-top"
+          },
+          {
+            "label": "Bottom inset",
+            "token": "--titan-account-header-inset-block",
+            "selector": ".titan-account-header",
+            "property": "padding-bottom"
+          },
+          {
+            "label": "End inset",
+            "token": "--titan-space-8",
+            "selector": ".titan-account-header",
+            "property": "padding-right"
+          },
+          {
+            "label": "Avatar to address",
+            "token": "--titan-gap-icon-label",
+            "selector": ".titan-account-header__identity",
+            "property": "column-gap"
+          }
+        ],
+        "ownership": "Account header owns the chevron box, external avatar-to-address gap and address truncation. It renders the nested Avatar using its registered small variant at 24px and purple surface. No child styling overrides are supported. Parent owns sidebar placement and surrounding rules.",
+        "behavior": "Native button. Toggles aria-expanded on click and reports the new state through the toggle callback; the caller owns showing or hiding the folders beneath it. Collapsing rotates the chevron. Addresses longer than the row truncate with an ellipsis \u2014 that is inherent, not a separate variant.",
+        "alignment": "Chevron, avatar and address share one centred row; the address takes the remaining width.",
+        "interactionOwnership": "Owns its own click, expanded state, focus and disabled treatment."
+      },
+      "dependencies": [
+        "avatar"
+      ],
+      "interactions": {
+        "preview": "specimens/interactions.html?part=account-header",
+        "width": 250,
+        "targets": [
+          {
+            "id": "main",
+            "name": "Account header",
+            "owner": "account-header",
+            "states": [
+              "default",
+              "collapsed",
+              "focus",
+              "disabled"
+            ]
+          }
+        ]
+      },
+      "previewConfigurations": [
+        {
+          "id": "default",
+          "name": "Default",
+          "interactionTarget": "main"
+        }
+      ],
+      "previewLayout": {
+        "columns": 1
+      }
+    }
+  ],
+  "compositions": [],
+  "patterns": [
+    {
+      "id": "three-pane-workspace",
+      "name": "Three-pane workspace",
+      "category": "Layouts",
+      "preview": "specimens/workspace-pattern.html",
+      "previewHeight": 600,
+      "summary": "Three adjacent sections with a full-height left section and a shared upper section above the middle and right.",
+      "structure": [
+        "Full-height left section",
+        "Middle section",
+        "Right section",
+        "Upper section spanning the middle and right"
+      ],
+      "requirements": [
+        "The left section spans the full height; the upper section spans the two remaining columns.",
+        "Column widths, scrolling and the smaller-screen arrangement are chosen by the consuming screen.",
+        "Sections accept any content; this layout assigns no content roles."
+      ],
+      "useWhen": [
+        "Arranging three adjacent sections with a shared upper section over the last two."
+      ],
+      "previewAutoHeight": true
+    },
+    {
+      "id": "overlay-side-panel",
+      "name": "Overlay side panel",
+      "category": "Interaction Patterns",
+      "preview": "specimens/workspace-pattern.html?pattern=overlay",
+      "previewHeight": 600,
+      "summary": "An elevated panel opens over the workspace.",
+      "structure": [
+        "Right-aligned panel, 316px wide, full viewport height.",
+        "Fixed header, scrollable settings area and bottom action."
+      ],
+      "requirements": [
+        "Settings control toggles the panel; close control dismisses it.",
+        "Panel overlays content without changing pane widths.",
+        "Existing 300ms slide transition and shadow.",
+        "Escape, outside-click dismissal and focus management are not implemented in the source; do not claim them as supported."
+      ],
+      "useWhen": [
+        "Accessing settings without leaving the workspace."
+      ],
+      "previewAutoHeight": true
+    },
+    {
+      "id": "docked-composer",
+      "name": "Bottom-docked panel: slide-in",
+      "category": "Interaction Patterns",
+      "preview": "specimens/composer-pattern.html",
+      "previewAutoHeight": true,
+      "summary": "Slide upward from the bottom edge; minimize to the header.",
+      "states": [
+        "open",
+        "minimized",
+        "closed"
+      ],
+      "anatomy": {
+        "ownership": "Host owns bottom/right placement, width limits and elevation. Composer owns editing regions and internal scroll.",
+        "behavior": "Shared transform motion for open, close, minimize and restore. Composer opening focuses To. Expanded mode and a designed small-screen layout remain undefined."
+      },
+      "css": "patterns/bottom-docked-panel.css",
+      "motion": {
+        "duration": "300ms",
+        "easing": "cubic-bezier(.16,1,.3,1)",
+        "property": "transform",
+        "reducedMotion": "Immediate state change"
+      },
+      "requirements": [
+        "Host owns bottom placement, width, height and elevation.",
+        "Open from below; close by reversing the slide.",
+        "Minimize leaves a 44px header visible; restore without resizing content.",
+        "Reduced motion removes transitions."
+      ]
+    },
+    {
+      "id": "layout-guide",
+      "name": "Layout guide",
+      "category": "Layouts",
+      "preview": "specimens/layout-recipes.html",
+      "previewAutoHeight": true,
+      "summary": "Explore lists, grids and rows with the Titan spacing scale. Guidelines, not required code utilities.",
+      "useWhen": [
+        "Creating or rearranging a DS screen: consult alongside components and tokens."
+      ],
+      "structure": [
+        "One switchable guide for List, Grid, Row and Footer arrangements."
+      ],
+      "requirements": [
+        "Choose context before spacing: data rows 0, launcher menu items 4px, Contacts navigation 8px, app grids 16px. Form/card recommendations are provisional. See layouts/README.md for evidence and separate group/inset guidance.",
+        "Parent owns gaps, outer padding, alignment, wrapping and columns. Child internals remain unchanged.",
+        "Apply guidance through existing screen code; no mandatory layout class, import or renderer.",
+        "See layouts/README.md for defaults, override boundaries and usage."
+      ]
+    },
+    {
+      "id": "anchored-popover",
+      "name": "Anchored popover disclosure",
+      "category": "Interaction Patterns",
+      "preview": "specimens/app-switcher.html?part=app-switcher",
+      "previewHeight": 680,
+      "previewAutoHeight": true,
+      "summary": "A registered trigger reveals a caller-owned floating panel anchored to it; the page coordinates visibility, placement, dismissal and focus.",
+      "structure": [
+        "Trigger (a registered control, e.g. Dropdown trigger).",
+        "Floating panel (a separate registered surface; App switcher panel is the reference implementation).",
+        "Page-owned coordination: visibility, placement, dismissal and focus return."
+      ],
+      "requirements": [
+        "Trigger and panel stay independently registered; do not fold the panel into the trigger component or treat it as the trigger's hover, pressed or selected state.",
+        "The page owns open/close state, outside-click and Escape dismissal, focus return and the panel's actions.",
+        "Render the panel in a container that can extend outside the sidebar or parent layout, and keep it within the viewport.",
+        "Reference implementation: the App switcher coordination (patterns/app-switcher.js and patterns/app-switcher.css, bound by the page)."
+      ],
+      "useWhen": [
+        "A short-lived choice or navigation surface anchored to its trigger.",
+        "The panel content is page-owned or a separate registered surface."
+      ],
+      "avoid": [
+        "Do not restyle the trigger or the panel internals from the parent.",
+        "Do not imply a route or a persistent page change; the disclosure is transient."
+      ],
+      "searchTags": [
+        "popover",
+        "disclosure",
+        "dropdown",
+        "menu",
+        "anchor"
+      ]
+    }
+  ],
+  "visualizations": [],
+  "themes": [
+    {
+      "id": "light",
+      "name": "Light",
+      "file": "themes/light.css",
+      "description": "Light surfaces with fixed dark navigation.",
+      "colorScheme": "light"
+    },
+    {
+      "id": "dark",
+      "name": "Dark",
+      "file": "themes/dark.css",
+      "description": "Dark reading surfaces; existing dark navigation remains unchanged.",
+      "colorScheme": "dark"
+    }
+  ],
+  "screens": [
+    {
+      "id": "titan-email-shell",
+      "name": "Titan Email Shell",
+      "preview": "../app/Prototypes/Ishant/design ops/DS-specific%20shells/TitanEmailShell/index.html",
+      "description": "Existing source screen: accepted color/type baseline, spacing adoption ready for review.",
+      "usage": "First reference for the growing Titan design system. Color/type appearance accepted; spacing extracted with unchanged values. Future screens will enrich the same catalog."
+    }
+  ],
+  "icons": [
+    {
+      "id": "titan-icons",
+      "name": "Iconography",
+      "preview": "icons/index.html",
+      "previewHeight": 720,
+      "manifest": "icons/catalog.json",
+      "usage": "Shared artwork, display sizes, color and usage contracts",
+      "anatomy": {
+        "ownership": "Shared assets own normalized artwork and proportions. Controls own square image slots, spacing and interactions.",
+        "behavior": "Preserve source colors and aspect ratio. App artwork is not recolored as an interface glyph."
+      },
+      "previewAutoHeight": true
+    }
+  ],
+  "tokenFiles": [
+    "tokens/primitives.css",
+    "tokens/semantics.css",
+    "tokens/spacing.css",
+    "tokens/text-styles.css",
+    "components/composer.css",
+    "tokens/iconography.css",
+    "tokens/strokes.css",
+    "tokens/elevation.css"
+  ],
+  "knownGaps": [
+    "User accepted color/type appearance; agent browser verification and full interaction coverage remain pending.",
+    "Spacing adoption covers selected static declarations; wide-view offsets, stack overlap, composer/reply spacing and inline styles remain local.",
+    "Reading surface differs from legacy --reading-pane-bg; no value normalization performed.",
+    "Muted text contrast, responsive layout and keyboard behavior still require review.",
+    "Motion and themes remain later phases; one-off shadows and z-order remain source-owned."
+  ],
+  "decisions": [
+    "decisions/initial-extraction.md",
+    "ROADMAP.md",
+    "decisions/color-typography.md",
+    "decisions/color-type-adoption.json",
+    "decisions/spacing.md",
+    "decisions/spacing-adoption.json",
+    "FINDINGS.md",
+    "decisions/upstream-refresh.md",
+    "decisions/icon-normalization.md",
+    "decisions/icon-colors.md",
+    "decisions/icon-optical-review.md",
+    "decisions/iconography-contract.md",
+    "decisions/iconography-sidebar.md",
+    "decisions/elevation.md"
+  ],
+  "foundationPresentation": {
+    "tokens": {
+      "--titan-surface-base": {
+        "label": "Base",
+        "layer": "semantic"
+      },
+      "--titan-surface-reading": {
+        "label": "Reading surface",
+        "layer": "semantic"
+      },
+      "--titan-surface-navigation": {
+        "label": "Navigation",
+        "layer": "semantic"
+      },
+      "--titan-surface-composer-header": {
+        "label": "Composer header",
+        "layer": "semantic"
+      },
+      "--titan-text-primary": {
+        "label": "Primary text",
+        "layer": "semantic"
+      },
+      "--titan-text-strong": {
+        "label": "Strong text",
+        "layer": "semantic"
+      },
+      "--titan-text-secondary": {
+        "label": "Secondary text",
+        "layer": "semantic"
+      },
+      "--titan-text-muted": {
+        "label": "Muted text",
+        "layer": "semantic"
+      },
+      "--titan-text-inverse": {
+        "label": "Inverse text",
+        "layer": "semantic"
+      },
+      "--titan-action-primary": {
+        "label": "Primary action",
+        "layer": "semantic"
+      },
+      "--titan-indicator-active": {
+        "label": "Active indicator",
+        "layer": "semantic"
+      },
+      "--titan-text-link": {
+        "label": "Links",
+        "layer": "semantic"
+      },
+      "--titan-font-family-ui": {
+        "label": "System sans",
+        "sample": "Clear by design.",
+        "kind": "family",
+        "layer": "semantic"
+      },
+      "--titan-type-thread-title-size": {
+        "label": "Thread title",
+        "sample": "A little clarity goes a long way.",
+        "weight": 600,
+        "lineHeight": "1.3",
+        "layer": "semantic"
+      },
+      "--titan-type-sender-size": {
+        "label": "Sender",
+        "sample": "Alex Morgan",
+        "weight": 600,
+        "lineHeight": "20px",
+        "layer": "semantic"
+      },
+      "--titan-type-tab-size": {
+        "label": "Tab label",
+        "sample": "Priority",
+        "weight": 600,
+        "lineHeight": "20px",
+        "layer": "semantic"
+      },
+      "--titan-type-body-size": {
+        "label": "Body",
+        "sample": "The updated notes are ready for your review.",
+        "weight": 400,
+        "lineHeight": "20px",
+        "layer": "semantic"
+      },
+      "--titan-type-control-size": {
+        "label": "Primary action",
+        "sample": "Compose message",
+        "weight": 600,
+        "layer": "semantic"
+      },
+      "--titan-type-control-compact-size": {
+        "label": "Compact action",
+        "sample": "Reply to all",
+        "weight": 400,
+        "layer": "semantic"
+      },
+      "--titan-type-meta-size": {
+        "label": "Metadata",
+        "sample": "Today, 10:42 AM",
+        "weight": 400,
+        "layer": "semantic"
+      },
+      "--titan-type-meta-small-size": {
+        "label": "Compact timestamp",
+        "sample": "10:42 AM",
+        "weight": 400,
+        "layer": "semantic"
+      },
+      "--titan-reading-pane-inset-inline": {
+        "label": "Reading pane inset",
+        "layer": "semantic"
+      },
+      "--titan-mail-row-inset-block": {
+        "label": "Mail row \u00b7 vertical",
+        "layer": "semantic"
+      },
+      "--titan-mail-row-inset-inline": {
+        "label": "Mail row \u00b7 horizontal",
+        "layer": "semantic"
+      },
+      "--titan-mail-row-gap": {
+        "label": "Mail row gap",
+        "layer": "semantic"
+      },
+      "--titan-message-inset-inline": {
+        "label": "Message \u00b7 horizontal",
+        "layer": "semantic"
+      },
+      "--titan-message-inset-block": {
+        "label": "Message header \u00b7 vertical",
+        "layer": "semantic"
+      },
+      "--titan-message-header-gap": {
+        "label": "Message header gap",
+        "layer": "semantic"
+      },
+      "--card-border-radius": {
+        "label": "Card",
+        "status": "Defined \u00b7 not yet applied",
+        "layer": "semantic"
+      },
+      "--compose-border-radius": {
+        "label": "Composer",
+        "status": "Defined \u00b7 not yet applied",
+        "layer": "semantic"
+      },
+      "--search-border-radius": {
+        "label": "Search",
+        "status": "Defined \u00b7 not yet applied",
+        "layer": "semantic"
+      },
+      "--reading-pane-bg": {
+        "label": "Reading surface \u00b7 legacy",
+        "layer": "semantic"
+      },
+      "--search-bg": {
+        "label": "Search fill",
+        "layer": "semantic"
+      },
+      "--hover-bg": {
+        "label": "Hover",
+        "layer": "semantic"
+      },
+      "--selected-bg": {
+        "label": "Selected",
+        "layer": "semantic"
+      },
+      "--selected-bg-strong": {
+        "label": "Selected \u00b7 strong",
+        "layer": "semantic"
+      },
+      "--border-color": {
+        "label": "Divider",
+        "layer": "semantic"
+      },
+      "--card-border-color": {
+        "label": "Card border",
+        "layer": "semantic"
+      },
+      "--hover-overlay-on-accent": {
+        "label": "Hover overlay",
+        "layer": "semantic"
+      },
+      "--active-overlay-on-accent": {
+        "label": "Pressed overlay",
+        "layer": "semantic"
+      },
+      "--card-spacing": {
+        "label": "Card spacing \u00b7 legacy",
+        "layer": "semantic"
+      },
+      "--click-scale": {
+        "label": "Press scale",
+        "layer": "semantic"
+      },
+      "--titan-font-weight-regular": {
+        "label": "Regular",
+        "kind": "weight",
+        "sample": "Good design feels effortless.",
+        "layer": "primitive"
+      },
+      "--titan-font-weight-medium": {
+        "label": "Medium",
+        "kind": "weight",
+        "sample": "Good design feels effortless.",
+        "layer": "primitive"
+      },
+      "--titan-font-weight-semibold": {
+        "label": "Semibold",
+        "kind": "weight",
+        "sample": "Good design feels effortless.",
+        "layer": "primitive"
+      },
+      "--titan-space-4": {
+        "layer": "primitive"
+      },
+      "--titan-space-8": {
+        "layer": "primitive"
+      },
+      "--titan-space-12": {
+        "layer": "primitive"
+      },
+      "--titan-space-16": {
+        "layer": "primitive"
+      },
+      "--titan-space-20": {
+        "layer": "primitive"
+      },
+      "--titan-space-24": {
+        "layer": "primitive"
+      },
+      "--titan-font-system": {
+        "layer": "primitive"
+      },
+      "--titan-font-size-11": {
+        "layer": "primitive"
+      },
+      "--titan-font-size-12": {
+        "layer": "primitive"
+      },
+      "--titan-font-size-13": {
+        "layer": "primitive"
+      },
+      "--titan-font-size-14": {
+        "layer": "primitive"
+      },
+      "--titan-font-size-15": {
+        "layer": "primitive"
+      },
+      "--titan-font-size-24": {
+        "layer": "primitive"
+      },
+      "--titan-line-height-20": {
+        "layer": "primitive"
+      },
+      "--titan-radius-4": {
+        "layer": "primitive"
+      },
+      "--titan-radius-6": {
+        "layer": "primitive"
+      },
+      "--titan-type-body-line-height": {
+        "layer": "semantic"
+      },
+      "--titan-type-heading-family": {
+        "layer": "semantic"
+      },
+      "--titan-type-heading-size": {
+        "layer": "semantic"
+      },
+      "--titan-type-heading-weight": {
+        "layer": "semantic"
+      },
+      "--titan-type-body-family": {
+        "layer": "semantic"
+      },
+      "--titan-type-body-weight": {
+        "layer": "semantic"
+      },
+      "--titan-type-label-family": {
+        "layer": "semantic"
+      },
+      "--titan-type-label-size": {
+        "layer": "semantic"
+      },
+      "--titan-type-label-weight": {
+        "layer": "semantic"
+      },
+      "--titan-type-caption-family": {
+        "layer": "semantic"
+      },
+      "--titan-type-caption-size": {
+        "layer": "semantic"
+      },
+      "--titan-type-caption-weight": {
+        "layer": "semantic"
+      },
+      "--titan-space-3": {
+        "layer": "primitive"
+      },
+      "--titan-gap-text-tight": {
+        "layer": "semantic"
+      },
+      "--titan-gap-icon-label": {
+        "layer": "semantic"
+      },
+      "--titan-gap-icon-label-compact": {
+        "layer": "semantic"
+      },
+      "--titan-gap-actions-compact": {
+        "layer": "semantic"
+      },
+      "--titan-color-blue-50": {
+        "label": "Blue 50",
+        "layer": "primitive",
+        "colorFamily": "Blue",
+        "colorOrder": 314
+      },
+      "--titan-color-blue-100": {
+        "label": "Blue 100",
+        "layer": "primitive",
+        "colorFamily": "Blue",
+        "colorOrder": 490
+      },
+      "--titan-surface-selected": {
+        "label": "Selected surface",
+        "layer": "semantic"
+      },
+      "--titan-card-inset": {
+        "layer": "semantic",
+        "label": "Card inset"
+      },
+      "--titan-icon-size-12": {
+        "layer": "primitive",
+        "label": "12 icon size"
+      },
+      "--titan-icon-size-16": {
+        "layer": "primitive",
+        "label": "16 icon size"
+      },
+      "--titan-icon-size-18": {
+        "layer": "primitive",
+        "label": "18 icon size"
+      },
+      "--titan-icon-size-20": {
+        "layer": "primitive",
+        "label": "20 icon size"
+      },
+      "--titan-icon-size-24": {
+        "layer": "primitive",
+        "label": "24 icon size"
+      },
+      "--titan-icon-size-indicator": {
+        "layer": "semantic",
+        "label": "Indicator icon size"
+      },
+      "--titan-icon-size-compact": {
+        "layer": "semantic",
+        "label": "Compact icon size"
+      },
+      "--titan-icon-size-window": {
+        "layer": "semantic",
+        "label": "Window icon size"
+      },
+      "--titan-icon-size-sidebar": {
+        "layer": "semantic",
+        "label": "Sidebar icon size"
+      },
+      "--titan-icon-size-action": {
+        "layer": "semantic",
+        "label": "Action icon size"
+      },
+      "--titan-icon-size-action-large": {
+        "layer": "semantic",
+        "label": "Action-Large icon size"
+      },
+      "--titan-icon-size-supporting": {
+        "layer": "semantic",
+        "label": "Supporting icon size"
+      },
+      "--titan-icon-size-message-status": {
+        "layer": "semantic",
+        "label": "Message status icon size"
+      },
+      "--titan-border-width-default": {
+        "layer": "semantic"
+      },
+      "--titan-divider-width-default": {
+        "layer": "semantic"
+      },
+      "--titan-focus-ring-width": {
+        "layer": "semantic"
+      },
+      "--titan-split-divider-width": {
+        "layer": "semantic"
+      },
+      "--titan-composer-field-divider-width": {
+        "layer": "semantic"
+      },
+      "--titan-elevation-compact-action": {
+        "layer": "semantic",
+        "label": "Compact action elevation"
+      },
+      "--titan-elevation-stacked-surface": {
+        "layer": "semantic",
+        "label": "Stacked surface elevation"
+      },
+      "--titan-elevation-floating-badge": {
+        "layer": "semantic",
+        "label": "Floating badge elevation"
+      },
+      "--titan-elevation-floating-badge-hover": {
+        "layer": "semantic",
+        "label": "Floating badge hover elevation"
+      },
+      "--titan-elevation-tooltip": {
+        "layer": "semantic",
+        "label": "Tooltip elevation"
+      },
+      "--titan-elevation-popover": {
+        "layer": "semantic",
+        "label": "Popover elevation"
+      },
+      "--titan-elevation-side-panel": {
+        "layer": "semantic",
+        "label": "Side panel elevation"
+      },
+      "--titan-elevation-bottom-panel": {
+        "layer": "semantic",
+        "label": "Bottom panel elevation"
+      },
+      "--titan-shadow-down-hairline": {
+        "layer": "primitive"
+      },
+      "--titan-shadow-down-soft": {
+        "layer": "primitive"
+      },
+      "--titan-shadow-down-small": {
+        "layer": "primitive"
+      },
+      "--titan-shadow-down-medium": {
+        "layer": "primitive"
+      },
+      "--titan-shadow-down-diffuse": {
+        "layer": "primitive"
+      },
+      "--titan-shadow-drop-soft": {
+        "layer": "primitive"
+      },
+      "--titan-shadow-left-wide": {
+        "layer": "primitive"
+      },
+      "--titan-shadow-up-wide-ring": {
+        "layer": "primitive"
+      },
+      "--titan-elevation-compact-action-border": {
+        "layer": "semantic"
+      },
+      "--titan-elevation-stacked-surface-border": {
+        "layer": "semantic"
+      },
+      "--titan-elevation-floating-badge-border": {
+        "layer": "semantic"
+      },
+      "--titan-elevation-floating-badge-hover-border": {
+        "layer": "semantic"
+      },
+      "--titan-border-compact-raised": {
+        "layer": "primitive"
+      },
+      "--titan-border-stacked": {
+        "layer": "primitive"
+      },
+      "--titan-border-floating": {
+        "layer": "primitive"
+      },
+      "--titan-border-floating-hover": {
+        "layer": "primitive"
+      },
+      "--titan-elevation-0-shadow": {
+        "layer": "semantic"
+      },
+      "--titan-elevation-0-border": {
+        "layer": "semantic"
+      },
+      "--titan-shadow-none": {
+        "layer": "primitive"
+      },
+      "--titan-elevation-1-shadow": {
+        "layer": "semantic"
+      },
+      "--titan-elevation-1-border": {
+        "layer": "semantic"
+      },
+      "--titan-elevation-2-shadow": {
+        "layer": "semantic"
+      },
+      "--titan-elevation-2-border": {
+        "layer": "semantic"
+      },
+      "--titan-elevation-3-shadow": {
+        "layer": "semantic"
+      },
+      "--titan-elevation-3-border": {
+        "layer": "semantic"
+      },
+      "--titan-shadow-raised": {
+        "layer": "primitive"
+      },
+      "--titan-elevation-4-shadow": {
+        "layer": "semantic"
+      },
+      "--titan-elevation-4-border": {
+        "layer": "semantic"
+      },
+      "--titan-shadow-floating": {
+        "layer": "primitive"
+      },
+      "--titan-border-elevation": {
+        "layer": "primitive"
+      },
+      "--titan-border-elevation-native-dark": {
+        "layer": "semantic",
+        "label": "Native-dark elevation border"
+      },
+      "--titan-elevation-tooltip-border": {
+        "layer": "semantic"
+      },
+      "--titan-elevation-popover-border": {
+        "layer": "semantic"
+      },
+      "--titan-elevation-side-panel-border": {
+        "layer": "semantic"
+      },
+      "--titan-elevation-bottom-panel-border": {
+        "layer": "semantic"
+      },
+      "--titan-shadow-side-0": {
+        "layer": "primitive"
+      },
+      "--titan-elevation-0-side-shadow": {
+        "layer": "semantic"
+      },
+      "--titan-shadow-bottom-0": {
+        "layer": "primitive"
+      },
+      "--titan-elevation-0-bottom-shadow": {
+        "layer": "semantic"
+      },
+      "--titan-shadow-side-1": {
+        "layer": "primitive"
+      },
+      "--titan-elevation-1-side-shadow": {
+        "layer": "semantic"
+      },
+      "--titan-shadow-bottom-1": {
+        "layer": "primitive"
+      },
+      "--titan-elevation-1-bottom-shadow": {
+        "layer": "semantic"
+      },
+      "--titan-shadow-side-2": {
+        "layer": "primitive"
+      },
+      "--titan-elevation-2-side-shadow": {
+        "layer": "semantic"
+      },
+      "--titan-shadow-bottom-2": {
+        "layer": "primitive"
+      },
+      "--titan-elevation-2-bottom-shadow": {
+        "layer": "semantic"
+      },
+      "--titan-shadow-side-3": {
+        "layer": "primitive"
+      },
+      "--titan-elevation-3-side-shadow": {
+        "layer": "semantic"
+      },
+      "--titan-shadow-bottom-3": {
+        "layer": "primitive"
+      },
+      "--titan-elevation-3-bottom-shadow": {
+        "layer": "semantic"
+      },
+      "--titan-shadow-side-4": {
+        "layer": "primitive"
+      },
+      "--titan-elevation-4-side-shadow": {
+        "layer": "semantic"
+      },
+      "--titan-shadow-bottom-4": {
+        "layer": "primitive"
+      },
+      "--titan-elevation-4-bottom-shadow": {
+        "layer": "semantic"
+      },
+      "--titan-color-night-70": {
+        "layer": "primitive",
+        "colorFamily": "Blue",
+        "colorOrder": 7647
+      },
+      "--titan-color-night-130": {
+        "layer": "primitive",
+        "colorFamily": "Blue",
+        "colorOrder": 7078
+      },
+      "--titan-icon-button-pressed-surface": {
+        "layer": "semantic"
+      },
+      "--titan-surface-hover": {
+        "layer": "semantic"
+      },
+      "--titan-surface-subtle": {
+        "layer": "semantic"
+      },
+      "--titan-divider-subtle": {
+        "layer": "semantic"
+      },
+      "--titan-scrollbar": {
+        "layer": "semantic"
+      },
+      "--titan-text-faint": {
+        "layer": "semantic"
+      },
+      "--titan-text-disabled": {
+        "layer": "semantic"
+      },
+      "--titan-launcher-text": {
+        "layer": "semantic"
+      },
+      "--titan-launcher-divider": {
+        "layer": "semantic"
+      },
+      "--titan-color-blue-120": {
+        "label": "Blue 120",
+        "layer": "primitive",
+        "colorFamily": "Blue",
+        "colorOrder": 922
+      },
+      "--titan-color-blue-150": {
+        "label": "Blue 150",
+        "layer": "primitive",
+        "colorFamily": "Blue",
+        "colorOrder": 1745
+      },
+      "--titan-color-blue-180": {
+        "label": "Blue 180",
+        "layer": "primitive",
+        "colorFamily": "Blue",
+        "colorOrder": 2784
+      },
+      "--titan-color-blue-200": {
+        "label": "Blue 200",
+        "layer": "primitive",
+        "colorFamily": "Blue",
+        "colorOrder": 3314
+      },
+      "--titan-color-blue-300": {
+        "label": "Blue 300",
+        "layer": "primitive",
+        "colorFamily": "Blue",
+        "colorOrder": 3490
+      },
+      "--titan-color-blue-350": {
+        "label": "Blue 350",
+        "layer": "primitive",
+        "colorFamily": "Blue",
+        "colorOrder": 4373
+      },
+      "--titan-color-blue-400-primary": {
+        "label": "Blue 400 Primary",
+        "layer": "primitive",
+        "colorFamily": "Blue",
+        "colorOrder": 4569
+      },
+      "--titan-color-blue-500": {
+        "label": "Blue 500",
+        "layer": "primitive",
+        "colorFamily": "Blue",
+        "colorOrder": 5353
+      },
+      "--titan-color-blue-600": {
+        "label": "Blue 600",
+        "layer": "primitive",
+        "colorFamily": "Blue",
+        "colorOrder": 6608
+      },
+      "--titan-color-green-100": {
+        "label": "Green 100",
+        "layer": "primitive",
+        "colorFamily": "Cyan",
+        "colorOrder": 5784
+      },
+      "--titan-color-green-150": {
+        "label": "Green 150",
+        "layer": "primitive",
+        "colorFamily": "Green",
+        "colorOrder": 5922
+      },
+      "--titan-color-green-200": {
+        "label": "Green 200",
+        "layer": "primitive",
+        "colorFamily": "Cyan",
+        "colorOrder": 7627
+      },
+      "--titan-color-green-50": {
+        "label": "Green 50",
+        "layer": "primitive",
+        "colorFamily": "Green",
+        "colorOrder": 294
+      },
+      "--titan-color-grey-400": {
+        "label": "Grey 400",
+        "layer": "primitive",
+        "colorFamily": "Neutrals",
+        "colorOrder": 157
+      },
+      "--titan-color-grey-450": {
+        "label": "Grey 450",
+        "layer": "primitive",
+        "colorFamily": "Neutrals",
+        "colorOrder": 510
+      },
+      "--titan-color-grey-500": {
+        "label": "Grey 500",
+        "layer": "primitive",
+        "colorFamily": "Neutrals",
+        "colorOrder": 588
+      },
+      "--titan-color-grey-550": {
+        "label": "Grey 550",
+        "layer": "primitive",
+        "colorFamily": "Neutrals",
+        "colorOrder": 1333
+      },
+      "--titan-color-grey-600": {
+        "label": "Grey 600",
+        "layer": "primitive",
+        "colorFamily": "Neutrals",
+        "colorOrder": 1294
+      },
+      "--titan-color-grey-700": {
+        "label": "Grey 700",
+        "layer": "primitive",
+        "colorFamily": "Neutrals",
+        "colorOrder": 2588
+      },
+      "--titan-color-grey-750": {
+        "label": "Grey 750",
+        "layer": "primitive",
+        "colorFamily": "Neutrals",
+        "colorOrder": 3882
+      },
+      "--titan-color-grey-800": {
+        "label": "Grey 800",
+        "layer": "primitive",
+        "colorFamily": "Neutrals",
+        "colorOrder": 4667
+      },
+      "--titan-color-grey-810": {
+        "label": "Grey 810",
+        "layer": "primitive",
+        "colorFamily": "Neutrals",
+        "colorOrder": 5647
+      },
+      "--titan-color-grey-815": {
+        "label": "Grey 815",
+        "layer": "primitive",
+        "colorFamily": "Neutrals",
+        "colorOrder": 6000
+      },
+      "--titan-color-grey-820": {
+        "label": "Grey 820",
+        "layer": "primitive",
+        "colorFamily": "Neutrals",
+        "colorOrder": 7098
+      },
+      "--titan-color-grey-830": {
+        "label": "Grey 830",
+        "layer": "primitive",
+        "colorFamily": "Neutrals",
+        "colorOrder": 8235
+      },
+      "--titan-color-grey-850": {
+        "label": "Grey 850",
+        "layer": "primitive",
+        "colorFamily": "Neutrals",
+        "colorOrder": 8392
+      },
+      "--titan-color-grey-900": {
+        "label": "Grey 900",
+        "layer": "primitive",
+        "colorFamily": "Neutrals",
+        "colorOrder": 8000
+      },
+      "--titan-color-grey-910": {
+        "label": "Grey 910",
+        "layer": "primitive",
+        "colorFamily": "Neutrals",
+        "colorOrder": 7843
+      },
+      "--titan-color-grey-950": {
+        "label": "Grey 950",
+        "layer": "primitive",
+        "colorFamily": "Neutrals",
+        "colorOrder": 8765
+      },
+      "--titan-color-grey-965": {
+        "label": "Grey 965",
+        "layer": "primitive",
+        "colorFamily": "Neutrals",
+        "colorOrder": 8980
+      },
+      "--titan-color-grey-980": {
+        "label": "Grey 980",
+        "layer": "primitive",
+        "colorFamily": "Neutrals",
+        "colorOrder": 9216
+      },
+      "--titan-color-grey-990": {
+        "label": "Grey 990",
+        "layer": "primitive",
+        "colorFamily": "Neutrals",
+        "colorOrder": 9410
+      },
+      "--titan-color-grey-black": {
+        "label": "Grey Black",
+        "layer": "primitive",
+        "colorFamily": "Neutrals",
+        "colorOrder": 10000
+      },
+      "--titan-color-grey-white": {
+        "label": "Grey White",
+        "layer": "primitive",
+        "colorFamily": "Neutrals",
+        "colorOrder": 0
+      },
+      "--titan-color-pink-100": {
+        "label": "Pink 100",
+        "layer": "primitive",
+        "colorFamily": "Pink",
+        "colorOrder": 3000
+      },
+      "--titan-color-pink-200": {
+        "label": "Pink 200",
+        "layer": "primitive",
+        "colorFamily": "Pink",
+        "colorOrder": 4725
+      },
+      "--titan-color-purple-100": {
+        "label": "Purple 100",
+        "layer": "primitive",
+        "colorFamily": "Purple",
+        "colorOrder": 373
+      },
+      "--titan-color-purple-200": {
+        "label": "Purple 200",
+        "layer": "primitive",
+        "colorFamily": "Purple",
+        "colorOrder": 5000
+      },
+      "--titan-color-red-100": {
+        "label": "Red 100",
+        "layer": "primitive",
+        "colorFamily": "Red",
+        "colorOrder": 2392
+      },
+      "--titan-color-red-900": {
+        "label": "Red 900",
+        "layer": "primitive",
+        "colorFamily": "Orange",
+        "colorOrder": 4431
+      },
+      "--titan-color-violet-700": {
+        "label": "Violet 700",
+        "layer": "primitive",
+        "colorFamily": "Purple",
+        "colorOrder": 6353
+      },
+      "--titan-color-violet-720": {
+        "label": "Violet 720",
+        "layer": "primitive",
+        "colorFamily": "Purple",
+        "colorOrder": 6843
+      },
+      "--titan-color-violet-750": {
+        "label": "Violet 750",
+        "layer": "primitive",
+        "colorFamily": "Purple",
+        "colorOrder": 7569
+      },
+      "--titan-color-violet-800": {
+        "label": "Violet 800",
+        "layer": "primitive",
+        "colorFamily": "Purple",
+        "colorOrder": 7647
+      },
+      "--titan-color-violet-900": {
+        "label": "Violet 900",
+        "layer": "primitive",
+        "colorFamily": "Purple",
+        "colorOrder": 8098
+      },
+      "--titan-color-yellow-100": {
+        "label": "Yellow 100",
+        "layer": "primitive",
+        "colorFamily": "Orange",
+        "colorOrder": 3392
+      },
+      "--titan-color-yellow-200": {
+        "label": "Yellow 200",
+        "layer": "primitive",
+        "colorFamily": "Orange",
+        "colorOrder": 5980
+      },
+      "--titan-color-yellow-50-upgrade": {
+        "label": "Yellow 50 Upgrade",
+        "layer": "primitive",
+        "colorFamily": "Orange",
+        "colorOrder": 3157
+      },
+      "--titan-launcher-surface": {
+        "label": "App switcher surface",
+        "layer": "semantic"
+      },
+      "--titan-launcher-selected-surface": {
+        "label": "Selected app surface",
+        "layer": "semantic"
+      }
+    },
+    "textStyles": [
+      {
+        "id": "heading",
+        "name": "Heading",
+        "sample": "A little clarity goes a long way.",
+        "family": "--titan-font-system",
+        "size": "--titan-font-size-24",
+        "weight": "--titan-font-weight-semibold",
+        "semanticTokens": {
+          "family": "--titan-type-heading-family",
+          "size": "--titan-type-heading-size",
+          "weight": "--titan-type-heading-weight"
+        }
+      },
+      {
+        "id": "body",
+        "name": "Body",
+        "sample": "Keep the details easy to read. Give each thought room to breathe.",
+        "family": "--titan-font-system",
+        "size": "--titan-font-size-14",
+        "weight": "--titan-font-weight-regular",
+        "leading": "--titan-line-height-20",
+        "semanticTokens": {
+          "family": "--titan-type-body-family",
+          "size": "--titan-type-body-size",
+          "weight": "--titan-type-body-weight",
+          "leading": "--titan-type-body-line-height"
+        }
+      },
+      {
+        "id": "label",
+        "name": "Label",
+        "sample": "Your preferences",
+        "family": "--titan-font-system",
+        "size": "--titan-font-size-14",
+        "weight": "--titan-font-weight-medium",
+        "semanticTokens": {
+          "family": "--titan-type-label-family",
+          "size": "--titan-type-label-size",
+          "weight": "--titan-type-label-weight"
+        }
+      },
+      {
+        "id": "caption",
+        "name": "Caption",
+        "sample": "Updated a moment ago",
+        "family": "--titan-font-system",
+        "size": "--titan-font-size-12",
+        "weight": "--titan-font-weight-regular",
+        "semanticTokens": {
+          "family": "--titan-type-caption-family",
+          "size": "--titan-type-caption-size",
+          "weight": "--titan-type-caption-weight"
+        }
+      }
+    ],
+    "colorRoles": [
+      {
+        "token": "--titan-surface-base",
+        "kind": "surface",
+        "label": "Base surface"
+      },
+      {
+        "token": "--titan-text-primary",
+        "kind": "text",
+        "label": "Primary text",
+        "background": "--titan-surface-base"
+      },
+      {
+        "token": "--titan-text-strong",
+        "kind": "text",
+        "label": "Strong text",
+        "background": "--titan-surface-base"
+      },
+      {
+        "token": "--titan-text-secondary",
+        "kind": "text",
+        "label": "Secondary text",
+        "background": "--titan-surface-base"
+      },
+      {
+        "token": "--titan-text-muted",
+        "kind": "text",
+        "label": "Muted text",
+        "background": "--titan-surface-base"
+      },
+      {
+        "token": "--titan-text-inverse",
+        "kind": "text",
+        "label": "Inverse text",
+        "background": "--titan-surface-navigation"
+      },
+      {
+        "token": "--titan-action-primary",
+        "kind": "color",
+        "label": "Primary action"
+      },
+      {
+        "token": "--titan-text-link",
+        "kind": "link",
+        "label": "Link",
+        "background": "--titan-surface-base"
+      },
+      {
+        "token": "--titan-indicator-active",
+        "kind": "color",
+        "label": "Active indicator"
+      },
+      {
+        "token": "--titan-surface-selected",
+        "kind": "surface",
+        "label": "Selected surface"
+      },
+      {
+        "token": "--titan-surface-navigation",
+        "label": "Surface Navigation"
+      },
+      {
+        "token": "--titan-surface-reading",
+        "label": "Surface Reading"
+      },
+      {
+        "token": "--titan-surface-composer-header",
+        "label": "Surface Composer Header"
+      },
+      {
+        "token": "--titan-icon-button-pressed-surface",
+        "label": "Icon button pressed surface"
+      },
+      {
+        "token": "--reading-pane-bg",
+        "label": "Reading pane bg"
+      },
+      {
+        "token": "--border-color",
+        "label": "Border color"
+      },
+      {
+        "token": "--card-border-color",
+        "label": "Card border color"
+      },
+      {
+        "token": "--search-bg",
+        "label": "Search bg"
+      },
+      {
+        "token": "--hover-bg",
+        "label": "Hover bg"
+      },
+      {
+        "token": "--selected-bg-strong",
+        "label": "Selected bg strong"
+      },
+      {
+        "token": "--titan-surface-hover",
+        "label": "Surface hover"
+      },
+      {
+        "token": "--titan-surface-subtle",
+        "label": "Surface subtle"
+      },
+      {
+        "token": "--titan-divider-subtle",
+        "label": "Divider subtle"
+      },
+      {
+        "token": "--titan-scrollbar",
+        "label": "Scrollbar"
+      },
+      {
+        "token": "--titan-text-faint",
+        "label": "Text faint"
+      },
+      {
+        "token": "--titan-text-disabled",
+        "label": "Text disabled"
+      },
+      {
+        "token": "--titan-launcher-text",
+        "label": "Launcher text"
+      },
+      {
+        "token": "--titan-launcher-divider",
+        "label": "Launcher divider"
+      },
+      {
+        "token": "--titan-launcher-surface",
+        "label": "App switcher surface",
+        "kind": "surface"
+      },
+      {
+        "token": "--titan-launcher-selected-surface",
+        "label": "Selected app surface",
+        "kind": "surface"
+      }
+    ],
+    "spacingRoles": [
+      {
+        "token": "--titan-message-header-gap",
+        "primitive": "--titan-space-16",
+        "kind": "gap",
+        "label": "Message header gap",
+        "preview": "inline-text"
+      },
+      {
+        "token": "--titan-reading-pane-inset-inline",
+        "primitive": "--titan-space-24",
+        "kind": "inline",
+        "label": "Reading pane inset"
+      },
+      {
+        "token": "--titan-mail-row-inset-inline",
+        "primitive": "--titan-space-20",
+        "kind": "inline",
+        "label": "Mail row inset",
+        "textGap": "--titan-gap-text-tight"
+      },
+      {
+        "token": "--titan-message-inset-inline",
+        "primitive": "--titan-space-24",
+        "kind": "inline",
+        "label": "Message inset"
+      },
+      {
+        "token": "--titan-mail-row-inset-block",
+        "primitive": "--titan-space-16",
+        "kind": "block",
+        "label": "Mail row inset",
+        "textGap": "--titan-gap-text-tight"
+      },
+      {
+        "token": "--titan-mail-row-gap",
+        "primitive": "--titan-space-4",
+        "kind": "gap",
+        "label": "Mail row gap"
+      },
+      {
+        "token": "--titan-message-inset-block",
+        "primitive": "--titan-space-20",
+        "kind": "block",
+        "label": "Message inset"
+      },
+      {
+        "token": "--titan-gap-text-tight",
+        "primitive": "--titan-space-3",
+        "kind": "stack",
+        "label": "Text Tight",
+        "preview": "text-stack"
+      },
+      {
+        "token": "--titan-gap-icon-label",
+        "primitive": "--titan-space-8",
+        "kind": "gap",
+        "label": "Icon Label",
+        "preview": "icon-label"
+      },
+      {
+        "token": "--titan-gap-icon-label-compact",
+        "primitive": "--titan-space-4",
+        "kind": "gap",
+        "label": "Icon Label Compact",
+        "preview": "icon-label"
+      },
+      {
+        "token": "--titan-gap-actions-compact",
+        "primitive": "--titan-space-4",
+        "kind": "gap",
+        "label": "Actions Compact",
+        "preview": "actions"
+      },
+      {
+        "token": "--titan-card-inset",
+        "primitive": "--titan-space-16",
+        "kind": "inset",
+        "label": "Card inset"
+      },
+      {
+        "token": "--titan-composer-content-inset",
+        "primitive": "--titan-space-16",
+        "label": "Composer content inset",
+        "kind": "inline"
+      }
+    ],
+    "radiusRoles": [
+      {
+        "token": "--card-border-radius",
+        "primitive": "--titan-radius-4",
+        "kind": "radius",
+        "label": "Card"
+      },
+      {
+        "token": "--compose-border-radius",
+        "primitive": "--titan-radius-6",
+        "kind": "radius",
+        "label": "Compose"
+      },
+      {
+        "token": "--search-border-radius",
+        "primitive": "--titan-radius-6",
+        "kind": "radius",
+        "label": "Search"
+      }
+    ],
+    "strokeRoles": [
+      {
+        "token": "--titan-border-width-default",
+        "primitive": "--titan-stroke-1",
+        "label": "Default border"
+      },
+      {
+        "token": "--titan-divider-width-default",
+        "primitive": "--titan-stroke-1",
+        "label": "Default divider"
+      },
+      {
+        "token": "--titan-focus-ring-width",
+        "primitive": "--titan-stroke-2",
+        "label": "Focus ring"
+      },
+      {
+        "token": "--titan-split-divider-width",
+        "primitive": "--titan-stroke-1-5",
+        "label": "Split-button divider"
+      },
+      {
+        "token": "--titan-composer-field-divider-width",
+        "primitive": "--titan-stroke-2",
+        "label": "Composer field divider"
+      }
+    ],
+    "elevationRoles": [
+      {
+        "token": "--titan-elevation-compact-action",
+        "label": "Compact action",
+        "kind": "box-shadow",
+        "description": "Level 1. Compact action surfaces. Observed on Message row action pills, paired with a subtle border.",
+        "primitive": "--titan-shadow-down-small",
+        "border": "--titan-elevation-compact-action-border",
+        "class": "titan-elevation-compact-action",
+        "level": "--titan-elevation-1-shadow"
+      },
+      {
+        "token": "--titan-elevation-stacked-surface",
+        "label": "Stacked surface",
+        "kind": "box-shadow",
+        "description": "Level 1. Overlapping surfaces in a stack. Observed on collapsed thread cards, paired with a border.",
+        "primitive": "--titan-shadow-down-small",
+        "border": "--titan-elevation-stacked-surface-border",
+        "class": "titan-elevation-stacked-surface",
+        "level": "--titan-elevation-1-shadow"
+      },
+      {
+        "token": "--titan-elevation-floating-badge",
+        "label": "Floating badge",
+        "kind": "box-shadow",
+        "description": "Level 2. Small badges floating above content. Observed on the thread count pill, paired with a border.",
+        "primitive": "--titan-shadow-down-medium",
+        "border": "--titan-elevation-floating-badge-border",
+        "class": "titan-elevation-floating-badge",
+        "level": "--titan-elevation-2-shadow"
+      },
+      {
+        "token": "--titan-elevation-floating-badge-hover",
+        "label": "Floating badge hover",
+        "kind": "box-shadow",
+        "description": "Level 3. Hover treatment for floating badges. Observed on the thread count pill with its hover border.",
+        "primitive": "--titan-shadow-raised",
+        "border": "--titan-elevation-floating-badge-hover-border",
+        "class": "titan-elevation-floating-badge-hover",
+        "level": "--titan-elevation-3-shadow"
+      },
+      {
+        "token": "--titan-elevation-popover",
+        "label": "Popover",
+        "kind": "drop-shadow",
+        "description": "Level 3 depth rendered as a shape-following drop shadow. The exported surface owns its edge artwork.",
+        "primitive": "--titan-shadow-raised",
+        "class": "titan-elevation-popover",
+        "level": "--titan-elevation-3-shadow"
+      },
+      {
+        "token": "--titan-elevation-bottom-panel",
+        "label": "Bottom panel",
+        "kind": "box-shadow",
+        "placement": "bottom",
+        "description": "Level 3, bottom-docked: upward shadow with an edge border.",
+        "primitive": "--titan-shadow-bottom-3",
+        "class": "titan-elevation-bottom-panel",
+        "level": "--titan-elevation-3-shadow",
+        "border": "--titan-elevation-bottom-panel-border"
+      },
+      {
+        "token": "--titan-elevation-tooltip",
+        "label": "Tooltip",
+        "kind": "box-shadow",
+        "description": "Level 4. Short contextual hints. Observed on the dark sidebar tooltip surface.",
+        "primitive": "--titan-shadow-floating",
+        "class": "titan-elevation-tooltip",
+        "level": "--titan-elevation-4-shadow",
+        "border": "--titan-elevation-tooltip-border"
+      },
+      {
+        "token": "--titan-elevation-side-panel",
+        "label": "Side panel",
+        "kind": "box-shadow",
+        "placement": "right",
+        "description": "Level 4, right-docked: highest panel elevation, above the Level 3 bottom/composer panel. Leftward shadow with a leading edge border.",
+        "primitive": "--titan-shadow-side-4",
+        "class": "titan-elevation-side-panel",
+        "level": "--titan-elevation-4-shadow",
+        "border": "--titan-elevation-side-panel-border"
+      }
+    ],
+    "elevationLevels": [
+      {
+        "label": "Level 0 \u00b7 Flat",
+        "token": "--titan-elevation-0-shadow",
+        "border": "--titan-elevation-0-border",
+        "primitive": "--titan-shadow-none",
+        "class": "titan-elevation-0"
+      },
+      {
+        "label": "Level 1 \u00b7 Resting surface",
+        "token": "--titan-elevation-1-shadow",
+        "border": "--titan-elevation-1-border",
+        "primitive": "--titan-shadow-down-small",
+        "class": "titan-elevation-1"
+      },
+      {
+        "label": "Level 2 \u00b7 Raised control",
+        "token": "--titan-elevation-2-shadow",
+        "border": "--titan-elevation-2-border",
+        "primitive": "--titan-shadow-down-medium",
+        "class": "titan-elevation-2"
+      },
+      {
+        "label": "Level 3 \u00b7 Floating surface",
+        "token": "--titan-elevation-3-shadow",
+        "border": "--titan-elevation-3-border",
+        "primitive": "--titan-shadow-raised",
+        "class": "titan-elevation-3"
+      },
+      {
+        "label": "Level 4 \u00b7 Prominent overlay",
+        "token": "--titan-elevation-4-shadow",
+        "border": "--titan-elevation-4-border",
+        "primitive": "--titan-shadow-floating",
+        "class": "titan-elevation-4"
+      }
+    ]
+  },
+  "presentation": {
+    "hiddenSections": [
+      "visualizations"
+    ]
+  }
+}

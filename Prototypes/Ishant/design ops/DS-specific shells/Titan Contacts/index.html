@@ -6,7 +6,8 @@
 <title>Titan Contacts</title>
 <script>
 const dsBase=location.pathname.startsWith('/app/')?'/design-system/':'../../../../../design-system/';
-for(const file of ['tokens.css','components/actions.css','components/navigation-input.css','components/selection.css','components/sidebar-header.css','components/avatar.css','components/data-list.css','icons/icons.css'])document.write('<link rel="stylesheet" href="'+dsBase+file+'">');
+for(const file of ['tokens.css','components/actions.css','components/navigation-input.css','components/selection.css','components/sidebar-header.css','patterns/app-switcher.css','components/avatar.css','components/data-list.css','icons/icons.css'])document.write('<link rel="stylesheet" href="'+dsBase+file+'">');
+document.write('<script src="'+dsBase+'theme.js"><\/script>');
 </script>
 <link rel="stylesheet" href="contacts.css">
 </head>
@@ -55,7 +56,7 @@ for(const file of ['tokens.css','components/actions.css','components/navigation-
 </div>
 
 <script>
-for(const file of ['icons/runtime.js','components/actions.js','components/navigation-input.js','components/selection.js','components/app-switcher.js','app-switcher-config.js','components/sidebar-header.js','components/avatar.js','components/data-list.js'])document.write('<script src="'+dsBase+file+'"><\/script>');
+for(const file of ['icons/runtime.js','components/actions.js','components/navigation-input.js','components/selection.js','components/app-switcher.js','patterns/app-switcher.js','app-switcher-config.js','components/sidebar-header.js','components/avatar.js','components/data-list.js'])document.write('<script src="'+dsBase+file+'"><\/script>');
 </script>
 <script src="contacts.js"></script>
 <script>

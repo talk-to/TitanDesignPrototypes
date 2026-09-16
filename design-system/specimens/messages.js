@@ -1,0 +1,15 @@
+(()=>{
+ const params=new URLSearchParams(location.search),gallery=params.get('gallery')==='1',part=params.get('part')||'message-list';
+ if(gallery)document.body.dataset.gallery='true';
+ const host=document.getElementById('examples');
+ const messages=[{id:'alex',sender:'Alex Morgan',subject:'Project roadmap',preview:'Here are the updates for our next release.',time:'10:30 AM',unread:true,selected:true},{id:'sam',sender:'Sam Rivera',subject:'Design review',preview:'Thanks for sharing the latest direction.',time:'Yesterday',starred:true}];
+
+ const received={id:'alex',sender:'Alex Morgan',initials:'AM',recipients:'To: you, Sam',time:'Jun 12',preview:'Here are the updates for our next release.',paragraphs:['Hi team,','Here are the updates for our next release. Let’s review the roadmap together on Monday.','Thanks!'],headerActions:[{id:'reply',label:'Reply',icon:'reply'}],actions:[{id:'reply',label:'Reply',icon:'reply'},{id:'reply-all',label:'Reply all',icon:'reply-all'},{id:'forward',label:'Forward',icon:'forward'}]};
+ const result=document.createElement('p');result.id='result';result.setAttribute('role','status');
+ const handlers={open:id=>{host.querySelectorAll('.titan-message-row').forEach(row=>{const selected=row.dataset.messageId===id;row.classList.toggle('selected',selected);const button=row.querySelector('[data-message-action="open"]');if(selected)button.setAttribute('aria-current','true');else button.removeAttribute('aria-current');});result.textContent='Message selected';},check:(id,checked)=>result.textContent=checked?'Message checked':'Message unchecked',star:(id,starred)=>result.textContent=starred?'Message starred':'Star removed',reply:()=>result.textContent='Reply selected','reply-all':()=>result.textContent='Reply all selected',forward:()=>result.textContent='Forward selected'};
+ function example(label,kind,options){const section=document.createElement('section');section.className='example '+kind;section.dataset.variant=options.variant||'stacked';const heading=document.createElement('p');heading.className='caption';heading.textContent=label;const mount=document.createElement('div');mount.className='mount';section.append(heading,mount);host.append(section);TitanMessages.mount(mount,kind,options,{...handlers,expand:()=>{mount.innerHTML=TitanMessages.card(received);result.textContent='Message opened';}});}
+ if(part==='message-row'){example('Stacked','row',messages[0]);example('Single line','row',{...messages[0],variant:'wide'});}
+ else if(part==='message-list'){example('Stacked','list',{messages});example('Single line','list',{messages,variant:'wide'});}
+ else{example('Collapsed','card',{...received,variant:'collapsed'});example('Expanded','card',received);}
+ host.append(result);
+})();

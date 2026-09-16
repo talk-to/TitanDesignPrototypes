@@ -1,0 +1,63 @@
+/* Account header owns the chevron, external identity gap and email truncation.
+   Nested Avatar uses its registered small variant without consumer overrides. */
+.titan-account-header {
+  --titan-account-header-chevron-box: 24px;
+  --titan-account-header-chevron-size: var(--titan-icon-size-indicator);
+  display: flex;
+  width: 100%;
+  min-width: 0;
+  align-items: center;
+  padding-top: var(--titan-account-header-inset-block);
+  padding-bottom: var(--titan-account-header-inset-block);
+  padding-left: 0;
+  padding-right: var(--titan-space-8);
+  border: 0;
+  background: transparent;
+  color: var(--titan-text-inverse);
+  font-family: var(--titan-font-family-ui);
+  text-align: left;
+  cursor: pointer;
+}
+
+.titan-account-header:disabled { cursor: default; opacity: .5; }
+
+.titan-account-header__chevron {
+  display: flex;
+  width: var(--titan-account-header-chevron-box);
+  height: var(--titan-account-header-chevron-box);
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.titan-account-header__chevron > svg,
+.titan-account-header__chevron > img {
+  display: block;
+  width: var(--titan-account-header-chevron-size);
+  height: var(--titan-account-header-chevron-size);
+  transition: transform .15s;
+}
+.titan-account-header[aria-expanded="false"] .titan-account-header__chevron > svg,
+.titan-account-header[aria-expanded="false"] .titan-account-header__chevron > img { transform: rotate(-90deg); }
+
+.titan-account-header__identity {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  align-items: center;
+  gap: var(--titan-gap-icon-label);
+}
+
+.titan-account-header__avatar {
+  display: flex;
+  flex-shrink: 0;
+}
+.titan-account-header__email {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  color: var(--titan-text-inverse);
+  font-size: var(--titan-type-control-compact-size);
+  font-weight: var(--titan-font-weight-semibold);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

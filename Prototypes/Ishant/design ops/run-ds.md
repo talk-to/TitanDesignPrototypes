@@ -3,6 +3,7 @@
 Start here for Titan design-system work. The shared DS content lives at the
 workspace root in `design-system/`, not in the studio folder beside this file.
 
+- [Component registration contract](../../../design-system/COMPONENT-REGISTRATION.md) — authoritative component boundaries, state categories and preview rules.
 - [Using the design system](../../../design-system/USAGE.md) — how to reuse tokens, components and icons.
 - [Agent instructions](../../../design-system/AGENTS.md) — required workflow and further reading.
 - [Component catalog](../../../design-system/registry.json) — registered definitions and source paths.
@@ -14,6 +15,13 @@ Referencing this file or saying “run DS” in this workspace instructs the age
 follow the Titan design system for the current task and subsequent related screen
 work in this conversation. No additional “follow the DS” prompt is required.
 
+- Mandatory, overriding everything below: never create, edit or delete anything under the
+  workspace-root `design-system/` folder unless the user explicitly asks for a design-system
+  change in that message. Following the DS means consuming its tokens, components and icons,
+  never editing them. If a fix seems to belong in the DS, stop and ask first, naming the file
+  and the change; questions are welcome, silent DS edits are not. Solve it in the prototype's
+  own screen-owned code instead, and say plainly in the report whether `design-system/` was
+  touched at all.
 - Read and follow the linked shared AGENTS.md and USAGE.md. Use their current
   change-specific checklist; do not reread unchanged instructions already loaded.
 - Mandatory: inspect existing components and variants for the whole and its parts
@@ -76,6 +84,6 @@ files so this entry point does not become a second checklist.
 - `DS-specific shells/` — shells connected to the shared DS.
 - `design-system-recovery/` — recovery material.
 
-The root `design-system/` folder is currently gitignored. These links point to local
-files; they do not copy or track that content. A fresh clone needs the shared content
-restored before the links can work. Keep instructions at their source to avoid drift.
+The root `design-system/` folder is tracked on the `Titan-design-system` branch.
+Studio is a separate submodule. For theme/color work, read the shared
+[theme contract](../../../design-system/THEMES.md). Keep instructions at their source to avoid drift.

@@ -1,0 +1,16 @@
+/* SVG viewBox remains 0 0 24 24. These are CSS display sizes, not hit areas. */
+:root {
+  --titan-icon-size-12: 12px;
+  --titan-icon-size-16: 16px;
+  --titan-icon-size-18: 18px;
+  --titan-icon-size-20: 20px;
+  --titan-icon-size-24: 24px;
+  --titan-icon-size-indicator: var(--titan-icon-size-12);
+  --titan-icon-size-compact: var(--titan-icon-size-16);
+  --titan-icon-size-window: var(--titan-icon-size-18);
+  --titan-icon-size-sidebar: var(--titan-icon-size-18);
+  --titan-icon-size-message-status: var(--titan-icon-size-18);
+  --titan-icon-size-action: var(--titan-icon-size-20);
+  --titan-icon-size-action-large: var(--titan-icon-size-24);
+  --titan-icon-size-supporting: var(--titan-icon-size-24);
+}

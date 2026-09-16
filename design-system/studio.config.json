@@ -1,0 +1,10 @@
+{
+  "configVersion": 1,
+  "contractVersion": 1,
+  "name": "Titan",
+  "appRoot": "..",
+  "content": ".",
+  "studioRoot": "../Prototypes/Ishant/design ops/design system",
+  "defaultProfile": "project",
+  "port": 8031
+}

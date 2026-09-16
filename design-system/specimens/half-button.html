@@ -1,0 +1,19 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Titan half button</title><link rel="stylesheet" href="../components/actions.css"><style>
+*{box-sizing:border-box}body{margin:0;padding:20px;font-family:var(--titan-font-family-ui);background:var(--titan-surface-base);color:var(--titan-text-primary)}
+main{display:grid;gap:22px;max-width:520px;margin-inline:auto;justify-items:start}
+.caption{margin:0 0 10px;font:500 10px/1.5 var(--titan-font-family-ui);letter-spacing:.05em;text-transform:uppercase;color:var(--titan-text-muted)}
+</style><link rel="stylesheet" href="gallery.css"><script src="../theme.js"></script></head><body><main id="examples"></main><script src="../icons/runtime.js"></script><script src="../components/actions.js"></script><script>
+(()=>{
+ const host=document.getElementById('examples');
+ if(new URLSearchParams(location.search).get('gallery')==='1')document.body.dataset.gallery='true';
+ function example(caption,options){const section=document.createElement('section');const label=document.createElement('p');label.className='caption';label.textContent=caption;const mount=document.createElement('div');mount.innerHTML=TitanActions.halfButton(options);section.append(label,mount);host.append(section);}
+ example('Icon and text · Left',{side:'left',label:'New email',icon:'compose'});
+ example('Text only · Left',{side:'left',label:'New email'});
+ example('Icon only · Left',{side:'left',label:'New email',icon:'compose',labelHidden:true});
+ example('Text and icon · Right',{side:'right',label:'More email actions',icon:'chevron-down',iconColor:'currentColor',haspopup:'menu'});
+ example('Text only · Right',{side:'right',label:'More email actions'});
+ example('Icon only · Right',{side:'right',label:'More email actions',labelHidden:true,icon:'chevron-down',iconColor:'currentColor',haspopup:'menu'});
+ example('Composer · Left',{side:'left',label:'Send',size:'composer'});
+ example('Composer · Right',{side:'right',label:'Send options',labelHidden:true,icon:'chevron-down',iconColor:'currentColor',haspopup:'menu',size:'composer'});
+})();
+</script><script src="gallery.js"></script></body></html>

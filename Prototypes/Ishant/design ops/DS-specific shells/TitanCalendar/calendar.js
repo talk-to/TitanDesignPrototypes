@@ -25,8 +25,8 @@ for(const [id,label,icon] of [['previous-week','Previous week','next-arrow'],['n
  if(id.startsWith('previous'))$(id).classList.add('previous');
 }
 $('view-picker').innerHTML=TitanSelection.dropdown({label:'Week'});
-$('sidebar-header-host').outerHTML=TitanSidebarHeader.render({appSwitcher:TitanAppSwitcherOptions('calendar'),logo:'../TitanEmailShell/assets/fa36f613-977c-444a-bef5-e1b5f5f1b340.svg'});
-TitanSidebarHeader.bind(document.querySelector('.titan-sidebar-header'));
+$('sidebar-header-host').outerHTML=TitanSidebarHeader.render({trigger:TitanAppSwitcherPattern.render(TitanAppSwitcherOptions('calendar')),logo:'../TitanEmailShell/assets/fa36f613-977c-444a-bef5-e1b5f5f1b340.svg'});
+TitanAppSwitcherPattern.bind(document.querySelector('.titan-sidebar-header'));
 $('calendar-checkbox').innerHTML=TitanSelection.checkbox({label:'ishant@titan.email calendar',checked:true});
 $('calendar-checkbox').setAttribute('inert','');
 render();
