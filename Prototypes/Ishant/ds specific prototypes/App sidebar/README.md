@@ -42,9 +42,9 @@ Previously visited frames are not reloaded, so in-shell state survives app switc
 - App switching uses a 180ms directional exit and 260ms directional entrance around
   the existing loading state. Future sidebar variations remain prototype-local and
   will be exposed through a showcase panel rather than registered in the DS.
-- The showcase panel uses one dropdown to switch between the prototype variations.
+- The showcase panel separates Color (Grayscale, Colored top only or Colored top + bottom), Layout and App transition into independent dropdowns.
   Site is intentionally excluded from the sidebar app list.
-- Full color top + bottom keeps both the app icons and the four bottom product-tool
+- Colored top + bottom keeps both the app icons and the four bottom product-tool
   icons colored at rest, with their colored containers persistently visible.
 - The Centered + more variation vertically centers the app stack, keeps Settings at
   the rail bottom, and moves the four product tools into a dark listbox opened by a
@@ -75,3 +75,23 @@ shell fades and blurs over 220ms with `cubic-bezier(.8, 0, .9, .9)`; a blank 360
 loading interval follows; then the incoming shell arrives over 320ms with
 `cubic-bezier(.1, .1, .2, 1)`.
 Only the latest rapid selection is queued. Reduced-motion mode switches immediately.
+
+
+### Top + labels
+
+Choose **Top + labels** in the Layout dropdown, or append
+`?layout=top-labels` to the preview URL. This local variation uses a 72px rail
+with app names beneath the seven top app icons. Each 56px-wide app slot keeps
+its existing 40px icon control, with a 4px label gap and local 10px labels (an explicit prototype-only size).
+Labeled apps suppress hover and focus tooltips. Bottom tools retain their icon-only arrangement and tooltips. Labels also activate their app;
+keyboard focus and accessible names remain on the existing icon buttons.
+
+
+Color, layout and transition can be combined in preview URLs, for example
+`?color=colored&layout=top-labels&transition=slide-skeleton`. Layout options are
+Top, Top + labels, Top + more and Centered + more. Colored top + bottom applies to both top apps
+and bottom product tools; Colored top only (`color=colored-top`) keeps the bottom
+product tools grayscale at rest. Existing `sidebar=` preview links remain supported.
+
+More apps popup icons use local 20px colored containers, with 16px artwork for
+Signature Designer and Smart Write AI and 14px artwork for the other tools.

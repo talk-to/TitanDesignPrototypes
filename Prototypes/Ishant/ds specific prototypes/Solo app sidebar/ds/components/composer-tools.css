@@ -1,4 +1,0 @@
-@import '../tokens.css';
-@import './actions.css';
-.titan-composer-tools{box-sizing:border-box;display:flex;align-items:center;gap:var(--titan-space-8);padding:var(--titan-space-8) var(--titan-space-16);overflow-x:auto;flex-shrink:0;border-bottom:var(--titan-divider-width-default) solid var(--titan-divider-subtle);background:var(--titan-surface-base)}
-.titan-composer-command{display:inline-flex;flex:none}

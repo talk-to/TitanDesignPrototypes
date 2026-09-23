@@ -1,5 +1,0 @@
-@import '../components/app-switcher.css';
-@import '../components/selection.css';
-.titan-app-switcher{position:relative;width:max-content;flex:none}
-.titan-app-switcher__popover[hidden]{display:none}
-.titan-app-switcher__popover{position:absolute;top:100%;left:-4px;margin-top:var(--titan-space-8);width:280px;z-index:1000}

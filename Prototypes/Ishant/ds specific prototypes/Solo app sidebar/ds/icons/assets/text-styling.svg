@@ -1,7 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" fill="none" width="24" height="24" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet">
-<g id="titan-artwork" transform="translate(12 12) scale(0.900000) translate(-12 -12)" fill="none"><g transform="translate(2.000000 2.000000) scale(1.333333)">
-              <g id="Group">
-                <path id="Subtract" d="M13 0C14.1046 0 15 0.89543 15 2V13C15 14.1046 14.1046 15 13 15H2C0.89543 15 0 14.1046 0 13V2C0 0.89543 0.89543 0 2 0H13ZM6.44727 3.21484L3.47168 11.7861H5.26953L5.92969 9.74316H8.94141L9.58984 11.7861H11.5322L8.55664 3.21484H6.44727ZM7.39062 4.99707H7.49805L8.56055 8.3584H6.31543L7.39062 4.99609V4.99707Z" fill="var(--titan-icon-color, #888888)" />
-              </g>
-            </g>
-</g></svg>
