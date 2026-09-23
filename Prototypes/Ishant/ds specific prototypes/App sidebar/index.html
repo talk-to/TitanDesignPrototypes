@@ -8,6 +8,21 @@
   <link rel="stylesheet" href="../../../../design-system/components/actions.css">
   <link rel="stylesheet" href="../../../../design-system/icons/icons.css">
   <link rel="stylesheet" href="app-sidebar.css">
+  <style>
+    .app-rail__apps .app-rail-icon-button--local > img,
+    .app-rail__apps .app-rail-icon-button--local > svg {
+      transition: filter 120ms ease, opacity 120ms ease, width 160ms ease, height 160ms ease;
+    }
+    body[data-sidebar-icon-size="scaled"] .app-rail__apps .app-rail-icon-button--local > img,
+    body[data-sidebar-icon-size="scaled"] .app-rail__apps .app-rail-icon-button--local > svg {
+      width: 24px;
+      height: 24px;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .app-rail__apps .app-rail-icon-button--local > img,
+      .app-rail__apps .app-rail-icon-button--local > svg { transition: none; }
+    }
+  </style>
   <script src="../../../../design-system/theme.js"></script>
 </head>
 <body>
@@ -40,12 +55,26 @@
         <option value="skeleton">Instant + skeleton</option>
         <option value="instant">Instant + loader</option>
       </select>
+      <label class="sidebar-variant-panel__label" for="sidebar-icon-size-select">Size</label>
+      <select id="sidebar-icon-size-select" aria-label="App icon size">
+        <option value="normal">Normal</option>
+        <option value="scaled">Scaled</option>
+      </select>
     </aside>
     <p class="sr-only" id="app-announcement" aria-live="polite"></p>
   </main>
   <script src="../../../../design-system/icons/runtime.js"></script>
   <script src="../../../../design-system/components/actions.js"></script>
   <script src="app-sidebar.js"></script>
+  <script>
+    (() => {
+      const sizeSelect = document.getElementById('sidebar-icon-size-select');
+      const initialSize = new URLSearchParams(location.search).get('icon-size') === 'scaled' ? 'scaled' : 'normal';
+      document.body.dataset.sidebarIconSize = initialSize;
+      sizeSelect.value = initialSize;
+      sizeSelect.addEventListener('change', () => { document.body.dataset.sidebarIconSize = sizeSelect.value; });
+    })();
+  </script>
   <script>
     (() => {
       if (new URLSearchParams(location.search).get('ds') !== 'true') return;
