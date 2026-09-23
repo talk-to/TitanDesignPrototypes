@@ -1,7 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" fill="none" width="24" height="24" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet">
-<g id="titan-artwork" transform="translate(12 12) scale(0.925000) translate(-12 -12)" fill="none"><g transform="translate(-2.723926 -2.723926) scale(1.226994)">
-  <rect x="3.87" y="3.96" width="7.089" height="9.258" rx="1" fill="var(--titan-icon-color, #888888)" />
-  <rect x="13.04" y="3.96" width="7.089" height="9.258" rx="1" fill="var(--titan-icon-color, #888888)" />
-  <rect x="3.87" y="15.04" width="16.265" height="4.996" rx="1" fill="var(--titan-icon-color, #888888)" />
-</g>
-</g></svg>

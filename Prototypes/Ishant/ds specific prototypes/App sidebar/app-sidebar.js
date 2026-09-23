@@ -28,10 +28,15 @@
   const theme = query.get('theme') === 'dark' ? 'dark' : 'light';
   const inspect = query.get('ds') === 'true';
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const variantSelect = document.getElementById('sidebar-variant-select');
+  const colorSelect = document.getElementById('sidebar-color-select');
+  const layoutSelect = document.getElementById('sidebar-layout-select');
   const transitionSelect = document.getElementById('app-transition-select');
-  const requestedVariant = query.get('sidebar');
-  const initialVariant = ['colored', 'colored-all', 'top-more', 'centered-more'].includes(requestedVariant) ? requestedVariant : 'grayscale';
+  // Keep older shared preview URLs working.
+  const legacyVariant = query.get('sidebar');
+  const requestedLayout = query.get('layout') || legacyVariant;
+  const initialLayout = ['top-labels', 'top-more', 'centered-more'].includes(requestedLayout) ? requestedLayout : 'top';
+  const requestedColor = query.get('color') || (legacyVariant === 'colored' ? 'colored-top' : legacyVariant === 'colored-all' ? 'colored' : 'grayscale');
+  const initialColor = ['colored-top', 'colored'].includes(requestedColor) ? requestedColor : 'grayscale';
   const requestedTransition = query.get('transition');
   const initialTransition = ['skeleton', 'slide-skeleton', 'instant'].includes(requestedTransition) ? requestedTransition : 'spinner';
   let transitionStyle = initialTransition;
@@ -42,14 +47,22 @@
   let tooltipItem = null;
   let tooltipHideTimer = 0;
 
-  function setSidebarVariant(variant) {
-    document.body.dataset.sidebarVariant = variant;
+  function setSidebarLayout(layout) {
+    document.body.dataset.sidebarLayout = layout;
     closeMoreApps();
-    variantSelect.value = variant;
+    hideTooltip();
+    layoutSelect.value = layout;
   }
 
-  setSidebarVariant(initialVariant);
-  variantSelect.addEventListener('change', () => setSidebarVariant(variantSelect.value));
+  function setSidebarColor(color) {
+    document.body.dataset.sidebarColor = color;
+    colorSelect.value = color;
+  }
+
+  setSidebarLayout(initialLayout);
+  setSidebarColor(initialColor);
+  layoutSelect.addEventListener('change', () => setSidebarLayout(layoutSelect.value));
+  colorSelect.addEventListener('change', () => setSidebarColor(colorSelect.value));
 
   function setTransitionStyle(style) {
     transitionStyle = style;
@@ -64,7 +77,7 @@
     const label = `${item.label}${current ? ', current app' : ''}`;
     return `<div class="app-rail__item" role="listitem" data-app="${item.id}" data-label="${item.label}" data-current="${current}">` +
       TitanActions.iconButton({ label, icon: item.icon, iconSize: 20, variant: 'dark' }) +
-      '</div>';
+      `<span class="app-rail__label" aria-hidden="true">${item.label}</span></div>`;
   }
 
   function prepareButton(button, className) {
@@ -107,7 +120,7 @@
   });
   moreAppsListbox.innerHTML = tools.map(tool =>
     `<button type="button" role="option" aria-selected="false" data-more-tool="${tool.id}" data-tool-tone="${tool.tone}">` +
-      `<span class="more-apps-listbox__icon" style="--more-app-icon-size:${tool.iconSize || 16}px">${TitanIcons.render(tool.icon)}</span>` +
+      `<span class="more-apps-listbox__icon" style="--more-app-icon-size:${tool.iconSize ? 16 : 14}px">${TitanIcons.render(tool.icon)}</span>` +
       `<span>${tool.label}</span>` +
     '</button>'
   ).join('');
@@ -177,6 +190,10 @@
 
   function showTooltip(item) {
     if (!item) return;
+    if (document.body.dataset.sidebarLayout === 'top-labels' && item.hasAttribute('data-app')) {
+      hideTooltip();
+      return;
+    }
     clearTimeout(tooltipHideTimer);
     tooltipItem?.querySelector('button')?.removeAttribute('aria-describedby');
     tooltipItem = item;
@@ -190,14 +207,17 @@
     item.querySelector('button')?.setAttribute('aria-describedby', tooltip.id);
   }
 
+  function hideTooltip() {
+    clearTimeout(tooltipHideTimer);
+    tooltip.removeAttribute('data-visible');
+    tooltipItem?.querySelector('button')?.removeAttribute('aria-describedby');
+    tooltipItem = null;
+    tooltip.hidden = true;
+  }
+
   function scheduleTooltipHide() {
     clearTimeout(tooltipHideTimer);
-    tooltipHideTimer = window.setTimeout(() => {
-      tooltip.removeAttribute('data-visible');
-      tooltipItem?.querySelector('button')?.removeAttribute('aria-describedby');
-      tooltipItem = null;
-      tooltip.hidden = true;
-    }, 140);
+    tooltipHideTimer = window.setTimeout(hideTooltip, 140);
   }
 
   function animateButton(button) {
@@ -371,7 +391,7 @@
   });
 
   rail.addEventListener('keydown', event => {
-    const railButtons = [...rail.querySelectorAll('button')];
+    const railButtons = [...rail.querySelectorAll('button')].filter(button => button.getClientRects().length);
     const currentIndex = railButtons.indexOf(document.activeElement);
     if (currentIndex < 0) return;
     let nextIndex;

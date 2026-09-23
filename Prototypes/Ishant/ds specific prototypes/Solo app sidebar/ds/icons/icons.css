@@ -1,3 +1,0 @@
-@import "../tokens.css";
-/* A monochrome shared SVG fragment inherits the surrounding text color. */
-.titan-icon{width:var(--titan-icon-size,var(--titan-icon-size-24));height:var(--titan-icon-size,var(--titan-icon-size-24));display:inline-block;flex-shrink:0;--titan-icon-color:currentColor}

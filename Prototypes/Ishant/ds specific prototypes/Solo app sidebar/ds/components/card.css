@@ -1,2 +1,0 @@
-@import '../tokens.css';
-.titan-card{box-sizing:border-box;min-width:0;padding:var(--titan-card-inset);background:var(--titan-surface-base);color:var(--titan-text-primary);border:1px solid var(--card-border-color);border-radius:var(--card-border-radius);font-family:var(--titan-font-family-ui);overflow-wrap:anywhere}

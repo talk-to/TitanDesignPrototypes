@@ -1,7 +1,0 @@
-@import '../tokens.css';
-@import './actions.css';
-:root{--titan-composer-header-height:44px}
-.titan-composer-header{box-sizing:border-box;height:var(--titan-composer-header-height);flex-shrink:0;padding-inline:var(--titan-space-16);display:flex;align-items:center;background:var(--titan-surface-composer-header);font:var(--titan-type-control-size) var(--titan-font-family-ui)}
-.titan-composer-header__title{flex:1;min-width:0;text-align:left;border:0;padding:0;background:none;color:var(--titan-text-inverse);font:inherit;cursor:pointer;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.titan-composer-header__actions{display:flex;gap:var(--titan-space-8);flex:none}
-.titan-composer-command{display:inline-flex;flex:none}

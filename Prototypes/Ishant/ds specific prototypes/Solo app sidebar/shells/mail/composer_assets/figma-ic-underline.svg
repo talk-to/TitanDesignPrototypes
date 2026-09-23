@@ -1,8 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" fill="none" width="24" height="24" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet">
-<g id="titan-artwork" transform="translate(12 12) scale(0.900000) translate(-12 -12)" fill="none"><g transform="translate(4.000000 2.000000) scale(1.333333)">
-<g id="Vector">
-<path fill-rule="evenodd" clip-rule="evenodd" d="M2.96874 0V8.14479C2.96874 9.92152 4.12011 11.1529 6.1328 11.1529C8.15427 11.1529 9.30564 9.92152 9.30564 8.14479V0H11.2744V8.3207C11.2744 11.0737 9.31443 13 6.1328 13C2.95116 13 0.999997 11.0737 0.999997 8.3207V0H2.96874Z" fill="var(--titan-icon-color, #888888)" />
-<path d="M0 15V14H12V15H0Z" fill="var(--titan-icon-color, #888888)" />
-</g>
-</g>
-</g></svg>

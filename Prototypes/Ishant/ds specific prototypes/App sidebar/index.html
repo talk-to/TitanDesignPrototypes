@@ -20,16 +20,21 @@
     <div class="more-apps-listbox" id="more-apps-listbox" role="listbox" aria-label="More apps" hidden></div>
     <section class="app-views" id="app-views" aria-label="Current app"></section>
     <aside class="sidebar-variant-panel" aria-label="Sidebar variations">
-      <label class="sidebar-variant-panel__label" for="sidebar-variant-select">Sidebar style</label>
-      <select id="sidebar-variant-select" aria-label="Sidebar style">
+      <label class="sidebar-variant-panel__label" for="sidebar-color-select">Color</label>
+      <select id="sidebar-color-select" aria-label="Color">
         <option value="grayscale">Grayscale</option>
-        <option value="colored">Full color</option>
-        <option value="colored-all">Full color top + bottom</option>
+        <option value="colored-top">Colored top only</option>
+        <option value="colored">Colored top + bottom</option>
+      </select>
+      <label class="sidebar-variant-panel__label" for="sidebar-layout-select">Layout</label>
+      <select id="sidebar-layout-select" aria-label="Layout">
+        <option value="top">Top</option>
+        <option value="top-labels">Top + labels</option>
         <option value="top-more">Top + more</option>
         <option value="centered-more">Centered + more</option>
       </select>
-      <label class="sidebar-variant-panel__label" for="app-transition-select">App swap</label>
-      <select id="app-transition-select" aria-label="App swap transition">
+      <label class="sidebar-variant-panel__label" for="app-transition-select">App transition</label>
+      <select id="app-transition-select" aria-label="App transition">
         <option value="spinner">Slide + loader</option>
         <option value="slide-skeleton">Slide + skeleton</option>
         <option value="skeleton">Instant + skeleton</option>

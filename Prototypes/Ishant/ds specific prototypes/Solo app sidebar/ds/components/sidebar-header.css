@@ -1,7 +1,0 @@
-@import '../tokens.css';
-@import './selection.css';
-@import './app-switcher.css';
-/* Header owns placement; the nested Dropdown owns its control states and insets. */
-.titan-sidebar-header{--titan-sidebar-header-height:64px;--titan-sidebar-header-gap:11px;--titan-sidebar-header-logo-end:var(--titan-space-24);--titan-sidebar-header-logo-top:var(--titan-space-3);--titan-sidebar-header-logo-width:77px;--titan-sidebar-header-logo-height:20px;box-sizing:border-box;height:var(--titan-sidebar-header-height);display:flex;align-items:center;padding:0 var(--titan-space-12);gap:var(--titan-sidebar-header-gap);flex-shrink:0;background:var(--titan-surface-navigation);color:var(--titan-text-inverse);min-width:0}
-.titan-sidebar-header__logo{flex:1;min-width:0;display:flex;align-items:center;justify-content:center;padding-right:var(--titan-sidebar-header-logo-end);padding-top:var(--titan-sidebar-header-logo-top)}
-.titan-sidebar-header__logo img{display:block;width:var(--titan-sidebar-header-logo-width);height:var(--titan-sidebar-header-logo-height);max-width:100%;object-fit:contain}
