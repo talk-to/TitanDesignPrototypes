@@ -1,3 +1,7 @@
 [submodule "titan-design-studio"]
 	path = Prototypes/Ishant/design ops/design system
 	url = https://github.com/ishantperiwal/ds-starter.git
+
+[submodule "titan-workflow"]
+	path = titan-workflow
+	url = https://github.com/aahna-titan/titan-workflow.git
