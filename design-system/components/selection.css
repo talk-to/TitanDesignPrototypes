@@ -36,7 +36,7 @@
 /* Tab owns both visual treatments; Tabs only arranges its children. */
 .titan-tab{min-height:52px;font-family:var(--titan-font-family-ui)}
 .titan-tab:not([aria-selected=true]):hover::after{content:"";position:absolute;inset:0 var(--titan-selection-inset);border-radius:var(--titan-selection-radius);background:var(--titan-surface-hover);z-index:-1;pointer-events:none}
-.titan-tab--underline[aria-selected=true]::after{inset:auto 0 0;height:3px;border-radius:0;background:var(--titan-indicator-active)}
+.titan-tab--underline[aria-selected=true]::after{inset:auto 0 var(--titan-divider-width-default);height:3px;border-radius:0;background:var(--titan-indicator-active)}
 .titan-tab:focus-visible{outline:2px solid var(--titan-indicator-active);outline-offset:-2px}
 
 /* Selection grows from the center, without changing the tab's hit area. */
