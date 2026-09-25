@@ -10,6 +10,6 @@
  function example(label,kind,options){const section=document.createElement('section');section.className='example '+kind;section.dataset.variant=options.variant||'stacked';const heading=document.createElement('p');heading.className='caption';heading.textContent=label;const mount=document.createElement('div');mount.className='mount';section.append(heading,mount);host.append(section);TitanMessages.mount(mount,kind,options,{...handlers,expand:()=>{mount.innerHTML=TitanMessages.card(received);result.textContent='Message opened';}});}
  if(part==='message-row'){example('Stacked','row',messages[0]);example('Single line','row',{...messages[0],variant:'wide'});}
  else if(part==='message-list'){example('Stacked','list',{messages});example('Single line','list',{messages,variant:'wide'});}
- else{example('Collapsed','card',{...received,variant:'collapsed'});example('Expanded','card',received);}
+ else{example('Collapsed','card',{...received,variant:'collapsed'});example('Expanded','card',received);example('Expanded without footer','card',{...received,variant:'expanded',actions:[]});}
  host.append(result);
 })();

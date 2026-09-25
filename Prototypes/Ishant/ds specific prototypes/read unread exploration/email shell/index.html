@@ -17,7 +17,7 @@
     })();
   </script>
   <title>Inbox (367) - Mail</title>
-  <link rel="stylesheet" href="../../../../../design-system/tokens.css" onerror="this.onerror=null;this.href='../../../../../design-system/tokens.css'">
+  <link rel="stylesheet" href="../../../../../design-system/tokens.css" onerror="this.onerror=null;this.href='/design-system/tokens.css'">
   <style>
 
     * {
@@ -1553,28 +1553,7 @@
       gap: var(--titan-gap-actions-compact);
       flex: 1;
     }
-    .comp-delete-btn {
-      width: 32px;
-      height: 32px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 4px;
-      cursor: pointer;
-      border: none;
-      background: none;
-      flex-shrink: 0;
-      margin-left: auto;
-      padding: 0;
-    }
-    .comp-delete-btn:hover {
-      background: var(--hover-bg);
-    }
-    .comp-delete-btn img {
-      display: block;
-      width: 13.4px;
-      height: 16px;
-    }
+    #reply-discard-control { margin-left: auto; display: flex; }
 
     /* ── Settings Side Modal Drawer ── */
     .side-modal {
@@ -1824,14 +1803,14 @@
       display: none !important;
     }
   </style>
-  <link rel="stylesheet" href="../../../../../design-system/components/navigation-input.css" onerror="this.onerror=null;this.href='../../../../../design-system/components/navigation-input.css'">
-  <link rel="stylesheet" href="../../../../../design-system/components/messages.css" onerror="this.onerror=null;this.href='../../../../../design-system/components/messages.css'">
-  <link rel="stylesheet" href="../../../../../design-system/components/actions.css" onerror="this.onerror=null;this.href='../../../../../design-system/components/actions.css'">
-  <link rel="stylesheet" href="../../../../../design-system/components/avatar.css" onerror="this.onerror=null;this.href='../../../../../design-system/components/avatar.css'">
-  <link rel="stylesheet" href="../../../../../design-system/components/account-header.css" onerror="this.onerror=null;this.href='../../../../../design-system/components/account-header.css'">
-<link rel="stylesheet" href="../../../../../design-system/components/selection.css">
-<link rel="stylesheet" href="../../../../../design-system/components/sidebar-header.css">
-<script src="../../../../../design-system/theme.js" onerror="this.onerror=null;this.src='../../../../../design-system/theme.js'"></script></head>
+  <link rel="stylesheet" href="../../../../../design-system/components/navigation-input.css" onerror="this.onerror=null;this.href='/design-system/components/navigation-input.css'">
+  <link rel="stylesheet" href="../../../../../design-system/components/messages.css" onerror="this.onerror=null;this.href='/design-system/components/messages.css'">
+  <link rel="stylesheet" href="../../../../../design-system/components/actions.css" onerror="this.onerror=null;this.href='/design-system/components/actions.css'">
+  <link rel="stylesheet" href="../../../../../design-system/components/avatar.css" onerror="this.onerror=null;this.href='/design-system/components/avatar.css'">
+  <link rel="stylesheet" href="../../../../../design-system/components/account-header.css" onerror="this.onerror=null;this.href='/design-system/components/account-header.css'">
+<link rel="stylesheet" href="../../../../../design-system/components/selection.css" onerror="this.onerror=null;this.href='/design-system/components/selection.css'">
+<link rel="stylesheet" href="../../../../../design-system/components/sidebar-header.css" onerror="this.onerror=null;this.href='/design-system/components/sidebar-header.css'">
+<script>document.write('<script src="' + (location.pathname.startsWith('/app/') ? '/' : '../../../../../') + 'design-system/theme.js"><\/script>');</script></head>
 
 <body>
 
@@ -2335,7 +2314,7 @@
             </section>
 
             <!-- Reply Box Card (Embedded Inline) -->
-            <div class="reply-box-card" id="reply-box-card" style="display: none; margin-top: 16px; border: 1px solid var(--border-color); border-radius: 4px; box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06); background:var(--titan-surface-base); flex-direction: column; overflow: hidden; margin-bottom: 0;">
+            <div class="reply-box-card" id="reply-box-card" style="display: none; margin-top: 0; border: 1px solid var(--border-color); border-radius: 4px; box-shadow: var(--titan-elevation-2-shadow); background:var(--titan-surface-base); flex-direction: column; overflow: hidden; margin-bottom: 0;">
                 <!-- From row -->
                 <div class="reply-box-from-row" style="display: flex; align-items: center; justify-content: space-between; padding: 10px 24px; border-bottom: var(--titan-divider-width-default) solid var(--card-border-color);">
                   <div style="font-size: 14px; color:var(--titan-text-muted);">From: <span id="reply-box-from" style="color:var(--titan-text-primary);">ishantp@titan.email</span></div>
@@ -2513,9 +2492,7 @@
                         </button>
                       </div>
                     </div>
-                    <button class="comp-delete-btn" title="Discard" onclick="discardReply()">
-                      <img data-titan-icon="delete" alt="">
-                    </button>
+                    <span id="reply-discard-control"></span>
                   </div>
                 </div>
             </div>
@@ -2718,15 +2695,15 @@
 
   <!-- Shared DS composer; original shell remains independent. -->
   <div id="ds-composer-host" inert></div>
-  <link rel="stylesheet" href="../../../../../design-system/components/composer.css">
-  <script src="../../../../../design-system/icons/runtime.js"></script><script src="../../../../../design-system/components/actions.js"></script>
-  <script src="../../../../../design-system/components/selection.js"></script>
-  <script src="../../../../../design-system/components/app-switcher.js"></script><script src="../../../../../design-system/patterns/app-switcher.js"></script><link rel="stylesheet" href="../../../../../design-system/patterns/app-switcher.css">
-  <script src="../../../../../design-system/app-switcher-config.js"></script>
-  <script src="../../../../../design-system/components/sidebar-header.js"></script>
-  <script src="../../../../../design-system/components/avatar.js"></script>
-  <script src="../../../../../design-system/components/messages.js"></script>
-  <script src="../../../../../design-system/components/account-header.js"></script>
+  <link rel="stylesheet" href="../../../../../design-system/components/composer.css" onerror="this.onerror=null;this.href='/design-system/components/composer.css'">
+  <script>document.write('<script src="' + (location.pathname.startsWith('/app/') ? '/' : '../../../../../') + 'design-system/icons/runtime.js"><\/script>');</script><script>document.write('<script src="' + (location.pathname.startsWith('/app/') ? '/' : '../../../../../') + 'design-system/components/actions.js"><\/script>');</script>
+  <script>document.write('<script src="' + (location.pathname.startsWith('/app/') ? '/' : '../../../../../') + 'design-system/components/selection.js"><\/script>');</script>
+  <script>document.write('<script src="' + (location.pathname.startsWith('/app/') ? '/' : '../../../../../') + 'design-system/components/app-switcher.js"><\/script>');</script><script>document.write('<script src="' + (location.pathname.startsWith('/app/') ? '/' : '../../../../../') + 'design-system/patterns/app-switcher.js"><\/script>');</script><link rel="stylesheet" href="../../../../../design-system/patterns/app-switcher.css" onerror="this.onerror=null;this.href='/design-system/patterns/app-switcher.css'">
+  <script>document.write('<script src="' + (location.pathname.startsWith('/app/') ? '/' : '../../../../../') + 'design-system/app-switcher-config.js"><\/script>');</script>
+  <script>document.write('<script src="' + (location.pathname.startsWith('/app/') ? '/' : '../../../../../') + 'design-system/components/sidebar-header.js"><\/script>');</script>
+  <script>document.write('<script src="' + (location.pathname.startsWith('/app/') ? '/' : '../../../../../') + 'design-system/components/avatar.js"><\/script>');</script>
+  <script>document.write('<script src="' + (location.pathname.startsWith('/app/') ? '/' : '../../../../../') + 'design-system/components/messages.js"><\/script>');</script>
+  <script>document.write('<script src="' + (location.pathname.startsWith('/app/') ? '/' : '../../../../../') + 'design-system/components/account-header.js"><\/script>');</script>
   <script>
   document.getElementById('sidebar-header-host').outerHTML=TitanSidebarHeader.render({trigger:TitanAppSwitcherPattern.render(TitanAppSwitcherOptions('mail')),logo:'assets/fa36f613-977c-444a-bef5-e1b5f5f1b340.svg'});
   TitanAppSwitcherPattern.bind(document.querySelector('.titan-sidebar-header'));
@@ -2740,7 +2717,7 @@
     {id:'settings',label:'Settings',icon:'settings',labelHidden:true}
   ]},{settings:()=>toggleSettingsModal()});
   </script>
-  <script src="../../../../../design-system/components/composer.js"></script>
+  <script>document.write('<script src="' + (location.pathname.startsWith('/app/') ? '/' : '../../../../../') + 'design-system/components/composer.js"><\/script>');</script>
   <script>let composerReturnFocus=null;TitanComposer.mount(document.getElementById('ds-composer-host'),'emailComposer',{docked:true,id:'composer-window',toId:'comp-to-input',from:'ella@avontech.com'},{close:()=>{document.getElementById('ds-composer-host').inert=true;composerReturnFocus?.focus();}});</script>
 
 
@@ -3506,7 +3483,13 @@
         tailMessages.forEach(message => content.push(renderMessage(message)));
         comparisonIteration.className = `read-unread-iteration read-unread-thread read-unread-thread--${iteration}`;
         comparisonIteration.setAttribute('aria-label', `${iterationPages.find(page => page.id === iteration).label} iteration`);
+        const replyWrapper = document.getElementById('reply-box-reveal');
+        if (replyWrapper && comparisonIteration.contains(replyWrapper)) comparisonIteration.after(replyWrapper);
         comparisonIteration.innerHTML = content.join('');
+        if (replyWrapper?.dataset.replyMessageId) {
+          const anchor = comparisonIteration.querySelector(`[data-message-id="${CSS.escape(replyWrapper.dataset.replyMessageId)}"]`);
+          anchor?.parentElement.after(replyWrapper);
+        }
         syncEarlierStack();
         requestAnimationFrame(updateJumpVisibility);
         if (restoreBoundary) {
@@ -3565,10 +3548,10 @@
           const card = comparisonIteration.querySelector(`[data-message-id="${id}"]`);
           revealMessage(card, card?.parentElement, startHeight);
         },
-        reply: () => openReplyBox('reply'),
-        'reply-all': () => openReplyBox('reply-all'),
-        forward: () => openReplyBox('forward'),
-        'reply-ai': () => openReplyBox('reply')
+        reply: (id) => openReplyBox('reply', id),
+        'reply-all': (id) => openReplyBox('reply-all', id),
+        forward: (id) => openReplyBox('forward', id),
+        'reply-ai': (id) => openReplyBox('reply', id)
       });
       comparisonIteration.addEventListener('click', event => {
         if (event.target.closest('[data-jump-latest]')) { jumpToLatest(); return; }
@@ -3851,10 +3834,13 @@
     }
 
     // ── Reply Box Controls ──────────────────────────────────────────────
-    function scrollReplyIntoView(replyBox) {
+    const replyDiscardControl = document.getElementById('reply-discard-control');
+    replyDiscardControl.innerHTML = TitanActions.iconButton({label:'Discard reply', icon:'delete', variant:'composer'});
+    replyDiscardControl.addEventListener('click', discardReply);
+
+    function replyScrollTarget(replyBox) {
       const pane = replyBox.closest('.thread-content');
-      if (!pane || replyBox.style.display === 'none') return;
-      revealMessage.cancel?.();
+      if (!pane || replyBox.style.display === 'none') return null;
       const bounds = replyBox.getBoundingClientRect();
       const viewport = pane.getBoundingClientRect();
       const inset = 24;
@@ -3863,16 +3849,25 @@
       let delta = 0;
       if (bounds.height > available || bounds.top < topLimit) delta = bounds.top - topLimit;
       else if (bounds.bottom > viewport.bottom - inset) delta = bounds.bottom - viewport.bottom + inset;
+      return {pane, top: Math.max(0, Math.min(pane.scrollHeight - pane.clientHeight, pane.scrollTop + delta))};
+    }
+    function scrollReplyIntoView(replyBox) {
+      revealMessage.cancel?.();
+      const target = replyScrollTarget(replyBox);
+      if (!target) return;
       document.getElementById('reply-box-body')?.focus({ preventScroll: true });
-      pane.scrollTo({ top: Math.max(0, pane.scrollTop + delta), behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' });
+      target.pane.scrollTo({ top: target.top, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' });
     }
 
-    function openReplyBox(type) {
+    function openReplyBox(type, messageId) {
       const replyBox = document.getElementById('reply-box-card');
       if (!replyBox) return;
       revealMessage.cancel?.();
       const body = document.getElementById('reply-box-body');
-      if (replyBox.style.display === 'flex') {
+      const anchor = messageId ? document.querySelector(`#read-unread-iteration [data-message-id="${CSS.escape(messageId)}"]`) : null;
+      const existingWrapper = document.getElementById('reply-box-reveal');
+      const samePosition = !anchor || existingWrapper?.previousElementSibling === anchor.parentElement;
+      if (replyBox.style.display === 'flex' && samePosition) {
         scrollReplyIntoView(replyBox);
         return;
       }
@@ -3881,11 +3876,20 @@
         wrapper = document.createElement('div');
         wrapper.id = 'reply-box-reveal';
         wrapper.style.display = 'flow-root';
+        wrapper.style.marginBottom = 'var(--thread-message-gap)';
         replyBox.before(wrapper);
         wrapper.append(replyBox);
       }
+      openReplyBox.animations?.forEach(animation => animation.cancel());
+      if (anchor) {
+        wrapper.dataset.replyMessageId = messageId;
+        anchor.parentElement.after(wrapper);
+      }
+      wrapper.style.marginBottom = 'var(--thread-message-gap)';
       replyBox.style.display = 'flex';
       const height = wrapper.getBoundingClientRect().height;
+      const scroll = replyScrollTarget(replyBox);
+      const startScroll = scroll?.pane.scrollTop || 0;
       const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
       if (!reduced) {
         wrapper.style.overflow = 'hidden';
@@ -3901,8 +3905,27 @@
           wrapper.style.removeProperty('overflow');
           if (openReplyBox.animations?.[0] === growth) openReplyBox.animations = null;
         };
-        growth.onfinish = () => { finish(); scrollReplyIntoView(replyBox); };
-        growth.oncancel = finish;
+        let frame;
+        let scrolling = true;
+        const cancelScroll = () => {
+          scrolling = false;
+          cancelAnimationFrame(frame);
+          for (const event of ['wheel', 'touchstart', 'pointerdown', 'keydown']) scroll?.pane.removeEventListener(event, cancelScroll);
+        };
+        const tick = () => {
+          if (!scrolling || !scroll) return;
+          const progress = growth.effect.getComputedTiming().progress ?? 1;
+          scroll.pane.scrollTop = startScroll + (scroll.top - startScroll) * progress;
+          if (growth.playState === 'running') frame = requestAnimationFrame(tick);
+        };
+        for (const event of ['wheel', 'touchstart', 'pointerdown', 'keydown']) scroll?.pane.addEventListener(event, cancelScroll, {passive:true});
+        frame = requestAnimationFrame(tick);
+        growth.onfinish = () => {
+          if (scrolling && scroll) scroll.pane.scrollTop = scroll.top;
+          cancelScroll();
+          finish();
+        };
+        growth.oncancel = () => { cancelScroll(); finish(); };
       }
       if (reduced) scrollReplyIntoView(replyBox);
       body?.focus({ preventScroll: true });
@@ -3913,6 +3936,7 @@
       openReplyBox.animations = null;
       const replyBox = document.getElementById('reply-box-card');
       if (replyBox) replyBox.style.display = 'none';
+      document.getElementById('reply-box-reveal')?.style.setProperty('margin-bottom', '0');
     }
     function toggleReplySubject() {
       const row = document.getElementById('reply-subject-row');
@@ -4004,10 +4028,21 @@
       const duration = 520;
       const endHeight = wrapper.getBoundingClientRect().height;
       const startScroll = pane.scrollTop;
+      // Measure the final layout before starting the height animation.
+      const inset = parseFloat(getComputedStyle(pane).getPropertyValue('--titan-space-24')) || 24;
+      const paneBounds = pane.getBoundingClientRect();
+      const heading = pane.querySelector('.thread-sticky-header');
+      const readingTop = Math.max(paneBounds.top, heading?.getBoundingClientRect().bottom || paneBounds.top) + inset;
+      const bounds = card.getBoundingClientRect();
+      const bottomOverflow = bounds.bottom > paneBounds.bottom ? bounds.bottom - (paneBounds.bottom - inset) : 0;
+      const topAllowance = Math.max(0, bounds.top - readingTop);
+      const scrollTarget = Math.max(startScroll, Math.min(pane.scrollHeight - pane.clientHeight, startScroll + Math.min(bottomOverflow, topAllowance)));
+      let growth;
+
       if (!reduced && Number.isFinite(startHeight) && endHeight > startHeight) {
         const previousOverflow = wrapper.style.overflow;
         wrapper.style.overflow = 'hidden';
-        const animation = wrapper.animate([
+        const animation = growth = wrapper.animate([
           { height: `${startHeight}px` }, { height: `${endHeight}px` }
         ], { duration, easing: 'cubic-bezier(0.22, 1, 0.36, 1)' });
         const cleanup = () => { wrapper.style.overflow = previousOverflow; };
@@ -4032,34 +4067,15 @@
       pane.addEventListener('wheel', cancel, { passive: true });
       pane.addEventListener('touchstart', cancel, { passive: true });
       pane.addEventListener('pointerdown', cancel, { passive: true });
-      let scrollTarget = null;
       const tick = now => {
         if (!card.isConnected) { cancel(); return; }
-        // Keep the top edge still during growth; reposition for reading afterwards.
-        if (!reduced && now - started < duration) {
-          pane.scrollTop = startScroll;
-          frame = requestAnimationFrame(tick);
-          return;
-        }
-        const progress = reduced ? 1 : Math.min(1, (now - started - duration) / 360);
-        const inset = parseFloat(getComputedStyle(pane).getPropertyValue('--titan-space-24')) || 24;
-        const paneBounds = pane.getBoundingClientRect();
-        const paneTop = paneBounds.top;
-        const heading = pane.querySelector('.thread-sticky-header');
-        const readingTop = Math.max(paneTop, heading?.getBoundingClientRect().bottom || paneTop) + inset;
-        if (scrollTarget === null) {
-          const bounds = card.getBoundingClientRect();
-          // Leave already-visible messages still. Otherwise reveal the bottom,
-          // stopping sooner if moving further would crowd the message's top.
-          const bottomOverflow = bounds.bottom > paneBounds.bottom
-            ? bounds.bottom - (paneBounds.bottom - inset) : 0;
-          const topAllowance = Math.max(0, bounds.top - readingTop);
-          scrollTarget = Math.min(pane.scrollHeight - pane.clientHeight, startScroll + Math.min(bottomOverflow, topAllowance));
-          if (scrollTarget <= startScroll + 0.5) { cancel(); return; }
-        }
-        pane.scrollTop = startScroll + (scrollTarget - startScroll) * (1 - Math.pow(1 - progress, 3));
-        if (progress < 1) frame = requestAnimationFrame(tick);
-        else cancel();
+        const progress = reduced ? 1 : Math.min(1, (now - started) / duration);
+        const eased = growth
+          ? (growth.playState === 'finished' ? 1 : growth.effect.getComputedTiming().progress ?? 0)
+          : 1 - Math.pow(1 - progress, 3);
+        pane.scrollTop = startScroll + (scrollTarget - startScroll) * eased;
+        if (progress < 1 || (growth && growth.playState === 'running')) frame = requestAnimationFrame(tick);
+        else { pane.scrollTop = scrollTarget; cancel(); }
       };
       frame = requestAnimationFrame(tick);
     }
@@ -4095,7 +4111,7 @@
       }
       TitanMessages.bind(host, {
         expand: () => render(true),
-        'reply-all': () => openReplyBox('reply-all')
+        'reply-all': (id) => openReplyBox('reply-all', id)
       });
       host.addEventListener('click', event => {
         if (event.target.closest('.expanded-header') && !event.target.closest('button, [data-message-action]')) closeMessage(host, () => { render(false, false); return host; });
@@ -4494,7 +4510,7 @@
       });
       TitanMessages.bind(list, {
         expand: expandMessage,
-        'reply-all': () => openReplyBox('reply-all')
+        'reply-all': (id) => openReplyBox('reply-all', id)
       });
       TitanMessages.bind(extracted, {
         expand: messageId => {
@@ -4502,11 +4518,13 @@
           const wrapper = card?.parentElement;
           if (!wrapper) return;
           const height = wrapper.getBoundingClientRect().height;
+      const scroll = replyScrollTarget(replyBox);
+      const startScroll = scroll?.pane.scrollTop || 0;
           const message = relatedMessages.find(item => item.id === messageId);
           wrapper.innerHTML = TitanMessages.card({...message, ...messageDetails[messageId], variant:'expanded', headerActions:expandedMessageHeaderActions});
           revealMessage(wrapper.firstElementChild, wrapper, height);
         },
-        'reply-all': () => openReplyBox('reply-all')
+        'reply-all': (id) => openReplyBox('reply-all', id)
       });
       list.addEventListener('click', event => {
         const header = event.target.closest('.expanded-header');

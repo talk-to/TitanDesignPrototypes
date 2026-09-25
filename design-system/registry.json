@@ -1254,7 +1254,7 @@
         "variant": "collapsed / expanded",
         "content": "id, sender, initials?, recipients?, time, preview, paragraphs[], headerActions[], actions[]",
         "headerActions": "Uses shared TitanActions.iconButton (compact, unchanged); each action has id, label, icon and disabled.",
-        "actions": "Uses shared TitanActions.button (unchanged); each action has id, label, optional icon and disabled. Actions are routed through external wrappers."
+        "actions": "Uses shared TitanActions.button (unchanged); each action has id, label, optional icon and disabled. Actions are routed through external wrappers. Omit or pass [] for the Expanded without footer configuration."
       },
       "anatomy": {
         "parts": [
@@ -1289,6 +1289,10 @@
           {
             "name": "Actions",
             "selector": ".expanded-footer"
+          },
+          {
+            "name": "Body end marker",
+            "selector": ".titan-message-card__body-end"
           }
         ],
         "spacing": [
@@ -1423,10 +1427,16 @@
             "token": "--titan-message-inset-inline",
             "selector": ".thread-tile-inner",
             "property": "padding-right"
+          },
+          {
+            "label": "Body to end marker",
+            "token": "--titan-space-16",
+            "selector": ".titan-message-card__body-end",
+            "property": "margin-top"
           }
         ],
         "ownership": "Component owns internal spacing. Parent owns placement, external spacing and pane dimensions. Existing shell retains its 8px card stack gap.",
-        "behavior": "Collapsed trigger requests expansion through callback. Expanded body wraps text. Optional footer and header actions compose shared Button and Icon button instances unchanged behind action wrappers. Caller owns expansion, reply handling and message data.",
+        "behavior": "Collapsed trigger requests expansion through callback. Expanded body wraps text. Optional footer and header actions compose shared Button and Icon button instances unchanged behind action wrappers. Caller owns expansion, reply handling and message data. Every expanded body ends with a static, decorative three-dot marker; it has no action or keyboard focus.",
         "alignment": "Sender and recipients form a tight text stack; footer actions wrap when needed.",
         "interactionOwnership": "Owns collapsed-to-expanded message presentation and action routing through external wrappers. Footer actions reuse Button and header actions reuse Icon button (compact); their hover, focus, pressed and disabled states stay documented at those owners. Do not duplicate child state previews here."
       },
@@ -1462,6 +1472,12 @@
           "id": "expanded",
           "name": "Expanded",
           "selector": "main > section:nth-of-type(2)",
+          "interactionTarget": "main"
+        },
+        {
+          "id": "expanded-no-footer",
+          "name": "Expanded without footer",
+          "selector": "main > section:nth-of-type(3)",
           "interactionTarget": "main"
         }
       ],

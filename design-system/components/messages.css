@@ -658,3 +658,18 @@
 .titan-message-row::before{content:"";position:absolute;inset:0 var(--titan-selection-inset);border-radius:var(--titan-selection-radius);pointer-events:none;z-index:-1}
 .titan-message-row:hover::before{background:var(--titan-surface-hover)}
 .titan-message-row.selected::before{background:var(--titan-surface-selected)}
+
+/* Static end-of-body marker; no action or focus target until behavior is defined. */
+.titan-message-card__body-end {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 16px;
+  box-sizing: border-box;
+  margin-top: var(--titan-space-16);
+  border: var(--titan-border-width-default) solid var(--card-border-color);
+  border-radius: var(--titan-radius-4);
+  color: var(--titan-action-primary);
+  background: var(--titan-surface-base);
+}
