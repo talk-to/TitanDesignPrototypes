@@ -13,15 +13,20 @@ test('list supports two layouts and composes the shared Checkbox and Icon button
  assert(html.includes('titan-message-list--wide'));assert(html.includes('aria-current="true"'));
  assert(html.includes('titan-checkbox'));assert(html.includes('titan-icon-button'));
  assert(html.includes('titan-icon-button--toggle'));
+ assert(html.includes('titan-message-row__indicator'));
  assert(html.includes('titan-message-row__star'));assert(html.includes('data-message-action="star"'));
  assert(html.includes('aria-pressed="true"'));assert(html.includes(' checked'));assert(html.includes('aria-label="Unread"'));
  assert(html.includes('star-outline.svg#titan-artwork'));assert(html.includes('star.svg#titan-artwork'));
  assert(!html.includes('★'));assert(!html.includes('tile-star'));
+ assert(html.indexOf('tile-dot')>html.indexOf('titan-message-row__indicator'));
+ assert(html.indexOf('titan-message-row__star')>html.indexOf('tile-dot'));
  assert.equal((html.match(/<button /g)||[]).length,2);
  assert(!M.list({messages:[]}).includes('undefined'));
 });
 test('message card supports collapsed, expanded and omitted optional regions',()=>{
- const closed=M.card({sender:'Alex',variant:'collapsed',preview:'Hello'});assert(closed.includes('data-message-action="expand"'));assert(!closed.includes('expanded-body'));
+ const closed=M.card({sender:'Alex',variant:'collapsed',preview:'Hello',time:'Jun 3'});assert(closed.includes('data-message-action="expand"'));assert(!closed.includes('expanded-body'));
+ assert(closed.includes('<span class="thread-meta"><span class="thread-date">Jun 3</span></span>'));
+ assert(closed.indexOf('thread-preview')<closed.indexOf('thread-meta'));
  const open=M.card({sender:'Alex',paragraphs:['Hello']});assert(open.includes('expanded-body'));assert(!open.includes('expanded-footer'));assert(!open.includes('exp-to'));
  const footer=M.card({sender:'Alex',actions:[{id:'reply',label:'Reply',disabled:true}]});assert(footer.includes('disabled'));
 });
@@ -39,10 +44,21 @@ test('received-message footer composes the shared Button unchanged behind its ac
  assert(!html.includes('data-message-action="reply" data-action'));
  assert.throws(()=>M.card({sender:'Alex',actions:[{id:'reply',label:''}]}),/label/);
 });
-test('received-message header actions compose the shared Icon button unchanged',()=>{
+test('received-message header actions compose four compact shared Icon buttons in the expected order',()=>{
  const Actions=require('../components/actions');
- const child=Actions.iconButton({label:'Reply',icon:'reply',variant:'compact',disabled:undefined});
- const html=M.card({sender:'Alex',headerActions:[{id:'reply',label:'Reply',icon:'reply'}]});
- assert(html.includes('<span class="titan-message-card__action" data-message-action="reply">'+child));
- assert(html.includes('titan-icon-button--compact'));assert(!html.includes('class="exp-icon"'));
+ const actions=[
+  {id:'expand-view',label:'Expand message',icon:'expand'},
+  {id:'open-in-window',label:'Open in window',icon:'open-in-window'},
+  {id:'reply-all',label:'Reply all',icon:'reply-all'},
+  {id:'more',label:'More message actions',icon:'more-horizontal-bold'}
+ ];
+ const html=M.card({sender:'Alex',headerActions:actions});
+ actions.forEach(action=>{
+  const child=Actions.iconButton({label:action.label,icon:action.icon,variant:'compact',disabled:undefined});
+  assert(html.includes('<span class="titan-message-card__action" data-message-action="'+action.id+'">'+child));
+ });
+ const positions=actions.map(action=>html.indexOf('data-message-action="'+action.id+'"'));
+ assert.deepEqual(positions,[...positions].sort((a,b)=>a-b));
+ assert.equal((html.match(/titan-icon-button--compact/g)||[]).length,4);
+ assert(!html.includes('class="exp-icon"'));
 });

@@ -252,6 +252,27 @@
     ]
   },
   {
+    "id": "open-in-window",
+    "originalViewBox": [
+      0,
+      0,
+      18,
+      16
+    ],
+    "paintBounds": [
+      0,
+      0,
+      18,
+      16
+    ],
+    "targetExtent": 20,
+    "scale": 1.1111111111111112,
+    "translate": [
+      2,
+      3.111111111111111
+    ]
+  },
+  {
     "id": "help",
     "originalViewBox": [
       0,
@@ -312,6 +333,27 @@
     "translate": [
       -3,
       -3
+    ]
+  },
+  {
+    "id": "more-horizontal-bold",
+    "originalViewBox": [
+      0,
+      0,
+      24,
+      24
+    ],
+    "paintBounds": [
+      3.75,
+      9.75,
+      16.5,
+      4.5
+    ],
+    "targetExtent": 16.5,
+    "scale": 1,
+    "translate": [
+      0,
+      0
     ]
   },
   {

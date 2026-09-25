@@ -165,6 +165,24 @@
     "colorMode": "monochrome"
   },
   {
+    "id": "open-in-window",
+    "name": "Open in window",
+    "category": "Controls",
+    "src": "assets/open-in-window.svg",
+    "source": "Figma Handoffs / Trash / selected icon (2026-09-25)",
+    "background": "light",
+    "rotation": 0,
+    "kind": "interface-icon",
+    "aspectRatio": 1,
+    "colorMode": "monochrome",
+    "searchTags": [
+      "browser",
+      "window",
+      "pop out",
+      "panel"
+    ]
+  },
+  {
     "id": "help",
     "name": "Help",
     "category": "Controls",
@@ -194,6 +212,18 @@
     "category": "Controls",
     "src": "assets/more.svg",
     "source": "Prototypes/Ishant/design ops/DS-specific shells/TitanEmailShell/assets/495649bc-11a9-41e0-84b4-81a6600de9f6.svg",
+    "background": "light",
+    "rotation": 0,
+    "kind": "interface-icon",
+    "aspectRatio": 1,
+    "colorMode": "monochrome"
+  },
+  {
+    "id": "more-horizontal-bold",
+    "name": "More horizontal bold",
+    "category": "Controls",
+    "src": "assets/more-horizontal-bold.svg",
+    "source": "Created for expanded message actions (2026-09-25)",
     "background": "light",
     "rotation": 0,
     "kind": "interface-icon",

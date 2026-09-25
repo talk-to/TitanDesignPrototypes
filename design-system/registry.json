@@ -1067,6 +1067,10 @@
             "selector": ".tile-chk input"
           },
           {
+            "name": "Unread and star indicator",
+            "selector": ".titan-message-row__indicator"
+          },
+          {
             "name": "Star",
             "selector": ".titan-message-row__star"
           },
@@ -1119,7 +1123,7 @@
             "property": "gap"
           },
           {
-            "label": "Selection to star",
+            "label": "Selection to indicator",
             "token": "--titan-space-3",
             "selector": ".titan-message-row:not(.titan-message-row--wide) .tile-icons",
             "property": "gap"
@@ -1149,7 +1153,7 @@
             "property": "margin-right"
           },
           {
-            "label": "Wide selection to star",
+            "label": "Wide selection to indicator",
             "token": "--titan-space-8",
             "selector": ".titan-message-row--wide .tile-chk",
             "property": "margin-right"
@@ -1168,7 +1172,7 @@
           }
         ],
         "ownership": "Row owns insets, internal gaps and summary layout. Parent owns list arrangement, outer spacing and scrolling.",
-        "behavior": "Composes the shared Checkbox and Icon button (Icon toggle variant, pressed) unchanged; open is a row-owned button. Open, check and star callbacks. Caller owns message data and selected row. Single-line rows retain a 640px minimum width and scroll horizontally in narrow containers.",
+        "behavior": "Composes the shared Checkbox and Icon button (Icon toggle variant, pressed) unchanged; open is a row-owned button. The unread dot and star share one indicator slot: unread shows the dot at rest, while hover, keyboard focus and starred state reveal the star. Open, check and star callbacks. Caller owns message data and selected row. Single-line rows retain a 640px minimum width and scroll horizontally in narrow containers.",
         "alignment": "Rows share aligned sender/subject columns in wide layout; stacked rows align text to a common left edge.",
         "interactionOwnership": "Owns row opening, selected/read state and row-specific star action. The caller owns checked/starred values; the row routes check/star actions and callbacks. Shared Checkbox and Icon button own control semantics and rendering of those supplied values, including focus, pressed treatment and the Icon toggle artwork swap. Do not duplicate child visual state galleries here; verify row state propagation and callback integration.",
         "selectionSurface": "Highlight paint spans the full control height, is inset horizontally by --titan-selection-inset (4px), and uses --titan-selection-radius (4px). Control hit area and content geometry are unchanged. Selected/hover fills stay within this surface; keyboard focus remains independently visible."
@@ -1185,6 +1189,9 @@
               "default",
               "hover",
               "selected",
+              "unread",
+              "starred",
+              "checked",
               "focus"
             ]
           },
@@ -1196,6 +1203,9 @@
               "default",
               "hover",
               "selected",
+              "unread",
+              "starred",
+              "checked",
               "focus"
             ]
           }
@@ -1265,6 +1275,14 @@
             "selector": ".exp-actions"
           },
           {
+            "name": "Collapsed preview",
+            "selector": ".thread-preview"
+          },
+          {
+            "name": "Collapsed metadata",
+            "selector": ".thread-meta"
+          },
+          {
             "name": "Body",
             "selector": ".expanded-body"
           },
@@ -1312,7 +1330,7 @@
           },
           {
             "label": "Header action gap",
-            "token": "--titan-space-12",
+            "token": "--titan-gap-actions-compact",
             "selector": ".exp-actions",
             "property": "gap"
           },

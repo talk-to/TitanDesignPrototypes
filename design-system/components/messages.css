@@ -412,6 +412,9 @@
       gap: var(--titan-message-header-gap);
       padding: var(--titan-message-inset-block) var(--titan-message-inset-inline);
       position: relative;
+      box-sizing: border-box;
+      width: 100%;
+      min-width: 0;
     }
 
     .thread-sender {
@@ -419,32 +422,37 @@
       font-weight: var(--titan-font-weight-semibold);
       color: var(--titan-text-primary);
       white-space: nowrap;
-      flex-shrink: 0;
-      min-width: 120px;
+      flex: 0 1 auto;
+      min-width: 0;
+      max-width: 30%;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .thread-preview {
       font-size: var(--titan-type-body-size);
       color: var(--titan-text-muted);
       flex: 1;
+      min-width: 0;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
     }
 
     .thread-meta {
-      position: absolute;
-      right: 12px;
-      top: 22px;
       display: flex;
       align-items: center;
       gap: 10px;
+      flex: 0 0 auto;
+      min-width: 0;
+      margin-left: auto;
     }
 
     .thread-date {
       font-size: var(--titan-type-meta-size);
       color: var(--titan-text-muted);
       white-space: nowrap;
+      flex-shrink: 0;
     }
 
     .thread-attach {
@@ -452,6 +460,7 @@
       height: 20px;
       position: relative;
       overflow: hidden;
+      flex-shrink: 0;
     }
 
     .thread-attach img {
@@ -516,7 +525,7 @@
     .exp-actions {
       display: flex;
       align-items: center;
-      gap: var(--titan-space-12);
+      gap: var(--titan-gap-actions-compact);
     }
 
     .exp-rr {
@@ -620,10 +629,14 @@
 .titan-message-list--wide{overflow-x:auto}
 .titan-message-list--wide .titan-message-row,
 .titan-message-row--wide{min-width:640px}
-.titan-message-row__star{display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.titan-message-row:has(.titan-message-row__star) .tile-dot{position:absolute;left:15px;top:60px;pointer-events:none}
-.titan-message-list--wide .titan-message-row:has(.titan-message-row__star) .tile-dot,
-.titan-message-row--wide:has(.titan-message-row__star) .tile-dot{left:4px;top:12px}
+.titan-message-row__indicator{position:relative;display:flex;width:24px;height:24px;align-items:center;justify-content:center;flex-shrink:0}
+.titan-message-row__indicator .tile-dot{position:absolute;inset:0;display:flex;width:24px;height:24px;align-items:center;justify-content:center;pointer-events:none;transition:opacity .15s ease}
+.titan-message-row__star{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .15s ease}
+.titan-message-row:hover .titan-message-row__star,
+.titan-message-row__indicator:focus-within .titan-message-row__star,
+.titan-message-row__star:has(button[aria-pressed="true"]){opacity:1;pointer-events:auto}
+.titan-message-row__indicator:focus-within .tile-dot,
+.titan-message-row__indicator:has(.titan-message-row__star button[aria-pressed="true"]) .tile-dot{opacity:0}
 .titan-message-card__action{display:contents}
 .titan-message-card .expanded-header{gap:var(--titan-space-12);flex-wrap:wrap}
 .titan-message-card .exp-left{min-width:0}.titan-message-card .exp-left>div{min-width:0;overflow-wrap:anywhere}
