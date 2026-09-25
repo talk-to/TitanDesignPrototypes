@@ -1,0 +1,197 @@
+// Dev overlay chrome.
+//
+// Deliberately uses no design-system tokens and no theme variables: this is a
+// tool sitting ON the product, not part of it. It must look the same in every
+// repo, must not shift when the product's theme changes, and must never be
+// mistaken for the UI being reviewed.
+//
+// Class prefix `tdo-` (titan design overlay) so nothing can collide.
+
+.tdo {
+  position: fixed;
+  z-index: 2147483000; // above the app, below nothing that matters
+  width: 208px;
+  border-radius: 8px;
+  background: #1f2023;
+  color: #e8e8ea;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.32);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 12px;
+  line-height: 1.4;
+  user-select: none;
+  overflow: hidden;
+
+  &.is-collapsed {
+    width: auto;
+  }
+}
+
+.tdo-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 8px;
+  cursor: grab;
+  touch-action: none; // pointer events drive the drag, not scrolling
+
+  &:active {
+    cursor: grabbing;
+  }
+}
+
+.tdo-grip {
+  color: #6b6d73;
+  font-size: 11px;
+}
+
+.tdo-title {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: #9a9ca2;
+  white-space: nowrap;
+}
+
+// How many groups are off their default — visible while collapsed, so a
+// forgotten override can't silently skew a review.
+.tdo-badge {
+  min-width: 15px;
+  padding: 0 4px;
+  border-radius: 7px;
+  background: #3b82f6;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  text-align: center;
+  text-transform: none;
+}
+
+.tdo-icon-btn {
+  width: 18px;
+  height: 18px;
+  padding: 0;
+  border: none;
+  border-radius: 4px;
+  background: transparent;
+  color: #9a9ca2;
+  font-size: 13px;
+  line-height: 1;
+  cursor: pointer;
+
+  &:hover {
+    background: #32343a;
+    color: #e8e8ea;
+  }
+
+  &:focus-visible {
+    outline: 2px solid #3b82f6;
+    outline-offset: 1px;
+  }
+}
+
+.tdo-body {
+  padding: 2px 8px 8px;
+}
+
+.tdo-group + .tdo-group {
+  margin-top: 10px;
+}
+
+.tdo-label {
+  margin-bottom: 4px;
+  color: #b9bbc1;
+  font-size: 11px;
+}
+
+.tdo-hint {
+  margin-top: 4px;
+  color: #7c7e85;
+  font-size: 10px;
+  line-height: 1.35;
+}
+
+.tdo-segmented {
+  display: flex;
+  padding: 2px;
+  border-radius: 6px;
+  background: #17181a;
+
+  &--tabs {
+    flex-wrap: wrap;
+  }
+}
+
+.tdo-segment {
+  flex: 1;
+  min-width: 0;
+  padding: 4px 6px;
+  border: none;
+  border-radius: 4px;
+  background: transparent;
+  color: #9a9ca2;
+  font-size: 11px;
+  font-family: inherit;
+  cursor: pointer;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  &:hover {
+    color: #e8e8ea;
+  }
+
+  &:focus-visible {
+    outline: 2px solid #3b82f6;
+    outline-offset: -2px;
+  }
+
+  &.is-active {
+    background: #3a3d44;
+    color: #fff;
+  }
+}
+
+.tdo-select {
+  width: 100%;
+  padding: 4px 6px;
+  border: 1px solid #3a3d44;
+  border-radius: 6px;
+  background: #17181a;
+  color: #e8e8ea;
+  font-size: 11px;
+  font-family: inherit;
+  cursor: pointer;
+
+  &:focus-visible {
+    outline: 2px solid #3b82f6;
+    outline-offset: 1px;
+  }
+}
+
+.tdo-reset {
+  width: 100%;
+  margin-top: 10px;
+  padding: 5px;
+  border: none;
+  border-radius: 6px;
+  background: #2a2c31;
+  color: #b9bbc1;
+  font-size: 11px;
+  font-family: inherit;
+  cursor: pointer;
+
+  &:hover {
+    background: #32343a;
+    color: #e8e8ea;
+  }
+
+  &:focus-visible {
+    outline: 2px solid #3b82f6;
+    outline-offset: 1px;
+  }
+}
