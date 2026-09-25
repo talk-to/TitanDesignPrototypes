@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Inbox (367) - Mail</title>
-  <link rel="stylesheet" href="/design-system/tokens.css" onerror="this.onerror=null;this.href='../../../../../design-system/tokens.css'">
+  <link rel="stylesheet" href="../../../../../design-system/tokens.css" onerror="this.onerror=null;this.href='../../../../../design-system/tokens.css'">
   <style>
 
     * {
@@ -330,7 +330,7 @@
       transition: filter 0.2s ease;
     }
 
-    .toolbar-icon img[src*="/design-system/icons/"] {max-width:none;max-height:none}
+    .toolbar-icon img[src*="../../../../../design-system/icons/"] {max-width:none;max-height:none}
 
     .toolbar-icon:hover img {
       filter: brightness(0.6);
@@ -1342,13 +1342,13 @@
       object-fit: contain;
     }
   </style>
-  <link rel="stylesheet" href="/design-system/components/navigation-input.css" onerror="this.onerror=null;this.href='../../../../../design-system/components/navigation-input.css'">
-  <link rel="stylesheet" href="/design-system/components/messages.css" onerror="this.onerror=null;this.href='../../../../../design-system/components/messages.css'">
-  <link rel="stylesheet" href="/design-system/components/actions.css" onerror="this.onerror=null;this.href='../../../../../design-system/components/actions.css'">
-  <link rel="stylesheet" href="/design-system/components/avatar.css" onerror="this.onerror=null;this.href='../../../../../design-system/components/avatar.css'">
-  <link rel="stylesheet" href="/design-system/components/account-header.css" onerror="this.onerror=null;this.href='../../../../../design-system/components/account-header.css'">
+  <link rel="stylesheet" href="../../../../../design-system/components/navigation-input.css" onerror="this.onerror=null;this.href='../../../../../design-system/components/navigation-input.css'">
+  <link rel="stylesheet" href="../../../../../design-system/components/messages.css" onerror="this.onerror=null;this.href='../../../../../design-system/components/messages.css'">
+  <link rel="stylesheet" href="../../../../../design-system/components/actions.css" onerror="this.onerror=null;this.href='../../../../../design-system/components/actions.css'">
+  <link rel="stylesheet" href="../../../../../design-system/components/avatar.css" onerror="this.onerror=null;this.href='../../../../../design-system/components/avatar.css'">
+  <link rel="stylesheet" href="../../../../../design-system/components/account-header.css" onerror="this.onerror=null;this.href='../../../../../design-system/components/account-header.css'">
 <link rel="stylesheet" href="../../../../../design-system/components/selection.css">
-<script src="/design-system/theme.js" onerror="this.onerror=null;this.src='../../../../../design-system/theme.js'"></script></head>
+<script src="../../../../../design-system/theme.js" onerror="this.onerror=null;this.src='../../../../../design-system/theme.js'"></script></head>
 
 <body>
 
@@ -2235,11 +2235,11 @@
 
   <!-- Shared DS composer; original shell remains independent. -->
   <div id="ds-composer-host" inert></div>
-  <link rel="stylesheet" href="/design-system/components/composer.css">
-  <script src="/design-system/icons/runtime.js"></script><script src="/design-system/components/actions.js"></script>
-  <script src="/design-system/components/selection.js"></script>
-  <script src="/design-system/components/avatar.js"></script>
-  <script src="/design-system/components/account-header.js"></script>
+  <link rel="stylesheet" href="../../../../../design-system/components/composer.css">
+  <script src="../../../../../design-system/icons/runtime.js"></script><script src="../../../../../design-system/components/actions.js"></script>
+  <script src="../../../../../design-system/components/selection.js"></script>
+  <script src="../../../../../design-system/components/avatar.js"></script>
+  <script src="../../../../../design-system/components/account-header.js"></script>
   <script>
   for(const [host,options] of [
     ['account-header-ella',{id:'ella',email:'ella.henderson@avontechlabs.com',initials:'E'}],
@@ -2251,7 +2251,7 @@
     {id:'settings',label:'Settings',icon:'settings',labelHidden:true}
   ]},{settings:()=>toggleSettingsModal()});
   </script>
-  <script src="/design-system/components/composer.js"></script>
+  <script src="../../../../../design-system/components/composer.js"></script>
   <script>let composerReturnFocus=null;TitanComposer.mount(document.getElementById('ds-composer-host'),'emailComposer',{docked:true,id:'composer-window',toId:'comp-to-input',from:'ella@avontech.com'},{close:()=>{document.getElementById('ds-composer-host').inert=true;composerReturnFocus?.focus();}});</script>
 
 
