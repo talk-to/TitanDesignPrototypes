@@ -2,10 +2,11 @@
 <html lang="en">
 
 <head>
+  <script>window.appSidebarDsBase = location.pathname.startsWith("/app/") ? "/design-system/" : "../../../../../design-system/";</script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Inbox (367) - Mail</title>
-  <link rel="stylesheet" href="/design-system/tokens.css" onerror="this.onerror=null;this.href='/design-system/tokens.css'">
+  <script>document.write("<link rel=\"stylesheet\" href=\"" + window.appSidebarDsBase + "tokens.css\">");</script>
   <style>
 
     * {
@@ -1342,13 +1343,13 @@
       object-fit: contain;
     }
   </style>
-  <link rel="stylesheet" href="/design-system/components/navigation-input.css" onerror="this.onerror=null;this.href='/design-system/components/navigation-input.css'">
-  <link rel="stylesheet" href="/design-system/components/messages.css" onerror="this.onerror=null;this.href='/design-system/components/messages.css'">
-  <link rel="stylesheet" href="/design-system/components/actions.css" onerror="this.onerror=null;this.href='/design-system/components/actions.css'">
-  <link rel="stylesheet" href="/design-system/components/avatar.css" onerror="this.onerror=null;this.href='/design-system/components/avatar.css'">
-  <link rel="stylesheet" href="/design-system/components/account-header.css" onerror="this.onerror=null;this.href='/design-system/components/account-header.css'">
-<link rel="stylesheet" href="/design-system/components/selection.css">
-<script src="/design-system/theme.js" onerror="this.onerror=null;this.src='/design-system/theme.js'"></script>  <link rel="stylesheet" href="sidebar-collapse.css">
+  <script>document.write("<link rel=\"stylesheet\" href=\"" + window.appSidebarDsBase + "components/navigation-input.css\">");</script>
+  <script>document.write("<link rel=\"stylesheet\" href=\"" + window.appSidebarDsBase + "components/messages.css\">");</script>
+  <script>document.write("<link rel=\"stylesheet\" href=\"" + window.appSidebarDsBase + "components/actions.css\">");</script>
+  <script>document.write("<link rel=\"stylesheet\" href=\"" + window.appSidebarDsBase + "components/avatar.css\">");</script>
+  <script>document.write("<link rel=\"stylesheet\" href=\"" + window.appSidebarDsBase + "components/account-header.css\">");</script>
+<script>document.write("<link rel=\"stylesheet\" href=\"" + window.appSidebarDsBase + "components/selection.css\">");</script>
+<script>document.write("<script src=\"" + window.appSidebarDsBase + "theme.js\"><\/script>");</script>  <link rel="stylesheet" href="sidebar-collapse.css">
   <link rel="stylesheet" href="productivity-panel.css">
 </head>
 
@@ -2239,11 +2240,11 @@
 
   <!-- Shared DS composer; original shell remains independent. -->
   <div id="ds-composer-host" inert></div>
-  <link rel="stylesheet" href="/design-system/components/composer.css">
-  <script src="/design-system/icons/runtime.js"></script><script src="/design-system/components/actions.js"></script>
-  <script src="/design-system/components/selection.js"></script>
-  <script src="/design-system/components/avatar.js"></script>
-  <script src="/design-system/components/account-header.js"></script>
+  <script>document.write("<link rel=\"stylesheet\" href=\"" + window.appSidebarDsBase + "components/composer.css\">");</script>
+  <script>document.write("<script src=\"" + window.appSidebarDsBase + "icons/runtime.js\"><\/script>");</script><script>document.write("<script src=\"" + window.appSidebarDsBase + "components/actions.js\"><\/script>");</script>
+  <script>document.write("<script src=\"" + window.appSidebarDsBase + "components/selection.js\"><\/script>");</script>
+  <script>document.write("<script src=\"" + window.appSidebarDsBase + "components/avatar.js\"><\/script>");</script>
+  <script>document.write("<script src=\"" + window.appSidebarDsBase + "components/account-header.js\"><\/script>");</script>
   <script>
   document.getElementById('toolbar-sidebar-host').innerHTML = TitanActions.iconButton({label:'Sidebar',icon:'sidebar',size:40});
   document.querySelector('#toolbar-sidebar-host button').classList.add('toolbar-icon');
@@ -2259,7 +2260,7 @@
   </script>
   <script src="sidebar-collapse.js"></script>
   <script src="productivity-panel.js"></script>
-  <script src="/design-system/components/composer.js"></script>
+  <script>document.write("<script src=\"" + window.appSidebarDsBase + "components/composer.js\"><\/script>");</script>
   <script>let composerReturnFocus=null;TitanComposer.mount(document.getElementById('ds-composer-host'),'emailComposer',{docked:true,id:'composer-window',toId:'comp-to-input',from:'ella@avontech.com'},{close:()=>{document.getElementById('ds-composer-host').inert=true;composerReturnFocus?.focus();}});</script>
 
 
