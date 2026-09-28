@@ -37,7 +37,7 @@
   });
   function toggleShortcut(event) {
     if (event.key.toLowerCase() !== 'h' || event.repeat || event.ctrlKey || event.metaKey || event.altKey) return;
-    if (event.target.closest?.('input, textarea, select, [contenteditable]:not([contenteditable="false"]), [role="textbox"]')) return;
+    if (event.target.closest?.('input, textarea, [contenteditable]:not([contenteditable="false"]), [role="textbox"]')) return;
     event.preventDefault();
     event.stopImmediatePropagation();
     finishDrag();

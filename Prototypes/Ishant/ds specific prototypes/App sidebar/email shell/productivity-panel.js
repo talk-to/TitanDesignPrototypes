@@ -46,8 +46,8 @@
     panel.hidden = !open;
     trigger.setAttribute('aria-expanded',String(open));
     trigger.setAttribute('aria-label',`${open?'Close':'Open'} Calendar and Tasks sidebar`);
-    if(open) {scrollAgenda(); panel.querySelector('[role="tab"][aria-selected="true"]').focus();}
-    else if(restoreFocus) trigger.focus();
+    if(open) {scrollAgenda(); panel.querySelector('[role="tab"][aria-selected="true"]').focus({preventScroll:true});}
+    else if(restoreFocus) trigger.focus({preventScroll:true});
   }
   trigger.addEventListener('click',()=>setOpen(panel.hidden));
   document.getElementById('productivity-close').innerHTML=TitanActions.iconButton({label:'Close Calendar and Tasks sidebar',icon:'close',iconColor:'currentColor',variant:'compact'});

@@ -204,7 +204,7 @@
     clearTimeout(tooltipHideTimer);
     tooltipItem?.querySelector('button')?.removeAttribute('aria-describedby');
     tooltipItem = item;
-    const itemRect = item.getBoundingClientRect();
+    const itemRect = (item.querySelector("button") || item).getBoundingClientRect();
     const railRect = rail.getBoundingClientRect();
     tooltip.textContent = item.dataset.label;
     if (item.dataset.app && item.dataset.app !== 'mail') {
@@ -212,13 +212,13 @@
       hint.className = 'app-rail-tooltip__hint';
       const commandKey = document.createElement('kbd');
       commandKey.className = 'app-rail-tooltip__key';
-      commandKey.textContent = '⌘';
+      commandKey.textContent = '⌘ Cmd';
       commandKey.setAttribute('aria-label', 'Command');
-      hint.append(commandKey, ' + click to open in new window');
+      hint.append(commandKey, ' + click to open', document.createElement('br'), 'in a new window');
       tooltip.append(hint);
     }
     tooltip.style.left = `${railRect.right + 6}px`;
-    tooltip.style.top = `${itemRect.top + itemRect.height / 2}px`;
+    tooltip.style.top = `${itemRect.top}px`;
     tooltip.hidden = false;
     tooltip.setAttribute('data-visible', 'true');
     item.querySelector('button')?.setAttribute('aria-describedby', tooltip.id);
