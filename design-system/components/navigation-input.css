@@ -106,7 +106,7 @@
 .titan-search-field:has(input:disabled){opacity:.5}
 .titan-search-field button:disabled{cursor:default}
 .titan-sidebar-item{width:100%;border:0;border-radius:0;background:transparent;text-align:left;font-family:var(--titan-font-family-ui);text-decoration:none}
-.titan-sidebar-item:has(.nav-badge){padding-right:var(--titan-space-8)}
+.titan-sidebar-item:has(.nav-badge){padding-right:var(--titan-space-12)}
 .titan-sidebar-item .nav-item-label{min-width:0;overflow:hidden;text-overflow:ellipsis}
 .titan-sidebar-item:hover{background:var(--titan-color-gray-800)}
 /* Trailing action row: the item takes the free width; the row owns the end

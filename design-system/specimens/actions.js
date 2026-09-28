@@ -11,7 +11,7 @@
  'split-button':[['Default','splitButton',{label:'New email',secondaryLabel:'More email actions',icon:compose}],['Secondary disabled','splitButton',{label:'New email',secondaryLabel:'More email actions',icon:compose,secondaryDisabled:true}],['Disabled','splitButton',{label:'New email',secondaryLabel:'More email actions',icon:compose,disabled:true}]]};
  choices['icon-button'].push(['Composer','iconButton',{label:'Bold',icon:'bold',variant:'composer'}]);
  choices['icon-button'].push(['Compact','iconButton',{label:'Previous week',icon:'next-arrow',iconColor:'currentColor',variant:'compact'}]);
- choices['icon-button'].push(['Dark','iconButton',{label:'Next month',icon:'next-arrow',iconColor:'currentColor',variant:'dark'}]);
+ choices['icon-button'].push(['Dark · 24px','iconButton',{label:'Open in window',icon:'open-in-window',iconColor:'currentColor',variant:'dark',size:24}],['Dark · 32px','iconButton',{label:'Open in window',icon:'open-in-window',iconColor:'currentColor',variant:'dark',size:32}],['Dark · 40px','iconButton',{label:'Open in window',icon:'open-in-window',iconColor:'currentColor',variant:'dark',size:40}]);
  choices['icon-button'].push(['Dark quiet','iconButton',{label:'About Inbox',icon:'help',variant:'dark-quiet'}]);
  choices['icon-button'].push(['Icon toggle','iconButton',{label:'Star message',icon:'star-outline',pressedIcon:'star',variant:'toggle',pressed:false,iconColor:'currentColor'}],['Icon toggle · On','iconButton',{label:'Star message',icon:'star-outline',pressedIcon:'star',variant:'toggle',pressed:true,iconColor:'currentColor'}]);
  choices['button'].push(['Dark','button',{label:'Add calendar',variant:'dark',icon:'add-calendar',iconColor:'currentColor'}]);

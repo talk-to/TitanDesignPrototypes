@@ -403,7 +403,7 @@ arrows. Legacy `window` and `dark-compact` inputs normalize to this renderer for
 compatibility; they are not separately cataloged variants. Existing composer and
 Calendar usages have migrated. The supported iconSize values are 16, 18, 20, 24;
 the dark treatment honors this token-backed artwork size independently of its
-24px control size.
+control size. Dark supports size 24 (default), 32 and 40; default artwork is 16, 20 and 24px respectively.
 
 ## Derived components
 

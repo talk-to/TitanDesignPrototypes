@@ -1010,5 +1010,22 @@
     "kind": "interface-icon",
     "aspectRatio": 1,
     "colorMode": "monochrome"
+  },
+  {
+    "id": "sidebar",
+    "name": "Sidebar",
+    "category": "Navigation",
+    "src": "assets/sidebar.svg",
+    "source": "https://www.figma.com/design/cksaovdWzvUnojcQcA1TV3/Handoffs?node-id=2131-5493",
+    "background": "light",
+    "rotation": 0,
+    "kind": "interface-icon",
+    "aspectRatio": 1,
+    "colorMode": "monochrome",
+    "searchTags": [
+      "side panel",
+      "navigation panel",
+      "toggle sidebar"
+    ]
   }
 ]

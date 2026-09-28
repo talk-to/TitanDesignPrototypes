@@ -368,7 +368,8 @@ Parent owns width and external spacing. Shared account inset tokens own 8px padd
 long labels truncate visually while retaining their accessible name. The registered
 chevron asset replaces the screen's text glyph. Menu content remains caller-owned.
 
-Icon button supports `variant: 'dark'`: 24px target, 16px artwork,
+Icon button supports `variant: 'dark'`: 24px target/16px artwork by default;
+`size:32` uses 20px artwork and `size:40` uses 24px artwork, with
 muted inverse foreground, subtle translucent hover/pressed backgrounds and an
 inverse focus outline. Use `iconColor:'currentColor'` with registered monochrome
 assets. It owns zero padding; its parent owns surrounding gaps. Calendar's month
@@ -528,3 +529,7 @@ New components must demonstrate both themes, including hover/selected/disabled
 states. Preserve brand artwork; monochrome icons should inherit a foreground role.
 
 See [THEMES.md](THEMES.md) for the complete theme implementation and validation contract.
+
+### Dark Icon button sizes
+
+Use `TitanActions.iconButton({label, icon, variant:'dark', size:32})` for a medium dark-surface control. Dark supports 24px (the unchanged default), 32px and 40px targets, with 16px, 20px and 24px artwork respectively. An explicit `iconSize` of 16, 18, 20 or 24 overrides the artwork default. All sizes share Dark hover, pressed, focus and disabled treatment. Size configurations are grouped together in the Icon button previews.

@@ -1,0 +1,65 @@
+.content-area { position: relative; min-width: 0; min-height: 0; }
+/* The open panel participates in the same row as the list and reading pane. */
+.content-area:has(> .mail-productivity-panel[data-mode="embedded"]:not([hidden])) > .middle-panel {
+  flex: 0 1 auto;
+  min-width: 0;
+}
+.content-area:has(> .mail-productivity-panel[data-mode="embedded"]:not([hidden])) > .reading-pane {
+  flex: 1 1 360px;
+  min-width: 0;
+}
+.mail-productivity-panel {
+  position: relative;
+  flex: 0 0 300px; min-width: 0; min-height: 0;
+  width: 300px; max-width: min(300px, 50%); display: flex; flex-direction: column;
+  background: var(--titan-surface-base); color: var(--titan-text-primary);
+  border-left: var(--titan-divider-width-default) solid var(--card-border-color);
+}
+.mail-productivity-panel[hidden], .mail-productivity-panel [hidden] { display: none; }
+.productivity-heading { display: flex; align-items: center; justify-content: space-between; padding-inline: var(--titan-space-16); min-height: 52px; border-bottom: var(--titan-divider-width-default) solid var(--card-border-color); }
+#productivity-calendar { display: flex; flex-direction: column; flex: 1; min-height: 0; }
+.productivity-date-toolbar { display: flex; align-items: center; gap: var(--titan-space-8); padding: var(--titan-space-16); }
+#productivity-month { margin-right: auto; }
+.productivity-week { display: grid; grid-template-columns: repeat(7,1fr); padding: 0 var(--titan-space-8) var(--titan-space-12); }
+.productivity-week-day { font-size: var(--titan-type-caption-size); display: flex; flex-direction: column; align-items: center; gap: var(--titan-space-8); }
+.productivity-week-day > span:first-child { color: var(--titan-text-muted); }
+.productivity-date { display: grid; place-items: center; width: 28px; height: 28px; border-radius: var(--titan-radius-6); }
+.productivity-date.is-selected { background: var(--titan-action-primary); color: var(--titan-text-inverse); }
+.productivity-timezone { padding: var(--titan-space-8) var(--titan-space-12); font-size: var(--titan-type-caption-size); border-top: var(--titan-divider-width-default) solid var(--card-border-color); border-bottom: var(--titan-divider-width-default) solid var(--card-border-color); }
+.productivity-agenda { overflow-y: auto; flex: 1; min-height: 0; }
+.productivity-hours { position: relative; }
+.productivity-hour { height: 52px; border-bottom: var(--titan-divider-width-default) solid var(--card-border-color); }
+.productivity-hour > span { display: block; width: 64px; height: 100%; padding: var(--titan-space-8); border-right: var(--titan-divider-width-default) solid var(--card-border-color); font-size: var(--titan-type-caption-size); }
+.productivity-now { position: absolute; left: 64px; right: 0; border-top: 2px solid #ff4265; pointer-events: none; }
+.productivity-now::before { content: ''; position: absolute; width: 8px; height: 8px; border-radius: 50%; background: #ff4265; left: -4px; top: -5px; }
+#productivity-tasks { padding: var(--titan-space-24); color: var(--titan-text-muted); }
+
+/* Orient the shared right chevron via its page-owned placement wrapper. */
+#productivity-prev { transform: rotate(180deg); }
+
+/* Requested page-local chevron size; preserve the 24px button targets. */
+#productivity-prev .titan-icon-button > svg,
+#productivity-next .titan-icon-button > svg {
+  width: 12px;
+  height: 12px;
+}
+
+/* Page-owned presentation: the existing DS controls stay unchanged. */
+.mail-productivity-panel[data-mode="floating"] {
+  position: absolute;
+  inset: var(--titan-space-12) var(--titan-space-12) var(--titan-space-12) auto;
+  z-index: 30;
+  max-width: min(300px, calc(100% - 24px));
+  border: var(--titan-elevation-3-border);
+  border-radius: var(--titan-radius-6);
+  overflow: hidden;
+  box-shadow: var(--titan-elevation-3-shadow);
+  animation: productivity-slide-in 220ms ease-out;
+}
+@keyframes productivity-slide-in {
+  from { transform: translateX(100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .mail-productivity-panel[data-mode="floating"] { animation: none; }
+}

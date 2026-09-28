@@ -22,15 +22,16 @@
         "disabled",
         "pressed"
       ],
-      "usage": "Variants: default, compact, composer, dark, dark-quiet, toggle. Dark uses a 24px target; iconSize 16 (default) or 18 supports navigation or window usages with one treatment. Toggle requires icon + pressedIcon and an explicit pressed state; it swaps artwork instead of painting a container. Use monochrome assets with iconColor: currentColor. Legacy window/dark-compact inputs normalize to dark.",
+      "usage": "Variants: default, compact, composer, dark, dark-quiet, toggle. Dark supports size 24 (default), 32 and 40, with default artwork 16, 20 and 24px respectively. iconSize may explicitly select 16, 18, 20 or 24px. Toggle requires icon + pressedIcon and an explicit pressed state; it swaps artwork instead of painting a container. Use monochrome assets with iconColor: currentColor. Legacy window/dark-compact inputs normalize to dark.",
       "props": {
         "label": "Required visible or accessible label",
         "icon": "Required registered icon ID (custom image paths supported)",
         "disabled": "Boolean; prevents interaction",
         "pressed": "Optional boolean; caller owns toggle state",
         "pressedIcon": "Required for the toggle variant; registered icon ID or custom image path shown while pressed. The resting asset comes from icon.",
-        "size": "32 (default) or 40; observed action and toolbar sizes",
-        "variant": "default, compact, composer, dark, dark-quiet, or toggle. Toggle is the quiet artwork-swap treatment: 24px target, 16px artwork, no container, accent artwork while pressed. Dark and dark-quiet are for dark surfaces; dark-quiet has no hover container \u2014 its artwork sits at reduced opacity and reaches full opacity on hover, active and pressed. Opacity is used rather than colour so artwork supplied as a path (rendered as <img>) is affected too."
+        "size": "Default: 32 or 40. Dark: 24 (default), 32 or 40. Other variants retain their existing size contracts.",
+        "variant": "default, compact, composer, dark, dark-quiet, or toggle. Toggle is the quiet artwork-swap treatment: 24px target, 16px artwork, no container, accent artwork while pressed. Dark and dark-quiet are for dark surfaces; dark-quiet has no hover container \u2014 its artwork sits at reduced opacity and reaches full opacity on hover, active and pressed. Opacity is used rather than colour so artwork supplied as a path (rendered as <img>) is affected too.",
+        "iconSize": "Dark artwork override: 16, 18, 20 or 24; otherwise determined by button size."
       },
       "anatomy": {
         "parts": [
@@ -40,7 +41,7 @@
           }
         ],
         "spacing": [],
-        "alignment": "Centered image canvases: 20px for normal 32px and composer 28px controls, 24px for 40px controls, 18px for 24px window controls. Artwork has shared optical corrections inside each canvas.",
+        "alignment": "Centered image canvases: 20px for normal 32px and composer 28px controls, 24px for 40px controls, 18px for 24px window controls. Artwork has shared optical corrections inside each canvas. Dark sizes 24/32/40 center artwork at 16/20/24px, with zero internal padding.",
         "behavior": "Native keyboard activation; disabled controls cannot activate. Split actions have independent callbacks. The dark-quiet variant paints no hover background; it changes artwork opacity only, so it can sit directly on a filled row without drawing a second container. The toggle variant swaps between its two supplied artwork states with no container in any state.",
         "ownership": "Component owns its internal spacing and hit area. Parent owns spacing between controls.",
         "interactionOwnership": "Owns control semantics and visual treatment for activation, focus, disabled and optional pressed values for each size. The caller owns the toggle value and updates the documented pressed input (aria-pressed); this is distinct from transient active interaction. The toggle variant swaps artwork between icon and pressedIcon under the same contract."
@@ -90,11 +91,38 @@
           },
           {
             "id": "dark",
-            "name": "Dark",
+            "name": "Dark \u00b7 24px",
             "owner": "icon-button",
             "states": [
               "default",
               "hover",
+              "active",
+              "focus",
+              "pressed",
+              "disabled"
+            ]
+          },
+          {
+            "id": "dark-32",
+            "name": "Dark \u00b7 32px",
+            "owner": "icon-button",
+            "states": [
+              "default",
+              "hover",
+              "active",
+              "focus",
+              "pressed",
+              "disabled"
+            ]
+          },
+          {
+            "id": "dark-40",
+            "name": "Dark \u00b7 40px",
+            "owner": "icon-button",
+            "states": [
+              "default",
+              "hover",
+              "active",
               "focus",
               "pressed",
               "disabled"
@@ -178,26 +206,38 @@
         },
         {
           "id": "dark",
-          "name": "Dark",
+          "name": "Dark \u00b7 24px",
           "selector": "#examples > .example:nth-child(5)",
           "interactionTarget": "dark"
         },
         {
+          "id": "dark-32",
+          "name": "Dark \u00b7 32px",
+          "selector": "#examples > .example:nth-child(6)",
+          "interactionTarget": "dark-32"
+        },
+        {
+          "id": "dark-40",
+          "name": "Dark \u00b7 40px",
+          "selector": "#examples > .example:nth-child(7)",
+          "interactionTarget": "dark-40"
+        },
+        {
           "id": "dark-quiet",
           "name": "Dark quiet",
-          "selector": "#examples > .example:nth-child(6)",
+          "selector": "#examples > .example:nth-child(8)",
           "interactionTarget": "dark-quiet"
         },
         {
           "id": "toggle",
           "name": "Icon toggle",
-          "selector": "#examples > .example:nth-child(7)",
+          "selector": "#examples > .example:nth-child(9)",
           "interactionTarget": "toggle"
         },
         {
           "id": "toggle-on",
           "name": "Icon toggle \u00b7 On",
-          "selector": "#examples > .example:nth-child(8)",
+          "selector": "#examples > .example:nth-child(10)",
           "interactionTarget": "toggle"
         }
       ],
@@ -1704,7 +1744,7 @@
           },
           {
             "label": "Right inset with count",
-            "token": "--titan-space-8",
+            "token": "--titan-space-12",
             "selector": ".titan-sidebar-item:has(.nav-badge)",
             "property": "padding-right"
           },

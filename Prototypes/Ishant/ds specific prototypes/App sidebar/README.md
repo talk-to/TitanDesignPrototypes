@@ -7,8 +7,8 @@ http://localhost:8031/app/Prototypes/Ishant/ds%20specific%20prototypes/App%20sid
 This screen-owned prototype places a persistent 56px dark app rail to the left of
 the existing navigation. It mirrors the registered 3×3 App Switcher inventory except
 for Admin: Mail, Calendar, Contacts, Bookings, Drive, Backup, Tasks and Site. Mail,
-Calendar, Contacts and Drive use their real DS-connected shells; Mail uses a copied
-shell under `email shell/` with its internal App Switcher removed because the outer
+Calendar, Contacts and Drive use independent copies under `calendar shell/`,
+`contacts shell/` and `drive shell/`; Mail uses a copied shell under `email shell/` with its internal App Switcher removed because the outer
 rail now owns app navigation. The other four use a neutral local placeholder.
 Previously visited frames are not reloaded, so in-shell state survives app switching.
 

@@ -95,3 +95,17 @@ test('button identifies its complete registered preview configuration',()=>{
   assert(A.button({label:'Example',...options}).includes('data-inspector-variant="'+id+'"'));
  }
 });
+
+test('dark sizes expose independent supported configurations and preserve legacy defaults',()=>{
+ const base={label:'Open in window',icon:'open-in-window',variant:'dark'};
+ assert.match(A.iconButton(base),/data-inspector-variant="dark"/);
+ for(const [size,target] of [[24,'dark'],[32,'dark-32'],[40,'dark-40']]){
+  const html=A.iconButton({...base,size,disabled:true,pressed:true});
+  assert(html.includes(`data-inspector-variant="${target}"`));
+  assert(html.includes(' disabled') && html.includes('aria-pressed="true"'));
+  if(size!==24)assert(html.includes(`titan-icon-button--${size}`));
+ }
+ assert.match(A.iconButton({...base,size:40,iconSize:18}),/--titan-icon-size-18/);
+ assert.throws(()=>A.iconButton({...base,size:28}),/Supported icon button sizes/);
+ assert.throws(()=>A.iconButton({label:'Settings',icon:'settings',size:24}),/Supported icon button sizes/);
+});

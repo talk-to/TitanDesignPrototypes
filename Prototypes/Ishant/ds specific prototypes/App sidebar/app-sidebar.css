@@ -282,12 +282,15 @@ body[data-sidebar-color="colored"] .app-rail-icon-button--tool-local::before {
 .sidebar-variant-panel {
   position: fixed;
   z-index: 10;
+  max-width: calc(100vw - 24px);
+  width: 280px;
   bottom: var(--titan-space-12);
   right: var(--titan-space-12);
-  display: flex;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
   align-items: center;
   gap: var(--titan-space-8);
-  padding: var(--titan-space-4);
+  padding: var(--titan-space-12);
   border: var(--titan-border-elevation-native-dark);
   border-radius: var(--titan-radius-6);
   background: var(--titan-color-grey-965);
@@ -557,4 +560,43 @@ body[data-sidebar-layout="top-labels"] .app-rail__label {
 }
 body[data-sidebar-layout="top-labels"] [data-app]:is(:hover, :focus-within, [data-current="true"]) .app-rail__label {
   color: var(--titan-text-inverse);
+}
+
+.sidebar-variant-panel[hidden] { display: none; }
+.sidebar-variant-panel__handle {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: var(--titan-space-8);
+  padding: 0 0 var(--titan-space-8);
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: var(--titan-type-caption-size);
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+}
+.sidebar-variant-panel__handle:active { cursor: grabbing; }
+.sidebar-variant-panel__handle:focus-visible { outline: 2px solid var(--titan-action-primary); }
+.sidebar-variant-panel__hint { margin-left: auto; opacity: .65; }
+.sidebar-variant-panel select { width: 100%; min-width: 0; }
+body.is-moving-iterations iframe { pointer-events: none; }
+
+.app-rail-tooltip__hint { display: block; opacity: .7; }
+
+.app-rail-tooltip__key {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  margin-top: var(--titan-space-4);
+  padding-inline: var(--titan-space-4);
+  border: var(--titan-border-elevation-native-dark);
+  border-radius: var(--titan-radius-4);
+  background: var(--titan-color-grey-965);
+  color: inherit;
+  font: inherit;
 }

@@ -1,0 +1,94 @@
+/* Page-owned collapse control and layout; no shared component overrides. */
+.sidebar { position: relative; }
+.mail-collapse-control {
+  position: absolute;
+  z-index: 20;
+  top: 32px;
+  right: var(--titan-space-4);
+  transform: translate(50%, -50%);
+  display: grid;
+  place-items: center;
+
+}
+.sidebar[data-collapsed="true"] { width: 84px; }
+.sidebar[data-collapsed="true"] > .nav-scroll,
+.sidebar[data-collapsed="true"] > .mail-expanded-footer { display: none; }
+.mail-compact-nav { display: none; }
+.sidebar[data-collapsed="true"] > .mail-compact-nav {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: var(--titan-space-8);
+  gap: var(--titan-space-4);
+}
+.mail-compact-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  min-height: 32px;
+  flex-shrink: 0;
+  border-radius: var(--titan-radius-6);
+}
+.mail-compact-row[data-current="true"] { background: var(--titan-icon-button-dark-pressed); }
+.mail-compact-account { position: relative; margin-block: var(--titan-space-4); }
+/* Center the avatar independently; the chevron sits to its left. */
+.mail-compact-account-chevron {
+  position: absolute;
+  left: calc(-1 * var(--titan-space-12));
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+}
+.mail-compact-separator { width: 100%; border-top: var(--titan-divider-width-default) solid var(--titan-color-grey-830); margin-block: var(--titan-space-4); }
+
+.sidebar[data-collapsed="true"] .email-shell-logo-header > img { display: none; }
+
+.mail-compact-row[hidden] { display: none; }
+
+/* One circular surface owns resting, hover, pressed and focus states. */
+.mail-sidebar-toggle {
+  box-sizing: border-box;
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: var(--titan-stroke-2) solid var(--titan-color-grey-830);
+  border-radius: 50%;
+  background: var(--titan-surface-navigation);
+  cursor: pointer;
+  transition: background-color 120ms ease, border-color 120ms ease;
+}
+.mail-sidebar-toggle img, .mail-sidebar-toggle svg { display: block; width: var(--titan-icon-size-compact); height: var(--titan-icon-size-compact); pointer-events: none; }
+.mail-sidebar-toggle:hover { background: var(--titan-color-grey-830); }
+.mail-sidebar-toggle:active { background: var(--titan-color-grey-830); border-color: var(--titan-text-muted); }
+.mail-sidebar-toggle:focus-visible { outline: var(--titan-stroke-2) solid var(--titan-action-primary); outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) { .mail-sidebar-toggle { transition: none; } }
+
+/* Collapsed navigation uses its empty header as the expand affordance. */
+.sidebar[data-collapsed="true"] > .mail-collapse-control {
+  right: 50%;
+}
+.sidebar[data-collapsed="true"] .mail-sidebar-toggle {
+  width: 32px;
+  height: 32px;
+  border: 0;
+  border-radius: var(--titan-radius-6);
+  color: var(--titan-text-inverse);
+  background: transparent;
+}
+.sidebar[data-collapsed="true"] .mail-sidebar-toggle:hover,
+.sidebar[data-collapsed="true"] .mail-sidebar-toggle:active {
+  background: var(--titan-color-grey-830);
+}
+.sidebar[data-collapsed="true"] .mail-sidebar-toggle svg,
+.sidebar[data-collapsed="true"] .mail-sidebar-toggle img {
+  width: var(--titan-icon-size-24);
+  height: var(--titan-icon-size-24);
+}
+
+.email-shell-logo-header { position: relative; }

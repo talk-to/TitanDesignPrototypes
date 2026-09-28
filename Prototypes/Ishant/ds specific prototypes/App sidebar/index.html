@@ -4,9 +4,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>App sidebar · Titan</title>
-  <link rel="stylesheet" href="../../../../design-system/tokens.css">
-  <link rel="stylesheet" href="../../../../design-system/components/actions.css">
-  <link rel="stylesheet" href="../../../../design-system/icons/icons.css">
+  <link rel="stylesheet" href="/design-system/tokens.css">
+  <link rel="stylesheet" href="/design-system/components/actions.css">
+  <link rel="stylesheet" href="/design-system/icons/icons.css">
   <link rel="stylesheet" href="app-sidebar.css">
   <style>
     .app-rail__apps .app-rail-icon-button--local > img,
@@ -25,7 +25,7 @@
       }
     }
   </style>
-  <script src="../../../../design-system/theme.js"></script>
+  <script src="/design-system/theme.js"></script>
 </head>
 <body>
   <main class="app-stage" aria-label="Titan app sidebar prototype">
@@ -37,10 +37,11 @@
     <div class="more-apps-listbox" id="more-apps-listbox" role="listbox" aria-label="More apps" hidden></div>
     <section class="app-views" id="app-views" aria-label="Current app"></section>
     <aside class="sidebar-variant-panel" aria-label="Sidebar variations">
+      <button type="button" class="sidebar-variant-panel__handle" aria-label="Move iterations tray. Use arrow keys to move." title="Drag to move · H to hide/show"><span aria-hidden="true">⠿</span> Iterations <span class="sidebar-variant-panel__hint">H to hide</span></button>
       <label class="sidebar-variant-panel__label" for="sidebar-color-select">Color</label>
       <select id="sidebar-color-select" aria-label="Color">
         <option value="grayscale">Grayscale</option>
-        <option value="colored-top">Colored top only</option>
+        <option value="colored-top" selected>Colored top only</option>
         <option value="colored">Colored top + bottom</option>
       </select>
       <label class="sidebar-variant-panel__label" for="sidebar-layout-select">Layout</label>
@@ -60,18 +61,24 @@
       <label class="sidebar-variant-panel__label" for="sidebar-icon-size-select">Size</label>
       <select id="sidebar-icon-size-select" aria-label="App icon size">
         <option value="normal">Normal</option>
-        <option value="scaled">Scaled</option>
+        <option value="scaled" selected>Scaled</option>
+      </select>
+      <label class="sidebar-variant-panel__label" for="right-sidebar-select">Right sidebar</label>
+      <select id="right-sidebar-select" aria-label="Right sidebar">
+        <option value="embedded" selected>Embedded</option>
+        <option value="floating">Floating</option>
       </select>
     </aside>
     <p class="sr-only" id="app-announcement" aria-live="polite"></p>
   </main>
-  <script src="../../../../design-system/icons/runtime.js"></script>
-  <script src="../../../../design-system/components/actions.js"></script>
+  <script src="/design-system/icons/runtime.js"></script>
+  <script src="/design-system/components/actions.js"></script>
   <script src="app-sidebar.js"></script>
+  <script src="iteration-tray.js"></script>
   <script>
     (() => {
       const sizeSelect = document.getElementById('sidebar-icon-size-select');
-      const initialSize = new URLSearchParams(location.search).get('icon-size') === 'scaled' ? 'scaled' : 'normal';
+      const initialSize = new URLSearchParams(location.search).get('icon-size') === 'normal' ? 'normal' : 'scaled';
       document.body.dataset.sidebarIconSize = initialSize;
       sizeSelect.value = initialSize;
       sizeSelect.addEventListener('change', () => {

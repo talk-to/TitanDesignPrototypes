@@ -115,3 +115,13 @@
 /* Labelled segments share spare width and shrink only when content no longer fits. */
 .titan-footer-actions__item--icon-only{flex:0 0 auto;min-width:calc(var(--titan-space-24) * 2)}
 .titan-footer-actions__label{min-width:0}
+
+/* Dark size configurations: preserve the legacy 24px default. */
+.titan-icon-button--dark.titan-icon-button--32 {
+  --titan-icon-button-size: 32px;
+  --titan-icon-button-artwork-size: var(--titan-icon-size-20);
+}
+.titan-icon-button--dark.titan-icon-button--40 {
+  --titan-icon-button-size: 40px;
+  --titan-icon-button-artwork-size: var(--titan-icon-size-24);
+}

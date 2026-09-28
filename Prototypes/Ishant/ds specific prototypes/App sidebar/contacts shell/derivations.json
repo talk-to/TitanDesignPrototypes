@@ -1,0 +1,21 @@
+{
+  "status": "none",
+  "scope": "Titan Contacts prototype only",
+  "derivations": [],
+  "sharedSources": [
+    "design-system/components/actions.js",
+    "design-system/components/actions.css"
+  ],
+  "localSources": [
+    "contacts.js",
+    "contacts.css"
+  ],
+  "promoted": [
+    {
+      "name": "Primary outlined import action",
+      "promotedTo": "Button variant 'outlined-primary'",
+      "class": ".titan-button--outlined-primary",
+      "note": "Promoted to a shared Button variant on request; the screen now selects the registered variant and owns no button colour."
+    }
+  ]
+}

@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Inbox (367) - Mail</title>
-  <link rel="stylesheet" href="../../../../../design-system/tokens.css" onerror="this.onerror=null;this.href='../../../../../design-system/tokens.css'">
+  <link rel="stylesheet" href="/design-system/tokens.css" onerror="this.onerror=null;this.href='/design-system/tokens.css'">
   <style>
 
     * {
@@ -330,7 +330,7 @@
       transition: filter 0.2s ease;
     }
 
-    .toolbar-icon img[src*="../../../../../design-system/icons/"] {max-width:none;max-height:none}
+    .toolbar-icon img[src*="/design-system/icons/"] {max-width:none;max-height:none}
 
     .toolbar-icon:hover img {
       filter: brightness(0.6);
@@ -1335,20 +1335,22 @@
       color: var(--titan-text-inverse);
     }
 
-    .email-shell-logo-header img {
+    .email-shell-logo-header > img {
       display: block;
       width: 77px;
       height: 20px;
       object-fit: contain;
     }
   </style>
-  <link rel="stylesheet" href="../../../../../design-system/components/navigation-input.css" onerror="this.onerror=null;this.href='../../../../../design-system/components/navigation-input.css'">
-  <link rel="stylesheet" href="../../../../../design-system/components/messages.css" onerror="this.onerror=null;this.href='../../../../../design-system/components/messages.css'">
-  <link rel="stylesheet" href="../../../../../design-system/components/actions.css" onerror="this.onerror=null;this.href='../../../../../design-system/components/actions.css'">
-  <link rel="stylesheet" href="../../../../../design-system/components/avatar.css" onerror="this.onerror=null;this.href='../../../../../design-system/components/avatar.css'">
-  <link rel="stylesheet" href="../../../../../design-system/components/account-header.css" onerror="this.onerror=null;this.href='../../../../../design-system/components/account-header.css'">
-<link rel="stylesheet" href="../../../../../design-system/components/selection.css">
-<script src="../../../../../design-system/theme.js" onerror="this.onerror=null;this.src='../../../../../design-system/theme.js'"></script></head>
+  <link rel="stylesheet" href="/design-system/components/navigation-input.css" onerror="this.onerror=null;this.href='/design-system/components/navigation-input.css'">
+  <link rel="stylesheet" href="/design-system/components/messages.css" onerror="this.onerror=null;this.href='/design-system/components/messages.css'">
+  <link rel="stylesheet" href="/design-system/components/actions.css" onerror="this.onerror=null;this.href='/design-system/components/actions.css'">
+  <link rel="stylesheet" href="/design-system/components/avatar.css" onerror="this.onerror=null;this.href='/design-system/components/avatar.css'">
+  <link rel="stylesheet" href="/design-system/components/account-header.css" onerror="this.onerror=null;this.href='/design-system/components/account-header.css'">
+<link rel="stylesheet" href="/design-system/components/selection.css">
+<script src="/design-system/theme.js" onerror="this.onerror=null;this.src='/design-system/theme.js'"></script>  <link rel="stylesheet" href="sidebar-collapse.css">
+  <link rel="stylesheet" href="productivity-panel.css">
+</head>
 
 <body>
 
@@ -1356,7 +1358,8 @@
   <div class="app-window">
 
     <!-- Sidebar -->
-    <div class="sidebar">
+    <div class="sidebar" id="mail-sidebar">
+      <div class="mail-collapse-control" id="mail-collapse-control"></div>
 
       <!-- Header with logo -->
       <div class="email-shell-logo-header">
@@ -1369,7 +1372,7 @@
         <div id="account-header-ella"></div>
 
         <!-- Inbox (active) -->
-        <div class="titan-sidebar-item nav-item active" style="padding-right: 8px;">
+        <div class="titan-sidebar-item nav-item active">
           <div class="nav-item-icon">
             <img data-titan-icon="inbox" alt="">
           </div>
@@ -1515,6 +1518,7 @@
         </div>
         <div class="toolbar-right">
           <div class="toolbar-icons">
+            <span id="toolbar-sidebar-host" style="display:flex"></span>
             <button type="button" class="titan-icon-button titan-icon-button--40 toolbar-icon" data-action="main" aria-label="Read receipts" title="Read receipts"><img src="assets/ec5d8d32-261b-410c-b07c-310cd6bb915e.svg" alt="" draggable="false"></button>
             <button type="button" class="titan-icon-button titan-icon-button--40 toolbar-icon" data-action="main" onclick="toggleSettingsModal()" aria-label="Settings" title="Settings"><img data-titan-icon="settings" alt="" draggable="false"></button>
           </div>
@@ -2235,12 +2239,14 @@
 
   <!-- Shared DS composer; original shell remains independent. -->
   <div id="ds-composer-host" inert></div>
-  <link rel="stylesheet" href="../../../../../design-system/components/composer.css">
-  <script src="../../../../../design-system/icons/runtime.js"></script><script src="../../../../../design-system/components/actions.js"></script>
-  <script src="../../../../../design-system/components/selection.js"></script>
-  <script src="../../../../../design-system/components/avatar.js"></script>
-  <script src="../../../../../design-system/components/account-header.js"></script>
+  <link rel="stylesheet" href="/design-system/components/composer.css">
+  <script src="/design-system/icons/runtime.js"></script><script src="/design-system/components/actions.js"></script>
+  <script src="/design-system/components/selection.js"></script>
+  <script src="/design-system/components/avatar.js"></script>
+  <script src="/design-system/components/account-header.js"></script>
   <script>
+  document.getElementById('toolbar-sidebar-host').innerHTML = TitanActions.iconButton({label:'Sidebar',icon:'sidebar',size:40});
+  document.querySelector('#toolbar-sidebar-host button').classList.add('toolbar-icon');
   for(const [host,options] of [
     ['account-header-ella',{id:'ella',email:'ella.henderson@avontechlabs.com',initials:'E'}],
     ['account-header-support',{id:'support',email:'support.team@avontechlabs.com',initials:'S'}]
@@ -2251,7 +2257,9 @@
     {id:'settings',label:'Settings',icon:'settings',labelHidden:true}
   ]},{settings:()=>toggleSettingsModal()});
   </script>
-  <script src="../../../../../design-system/components/composer.js"></script>
+  <script src="sidebar-collapse.js"></script>
+  <script src="productivity-panel.js"></script>
+  <script src="/design-system/components/composer.js"></script>
   <script>let composerReturnFocus=null;TitanComposer.mount(document.getElementById('ds-composer-host'),'emailComposer',{docked:true,id:'composer-window',toId:'comp-to-input',from:'ella@avontech.com'},{close:()=>{document.getElementById('ds-composer-host').inert=true;composerReturnFocus?.focus();}});</script>
 
 
@@ -2469,8 +2477,13 @@
       document.addEventListener('mousemove', function (e) {
         if (!dragging) return;
         const delta = e.clientX - startX;
-        const newW = Math.min(900, Math.max(380, startW + delta));
+        const content = panel.parentElement;
+        const sidePanel = content.querySelector('.mail-productivity-panel:not([hidden])');
+        const available = content.clientWidth - (sidePanel?.offsetWidth || 0);
+        const maxWidth = Math.max(360, Math.min(900, available - 240));
+        const newW = Math.min(maxWidth, Math.max(360, startW + delta));
         panel.style.width = newW + 'px';
+        panel.style.flex = '0 0 ' + newW + 'px';
         panel.classList.toggle('wide-view', newW >= 620);
       });
       document.addEventListener('mouseup', function () {
@@ -2528,6 +2541,7 @@
           contentArea.classList.remove('reading-pane-hidden');
           middlePanel.classList.remove('wide-view');
           middlePanel.style.width = '443px';
+          middlePanel.style.flex = '';
         }
       }
     }

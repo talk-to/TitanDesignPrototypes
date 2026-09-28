@@ -3,10 +3,10 @@
 
   const apps = [
     { id: 'mail', label: 'Mail', icon: 'app-mail', path: 'email shell/index.html', shape: 'mail' },
-    { id: 'calendar', label: 'Calendar', icon: 'app-calendar', path: '../../design ops/DS-specific shells/TitanCalendar/index.html', shape: 'calendar' },
-    { id: 'contacts', label: 'Contacts', icon: 'app-contacts', path: '../../design ops/DS-specific shells/Titan Contacts/index.html', shape: 'rows' },
+    { id: 'calendar', label: 'Calendar', icon: 'app-calendar', path: 'calendar shell/index.html', shape: 'calendar' },
+    { id: 'contacts', label: 'Contacts', icon: 'app-contacts', path: 'contacts shell/index.html', shape: 'rows' },
     { id: 'bookings', label: 'Bookings', icon: 'app-bookings', path: 'placeholder.html', placeholder: true, shape: 'plain' },
-    { id: 'drive', label: 'Drive', icon: 'app-drive', path: '../../design ops/DS-specific shells/TitanDrive/index.html', shape: 'rows' },
+    { id: 'drive', label: 'Drive', icon: 'app-drive', path: 'drive shell/index.html', shape: 'rows' },
     { id: 'backup', label: 'Backup', icon: 'app-backup', path: 'placeholder.html', placeholder: true, shape: 'plain' },
     { id: 'tasks', label: 'Tasks', icon: 'app-tasks', path: 'placeholder.html', placeholder: true, shape: 'plain' }
   ];
@@ -30,12 +30,14 @@
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const colorSelect = document.getElementById('sidebar-color-select');
   const layoutSelect = document.getElementById('sidebar-layout-select');
+  const rightSidebarSelect = document.getElementById('right-sidebar-select');
+  rightSidebarSelect.value = query.get('right-sidebar') === 'floating' ? 'floating' : 'embedded';
   const transitionSelect = document.getElementById('app-transition-select');
   // Keep older shared preview URLs working.
   const legacyVariant = query.get('sidebar');
   const requestedLayout = query.get('layout') || legacyVariant;
   const initialLayout = ['top-labels', 'top-more', 'centered-more'].includes(requestedLayout) ? requestedLayout : 'top';
-  const requestedColor = query.get('color') || (legacyVariant === 'colored' ? 'colored-top' : legacyVariant === 'colored-all' ? 'colored' : 'grayscale');
+  const requestedColor = query.get('color') || (legacyVariant === 'colored' ? 'colored-top' : legacyVariant === 'colored-all' ? 'colored' : legacyVariant === 'grayscale' ? 'grayscale' : 'colored-top');
   const initialColor = ['colored-top', 'colored'].includes(requestedColor) ? requestedColor : 'grayscale';
   const requestedTransition = query.get('transition');
   const initialTransition = ['skeleton', 'slide-skeleton', 'instant'].includes(requestedTransition) ? requestedTransition : 'spinner';
@@ -109,13 +111,11 @@
     `<div class="app-rail__item" role="listitem" data-tool="${tool.id}" data-tool-tone="${tool.tone}" data-label="${tool.label}">` +
       TitanActions.iconButton({ label: tool.label, icon: tool.icon, iconSize: tool.iconSize || 16, variant: 'dark' }) +
     '</div>'
-  ).join('') + '<div class="app-rail__item" role="listitem" data-tool="settings" data-label="Settings">' +
-    TitanActions.iconButton({ label: 'Settings', icon: 'settings', iconSize: 16, iconColor: 'currentColor', variant: 'dark' }) +
-    '</div>';
+  ).join('');
   footerHost.querySelectorAll('[data-tool]').forEach(item => {
     prepareButton(
       item.querySelector('button'),
-      item.dataset.tool === 'settings' ? 'app-rail-icon-button--utility-local' : 'app-rail-icon-button--tool-local'
+      'app-rail-icon-button--tool-local'
     );
   });
   moreAppsListbox.innerHTML = tools.map(tool =>
@@ -175,6 +175,7 @@
     '<span class="app-view-loader__spinner"></span>' +
   '</div><div class="app-skeleton" id="app-skeleton" aria-hidden="true" hidden></div>' + apps.map((app, index) => {
     const frameQuery = new URLSearchParams({ theme });
+    if (app.id === 'mail') frameQuery.set('right-sidebar', rightSidebarSelect.value);
     if (app.placeholder) {
       frameQuery.set('app', app.label);
       frameQuery.set('icon', app.icon);
@@ -185,12 +186,18 @@
   }).join('');
 
   const views = [...viewsHost.querySelectorAll('.app-view')];
+  const mailView = views.find(view => view.dataset.appView === 'mail');
+  function syncRightSidebar() {
+    mailView.contentWindow.postMessage({type:'app-sidebar:productivity-mode', mode:rightSidebarSelect.value}, location.origin);
+  }
+  rightSidebarSelect.addEventListener('change', syncRightSidebar);
+  mailView.addEventListener('load', syncRightSidebar);
   const viewLoader = document.getElementById('app-view-loader');
   const skeleton = document.getElementById('app-skeleton');
 
   function showTooltip(item) {
     if (!item) return;
-    if (document.body.dataset.sidebarLayout === 'top-labels' && item.hasAttribute('data-app')) {
+    if (document.body.dataset.sidebarLayout === 'top-labels' && item.dataset.app === 'mail') {
       hideTooltip();
       return;
     }
@@ -200,6 +207,16 @@
     const itemRect = item.getBoundingClientRect();
     const railRect = rail.getBoundingClientRect();
     tooltip.textContent = item.dataset.label;
+    if (item.dataset.app && item.dataset.app !== 'mail') {
+      const hint = document.createElement('span');
+      hint.className = 'app-rail-tooltip__hint';
+      const commandKey = document.createElement('kbd');
+      commandKey.className = 'app-rail-tooltip__key';
+      commandKey.textContent = '⌘';
+      commandKey.setAttribute('aria-label', 'Command');
+      hint.append(commandKey, ' + click to open in new window');
+      tooltip.append(hint);
+    }
     tooltip.style.left = `${railRect.right + 6}px`;
     tooltip.style.top = `${itemRect.top + itemRect.height / 2}px`;
     tooltip.hidden = false;
@@ -386,6 +403,12 @@
     }
     const item = event.target.closest('[data-app]');
     if (!item) return;
+    if (event.metaKey && item.dataset.app !== 'mail') {
+      const view = views.find(view => view.dataset.appView === item.dataset.app);
+      if (view) window.open(view.src, '_blank', 'noopener');
+      hideTooltip();
+      return;
+    }
     if (item.dataset.app === currentApp) animateButton(item.querySelector('button'));
     else selectApp(item.dataset.app);
   });
