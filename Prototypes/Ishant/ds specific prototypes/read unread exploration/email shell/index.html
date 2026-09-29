@@ -824,8 +824,50 @@
       pointer-events: auto;
       transition-delay: 0s;
     }
+    .sent-message-floating {
+      position: absolute;
+      right: calc(var(--titan-space-24) + var(--titan-space-8));
+      bottom: calc(var(--titan-space-24) + var(--titan-space-8));
+      z-index: 21;
+      opacity: 0;
+      translate: 0 var(--titan-space-12);
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity 220ms ease, translate 280ms cubic-bezier(0.22, 1, 0.36, 1), visibility 0s 280ms;
+    }
+    .sent-message-floating.is-visible {
+      opacity: 1;
+      translate: 0 0;
+      visibility: visible;
+      pointer-events: auto;
+      transition-delay: 0s;
+    }
+    .reply-send-flight {
+      position: fixed;
+      z-index: 100;
+      pointer-events: none;
+      box-sizing: border-box;
+    }
+    .reply-send-flight__layer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      transform-origin: top center;
+    }
+    .reply-send-status {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+      white-space: nowrap;
+    }
     @media (prefers-reduced-motion: reduce) {
       .jump-latest-floating.titan-button { transition: none; translate: none; }
+      .sent-message-floating { transition: none; translate: none; }
     }
 
     .new-message-separator {
@@ -917,7 +959,7 @@
     }
 
     /* Keep the fill when cards are nested inside temporary crossfade layers. */
-    .read-unread-thread--muted .read-unread-message--read .titan-message-card {
+    .read-unread-thread--muted .read-unread-message--read:not([data-sent="true"]) .titan-message-card {
       background: color-mix(in srgb, var(--titan-surface-subtle) 65%, var(--titan-surface-base));
     }
 
@@ -2403,16 +2445,7 @@
                   <!-- Send bar -->
                   <div class="comp-send-bar" style="display: flex; align-items: center; justify-content: space-between; padding: 12px 24px; border-top: var(--titan-divider-width-default) solid var(--card-border-color);">
                     <div style="display: flex; align-items: center; gap: 8px;">
-                      <button class="comp-send-btn titan-split-btn" onclick="discardReply()">
-                        <span class="comp-send-main split-btn-main">
-                          <span class="btn-content-wrapper">Send</span>
-                        </span>
-                        <span class="comp-send-dd-btn split-btn-dd">
-                          <span class="btn-content-wrapper">
-                            <img src="composer_assets/ic-caret-white.svg" alt="">
-                          </span>
-                        </span>
-                      </button>
+                      <span id="reply-send-control"></span>
                       <button class="comp-campaign-btn titan-action-btn action-btn-campaign" title="Campaign">
                         <svg class="ci-campaign" preserveAspectRatio="xMidYMid meet" overflow="visible"
                           style="display: block;" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -2496,10 +2529,12 @@
                   </div>
                 </div>
             </div>
+            <span class="reply-send-status" id="reply-send-status" role="status" aria-live="polite"></span>
 
           </div><!-- /thread-content -->
 
           <button type="button" class="jump-latest-floating titan-button titan-button--outlined-primary" id="jump-latest-floating" data-jump-latest inert aria-hidden="true">Jump to latest ↓</button>
+          <span class="sent-message-floating" id="sent-message-floating" inert aria-hidden="true"></span>
           <nav class="iteration-switcher" aria-label="Read and unread prototype iterations">
             <button type="button" class="iteration-switcher__handle" id="iteration-switcher-handle" aria-label="Move iteration control" title="Drag to move; use arrow keys for precise positioning">
               <span class="iteration-switcher__grip" aria-hidden="true"></span>
@@ -2815,6 +2850,16 @@
       jumpFloating.inert = true;
       jumpFloating.setAttribute('aria-hidden', 'true');
       document.getElementById('jump-latest-floating').replaceWith(jumpFloating);
+      const sentFloating = document.getElementById('sent-message-floating');
+      function renderSentFloatingButton() {
+        sentFloating.innerHTML = TitanActions.button({
+          label: 'View sent message',
+          variant: jumpMode === 'floating-primary-outlined' ? 'outlined-primary' : 'outlined',
+          icon: 'sent',
+          iconColor: 'currentColor'
+        });
+      }
+      renderSentFloatingButton();
       jumpSelect.value = jumpMode;
       const separatorStyles = new Set(['line', 'pill']);
       const separatorColors = new Set(['soft', 'solid']);
@@ -3267,6 +3312,10 @@
       const replyDrafts = new Map();
       const threadList = document.querySelector('.email-list.titan-message-list');
       let messages, olderMessages, unreadMessages, leadingMessage, earlierStackMessages, newestMessageId, tailMessages;
+      let sentMessageId = null;
+      let sendInProgress = false;
+      let activeSendFlight = null;
+      let sentSequence = 0;
       const earlierStackIds = new Set();
       const openMessages = new Set();
       let earlierStackExpanded = false;
@@ -3292,7 +3341,7 @@
         newestMessageId = messages.at(-1).id;
         earlierStackIds.clear(); earlierStackMessages.forEach(message => earlierStackIds.add(message.id));
         openMessages.clear();
-        (unreadMessages.length ? unreadMessages : [messages.at(-1)]).forEach(message => openMessages.add(message.id));
+        (unreadMessages.length ? unreadMessages : (messages.at(-1).sent ? [] : [messages.at(-1)])).forEach(message => openMessages.add(message.id));
         earlierStackExpanded = earlierStackMessages.length < 4;
         stickyHeader.querySelector('.thread-title').textContent = thread.subject;
         renderIteration(true);
@@ -3300,6 +3349,9 @@
       }
       function selectThread(id) {
         if (id === currentThreadId || !threads.some(thread => thread.id === id)) return;
+        activeSendFlight?.cancel();
+        sentMessageId = null;
+        setSentVisible(false);
         revealMessage.cancel?.();
         if (readOnLeave) threads.find(thread => thread.id === currentThreadId).messages.forEach(message => { message.unread = false; });
         const reply = document.getElementById('reply-box-card');
@@ -3347,8 +3399,8 @@
           recipients: message.recipients,
           time: message.time,
           paragraphs: formatMessageParagraphs(message.paragraphs),
-          headerActions: expandedMessageHeaderActions,
-          actions: message.id === newestMessageId ? [
+          headerActions: message.sent ? [] : expandedMessageHeaderActions,
+          actions: message.id === newestMessageId && !message.sent ? [
             { id: 'reply', label: 'Reply', icon: 'reply' },
             { id: 'reply-all', label: 'Reply all', icon: 'reply-all' },
             { id: 'forward', label: 'Forward', icon: 'forward' },
@@ -3368,7 +3420,7 @@
         const edgePill = iteration === 'pills' && message.unread
           ? '<span class="new-message-edge-pill">New</span>'
           : '';
-        return `<div class="read-unread-message ${stateClass}" data-unread="${message.unread}" data-latest-message="${message.id === newestMessageId}">${edgePill}${renderCard(message)}</div>`;
+        return `<div class="read-unread-message ${stateClass}" data-unread="${message.unread}" data-sent="${!!message.sent}" data-latest-message="${message.id === newestMessageId}">${edgePill}${renderCard(message)}</div>`;
       }
 
       function renderEarlierStack() {
@@ -3396,6 +3448,11 @@
         jumpFloating.inert = !visible;
         jumpFloating.setAttribute('aria-hidden', String(!visible));
       }
+      function setSentVisible(visible) {
+        sentFloating.classList.toggle('is-visible', visible);
+        sentFloating.inert = !visible;
+        sentFloating.setAttribute('aria-hidden', String(!visible));
+      }
       function hideScrollJump() {
         clearTimeout(jumpHideTimer);
         jumpScrollActive = false;
@@ -3404,7 +3461,19 @@
       function updateJumpVisibility() {
         const latest = comparisonIteration.querySelector('[data-latest-message="true"]');
         const latestBelowView = !!latest && latest.getBoundingClientRect().top >= threadContent.getBoundingClientRect().bottom;
-        setJumpVisible(jumpScrollActive && jumpMode.startsWith('floating-') && latestBelowView);
+        let sentOffscreen = false;
+        if (sentMessageId && !sendInProgress) {
+          const sentCard = comparisonIteration.querySelector(`[data-message-id="${CSS.escape(sentMessageId)}"]`);
+          if (sentCard) {
+            const bounds = sentCard.getBoundingClientRect();
+            sentOffscreen = bounds.top >= threadContent.getBoundingClientRect().bottom || bounds.bottom <= stickyHeader.getBoundingClientRect().bottom;
+            if (!sentOffscreen) sentMessageId = null;
+          } else {
+            sentMessageId = null;
+          }
+        }
+        setSentVisible(sentOffscreen);
+        setJumpVisible(!sendInProgress && !sentOffscreen && jumpScrollActive && jumpMode.startsWith('floating-') && latestBelowView);
         comparisonIteration.querySelectorAll('.jump-latest-inline').forEach(control => {
           // Preserve the separator layout so hiding the action cannot shift the visibility boundary.
           control.style.visibility = latestBelowView ? 'visible' : 'hidden';
@@ -3434,12 +3503,32 @@
         jumpFloating.classList.toggle('titan-button--outlined', outlined);
         jumpFloating.classList.toggle('titan-button--outlined-primary', !outlined);
         jumpFloating.dataset.inspectorVariant = outlined ? 'outlined' : 'outlined-primary-icon';
+        renderSentFloatingButton();
         const url = new URL(location.href);
         url.searchParams.set(jumpParameter, jumpMode);
         history.replaceState(null, '', url);
         renderIteration(false);
       });
       jumpFloating.addEventListener('click', jumpToLatest);
+      sentFloating.addEventListener('click', () => {
+        const targetId = sentMessageId;
+        if (!targetId) return;
+        sentMessageId = null;
+        setSentVisible(false);
+        hideScrollJump();
+        revealMessage.cancel?.();
+        openMessages.add(targetId);
+        renderIteration(false);
+        requestAnimationFrame(() => {
+          const sentCard = comparisonIteration.querySelector(`[data-message-id="${CSS.escape(targetId)}"]`);
+          if (!sentCard) return;
+          const card = sentCard.matches('.titan-message-card') ? sentCard : sentCard.querySelector('.titan-message-card');
+          const top = threadContent.scrollTop + sentCard.getBoundingClientRect().top - threadContent.getBoundingClientRect().top - stickyHeader.offsetHeight - tokenSpace(3);
+          card?.setAttribute('tabindex', '-1');
+          card?.focus({preventScroll:true});
+          threadContent.scrollTo({top:Math.max(0,top), behavior:matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth'});
+        });
+      });
       const noteScrollIntent = () => { jumpUserScrollUntil = performance.now() + 1500; };
       threadContent.addEventListener('wheel', event => {
         noteScrollIntent();
@@ -3497,6 +3586,178 @@
           requestAnimationFrame(() => requestAnimationFrame(() => { if (version === navigationVersion) scrollToUnreadBoundary(); }));
         }
       }
+
+      function sendInlineReply() {
+        if (sendInProgress) return;
+        const replyBox = document.getElementById('reply-box-card');
+        const replyBody = document.getElementById('reply-box-body');
+        const wrapper = document.getElementById('reply-box-reveal');
+        if (!wrapper || replyBox.style.display !== 'flex') return;
+        const text = replyBody.innerText.replace(/\u00a0/g, ' ').replace(/\r\n?/g, '\n').trim();
+        const status = document.getElementById('reply-send-status');
+        if (!text) {
+          status.textContent = 'Write a reply before sending.';
+          replyBody.focus();
+          return;
+        }
+
+        openReplyBox.animations?.forEach(animation => animation.cancel());
+        openReplyBox.animations = null;
+        const paragraphs = text.split('\n').map(line => line.trim());
+        const sent = {
+          id: `sent-${Date.now()}-${++sentSequence}`,
+          sender: 'Ishant P',
+          initials: 'IP',
+          recipients: `To: ${document.getElementById('reply-recipient-name').textContent.trim()}`,
+          time: new Date().toLocaleTimeString('en-US', {hour:'numeric', minute:'2-digit'}),
+          preview: paragraphs.find(Boolean).slice(0, 160),
+          paragraphs,
+          unread: false,
+          sent: true
+        };
+        const sendingThreadId = currentThreadId;
+        messages.push(sent);
+        tailMessages.push(sent);
+        newestMessageId = sent.id;
+        replyDrafts.delete(currentThreadId);
+        renderThreadList();
+        sendInProgress = true;
+        replyBox.dataset.sending = 'true';
+        setJumpVisible(false);
+        setSentVisible(false);
+
+        const source = replyBox.getBoundingClientRect();
+        const wrapperHeight = wrapper.getBoundingClientRect().height;
+        const measuringCard = document.createElement('div');
+        measuringCard.className = 'read-unread-message';
+        measuringCard.style.cssText = `position:absolute;visibility:hidden;width:${source.width}px;`;
+        measuringCard.innerHTML = renderCard(sent);
+        comparisonIteration.append(measuringCard);
+        const cardHeight = measuringCard.getBoundingClientRect().height;
+        measuringCard.remove();
+
+        const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const ghost = reduced ? null : document.createElement('div');
+        let editorLayer, cardLayer;
+        if (ghost) {
+          editorLayer = replyBox.cloneNode(true);
+          editorLayer.querySelectorAll('[id], [onclick], [contenteditable]').forEach(element => {
+            element.removeAttribute('id');
+            element.removeAttribute('onclick');
+            element.removeAttribute('contenteditable');
+          });
+          editorLayer.removeAttribute('id');
+          editorLayer.classList.add('reply-send-flight__layer');
+          editorLayer.style.height = `${source.height}px`;
+          editorLayer.style.margin = '0';
+          cardLayer = document.createElement('div');
+          cardLayer.className = 'reply-send-flight__layer';
+          cardLayer.innerHTML = renderCard(sent);
+          cardLayer.style.opacity = '0';
+          ghost.className = 'reply-send-flight';
+          ghost.setAttribute('aria-hidden', 'true');
+          ghost.inert = true;
+          ghost.style.left = `${source.left}px`;
+          ghost.style.top = `${source.top}px`;
+          ghost.style.width = `${source.width}px`;
+          ghost.style.height = `${source.height}px`;
+          ghost.append(editorLayer, cardLayer);
+          document.body.append(ghost);
+        }
+        replyBox.style.visibility = 'hidden';
+        wrapper.style.overflow = 'hidden';
+        let cancelled = false;
+        const animations = [];
+        const cleanup = () => {
+          if (activeSendFlight !== flight) return;
+          animations.forEach(animation => animation.cancel());
+          ghost?.remove();
+          replyBox.style.display = 'none';
+          replyBox.style.removeProperty('visibility');
+          replyBox.removeAttribute('data-sending');
+          replyBody.innerHTML = '';
+          wrapper.style.removeProperty('height');
+          wrapper.style.removeProperty('overflow');
+          wrapper.style.marginBottom = '0';
+          sendInProgress = false;
+          activeSendFlight = null;
+        };
+        const flight = {cancel() { cancelled = true; cleanup(); }};
+        activeSendFlight = flight;
+
+        const finish = () => {
+          if (cancelled || activeSendFlight !== flight) return;
+          cleanup();
+          if (currentThreadId !== sendingThreadId) return;
+          const oldLatest = comparisonIteration.querySelector('[data-latest-message="true"]');
+          if (oldLatest?.querySelector('[data-message-id]')?.dataset.messageId !== sent.id) oldLatest?.setAttribute('data-latest-message', 'false');
+          if (!comparisonIteration.querySelector(`[data-message-id="${CSS.escape(sent.id)}"]`)) {
+            comparisonIteration.insertAdjacentHTML('beforeend', renderMessage(sent));
+          }
+          sentMessageId = sent.id;
+          status.textContent = 'Reply sent.';
+          updateJumpVisibility();
+          if (sentMessageId) sentFloating.querySelector('button')?.focus({preventScroll:true});
+          else comparisonIteration.querySelector(`[data-message-id="${CSS.escape(sent.id)}"] .titan-message-card__open`)?.focus({preventScroll:true});
+        };
+
+        if (reduced) {
+          finish();
+          return;
+        }
+        const collapse = ghost.animate([
+          {height:`${source.height}px`},
+          {height:`${cardHeight}px`}
+        ], {duration:280, easing:'cubic-bezier(0.22, 1, 0.36, 1)', fill:'forwards'});
+        // Crossfade the whole editor into the real collapsed card; never crop its contents.
+        const editorFade = editorLayer.animate([
+          {opacity:1, transform:'scaleY(1)'},
+          {opacity:0, transform:`scaleY(${cardHeight / source.height})`}
+        ], {duration:220, easing:'cubic-bezier(0.22, 1, 0.36, 1)', fill:'forwards'});
+        const cardFade = cardLayer.animate([
+          {opacity:0},
+          {opacity:1}
+        ], {delay:100, duration:180, easing:'ease-out', fill:'forwards'});
+        const closeGap = wrapper.animate([
+          {height:`${wrapperHeight}px`, marginBottom:getComputedStyle(wrapper).marginBottom},
+          {height:'0px', marginBottom:'0px'}
+        ], {duration:280, easing:'cubic-bezier(0.22, 1, 0.36, 1)', fill:'forwards'});
+        animations.push(collapse, closeGap, editorFade, cardFade);
+        Promise.allSettled([collapse.finished, closeGap.finished, editorFade.finished, cardFade.finished]).then(() => {
+          if (cancelled || activeSendFlight !== flight) return;
+          ghost.style.height = `${cardHeight}px`;
+          wrapper.style.height = '0px';
+          wrapper.style.marginBottom = '0';
+          collapse.cancel();
+          closeGap.cancel();
+          editorLayer.remove();
+          cardLayer.style.opacity = '1';
+          editorFade.cancel();
+          cardFade.cancel();
+          const liftDistance = parseFloat(getComputedStyle(replyBox).getPropertyValue('--titan-space-16')) || 16;
+          const lift = ghost.animate([
+            {transform:'translate3d(0, 0, 0)'},
+            {transform:`translate3d(0, -${liftDistance}px, 0)`}
+          ], {duration:160, easing:'cubic-bezier(0.22, 1, 0.36, 1)', fill:'forwards'});
+          animations.push(lift);
+          lift.finished.then(() => {
+            if (cancelled || activeSendFlight !== flight) return;
+            const pane = threadContent.getBoundingClientRect();
+            const travelY = Math.max(80, pane.bottom + cardHeight - source.top);
+            const travelX = Math.min(32, Math.max(0, pane.right - source.right));
+            const fly = ghost.animate([
+              {transform:`translate3d(0, -${liftDistance}px, 0)`, opacity:1},
+              {transform:`translate3d(${travelX * .8}px, ${travelY * .8}px, 0)`, opacity:1, offset:.8},
+              {transform:`translate3d(${travelX}px, ${travelY}px, 0)`, opacity:0}
+            ], {duration:560, easing:'cubic-bezier(0.4, 0, 0.2, 1)', fill:'forwards'});
+            animations.push(fly);
+            fly.finished.then(finish, () => {});
+          }, () => {});
+        });
+      }
+      document.addEventListener('click', event => {
+        if (event.target.closest('#reply-send-control .titan-half-button--left')) sendInlineReply();
+      });
 
       function syncEarlierStack() {
         const earlierStack = comparisonIteration.querySelector('[data-earlier-stack]');
@@ -3834,6 +4095,9 @@
     }
 
     // ── Reply Box Controls ──────────────────────────────────────────────
+    document.getElementById('reply-send-control').innerHTML = TitanActions.splitButton({
+      label:'Send', secondaryLabel:'Send options', variant:'composer', secondaryDisabled:true
+    });
     const replyDiscardControl = document.getElementById('reply-discard-control');
     replyDiscardControl.innerHTML = TitanActions.iconButton({label:'Discard reply', icon:'delete', variant:'composer'});
     replyDiscardControl.addEventListener('click', discardReply);
@@ -3862,9 +4126,13 @@
     function openReplyBox(type, messageId) {
       const replyBox = document.getElementById('reply-box-card');
       if (!replyBox) return;
+      if (replyBox.dataset.sending === 'true') return;
       revealMessage.cancel?.();
       const body = document.getElementById('reply-box-body');
       const anchor = messageId ? document.querySelector(`#read-unread-iteration [data-message-id="${CSS.escape(messageId)}"]`) : null;
+      const sourceMessage = anchor || document.querySelector('#read-unread-iteration [data-latest-message="true"] [data-message-id]');
+      const sender = sourceMessage?.querySelector('.exp-sender, .thread-sender')?.textContent.trim();
+      if (sender) document.getElementById('reply-recipient-name').textContent = sender;
       const existingWrapper = document.getElementById('reply-box-reveal');
       const samePosition = !anchor || existingWrapper?.previousElementSibling === anchor.parentElement;
       if (replyBox.style.display === 'flex' && samePosition) {
