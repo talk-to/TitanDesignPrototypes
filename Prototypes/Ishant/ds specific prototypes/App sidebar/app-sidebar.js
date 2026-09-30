@@ -25,6 +25,7 @@
   const viewsHost = document.getElementById('app-views');
   const announcement = document.getElementById('app-announcement');
   const query = new URLSearchParams(location.search);
+  if (query.get('controls') === 'focused') document.body.dataset.showcaseControls = 'focused';
   const theme = query.get('theme') === 'dark' ? 'dark' : 'light';
   const inspect = query.get('ds') === 'true';
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;

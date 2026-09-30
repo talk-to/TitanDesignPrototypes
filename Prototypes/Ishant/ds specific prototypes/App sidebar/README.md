@@ -95,3 +95,10 @@ product tools grayscale at rest. Existing `sidebar=` preview links remain suppor
 
 More apps popup icons use local 20px colored containers, with 16px artwork for
 Signature Designer and Smart Write AI and 14px artwork for the other tools.
+
+### Focused layout review links
+
+Append `controls=focused` to hide the color, layout and right-sidebar controls.
+This presentation mode leaves only Icon size (Small or Large) and Interaction
+pattern in the iterations tray. Use it with a fixed layout and transition, for
+example `?layout=top&transition=slide-skeleton&controls=focused`.

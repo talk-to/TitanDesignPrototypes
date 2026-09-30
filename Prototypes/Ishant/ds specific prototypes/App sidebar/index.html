@@ -39,36 +39,46 @@
     <section class="app-views" id="app-views" aria-label="Current app"></section>
     <aside class="sidebar-variant-panel" aria-label="Sidebar variations">
       <button type="button" class="sidebar-variant-panel__handle" aria-label="Move iterations tray. Use arrow keys to move." title="Drag to move · H to hide/show"><span aria-hidden="true">⠿</span> Iterations <span class="sidebar-variant-panel__hint">H to hide</span></button>
-      <label class="sidebar-variant-panel__label" for="sidebar-color-select">Color</label>
-      <select id="sidebar-color-select" aria-label="Color">
-        <option value="grayscale">Grayscale</option>
-        <option value="colored-top" selected>Colored top only</option>
-        <option value="colored">Colored top + bottom</option>
-      </select>
-      <label class="sidebar-variant-panel__label" for="sidebar-layout-select">Layout</label>
-      <select id="sidebar-layout-select" aria-label="Layout">
-        <option value="top">Top</option>
-        <option value="top-labels">Top + labels</option>
-        <option value="top-more">Top + more</option>
-        <option value="centered-more">Centered + more</option>
-      </select>
-      <label class="sidebar-variant-panel__label" for="app-transition-select">App transition</label>
-      <select id="app-transition-select" aria-label="App transition">
-        <option value="spinner">Slide + loader</option>
-        <option value="slide-skeleton">Slide + skeleton</option>
-        <option value="skeleton">Instant + skeleton</option>
-        <option value="instant">Instant + loader</option>
-      </select>
-      <label class="sidebar-variant-panel__label" for="sidebar-icon-size-select">Size</label>
-      <select id="sidebar-icon-size-select" aria-label="App icon size">
-        <option value="normal">Normal</option>
-        <option value="scaled" selected>Scaled</option>
-      </select>
-      <label class="sidebar-variant-panel__label" for="right-sidebar-select">Right sidebar</label>
-      <select id="right-sidebar-select" aria-label="Right sidebar">
-        <option value="embedded" selected>Embedded</option>
-        <option value="floating">Floating</option>
-      </select>
+      <div class="sidebar-variant-panel__control sidebar-variant-panel__control--color">
+        <label class="sidebar-variant-panel__label" for="sidebar-color-select">Color</label>
+        <select id="sidebar-color-select" aria-label="Color">
+          <option value="grayscale">Grayscale</option>
+          <option value="colored-top" selected>Colored top only</option>
+          <option value="colored">Colored top + bottom</option>
+        </select>
+      </div>
+      <div class="sidebar-variant-panel__control sidebar-variant-panel__control--layout">
+        <label class="sidebar-variant-panel__label" for="sidebar-layout-select">Layout</label>
+        <select id="sidebar-layout-select" aria-label="Layout">
+          <option value="top">Top</option>
+          <option value="top-labels">Top + labels</option>
+          <option value="top-more">Top + more</option>
+          <option value="centered-more">Centered + more</option>
+        </select>
+      </div>
+      <div class="sidebar-variant-panel__control sidebar-variant-panel__control--transition">
+        <label class="sidebar-variant-panel__label" for="app-transition-select">Interaction pattern</label>
+        <select id="app-transition-select" aria-label="App interaction pattern">
+          <option value="spinner">Slide + loader</option>
+          <option value="slide-skeleton">Slide + skeleton</option>
+          <option value="skeleton">Instant + skeleton</option>
+          <option value="instant">Instant + loader</option>
+        </select>
+      </div>
+      <div class="sidebar-variant-panel__control sidebar-variant-panel__control--size">
+        <label class="sidebar-variant-panel__label" for="sidebar-icon-size-select">Icon size</label>
+        <select id="sidebar-icon-size-select" aria-label="App icon size">
+          <option value="normal">Small</option>
+          <option value="scaled" selected>Large</option>
+        </select>
+      </div>
+      <div class="sidebar-variant-panel__control sidebar-variant-panel__control--right-sidebar">
+        <label class="sidebar-variant-panel__label" for="right-sidebar-select">Right sidebar</label>
+        <select id="right-sidebar-select" aria-label="Right sidebar">
+          <option value="embedded" selected>Embedded</option>
+          <option value="floating">Floating</option>
+        </select>
+      </div>
     </aside>
     <p class="sr-only" id="app-announcement" aria-live="polite"></p>
   </main>
