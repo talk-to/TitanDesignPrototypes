@@ -303,6 +303,14 @@ body[data-sidebar-color="colored"] .app-rail-icon-button--tool-local::before {
   font-weight: var(--titan-type-caption-weight);
   line-height: var(--titan-line-height-20);
 }
+.sidebar-variant-panel__control {
+  display: contents;
+}
+body[data-showcase-controls="focused"] .sidebar-variant-panel__control--color,
+body[data-showcase-controls="focused"] .sidebar-variant-panel__control--layout,
+body[data-showcase-controls="focused"] .sidebar-variant-panel__control--right-sidebar {
+  display: none;
+}
 .sidebar-variant-panel select {
   appearance: auto;
   min-height: 28px;
